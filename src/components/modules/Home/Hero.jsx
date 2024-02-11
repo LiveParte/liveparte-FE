@@ -8,7 +8,7 @@ import { HiDotsHorizontal } from "react-icons/hi";
 export default function Hero({ notEvent = true,router,openModal,openModalLoginSignUp }) {
   return (
     <div
-      className={`relative font400  background1 bg-center  xl:bg-left ${MainContainer} `}
+      className={`relative font400  bg-[url('/webp/bg1.png')] bg-center bg-cover  xl:bg-left ${MainContainer} `}
     >
       <div className="">
        <div className="absolute left-0 right-0">
