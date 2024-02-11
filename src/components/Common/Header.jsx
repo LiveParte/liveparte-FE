@@ -50,7 +50,7 @@ export default function Header({ className, openModal }) {
       <div
         className={`pt-[14px] md:pt-[30px] xl:pt-[55px] pb-[98px]  font400 ${className} ${MainContainer}`}
       >
-         <div className="absolute left-0 right-0 top-0 bottom-0 header  z-30"></div>
+         <div className="absolute left-0 right-0 top-0 bottom-0 header  bg-[url('/webp/header.png')] z-30"></div>
         {/* <LogoWhite/> */}
         <div className="flex justify-between z-50 relative cursor-pointer">
           <Image
