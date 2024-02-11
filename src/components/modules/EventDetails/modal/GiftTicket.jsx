@@ -34,10 +34,12 @@ export default function GiftTicket() {
         <form className="flex flex-col gap-[16px]">
           {GiftTicketForm()?.map((item,i)=>item?.type==="textarea"?
            <FloatingLabelTextArea
+           key={i}
            label={item?.label}
            />
            :
           <FloatingLabelInput
+          key={i}
           label={item?.label}
           />
          

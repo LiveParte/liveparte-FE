@@ -47,7 +47,7 @@ export default function Carousel({
         className="mySwiper text-white"
       >
         {Data?.map((item, index) =>
-          <SwiperSlide>{renderItem(item)}</SwiperSlide>
+          <SwiperSlide key={index}>{renderItem(item)}</SwiperSlide>
         )}
       
         
