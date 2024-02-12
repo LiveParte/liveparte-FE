@@ -8,8 +8,8 @@ export default function LoginSignUp({
   closeModal
 }) {
   const [toggle, setToggle] = useState("Login");
-  const isActive = `text-white border-[1px] border-[#48515d  rounded-[999px] bg-[#2e3239] px-[50px] cursor-pointer `;
-  const notActive = `text-[#495969] px-[50px] cursor-pointer `;
+  const isActive = `text-white border-[1px] border-[#48515d  rounded-[999px] bg-[#2e3239] px-[30px] lg:px-[50px] cursor-pointer `;
+  const notActive = `text-[#495969] px-[30px] lg:px-[50px] cursor-pointer `;
   return (
     <div className="bg-[#1B1C20] pb-[48px] px-[16px] pt-[16px] lg:pt-[18px]">
       <div className="flex justify-end pb-[10px]" onClick={closeModal}>
@@ -28,7 +28,7 @@ export default function LoginSignUp({
           </div>
           <div
             onClick={() => setToggle("SignUp")}
-            className={` h-[36px] flex justify-center items-center   ${
+            className={` h-[36px] flex justify-center items-center ${
               toggle !== "Login" ? isActive : notActive
             }`}
           >

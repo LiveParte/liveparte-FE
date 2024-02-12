@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 export default function Header({ className, openModal }) {
   const router = useRouter();
   const MainContainer = `px-[20px] md:px-[60px] lg:px-[120px] relative`;
-  const [dropDown,setDropDown]=useState(false)
+  const [dropDown, setDropDown] = useState(false);
 
   const MenuDropdown = () => {
     return (
@@ -26,7 +26,7 @@ export default function Header({ className, openModal }) {
             <ButtonComp
               btnText={`close`}
               className={`px-[24px] py-[8px] text-[13px] font500 h-fit border-[#262C32] border-[1px] !bg-[#25272d] !text-white`}
-              onClick={()=>setDropDown(false)}
+              onClick={() => setDropDown(false)}
             />
           </div>
         </div>
@@ -45,12 +45,12 @@ export default function Header({ className, openModal }) {
   };
   return (
     <>
-     {dropDown&& <MenuDropdown />}
+      {dropDown && <MenuDropdown />}
 
       <div
         className={`pt-[14px] md:pt-[30px] xl:pt-[55px] pb-[98px]  font400 ${className} ${MainContainer}`}
       >
-         <div className="absolute left-0 right-0 top-0 bottom-0 header  bg-[url('/webp/header.png')] z-30"></div>
+        <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover  bg-[url('/webp/header.png')] z-30"></div>
         {/* <LogoWhite/> */}
         <div className="flex justify-between z-50 relative cursor-pointer">
           <Image
@@ -78,7 +78,7 @@ export default function Header({ className, openModal }) {
               className="text-[13px] font-medium hidden lg:block font500"
             />
             <ButtonComp
-            onClick={()=>setDropDown(true)}
+              onClick={() => setDropDown(true)}
               btnText="Menu"
               className="text-[13px] font-medium  lg:hidden !py-[8px] !px-[24px] gap-[10px] !bg-[#BAD6F70F] rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px] h-fit"
             />

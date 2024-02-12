@@ -8,7 +8,7 @@ import { HiDotsHorizontal } from "react-icons/hi";
 export default function HeroTime({ notEvent = true,router,onClick }) {
   return (
     <div
-      className={`relative font400  background1 bg-center  xl:bg-left ${MainContainer} grayscale flex-1`}
+      className={`relative font400  bg-[url('/webp/bg1.png')] bg-cover bg-center  xl:bg-left ${MainContainer} grayscale flex-1`}
     >
       <div className="h-full">
         
