@@ -7,17 +7,17 @@
 
 @font-face {
   font-family: 'CustomFont';
-  src: url('../../public/fonts/MatterSQ-Regular.woff')format('woff');
+  src: url('../../fonts/MatterSQ-Regular.woff')format('woff');
 }
 
 @font-face {
   font-family: 'CustomFontBold';
-  src: url('../../public/fonts/MatterSQ-SemiBold.woff')format('woff');
+  src: url('../../fonts/MatterSQ-SemiBold.woff')format('woff');
 }
 
 @font-face {
   font-family: 'CustomFontMedium';
-  src: url('../../public/fonts/MatterSQ-Medium.woff')format('woff');
+  src: url('../../fonts/MatterSQ-Medium.woff')format('woff');
 }
 
 .font400{

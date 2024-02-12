@@ -1,9 +1,8 @@
-import Header from "@/components/Common/Header";
+// import Header from "@/components/Common/Header";
 import React from "react";
-import { Daviod } from "../../../../public/svg";
+// import { Daviod } from "../../../../public/svg";
 import { MainContainer } from "@/utils/styleReuse";
 import ButtonComp from "@/components/Ui/button";
-import { HiDotsHorizontal } from "react-icons/hi";
 
 export default function HeroTime({ notEvent = true,router,onClick }) {
   return (
