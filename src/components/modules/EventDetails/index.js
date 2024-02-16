@@ -7,9 +7,7 @@ export default function EventDetails() {
     <div className={`${MainContainer}  bg-[#060809] pt-4`}>
       <div className=" bg-[#060809]">
         <div className="lg:w-[75%] text-white text-[20px] lg:text-[35px] font600 leading-[27px] lg:leading-[45px] pb-[53px] lg:pb-[101px]">
-          Davido is going to shutdown the event as usual with so amazing
-          performances which he never disappoint on. Get your ticket now so you
-          don’t miss out on the fun
+        Davido is going to shut down the event as usual with amazing performances, never failing to disappoint. Get your ticket now so you don’t miss out on the fun!
         </div>
 
         <div className="flex flex-wrap gap-[56px] lg:gap-[148px] items-center pb-[111px]">

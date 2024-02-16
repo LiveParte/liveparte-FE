@@ -10,9 +10,17 @@ import Hero from '@/components/modules/Home/Hero'
 import LoginSignUp from '@/components/modules/Home/Modal/Login&SignUp'
 import React, { useState } from 'react'
 import { Dropdown, DropdownItem } from 'flowbite-react';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+import AddToCalendar from 'react-add-to-calendar';
 
 export default function EventId () {
   let [isOpen, setIsOpen] = useState();
+  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   function closeModal() {
     setIsOpen(null);
@@ -24,6 +32,10 @@ export default function EventId () {
 
   function openModalLoginSignUp() {
     setIsOpen('login/signup');
+  }
+
+  function openModalGiftTicket() {
+    setIsOpen('gift ticket');
   }
 
 
@@ -43,6 +55,19 @@ export default function EventId () {
   ]
   return (
     <NoAuth>
+        {/* <Calendar
+        onChange={handleDateChange}
+        value={selectedDate}
+      /> */}
+      {/* <AddToCalendar
+        event={{
+          title: 'Your Event Title',
+          description: 'Your Event Description',
+          location: 'Event Location',
+          startTime: selectedDate,
+          endTime: selectedDate,
+        }}
+      /> */}
       {/* <DropDown/> */}
      
       <MyModal
@@ -52,7 +77,7 @@ export default function EventId () {
         closeModal={closeModal}
         openModal={openModal}
       />
-    <Hero openModalLoginSignUp={openModalLoginSignUp} openModal={openModal} notEvent={false}/>
+    <Hero openModalLoginSignUp={openModalLoginSignUp} openModal={openModal} giftTicket={openModalGiftTicket} notEvent={false}/>
     {/* <Dropdown  placement="top" label="Dropdown button" dismissOnClick={false}>
       <DropdownItem>Dashboard</DropdownItem>
       <DropdownItem>Settings</DropdownItem>

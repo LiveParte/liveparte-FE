@@ -5,7 +5,7 @@ import { dummyShowData } from "./Data";
 import Carousel from "@/components/Common/Carousel";
 
 export default function Happening() {
-  const container = "pl-[20px] md:pr-[20px] lg:px-[60px]";
+  const container = "pl-[20px] pr-[20px] lg:px-[60px]";
   return (
    <div className="bg-[#060809] ">
     <div className={` py-[30px] pb-[72px] lg:pb-[150px]`}>

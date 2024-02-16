@@ -13,9 +13,14 @@ export function FloatingLabelInput({ label, type }) {
           <input
             // type="text"
             id="floating_filled"
-            className="block rounded-[8px] px-[16px] pb-2.5 pt-[20px] w-full text-[13px] text-gray-900 bg-[#222428] border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-[#343F4B] dark:focus:border-[#343F4B] focus:outline-none focus:ring-0 focus:border-[#63768D] peer h-[50px]"
+            className="block rounded-[8px] px-[16px] pb-2.5 pt-[20px] w-full text-[13px] text-white bg-[#222428] border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-[#343F4B] dark:focus:border-[#343F4B] focus:outline-none focus:ring-0 focus:border-[#63768D] peer h-[50px]"
             placeholder=" "
             type={type || "text"}
+            // autoComplete="off" 
+            autoComplete="new-password"
+            role="presentation" autocomplete="off"
+            
+            // type='text'
           />
           <label
             for="floating_filled"

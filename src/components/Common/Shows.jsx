@@ -15,7 +15,7 @@ export default function ShowsCard({
     // console.log(showImage,'showImage')
   return (
     <div
-      className={`relative h-[35vh] md:h-[40vh] lg:h-[55vh] rounded-[8px] lg:rounded-[20px] ${backUrl} bg-cover bg-center1`}
+      className={`relative h-[50vh] md:h-[40vh] lg:h-[55vh] rounded-[8px] lg:rounded-[20px] ${backUrl} bg-cover bg-center1`}
     >
       <div className="h-full">
         <div className=" flex flex-col h-full">
@@ -34,10 +34,10 @@ export default function ShowsCard({
           </div>
 
           <div className="text-center">
-            <div className="font-1 text-[35px] md:text-[80px] font-medium text-white  mb-[27px] leading-[38px] md:leading-[68px]">
+            <div className="font-1 text-[35px] md:text-[80px] font-medium text-white MB-[4px]  md:mb-[27px] leading-[38px] md:leading-[68px]">
               {name}
             </div>
-            <div  className="text-[#B4BECB] text-[13px] mb-[25px] font-medium font500 whitespace-nowrap overflow-hidden text-ellipsis px-[10px]">
+            <div  className="text-[#B4BECB] text-[10px] md:text-[13px] mb-[16px] mb:mb-[25px] font-medium font500 whitespace-nowrap overflow-hidden text-ellipsis px-[10px]">
               {venue}
             </div>
           </div>

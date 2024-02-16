@@ -29,6 +29,66 @@ export const dummyShowData=[
     }
 ]
 
+export const dummyShowDataII=[
+    {
+        name:'REMA',
+        showImage:'/public/webp/show.png',
+        isLive:true,
+        venue:'O2 Cinema Arena Concert',
+        id:1,
+    },
+    {
+        name:'AFRO NATION',
+        showImage:'/public/webp/show2.png',
+        isLive:true,
+        venue:'The world’s biggest Afrobeats festival',
+        id:2,
+    },
+    {
+        name:'BURNA BOY',
+        showImage:'/public/webp/show2.png',
+        isLive:true,
+        venue:'The world’s biggest Afrobeats festival',
+        id:3,
+    },
+    {
+        name:'BIG WIZ',
+        showImage:'/publicr/webp/show2.png',
+        isLive:true,
+        venue:'The world’s biggest Afrobeats festival',
+        id:4,
+    },
+    {
+        name:'REMA',
+        showImage:'/public/webp/show.png',
+        isLive:true,
+        venue:'O2 Cinema Arena Concert',
+        id:1,
+    },
+    {
+        name:'AFRO NATION',
+        showImage:'/public/webp/show2.png',
+        isLive:true,
+        venue:'The world’s biggest Afrobeats festival',
+        id:2,
+    },
+    {
+        name:'BURNA BOY',
+        showImage:'/public/webp/show2.png',
+        isLive:true,
+        venue:'The world’s biggest Afrobeats festival',
+        id:3,
+    },
+    {
+        name:'BIG WIZ',
+        showImage:'/publicr/webp/show2.png',
+        isLive:true,
+        venue:'The world’s biggest Afrobeats festival',
+        id:4,
+    }
+]
+
+
 
 export const LoginForm =()=>{
     return [

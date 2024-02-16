@@ -4,7 +4,7 @@ export const LoginForm =()=>{
         {
             name:'',
             label:'Email Address',
-            // type:''
+            type:'text'
         },
         {
             name:'',

@@ -37,7 +37,7 @@ export default function LoginSignUp({
         </div>
       </div>
 
-      {toggle==="Login" &&<form className="px-[15px] lg:px-[50px] flex flex-col gap-[20px] lg:pb-[92px]">
+      {toggle==="Login" &&<form className="px-[15px] lg:px-[50px] flex flex-col gap-[20px] lg:pb-[92px]" autoComplete="off">
         {LoginForm()?.map((item, index) => (
           <FloatingLabelInput key={index} label={item?.label} type={item?.type} />
         ))}
@@ -49,7 +49,7 @@ export default function LoginSignUp({
         </div>
       </form>}
 
-      {toggle!=="Login" &&<form className="px-[15px] lg:px-[50px] flex flex-col gap-[20px] lg:pb-[92px]">
+      {toggle!=="Login" &&<form className="px-[15px] lg:px-[50px] flex flex-col gap-[20px] lg:pb-[92px]" autoComplete="off">
         {SignUpForm()?.map((item, index) => (
           <FloatingLabelInput key={index} label={item?.label} type={item?.type} />
         ))}

@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 
 export default function Header({ className, openModal }) {
   const router = useRouter();
-  const MainContainer = `px-[20px] md:px-[60px] lg:px-[120px] relative`;
+  const MainContainer = `px-[20px] lg:px-[60px] lg:px-[120px] relative`;
   const [dropDown, setDropDown] = useState(false);
 
   const MenuDropdown = () => {
@@ -48,7 +48,7 @@ export default function Header({ className, openModal }) {
       {dropDown && <MenuDropdown />}
 
       <div
-        className={`pt-[14px] md:pt-[30px] xl:pt-[55px] pb-[98px]  font400 ${className} ${MainContainer}`}
+        className={`pt-[14px] md:pt-[30px] lg:pt-[43px] pb-[98px]  font400 ${className} ${MainContainer}`}
       >
         <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover  bg-[url('/webp/header.png')] z-30"></div>
         {/* <LogoWhite/> */}

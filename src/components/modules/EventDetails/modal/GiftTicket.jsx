@@ -3,13 +3,20 @@ import React from "react";
 import { GiftTicketForm } from "../Data";
 import { FloatingLabelInput } from "@/components/Ui/TextInput";
 import { FloatingLabelTextArea } from "@/components/Ui/TextArea";
+import { CountdownTimerII } from "@/utils/reusableComponent";
+import { useRouter } from "next/router";
+
 
 export default function GiftTicket() {
+  const router = useRouter();
+  const handleAction = () =>{
+    router.push('/event_time_out')
+  }
   return (
     <div className="bg-[#1B1C20] pb-[56px] px-[16px] lg:px-[56px] pt-[16px] lg:pt-[24px]">
       <nav className="flex justify-between items-center mb-[32px]">
         <div className="text-[18px]  text-white">Gift Ticket</div>
-        <div className="text-[#63768D] text-[18px]">05:45</div>
+        <div className="text-[#63768D] text-[18px]"><CountdownTimerII initialTime={5} onTimerEnd={handleAction}/></div>
       </nav>
 
       <main>
