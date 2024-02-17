@@ -5,10 +5,7 @@ export default function Document() {
     <Html lang="en">
       <Head >
       <title>Live Party</title>
-      <script src="https://c.webfontfree.com/c.js?f=MatterSQ-Medium" type="text/javascript"></script>
-      <script src="https://c.webfontfree.com/c.js?f=MatterSQ-Light" type="text/javascript" />
-      <script src="https://c.webfontfree.com/c.js?f=MatterSQ-Medium" type="text/javascript"></script>
-
+      
       </Head>
      
       <body>

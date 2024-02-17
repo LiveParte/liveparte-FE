@@ -4,7 +4,7 @@ import Header from "@/components/modules/MyShow/Header";
 import Shows from "@/components/modules/MyShow/Shows";
 import React, { useState } from "react";
 
-export default function myShows() {
+export default function MyShows() {
   const HeaderData = [
     {
       name: "Upcoming",

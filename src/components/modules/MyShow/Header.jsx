@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 export default function Header({
   Data = [],
@@ -22,7 +22,8 @@ export default function Header({
         <div className="flex items-center  justify-start md:gap-[10px] lg:gap-[24px] text-white  overflow-x-scroll">
           {Data?.map((item, i) => (
             <div
-              onClick={() => setIsActive&& setIsActive(item?.name)}
+              key={i}
+              onClick={() => setIsActive && setIsActive(item?.name)}
               className={`${
                 isActive === item?.name
                   ? "border-[1px] border-[#262C32] rounded-[999px] px-[15px] lg:px-[32px] py-[11px] bg-[#BAD6F70F]"

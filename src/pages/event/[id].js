@@ -1,6 +1,5 @@
 import Footer from '@/components/Common/Footer'
 import NoAuth from '@/components/Layout/NoAuth'
-import DropDown from '@/components/Ui/DropDown'
 // import DropDown from '@/components/Ui/DropDown'
 import MyModal from '@/components/Ui/Modal'
 import EventDetails from '@/components/modules/EventDetails'
@@ -9,10 +8,6 @@ import GiftTicket from '@/components/modules/EventDetails/modal/GiftTicket'
 import Hero from '@/components/modules/Home/Hero'
 import LoginSignUp from '@/components/modules/Home/Modal/Login&SignUp'
 import React, { useState } from 'react'
-import { Dropdown, DropdownItem } from 'flowbite-react';
-import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
-import AddToCalendar from 'react-add-to-calendar';
 
 export default function EventId () {
   let [isOpen, setIsOpen] = useState();
