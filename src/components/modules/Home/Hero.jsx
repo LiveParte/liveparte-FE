@@ -74,7 +74,7 @@ export default function Hero({ notEvent = true,router,openModal,openModalLoginSi
                       April 17, 2024 - Watch live
                     </div>
                   </div>
-                  <div className="text-center mt-[40px] lg:hidden mb-[42px]">
+                  <div className="text-center mt-[40px] lg:hidden mb-[42px] font500">
                     <div className="text-[#B4BECB] text-[13px] md:text-[15px] z-10 relative mb-[24px] font500">
                       April 17, 2024 - Watch live
                     </div>
@@ -105,7 +105,7 @@ export default function Hero({ notEvent = true,router,openModal,openModalLoginSi
                       
                     </div>
                        
-                    <div className="text-[13px] xl:text-[16px]  text-[#B4BECB] z-10 relative">
+                    <div className="text-[13px] xl:text-[16px]  text-[#B4BECB] z-10 relative font500">
                       April 17, 2024 - Watch live
                     </div>
                   </div>

@@ -9,7 +9,9 @@ export default function SettingForm({ isActive }) {
   return (
     <div className="px-[20px] lg:px-[120px] md:w-[60vw] xl:w-[40vw]">
      {isActive == "Profile" && <div className="mb-[29px] flex items-center gap-[12px] text-white">
+        <div className="h-[48px] w-[48px]">
         <NoProfile />
+        </div>
         <div className="text-[12px] leading-[20px] ">
           Upload your profile photo, it should be a maximum{" "}
           <br className="hidden md:block" /> size of 5 MB.

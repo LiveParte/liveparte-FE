@@ -9,10 +9,11 @@ export default function Shows() {
     "pl-[20px] pr-[20px] md:pl-[20px] md:pr-[20px] lg:px-[60px]";
   const isLength = dummyShowDataII?.length;
   return (
-    <div>
+    <div  className="pb-[150px] lg:pb-[300px]">
       <div className={container}>
-        {/* <Carousel
-          Data={dummyShowData}
+     <div className="lg:hidden">
+     {isLength > 0 &&  <Carousel
+          Data={dummyShowDataII}
           renderItem={(item, i) => (
             <ShowsCard
               // key={i}
@@ -23,9 +24,11 @@ export default function Shows() {
               isLive={false}
             />
           )}
-        /> */}
-        {isLength > 0 && (
-          <div className="grid grid-cols-1  md:grid-cols-2  xl:grid-cols-4 gap-x-[40px] gap-y-[104px] pb-[100px] lg:pb-[247px]">
+        />}
+     </div>
+
+{isLength > 0 && (
+          <div className=" grid-cols-1  md:grid-cols-2  xl:grid-cols-4 gap-x-[40px] gap-y-[104px] pb-[100px] lg:pb-[247px] hidden lg:grid">
             {dummyShowDataII?.map((item, index) => (
               <ShowsCard
                 key={index}
@@ -38,6 +41,7 @@ export default function Shows() {
             ))}
           </div>
         )}
+       
         {/* No SHow */}
         {isLength === 0 && (
           <div className="pb-[100px] lg:pb-[247px] h-[60vh] flex flex-col justify-center items-center">

@@ -1,5 +1,8 @@
 @import url("https://fonts.cdnfonts.com/css/md-nichrome-test");
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+@import url('https://c.webfontfree.com/c.js?f=MatterSQ-Light');
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,23 +10,23 @@
 
 @font-face {
   font-family: 'CustomFont';
-  src: url('../../fonts/MatterSQ-Regular.woff')format('woff');
+  src: url('../../fonts/Matter/WEB/Matter-Light.woff')format('woff');
 }
 
 @font-face {
   font-family: 'CustomFontBold';
-  src: url('../../fonts/MatterSQ-SemiBold.woff')format('woff');
+  src: url('../../fonts/Matter/WEB/Matter-SemiBold.woff')format('woff');
 }
 
 @font-face {
   font-family: 'CustomFontMedium';
-  src: url('../../fonts/MatterSQ-Medium.woff')format('woff');
+  src: url('../../fonts/Matter/WEB/Matter-Medium.woff')format('woff');
 }
 
 .font400{
   /* font-family: 'CustomFont' !important; */
-  font-family: 'MatterSQ-Medium', cursive !important;
-  font-weight: 100 !important;
+  font-family: 'CustomFont' !important;
+  /* font-weight: 100 !important; */
 }
 
 .font500{
@@ -145,6 +148,11 @@ body{
   /* transform: translate3d(0px, -60px, 0px); */
 }
 
+.dropdownII{
+      inset: -1px 1px 5px auto;
+    transform: translate3d(0px, 60.5px, 0px);
+}
+
 
 .shadow-1 {
   box-shadow: 0px 0px 0px 0px #BACFF71F inset;
@@ -156,4 +164,14 @@ body{
 
 .shadow-3 {
   box-shadow: 0px 1px 1px 0px #D8ECF833 inset;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type=number]{
+  -moz-appearance: textfield;
 }

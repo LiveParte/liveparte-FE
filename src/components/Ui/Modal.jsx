@@ -3,7 +3,6 @@ import { Fragment, useState } from 'react'
 
 export default function MyModal({
   bodyComponent,
-  openModal,
   isOpen,
   closeModal,
   containerStyle

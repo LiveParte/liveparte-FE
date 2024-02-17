@@ -25,7 +25,7 @@ export default function Chat() {
 
   const ChatList = () => {
     return (
-      <div className="my-[16px] flex items-center gap-[8px]">
+      <div className="pb-[16px] flex items-center gap-[8px] w-[90%] lg:w-full">
         <img
           src={`/webp/profile.png`}
           width={30}
@@ -33,10 +33,10 @@ export default function Chat() {
           className="object-cover"
         />
         <div>
-          <div className="text-[#B4BECB] text-[11px] font500 leading-[14px] ">
+          <div className="text-[#B4BECB] text-[11px] font500 leading-[14px] font500">
             Anitajoseph
           </div>
-          <div className="text-[#FFFFFF] text-[10px] leading-[14px] -tracking-[0.12px] font-thin">
+          <div className="text-[#FFFFFF] text-[10px] leading-[14px] -tracking-[0.12px]  font400">
             This performance is fire, Thank you livepaarty for making this
             possible
           </div>
@@ -54,17 +54,18 @@ export default function Chat() {
   };
   return (
     <div className=" h-full flex flex-col">
-       <div className="py-[7px]  lg:py-[16px] px-[16px] ">
+       <div className="py-[7px]  lg:pt-[16px] px-[16px] ">
        <div className="lg:hidden text-[15px] text-white font-1 font-bold uppercase mb-[8px] leading-[20px]">
         timeless tour - new york
         </div>
-      <div className=" font-1 text-[13px] lg:text-[22px] text-white uppercase font-bold pb-[8px] lg:pb-0 border-b-[1px] border-b-[#343F4B]">
+      <div className=" font-1 text-[13px] lg:text-[22px] text-white uppercase font-bold pb-[16px]  border-b-[1px] border-b-[#343F4B]">
         Chat
       </div>
        </div>
       <div className=" h-full flex flex-col">
-        <div className=" px-[16px] overflow-y-scroll h-[40vh] lg:h-[60vh] ">
-          <ChatList />
+        <div className=" px-[16px]   flex  items-end">
+         <div className="flex-1 lg:w-full overflow-y-scroll h-[35vh] lg:h-[60vh]">
+         <ChatList />
           <ChatList />
           <ChatList />
           <ChatList />
@@ -76,13 +77,21 @@ export default function Chat() {
           <ChatList />
           <ChatList />
           <ChatList />
+         </div>
+         <div>
+         <div className="lg:hidden  flex flex-col items-end gap-[16px] pb-[16px]">
+                  <Image src={`/svg/reaction1.svg`} width={32} height={32} />
+                  <Image src={`/svg/reaction2.svg`} width={32} height={32} />
+                  <Image src={`/svg/reaction3.svg`} width={32} height={32} />
+                </div>
+         </div>
         </div>
         <div className="p-[16px] pt-[18px] border-t-[1px] border-t-[#343F4B]">
           <div className="flex items-center gap-[10px] mb-[13px]">
-            <input className="h-[40px] lg:h-[35px] border-[1px] border-[#343F4B] rounded-[8px] bg-transparent flex-1 placeholder:text-[#495969] px-[17px] text-white outline-none"  placeholder="Comment here..."/>
+            <input className="h-[40px] lg:h-[35px] w-[23px] border-[1px] border-[#343F4B] rounded-[8px] bg-transparent flex-1 placeholder:text-[#495969] px-[17px] text-white outline-none"  placeholder="Comment here..."/>
             <div 
             onClick={()=>setPayFlow('giftCoins')}
-             className="lg:hidden text-white">
+             className="lg:hidden text-white flex flex-col  items-center">
             <Image src={`/svg/coins.svg`} width={24} height={24} className="mb-[2px]" />
               <div className="text-[10px]">500</div>
             </div>

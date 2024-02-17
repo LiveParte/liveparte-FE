@@ -7,9 +7,9 @@ export default function index() {
   return (
    <>
     <div className='bg-[#060809] min-h-[100vh]'>
-        <div className='hidden lg:block'>
-        <AuthHeader/>
-        </div>
+        {/* <div className='hidden lg:block'>
+        <AuthHeader className={`!mb-[32px]`}/>
+        </div> */}
         <LiveStream/>
     </div>
    </>

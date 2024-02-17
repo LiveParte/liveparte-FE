@@ -1,15 +1,23 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CloseModal } from "../../../../../public/svg";
 import ButtonComp from "@/components/Ui/button";
 import { FloatingLabelInput } from "@/components/Ui/TextInput";
 import { LoginForm ,SignUpForm} from "../Data";
 
 export default function LoginSignUp({
-  closeModal
+  closeModal,
+  pageName='Login'
 }) {
   const [toggle, setToggle] = useState("Login");
   const isActive = `text-white border-[1px] border-[#48515d  rounded-[999px] bg-[#2e3239] px-[30px] lg:px-[50px] cursor-pointer `;
   const notActive = `text-[#495969] px-[30px] lg:px-[50px] cursor-pointer `;
+  useEffect(() => {
+    if(pageName){
+      setToggle(pageName)
+    }
+  
+  }, [pageName])
+  
   return (
     <div className="bg-[#1B1C20] pb-[48px] px-[16px] pt-[16px] lg:pt-[18px]">
       <div className="flex justify-end pb-[10px]" onClick={closeModal}>
@@ -39,7 +47,7 @@ export default function LoginSignUp({
 
       {toggle==="Login" &&<form className="px-[15px] lg:px-[50px] flex flex-col gap-[20px] lg:pb-[92px]" autoComplete="off">
         {LoginForm()?.map((item, index) => (
-          <FloatingLabelInput key={index} label={item?.label} type={item?.type} />
+          <FloatingLabelInput key={index} label={item?.label} type={item?.type} name={item?.name} />
         ))}
         <div className="mt-[122px] lg:mt-[24px]">
           <ButtonComp

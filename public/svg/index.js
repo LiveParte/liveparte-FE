@@ -109,3 +109,13 @@ export const NoProfile = () =>(
   </svg>
   
 )
+
+
+export const CloseII=()=>(
+  <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="11" cy="11" r="11" fill="#2F3239"/>
+<path d="M13.5885 8.41211L8.41203 13.5886" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M8.41203 8.41211L13.5885 13.5886" stroke="white" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+)

@@ -1,25 +1,43 @@
 const React = require("react");
 
 export function FloatingLabelInput({ label, type }) {
+  const [readOnly, setReadOnly] = React.useState(true);
+  const [showPasswords, setShowPasswords] = React.useState('');
+
+  function handleSwitchPassword (){
+    if(type==="password"||!showPasswords){
+    return  setShowPasswords('text')
+  }
+  return  setShowPasswords('password')
+}
   return (
+    
     <>
       <div class="relative">
         {type === "password" && (
-          <div className="absolute right-[17px] text-[13px] font500 cursor-pointer underline text- z-50 top-0 bottom-0 text-white flex justify-center items-center">
+          <div
+          onClick={handleSwitchPassword}
+          className="absolute right-[17px] text-[13px] font500 cursor-pointer underline text- z-50 top-0 bottom-0 text-white flex justify-center items-center">
             Show
           </div>
         )}
         <div>
           <input
+            readOnly={readOnly}
+            onFocus={ () => setReadOnly(false) }
+            onBlur={ () => setReadOnly(true) }
             // type="text"
             id="floating_filled"
             className="block rounded-[8px] px-[16px] pb-2.5 pt-[20px] w-full text-[13px] text-white bg-[#222428] border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-[#343F4B] dark:focus:border-[#343F4B] focus:outline-none focus:ring-0 focus:border-[#63768D] peer h-[50px]"
             placeholder=" "
-            type={type || "text"}
+            type={showPasswords||type || "text"}
             // autoComplete="off" 
-            autoComplete="new-password"
-            role="presentation" autocomplete="off"
-            
+            // autoComplete="new-password"
+            role="presentation" 
+            // autocomplete="off"
+            autoComplete="off"
+            // id="cc"
+             name="cc"
             // type='text'
           />
           <label

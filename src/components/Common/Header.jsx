@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import ButtonComp from "../Ui/button";
 import { useRouter } from "next/router";
-
+import Link from 'next/link'
 export default function Header({ className, openModal }) {
   const router = useRouter();
   const MainContainer = `px-[20px] lg:px-[60px] lg:px-[120px] relative`;
@@ -10,13 +10,13 @@ export default function Header({ className, openModal }) {
 
   const MenuDropdown = () => {
     return (
-      <div className="bg-[#1B1C20]  left-0 right-0 top-0 bottom-0 z-[99] px-[24px] py-[14px] overflow-hidden h-[100vh]  flex flex-col fixed">
+      <div className="bg-[#1B1C20]  left-0 right-0 top-0 bottom-0 z-[99] px-[24px] py-[14px] lg:py-[30px] overflow-hidden h-[100vh]  flex flex-col fixed">
         <div className="flex justify-between items-center mb-[28px] ">
           <div>
             {" "}
             <Image
               onClick={() => router.push("/")}
-              src="/svg/Kommerce logo.svg"
+              src="/svg/logo.svg"
               width={148}
               height={23}
               alt="Picture of the author"
@@ -25,13 +25,13 @@ export default function Header({ className, openModal }) {
           <div>
             <ButtonComp
               btnText={`close`}
-              className={`px-[24px] py-[8px] text-[13px] font500 h-fit border-[#262C32] border-[1px] !bg-[#25272d] !text-white`}
+              className={`px-[24px] py-[8px] text-[13px] font500 h-fit border-[#262C32] border-[1px] !bg-[#25272d] !text-white !rounded-full`}
               onClick={() => setDropDown(false)}
             />
           </div>
         </div>
         <div className="text-[15px] text-white font500 flex-1 ">
-          <div className="py-[12px]  cursor-pointer">Browse events</div>
+          <Link href={'/'} className="py-[12px]  cursor-pointer no-underline text-white">Browse events</Link>
           <div className="py-[12px]  cursor-pointer">On demand</div>
         </div>
 
@@ -48,14 +48,14 @@ export default function Header({ className, openModal }) {
       {dropDown && <MenuDropdown />}
 
       <div
-        className={`pt-[14px] md:pt-[30px] lg:pt-[43px] pb-[98px]  font400 ${className} ${MainContainer}`}
+        className={`pt-[14px]  lg:pt-[43px] pb-[98px]  font400 ${className} ${MainContainer}`}
       >
         <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover  bg-[url('/webp/header.png')] z-30"></div>
         {/* <LogoWhite/> */}
         <div className="flex justify-between z-50 relative cursor-pointer">
           <Image
             onClick={() => router.push("/")}
-            src="/svg/Kommerce logo.svg"
+            src="/svg/logo.svg"
             width={148}
             height={23}
             alt="Picture of the author"
