@@ -3,13 +3,18 @@ const React = require("react");
 export function FloatingLabelInput({ label, type }) {
   const [readOnly, setReadOnly] = React.useState(true);
   const [showPasswords, setShowPasswords] = React.useState('');
+  const textFormat=showPasswords||type
 
   function handleSwitchPassword (){
-    if(type==="password"||!showPasswords){
-    return  setShowPasswords('text')
+    console.log(showPasswords,'showPasswords')
+    if(textFormat==="password"){
+      setShowPasswords('text')
   }
-  return  setShowPasswords('password')
+  return textFormat==="text" && setShowPasswords('password');
+  
 }
+
+
   return (
     
     <>
@@ -18,7 +23,7 @@ export function FloatingLabelInput({ label, type }) {
           <div
           onClick={handleSwitchPassword}
           className="absolute right-[17px] text-[13px] font500 cursor-pointer underline text- z-50 top-0 bottom-0 text-white flex justify-center items-center">
-            Show
+           {textFormat==="text"?'Hide':'Show'} 
           </div>
         )}
         <div>

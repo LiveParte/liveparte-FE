@@ -12,19 +12,30 @@ export default function Home() {
   let [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
-    setIsOpen(false);
+    setIsOpen();
   }
 
-  function openModal() {
-    setIsOpen(true);
+  function openModal(pageName) {
+    setIsOpen(pageName);
   }
+
+  const modalPage =[
+    {
+      name:'Login',
+      component:<LoginSignUp className={`min-h-[75vh] tallT:min-h-[65vh]`} closeModal={closeModal} />
+    },
+    {
+      name:'SignUp',
+      component:<LoginSignUp className={`xl:min-h-[75vh] tallT:min-h-[65vh]`} pageName="signUp" closeModal={closeModal} />
+    },
+  ]
 
   return (
     <NoAuth>
       <MyModal
-        bodyComponent={<LoginSignUp closeModal={closeModal} />}
-        containerStyle={`bg-[#1B1C20] border-[1px] border-[#343F4B] rounded-[16px]  !w-[586px]`}
-        isOpen={isOpen}
+        bodyComponent={modalPage?.find((item)=>item?.name===isOpen)?.component}
+        containerStyle={`!bg-[#1B1C20]  border-[1px] border-[#343F4B] rounded-[16px]  !w-[586px] min-h-[75vh] tallT:min-h-[65vh]`}
+        isOpen={isOpen?true:false}
         closeModal={closeModal}
         openModal={openModal}
       />

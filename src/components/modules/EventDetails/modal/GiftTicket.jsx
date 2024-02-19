@@ -5,9 +5,12 @@ import { FloatingLabelInput } from "@/components/Ui/TextInput";
 import { FloatingLabelTextArea } from "@/components/Ui/TextArea";
 import { CountdownTimerII } from "@/utils/reusableComponent";
 import { useRouter } from "next/router";
+import { CloseII } from "../../../../../public/svg";
 
 
-export default function GiftTicket() {
+export default function GiftTicket({
+  closeModal
+}) {
   const router = useRouter();
   const handleAction = () =>{
     router.push('/event_time_out')
@@ -16,7 +19,9 @@ export default function GiftTicket() {
     <div className="bg-[#1B1C20] pb-[56px] px-[16px] lg:px-[56px] pt-[16px] lg:pt-[24px]">
       <nav className="flex justify-between items-center mb-[32px]">
         <div className="text-[18px]  text-white">Gift Ticket</div>
-        <div className="text-[#63768D] text-[18px]"><CountdownTimerII initialTime={5} onTimerEnd={handleAction}/></div>
+        <div className="text-[#63768D] text-[18px] flex items-center gap-[12px]"><CountdownTimerII initialTime={5} onTimerEnd={handleAction}/>
+        <span className="cursor-pointer" onClick={closeModal&&closeModal}> <CloseII /></span>
+        </div>
       </nav>
 
       <main>

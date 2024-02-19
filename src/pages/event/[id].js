@@ -13,9 +13,7 @@ export default function EventId () {
   let [isOpen, setIsOpen] = useState();
   const [selectedDate, setSelectedDate] = useState(new Date());
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
-  };
+  
 
   function closeModal() {
     setIsOpen(null);

@@ -10,17 +10,17 @@
 
 @font-face {
   font-family: 'CustomFont';
-  src: url('../../fonts/Matter/WEB/Matter-Light.woff')format('woff');
+  src: url('/fonts/Matter/WEB/Matter-Light.woff')format('woff');
 }
 
 @font-face {
   font-family: 'CustomFontBold';
-  src: url('../../fonts/Matter/WEB/Matter-SemiBold.woff')format('woff');
+  src: url('/fonts/Matter/WEB/Matter-SemiBold.woff')format('woff');
 }
 
 @font-face {
   font-family: 'CustomFontMedium';
-  src: url('../../fonts/Matter/WEB/Matter-Medium.woff')format('woff');
+  src: url('/fonts/Matter/WEB/Matter-Medium.woff')format('woff');
 }
 
 .font400{
@@ -123,7 +123,7 @@ body{
 @media (max-width: 480px) {
   .swiper-slide {
     margin-right: 16px !important; /* Further adjust spacing for even smaller screens */
-    width: 175px !important;
+    width: 160px !important;
   }
 }
 
@@ -137,7 +137,7 @@ body{
 @media (max-width: 360px) {
   .swiper-slide {
     margin-right: 16px !important; /* Further adjust spacing for even smaller screens */
-    width: 150px !important;
+    width: 138px !important;
   }
 }
 

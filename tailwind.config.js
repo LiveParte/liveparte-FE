@@ -15,8 +15,17 @@ module.exports = {
    
         'show1': "url('./webp/show.png')",
     
+      },
+      screens: {
+        'tall': { 'raw': '(max-height: 600px)' },
+        'tallM': { 'raw': '(max-height: 650px)' },
+        'tallI': { 'raw': '(max-height: 720px)' },
+        'tallT': { 'raw': '(max-width: 1100px)' },
+        //1100
+        // => @media (min-height: 800px) { ... }
       }
     },
+   
   },
   plugins: [
     require('flowbite/plugin'),

@@ -2,6 +2,7 @@ import ButtonComp from "@/components/Ui/button";
 import {  CountdownTimerII } from "@/utils/reusableComponent";
 import { useRouter } from "next/router";
 import React from "react";
+import { CloseII } from "../../../../../public/svg";
 
 export default function CheckOut({
   closeModal
@@ -16,7 +17,9 @@ export default function CheckOut({
     <div className="bg-[#1B1C20] pb-[56px] px-[16px] lg:px-[56px] pt-[16px] lg:pt-[24px]">
       <nav className="flex justify-between items-center mb-[32px]">
         <div className="text-[18px]  text-white">Checkout</div>
-        <div className="text-[#63768D] text-[18px]" ><CountdownTimerII initialTime={5} onTimerEnd={handleAction}/></div>
+        <div className="text-[#63768D] text-[18px] flex gap-[20px]" ><CountdownTimerII initialTime={5} onTimerEnd={handleAction}/> 
+        <span className="cursor-pointer" onClick={closeModal}> <CloseII /></span>
+       </div>
       </nav>
 
       <main>

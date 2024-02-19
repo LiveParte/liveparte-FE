@@ -5,8 +5,13 @@ import { useRouter } from "next/router";
 import Link from 'next/link'
 export default function Header({ className, openModal }) {
   const router = useRouter();
-  const MainContainer = `px-[20px] lg:px-[60px] lg:px-[120px] relative`;
+  const isHome =router?.pathname==="/"
+  const MainContainer = `px-[20px] md:px-[40px] lg:px-[120px] relative`;
   const [dropDown, setDropDown] = useState(false);
+
+  const handleCheckIfITHome = () =>{
+    isHome&&setDropDown(false)
+  }
 
   const MenuDropdown = () => {
     return (
@@ -30,13 +35,13 @@ export default function Header({ className, openModal }) {
             />
           </div>
         </div>
-        <div className="text-[15px] text-white font500 flex-1 ">
-          <Link href={'/'} className="py-[12px]  cursor-pointer no-underline text-white">Browse events</Link>
-          <div className="py-[12px]  cursor-pointer">On demand</div>
+        <div className="text-[15px] text-white font500 flex-1 flex flex-col">
+          <Link onClick={handleCheckIfITHome} href={'/'} className="py-[12px]  cursor-pointer no-underline text-white">Browse events</Link>
+          <Link onClick={handleCheckIfITHome} href={'/'} className="py-[12px]  cursor-pointer no-underline text-white">On demand</Link>
         </div>
 
         <ButtonComp
-          onClick={openModal}
+          onClick={()=>openModal('SignUp')}
           btnText={`Log In/Sign Up`}
           className={`text-[13px] font500 mb-[32px] `}
         />
@@ -59,6 +64,15 @@ export default function Header({ className, openModal }) {
             width={148}
             height={23}
             alt="Picture of the author"
+            className="hidden md:block"
+          />
+           <Image
+            onClick={() => router.push("/")}
+            src="/svg/logo.svg"
+            width={87}
+            height={16}
+            alt="Picture of the author"
+            className="md:hidden"
           />
 
           <div className="flex items-center gap-[24px]">
@@ -72,11 +86,18 @@ export default function Header({ className, openModal }) {
             />
           </div>
           <div>
+            <div className="hidden lg:flex  gap-x-[40px] items-center">
             <ButtonComp
-              onClick={openModal}
-              btnText="Log In / Sign Up"
-              className="text-[13px] font-medium hidden lg:block font500"
+                 onClick={()=>openModal('Login')}
+              btnText="Log In"
+              className="text-[13px] font-medium font500 bg-transparent px-0 text-white font500"
             />
+            <ButtonComp
+                onClick={()=>openModal('SignUp')}
+              btnText="Sign Up"
+              className="text-[13px] font-medium font500 px-[40px] py-[12px]"
+            />
+            </div>
             <ButtonComp
               onClick={() => setDropDown(true)}
               btnText="Menu"

@@ -30,7 +30,9 @@ export default function Setting() {
         containerStyle={`!mb-[40px]`}
       />
       {/* <Form/> */}
-      <div className={`${isActive==="Profile"?'mb-[150px]':'mb-[200px]'}`}>
+      <div 
+      className={`${isActive==="Profile"?'mb-[150px]':'mb-[150px]'}`}
+      >
       <SettingForm  isActive={isActive}/>
       </div>
       <div className="absolute left-0 right-0 bottom-0">

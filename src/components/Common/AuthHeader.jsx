@@ -12,7 +12,7 @@ import CustomDropDown from "./CustomDropDown";
 
 export default function AuthHeader({ className, openModal, showNav = false }) {
   const router = useRouter();
-  const MainContainer = `px-[20px] lg:px-[60px] lg:px-[120px] relative`;
+  const MainContainer = `px-[20px] md:px-[40px] lg:px-[120px] relative`;
   const [dropDown, setDropDown] = useState(false);
   const [modalName, setModalName] = useState();
   const [isOpen, setIsOpen] = useState(false);
@@ -74,12 +74,21 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           <div>
             {" "}
             <Image
-              onClick={() => router.push("/")}
-              src="/svg/Kommerce logo.svg"
-              width={148}
-              height={23}
-              alt="Picture of the author"
-            />
+            onClick={() => router.push("/")}
+            src="/svg/logo.svg"
+            width={148}
+            height={23}
+            alt="Picture of the author"
+            className="hidden md:block"
+          />
+           <Image
+            onClick={() => router.push("/")}
+            src="/svg/logo.svg"
+            width={87}
+            height={16}
+            alt="Picture of the author"
+            className="md:hidden"
+          />
           </div>
           <div>
             <ButtonComp
@@ -97,15 +106,15 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           >
             Browse events
           </Link>
-          <div className="py-[12px]  cursor-pointer mb-2">On demand</div>
+          <div className="py-[12px]  cursor-pointer ">On demand</div>
           <Link
             href={"/my_shows"}
-            className="py-[12px]  cursor-pointer no-underline text-white"
+            className="py-[12px]  cursor-pointer no-underline text-white mb-2"
           >
             My Show
           </Link>
-          <div className="flex justify-between items-center">
-            <div className="text-[13px] flex items-center gap-[5px] py-[12px] ">
+          <div className="flex justify-between items-center py-[15px]">
+            <div className="text-[13px] flex items-center gap-[5px] ">
               <Image src={`/svg/coin1.svg`} width={24} height={24} /> 100 Coins
             </div>
             <ButtonComp
@@ -117,7 +126,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
         </div>
 
         <div>
-          <div className="text-[15px] text-white font500 flex-1 ">
+          <div className="text-[15px] text-white font500 flex-1  mb-[16px]">
             <Link
               href="/setting"
               className="py-[12px]  cursor-pointer text-white no-underline"
@@ -135,7 +144,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           <ButtonComp
             onClick={() => setModalName(`Login/Signup`)}
             btnText={`Login`}
-            className={`text-[13px] font500 mb-[32px]  w-full !bg-[#27292e] text-white`}
+            className={`text-[13px] font500 mb-[28px]  w-full !bg-[#27292e] text-white`}
           />
           <div></div>
         </div>
@@ -186,17 +195,26 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
       {dropDown && <MenuDropdown />}
 
       <div
-        className={`py-[14px] lg:py-[32px] mb-[50px] lg:mb-[75px]  font400 ${MainContainer} ${className} `}
+        className={`py-[14px] lg:py-[32px] mb-[40px] lg:mb-[75px]  font400 ${MainContainer} ${className} `}
       >
         <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover  bg-[url('/webp/header.png')] z-30"></div>
         {/* <LogoWhite/> */}
         <div className="flex items-center justify-between z-50 relative cursor-pointer">
-          <Image
+        <Image
             onClick={() => router.push("/")}
             src="/svg/logo.svg"
             width={148}
             height={23}
             alt="Picture of the author"
+            className="hidden md:block"
+          />
+           <Image
+            onClick={() => router.push("/")}
+            src="/svg/logo.svg"
+            width={87}
+            height={16}
+            alt="Picture of the author"
+            className="md:hidden"
           />
 
           {showNav && (

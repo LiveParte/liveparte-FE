@@ -47,18 +47,12 @@ export default function Hero({ notEvent = true,router,openModal,openModalLoginSi
         <div className="relative">
           <div className="  h-[100vh] relative flex flex-col justify-end  ">
             <div className="h-[20vh]" />
-             {/* dots Modal */}
-             {/* <div className="absolute bg-[#1B1C20] border-[1px] border-[#343F4B] text-[14px] text-white bottom-[12vh] lg:bottom-[17vh] md:w-[450px] rounded-[16px] z-[90]  left-[0] right-0 text-left  px-[40px] py-[24px]">
-                    <div className="py-[12px]">Gift a ticket</div>
-                    <div className="py-[12px]">Share Event</div>
-                    <div className="py-[12px]">Add to Calendar</div>
-                  </div> */}
-                  {/*  */}
+            
             <div
               className={`relative z-40  flex flex-col  md:justify-start items-center md:items-start  text-center  md:text-start`}
             >
               <Daviod />
-              <div className="mt-[16px] text-[45px] lg:text-[92px]  font-1 text-white font-bold uppercase mb-[32px] leading-[46px] lg:leading-[90px]">
+              <div className="mt-[16px] text-[45px] lg:text-[92px]  font-1 text-white font-bold uppercase lg:mb-[32px] leading-[46px] lg:leading-[90px]">
                 Timeless tour - Newyork 
               </div>
               {/*  */}
@@ -74,7 +68,7 @@ export default function Hero({ notEvent = true,router,openModal,openModalLoginSi
                       April 17, 2024 - Watch live
                     </div>
                   </div>
-                  <div className="text-center mt-[40px] lg:hidden mb-[42px] font500">
+                  <div className="text-center mt-[20px] lg:mt-[40px] lg:hidden mb-[42px] font500">
                     <div className="text-[#B4BECB] text-[13px] md:text-[15px] z-10 relative mb-[24px] font500">
                       April 17, 2024 - Watch live
                     </div>

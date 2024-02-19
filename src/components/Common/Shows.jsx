@@ -16,7 +16,7 @@ export default function ShowsCard({
   // console.log(showImage,'showImage')
   return (
     <div
-      className={`relative h-[40vh] md:h-[40vh] lg:h-[55vh] rounded-[8px] lg:rounded-[20px] ${backUrl} bg-cover bg-center1`}
+      className={`relative h-[35vh] md:h-[40vh] lg:h-[55vh] rounded-[8px] lg:rounded-[20px] ${backUrl} bg-cover bg-center1`}
     >
       <div className="h-full">
         <div className=" flex flex-col h-full">

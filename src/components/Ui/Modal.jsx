@@ -27,7 +27,7 @@ export default function MyModal({
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full bg-[#0000001c] backdrop-blur-[10px] items-center justify-center p-4 text-center">
+            <div className="flex min-h-full bg-[#0000001c] backdrop-blur-[10px] items-center justify-center p-4 text-center h-full">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"

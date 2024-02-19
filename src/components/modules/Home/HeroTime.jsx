@@ -14,7 +14,7 @@ export default function HeroTime({ notEvent = true,router,onClick }) {
         <div className="relative z-40 h-full">
           <div className=" relative flex flex-col justify-center items-center h-full">
             {/* <div className="h-[20vh]" /> */}
-            <div className="text-[92px] font-1 font-bold text-white uppercase mb-[16px] leading-none">Time’s up</div>
+            <div className="text-[92px] font-1 font-bold text-white uppercase mb-[16px] leading-none text-center">Time’s up</div>
             <div className="text-[#B4BECB] text-[13px] mb-[48px]">Go back to the event details and try again</div>
             <ButtonComp
             onClick={onClick}
