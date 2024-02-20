@@ -6,7 +6,7 @@ import React from 'react'
 export default function index() {
   return (
    <>
-    <div className='bg-[#060809] min-h-[100vh]'>
+    <div className='bg-[#060809] h-[100vh] overflow-hidden'>
         {/* <div className='hidden lg:block'>
         <AuthHeader className={`!mb-[32px]`}/>
         </div> */}

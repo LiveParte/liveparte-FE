@@ -10,7 +10,7 @@ export default function PurchasePaartyCoins({
 }) {
   return (
     <div className={`px-[34px] pt-[16px] bg-[#060809] w-full  ${containerStyle}`}>
-      <LiveStreamHeader path={path} title={`Purchase Paarty Coins`} onClose={onClose} onBack={onBack} />
+      <LiveStreamHeader path={path} title={`Purchase Parte Coins`} onClose={onClose} onBack={onBack} />
       <div className=" relative flex overflow-hidden  h-[35px] mb-[16px] rounded-[8px] px-[12px] border-[#343F4B] border-[1px]">
         <input className="flex-1 bg-transparent border-none outline-none mr-20  text-white outline-none" 
         // type="number"

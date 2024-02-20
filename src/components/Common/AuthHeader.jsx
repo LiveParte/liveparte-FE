@@ -195,7 +195,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
       {dropDown && <MenuDropdown />}
 
       <div
-        className={`py-[14px] lg:py-[32px] mb-[40px] lg:mb-[75px]  font400 ${MainContainer} ${className} `}
+        className={`py-[14px] lg:py-[32px] mb-[34px] lg:mb-[75px]  font400 ${MainContainer} ${className} `}
       >
         <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover  bg-[url('/webp/header.png')] z-30"></div>
         {/* <LogoWhite/> */}

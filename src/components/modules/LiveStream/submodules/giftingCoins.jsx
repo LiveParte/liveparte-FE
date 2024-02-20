@@ -9,7 +9,7 @@ export default function GiftingCoins({
 }) {
   return (
     <div className="px-[34px] py-[16px] bg-[#060809] w-full">
-      <LiveStreamHeader title={`Gift Paarty Coins`} onClose={onClose} />
+      <LiveStreamHeader title={`Gift Parte Coins`} onClose={onClose} />
 
       <div className="border-[#343F4B] border-[1px] bg-[#27292E]  flex items-center px-[12px] rounded-[8px] py-[7px] gap-[12px] mb-[16px] !h-[35px]">
         <Image src={`/svg/coins.svg`} width={16} height={16} />
@@ -25,7 +25,7 @@ export default function GiftingCoins({
       </div>
 
       <div className="text-center text-[#00A699] text-[13px] underline mb-[10px] cursor-pointer" onClick={onNext}>
-        Purchase Paarty Coins
+        Purchase Parte Coins
       </div>
     </div>
   );

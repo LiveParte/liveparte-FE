@@ -8,9 +8,9 @@ export default function Footer() {
         <div className="flex items-center gap-[9px] md:gap-[23px]">
           <div>Terms</div>
           <div>Privacy</div>
-          <div className="hidden md:block">Customer Service</div>
+          <div className="hidden md:block">Contact Us</div>
         </div>
-        <div>© 2024, Liveparte Inc.</div>
+        <div>© 2024, Liveparte</div>
       </div>
     </div>
   );
