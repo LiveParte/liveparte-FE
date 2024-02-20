@@ -10,7 +10,7 @@ export default function Footer() {
           <div>Privacy</div>
           <div className="hidden md:block">Customer Service</div>
         </div>
-        <div>© 2024, liveparty Inc.</div>
+        <div>© 2024, Liveparte Inc.</div>
       </div>
     </div>
   );

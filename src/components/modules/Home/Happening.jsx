@@ -70,7 +70,7 @@ export default function Happening() {
       </div>
     </div>
 
-    <div className={`bg-[#060809]  py-[30px] pb-[25px] lg:pb-[320px]`}>
+    <div className={`bg-[#060809]  py-[30px] pb-[25px] lg:pb-[150px]`}>
       <div
         className={`text-[20px] font500 text-white ${MainContainer} mb-[40px]`}
       >

@@ -43,7 +43,7 @@ export default function CheckOut({
 
         <ButtonComp
           btnText={`Proceed To Make Payment ₦48,000 `}
-          className={`w-full text-[13px] font500] h-[44px] hover:scale-105`}
+          className={`w-full text-[13px] font500] h-[44px] `}
         />
       </main>
     </div>

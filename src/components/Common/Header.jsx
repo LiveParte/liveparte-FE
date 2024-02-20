@@ -8,6 +8,7 @@ export default function Header({ className, openModal }) {
   const isHome =router?.pathname==="/"
   const MainContainer = `px-[20px] md:px-[40px] lg:px-[120px] relative`;
   const [dropDown, setDropDown] = useState(false);
+  const isFocused =` hover:!bg-[#BAD6F70F] hover:rounded-[999px] hover:border-[#262C32] hover:border-[1px] hover:font500  hover:backdrop-blur-[60px]`
 
   const handleCheckIfITHome = () =>{
     isHome&&setDropDown(false)
@@ -72,17 +73,17 @@ export default function Header({ className, openModal }) {
             width={87}
             height={16}
             alt="Picture of the author"
-            className="md:hidden"
+            className="md:hidden "
           />
 
           <div className="flex items-center gap-[24px]">
             <ButtonComp
               btnText="Browse event"
-              className="text-[15px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-[#BAD6F70F] rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px]"
+              className={`text-[15px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-[#BAD6F70F]  rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px]  focus:${isFocused}`}
             />
             <ButtonComp
               btnText="On demand"
-              className="text-[15px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white backdrop-blur-[60px]"
+              className={`text-[15px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white ${isFocused} `}
             />
           </div>
           <div>
