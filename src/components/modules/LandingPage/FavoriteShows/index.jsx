@@ -6,7 +6,7 @@ export default function FavoriteShow() {
   return (
     <div className="pt-[56px] bg-[#060809]  pb-[80px] lg:pb-[112px]">
       <div className="px-[30px] lg:px-[96px] flex justify-between items-center mb-[40px] md:mb-[80px] lg:mb-[119px]">
-        <div className="hidden lg:block">
+        <div style={{visibility:'hidden'}} className="hidden lg:block">
           <BannerIcon />
         </div>
         <div className="font-1 text-[28px] md:text-[35px] lg:text-[45px] font-bold uppercase text-white text-center md:leading-[56px]">
@@ -30,7 +30,7 @@ export default function FavoriteShow() {
             classNameMain={`flex justify-center`}
           />
         </div>
-        <div className="hidden lg:block">
+        <div className="hidden lg:block" style={{visibility:'hidden'}}>
           <BannerIcon2 />
         </div>
       </div>

@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import Link from 'next/link'
+import Link from "next/link";
 import ButtonComp from "@/components/Ui/button";
 export default function Header({ className, openModal }) {
   const router = useRouter();
-  const isHome =router?.pathname==="/"
+  const isHome = router?.pathname === "/";
   const MainContainer = `px-[20px] md:px-[40px] lg:px-[120px] relative`;
   const [dropDown, setDropDown] = useState(false);
-  const isFocused =` hover:!bg-[#BAD6F70F] hover:rounded-[999px] hover:border-[#262C32] hover:border-[1px] hover:font500  hover:backdrop-blur-[60px]`
+  const isFocused = ` hover:!bg-[#BAD6F70F] hover:rounded-[999px] hover:border-[#262C32] hover:border-[1px] hover:font500  hover:backdrop-blur-[60px]`;
 
-  const handleCheckIfITHome = () =>{
-    isHome&&setDropDown(false)
-  }
+  const handleCheckIfITHome = () => {
+    isHome && setDropDown(false);
+  };
 
   const MenuDropdown = () => {
     return (
@@ -37,12 +37,24 @@ export default function Header({ className, openModal }) {
           </div>
         </div>
         <div className="text-[15px] text-white font500 flex-1 flex flex-col">
-          <Link onClick={handleCheckIfITHome} href={'/'} className="py-[12px]  cursor-pointer no-underline text-white">Browse events</Link>
-          <Link onClick={handleCheckIfITHome} href={'/'} className="py-[12px]  cursor-pointer no-underline text-white">On demand</Link>
+          <Link
+            onClick={handleCheckIfITHome}
+            href={"/"}
+            className="py-[12px]  cursor-pointer no-underline text-white"
+          >
+            Browse events
+          </Link>
+          <Link
+            onClick={handleCheckIfITHome}
+            href={"/"}
+            className="py-[12px]  cursor-pointer no-underline text-white"
+          >
+            On demand
+          </Link>
         </div>
 
         <ButtonComp
-          onClick={()=>openModal('SignUp')}
+          onClick={() => openModal("SignUp")}
           btnText={`Log In/Sign Up`}
           className={`text-[13px] font500 mb-[32px] `}
         />
@@ -50,7 +62,7 @@ export default function Header({ className, openModal }) {
     );
   };
 
-   // bg-[url('/webp/header.png')] 
+  // bg-[url('/webp/header.png')]
   return (
     <>
       {dropDown && <MenuDropdown />}
@@ -58,10 +70,12 @@ export default function Header({ className, openModal }) {
       <div
         className={`pt-[14px]  lg:pt-[28px] pb-[29px]  font400 ${className} ${MainContainer}`}
       >
-        <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover  
+        <div
+          className="absolute left-0 right-0 top-0 bottom-0 bg-cover  
        
         bg-[#06080933]
-        z-30"></div>
+        z-30  backdrop-blur-[50px]"
+        ></div>
         {/* <LogoWhite/> */}
         <div className="flex justify-between z-50 relative cursor-pointer">
           <Image
@@ -72,7 +86,7 @@ export default function Header({ className, openModal }) {
             alt="Picture of the author"
             className="hidden md:block"
           />
-           <Image
+          <Image
             onClick={() => router.push("/")}
             src="/svg/logo.svg"
             width={87}
@@ -93,16 +107,16 @@ export default function Header({ className, openModal }) {
           </div>
           <div>
             <div className="hidden lg:flex  gap-x-[40px] items-center">
-            <ButtonComp
-                 onClick={()=>openModal('Login')}
-              btnText="Log In"
-              className="text-[13px] font-medium font500 bg-transparent px-0 text-white font500"
-            />
-            <ButtonComp
-                onClick={()=>openModal('SignUp')}
-              btnText="Sign Up"
-              className="text-[13px] font-medium font500 px-[40px] py-[12px]"
-            />
+              <ButtonComp
+                onClick={() => openModal("Login")}
+                btnText="Log In"
+                className="text-[13px] font-medium font500 bg-transparent px-0 text-white font500"
+              />
+              <ButtonComp
+                onClick={() => openModal("SignUp")}
+                btnText="Sign Up"
+                className="text-[13px] font-medium font500 px-[40px] py-[12px]"
+              />
             </div>
             <ButtonComp
               onClick={() => setDropDown(true)}

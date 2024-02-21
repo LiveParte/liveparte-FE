@@ -3,10 +3,29 @@ import { Daviod } from "../../../../public/svg";
 import { MainContainer } from "@/utils/styleReuse";
 import ButtonComp from "@/components/Ui/button";
 import Header from "./submodules/Header";
+import { motion, AnimatePresence } from "framer-motion"
 
 export default function Hero({ notEvent = true,router,openModal,openModalLoginSignUp,giftTicket }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+
+  //
+  const [textChange, setTextChange] = useState("Event");
+  const words = ["Concerts", "Groove", "Parte","Event"]; // Array of words to cycle through
+  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Increment currentWordIndex to rotate through the words
+      setCurrentWordIndex((prevIndex) => (prevIndex + 1) % words.length);
+      // Fade out the text and then update it after a delay
+      setTimeout(() => {
+        setTextChange(words[currentWordIndex]);
+      }, 1000); // Adjust the delay time as needed
+    }, 2000); // Change word every 5 seconds
+
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, [currentWordIndex, words]);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -37,6 +56,7 @@ export default function Hero({ notEvent = true,router,openModal,openModalLoginSi
     
   
   return (
+    <AnimatePresence>
     <div
       className={`relative font400  bg-[url('/webp/1.png')]  bg-cover  xl:bg-left ${MainContainer} `}
     >
@@ -50,9 +70,22 @@ export default function Hero({ notEvent = true,router,openModal,openModalLoginSi
             
             <div
               className={`relative z-40  flex flex-col  md:justify-start items-center md:items-start  text-center  md:text-start`}
+            
             >
             <div className="">
-            <div className="font-1 text-[50px] md:text-[80px] lg:text-[112px] font-bold text-white uppercase mb-[8px] lg:mb-[16px] text-start leading-none md:leading-[110px] md:flex lg:gap-3 items-center">Never miss the <div className="text-[#FFC41B]">events</div></div>
+            <div className="font-1 text-[50px] md:text-[70px] lg:text-[112px] font-bold text-white uppercase mb-[8px] lg:mb-[16px] text-start leading-none md:leading-[110px] flex gap-x-4 lg:gap-6 items-center">Never miss the <div className="text-[#FFC41B]">
+            <motion.div 
+              key={textChange}
+          className="text-[#FFC41B]" 
+          initial={{ opacity: 0, y: 200 }} // Initial position and opacity
+          animate={{ opacity: 1, y: 0 }} // Animation to fade in and move up
+          exit={{ opacity: 0,y:-100 }} // Animation to fade out
+          transition={{ duration: 0.5 }} // Duration of the animation
+          onPause={true}
+        >
+          {textChange}
+        </motion.div>
+              </div></div>
              <div className="text-white lg:w-[37vw] mb-[40px] text-start md:text-[20px] font400">
              Get direct access to live and on-demand concert, performances by your award-winning artistes and comedians anywhere in the world from the comfort of your devices
              </div>
@@ -70,5 +103,6 @@ export default function Hero({ notEvent = true,router,openModal,openModalLoginSi
       </div>
       <div className=" absolute bottom-0 left-0 right-0 h-[50vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-t from-black"></div>
     </div>
+    </AnimatePresence>
   );
 }
