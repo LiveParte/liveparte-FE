@@ -14,11 +14,11 @@ export default function Features() {
             <div className="mb-[20px] md:mb-[40px]">
               {item?.icon}
             </div>
-            <div className="font-1 text-[20px] md:text-[24px] font-bold md:mb-[16px]">
-              {item?.name}
+            <div className="font-1 text-[20px] md:text-[24px] font-bold md:mb-[16px]" >
+            
             </div>
-            <div className="md:text-[20px] leading-normal md:leading-[28px] text-center  font400">
-              {item?.dec}
+            <div className="md:text-[20px] leading-normal md:leading-[28px] text-center  font400" dangerouslySetInnerHTML={{__html:item?.dec}}>
+              {/* {item?.dec} */}
             </div>
           </div>
         ))}

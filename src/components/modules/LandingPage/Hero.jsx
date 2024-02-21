@@ -65,15 +65,15 @@ export default function Hero({ notEvent = true,router,openModal,openModalLoginSi
        <Header openModal={openModalLoginSignUp||openModal}  className="absolute top-0 left-0 right-0" />
        </div>
         <div className="relative">
-          <div className="  h-[100vh] relative flex flex-col justify-end  ">
-            <div className="h-[20vh]" />
+          <div className="  h-[100vh] relative flex flex-col justify-start md:justify-end  ">
+            <div className="h-[30vh] md:h-[20vh]" />
             
             <div
               className={`relative z-40  flex flex-col  md:justify-start items-center md:items-start  text-center  md:text-start`}
             
             >
             <div className="">
-            <div className="font-1 text-[50px] md:text-[70px] lg:text-[112px] font-bold text-white uppercase mb-[8px] lg:mb-[16px] text-start leading-none md:leading-[110px] flex gap-x-4 lg:gap-6 items-center">Never miss the <div className="text-[#FFC41B]">
+            <div className="font-1 text-[50px] md:text-[70px] lg:text-[112px] font-bold text-white uppercase mb-[20px] md:mb-[8px] lg:mb-[16px] text-start leading-none md:leading-[110px] md:flex gap-x-4 lg:gap-6 items-center">Never miss the <div className="text-[#FFC41B]">
             <motion.div 
               key={textChange}
           className="text-[#FFC41B]" 
