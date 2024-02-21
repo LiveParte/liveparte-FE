@@ -10,7 +10,7 @@ export default function FAQ() {
       <div className="grid grid-cols-1 gap-4  md:grid-cols-2 md:gap-6 xl:grid-cols-3 xl:gap-x-[178px] text-white">
         {FAQData?.map((item, i) => (
           <div
-            className={`flex flex-col justify-center `}
+            className={`flex flex-col justify-start `}
             key={i}
           >
             <div className="font-1 text-[20px] md:text-[27px] font-bold mb-[10px] md:mb-[33px]">

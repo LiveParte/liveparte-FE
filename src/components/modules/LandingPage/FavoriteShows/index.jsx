@@ -18,7 +18,7 @@ export default function FavoriteShow() {
         </div>
       </div>
 
-      <div className="flex justify-center gap-[51px] items-center">
+      <div className="flex justify-center gap-[51px] items-center px-[30px] lg:px-[104px] ">
         <div className="w-[166px] hidden lg:block">
           <BannerIcon2 />
         </div>
