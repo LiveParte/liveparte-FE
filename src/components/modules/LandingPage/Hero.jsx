@@ -65,7 +65,7 @@ export default function Hero({ notEvent = true,router,openModal,openModalLoginSi
        <Header openModal={openModalLoginSignUp||openModal}  className="absolute top-0 left-0 right-0" />
        </div>
         <div className="relative">
-          <div className="  h-[100vh] relative flex flex-col justify-start md:justify-end  ">
+          <div className="  h-[100vh] relative flex flex-col justify-end md:justify-end  ">
             <div className="h-[30vh] md:h-[20vh]" />
             
             <div

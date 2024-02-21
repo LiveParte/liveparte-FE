@@ -31,7 +31,7 @@ export const FeatureData = [
 
 export const FAQData =[
   {
-    name:`How long will livestreams <br/> last?`,
+    name:`How long will livestreams <br class='hidden md:block'/> last?`,
     desc:`Livestreams are real live events and<br/>  the length of the event is entirely<br/>  up to the artist and venues.`
 
   },
