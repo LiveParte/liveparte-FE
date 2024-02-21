@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import ButtonComp from "../Ui/button";
 import { useRouter } from "next/router";
 import Link from 'next/link'
+import ButtonComp from "@/components/Ui/button";
 export default function Header({ className, openModal }) {
   const router = useRouter();
   const isHome =router?.pathname==="/"

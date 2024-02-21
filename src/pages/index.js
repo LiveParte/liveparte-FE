@@ -1,11 +1,15 @@
 import NoAuth from "@/components/Layout/NoAuth";
-import Hero from "@/components/modules/Home/Hero";
-import Happening from "@/components/modules/Home/Happening";
+import Happening from "@/components/modules/Event/Happening";
 import Footer from "@/components/Common/Footer";
 import { useRouter } from "next/router";
 import MyModal from "@/components/Ui/Modal";
 import { useState } from "react";
-import LoginSignUp from "@/components/modules/Home/Modal/Login&SignUp";
+import LoginSignUp from "@/components/modules/Event/Modal/Login&SignUp";
+import Hero from "@/components/modules/LandingPage/Hero";
+import FavoriteShow from "@/components/modules/LandingPage/FavoriteShows";
+import Features from "@/components/modules/LandingPage/Features";
+import ArtistList from "@/components/modules/LandingPage/Artist";
+import FAQ from "@/components/modules/LandingPage/FAQ";
 
 export default function Home() {
   const router = useRouter();
@@ -40,7 +44,10 @@ export default function Home() {
         openModal={openModal}
       />
       <Hero openModal={openModal} router={router} notEvent={true} />
-      <Happening />
+      <FavoriteShow/>
+      <Features/>
+      <ArtistList/>
+      <FAQ/>
       <Footer />
     </NoAuth>
   );

@@ -1,7 +1,7 @@
 import Carousel from "@/components/Common/Carousel";
 import ShowsCard from "@/components/Common/Shows";
 import React from "react";
-import { dummyShowDataII } from "../Home/Data";
+import { dummyShowDataII } from "../Event/Data";
 import ButtonComp from "@/components/Ui/button";
 
 export default function Shows() {

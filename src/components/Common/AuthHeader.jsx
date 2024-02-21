@@ -3,11 +3,11 @@ import Image from "next/image";
 import ButtonComp from "../Ui/button";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import Login from "../modules/Home/Modal/submodules/Login";
+import Login from "../modules/Event/Modal/submodules/Login";
 import GiftTicket from "../modules/EventDetails/modal/GiftTicket";
 import PurchasePaartyCoins from "../modules/LiveStream/submodules/PurchasePaartyCoins";
 import MyModal from "../Ui/Modal";
-import LoginSignUp from "../modules/Home/Modal/Login&SignUp";
+import LoginSignUp from "../modules/Event/Modal/Login&SignUp";
 import CustomDropDown from "./CustomDropDown";
 
 export default function AuthHeader({ className, openModal, showNav = false }) {

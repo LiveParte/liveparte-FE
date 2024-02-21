@@ -1,6 +1,6 @@
 import Footer from '@/components/Common/Footer'
-import Hero from '@/components/modules/Home/Hero'
-import HeroTime from '@/components/modules/Home/HeroTime'
+import Hero from '@/components/modules/Event/Hero'
+import HeroTime from '@/components/modules/Event/HeroTime'
 import { useRouter } from 'next/router';
 import React from 'react'
 
