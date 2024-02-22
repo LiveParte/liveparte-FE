@@ -1,5 +1,5 @@
 stages:
-  - feat/docker
+  - deploy
 
 deploy_to_ec2:
   stage: deploy
@@ -17,4 +17,4 @@ deploy_to_ec2:
     # SSH into the EC2 instance and run the script
     - ssh -i ec2_private_key.pem ec2-user@your-ec2-instance-ip 'bash -s' < path/to/your/script.sh
   only:
-    - master  # Run this job only when changes are pushed to the master branch
+    - feat/docker  # Run this job only when changes are pushed to the master branch
