@@ -5,6 +5,7 @@ deploy_to_ec2:
   stage: deploy
   script:    
    # Store private key in a temporary file
+    - mkdir -p ~/.ssh
     - echo "$EC2_PRIVATE_KEY" > ec2_private_key.pem
     - chmod 600 ec2_private_key.pem
     - ssh-keyscan -t ed25519 44.208.167.228 >> ~/.ssh/known_hosts
