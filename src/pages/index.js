@@ -48,7 +48,9 @@ export default function Home() {
       <Features/>
       <ArtistList/>
       <FAQ/>
-      <Footer />
+     <div className="mb-[70px] md:mb-0">
+     <Footer />
+     </div>
     </NoAuth>
   );
 }

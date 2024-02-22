@@ -39,7 +39,7 @@ export default function Header({ className, openModal }) {
         <div className="text-[15px] text-white font500 flex-1 flex flex-col">
           <Link
             onClick={handleCheckIfITHome}
-            href={"/"}
+            href={"/event"}
             className="py-[12px]  cursor-pointer no-underline text-white"
           >
             Browse events
@@ -99,10 +99,12 @@ export default function Header({ className, openModal }) {
             <ButtonComp
               btnText="Browse event"
               className={`text-[15px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-[#BAD6F70F]  rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px]  focus:${isFocused}`}
+              onClick={()=>router.push("/event")}
             />
             <ButtonComp
               btnText="On demand"
               className={`text-[15px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white ${isFocused} `}
+              onClick={()=>router.push("/event")}
             />
           </div>
           <div>

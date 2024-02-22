@@ -7,21 +7,21 @@ import {
 export const FeatureData = [
   {
     name: "Stream Live, on the go",
-    dec: `Access live concert event on <br/>
-     your device at any location <br/>
+    dec: `Access live concert event on 
+     your device at any location 
      and time.`,
     icon: <Feature1Icon />,
     color:'text-[#FA4354]'
   },
   {
     name: "Watch On demand",
-    dec: `Replay and watch missed concerts <br/> as many times as possible on <br/>demand.`,
+    dec: `Replay and watch missed concerts as many times as possible on demand.`,
     icon: <Feature2con />,
     color:'text-[#00A699]'
   },
   {
     name: "Gift your favs",
-    dec: "Send gifts to your favourite artiste<br/> with cash equivalent coins during<br/> and after live shows.",
+    dec: "Send gifts to your favourite artistewith cash equivalent coins duringand after live shows.",
     icon: <Feature3con />,
     color:'text-[#FFC41B]'
   },
@@ -31,16 +31,16 @@ export const FeatureData = [
 
 export const FAQData =[
   {
-    name:`How long will livestreams <br class='hidden md:block'/> last?`,
-    desc:`Livestreams are real live events and<br/>  the length of the event is entirely<br/>  up to the artist and venues.`
+    name:`How long will livestreams  last?`,
+    desc:`Livestreams are real live events and  the length of the event is entirely  up to the artist and venues.`
 
   },
   {
-    name:`What payment methods are <br/> accepted?`,
-    desc:`We accept all methods of payment; Bank <br/> transfer, Card payment, Mobile Money<br/>  transfer`
+    name:`What payment methods are  accepted?`,
+    desc:`We accept all methods of payment; Bank  transfer, Card payment, Mobile Money  transfer`
   },
   {
-    name:`Can I watch the event for <br/> free`,
-    desc:`No, you have to pay for the event ticket to get<br/>  access to watch the event live, you can also<br/>  come back to watch the event even after it has<br/>  ended`
+    name:`Can I watch the event for  free`,
+    desc:`No, you have to pay for the event ticket to get  access to watch the event live, you can also  come back to watch the event even after it has  ended`
   }
 ]
