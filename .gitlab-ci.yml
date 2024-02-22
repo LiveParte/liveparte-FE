@@ -9,6 +9,6 @@ deploy_to_ec2:
     - chmod 600 ec2_private_key.pem
     
     # SSH into the EC2 instance and run the script
-    - ssh -i ec2_private_key.pem ubuntu@$SERVER_IP 'bash -s' < path/to/your/script.sh
+    - ssh -i ec2_private_key.pem ubuntu@$SERVER_IP 'bash -s' < /home/ubuntu/test.sh
   only:
     - feat/docker  
