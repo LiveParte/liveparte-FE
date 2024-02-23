@@ -5,6 +5,7 @@ deploy_to_ec2:
   stage: deploy
   image: ubuntu:latest
   script:
+    - apt-get update && apt-get install \-y openssh-client
        # Store private key in a temporary file
     - echo "$EC2_PRIVATE_KEY" > ec2_private_key.pem
     - cat ec2_private_key.pem
