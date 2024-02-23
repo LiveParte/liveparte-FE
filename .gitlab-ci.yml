@@ -16,7 +16,7 @@ deploy_to_ec2:
   #   - ssh-keyscan 44.208.167.228 >> ~/.ssh/known_hosts
   #   - '[[ -f /.dockerinit ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
-    # - apt-get update && apt-get install \-y openssh-client
+    - apt-get update && apt-get install \-y openssh-client
     #    # Store private key in a temporary file
     # - mkdir -p ~/.ssh
     # - echo "$EC2_PRIVATE_KEY" > ~/.ssh/id_rsa
