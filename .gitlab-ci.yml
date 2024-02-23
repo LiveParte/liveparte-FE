@@ -4,17 +4,17 @@ stages:
 deploy_to_ec2:
   stage: deploy
   image: ubuntu:latest
-  before_script:
-    - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client wget gnupg -y )'
-    - wget -qO- https://get.docker.com/gpg | apt-key add -
-    - eval $(ssh-agent -s)
-    - echo "$EC2_PRIVATE_KEY" | tr -d '\r' | ssh-add -
-    - mkdir -p ~/.ssh
-    - touch ~/.ssh/config
-    - touch ~/.ssh/known_hosts
-    - chmod -R 400 ~/.ssh
-    - ssh-keyscan 44.208.167.228 >> ~/.ssh/known_hosts
-    - '[[ -f /.dockerinit ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+  # before_script:
+  #   - 'command -v ssh-agent >/dev/null || ( apt-get update -y && apt-get install openssh-client wget gnupg -y )'
+  #   - wget -qO- https://get.docker.com/gpg | apt-key add -
+  #   - eval $(ssh-agent -s)
+  #   - echo "$EC2_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+  #   - mkdir -p ~/.ssh
+  #   - touch ~/.ssh/config
+  #   - touch ~/.ssh/known_hosts
+  #   - chmod -R 400 ~/.ssh
+  #   - ssh-keyscan 44.208.167.228 >> ~/.ssh/known_hosts
+  #   - '[[ -f /.dockerinit ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
   script:
     # - apt-get update && apt-get install \-y openssh-client
     #    # Store private key in a temporary file
@@ -23,11 +23,11 @@ deploy_to_ec2:
     # - chmod 600 ~/.ssh/id_rsa
     # - ssh-keyscan -t ed25519 44.208.167.228 >> ~/.ssh/known_hosts
     # - eval "$(ssh-agent -s)"
-    # - echo "$EC2_PRIVATE_KEY" > larparte-keypair.pem
-    # - chmod 600 larparte-keypair.pem
+    - echo "$EC2_PRIVATE_KEY" > larparte-keypair.pem
+    - chmod 600 larparte-keypair.pem
 
     # SSH into the EC2 instance and run the script
-    - ssh root@44.208.167.228 "cd /home/ubuntu && chmod +x test.sh && ./test.sh"
-    #- ssh -o StrictHostKeyChecking=no -i larparte-keypair.pem ubuntu@$SERVER_IP "cd /home/ubuntu && chmod +x test.sh && ./test.sh"
+    #- ssh root@44.208.167.228 "cd /home/ubuntu && chmod +x test.sh && ./test.sh"
+    - ssh -o StrictHostKeyChecking=no -i larparte-keypair.pem ubuntu@$SERVER_IP "cd /home/ubuntu && chmod +x test.sh && ./test.sh"
   only:
     - feat/docker  
