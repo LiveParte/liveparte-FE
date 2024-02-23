@@ -3,9 +3,11 @@ stages:
 
 deploy_to_ec2:
   stage: deploy
+  image: ubuntu:latest
   script:
        # Store private key in a temporary file
     - echo "$EC2_PRIVATE_KEY" > ec2_private_key.pem
+    - cat ec2_private_key.pem
     - chmod 600 ec2_private_key.pem
     
     # SSH into the EC2 instance and run the script
