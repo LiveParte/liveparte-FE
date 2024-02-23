@@ -3,19 +3,12 @@ stages:
 
 deploy_to_ec2:
   stage: deploy
-  image: ubuntu:latest
-  variables:
-    SSH_PRIVATE_KEY: $EC2_PRIVATE_KEY  # Assuming you have stored the private key in GitLab CI/CD environment variables
-  before_script:
-    - apt-get update && apt-get install -y openssh-client
-    # Set permissions for the private key
-    - mkdir /root/.ssh/
-    - echo "$SSH_PRIVATE_KEY" > /root/.ssh/id_rsa
-    - chmod 600 /root/.ssh/id_rsa
-    # Add the EC2 instance's host key to known_hosts
-    - ssh-keyscan -H $SERVER_IP >> /root/.ssh/known_hosts
   script:
-    # SSH into the EC2 instance and execute commands
-    - ssh -i /root/.ssh/id_rsa ubuntu@$SERVER_IP "cd home/ubuntu && chmod +x test.sh && ./test.sh"
+       # Store private key in a temporary file
+    - echo "$EC2_PRIVATE_KEY" > ec2_private_key.pem
+    - chmod 600 ec2_private_key.pem
+    
+    # SSH into the EC2 instance and run the script
+    - ssh -i ec2_private_key.pem ubuntu@$SERVER_IP 'bash -s' < /home/ubuntu/test.sh
   only:
     - feat/docker  
