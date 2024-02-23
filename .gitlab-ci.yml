@@ -7,14 +7,16 @@ deploy_to_ec2:
   script:
     - apt-get update && apt-get install \-y openssh-client
        # Store private key in a temporary file
-    - mkdir to_ssh
-    - cd to_ssh
-    - echo $EC2_PRIVATE_KEY
-    - cat $EC2_PRIVATE_KEY
-    - echo "$EC2_PRIVATE_KEY" > larparte-keypair.pem
-    - chmod 600 larparte-keypair.pem
+    - mkdir -p ~/.ssh
+    - echo "$EC2_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+    - ssh-keyscan -t ed25519 44.208.167.228 >> ~/.ssh/known_hosts
+    - eval "$(ssh-agent -s)"
+    # - echo "$EC2_PRIVATE_KEY" > larparte-keypair.pem
+    # - chmod 600 larparte-keypair.pem
 
     # SSH into the EC2 instance and run the script
-    - ssh -o StrictHostKeyChecking=no -i larparte-keypair.pem ubuntu@$SERVER_IP "cd /home/ubuntu && chmod +x test.sh && ./test.sh"
+    - ssh root@44.208.167.228 "cd /home/ubuntu && chmod +x test.sh && ./test.sh"
+    #- ssh -o StrictHostKeyChecking=no -i larparte-keypair.pem ubuntu@$SERVER_IP "cd /home/ubuntu && chmod +x test.sh && ./test.sh"
   only:
     - feat/docker  
