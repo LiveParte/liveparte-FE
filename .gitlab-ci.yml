@@ -9,6 +9,8 @@ deploy_to_ec2:
        # Store private key in a temporary file
     - mkdir to_ssh
     - cd to_ssh
+    - echo $EC2_PRIVATE_KEY
+    - cat $EC2_PRIVATE_KEY
     - echo "$EC2_PRIVATE_KEY" > larparte-keypair.pem
     - chmod 600 larparte-keypair.pem
 
