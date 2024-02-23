@@ -9,6 +9,7 @@ deploy_to_ec2:
   before_script:
     - apt-get update && apt-get install -y openssh-client
     # Set permissions for the private key
+    - mkdir /root/.ssh/
     - echo "$SSH_PRIVATE_KEY" > /root/.ssh/id_rsa
     - chmod 600 /root/.ssh/id_rsa
     # Add the EC2 instance's host key to known_hosts
