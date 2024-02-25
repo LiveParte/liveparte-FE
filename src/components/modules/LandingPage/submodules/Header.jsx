@@ -8,8 +8,8 @@ export default function Header({ className, openModal }) {
   const isHome = router?.pathname === "/";
   const MainContainer = `px-[20px] md:px-[40px] lg:px-[120px] relative`;
   const [dropDown, setDropDown] = useState(false);
-  const isFocused = ` hover:!bg-[#BAD6F70F] hover:rounded-[999px] hover:border-[#262C32] hover:border-[1px] hover:font500  hover:backdrop-blur-[60px]`;
-
+  const isFocused = ` hover:!bg-[#BAD6F70F] hover:rounded-[999px] hover:border-[#262C32] hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`;
+const isSelected=`border-[#262C32] border-[1px] backdrop-blur-[60px] !bg-[#BAD6F70F]  `
   const handleCheckIfITHome = () => {
     isHome && setDropDown(false);
   };
@@ -68,13 +68,13 @@ export default function Header({ className, openModal }) {
       {dropDown && <MenuDropdown />}
 
       <div
-        className={`pt-[14px]  lg:pt-[28px] pb-[29px]  font400 ${className} ${MainContainer}`}
+        className={`py-[16px] font400 ${className} ${MainContainer}`}
       >
         <div
           className="absolute left-0 right-0 top-0 bottom-0 bg-cover  
        
         bg-[#06080933]
-        z-30  backdrop-blur-[50px]"
+        z-30  backdrop-blur-[10px]"
         ></div>
         {/* <LogoWhite/> */}
         <div className="flex justify-between z-50 relative cursor-pointer">
@@ -98,12 +98,12 @@ export default function Header({ className, openModal }) {
           <div className="flex items-center gap-[24px]">
             <ButtonComp
               btnText="Browse event"
-              className={`text-[15px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-[#BAD6F70F]  rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px]  focus:${isFocused}`}
+              className={`text-[13px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] bg-transparent rounded-[999px]  font500 text-white  focus:${isFocused}`}
               onClick={()=>router.push("/event")}
             />
             <ButtonComp
               btnText="On demand"
-              className={`text-[15px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white ${isFocused} `}
+              className={`text-[13px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white ${isFocused} `}
               onClick={()=>router.push("/event")}
             />
           </div>
