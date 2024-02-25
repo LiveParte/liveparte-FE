@@ -1,7 +1,7 @@
 #!/bin/bash
 
-git checkout feat/docker
+git checkout staging
 
-git pull origin feat/docker
+git pull origin staging
 
 docker compose up -d --build frontend
