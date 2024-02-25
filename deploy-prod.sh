@@ -4,4 +4,4 @@ git checkout main
 
 git pull origin main
 
-docker compose up -d --build frontend-prod
+docker compose up -d --build frontend-main
