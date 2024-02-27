@@ -37,10 +37,10 @@ export const FAQData =[
   },
   {
     name:`What payment methods are  accepted?`,
-    desc:`We accept all methods of payment; Bank  transfer, Card payment, Mobile Money  transfer`
+    desc:`We accept all methods of payment; Bank  transfer, Card payment, Mobile Money  transfer.`
   },
   {
-    name:`Can I watch the event for  free <br/> <div class='hidden xl:block invisible'>. </div>`,
-    desc:`No, you have to pay for the event ticket to get  access to watch the event live, you can also  come back to watch the event even after it has  ended`
+    name:`Can I watch the event for  free? <br/> <div class='hidden xl:block invisible'>. </div>`,
+    desc:`No, you have to pay for the event ticket to get  access to watch the event live, you can also  come back to watch the event even after it has  ended.`
   }
 ]

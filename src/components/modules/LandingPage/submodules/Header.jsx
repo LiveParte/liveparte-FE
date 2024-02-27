@@ -37,7 +37,7 @@ const isSelected=`border-[#262C32] border-[1px] backdrop-blur-[60px] !bg-[#BAD6F
           </div>
         </div>
         <div className="text-[15px] text-white font500 flex-1 flex flex-col">
-          <Link
+          {/* <Link
             onClick={handleCheckIfITHome}
             href={"/event"}
             className="py-[12px]  cursor-pointer no-underline text-white"
@@ -50,14 +50,24 @@ const isSelected=`border-[#262C32] border-[1px] backdrop-blur-[60px] !bg-[#BAD6F
             className="py-[12px]  cursor-pointer no-underline text-white"
           >
             On demand
-          </Link>
+          </Link> */}
         </div>
 
-        <ButtonComp
-          onClick={() => openModal("SignUp")}
-          btnText={`Log In/Sign Up`}
-          className={`text-[13px] font500 mb-[32px] `}
-        />
+        <div>
+          
+
+          {/* <ButtonComp
+            onClick={() => openModal("SignUp")}
+            btnText={`Sign Up`}
+            className={`text-[13px] font500 mb-[16px]  w-full`}
+          />
+          <ButtonComp
+            onClick={() => openModal(`Login`)}
+            btnText={`Login`}
+            className={`text-[13px] font500 mb-[28px]  w-full !bg-[#27292e] text-white`}
+          /> */}
+          <div></div>
+        </div>
       </div>
     );
   };
@@ -96,7 +106,7 @@ const isSelected=`border-[#262C32] border-[1px] backdrop-blur-[60px] !bg-[#BAD6F
           />
 
           <div className="flex items-center gap-[24px]">
-            <ButtonComp
+            {/* <ButtonComp
               btnText="Browse event"
               className={`text-[13px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] bg-transparent rounded-[999px]  font500 text-white  focus:${isFocused}`}
               onClick={()=>router.push("/event")}
@@ -105,25 +115,25 @@ const isSelected=`border-[#262C32] border-[1px] backdrop-blur-[60px] !bg-[#BAD6F
               btnText="On demand"
               className={`text-[13px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white ${isFocused} `}
               onClick={()=>router.push("/event")}
-            />
+            /> */}
           </div>
           <div>
-            <div className="hidden lg:flex  gap-x-[40px] items-center">
+            <div className="hidden lg:flex  gap-x-[40px] items-center invisible">
               <ButtonComp
-                onClick={() => openModal("Login")}
+                // onClick={() => openModal("Login")}
                 btnText="Log In"
                 className="text-[13px] font-medium font500 bg-transparent px-0 text-white font500"
               />
               <ButtonComp
-                onClick={() => openModal("SignUp")}
+                // onClick={() =>  openModal("SignUp")}
                 btnText="Sign Up"
                 className="text-[13px] font-medium font500 px-[40px] py-[12px]"
               />
             </div>
             <ButtonComp
-              onClick={() => setDropDown(true)}
+              // onClick={() => setDropDown(true)}
               btnText="Menu"
-              className="text-[13px] font-medium  lg:hidden !py-[8px] !px-[24px] gap-[10px] !bg-[#BAD6F70F] rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px] h-fit"
+              className="text-[13px] font-medium  lg:hidden !py-[8px] !px-[24px] gap-[10px] !bg-[#BAD6F70F] rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px] h-fit invisible"
             />
           </div>
         </div>

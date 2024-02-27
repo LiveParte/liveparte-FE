@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import MyModal from "@/components/Ui/Modal";
 import { useState } from "react";
 import LoginSignUp from "@/components/modules/Event/Modal/Login&SignUp";
+import WithAuth from "@/components/Layout/WithAuth";
 
 export default function Home() {
   const router = useRouter();
@@ -31,7 +32,7 @@ export default function Home() {
   ]
 
   return (
-    <NoAuth>
+    <WithAuth>
       <MyModal
         bodyComponent={modalPage?.find((item)=>item?.name===isOpen)?.component}
         containerStyle={`!bg-[#1B1C20]  border-[1px] border-[#343F4B] rounded-[16px]  !w-[586px] min-h-[75vh] tallT:min-h-[65vh]`}
@@ -42,6 +43,6 @@ export default function Home() {
       <Hero openModal={openModal} router={router} notEvent={true} />
       <Happening />
       <Footer />
-    </NoAuth>
+    </WithAuth>
   );
 }

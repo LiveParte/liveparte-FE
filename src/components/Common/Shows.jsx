@@ -38,12 +38,12 @@ export default function ShowsCard({
             </span>
           )}
           </div>
-          <div className="flex-[1] flex justify-center items-center absolute left-0 right-0 -top-[50px] lg:-top-[100px] bottom-0">
+          <div className="flex-[1] flex justify-center items-center absolute left-0 right-0 -top-[50px] md:-top-[70px] lg:-top-[100px] bottom-0">
             <Play />
           </div>
 
-          <div className="text-center ">
-            <div className="font-1 text-[35px] md:text-[80px] tallI:text-[60px] font-medium text-white mb-[4px]  md:mb-[27px] tall:leading-[32px] leading-[38px] md:leading-[68px]">
+          <div className="text-center  px-1">
+            <div className="font-1 text-[35px] md:text-[80px] tallI:text-[60px] font-medium text-white mb-[4px]  md:mb-[27px] tall:leading-[32px] leading-[38px] md:leading-[68px] line-clamp-2  ">
               {name}
             </div>
             <div className="text-[#B4BECB] text-[10px] md:text-[13px] mb-[16px] mb:mb-[25px] font-medium font500 whitespace-nowrap overflow-hidden text-ellipsis px-[10px]">

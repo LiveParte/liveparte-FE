@@ -184,3 +184,8 @@ img, video {
 .vds-controls-group{
   display: none;
 }
+
+.newRole video{
+  object-fit: cover;
+  height: 100vh;
+}
