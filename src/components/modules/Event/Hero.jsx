@@ -38,7 +38,7 @@ export default function Hero({ notEvent = true,router,openModal,openModalLoginSi
   
   return (
     <div
-      className={`relative font400  bg-[url('/webp/bg1.png')] bg-center bg-cover  xl:bg-left ${MainContainer} `}
+      className={`relative font400  bg-[url('/webp/bg1.webp')] bg-center bg-cover  xl:bg-left ${MainContainer} `}
     >
       <div className="">
        <div className="absolute left-0 right-0">

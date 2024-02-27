@@ -102,18 +102,18 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
         <div className="text-[15px] text-white font500 flex-1  mb-[60px]">
           <Link
             href={"/"}
-            className="py-[12px]  cursor-pointer text-white no-underline"
+            className="py-[15px]  cursor-pointer text-white no-underline"
           >
             Browse events
           </Link>
-          <div className="py-[12px]  cursor-pointer ">On demand</div>
+          <div className="py-[15px]  cursor-pointer ">On demand</div>
           <Link
             href={"/my_shows"}
             className="py-[12px]  cursor-pointer no-underline text-white mb-2"
           >
             My Show
           </Link>
-          <div className="flex justify-between items-center py-[15px]">
+          <div className="flex justify-between items-center py-[18px]">
             <div className="text-[13px] flex items-center gap-[5px] ">
               <Image src={`/svg/coin1.svg`} width={24} height={24} /> 100 Coins
             </div>
@@ -129,11 +129,11 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           <div className="text-[15px] text-white font500 flex-1  mb-[16px]">
             <Link
               href="/setting"
-              className="py-[12px]  cursor-pointer text-white no-underline"
+              className="py-[15px]  cursor-pointer text-white no-underline"
             >
               Settings
             </Link>
-            <div className="py-[12px] cursor-pointer">Log out</div>
+            <div className="py-[15px] cursor-pointer">Log out</div>
           </div>
 
           <ButtonComp

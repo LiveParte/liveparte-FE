@@ -1,10 +1,13 @@
 import React from "react";
-import { BannerIcon, BannerIcon2 } from "../../../../../public/svg";
+import { BannerIcon, BannerIcon2, BannerSmall1 } from "../../../../../public/svg";
 import BlurryImage from "@/components/Common/LazyLoader";
 
 export default function FavoriteShow() {
   return (
-    <div className="md:pt-[56px] bg-[#060809]  pb-[80px] lg:pb-[112px]">
+    <div className=" md:pt-[56px] bg-[#060809]  pb-[80px] lg:pb-[112px]">
+        <div className="flex justify-start mb-1 lg:hidden">
+        <BannerSmall1/>
+        </div>
       <div className="px-[30px] lg:px-[96px] flex  justify-center lg:justify-between items-center mb-[40px] md:mb-[80px] lg:mb-[119px]">
         <div  className="hidden lg:block">
           <BannerIcon />

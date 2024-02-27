@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from 'next/router'
-import { CloseModal } from "../../../../../public/svg";
+import { CloseModal, GoogleIcon } from "../../../../../public/svg";
 import ButtonComp from "@/components/Ui/button";
 import { FloatingLabelInput } from "@/components/Ui/TextInput";
 import { LoginForm ,SignUpForm} from "../Data";
@@ -27,12 +27,13 @@ export default function LoginSignUp({
   }
   
   return (
-    <div className={`bg-[#1B1C20] pb-[48px] px-[16px] pt-[16px] lg:pt-[18px] ${className}`}>
-      <div className="flex justify-end pb-[10px]" onClick={closeModal}>
+    <div className={`bg-[#1B1C20] relative pb-[48px] px-[16px] pt-[16px] lg:pt-[16px] ${className} h-[90vh] md:h-auto overflow-y-scroll`}>
+      {/* <div className="flex justify-end pb-[10px] " onClick={closeModal}>
         <CloseModal  />
-      </div>
+      </div> */}
 
-      <div className="flex justify-center items-center mb-[72px]">
+      <div className="flex justify-between items-center mb-[45px]">
+        <div></div>
         <div className="flex border-[#343F4B] border-[1px] justify-center items-center rounded-[999px] bg-[#25272d] text-[14px] font500 h-[40px] ">
           <div
             onClick={() => setToggle("Login")}
@@ -51,29 +52,64 @@ export default function LoginSignUp({
             Sign Up
           </div>
         </div>
+        <div className="flex justify-end pb-[10px] " onClick={closeModal}>
+        <CloseModal  />
+      </div>
       </div>
 
+    
+
       {toggle==="Login" &&<form className="px-[15px] lg:px-[50px] flex flex-col gap-[20px] lg:pb-[92px]" autoComplete="off">
+        <div className="w-full ">
+        <div className="mb-[28px] ">
+            <ButtonComp
+            className={`w-full text-[#060809] text-[13px] font500`}
+            btnText={<div className="flex justify-center items-center gap-[12px]"><GoogleIcon/>Log in with Google</div>}
+            />
+      </div>
+
+      <div className="flex items-center text-[13px] text-white  py-[10px] mb-[29px]">
+      <div className="bg-[#343F4B]  h-[1px] flex-grow-1"></div>
+        <div className="px-[38px]">  Or you can</div>
+      
+        <div className="bg-[#343F4B]  h-[1px] flex-grow-1"></div>
+      </div>
+        </div>
         {LoginForm()?.map((item, index) => (
           <FloatingLabelInput key={index} label={item?.label} type={item?.type} name={item?.name} />
         ))}
         <div className="mt-[122px] lg:mt-[24px]">
           <ButtonComp
             btnText={"Log In and Continue"}
-            className={`w-full text-[13px] font500`}
+              className={`w-full text-[13px] font500 !bg-[#343F4B] !text-[#63768D]`}
             onClick={handleLogin}
           />
         </div>
       </form>}
 
       {toggle!=="Login" &&<form className="px-[15px] lg:px-[50px] flex flex-col gap-[20px] lg:pb-[92px]" autoComplete="off">
+      <div className="w-full ">
+        <div className="mb-[28px] ">
+            <ButtonComp
+            className={`w-full text-[#060809] text-[13px] font500`}
+            btnText={<div className="flex justify-center items-center gap-[12px]"><GoogleIcon/>Sign up with Google</div>}
+            />
+      </div>
+
+      <div className="flex items-center text-[13px] text-white  py-[10px] mb-[29px]">
+      <div className="bg-[#343F4B]  h-[1px] flex-grow-1"></div>
+        <div className="px-[38px]">  Or you can</div>
+      
+        <div className="bg-[#343F4B]  h-[1px] flex-grow-1"></div>
+      </div>
+        </div>
         {SignUpForm()?.map((item, index) => (
           <FloatingLabelInput key={index} label={item?.label} type={item?.type} />
         ))}
         <div className="mt-[24px]">
           <ButtonComp
             btnText={ "Sign Up and Continue"}
-            className={`w-full text-[13px] font500`}
+            className={`w-full text-[13px] font500 !bg-[#343F4B] !text-[#63768D]`}
             onClick={handleLogin}
           />
         </div>
