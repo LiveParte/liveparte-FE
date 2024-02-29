@@ -90,7 +90,7 @@ export default function Hero({
                       April 17, 2024 - Watch live
                     </div>
 
-                    <div>
+                    <div className="invisible">
                       <ButtonComp
                         className={`py-[12px] px-[57px] text-[13px] md:text-[15px] font500 `}
                         btnText={"Learn More"}

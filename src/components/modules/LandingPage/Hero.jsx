@@ -102,14 +102,14 @@ export default function Hero({
                 <div className="hidden md:flex mb-[40px] md:mb-[120px] ">
                   <ButtonComp
                     btnText={`Browse Events`}
-                    className={`text-start text-[13px] font500  py-[12px] px-[31px]`}
+                    className={`text-start text-[13px] font500  py-[12px] px-[31px] hidden`}
                     onClick={() => router.push("/event")}
                   />
                 </div>
                 <div className=" md:hidden  md:mb-[120px] fixed left-0 right-0 -bottom-[2px]">
                   <ButtonComp
                     btnText={`Browse Events`}
-                    className={` text-[15px] font500  py-[12px] px-[31px] w-full text-center h-[70px] rounded-none`}
+                    className={` text-[15px] font500  py-[12px] px-[31px] w-full text-center h-[70px] rounded-none hidden`}
                   />
                 </div>
               </div>
@@ -204,7 +204,7 @@ export default function Hero({
             </div>
           </div>
         </div> */}
-          <div className=" absolute  bottom-0 left-0 right-0 h-[60vh] md:h-[80vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-t from-black"></div>
+          <div className=" absolute  bottom-0 left-0 right-0 h-[60vh] md:h-[80vh]   bg-cover xl:bg-cover !bg-no-repeat bg-gradient-to-t from-black"></div>
         </div>
       </AnimatePresence>
     </div>

@@ -105,7 +105,7 @@ const isSelected=`border-[#262C32] border-[1px] backdrop-blur-[60px] !bg-[#BAD6F
             className="md:hidden "
           />
 
-          <div className="flex items-center gap-[24px]">
+          <div className="flex items-center gap-[24px] hidden">
             <ButtonComp
               btnText="Browse event"
               className={`text-[13px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] bg-transparent rounded-[999px]  font500 text-white  focus:${isFocused}`}
@@ -117,7 +117,7 @@ const isSelected=`border-[#262C32] border-[1px] backdrop-blur-[60px] !bg-[#BAD6F
               onClick={()=>router.push("/event")}
             />
           </div>
-          <div>
+          <div className="hidden">
             <div className="hidden lg:flex  gap-x-[40px] items-center ">
               <ButtonComp
                 onClick={() => openModal("Login")}

@@ -76,7 +76,7 @@ export default function Header({ className, openModal }) {
             className="md:hidden "
           />
 
-          <div className="flex items-center gap-[24px]">
+          <div className="flex items-center gap-[24px] hidden">
             <ButtonComp
               btnText="Browse event"
               className={`text-[15px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-[#BAD6F70F]  rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px]  focus:${isFocused}`}
@@ -86,7 +86,7 @@ export default function Header({ className, openModal }) {
               className={`text-[15px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white ${isFocused} `}
             />
           </div>
-          <div>
+          <div className="hidden">
             <div className="hidden lg:flex  gap-x-[40px] items-center">
             <ButtonComp
                  onClick={()=>openModal('Login')}
