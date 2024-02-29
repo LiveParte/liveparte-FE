@@ -8,6 +8,7 @@ import GiftTicket from '@/components/modules/EventDetails/modal/GiftTicket'
 import Hero from '@/components/modules/Event/Hero'
 import LoginSignUp from '@/components/modules/Event/Modal/Login&SignUp'
 import React, { useState } from 'react'
+import ShareEvent from '@/components/modules/EventDetails/modal/ShareEvent'
 
 export default function EventId () {
   let [isOpen, setIsOpen] = useState();
@@ -31,6 +32,11 @@ export default function EventId () {
     setIsOpen('gift ticket');
   }
 
+  function openModalShareEvent() {
+    setIsOpen('share event');
+  }
+
+
 
   const ModalList =[
     {
@@ -44,6 +50,10 @@ export default function EventId () {
     {
       name:'login/signup',
       component:<LoginSignUp closeModal={closeModal}/>
+    },
+    {
+      name:'share event',
+      component:<ShareEvent closeModal={closeModal}/>
     }
   ]
   return (
@@ -63,14 +73,14 @@ export default function EventId () {
       /> */}
       {/* <DropDown/> */}
      
-      <MyModal
+    {isOpen &&  <MyModal
         bodyComponent={ModalList?.find((item,index)=>item?.name ==isOpen)?.component}
         containerStyle={`bg-[#1B1C20] border-[1px] border-[#343F4B] rounded-[16px]  !w-[586px]`}
         isOpen={isOpen?true:false}
         closeModal={closeModal}
         openModal={openModal}
-      />
-    <Hero openModalLoginSignUp={openModalLoginSignUp} openModal={openModal} giftTicket={openModalGiftTicket} notEvent={false}/>
+      />}
+    <Hero openModalLoginSignUp={openModalLoginSignUp} openModal={openModal} giftTicket={openModalGiftTicket} openModalShareEvent={openModalShareEvent} notEvent={false}/>
     {/* <Dropdown  placement="top" label="Dropdown button" dismissOnClick={false}>
       <DropdownItem>Dashboard</DropdownItem>
       <DropdownItem>Settings</DropdownItem>

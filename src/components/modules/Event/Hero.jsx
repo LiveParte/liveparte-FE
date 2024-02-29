@@ -4,7 +4,14 @@ import { Daviod } from "../../../../public/svg";
 import { MainContainer } from "@/utils/styleReuse";
 import ButtonComp from "@/components/Ui/button";
 
-export default function Hero({ notEvent = true,router,openModal,openModalLoginSignUp,giftTicket }) {
+export default function Hero({
+  notEvent = true,
+  router,
+  openModal,
+  openModalLoginSignUp,
+  giftTicket,
+  openModalShareEvent
+}) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
 
@@ -18,42 +25,52 @@ export default function Hero({ notEvent = true,router,openModal,openModalLoginSi
 
     // Bind the event listener
     document.addEventListener("mousedown", handleClickOutside);
-    
+
     // Unbind the event listener on component unmount
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
-  function DropdownMenu (){
-    return   <div className=" absolute dropdownIII transform translate-x-0 -translate-y-[60px] z-50">
-    <div className=" bg-[#1B1C20] border-[1px] text-left border-[#343F4B] text-[13px] md:text-[14px] text-white  rounded-[16px] md:w-[327px] w-[80vw]     px-[40px] py-[24px]">
-      <div className="py-[12px] cursor-pointer " onClick={giftTicket}>Gift a ticket</div>
-      <div className="py-[12px]">Share Event</div>
-      <div className="py-[12px]">Add to Calendar</div>
-    </div> 
-   </div>
+  function DropdownMenu() {
+    return (
+      <div className=" absolute dropdownIII transform translate-x-0 -translate-y-[60px] z-50">
+        <div className=" bg-[#1B1C20] border-[1px] text-left border-[#343F4B] text-[13px] md:text-[14px] text-white  rounded-[16px] md:w-[327px] w-[80vw]     px-[40px] py-[24px]">
+          <div className="py-[12px] cursor-pointer " onClick={giftTicket}>
+            Gift a ticket
+          </div>
+          <div className="my-[12px] cursor-pointer" onClick={openModalShareEvent}>Share Event</div>
+        <div className="py-[12px]">
+        <a target="_blank" className=" text-white no-underline  "
+          href="https://calendar.google.com/calendar/r/eventedit?text=Your+Event+Names&dates=20140127T224000Z/20140320T221500Z&details=For+details,+link+here:+http://www.example.com&location=Waldorf+Astoria,+301+Park+Ave+,+New+York,+NY+10022&sf=true&output=xml"
+          >Add to Calendar</a>
+        </div>
+        </div>
+      </div>
+    );
   }
-    
-  
+
   return (
     <div
       className={`relative font400  bg-[url('/webp/bg1.webp')] bg-center bg-cover  xl:bg-left ${MainContainer} `}
     >
       <div className="">
-       <div className="absolute left-0 right-0">
-       <Header openModal={openModalLoginSignUp||openModal}  className="absolute top-0 left-0 right-0" />
-       </div>
+        <div className="absolute left-0 right-0">
+          <Header
+            openModal={openModalLoginSignUp || openModal}
+            className="absolute top-0 left-0 right-0"
+          />
+        </div>
         <div className="relative">
           <div className="  h-[100vh] relative flex flex-col justify-end  ">
             <div className="h-[20vh]" />
-            
+
             <div
               className={`relative z-40  flex flex-col  md:justify-start items-center md:items-start  text-center  md:text-start`}
             >
               <Daviod />
               <div className="mt-[16px] text-[45px] lg:text-[92px]  font-1 text-white font-bold uppercase lg:mb-[32px] leading-[46px] lg:leading-[90px]">
-                Timeless tour - Newyork 
+                Timeless tour - Newyork
               </div>
               {/*  */}
               {notEvent ? (
@@ -62,7 +79,7 @@ export default function Hero({ notEvent = true,router,openModal,openModalLoginSi
                     <ButtonComp
                       className={`py-[12px] px-[39px] text-[13px] xl:text-[15px] font500`}
                       btnText={"Learn More"}
-                      onClick={() => router.push('/event/1')}
+                      onClick={() => router.push("/event/1")}
                     />
                     <div className="text-[13px] xl:text-[16px]  text-[#B4BECB] z-10 relative font500">
                       April 17, 2024 - Watch live
@@ -72,54 +89,56 @@ export default function Hero({ notEvent = true,router,openModal,openModalLoginSi
                     <div className="text-[#B4BECB] text-[13px] md:text-[15px] z-10 relative mb-[24px] font500">
                       April 17, 2024 - Watch live
                     </div>
-                 
-                   <div>
-                   <ButtonComp
-                      className={`py-[12px] px-[57px] text-[13px] md:text-[15px] font500 `}
-                      btnText={"Learn More"}
-                      onClick={() => router.push('/event/1')}
-                    />
-                  
-                   </div>
+
+                    <div>
+                      <ButtonComp
+                        className={`py-[12px] px-[57px] text-[13px] md:text-[15px] font500 `}
+                        btnText={"Learn More"}
+                        onClick={() => router.push("/event/1")}
+                      />
+                    </div>
                   </div>
                 </div>
               ) : (
-                <div className=" w-full relative " >
-               
+                <div className=" w-full relative ">
                   <div ref={dropdownRef}>
-                  <div className="mb-[100px] hidden md:flex gap-[16px] items-center relative"  >
-                {isOpen&& <DropdownMenu/>}
-                    <ButtonComp
-                    onClick={openModal}
-                      className={`py-[12px] px-[39px] text-[13px] xl:text-[15px] font500`}
-                      btnText={"Get Ticket ₦24,000"}
-                    />
-                    <div className="" onClick={() => setIsOpen(!isOpen)}>
-                      <img src="/webp/dots.png" className="h-[44px] cursor-pointer"/>
-                      
+                    <div className="mb-[100px] hidden md:flex gap-[16px] items-center relative">
+                      {isOpen && <DropdownMenu />}
+                      <ButtonComp
+                        onClick={openModal}
+                        className={`py-[12px] px-[39px] text-[13px] xl:text-[15px] font500`}
+                        btnText={"Get Ticket ₦24,000"}
+                      />
+                      <div className="" onClick={() => setIsOpen(!isOpen)}>
+                        <img
+                          src="/webp/dots.png"
+                          className="h-[44px] cursor-pointer"
+                        />
+                      </div>
+
+                      <div className="text-[13px] xl:text-[16px]  text-[#B4BECB] z-10 relative font500">
+                        April 17, 2024 - Watch live
+                      </div>
                     </div>
-                       
-                    <div className="text-[13px] xl:text-[16px]  text-[#B4BECB] z-10 relative font500">
-                      April 17, 2024 - Watch live
+                    <div className="text-center mt-[40px] md:hidden mb-[42px] relative">
+                      {isOpen && <DropdownMenu />}
+                      <div className="text-[#B4BECB] text-[13px] md:text-[15px] z-10 relative mb-[24px] font500">
+                        April 17, 2024 - Watch live
+                      </div>
+                      <div className="flex items-center justify-center gap-3">
+                        <ButtonComp
+                          onClick={openModal}
+                          className={`py-[12px] px-[20px] md:px-[34px] lg:px-[57px] text-[13px] md:text-[15px] font500 `}
+                          btnText={"Get Ticket ₦24,000"}
+                        />
+                        <div onClick={() => setIsOpen(!isOpen)}>
+                          <img
+                            src="/webp/dots.png"
+                            className="h-[44px] cursor-pointer"
+                          />
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                  <div className="text-center mt-[40px] md:hidden mb-[42px] relative" >
-                  {isOpen&& <DropdownMenu/>}
-                    <div className="text-[#B4BECB] text-[13px] md:text-[15px] z-10 relative mb-[24px] font500">
-                      April 17, 2024 - Watch live
-                    </div>
-                    <div className="flex items-center justify-center gap-3">
-                    <ButtonComp
-                      onClick={openModal}
-                      className={`py-[12px] px-[20px] md:px-[34px] lg:px-[57px] text-[13px] md:text-[15px] font500 `}
-                      btnText={"Get Ticket ₦24,000"}
-                    />
-                    <div onClick={() => setIsOpen(!isOpen)}>
-                      <img src="/webp/dots.png" className="h-[44px] cursor-pointer"/>
-                    
-                    </div>
-                    </div>
-                  </div>
                   </div>
                 </div>
               )}
