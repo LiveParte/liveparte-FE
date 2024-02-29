@@ -93,7 +93,7 @@ export default function Hero({
                     </motion.div>
                   </div>
                 </div>
-                <div className="text-white lg:w-[37vw] mb-[40px] :-text-start md:text-start text-[13px] md:text-[20px] font400">
+                <div className="text-white w-[85vw] lg:w-[50vw]  mb-[40px] :-text-start md:text-start text-[13px] md:text-[20px] font400">
                   Get direct access to live and on-demand concert, performances
                   by your award-winning artistes and comedians anywhere in the
                   world from the comfort of your devices
@@ -204,7 +204,7 @@ export default function Hero({
             </div>
           </div>
         </div> */}
-          <div className=" absolute  bottom-0 left-0 right-0 h-[50vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-t from-black"></div>
+          <div className=" absolute  bottom-0 left-0 right-0 h-[60vh] md:h-[80vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-t from-black"></div>
         </div>
       </AnimatePresence>
     </div>

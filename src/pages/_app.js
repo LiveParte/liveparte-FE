@@ -22,7 +22,7 @@ export default function App({ Component, pageProps }) {
       </Head>
       <Provider store={store}>
     <Component {...pageProps} />
-  </Provider>;
+  </Provider>
 </>
 
   ) 
