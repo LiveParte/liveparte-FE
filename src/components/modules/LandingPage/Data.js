@@ -21,7 +21,7 @@ export const FeatureData = [
   },
   {
     name: "Gift your favs",
-    dec: "Send gifts to your favourite artistewith cash equivalent coins duringand after live shows.",
+    dec: "Send gifts to your favourite artiste with cash equivalent coins during and after live shows.",
     icon: <Feature3con />,
     color:'text-[#FFC41B]'
   },
