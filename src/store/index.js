@@ -9,14 +9,14 @@ export const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
     [userApi.reducerPath]: userApi.reducer,
-    [dashboardApi.reducerPath]: dashboardApi.reducer,
-    [transactionApi.reducerPath]: transactionApi.reducer,
+    // [dashboardApi.reducerPath]: dashboardApi.reducer,
+    // [transactionApi.reducerPath]: transactionApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       userApi.middleware,
-      dashboardApi.middleware,
-      transactionApi.middleware
+      // dashboardApi.middleware,
+      // transactionApi.middleware
     ),
 });
 

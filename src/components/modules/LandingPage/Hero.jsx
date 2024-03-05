@@ -26,18 +26,18 @@ export default function Hero({
   const words = ["Concerts", "Groove", "Parte", "Event"]; // Array of words to cycle through
   const [currentWordIndex, setCurrentWordIndex] = useState(0);
 
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     // Increment currentWordIndex to rotate through the words
-  //     setCurrentWordIndex((prevIndex) => (prevIndex + 1) % words.length);
-  //     // Fade out the text and then update it after a delay
-  //     setTimeout(() => {
-  //       setTextChange(words[currentWordIndex]);
-  //     }, 1000); // Adjust the delay time as needed
-  //   }, 2000); // Change word every 5 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Increment currentWordIndex to rotate through the words
+      setCurrentWordIndex((prevIndex) => (prevIndex + 1) % words.length);
+      // Fade out the text and then update it after a delay
+      setTimeout(() => {
+        setTextChange(words[currentWordIndex]);
+      }, 1000); // Adjust the delay time as needed
+    }, 2000); // Change word every 5 seconds
 
-  //   return () => clearInterval(interval); // Cleanup interval on component unmount
-  // }, [textChange, currentWordIndex]);
+    return () => clearInterval(interval); // Cleanup interval on component unmount
+  }, [textChange, currentWordIndex]);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -93,7 +93,7 @@ export default function Hero({
                     </motion.div>
                   </div>
                 </div>
-                <div className="text-white w-[85vw] lg:w-[50vw]  mb-[40px] :-text-start md:text-start text-[13px] md:text-[20px] font400">
+                <div className="text-white w-[75vw] md:w-[65vw] lg:w-[45vw]  mb-[40px] :-text-start md:text-start text-[13px] md:text-[20px] font400">
                   Get direct access to live and on-demand concert, performances
                   by your award-winning artistes and comedians anywhere in the
                   world from the comfort of your devices

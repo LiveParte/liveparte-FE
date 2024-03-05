@@ -37,7 +37,7 @@ const isSelected=`border-[#262C32] border-[1px] backdrop-blur-[60px] !bg-[#BAD6F
           </div>
         </div>
         <div className="text-[15px] text-white font500 flex-1 flex flex-col">
-          {/* <Link
+          <Link
             onClick={handleCheckIfITHome}
             href={"/event"}
             className="py-[12px]  cursor-pointer no-underline text-white"
@@ -50,13 +50,13 @@ const isSelected=`border-[#262C32] border-[1px] backdrop-blur-[60px] !bg-[#BAD6F
             className="py-[12px]  cursor-pointer no-underline text-white"
           >
             On demand
-          </Link> */}
+          </Link>
         </div>
 
         <div>
           
 
-          {/* <ButtonComp
+          <ButtonComp
             onClick={() => openModal("SignUp")}
             btnText={`Sign Up`}
             className={`text-[13px] font500 mb-[16px]  w-full`}
@@ -65,7 +65,7 @@ const isSelected=`border-[#262C32] border-[1px] backdrop-blur-[60px] !bg-[#BAD6F
             onClick={() => openModal(`Login`)}
             btnText={`Login`}
             className={`text-[13px] font500 mb-[28px]  w-full !bg-[#27292e] text-white`}
-          /> */}
+          />
           <div></div>
         </div>
       </div>

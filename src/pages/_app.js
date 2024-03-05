@@ -1,29 +1,39 @@
-import "@/styles/globals.css";
-// import "@/styles/moving.css";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '@vidstack/react/player/styles/default/theme.css';
-import '@vidstack/react/player/styles/default/layouts/video.css';
-import { Provider } from "react-redux";
 import store from "@/store";
-import Head from 'next/head';;
+import Head from "next/head";
+import "@/styles/globals.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "@vidstack/react/player/styles/default/theme.css";
+import "@vidstack/react/player/styles/default/layouts/video.css";
+import "react-toastify/dist/ReactToastify.css";
+import { Provider } from "react-redux";
+import { ToastContainer } from 'react-toastify';
 
-// import "node_modules/video-react/dist/video-react.css"; 
 export default function App({ Component, pageProps }) {
+  return (
+    <>
+      {/* <Head><title>This is the title</title></Head> */}
 
-
-
-
-  return(
-<>
-{/* <Head><title>This is the title</title></Head> */}
-
-<Head>
+      <Head>
         <title>Live Parte</title>
       </Head>
       <Provider store={store}>
-    <Component {...pageProps} />
-  </Provider>
-</>
+      <ToastContainer
+      className={`z-[9999]`}
+      position="top-right"
+autoClose={5000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
 
-  ) 
+
+      />
+        <Component {...pageProps} />
+       
+      </Provider>
+    </>
+  );
 }

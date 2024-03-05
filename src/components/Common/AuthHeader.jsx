@@ -9,9 +9,13 @@ import PurchasePaartyCoins from "../modules/LiveStream/submodules/PurchasePaarty
 import MyModal from "../Ui/Modal";
 import LoginSignUp from "../modules/Event/Modal/Login&SignUp";
 import CustomDropDown from "./CustomDropDown";
+import { accessTokenStorageName, userDetailStorageName } from "@/utils/helper";
+import { useDispatch } from "react-redux";
+import { logout, setUserData } from "@/store/User";
 
 export default function AuthHeader({ className, openModal, showNav = false }) {
   const router = useRouter();
+  const dispatch = useDispatch();
   const MainContainer = `px-[20px] md:px-[40px] lg:px-[120px] relative`;
   const [dropDown, setDropDown] = useState(false);
   const [modalName, setModalName] = useState();
@@ -37,6 +41,14 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
   // }, []);
   function handleCloseModal() {
     setModalName();
+  }
+
+  function handleLogOut(){
+    dispatch(logout());
+    // localStorage.removeItem(userDetailStorageName);
+    // localStorage.removeItem(accessTokenStorageName);
+    router.push('/')
+
   }
 
   const modalComponent = [
@@ -162,7 +174,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           >
             Settings
           </Link>
-          <div className="py-[12px]">Log out</div>
+          <div onClick={handleLogOut} className="py-[12px] cursor-pointer">Log out</div>
           {/* <div className="py-[12px]">Add to Calendar</div> */}
         </div>
       </CustomDropDown>

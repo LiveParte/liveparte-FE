@@ -4,7 +4,7 @@ import { Fragment, useState } from 'react'
 export default function MyModal({
   bodyComponent,
   isOpen,
-  closeModal,
+  closeModal={},
   containerStyle
 }) {
   
@@ -13,7 +13,7 @@ export default function MyModal({
     <>
     
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-[9999]" onClose={closeModal}>
+        <Dialog as="div" className="relative z-[9998]" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"

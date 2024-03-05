@@ -1,17 +1,17 @@
 export const SettingFormLabel =()=>{
     return [
         {
-            name:'',
+            name:'fullName',
             label:'Name',
             type:'text'
         },
         {
-            name:'',
+            name:'email',
             label:'Email Address',
             type:'text'
         },
         {
-            name:'',
+            name:'phone',
             label:'Phone number',
             type:'text'
         },
@@ -22,17 +22,17 @@ export const SettingFormLabel =()=>{
 export const SecurityFormLabel =()=>{
     return [
         {
-            name:'',
+            name:'password',
             label:'Current password',
             type:'password'
         },
         {
-            name:'',
+            name:'password',
             label:'New password',
             type:'password'
         },
         {
-            name:'',
+            name:'confirmPassword',
             label:'Confirm password',
             type:'password'
         },

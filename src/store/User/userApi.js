@@ -4,12 +4,12 @@ import { baseQuery } from "../api";
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: baseQuery,
-  tagTypes:['users','coupon','admin'],
+  
 
   endpoints: (builder) => ({
     getUserProfile: builder.query({
       query: (body) => ({
-        url: '/user/profile',
+        url: '/auth/profile',
         method: "GET",
         body,
       }),
@@ -20,9 +20,16 @@ export const userApi = createApi({
         method: "GET",
         // body,
       }),
-      providesTags:['users']
+      // providesTags:['users']
     }),
-    
+    //auth/register
+    registerApi: builder.mutation({
+      query: (payload) => ({
+        url: "/auth/register",
+        method: "POST",
+        body: payload,
+      }),
+    }),
     loginApi: builder.mutation({
       query: (payload) => ({
         url: "authentication",
@@ -30,34 +37,8 @@ export const userApi = createApi({
         body: payload,
       }),
     }),
-      ChangeUserStatus: builder.mutation({
-      query: ({
-        id:id,status
-      }) => ({
-        url: `users/${id}`,
-        method: "PATCH",
-        body: {
-          "isActive": status 
-        },
-      }),
-      invalidatesTags:['users']
-    }),
-    getAllAdmin: builder.query({
-      query: (payload) => ({
-        url: "admin/admin-management",
-        method: "GET",
-        body: payload,
-      }),
-      providesTags:['admin']
-    }),
-    addAdminUser: builder.mutation({
-      query: (payload) => ({
-        url: "admin/admin-management",
-        method: "POST",
-        body: payload,
-      }),
-      invalidatesTags:['admin']
-    }),
+    
+    
 //users/35
     //company/manager/:userId/update
     //admin/admin-management
@@ -68,8 +49,7 @@ export const userApi = createApi({
 export const {
  useLoginApiMutation,
  useGetUsersQuery,
- useChangeUserStatusMutation,
- useGetAllAdminQuery,
- useAddAdminUserMutation
+ useRegisterApiMutation,
+ useGetUserProfileQuery
  
 } = userApi;

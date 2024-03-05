@@ -1,13 +1,13 @@
 import { fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
 import { BASE_URL } from "./baseApi/baseUrl";
-import { isValidJson, storage } from "../utils/helper";
+import { accessTokenStorageName, decryptText, storage, userDetailStorageName } from "../utils/helper";
 
 
 // Create our baseQuery instance
 export const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
   prepareHeaders: (headers, { getState }) => {
-    const token =  storage["localStorage"].get('RechargeMater_accessToken');
+    const token =  decryptText(storage.localStorage.get(accessTokenStorageName));
    
     if (token) {
       headers.set("Authorization", `Bearer ${token}`);
@@ -16,12 +16,11 @@ export const baseQuery = fetchBaseQuery({
   },
   validateStatus: (status) => {
     if (status.status === 401) {
-      storage["localStorage"].remove("RechargeMater_accessToken");
+      storage["localStorage"].remove(accessTokenStorageName);
       // storage["localStorage"].remove("user_type");
-      storage["localStorage"].remove("RechargeMater_User");
+      storage["localStorage"].remove(userDetailStorageName);
      
-      setTimeout(() => {
-      }, 2000);
+      
     
       throw new Error("Unauthorized");
     }
