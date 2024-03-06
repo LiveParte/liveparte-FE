@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { CloseModal, GoogleIcon } from "../../../../../public/svg";
-import ButtonComp from "@/components/Ui/button";
-import { FloatingLabelInput } from "@/components/Ui/TextInput";
-import { LoginForm, SignUpForm } from "../Data";
-import { useRegisterApiMutation } from "@/store/User/userApi";
+import { CloseModal } from "../../../../../public/svg";
+import { useLoginApiMutation, useRegisterApiMutation } from "@/store/User/userApi";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 import {
@@ -36,6 +33,8 @@ export default function LoginSignUp({
     { isLoading: registerLoader, isError: registerIsError },
   ] = useRegisterApiMutation();
 
+  const [LoginUser,{isLoading:loginLoader,isError:loginIsError}]=useLoginApiMutation()
+
   const { control, handleSubmit, getValues } = useForm({
     defaultValues: {
       email: "test@gmail4.com",
@@ -46,7 +45,7 @@ export default function LoginSignUp({
     },
   });
 
-  console.log(getValues(), "getValues");
+  // console.log(getValues(), "getValues");
 
   useEffect(() => {
     if (pageName) {
@@ -54,13 +53,46 @@ export default function LoginSignUp({
     }
   }, [pageName]);
 
-  async function handleLogin(e) {
+  async function handleRegister(e) {
     // e.preventDefault();
     const payload = {
       ...e,
       username: e.phoneNumber,
     };
     const handleRegisterUser = await RegisterUser(payload);
+    const response = handleRegisterUser?.data;
+
+    const UserString = JSON.stringify(response?.user);
+    // console.log(handleRegisterUser, UserString, "handleRegisterUser");
+    // toast('Hello! RegisterUser')
+    if (response?.statusCode && response?.statusCode !== 200) {
+      CheckIfArray(response?.message)
+        ? toast.error(response?.message[0])
+        : toast.error(response?.message);
+    }
+    if (response?.user?.createdAt) {
+      toast.success(`User Register Successfully in`);
+      // storage.localStorage.set('accessTokenLiveParte1',response?.accessToken);
+      storage.localStorage.set(
+        accessTokenStorageName,
+        encryptText(response?.accessToken)
+      );
+      storage.localStorage.set(
+        userDetailStorageName,
+        encryptObject(response?.user)
+      );
+      dispatch(setUserData(response?.user));
+      // router.push("/my_shows");
+    }
+  }
+
+  async function handleLogin(e) {
+    // e.preventDefault();
+    const payload = {
+      ...e,
+      usernameOrEmail: e.email,
+    };
+    const handleRegisterUser = await LoginUser(payload);
     const response = handleRegisterUser?.data;
 
     const UserString = JSON.stringify(response?.user);
@@ -80,10 +112,10 @@ export default function LoginSignUp({
       );
       storage.localStorage.set(
         userDetailStorageName,
-        encryptObject(response?.user)
+        UserString
       );
       dispatch(setUserData(response?.user));
-      // router.push("/my_shows");
+     router.push("/my_shows");
     }
   }
 
@@ -122,13 +154,13 @@ export default function LoginSignUp({
         Controller={Controller}
         control={control}
         handleForgetPasswordToggle={handleForgetPasswordToggle}
-
+        isLoading={loginLoader}
         />
       )}
 
       {toggle !== "Login" && (
        <SignUpPage
-       handleLogin={handleLogin}
+       handleLogin={handleRegister}
        handleSubmit={handleSubmit}
        Controller={Controller}
        control={control}

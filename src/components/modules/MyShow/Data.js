@@ -1,3 +1,5 @@
+import { REGEX_PATTERNS } from "@/utils/constants/errors";
+
 export const SettingFormLabel =()=>{
     return [
         {
@@ -8,12 +10,14 @@ export const SettingFormLabel =()=>{
         {
             name:'email',
             label:'Email Address',
-            type:'text'
+            type:'text',
+            pattern:REGEX_PATTERNS?.EMAIL
         },
         {
             name:'phone',
             label:'Phone number',
-            type:'text'
+            type:'number',
+            pattern:REGEX_PATTERNS?.NUMBER
         },
     ]
 };

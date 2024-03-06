@@ -1,9 +1,10 @@
 import React from "react";
 
-export default function ButtonComp({ className, btnText, onClick, isLoading }) {
+export default function ButtonComp({ className, btnText, onClick, isLoading,isDisabled=false }) {
   return (
     <button
       onClick={onClick}
+      disabled={isDisabled}
       className={` bg-[#FFFFFF] h-[45px] px-[16px] rounded-[8px] ${className} hover:scale-100 transition-transform duration-300 ease-in-out flex justify-center items-center gap-1`}
     >
       {isLoading && (

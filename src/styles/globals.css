@@ -168,6 +168,10 @@ body{
   box-shadow: 0px 1px 1px 0px #D8ECF833 inset;
 }
 
+.shadow-4{
+  box-shadow: 0px 0px 0px 2px #BACFF71F inset !important;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;

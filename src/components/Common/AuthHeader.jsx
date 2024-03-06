@@ -132,7 +132,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
             <ButtonComp
               onClick={() => setModalName(`purchaseCoin`)}
               btnText={`Add Coins`}
-              className={`h-[30px] !bg-[#BACFF70A] shadow-1 shadow-2 shadow-3 text-[13px] rounded-[999px]`}
+              className={`h-[30px] !bg-[#BACFF70A] shadow-1 shadow-2 shadow-3 text-[13px] rounded-[999px] border-[#BACFF70A] border-[0.5px]`}
             />
           </div>
         </div>
@@ -259,7 +259,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
               {isOpenPC &&<PurchasePaartyCoinsDropdown/>}
                   <ButtonComp
                     btnText={`Add Coins`}
-                    className={`!h-[32px] py-[6px] px-[17px] !bg-[#BACFF70A] rounded-[999px] shadow-1 shadow-2 shadow-3 text-[10px]`}
+                    className={`!h-[32px] py-[6px] px-[17px] !bg-[#BACFF70A] rounded-[999px]  text-[10px] shadow-4`}
                   onClick={()=>setIsOpenPC(!isOpenPC)}
                   />
                 </div>

@@ -4,22 +4,26 @@ import { baseQuery } from "../api";
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: baseQuery,
-  
+  tagTypes: ["user"],
 
   endpoints: (builder) => ({
+   
     getUserProfile: builder.query({
       query: (body) => ({
         url: '/auth/profile',
         method: "GET",
         body,
       }),
+      providesTags:['user']
     }),
-    getUsers: builder.query({
-      query: (status='') => ({
-        url: `admin/fetch-users${status?`?userType=${status}`:''}`,
-        method: "GET",
+    updateProfile: builder.mutation({
+      query: (payload) => ({
+        url: `/users/${payload?.id}`,
+        method: "PATCH",
+        body: payload,
         // body,
       }),
+      invalidatesTags:['user']
       // providesTags:['users']
     }),
     //auth/register
@@ -32,7 +36,7 @@ export const userApi = createApi({
     }),
     loginApi: builder.mutation({
       query: (payload) => ({
-        url: "authentication",
+        url: "auth/login",
         method: "POST",
         body: payload,
       }),
@@ -48,7 +52,7 @@ export const userApi = createApi({
 
 export const {
  useLoginApiMutation,
- useGetUsersQuery,
+ useUpdateProfileMutation,
  useRegisterApiMutation,
  useGetUserProfileQuery
  
