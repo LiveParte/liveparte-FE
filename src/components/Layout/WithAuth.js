@@ -10,7 +10,7 @@ function WithAuth({ children }) {
   const router = useRouter();
   // let userInfo =storage["localStorage"]?.get(userDetailStorageName)&& decryptObject(storage["localStorage"]?.get(userDetailStorageName));
   const {isLoading,isError} =useGetUserProfileQuery();
-  alert("hello")
+  // alert("hello")
   const user =useSelector(selectCurrentUserData);
    console.log(user,'useSelector')
   const isAuthenticated =false;

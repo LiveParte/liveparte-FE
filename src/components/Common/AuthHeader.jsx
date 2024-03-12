@@ -23,22 +23,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
   const [isOpenPC, setIsOpenPC] = useState(false);
   const dropdownRef = useRef(null);
   const purchaseCoinRef = useRef(null);
-  // useEffect(() => {
-  //   function handleClickOutside(event) {
-  //     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-  //       // Clicked outside the dropdown, so close it
-  //       setIsOpen(false);
-  //     }
-  //   }
-
-  //   // Bind the event listener
-  //   document.addEventListener("mousedown", handleClickOutside);
-
-  //   // Unbind the event listener on component unmount
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, []);
+ 
   function handleCloseModal() {
     setModalName();
   }

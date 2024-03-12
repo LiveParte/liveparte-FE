@@ -11,6 +11,7 @@ import {
 } from "@vidstack/react/player/layouts/default";
 import ReactPlayer from "react-player";
 import { Player } from "video-react";
+import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
 export default function Hero({
   notEvent = true,
   router,
@@ -63,9 +64,9 @@ export default function Hero({
         className={`absolute left-0 right-0 top-0 bottom-0 ${MainContainer}`}
       >
         <div className="absolute left-0 right-0">
-          <Header
-            openModal={openModalLoginSignUp || openModal}
-            className="absolute top-0 left-0 right-0"
+          <IfHeaderIsAuth
+          openModal={openModal}
+          openModalLoginSignUp={openModalLoginSignUp}
           />
         </div>
         <div className="relative">

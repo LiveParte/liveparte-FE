@@ -6057,6 +6057,11 @@ react-fast-marquee@^1.6.4:
   resolved "https://registry.npmjs.org/react-fast-marquee/-/react-fast-marquee-1.6.4.tgz"
   integrity sha512-LAgvhRmHdqaUQ8R5jCUwzEGFUIjnCCt3T3W8X7j7wF6DWe0SATlpP0JX1V0pp2qX3DYUezmn1Iz5AtRFdL2EWQ==
 
+react-geolocated@^4.1.2:
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/react-geolocated/-/react-geolocated-4.1.2.tgz#2a00d3295bdfcd6d215f3fe2b960f8003cee85d0"
+  integrity sha512-/Ec26Wb1h06bB/axHYclBxrG0Yqob0T0W9awRi87cyedC3rMnpOR+Aqb7Q26FAEF+dNWXIpVDGNw1YZtlPUAEw==
+
 react-hook-form@^7.50.0:
   version "7.50.1"
   resolved "https://registry.npmjs.org/react-hook-form/-/react-hook-form-7.50.1.tgz"
