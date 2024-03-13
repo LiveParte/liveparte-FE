@@ -15,7 +15,7 @@ export const eventApi = createApi({
    
     getAllEvent: builder.query({
       query: (id='') => ({
-        url: `/event?skip=0&limit=10`,
+        url: `/event?skip=0&limit=20`,
         method: "GET",
         // body,
       }),
@@ -37,6 +37,14 @@ export const eventApi = createApi({
       }),
       
     }),
+    getEventViaId: builder.query({
+      query: (id='') => ({
+        url: `/event/${id}`,
+        method: "GET",
+        // body,
+      }),
+      
+    }),
    
     //globalservice/all-enums
     //admin/funding-history
@@ -50,6 +58,7 @@ export const eventApi = createApi({
 export const {
 useGetAllEventQuery,
 useGetEventOnDemandQuery,
-useGetEventStreamQuery
+useGetEventStreamQuery,
+useGetEventViaIdQuery
  
 } = eventApi;

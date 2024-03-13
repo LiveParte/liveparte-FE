@@ -3,10 +3,11 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import Link from 'next/link'
 import ButtonComp from "@/components/Ui/button";
+import { MainContainer } from "@/utils/styleReuse";
 export default function Header({ className, openModal }) {
   const router = useRouter();
   const isHome =router?.pathname==="/"
-  const MainContainer = `px-[20px] md:px-[40px] lg:px-[120px] relative`;
+  // const MainContainer = `px-[20px] md:px-[40px] lg:px-[120px] relative`;
   const [dropDown, setDropDown] = useState(false);
   const isFocused =` hover:!bg-[#BAD6F70F] hover:rounded-[999px] hover:border-[#262C32] hover:border-[1px] hover:font500  hover:backdrop-blur-[60px]`
 

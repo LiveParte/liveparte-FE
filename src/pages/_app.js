@@ -6,7 +6,8 @@ import "@vidstack/react/player/styles/default/theme.css";
 import "@vidstack/react/player/styles/default/layouts/video.css";
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
+import { ObjectProvider } from "@/Context/ObjectProvider";
 
 export default function App({ Component, pageProps }) {
   return (
@@ -16,24 +17,23 @@ export default function App({ Component, pageProps }) {
       <Head>
         <title>Live Parte</title>
       </Head>
-      <Provider store={store}>
-      <ToastContainer
-      className={`z-[9999]`}
-      position="top-right"
-autoClose={5000}
-hideProgressBar={false}
-newestOnTop={false}
-closeOnClick
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-
-
-      />
-        <Component {...pageProps} />
-       
-      </Provider>
+      <ObjectProvider>
+        <Provider store={store}>
+          <ToastContainer
+            className={`z-[9999]`}
+            position="top-right"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
+          <Component {...pageProps} />
+        </Provider>
+      </ObjectProvider>
     </>
   );
 }

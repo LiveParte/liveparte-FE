@@ -9,12 +9,26 @@ import Hero from '@/components/modules/Event/Hero'
 import LoginSignUp from '@/components/modules/Event/Modal/Login&SignUp'
 import React, { useState } from 'react'
 import ShareEvent from '@/components/modules/EventDetails/modal/ShareEvent'
+import { useObject } from '@/Context/ObjectProvider'
+import { useGetEventViaIdQuery } from '@/store/Event/eventApi'
+import { useRouter } from 'next/router'
 
 export default function EventId () {
+  const router = useRouter();
+  const { id } = router.query;
   let [isOpen, setIsOpen] = useState();
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const {data,isLoading}=useGetEventViaIdQuery(id,{
+    skip:!id
+  })
 
-  
+  const { myObject } = useObject();
+
+  console.log(data,'myObject')
+
+  // useEffect(() => {
+  //   setEvent(myObject);
+  // }, [myObject?._id]);
 
   function closeModal() {
     setIsOpen(null);
@@ -80,14 +94,14 @@ export default function EventId () {
         closeModal={closeModal}
         openModal={openModal}
       />}
-    <Hero openModalLoginSignUp={openModalLoginSignUp} openModal={openModal} giftTicket={openModalGiftTicket} openModalShareEvent={openModalShareEvent} notEvent={false}/>
+    <Hero HeroSectionEvent={data||myObject} openModalLoginSignUp={openModalLoginSignUp} openModal={openModal} giftTicket={openModalGiftTicket} openModalShareEvent={openModalShareEvent} notEvent={false}/>
     {/* <Dropdown  placement="top" label="Dropdown button" dismissOnClick={false}>
       <DropdownItem>Dashboard</DropdownItem>
       <DropdownItem>Settings</DropdownItem>
       <DropdownItem>Earnings</DropdownItem>
       <DropdownItem>Sign out</DropdownItem>
     </Dropdown> */}
-    <EventDetails/>
+    <EventDetails HeroSectionEvent={data||myObject}/>
     {/* <Happening/> */}
     <Footer/>
 

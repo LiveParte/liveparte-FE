@@ -3,6 +3,9 @@ import React, { useEffect, useRef, useState } from "react";
 import { Daviod } from "../../../../public/svg";
 import { MainContainer } from "@/utils/styleReuse";
 import ButtonComp from "@/components/Ui/button";
+import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
+import moment from "moment";
+import { useObject } from "@/Context/ObjectProvider";
 
 export default function Hero({
   notEvent = true,
@@ -10,10 +13,14 @@ export default function Hero({
   openModal,
   openModalLoginSignUp,
   giftTicket,
-  openModalShareEvent
+  openModalShareEvent,
+  HeroSectionEvent,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const { setMyObject } = useObject();
+  const [event, setEvent] = useState();
+  const { myObject } = useObject();
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -32,6 +39,8 @@ export default function Hero({
     };
   }, []);
 
+
+
   function DropdownMenu() {
     return (
       <div className=" absolute dropdownIII transform translate-x-0 -translate-y-[60px] z-50">
@@ -39,12 +48,21 @@ export default function Hero({
           <div className="py-[12px] cursor-pointer " onClick={giftTicket}>
             Gift a ticket
           </div>
-          <div className="my-[12px] cursor-pointer" onClick={openModalShareEvent}>Share Event</div>
-        <div className="py-[12px]">
-        <a target="_blank" className=" text-white no-underline  "
-          href="https://calendar.google.com/calendar/r/eventedit?text=Your+Event+Names&dates=20140127T224000Z/20140320T221500Z&details=For+details,+link+here:+http://www.example.com&location=Waldorf+Astoria,+301+Park+Ave+,+New+York,+NY+10022&sf=true&output=xml"
-          >Add to Calendar</a>
-        </div>
+          <div
+            className="my-[12px] cursor-pointer"
+            onClick={openModalShareEvent}
+          >
+            Share Event
+          </div>
+          <div className="py-[12px]">
+            <a
+              target="_blank"
+              className=" text-white no-underline  "
+              href="https://calendar.google.com/calendar/r/eventedit?text=Your+Event+Names&dates=20140127T224000Z/20140320T221500Z&details=For+details,+link+here:+http://www.example.com&location=Waldorf+Astoria,+301+Park+Ave+,+New+York,+NY+10022&sf=true&output=xml"
+            >
+              Add to Calendar
+            </a>
+          </div>
         </div>
       </div>
     );
@@ -52,11 +70,12 @@ export default function Hero({
 
   return (
     <div
-      className={`relative font400  bg-[url('/webp/bg1.webp')] bg-center bg-cover  xl:bg-left ${MainContainer} `}
+      className={`relative font400  bg-[url('/webp/bg1.webp')] bg-top bg-cover  xl:bg-left ${MainContainer} `}
+      style={{ backgroundImage: `url(${HeroSectionEvent?.thumbnail_url})` }}
     >
       <div className="">
         <div className="absolute left-0 right-0">
-          <Header
+          <IfHeaderIsAuth
             openModal={openModalLoginSignUp || openModal}
             className="absolute top-0 left-0 right-0"
           />
@@ -69,8 +88,8 @@ export default function Hero({
               className={`relative z-40  flex flex-col  md:justify-start items-center md:items-start  text-center  md:text-start`}
             >
               <Daviod />
-              <div className="mt-[16px] text-[45px] lg:text-[92px]  font-1 text-white font-bold uppercase lg:mb-[32px] leading-[46px] lg:leading-[90px]">
-                Timeless tour - Newyork
+              <div className="mt-[16px] text-[45px] lg:text-[92px] md:text-left font-1 text-white font-bold uppercase lg:mb-[32px] leading-[46px] lg:leading-[90px]">
+                {HeroSectionEvent?.address || "Timeless tour - Newyork"}
               </div>
               {/*  */}
               {notEvent ? (
@@ -79,10 +98,20 @@ export default function Hero({
                     <ButtonComp
                       className={`py-[12px] px-[39px] text-[13px] xl:text-[15px] font500`}
                       btnText={"Learn More"}
-                      onClick={() => router.push("/event/1")}
+                      onClick={() => {
+                        setMyObject(HeroSectionEvent);
+                        router.push({
+                          pathname: `event/${HeroSectionEvent?._id}`,
+                        });
+                      }}
                     />
                     <div className="text-[13px] xl:text-[16px]  text-[#B4BECB] z-10 relative font500">
-                      April 17, 2024 - Watch live
+                      {HeroSectionEvent?.event_date !== "Event Date"
+                        ? moment(HeroSectionEvent?.event_date).format(
+                            "MMMM DD, YYYY"
+                          )
+                        : `April 17, 2024`}{" "}
+                      - Watch live
                     </div>
                   </div>
                   <div className="text-center mt-[20px] lg:mt-[40px] lg:hidden mb-[42px] font500">

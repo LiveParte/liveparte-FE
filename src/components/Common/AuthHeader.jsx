@@ -194,7 +194,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
       <div
         className={`py-[14px] lg:py-[32px] mb-[34px] lg:mb-[75px]  font400 ${MainContainer} ${className} `}
       >
-        <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover  bg-[url('/webp/header.png')] z-30"></div>
+        <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover opacity-30  bg-[url('/webp/header.png')] z-30"></div>
         {/* <LogoWhite/> */}
         <div className="flex items-center justify-between z-50 relative cursor-pointer">
         <Image
@@ -219,12 +219,12 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
               <ButtonComp
                 btnText="Browse event"
                 className="text-[15px] font-medium  hidden lg:block !py-[11px] px-[5px] xl:px-[32px]  gap-[10px] !bg-transparent rounded-[999px]   font500 text-white backdrop-blur-[60px]"
-                onClick={() => router.push("/")}
+                onClick={() => router.push("/event")}
               />
               <ButtonComp
                 btnText="On demand"
                 className="text-[15px] font-medium  hidden lg:block !py-[11px] px-[5px] xl:px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white backdrop-blur-[60px]"
-                // onClick={() => router.push("/")}
+                onClick={() => router.push("/event")}
               />
               <ButtonComp
                 btnText="My shows"
