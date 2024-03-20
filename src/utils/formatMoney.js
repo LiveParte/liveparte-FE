@@ -8,7 +8,7 @@ export const formatMoney = (amount, koboRes = true,currencySymbol ='₦') => {
     let naira = amount[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     let kobo = String(amount[1]);
     if (!kobo || kobo === "undefined") kobo = "00";
-    return koboRes ? `${currencySymbol} ${naira}.${kobo}` :`${currencySymbol}${naira}`;
+    return koboRes ? ` ${naira}.${kobo}` :`${naira}`;
 };
 
 

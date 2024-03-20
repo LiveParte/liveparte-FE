@@ -6,15 +6,19 @@ import { FloatingLabelTextArea } from "@/components/Ui/TextArea";
 import { CountdownTimerII } from "@/utils/reusableComponent";
 import { useRouter } from "next/router";
 import { CloseII } from "../../../../../public/svg";
+import { formatMoney } from "@/utils/formatMoney";
 
 
 export default function ShareEvent({
-  closeModal
+  closeModal,
+  Data
 }) {
   const router = useRouter();
   const handleAction = () =>{
     // router.push('/event_time_out')
   }
+
+  console.log(Data)
   return (
     <div className="bg-[#1B1C20] pb-[56px] px-[16px] lg:px-[56px] pt-[16px] lg:pt-[24px]">
       <nav className="flex justify-between items-center mb-[32px]">
@@ -28,8 +32,9 @@ export default function ShareEvent({
       <main>
         <div className="flex items-center gap-[17px]  mb-[54px]">
           <div>
-            <img
-              src="/webp/bg1.webp"
+          <img
+             src={Data?.
+              thumbnail_url||"/webp/bg1.webp"}
               className="w-[89px] h-[89px] object-cover rounded-[8px]"
             />
           </div>
@@ -41,7 +46,7 @@ export default function ShareEvent({
             <div className="text-[#B4BECB] text-[15px] mb-[6px] flex items-center">
             Apr 24 <div className="rounded-full h-[4px] w-[4px] bg-[#D9D9D9] mx-[8px]"></div> O2 Cinema Arena Concert
             </div>
-            <div className="text-[14px] text-white font500">₦48,000 </div>
+            <div className="text-[14px] text-white font500">{Data?.ticket?.code} {formatMoney(Data?.ticket?.price,false||'0')} </div>
           </div>
         </div>
 

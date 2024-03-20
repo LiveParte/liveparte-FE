@@ -4,6 +4,7 @@ import ButtonComp from "@/components/Ui/button";
 import { SecurityFormLabel, SettingFormLabel } from "../MyShow/Data";
 import { NoProfile } from "../../../../public/svg";
 import {
+  useChangePasswordMutation,
   useGetUserProfileQuery,
   useUpdateProfileMutation,
 } from "@/store/User/userApi";
@@ -13,10 +14,12 @@ import { CheckIfArray } from "@/utils/helper";
 
 export default function SettingForm({ isActive }) {
   const { data, isLoading, isError } = useGetUserProfileQuery();
+  const [UpdatePassword, { isLoading: updatePasswordLoader }] =
+    useChangePasswordMutation();
   const [UpdateUser, { isLoading: updateUserLoader }] =
     useUpdateProfileMutation();
 
-  const { control, handleSubmit, setValue } = useForm({
+  const { control, handleSubmit, setValue, watch, setError,reset } = useForm({
     defaultValues: {
       fullName: "",
       email: "",
@@ -25,6 +28,9 @@ export default function SettingForm({ isActive }) {
       state: "Lagos",
       address: "No 4. olawunmi street, Lagos, Nigeria",
       id: "",
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
     },
   });
 
@@ -36,6 +42,8 @@ export default function SettingForm({ isActive }) {
     setValue("phone", data?.phone);
     setValue("fullName", data?.fullName);
   }, [data?._id]);
+
+  const confirmPassword = watch("confirmPassword");
 
   async function handleUpdateUser(data) {
     const payload = {
@@ -59,6 +67,46 @@ export default function SettingForm({ isActive }) {
 
       // dispatch(setUserData(response?.user));
       //  router.push("/my_shows");
+    }
+  }
+
+  async function handleUpdatePassword(data) {
+    const payload = {
+      ...data,
+    };
+
+    console.log(payload);
+    if (payload?.newPassword !== payload?.confirmPassword) {
+      return setError("confirmPassword", {
+        type: "custom",
+        message: "Confirm New Password must be the same as New Password ",
+      });
+    }
+    const handleRegisterUser = await UpdatePassword(payload);
+    const response = handleRegisterUser?.data;
+
+    // console.log(handleRegisterUser, "responseresponseresponse");
+
+    if (response?.statusCode && response?.statusCode !== 200) {
+      if (CheckIfArray(response?.message)) {
+        toast.error(response?.message[0]);
+      } else {
+        if(response?.message==="Current password is incorrect"){
+          return setError("currentPassword", {
+            type: "custom",
+            message: response?.message,
+          });
+        }
+        toast.error(response?.message);
+      }
+    }
+    if (response?.message==="Password changed successfully") {
+      reset()
+      setValue("email", data?.email);
+      setValue("id", data?._id);
+      setValue("phone", data?.phone);
+      setValue("fullName", data?.fullName);
+     return toast.success(response?.message);
     }
   }
 
@@ -120,13 +168,15 @@ export default function SettingForm({ isActive }) {
         )}
         {isActive == "Security" && (
           <div className="flex flex-col gap-[20px] ">
-            {SecurityFormLabel()?.map((item, index) => (
+            {SecurityFormLabel(confirmPassword)?.map((item, index) => (
               <Controller
                 control={control}
                 name={item?.name}
                 rules={{
                   required: `${item?.label} is required`,
                   pattern: item?.pattern,
+                  // validate:value=>console.log(value,confirmPassword)
+                  // validate:value=>item?.handlePasswordValidate?item?.handlePasswordValidate(value):{}
                 }}
                 render={({
                   field: { onChange, value },
@@ -149,6 +199,8 @@ export default function SettingForm({ isActive }) {
               <ButtonComp
                 btnText={"Save Changes"}
                 className={`w-full text-[13px] font500`}
+                onClick={handleSubmit(handleUpdatePassword)}
+                isLoading={updatePasswordLoader}
               />
             </div>
           </div>

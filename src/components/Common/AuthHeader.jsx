@@ -179,6 +179,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
     );
   }
   // border-[#262C32] border-[1px]
+  const blur=`backdrop-blur-[60px]`
   return (
     <>
       <MyModal
@@ -218,17 +219,17 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
             <div className="flex items-center  lg:gap-[18px] xl:gap-[24px] !hover:scale-100">
               <ButtonComp
                 btnText="Browse event"
-                className="text-[15px] font-medium  hidden lg:block !py-[11px] px-[5px] xl:px-[32px]  gap-[10px] !bg-transparent rounded-[999px]   font500 text-white backdrop-blur-[60px]"
+                className="text-[15px] font-medium  hidden lg:block !py-[11px] px-[5px] xl:px-[32px]  gap-[10px] !bg-transparent rounded-[999px]   font500 text-white "
                 onClick={() => router.push("/event")}
               />
               <ButtonComp
                 btnText="On demand"
-                className="text-[15px] font-medium  hidden lg:block !py-[11px] px-[5px] xl:px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white backdrop-blur-[60px]"
+                className="text-[15px] font-medium  hidden lg:block !py-[11px] px-[5px] xl:px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white "
                 onClick={() => router.push("/event")}
               />
               <ButtonComp
                 btnText="My shows"
-                className="text-[15px] font-medium  hidden lg:block !py-[11px] px-[5px] xl:px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white backdrop-blur-[60px]"
+                className="text-[15px] font-medium  hidden lg:block !py-[11px] px-[5px] xl:px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white "
                 onClick={() => router.push("/my_shows")}
               />
             </div>

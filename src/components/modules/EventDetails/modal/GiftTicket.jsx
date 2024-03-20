@@ -6,10 +6,12 @@ import { FloatingLabelTextArea } from "@/components/Ui/TextArea";
 import { CountdownTimerII } from "@/utils/reusableComponent";
 import { useRouter } from "next/router";
 import { CloseII } from "../../../../../public/svg";
+import { formatMoney } from "@/utils/formatMoney";
 
 
 export default function GiftTicket({
-  closeModal
+  closeModal,
+  Data
 }) {
   const router = useRouter();
   const handleAction = () =>{
@@ -28,7 +30,8 @@ export default function GiftTicket({
         <div className="flex items-center gap-[17px]  mb-[54px]">
           <div>
             <img
-              src="/webp/bg1.webp"
+             src={Data?.
+              thumbnail_url||"/webp/bg1.webp"}
               className="w-[89px] h-[89px] object-cover rounded-[8px]"
             />
           </div>
@@ -36,10 +39,10 @@ export default function GiftTicket({
             <div className="text-[#63768D] text-[13px] mb-[5px]">
               Livestream ticket
             </div>
-            <div className="text-[14px] text-white font500 mb-[5px]">
-              Timeless tour - Newyork
+            <div className="text-[14px] text-white font500 mb-[5px] lg:w-[70%]">
+            {Data?.address}
             </div>
-            <div className="text-[14px] text-white font500">₦48,000 </div>
+            <div className="text-[14px] text-white font500">{Data?.ticket?.code} {formatMoney(Data?.ticket?.price,false||'0')}</div>
           </div>
         </div>
 
@@ -59,7 +62,7 @@ export default function GiftTicket({
         </form>
 
         <ButtonComp
-          btnText={`Proceed To Make Payment ₦48,000 `}
+          btnText={`Proceed To Make Payment ${Data?.ticket?.code} ${formatMoney(Data?.ticket?.price,false||'0')} `}
           className={`w-full text-[13px] font500] h-[44px] mt-[54px]`}
         />
       </main>

@@ -26,14 +26,14 @@ export default function Happening({
         renderItem={(item)=>
           <ShowsCard
           // key={i}
-          id={item?.id}
+          id={item?._id}
           name={item?.name}
           venue={item?.address}
           showImage={item?.thumbnail_url
             ?.toString()}
           isLive={item?.isLive}
           eventDate={item?.event_date}
-
+item={item}
         />
         }
         />

@@ -8,7 +8,7 @@ export default function EventTimeOut() {
   const router = useRouter();
   return (
     <div className='h-[100vh] flex flex-col'>
-        <HeroTime onClick={()=>router.push('/event/2')}/>
+        <HeroTime onClick={()=>router.back()}/>
         <Footer/>
     </div>
   )

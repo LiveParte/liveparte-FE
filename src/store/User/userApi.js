@@ -7,14 +7,13 @@ export const userApi = createApi({
   tagTypes: ["user"],
 
   endpoints: (builder) => ({
-   
     getUserProfile: builder.query({
       query: (body) => ({
-        url: '/auth/profile',
+        url: "/auth/profile",
         method: "GET",
         body,
       }),
-      providesTags:['user']
+      providesTags: ["user"],
     }),
     updateProfile: builder.mutation({
       query: (payload) => ({
@@ -23,7 +22,7 @@ export const userApi = createApi({
         body: payload,
         // body,
       }),
-      invalidatesTags:['user']
+      invalidatesTags: ["user"],
       // providesTags:['users']
     }),
     //auth/register
@@ -41,19 +40,25 @@ export const userApi = createApi({
         body: payload,
       }),
     }),
-    
-    
-//users/35
+    changePassword: builder.mutation({
+      query: (payload) => ({
+        url: "auth/change-password",
+        method: "POST",
+        body: payload,
+      }),
+      invalidatesTags: ["user"],
+    }),
+    //users/35
     //company/manager/:userId/update
     //admin/admin-management
-   
+    //auth/change-password
   }),
 });
 
 export const {
- useLoginApiMutation,
- useUpdateProfileMutation,
- useRegisterApiMutation,
- useGetUserProfileQuery
- 
+  useLoginApiMutation,
+  useUpdateProfileMutation,
+  useRegisterApiMutation,
+  useGetUserProfileQuery,
+  useChangePasswordMutation
 } = userApi;

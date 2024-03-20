@@ -23,22 +23,25 @@ export const SettingFormLabel =()=>{
 };
 
 
-export const SecurityFormLabel =()=>{
+export const SecurityFormLabel =(confirmPassword)=>{
     return [
         {
-            name:'password',
+            name:'currentPassword',
             label:'Current password',
             type:'password'
         },
         {
-            name:'password',
+            name:'newPassword',
             label:'New password',
-            type:'password'
+            type:'password',
+          
         },
         {
             name:'confirmPassword',
-            label:'Confirm password',
-            type:'password'
+            label:'Confirm New password',
+            type:'password',
+            handlePasswordValidate:(value)=>value === confirmPassword || "The passwords do not match"
+            // handlePasswordValidate:(value)=>console.log(value,confirmPassword,value===confirmPassword,'confirmPassword')
         },
     ]
 }

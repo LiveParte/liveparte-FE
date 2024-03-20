@@ -6,6 +6,8 @@ import ButtonComp from "@/components/Ui/button";
 import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
 import moment from "moment";
 import { useObject } from "@/Context/ObjectProvider";
+import { formatMoney } from "@/utils/formatMoney";
+import { GetTransformedImageUrl } from "@/utils/reusableComponent";
 
 export default function Hero({
   notEvent = true,
@@ -15,6 +17,7 @@ export default function Hero({
   giftTicket,
   openModalShareEvent,
   HeroSectionEvent,
+  makePayment
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -68,10 +71,12 @@ export default function Hero({
     );
   }
 
+  // console.log(HeroSectionEvent,'HeroSectionEvent')
+
   return (
     <div
-      className={`relative font400  bg-[url('/webp/bg1.webp')] bg-top bg-cover  xl:bg-left ${MainContainer} `}
-      style={{ backgroundImage: `url(${HeroSectionEvent?.thumbnail_url})` }}
+      className={`relative font400  bg-[url('/webp/bg1.webp')] bg-cover bg-center  xl:bg-top ${MainContainer} `}
+      style={{ backgroundImage: HeroSectionEvent?.thumbnail_url&&`url(${GetTransformedImageUrl(HeroSectionEvent?.thumbnail_url,1140,1830)})`,backgroundAttachment:'fixed' }}
     >
       <div className="">
         <div className="absolute left-0 right-0">
@@ -88,7 +93,7 @@ export default function Hero({
               className={`relative z-40  flex flex-col  md:justify-start items-center md:items-start  text-center  md:text-start`}
             >
               <Daviod />
-              <div className="mt-[16px] text-[45px] lg:text-[92px] md:text-left font-1 text-white font-bold uppercase lg:mb-[32px] leading-[46px] lg:leading-[90px]">
+              <div className="mt-[16px] text-[45px] lg:text-[92px] md:text-left font-1 text-white font-bold uppercase lg:mb-[32px] leading-[46px] lg:leading-[90px] lg:w-[75%]">
                 {HeroSectionEvent?.address || "Timeless tour - Newyork"}
               </div>
               {/*  */}
@@ -134,10 +139,11 @@ export default function Hero({
                     <div className="mb-[100px] hidden md:flex gap-[16px] items-center relative">
                       {isOpen && <DropdownMenu />}
                       <ButtonComp
+                      isDisabled={!HeroSectionEvent?.ticket?.code}
                         onClick={openModal}
                         className={`py-[12px] px-[39px] text-[13px] xl:text-[15px] font500`}
-                        btnText={"Get Ticket ₦24,000"}
-                      />
+                        btnText={`Get Ticket ${HeroSectionEvent?.ticket?.code||""} ${formatMoney(HeroSectionEvent?.ticket?.price||' ',false)}`}
+                        />
                       <div className="" onClick={() => setIsOpen(!isOpen)}>
                         <img
                           src="/webp/dots.png"
@@ -158,7 +164,7 @@ export default function Hero({
                         <ButtonComp
                           onClick={openModal}
                           className={`py-[12px] px-[20px] md:px-[34px] lg:px-[57px] text-[13px] md:text-[15px] font500 `}
-                          btnText={"Get Ticket ₦24,000"}
+                          btnText={`Get Ticket ${HeroSectionEvent?.ticket?.code} ${HeroSectionEvent?.ticket?.price}`}
                         />
                         <div onClick={() => setIsOpen(!isOpen)}>
                           <img

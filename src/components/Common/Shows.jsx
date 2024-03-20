@@ -1,6 +1,8 @@
 import React from "react";
 import { Play } from "../../../public/svg";
 import moment from "moment";
+import { useRouter } from "next/router";
+import { useObject } from "@/Context/ObjectProvider";
 
 export default function ShowsCard({
   name,
@@ -10,9 +12,13 @@ export default function ShowsCard({
   id,
   showHeader = true,
   eventDate,
+  item
+  
 }) {
   const backgroundImage = `https://res.cloudinary.com/dammymoses/image/upload/v1710175667/LiveParte/a7_zeemus.png`;
-  // alert(id)
+  const router = useRouter();
+  const { setMyObject } = useObject();
+
   const backUrl =
     id == 1
       ? `bg-[url('https://res.cloudinary.com/dammymoses/image/upload/v1710175667/LiveParte/a7_zeemus.png')]`
@@ -45,7 +51,13 @@ export default function ShowsCard({
               </span>
             )}
           </div>
-          <div className="flex-[1] flex justify-center items-center absolute left-0 right-0 -top-[50px] md:-top-[70px] lg:-top-[100px] bottom-0  bg-gradient-to-t from-[#00000079]">
+          <div className="flex-[1] flex justify-center items-center absolute left-0 right-0 -top-[50px] md:-top-[70px] lg:-top-[100px] bottom-0  bg-gradient-to-t from-[#00000079]" onClick={()=>{
+              setMyObject(item);
+             router.push({
+              pathname: `event/${id}`,
+            });
+            //id
+          }}>
             <Play />
           </div>
 
