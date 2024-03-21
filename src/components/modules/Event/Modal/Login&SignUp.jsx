@@ -35,7 +35,7 @@ export default function LoginSignUp({
 
   const [LoginUser,{isLoading:loginLoader,isError:loginIsError}]=useLoginApiMutation()
 
-  const { control, handleSubmit, getValues } = useForm({
+  const { control, handleSubmit, getValues,reset } = useForm({
     defaultValues: {
       // email: "test@gmail4.com",
       // username: "dammymoses4",
@@ -77,6 +77,8 @@ export default function LoginSignUp({
     }
     if (response?.user?.createdAt) {
       toast.success(`User Register Successfully in`);
+      reset();
+      setToggle('Login')
       // storage.localStorage.set('accessTokenLiveParte1',response?.accessToken);
       storage.localStorage.set(
         accessTokenStorageName,
@@ -103,10 +105,14 @@ export default function LoginSignUp({
     const UserString = JSON.stringify(response?.user);
     // console.log(handleRegisterUser, UserString, "handleRegisterUser");
     // toast('Hello! RegisterUser')
-    if (response?.statusCode && response?.statusCode !== 200) {
-      CheckIfArray(response?.message)
-        ? toast.error(response?.message[0])
-        : toast.error(response?.message);
+
+    console.log(handleRegisterUser,'response')
+    // if (response?.statusCode && response?.statusCode !== 200) {
+      if (handleRegisterUser?.error?.message ==="Unauthorized") {
+      // CheckIfArray(response?.message)
+      //   ? toast.error(response?.message[0])
+      //   : toast.error(response?.message);
+      toast.error("Invalid credentials");
     }
     if (response?.user?.createdAt) {
       toast.success(`User Successfully Logged in`);
@@ -120,7 +126,7 @@ export default function LoginSignUp({
         UserString
       );
       dispatch(setUserData(response?.user));
-     router.push("/my_shows");
+     router.push("/event");
     }
   }
 
