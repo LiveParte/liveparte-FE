@@ -12,11 +12,12 @@ import BlurryImage from "@/components/Common/LazyLoader";
 export default function EmailSent({onNext}) {
   const { control, handleSubmit, getValues } = useForm({
     defaultValues: {
-      email: "test@gmail4.com",
-      username: "dammymoses4",
-      password: "Password@4",
-      phoneNumber: "0814409584848",
-      fullName: "Test Name",
+      email: "",
+      username: "",
+      password: "",
+      phoneNumber: "",
+      fullName: "",
+     
     },
   });
   return (

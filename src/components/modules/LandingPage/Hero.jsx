@@ -66,10 +66,10 @@ export default function Hero({
             {/* <div className="h-[45vh] md:h-[20vh]" /> */}
 
             <div
-              className={`relative z-40  flex flex-col  md:justify-start items-center md:items-start   md:text-start`}
+              className={`relative z-40  flex flex-col  md:justify-start items-start md:items-start   md:text-start`}
             >
               <div className="">
-                <div className="font-1 text-wrap flex-wrap text-[35px] md:text-[70px] lg:text-[100px] font-bold text-white uppercase mb-[15px] md:mb-[8px] lg:mb-[16px] md:text-start leading-none md:leading-[110px] flex   items-center ">
+                <div className="font-1 text-wrap flex-wrap text-[35px] md:text-[70px] lg:text-[100px] font-bold text-white uppercase mb-[15px] md:mb-[8px] lg:mb-[16px] md:text-start leading-none md:leading-[110px] flex   items-start ">
                   Never miss the
                   <div className="text-[#FFC41B]">
                    
@@ -86,7 +86,7 @@ export default function Hero({
                     </motion.div>
                   </div>
                 </div>
-                <div className="text-white w-[75vw] md:w-[65vw] lg:w-[45vw]  mb-[40px] :-text-start md:text-start text-[13px] md:text-[20px] font400">
+                <div className="text-white w-[75vw] md:w-[65vw] lg:w-[45vw] tracking-[1px] lg:tracking-normal  mb-[60px] :-text-start md:text-start text-[13px] md:text-[20px] font400">
                   Get direct access to live and on-demand concert, performances
                   by your award-winning artistes and comedians anywhere in the
                   world from the comfort of your devices

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { FloatingLabelInput } from "@/components/Ui/TextInput";
 import ButtonComp from "@/components/Ui/button";
 import { SecurityFormLabel, SettingFormLabel } from "../MyShow/Data";
@@ -12,14 +12,28 @@ import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 import { CheckIfArray } from "@/utils/helper";
 
-export default function SettingForm({ isActive }) {
+export default function SettingForm({ isActive,CloudinaryUpload }) {
+  //upload Image
+  const hiddenFileInput = useRef(null);
+
+  const handleClick = (event) => {
+    hiddenFileInput.current.click();
+  };
+
+  const handleChange = (event) => {
+    const fileUploaded = event.target.files[0];
+    CloudinaryUpload(fileUploaded)
+    // handleFile(fileUploaded);
+  };
+
+  //
   const { data, isLoading, isError } = useGetUserProfileQuery();
   const [UpdatePassword, { isLoading: updatePasswordLoader }] =
     useChangePasswordMutation();
   const [UpdateUser, { isLoading: updateUserLoader }] =
     useUpdateProfileMutation();
 
-  const { control, handleSubmit, setValue, watch, setError,reset } = useForm({
+  const { control, handleSubmit, setValue, watch, setError, reset } = useForm({
     defaultValues: {
       fullName: "",
       email: "",
@@ -91,7 +105,7 @@ export default function SettingForm({ isActive }) {
       if (CheckIfArray(response?.message)) {
         toast.error(response?.message[0]);
       } else {
-        if(response?.message==="Current password is incorrect"){
+        if (response?.message === "Current password is incorrect") {
           return setError("currentPassword", {
             type: "custom",
             message: response?.message,
@@ -100,13 +114,13 @@ export default function SettingForm({ isActive }) {
         toast.error(response?.message);
       }
     }
-    if (response?.message==="Password changed successfully") {
-      reset()
+    if (response?.message === "Password changed successfully") {
+      reset();
       setValue("email", data?.email);
       setValue("id", data?._id);
       setValue("phone", data?.phone);
       setValue("fullName", data?.fullName);
-     return toast.success(response?.message);
+      return toast.success(response?.message);
     }
   }
 
@@ -116,11 +130,20 @@ export default function SettingForm({ isActive }) {
         <div className="mb-[29px] flex items-center gap-[12px] text-white">
           <div className="h-[48px] w-[48px]">
             <NoProfile />
+            <input
+              type="file"
+              onChange={handleChange}
+              ref={hiddenFileInput}
+              style={{ display: "none" }} // Make the file input element invisible
+            />
           </div>
           <div className="text-[12px] leading-[20px] ">
             Upload your profile photo, it should be a maximum{" "}
             <br className="hidden md:block" /> size of 5 MB.
-            <span className="ml-2 text-[#FA4354] cursor-pointer">
+            <span
+              onClick={handleClick}
+              className="ml-2 text-[#FA4354] cursor-pointer hover:underline"
+            >
               Change my photo
             </span>
           </div>
@@ -132,6 +155,7 @@ export default function SettingForm({ isActive }) {
           <div className="flex flex-col gap-[20px] ">
             {SettingFormLabel()?.map((item, index) => (
               <Controller
+              key={index}
                 control={control}
                 name={item?.name}
                 rules={{
@@ -170,6 +194,7 @@ export default function SettingForm({ isActive }) {
           <div className="flex flex-col gap-[20px] ">
             {SecurityFormLabel(confirmPassword)?.map((item, index) => (
               <Controller
+              key={index}
                 control={control}
                 name={item?.name}
                 rules={{

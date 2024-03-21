@@ -16,6 +16,9 @@ export default function SignUpPage({
     <div className="w-full ">
       <div className="mb-[28px] ">
         <ButtonComp
+        onClick={(e)=>{
+          e.preventDefault();
+        }}
           className={`w-full text-[#060809] text-[13px] font500`}
           btnText={
             <div className="flex justify-center items-center gap-[12px]">
@@ -35,6 +38,7 @@ export default function SignUpPage({
     </div>
     {SignUpForm()?.map((item, index) => (
       <Controller
+      key={index}
         control={control}
         name={item?.name}
         rules={{
