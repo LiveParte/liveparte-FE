@@ -4,7 +4,11 @@ import ShowsCard from "@/components/Common/Shows";
 import { dummyShowData } from "./Data";
 import Carousel from "@/components/Common/Carousel";
 
-export default function Happening() {
+export default function Happening({
+  events,
+  upComingEvent,
+  OnDemandEvent
+}) {
   const container = "pl-[20px] pr-[20px] lg:px-[60px]";
   return (
    <div className="bg-[#060809] ">
@@ -18,15 +22,18 @@ export default function Happening() {
       {/*  */}
       <div className={container}>
         <Carousel
-        Data={dummyShowData}
+        Data={events}
         renderItem={(item)=>
           <ShowsCard
           // key={i}
-          id={item?.id}
+          id={item?._id}
           name={item?.name}
-          venue={item?.venue}
-          showImage={item?.showImage.toString()}
+          venue={item?.address}
+          showImage={item?.thumbnail_url
+            ?.toString()}
           isLive={item?.isLive}
+          eventDate={item?.event_date}
+item={item}
         />
         }
         />
@@ -54,14 +61,16 @@ export default function Happening() {
       {/*  */}
       <div className={container}>
       <Carousel
-        Data={dummyShowData}
+        Data={upComingEvent}
         renderItem={(item,i)=>
           <ShowsCard
           // key={i}
           id={item?.id}
           name={item?.name}
-          venue={item?.venue}
-          showImage={item?.showImage.toString()}
+          venue={item?.address}
+          showImage={item?.thumbnail_url
+            ?.toString()}
+          eventDate={item?.event_date}
           isLive={false}
         />
         }
@@ -80,16 +89,17 @@ export default function Happening() {
       {/*  */}
       <div className={container}>
       <Carousel
-        Data={dummyShowData}
+        Data={OnDemandEvent}
         renderItem={(item,i)=>
           <ShowsCard
           // key={i}
           id={item?.id}
           name={item?.name}
-          venue={item?.venue}
-          showImage={item?.showImage.toString()}
+          venue={item?.address}
+          showImage={item?.thumbnail_url
+            ?.toString()}
+          eventDate={item?.event_date}
           isLive={false}
-          showHeader={false}
         />
         }
         />

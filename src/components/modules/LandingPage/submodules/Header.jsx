@@ -8,8 +8,8 @@ export default function Header({ className, openModal }) {
   const isHome = router?.pathname === "/";
   const MainContainer = `px-[20px] md:px-[40px] lg:px-[120px] relative`;
   const [dropDown, setDropDown] = useState(false);
-  const isFocused = ` hover:!bg-[#BAD6F70F] hover:rounded-[999px] hover:border-[#262C32] hover:border-[1px] hover:font500  hover:backdrop-blur-[60px]`;
-
+  const isFocused = ` hover:!bg-[#BAD6F70F] hover:rounded-[999px] hover:border-[#262C32] hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`;
+const isSelected=`border-[#262C32] border-[1px] backdrop-blur-[60px] !bg-[#BAD6F70F]  `
   const handleCheckIfITHome = () => {
     isHome && setDropDown(false);
   };
@@ -53,11 +53,21 @@ export default function Header({ className, openModal }) {
           </Link>
         </div>
 
-        <ButtonComp
-          onClick={() => openModal("SignUp")}
-          btnText={`Log In/Sign Up`}
-          className={`text-[13px] font500 mb-[32px] `}
-        />
+        <div>
+          
+
+          <ButtonComp
+            onClick={() => openModal("SignUp")}
+            btnText={`Sign Up`}
+            className={`text-[13px] font500 mb-[16px]  w-full`}
+          />
+          <ButtonComp
+            onClick={() => openModal(`Login`)}
+            btnText={`Login`}
+            className={`text-[13px] font500 mb-[28px]  w-full !bg-[#27292e] text-white`}
+          />
+          <div></div>
+        </div>
       </div>
     );
   };
@@ -68,13 +78,13 @@ export default function Header({ className, openModal }) {
       {dropDown && <MenuDropdown />}
 
       <div
-        className={`pt-[14px]  lg:pt-[28px] pb-[29px]  font400 ${className} ${MainContainer}`}
+        className={`py-[16px] font400 ${className} ${MainContainer}`}
       >
         <div
           className="absolute left-0 right-0 top-0 bottom-0 bg-cover  
        
         bg-[#06080933]
-        z-30  backdrop-blur-[50px]"
+        z-30  backdrop-blur-[10px]"
         ></div>
         {/* <LogoWhite/> */}
         <div className="flex justify-between z-50 relative cursor-pointer">
@@ -98,24 +108,24 @@ export default function Header({ className, openModal }) {
           <div className="flex items-center gap-[24px]">
             <ButtonComp
               btnText="Browse event"
-              className={`text-[15px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-[#BAD6F70F]  rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px]  focus:${isFocused}`}
+              className={`text-[13px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] bg-transparent rounded-[999px]  font500 text-white  focus:${isFocused}`}
               onClick={()=>router.push("/event")}
             />
             <ButtonComp
               btnText="On demand"
-              className={`text-[15px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white ${isFocused} `}
+              className={`text-[13px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white ${isFocused} `}
               onClick={()=>router.push("/event")}
             />
           </div>
           <div>
-            <div className="hidden lg:flex  gap-x-[40px] items-center">
+            <div className="hidden lg:flex  gap-x-[40px] items-center ">
               <ButtonComp
                 onClick={() => openModal("Login")}
                 btnText="Log In"
                 className="text-[13px] font-medium font500 bg-transparent px-0 text-white font500"
               />
               <ButtonComp
-                onClick={() => openModal("SignUp")}
+                onClick={() =>  openModal("SignUp")}
                 btnText="Sign Up"
                 className="text-[13px] font-medium font500 px-[40px] py-[12px]"
               />
@@ -123,7 +133,7 @@ export default function Header({ className, openModal }) {
             <ButtonComp
               onClick={() => setDropDown(true)}
               btnText="Menu"
-              className="text-[13px] font-medium  lg:hidden !py-[8px] !px-[24px] gap-[10px] !bg-[#BAD6F70F] rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px] h-fit"
+              className="text-[13px] font-medium  lg:hidden !py-[8px] !px-[24px] gap-[10px] !bg-[#BAD6F70F] rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px] h-fit "
             />
           </div>
         </div>

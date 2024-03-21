@@ -1,14 +1,17 @@
 import { MainContainer } from "@/utils/styleReuse";
 import React from "react";
 import { EventIcon1, EventIcon2, EventIcon3 } from "../../../../public/svg";
+import moment from "moment";
 
-export default function EventDetails() {
+export default function EventDetails({
+  HeroSectionEvent
+}) {
   return (
     <div className={`${MainContainer}  bg-[#060809] pt-4`}>
       <div className=" bg-[#060809]">
         <div className="lg:w-[75%] text-white text-[20px] lg:text-[35px] font600 leading-[27px] lg:leading-[45px] pb-[53px] lg:pb-[101px]">
-        Davido is going to shut down the event as usual with amazing performances, never failing to disappoint. Get your ticket now so you don’t miss out on the fun!
-        </div>
+{     HeroSectionEvent?.description||   'Davido is going to shut down the event as usual with amazing performances, never failing to disappoint. Get your ticket now so you don’t miss out on the fun!'
+}        </div>
 
         <div className="flex flex-wrap gap-[56px] lg:gap-[148px] items-center pb-[111px]">
         <div className="flex">
@@ -17,9 +20,9 @@ export default function EventDetails() {
               <EventIcon1 />
             </div>
             <div>
-              <div className="text-[#63768D] text-[15px]">Wednesday</div>
+              <div className="text-[#63768D] text-[15px]">{moment(HeroSectionEvent?.createdAt).format('dddd')||`Wednesday`}</div>
               <div className="text-[#FFFFFF] text-[15px] font500">
-                April 17, 2024
+                {moment(HeroSectionEvent?.createdAt).format("MMM Do, YYYY") }
               </div>
             </div>
           </div>

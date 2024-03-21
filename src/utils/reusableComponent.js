@@ -3,7 +3,7 @@
   import React, { useEffect, useState } from "react";
 
 export function CountdownTimerII({ initialTime, onTimerEnd }) {
-  const [time, setTime] = useState(30);
+  const [time, setTime] = useState(240);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -32,3 +32,18 @@ export function CountdownTimerII({ initialTime, onTimerEnd }) {
 }
 
 // export default CountdownTimer;
+
+
+
+export function GetTransformedImageUrl(cloudinaryUrl, width=300, height=300) {
+  // console.log(cloudinaryUrl,'cloudinaryUrl')
+  const urlParts = cloudinaryUrl?.split('/');
+  const imageName = urlParts[urlParts?.length - 1]; // Get the image name from the URL
+ 
+  const cloudNameIndex = urlParts?.indexOf('upload') + 1;
+  const cloudName = urlParts[cloudNameIndex]; // Get the cloud name from the URL
+
+  const transformedImageUrl = `https://res.cloudinary.com/dammymoses/image/upload/w_${width}/h_${height}/${cloudName}/LiveParte/${imageName}`;
+  console.log(cloudinaryUrl,urlParts,transformedImageUrl,'cloudinaryUrl')
+  return transformedImageUrl;
+}

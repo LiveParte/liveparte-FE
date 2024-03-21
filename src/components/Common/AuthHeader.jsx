@@ -9,9 +9,13 @@ import PurchasePaartyCoins from "../modules/LiveStream/submodules/PurchasePaarty
 import MyModal from "../Ui/Modal";
 import LoginSignUp from "../modules/Event/Modal/Login&SignUp";
 import CustomDropDown from "./CustomDropDown";
+import { accessTokenStorageName, userDetailStorageName } from "@/utils/helper";
+import { useDispatch } from "react-redux";
+import { logout, setUserData } from "@/store/User";
 
 export default function AuthHeader({ className, openModal, showNav = false }) {
   const router = useRouter();
+  const dispatch = useDispatch();
   const MainContainer = `px-[20px] md:px-[40px] lg:px-[120px] relative`;
   const [dropDown, setDropDown] = useState(false);
   const [modalName, setModalName] = useState();
@@ -19,24 +23,17 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
   const [isOpenPC, setIsOpenPC] = useState(false);
   const dropdownRef = useRef(null);
   const purchaseCoinRef = useRef(null);
-  // useEffect(() => {
-  //   function handleClickOutside(event) {
-  //     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-  //       // Clicked outside the dropdown, so close it
-  //       setIsOpen(false);
-  //     }
-  //   }
-
-  //   // Bind the event listener
-  //   document.addEventListener("mousedown", handleClickOutside);
-
-  //   // Unbind the event listener on component unmount
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, []);
+ 
   function handleCloseModal() {
     setModalName();
+  }
+
+  function handleLogOut(){
+    dispatch(logout());
+    // localStorage.removeItem(userDetailStorageName);
+    // localStorage.removeItem(accessTokenStorageName);
+    router.push('/')
+
   }
 
   const modalComponent = [
@@ -102,25 +99,25 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
         <div className="text-[15px] text-white font500 flex-1  mb-[60px]">
           <Link
             href={"/"}
-            className="py-[12px]  cursor-pointer text-white no-underline"
+            className="py-[15px]  cursor-pointer text-white no-underline"
           >
             Browse events
           </Link>
-          <div className="py-[12px]  cursor-pointer ">On demand</div>
+          <div className="py-[15px]  cursor-pointer ">On demand</div>
           <Link
             href={"/my_shows"}
             className="py-[12px]  cursor-pointer no-underline text-white mb-2"
           >
             My Show
           </Link>
-          <div className="flex justify-between items-center py-[15px]">
+          <div className="flex justify-between items-center py-[18px]">
             <div className="text-[13px] flex items-center gap-[5px] ">
               <Image src={`/svg/coin1.svg`} width={24} height={24} /> 100 Coins
             </div>
             <ButtonComp
               onClick={() => setModalName(`purchaseCoin`)}
               btnText={`Add Coins`}
-              className={`h-[30px] !bg-[#BACFF70A] shadow-1 shadow-2 shadow-3 text-[13px] rounded-[999px]`}
+              className={`h-[30px] !bg-[#BACFF70A] shadow-1 shadow-2 shadow-3 text-[13px] rounded-[999px] border-[#BACFF70A] border-[0.5px]`}
             />
           </div>
         </div>
@@ -129,11 +126,11 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           <div className="text-[15px] text-white font500 flex-1  mb-[16px]">
             <Link
               href="/setting"
-              className="py-[12px]  cursor-pointer text-white no-underline"
+              className="py-[15px]  cursor-pointer text-white no-underline"
             >
               Settings
             </Link>
-            <div className="py-[12px] cursor-pointer">Log out</div>
+            <div className="py-[15px] cursor-pointer">Log out</div>
           </div>
 
           <ButtonComp
@@ -162,7 +159,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           >
             Settings
           </Link>
-          <div className="py-[12px]">Log out</div>
+          <div onClick={handleLogOut} className="py-[12px] cursor-pointer">Log out</div>
           {/* <div className="py-[12px]">Add to Calendar</div> */}
         </div>
       </CustomDropDown>
@@ -182,6 +179,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
     );
   }
   // border-[#262C32] border-[1px]
+  const blur=`backdrop-blur-[60px]`
   return (
     <>
       <MyModal
@@ -197,7 +195,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
       <div
         className={`py-[14px] lg:py-[32px] mb-[34px] lg:mb-[75px]  font400 ${MainContainer} ${className} `}
       >
-        <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover  bg-[url('/webp/header.png')] z-30"></div>
+        <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover opacity-30  bg-[url('/webp/header.png')] z-30"></div>
         {/* <LogoWhite/> */}
         <div className="flex items-center justify-between z-50 relative cursor-pointer">
         <Image
@@ -221,17 +219,17 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
             <div className="flex items-center  lg:gap-[18px] xl:gap-[24px] !hover:scale-100">
               <ButtonComp
                 btnText="Browse event"
-                className="text-[15px] font-medium  hidden lg:block !py-[11px] px-[5px] xl:px-[32px]  gap-[10px] !bg-transparent rounded-[999px]   font500 text-white backdrop-blur-[60px]"
-                onClick={() => router.push("/")}
+                className="text-[15px] font-medium  hidden lg:block !py-[11px] px-[5px] xl:px-[32px]  gap-[10px] !bg-transparent rounded-[999px]   font500 text-white "
+                onClick={() => router.push("/event")}
               />
               <ButtonComp
                 btnText="On demand"
-                className="text-[15px] font-medium  hidden lg:block !py-[11px] px-[5px] xl:px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white backdrop-blur-[60px]"
-                // onClick={() => router.push("/")}
+                className="text-[15px] font-medium  hidden lg:block !py-[11px] px-[5px] xl:px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white "
+                onClick={() => router.push("/event")}
               />
               <ButtonComp
                 btnText="My shows"
-                className="text-[15px] font-medium  hidden lg:block !py-[11px] px-[5px] xl:px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white backdrop-blur-[60px]"
+                className="text-[15px] font-medium  hidden lg:block !py-[11px] px-[5px] xl:px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white "
                 onClick={() => router.push("/my_shows")}
               />
             </div>
@@ -247,7 +245,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
               {isOpenPC &&<PurchasePaartyCoinsDropdown/>}
                   <ButtonComp
                     btnText={`Add Coins`}
-                    className={`!h-[32px] py-[6px] px-[17px] !bg-[#BACFF70A] rounded-[999px] shadow-1 shadow-2 shadow-3 text-[10px]`}
+                    className={`!h-[32px] py-[6px] px-[17px] !bg-[#BACFF70A] rounded-[999px]  text-[10px] shadow-4`}
                   onClick={()=>setIsOpenPC(!isOpenPC)}
                   />
                 </div>

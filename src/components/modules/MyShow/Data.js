@@ -1,40 +1,47 @@
+import { REGEX_PATTERNS } from "@/utils/constants/errors";
+
 export const SettingFormLabel =()=>{
     return [
         {
-            name:'',
+            name:'fullName',
             label:'Name',
             type:'text'
         },
         {
-            name:'',
+            name:'email',
             label:'Email Address',
-            type:'text'
+            type:'text',
+            pattern:REGEX_PATTERNS?.EMAIL
         },
         {
-            name:'',
+            name:'phone',
             label:'Phone number',
-            type:'text'
+            type:'number',
+            pattern:REGEX_PATTERNS?.NUMBER
         },
     ]
 };
 
 
-export const SecurityFormLabel =()=>{
+export const SecurityFormLabel =(confirmPassword)=>{
     return [
         {
-            name:'',
+            name:'currentPassword',
             label:'Current password',
             type:'password'
         },
         {
-            name:'',
+            name:'newPassword',
             label:'New password',
-            type:'password'
+            type:'password',
+          
         },
         {
-            name:'',
-            label:'Confirm password',
-            type:'password'
+            name:'confirmPassword',
+            label:'Confirm New password',
+            type:'password',
+            handlePasswordValidate:(value)=>value === confirmPassword || "The passwords do not match"
+            // handlePasswordValidate:(value)=>console.log(value,confirmPassword,value===confirmPassword,'confirmPassword')
         },
     ]
 }

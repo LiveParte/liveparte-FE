@@ -1,5 +1,6 @@
 import AuthHeader from "@/components/Common/AuthHeader";
 import Footer from "@/components/Common/Footer";
+import WithAuth from "@/components/Layout/WithAuth";
 import Header from "@/components/modules/MyShow/Header";
 import SettingForm from "@/components/modules/Setting/form";
 import React, { useState } from "react";
@@ -20,6 +21,7 @@ export default function Setting() {
   const [isActive, setIsActive] = useState(HeaderData[0]?.name);
 
   return (
+    <WithAuth>
     <div className="bg-[#060809] min-h-[100vh]  flex flex-col  relative">
       <AuthHeader showNav />
       <Header
@@ -39,5 +41,6 @@ export default function Setting() {
       <Footer />
       </div>
     </div>
+    </WithAuth>
   );
 }
