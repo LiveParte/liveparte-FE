@@ -31,6 +31,7 @@ export default function EnterEmail({onNext}) {
       <form>
         {ForgetPasswordForm()?.map((item, index) => (
           <Controller
+          key={index}
             control={control}
             name={item?.name}
             rules={{

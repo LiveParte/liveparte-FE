@@ -32,6 +32,7 @@ export default function EnterPassword({onNext}) {
       <form className="flex flex-col gap-[16px]">
         {SecurityFormLabel()?.map((item, index) => (
           <Controller
+          key={index}
             control={control}
             name={item?.name}
             rules={{

@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
 import { FAQData } from "../Data";
-import useMultilineCheck from "@/components/Common/CheckTextLine";
 
 export default function FAQ() {
   const divRef = useRef(null);

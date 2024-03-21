@@ -37,11 +37,16 @@ export default function LoginSignUp({
 
   const { control, handleSubmit, getValues } = useForm({
     defaultValues: {
-      email: "test@gmail4.com",
-      username: "dammymoses4",
-      password: "Password@4",
-      phoneNumber: "0814409584848",
-      fullName: "Test Name",
+      // email: "test@gmail4.com",
+      // username: "dammymoses4",
+      // password: "Password@4",
+      // phoneNumber: "0814409584848",
+      // fullName: "Test Name",
+      email: "",
+      username: "",
+      password: "",
+      phoneNumber: "",
+      fullName: "",
     },
   });
 
@@ -121,7 +126,7 @@ export default function LoginSignUp({
 
   return (
     <div
-      className={`bg-[#1B1C20] relative pb-[48px] px-[16px] pt-[16px] lg:pt-[16px] ${className} min-h-[75vh] md:h-auto overflow-y-scroll`}
+      className={`bg-[#1B1C20] relative pb-[48px] px-[16px] pt-[16px] lg:pt-[16px] ${className} min-h-[75vh] md:h-auto `}
     >
       <div className="flex justify-between items-center mb-[45px]">
         <div></div>
