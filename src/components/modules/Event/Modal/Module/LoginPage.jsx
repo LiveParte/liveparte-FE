@@ -64,12 +64,12 @@ export default function LoginPage({
     <div className="mt-[24px]">
       <ButtonComp
         btnText={"Log In and Continue"}
-        className={`w-full text-[13px] font500 !bg-[#343F4B] !text-[#63768D] mb-[30px]`}
+        className={`w-full text-[13px] font500   mb-[30px]`}
         onClick={handleSubmit(handleLogin)}
         isLoading={isLoading}
       />
 
-      <div className="text-center underline text-[13px] text-white cursor-pointer"
+      <div className="text-center underline text-[13px] text-white cursor-pointer mb-[53px]"
       onClick={handleForgetPasswordToggle}
       >I forgot my password</div>
     </div>

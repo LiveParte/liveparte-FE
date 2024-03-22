@@ -42,13 +42,26 @@ export default function Hero({
 
     // Bind the event listener
     document.addEventListener("mousedown", handleClickOutside);
-
     // Unbind the event listener on component unmount
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
   //bg-[url('/webp/1.png')]
+
+const Anima = () =>{
+  return  <motion.div
+  key={textChange}
+  className="text-[#FFC41B]"
+  initial={{ opacity: 0, y: 50 }} // Initial position and opacity
+  animate={{ opacity: 1, y: 0 }} // Animation to fade in and move up
+  exit={{ opacity: 0, y: -100 }} // Animation to fade out
+  transition={{ duration: 0.5 }} // Duration of the animation
+  onPause={true}
+>
+ <span key={textChange} className="invisible">.</span>{textChange}
+</motion.div>
+}
 
   return (
     <div className="relative min-h-[90vh]  md:min-h-[100vh]">
@@ -72,18 +85,10 @@ export default function Hero({
                 <div className="font-1 text-wrap flex-wrap text-[35px] md:text-[70px] lg:text-[100px] font-bold text-white uppercase mb-[15px] md:mb-[8px] lg:mb-[16px] md:text-start leading-none md:leading-[110px] flex   items-start ">
                   Never miss the
                   <div className="text-[#FFC41B]">
-                   
-                    <motion.div
-                      key={textChange}
-                      className="text-[#FFC41B]"
-                      initial={{ opacity: 0, y: 50 }} // Initial position and opacity
-                      animate={{ opacity: 1, y: 0 }} // Animation to fade in and move up
-                      exit={{ opacity: 0, y: -100 }} // Animation to fade out
-                      transition={{ duration: 0.5 }} // Duration of the animation
-                      onPause={true}
-                    >
-                     <span key={textChange} className="invisible">.</span>{textChange}
-                    </motion.div>
+                   {/* {textChange} */}
+                   {/* <span className="inline-block animate-bounce">Okay</span> */}
+
+                   <Anima/>
                   </div>
                 </div>
                 <div className="text-white w-[75vw] md:w-[65vw] lg:w-[45vw] tracking-[1px] lg:tracking-normal  mb-[60px] :-text-start md:text-start text-[13px] md:text-[20px] font400">

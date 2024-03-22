@@ -55,9 +55,9 @@ export default function Header({ className, openModal }) {
       {dropDown && <MenuDropdown />}
 
       <div
-        className={`pt-[14px]  lg:pt-[43px] pb-[98px]  font400 ${className} ${MainContainer}`}
+        className={`pt-[14px]  lg:pt-[16px] pb-[16px]  font400 ${className} ${MainContainer}`}
       >
-        <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover  bg-[url('/webp/header.png')] z-30"></div>
+        <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover  bg-[url('/webp/header.png')] z-30 opacity-25"></div>
         {/* <LogoWhite/> */}
         <div className="flex justify-between z-50 relative cursor-pointer">
           <Image
@@ -81,10 +81,12 @@ export default function Header({ className, openModal }) {
             <ButtonComp
               btnText="Browse event"
               className={`text-[15px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-[#BAD6F70F]  rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px]  focus:${isFocused}`}
+              onClick={() => router.push("/event")}
             />
             <ButtonComp
               btnText="On demand"
               className={`text-[15px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white ${isFocused} `}
+              onClick={() => router.push("/event")}
             />
           </div>
           <div>

@@ -16,15 +16,16 @@ import { useDispatch } from "react-redux";
 import { setUserData } from "@/store/User";
 import LoginPage from "./Module/LoginPage";
 import SignUpPage from "./Module/SignUp";
-
 export default function LoginSignUp({
   closeModal,
   pageName = "Login",
   className,
-  handleForgetPasswordToggle
+  handleForgetPasswordToggle,
+  onNext
 }) {
   const router = useRouter();
   const dispatch = useDispatch();
+  console.log(router?.pathname,'routerrouter')
   const [toggle, setToggle] = useState("Login");
   const isActive = `text-white border-[1px] border-[#48515d]  rounded-[999px] bg-[#2e3239] px-[30px] lg:px-[50px] cursor-pointer `;
   const notActive = `text-[#495969] px-[30px] lg:px-[50px] cursor-pointer `;
@@ -62,7 +63,7 @@ export default function LoginSignUp({
     // e.preventDefault();
     const payload = {
       ...e,
-      username: e.phoneNumber,
+      username: e.username,
     };
     const handleRegisterUser = await RegisterUser(payload);
     const response = handleRegisterUser?.data;
@@ -126,13 +127,19 @@ export default function LoginSignUp({
         UserString
       );
       dispatch(setUserData(response?.user));
-     router.push("/event");
+      if(router?.pathname ==="/"){
+       return  router.push("/event");
+      }
+      if(onNext){
+        return onNext();
+      }
+      closeModal();
     }
   }
 
   return (
     <div
-      className={`bg-[#1B1C20] relative pb-[48px] px-[16px] pt-[16px] lg:pt-[16px] ${className} min-h-[75vh] md:h-auto `}
+      className={`bg-[#1B1C20] relative pb-[48px] px-[16px] pt-[16px] lg:pt-[16px] ${className}  md:h-auto `}
     >
       <div className="flex justify-between items-center mb-[45px]">
         <div></div>

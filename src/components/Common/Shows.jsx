@@ -3,6 +3,7 @@ import { Play } from "../../../public/svg";
 import moment from "moment";
 import { useRouter } from "next/router";
 import { useObject } from "@/Context/ObjectProvider";
+import Image from 'next/image'
 
 export default function ShowsCard({
   name,
@@ -24,11 +25,23 @@ export default function ShowsCard({
       ? `bg-[url('https://res.cloudinary.com/dammymoses/image/upload/v1710175667/LiveParte/a7_zeemus.png')]`
       : `bg-[url('/webp/show2.png')]`;
   console.log(showImage, "showImage");
+  // ` relative h-[35vh] md:h-[40vh] lg:h-[55vh] rounded-[8px] lg:rounded-[20px] ${backUrl} bg-cover bg-center bg-gradient-to-b from-black to-transparent  overflow-hidden`
   return (
     <div
-      className={` relative h-[35vh] md:h-[40vh] lg:h-[55vh] rounded-[8px] lg:rounded-[20px] ${backUrl} bg-cover bg-center bg-gradient-to-b from-black to-transparent `}
-      style={{ backgroundImage: `url(${showImage || backgroundImage})` }}
+      className={` relative h-[35vh] md:h-[40vh] lg:h-[55vh] rounded-[8px] lg:rounded-[20px] ${backUrl} bg-cover bg-center bg-gradient-to-b from-black to-transparent  overflow-hidden`}
+      // style={{ backgroundImage: `url(${showImage || backgroundImage})` }}
     >
+      <Image
+      src={showImage || backgroundImage}
+      blurDataURL={showImage || backgroundImage}
+      className="absolute left-0 right-0 top-0 bottom-0"
+      // width={'100%'}
+      // height={'100%'}
+      alt="Your Image"
+      layout="fill"
+      objectFit="cover"
+      placeholder="blur"
+      />
       <div className="h-full">
         <div className=" flex flex-col h-full relative">
           <div className="flex-1">

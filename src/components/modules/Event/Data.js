@@ -121,12 +121,12 @@ export const SignUpForm =()=>{
             pattern:REGEX_PATTERNS?.EMAIL
             // type:''
         },
-        {
-            name:'phoneNumber',
-            label:'Phone number',
-            type:'tel',
-            pattern:REGEX_PATTERNS?.NUMBER
-        },
+        // {
+        //     name:'phoneNumber',
+        //     label:'Phone number',
+        //     type:'tel',
+        //     pattern:REGEX_PATTERNS?.NUMBER
+        // },
         {
             name:'password',
             label:'Password',

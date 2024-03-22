@@ -35,7 +35,6 @@ export default function Hero({
 
     // Bind the event listener
     document.addEventListener("mousedown", handleClickOutside);
-
     // Unbind the event listener on component unmount
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
@@ -72,10 +71,10 @@ export default function Hero({
   }
 
   // console.log(HeroSectionEvent,'HeroSectionEvent')
-
+//bg-[url('/webp/bg1.webp')]
   return (
     <div
-      className={`relative font400  bg-[url('/webp/bg1.webp')] bg-cover bg-center  xl:bg-top ${MainContainer} `}
+      className={`relative font400   bg-cover bg-center  xl:bg-top ${MainContainer} `}
       style={{ backgroundImage: HeroSectionEvent?.thumbnail_url&&`url(${GetTransformedImageUrl(HeroSectionEvent?.thumbnail_url,1140,1830)})`,backgroundAttachment:'fixed' }}
     >
       <div className="">
