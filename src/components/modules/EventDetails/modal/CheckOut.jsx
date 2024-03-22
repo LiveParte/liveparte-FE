@@ -41,6 +41,7 @@ export default function CheckOut({
             <img
               src={Data?.thumbnail_url || "/webp/bg1.webp"}
               className="w-[89px] h-[89px] object-cover rounded-[8px]"
+              alt="web"
             />
           </div>
           <div>

@@ -24,7 +24,7 @@ export default function EventId() {
 
   useEffect(() => {
     setUserDetail(user);
-  }, [user?._id]);
+  }, [user?._id,user]);
   const router = useRouter();
   const { id } = router.query;
   let [isOpen, setIsOpen] = useState();

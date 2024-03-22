@@ -16,7 +16,7 @@ export default function PurchasePaartyCoins({
         // type="number"
         />
         <div className="flex items-center  bg-[#343F4B] h-full absolute right-0 pr-[12px] pl-[8px]">
-          <Image src={`/svg/coin1.svg`} width={16} height={16} />
+          <Image src={`/svg/coin1.svg`} alt="coins" width={16} height={16} />
           <div className="text-[#FFFFFF] text-[12px]">12000</div>
         </div>
       </div>
