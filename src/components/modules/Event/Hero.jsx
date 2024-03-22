@@ -35,7 +35,6 @@ export default function Hero({
 
     // Bind the event listener
     document.addEventListener("mousedown", handleClickOutside);
-
     // Unbind the event listener on component unmount
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
