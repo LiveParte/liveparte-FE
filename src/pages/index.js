@@ -29,13 +29,14 @@ export default function Home() {
       name:'Login',
       component:<LoginSignUp 
       handleForgetPasswordToggle={()=>openModal('ForgetPassword')}
-      className={`min-h-[75vh] tallT:min-h-[65vh]`} closeModal={closeModal} />,
-      height:'min-h-[75vh] tallT:min-h-[65vh]'
+      // className={`min-h-[75vh] tallT:min-h-[65vh]`} 
+      closeModal={closeModal} />,
+      height:''
     },
     {
       name:'SignUp',
       component:<LoginSignUp className={`xl:min-h-[75vh] tallT:min-h-[65vh]`} pageName="signUp" closeModal={closeModal} />,
-      height:'min-h-[75vh] tallT:min-h-[65vh]'
+      height:''
     },
     {
       name:`ForgetPassword`,
