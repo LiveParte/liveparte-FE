@@ -1,5 +1,5 @@
 import ButtonComp from "@/components/Ui/button";
-import React from "react";
+import React, { useState } from "react";
 import ReactPlayer from "react-player";
 import { Media, Video } from "@vidstack/player-react";
 import Image from "next/image";
@@ -10,6 +10,8 @@ import AgoraRTC, { AgoraRTCProvider, useRTCClient } from "agora-rtc-react";
 import LiveStreamVideo from "./submodules/livestreamVideo";
 // Render a YouTube video player
 export default function LiveStream() {
+  const [activeConnection, setActiveConnection] = useState(true);
+
   const agoraClient = useRTCClient(
     AgoraRTC.createClient({ codec: "vp8", mode: "rtc" })
   ); // Initialize Agora Client
@@ -32,7 +34,10 @@ export default function LiveStream() {
                 <ButtonComp
                   className={`!h-[33px] !bg-[#FA4354] text-white text-[13px] font500 px-[23px] py-[5px]`}
                   btnText={"Leave"}
-                  onClick={() => router.push("/my_shows")}
+                  onClick={() => {
+                    setActiveConnection(false);
+                    router.push("/my_shows");
+                  }}
                 />
               </div>
             </div>
@@ -84,8 +89,10 @@ export default function LiveStream() {
                   </div>
                 </div>
               </div>
-              <LiveStreamVideo/>
-              
+              <LiveStreamVideo
+                setActiveConnection={setActiveConnection}
+                activeConnection={activeConnection}
+              />
             </div>
           </div>
           <div className=" lg:w-[25%] lg:rounded-[26px] bg-[#222428]">

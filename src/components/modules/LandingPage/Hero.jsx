@@ -1,9 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import { MainContainer } from "@/utils/styleReuse";
 import ButtonComp from "@/components/Ui/button";
-import { motion, AnimatePresence } from "framer-motion";
-
+import dynamic from 'next/dynamic'
 import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
+const Animate =dynamic(()=>import('./submodules/Animate'),{ssr:false});
+
 export default function Hero({
   // notEvent = true,
   router,
@@ -50,17 +51,7 @@ export default function Hero({
   //bg-[url('/webp/1.png')]
 
 const Anima = () =>{
-  return  <motion.div
-  key={textChange}
-  className="text-[#FFC41B]"
-  initial={{ opacity: 0, y: 50 }} // Initial position and opacity
-  animate={{ opacity: 1, y: 0 }} // Animation to fade in and move up
-  exit={{ opacity: 0, y: -100 }} // Animation to fade out
-  transition={{ duration: 0.5 }} // Duration of the animation
-  onPause={true}
->
- <span key={textChange} className="invisible">.</span>{textChange}
-</motion.div>
+  return  <Animate textChange={textChange}/>
 }
 
   return (
@@ -83,7 +74,7 @@ const Anima = () =>{
             >
               <div className="">
                 <div className="font-1 text-wrap flex-wrap text-[35px] md:text-[70px] lg:text-[100px] font-bold text-white uppercase mb-[15px] md:mb-[8px] lg:mb-[16px] md:text-start leading-none md:leading-[110px] flex   items-start ">
-                  Never miss the
+                  Never miss the <span key={textChange} className="invisible">.</span>
                   <div className="text-[#FFC41B]">
                    {/* {textChange} */}
                    {/* <span className="inline-block animate-bounce">Okay</span> */}
