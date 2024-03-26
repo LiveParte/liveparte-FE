@@ -1,6 +1,7 @@
 import Cookie from "js-cookie";
 import CryptoJS from 'crypto-js';
 import { useDispatch } from 'react-redux';
+import { Avatar1, Avatar10, Avatar2, Avatar3, Avatar4, Avatar5, Avatar6, Avatar7, Avatar8, Avatar9 } from "../../public/svg/avatars";
 
 const secretKey = 'hahahahah';
 
@@ -191,3 +192,8 @@ return decryptedData;
 }
 
 
+
+
+export const NoImageUser =[
+  <Avatar1/>,<Avatar2/>,<Avatar3/>,<Avatar4/>,<Avatar5/>,<Avatar6/>,<Avatar7/>,<Avatar8/>,<Avatar9/>,<Avatar10/>
+]

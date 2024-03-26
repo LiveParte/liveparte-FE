@@ -42,11 +42,21 @@ export default function Header({ className, openModal }) {
           <Link onClick={handleCheckIfITHome} href={'/'} className="py-[12px]  cursor-pointer no-underline text-white">On demand</Link>
         </div>
 
-        <ButtonComp
+        {/* <ButtonComp
           onClick={()=>openModal('SignUp')}
           btnText={`Log In/Sign Up`}
-          className={`text-[13px] font500 mb-[32px] `}
-        />
+          className={`text-[13px] font500  `}
+        /> */}
+         <ButtonComp
+            onClick={() => openModal("SignUp")}
+            btnText={`Sign Up`}
+            className={`text-[13px] font500 mb-[16px]  w-full`}
+          />
+          <ButtonComp
+            onClick={() => openModal(`Login`)}
+            btnText={`Login`}
+            className={`text-[13px] font500 mb-[50px]  w-full !bg-[#27292e] text-white`}
+          />
       </div>
     );
   };

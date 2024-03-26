@@ -53,6 +53,14 @@ export const eventApi = createApi({
       }),
       
     }),
+    userShows: builder.query({
+      query: (userId='') => ({
+        url: `/event/myevents/${userId}?skip=0&limit=30`,
+        method: "GET",
+        // body,
+      }),
+      
+    }),
    
     //globalservice/all-enums
     //admin/funding-history
@@ -68,6 +76,7 @@ useGetAllEventQuery,
 useGetEventOnDemandQuery,
 useGetEventStreamQuery,
 useGetEventViaIdQuery,
-useGetEventDetailViaIdQuery
+useGetEventDetailViaIdQuery,
+useUserShowsQuery
  
 } = eventApi;
