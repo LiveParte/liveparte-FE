@@ -80,7 +80,7 @@ export default function Chat() {
          </div>
          <div>
          <div className="lg:hidden  flex flex-col items-end gap-[16px] pb-[16px]">
-                  <Image src={`/svg/reaction1.svg`} width={32} height={32} alt="reaction" />
+                  <Image src={`/svg/reaction1.svg`} width={32} height={32} alt="reaction yarn " />
                   <Image src={`/svg/reaction2.svg`} width={32} height={32} />
                   <Image src={`/svg/reaction3.svg`} width={32} height={32} />
                 </div>

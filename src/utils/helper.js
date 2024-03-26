@@ -1,6 +1,10 @@
 import Cookie from "js-cookie";
 import CryptoJS from 'crypto-js';
+import { useDispatch } from 'react-redux';
+
 const secretKey = 'hahahahah';
+
+export const useAppDispatch = () => useDispatch();
 export const accessTokenStorageName =`accessTokenLiveParte`;
 export const userDetailStorageName=`UserLiveParte`;
 export const storage = {

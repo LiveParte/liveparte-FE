@@ -793,6 +793,11 @@ aggregate-error@^3.0.0:
     clean-stack "^2.0.0"
     indent-string "^4.0.0"
 
+agora-rtc-react@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/agora-rtc-react/-/agora-rtc-react-2.1.0.tgz#b4855e79b8c42e5b348595bc1fe7a7f8c82cf7f4"
+  integrity sha512-3FGteA7FG51oK5MusbYNgAcKZaAQK+4sbEz4F0DPzcpDxqNANpocJDqOsmXoUAj5yDBsBZelmagU3abd++6RGA==
+
 ajv@^6.12.4:
   version "6.12.6"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.12.6.tgz#baf5a62e802b07d977034586f8c3baf5adf26df4"
