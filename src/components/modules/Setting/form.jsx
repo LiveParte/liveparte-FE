@@ -55,7 +55,7 @@ export default function SettingForm({ isActive,CloudinaryUpload }) {
     setValue("id", data?._id);
     setValue("phone", data?.phone);
     setValue("fullName", data?.fullName);
-  }, [data?._id]);
+  }, [data?._id,data]);
 
   const confirmPassword = watch("confirmPassword");
 

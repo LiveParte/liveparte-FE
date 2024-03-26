@@ -44,7 +44,8 @@ export const authSlice = createSlice({
       storage["localStorage"].remove(userDetailStorageName);
       storage["localStorage"].remove(accessTokenStorageName)
 
-      state.isLoggedIn=false
+      state.isLoggedIn=false;
+     
     }
   },
 });

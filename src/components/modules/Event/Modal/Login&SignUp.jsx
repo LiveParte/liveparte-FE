@@ -36,7 +36,7 @@ export default function LoginSignUp({
 
   const [LoginUser,{isLoading:loginLoader,isError:loginIsError}]=useLoginApiMutation()
 
-  const { control, handleSubmit, getValues,reset } = useForm({
+  const { control, handleSubmit, getValues,reset,setError } = useForm({
     defaultValues: {
       // email: "test@gmail4.com",
       // username: "dammymoses4",
@@ -48,6 +48,7 @@ export default function LoginSignUp({
       password: "",
       phoneNumber: "",
       fullName: "",
+      confirmPassword: "",
     },
   });
 
@@ -60,10 +61,14 @@ export default function LoginSignUp({
   }, [pageName]);
 
   async function handleRegister(e) {
+
+    if(e?.password !== e?.confirmPassword){
+     return setError('confirmPassword', { type: 'custom', message: 'The password and confirm password do not match. Please make sure they are the same.' });
+    }
     // e.preventDefault();
     const payload = {
       ...e,
-      username: e.username,
+      username: e.email,
     };
     const handleRegisterUser = await RegisterUser(payload);
     const response = handleRegisterUser?.data;
@@ -90,6 +95,13 @@ export default function LoginSignUp({
         encryptObject(response?.user)
       );
       dispatch(setUserData(response?.user));
+      if(router?.pathname ==="/"){
+        return  router.push("/event");
+       }
+       if(onNext){
+         return onNext();
+       }
+       closeModal();
       // router.push("/my_shows");
     }
   }
@@ -99,6 +111,7 @@ export default function LoginSignUp({
     const payload = {
       ...e,
       usernameOrEmail: e.email,
+      
     };
     const handleRegisterUser = await LoginUser(payload);
     const response = handleRegisterUser?.data;

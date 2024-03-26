@@ -1,13 +1,14 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
-import { selectCurrentUserData } from "@/store/User";
+import { logout, selectCurrentUserData } from "@/store/User";
 import { useGetUserProfileQuery } from "@/store/User/userApi";
 import { decryptObject, storage, userDetailStorageName } from "@/utils/helper";
-import {  useSelector } from 'react-redux';
+import {  useSelector,useDispatch } from 'react-redux';
 
 
 function WithAuth({ children }) {
   const router = useRouter();
+  const dispatch = useDispatch()
   // let userInfo =storage["localStorage"]?.get(userDetailStorageName)&& decryptObject(storage["localStorage"]?.get(userDetailStorageName));
   const {isLoading,isError} =useGetUserProfileQuery();
   // alert("hello")
@@ -15,9 +16,12 @@ function WithAuth({ children }) {
    console.log(user,'useSelector')
   const isAuthenticated =false;
 
+  console.log(isAuthenticated,user,'isAuthenticated')
+
   useEffect(() => {
     if (isAuthenticated) {
       router.push("/");
+      
     }
   }, [isAuthenticated]);
 
@@ -25,6 +29,7 @@ function WithAuth({ children }) {
     if(!isLoading){
     if (isError) {
       router.push("/");
+      dispatch(logout())
     }
   }
   }, [isError,isLoading]);

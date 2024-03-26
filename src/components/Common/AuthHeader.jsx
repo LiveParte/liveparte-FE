@@ -80,6 +80,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
             height={23}
             alt="Picture of the author"
             className="hidden md:block"
+
           />
            <Image
             onClick={() => router.push("/")}
@@ -115,7 +116,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           </Link>
           <div className="flex justify-between items-center py-[18px]">
             <div className="text-[13px] flex items-center gap-[5px] ">
-              <Image src={`/svg/coin1.svg`} width={24} height={24} /> 100 Coins
+              <Image src={`/svg/coin1.svg`} width={24} height={24} alt="coin" /> 100 Coins
             </div>
             <ButtonComp
               onClick={() => setModalName(`purchaseCoin`)}
@@ -261,6 +262,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
                     width={40}
                     height={40}
                     onClick={() => setIsOpen(!isOpen)}
+                    alt="profile"
                     // placeholder="blur"
                     // blurDataURL=""
                   />

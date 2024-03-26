@@ -65,7 +65,7 @@ export default function SignUpPage({
     <div className="mt-[24px]">
       <ButtonComp
         btnText={"Sign Up and Continue"}
-        className={`w-full text-[13px] font500 !bg-[#343F4B] !text-[#63768D]`}
+        className={`w-full text-[13px] font500 `}
         onClick={handleSubmit(handleLogin)}
         isLoading={registerLoader}
       />
