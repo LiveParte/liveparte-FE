@@ -198,22 +198,22 @@ img, video {
   box-shadow: inset 0 0 0 2000px rgba(0, 0,0, 0.2);
 }
 
-.customScrollHorizontal {
-  &::-webkit-scrollbar {
-    height: 6px;
-  }
-  &::-webkit-scrollbar-track {
-    border-radius: 10px;
-    background-color: var(--grey2);
-  }
-  &::-webkit-scrollbar-thumb {
-    border: 1px solid transparent;
-    border-radius: 100px;
-    background-color: white;
-    background-clip: content-box;
-  }
+.customScrollHorizontal::-webkit-scrollbar {
+  height: 2px;
+  width: 10px;
 }
 
+.customScrollHorizontal::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color:white
+}
+
+.customScrollHorizontal::-webkit-scrollbar-thumb {
+  border: 1px solid transparent;
+  border-radius: 100px;
+  background-color: #fa4354;
+  background-clip: content-box;
+}
 
 /*  */
 
