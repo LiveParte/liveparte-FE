@@ -3,15 +3,19 @@ import Image from "next/image";
 import ButtonComp from "../Ui/button";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import Login from "../modules/Event/Modal/submodules/Login";
 import GiftTicket from "../modules/EventDetails/modal/GiftTicket";
 import PurchasePaartyCoins from "../modules/LiveStream/submodules/PurchasePaartyCoins";
 import MyModal from "../Ui/Modal";
 import LoginSignUp from "../modules/Event/Modal/Login&SignUp";
 import CustomDropDown from "./CustomDropDown";
-import { accessTokenStorageName, userDetailStorageName } from "@/utils/helper";
+import {  storage } from "@/utils/helper";
 import { useDispatch } from "react-redux";
 import { logout, setUserData } from "@/store/User";
+import dynamic from 'next/dynamic'
+// import { Avatar1 } from "../../../public/svg/avatars";
+import UserProfile from "./UserProfile";
+// const UserProfile =dynamic(()=>import('./UserProfile'),{src:false})
+
 
 export default function AuthHeader({ className, openModal, showNav = false }) {
   const router = useRouter();
@@ -23,7 +27,6 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
   const [isOpenPC, setIsOpenPC] = useState(false);
   const dropdownRef = useRef(null);
   const purchaseCoinRef = useRef(null);
- 
   function handleCloseModal() {
     setModalName();
   }
@@ -134,9 +137,9 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
             >
               Settings
             </Link>
-            <div className="py-[15px] cursor-pointer">Log out</div>
+            <div onClick={handleLogOut} className="py-[15px] cursor-pointer">Log out</div>
           </div>
-
+{/* 
           <ButtonComp
             onClick={() => setModalName("Signup")}
             btnText={`Sign Up`}
@@ -146,7 +149,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
             onClick={() => setModalName(`Login/Signup`)}
             btnText={`Login`}
             className={`text-[13px] font500 mb-[28px]  w-full !bg-[#27292e] text-white`}
-          />
+          /> */}
           <div></div>
         </div>
       </div>
@@ -257,7 +260,9 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
               <div className="hidden md:block">
                 <div className="relative">
                   {isOpen && <ProfileDropdown />}
-                  <Image
+                <UserProfile   onClick={() => setIsOpen(!isOpen)}/>
+                  {/* <Avatar1/> */}
+                  {/* <Image
                     src={`/webp/profile.png`}
                     width={40}
                     height={40}
@@ -265,7 +270,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
                     alt="profile"
                     // placeholder="blur"
                     // blurDataURL=""
-                  />
+                  /> */}
                 </div>
               </div>
             </div>

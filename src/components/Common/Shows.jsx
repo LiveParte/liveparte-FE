@@ -3,7 +3,7 @@ import { Play } from "../../../public/svg";
 import moment from "moment";
 import { useRouter } from "next/router";
 import { useObject } from "@/Context/ObjectProvider";
-import Image from 'next/image'
+import Image from "next/image";
 
 export default function ShowsCard({
   name,
@@ -13,8 +13,8 @@ export default function ShowsCard({
   id,
   showHeader = true,
   eventDate,
-  item
-  
+  item,
+  onNext,
 }) {
   const backgroundImage = `https://res.cloudinary.com/dammymoses/image/upload/v1710175667/LiveParte/a7_zeemus.png`;
   const router = useRouter();
@@ -32,15 +32,15 @@ export default function ShowsCard({
       // style={{ backgroundImage: `url(${showImage || backgroundImage})` }}
     >
       <Image
-      src={showImage || backgroundImage}
-      blurDataURL={showImage || backgroundImage}
-      className="absolute left-0 right-0 top-0 bottom-0"
-      // width={'100%'}
-      // height={'100%'}
-      alt="Your Image"
-      layout="fill"
-      objectFit="cover"
-      placeholder="blur"
+        src={showImage || backgroundImage}
+        blurDataURL={showImage || backgroundImage}
+        className="absolute left-0 right-0 top-0 bottom-0"
+        // width={'100%'}
+        // height={'100%'}
+        alt="Your Image"
+        layout="fill"
+        objectFit="cover"
+        placeholder="blur"
       />
       <div className="h-full">
         <div className=" flex flex-col h-full relative">
@@ -64,13 +64,21 @@ export default function ShowsCard({
               </span>
             )}
           </div>
-          <div className="flex-[1] flex justify-center items-center absolute left-0 right-0 -top-[50px] md:-top-[70px] lg:-top-[100px] bottom-0  bg-gradient-to-t from-[#00000079]" onClick={()=>{
+          <div
+            className="flex-[1] flex justify-center items-center absolute left-0 right-0 -top-[50px] md:-top-[70px] lg:-top-[100px] bottom-0  bg-gradient-to-t from-[#00000079]"
+            onClick={() => {
+              if (onNext) {
+                // console.log(item)
+                return onNext(item);
+              }
+
               setMyObject(item);
-             router.push({
-              pathname: `event/${id}`,
-            });
-            //id
-          }}>
+              router.push({
+                pathname: `event/${id}`,
+              });
+              //id
+            }}
+          >
             <Play />
           </div>
 

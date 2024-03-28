@@ -47,3 +47,8 @@ export function GetTransformedImageUrl(cloudinaryUrl, width=300, height=300) {
   console.log(cloudinaryUrl,urlParts,transformedImageUrl,'cloudinaryUrl')
   return transformedImageUrl;
 }
+
+
+export function randomBetweenOneAndTen() {
+  return Math.floor(Math.random() * 9) + 1;
+}

@@ -3,6 +3,7 @@ import { FloatingLabelInput } from "@/components/Ui/TextInput";
 import ButtonComp from "@/components/Ui/button";
 import { SecurityFormLabel, SettingFormLabel } from "../MyShow/Data";
 import { NoProfile } from "../../../../public/svg";
+import Image from "next/image";
 import {
   useChangePasswordMutation,
   useGetUserProfileQuery,
@@ -12,7 +13,12 @@ import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 import { CheckIfArray } from "@/utils/helper";
 
-export default function SettingForm({ isActive,CloudinaryUpload }) {
+export default function SettingForm({
+  isActive,
+  CloudinaryUpload,
+  imageUrl,
+  isImageUrlLoading,
+}) {
   //upload Image
   const hiddenFileInput = useRef(null);
 
@@ -22,7 +28,7 @@ export default function SettingForm({ isActive,CloudinaryUpload }) {
 
   const handleChange = (event) => {
     const fileUploaded = event.target.files[0];
-    CloudinaryUpload(fileUploaded)
+    CloudinaryUpload(fileUploaded);
     // handleFile(fileUploaded);
   };
 
@@ -55,13 +61,14 @@ export default function SettingForm({ isActive,CloudinaryUpload }) {
     setValue("id", data?._id);
     setValue("phone", data?.phone);
     setValue("fullName", data?.fullName);
-  }, [data?._id,data]);
+  }, [data?._id, data]);
 
   const confirmPassword = watch("confirmPassword");
 
   async function handleUpdateUser(data) {
     const payload = {
       ...data,
+      profile_image: imageUrl,
     };
     const handleRegisterUser = await UpdateUser(payload);
     const response = handleRegisterUser?.data;
@@ -129,7 +136,18 @@ export default function SettingForm({ isActive,CloudinaryUpload }) {
       {isActive == "Profile" && (
         <div className="mb-[29px] flex items-center gap-[12px] text-white">
           <div className="h-[48px] w-[48px]">
-            <NoProfile />
+            {/* <NoProfile /> */}
+            {imageUrl ? (
+              <Image
+                src={imageUrl}
+                width={50}
+                height={50}
+                placeholder="blur"
+                blurDataURL={imageUrl}
+              />
+            ) : (
+              <NoProfile />
+            )}
             <input
               type="file"
               onChange={handleChange}
@@ -155,7 +173,7 @@ export default function SettingForm({ isActive,CloudinaryUpload }) {
           <div className="flex flex-col gap-[20px] ">
             {SettingFormLabel()?.map((item, index) => (
               <Controller
-              key={index}
+                key={index}
                 control={control}
                 name={item?.name}
                 rules={{
@@ -184,8 +202,8 @@ export default function SettingForm({ isActive,CloudinaryUpload }) {
                 btnText={"Save Changes"}
                 className={`w-full text-[13px] font500`}
                 onClick={handleSubmit(handleUpdateUser)}
-                isLoading={updateUserLoader}
-                isDisabled={isLoading}
+                isLoading={isImageUrlLoading || updateUserLoader}
+                isDisabled={isImageUrlLoading || isLoading}
               />
             </div>
           </div>
@@ -194,7 +212,7 @@ export default function SettingForm({ isActive,CloudinaryUpload }) {
           <div className="flex flex-col gap-[20px] ">
             {SecurityFormLabel(confirmPassword)?.map((item, index) => (
               <Controller
-              key={index}
+                key={index}
                 control={control}
                 name={item?.name}
                 rules={{
@@ -225,7 +243,7 @@ export default function SettingForm({ isActive,CloudinaryUpload }) {
                 btnText={"Save Changes"}
                 className={`w-full text-[13px] font500`}
                 onClick={handleSubmit(handleUpdatePassword)}
-                isLoading={updatePasswordLoader}
+                isLoading={isImageUrlLoading || updatePasswordLoader}
               />
             </div>
           </div>

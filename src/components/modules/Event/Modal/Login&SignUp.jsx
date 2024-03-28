@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { CloseModal } from "../../../../../public/svg";
+import { CloseModal, NoProfile } from "../../../../../public/svg";
 import { useLoginApiMutation, useRegisterApiMutation } from "@/store/User/userApi";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -16,6 +16,7 @@ import { useDispatch } from "react-redux";
 import { setUserData } from "@/store/User";
 import LoginPage from "./Module/LoginPage";
 import SignUpPage from "./Module/SignUp";
+import { randomBetweenOneAndTen } from "@/utils/reusableComponent";
 export default function LoginSignUp({
   closeModal,
   pageName = "Login",
@@ -34,15 +35,12 @@ export default function LoginSignUp({
     { isLoading: registerLoader, isError: registerIsError },
   ] = useRegisterApiMutation();
 
-  const [LoginUser,{isLoading:loginLoader,isError:loginIsError}]=useLoginApiMutation()
-
+  const [LoginUser,{isLoading:loginLoader,isError:loginIsError}]=useLoginApiMutation();
+  const checkIfNonImageExist =storage.localStorage.get('noUserProfileImage');
+  // console.log(checkIfNonImageExist,'checkIfNonImageExist')
   const { control, handleSubmit, getValues,reset,setError } = useForm({
     defaultValues: {
-      // email: "test@gmail4.com",
-      // username: "dammymoses4",
-      // password: "Password@4",
-      // phoneNumber: "0814409584848",
-      // fullName: "Test Name",
+     
       email: "",
       username: "",
       password: "",
@@ -77,11 +75,19 @@ export default function LoginSignUp({
     // console.log(handleRegisterUser, UserString, "handleRegisterUser");
     // toast('Hello! RegisterUser')
     if (response?.statusCode && response?.statusCode !== 200) {
+      if(response?.message==="Email is already in use"){
+        return  setError('email', { type: 'custom', message: 'Email is already in use' });
+      }
       CheckIfArray(response?.message)
         ? toast.error(response?.message[0])
         : toast.error(response?.message);
+        
     }
     if (response?.user?.createdAt) {
+      storage.localStorage.set('noUserProfileImage',{
+        id:response?.user?._id,
+        nonProfileImage:randomBetweenOneAndTen()
+      })
       toast.success(`User Register Successfully in`);
       reset();
       setToggle('Login')
@@ -109,50 +115,60 @@ export default function LoginSignUp({
   async function handleLogin(e) {
     // e.preventDefault();
     const payload = {
-      ...e,
-      usernameOrEmail: e.email,
-      
+        ...e,
+        usernameOrEmail: e.email,
     };
+    
     const handleRegisterUser = await LoginUser(payload);
     const response = handleRegisterUser?.data;
-
     const UserString = JSON.stringify(response?.user);
+
     // console.log(handleRegisterUser, UserString, "handleRegisterUser");
     // toast('Hello! RegisterUser')
 
-    console.log(handleRegisterUser,'response')
-    // if (response?.statusCode && response?.statusCode !== 200) {
-      if (handleRegisterUser?.error?.message ==="Unauthorized") {
-      // CheckIfArray(response?.message)
-      //   ? toast.error(response?.message[0])
-      //   : toast.error(response?.message);
-      toast.error("Invalid credentials");
+    if (!checkIfNonImageExist?.id) {
+        storage.localStorage.set('noUserProfileImage', {
+            id: response?.user?._id,
+            nonProfileImage: randomBetweenOneAndTen()
+        });
+    } else {
+        if (response?.user?._id !== checkIfNonImageExist?.id) {
+            storage.localStorage.set('noUserProfileImage', {
+                id: response?.user?._id,
+                nonProfileImage: randomBetweenOneAndTen()
+            });
+        }
     }
+
+    if (handleRegisterUser?.error?.message === "Unauthorized") {
+        toast.error("Invalid credentials");
+    }
+
     if (response?.user?.createdAt) {
-      toast.success(`User Successfully Logged in`);
-      // storage.localStorage.set('accessTokenLiveParte1',response?.accessToken);
-      storage.localStorage.set(
-        accessTokenStorageName,
-        encryptText(response?.accessToken)
-      );
-      storage.localStorage.set(
-        userDetailStorageName,
-        UserString
-      );
-      dispatch(setUserData(response?.user));
-      if(router?.pathname ==="/"){
-       return  router.push("/event");
-      }
-      if(onNext){
-        return onNext();
-      }
-      closeModal();
+        toast.success(`User Successfully Logged in`);
+        storage.localStorage.set(
+            accessTokenStorageName,
+            encryptText(response?.accessToken)
+        );
+        storage.localStorage.set(
+            userDetailStorageName,
+            UserString
+        );
+        dispatch(setUserData(response?.user));
+        if (router?.pathname === "/") {
+            return router.push("/event");
+        }
+        if (onNext) {
+            return onNext();
+        }
+        closeModal();
     }
-  }
+}
+
 
   return (
     <div
-      className={`bg-[#1B1C20] relative pb-[48px] px-[16px] pt-[16px] lg:pt-[16px] ${className}  md:h-auto `}
+      className={`bg-[#1B1C20] relative pb-[48px] px-[16px] pt-[25px] lg:pt-[30px]  h-[90vh] overflow-y-scroll customScrollHorizontal ${className}  md:h-auto `}
     >
       <div className="flex justify-between items-center mb-[45px]">
         <div></div>

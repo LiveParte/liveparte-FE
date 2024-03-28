@@ -101,8 +101,8 @@ export default function EventId() {
     console.log(reference, "reference");
     const payload = {
       event_id: data?._id,
-      ticket_id: "641cde26cbf530b653fefe5a",
-      user_id: "641cde26cbf530b653fefe5a",
+      ticket_id: data?.ticket?.id,
+      user_id: userDetail?._id,
       purchase_date: new Date(),
     };
     const response = await CreatePurchase(payload);
