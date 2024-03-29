@@ -82,7 +82,7 @@ const Anima = () =>{
                    <Anima/>
                   </div>
                 </div>
-                <div className="text-white w-[75vw] md:w-[65vw] lg:w-[45vw] tracking-[1px] lg:tracking-normal  mb-[60px] :-text-start md:text-start text-[13px] md:text-[20px] font400">
+                <div className="text-white w-[75vw] md:w-[65vw] lg:w-[45vw]  lg:tracking-normal  mb-[80px] md:mb-[60px] :-text-start md:text-start text-[13px] md:text-[20px] font400">
                   Get direct access to live and on-demand concert, performances
                   by your award-winning artistes and comedians anywhere in the
                   world from the comfort of your devices
@@ -99,6 +99,7 @@ const Anima = () =>{
                   <ButtonComp
                     btnText={`Browse Events`}
                     className={` text-[15px] font500  py-[12px] px-[31px] w-full text-center h-[70px] rounded-none`}
+                    onClick={() => router.push("/event")}
                   />
                 </div>
               </div>

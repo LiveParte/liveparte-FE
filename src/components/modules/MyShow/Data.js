@@ -11,7 +11,8 @@ export const SettingFormLabel =()=>{
             name:'email',
             label:'Email Address',
             type:'text',
-            pattern:REGEX_PATTERNS?.EMAIL
+            pattern:REGEX_PATTERNS?.EMAIL,
+            disabled:true,
         },
         {
             name:'phone',

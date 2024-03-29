@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { FloatingLabelInput } from "@/components/Ui/TextInput";
 import ButtonComp from "@/components/Ui/button";
 import { SecurityFormLabel, SettingFormLabel } from "../MyShow/Data";
@@ -11,7 +11,8 @@ import {
 } from "@/store/User/userApi";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
-import { CheckIfArray } from "@/utils/helper";
+import { CheckIfArray, NoImageUser, storage } from "@/utils/helper";
+import { Avatar3 } from "../../../../public/svg/avatars";
 
 export default function SettingForm({
   isActive,
@@ -19,6 +20,13 @@ export default function SettingForm({
   imageUrl,
   isImageUrlLoading,
 }) {
+
+  const checkIfNonImageExist = storage.localStorage.get("noUserProfileImage");
+  const [userProfile,setUserProfile]=useState();
+  // const user =useSelector(selectCurrentUserData);
+  useEffect(() => {
+    setUserProfile(NoImageUser[checkIfNonImageExist?.nonProfileImage]||Avatar3)
+  }, [checkIfNonImageExist?.nonProfileImage])
   //upload Image
   const hiddenFileInput = useRef(null);
 
@@ -31,6 +39,8 @@ export default function SettingForm({
     CloudinaryUpload(fileUploaded);
     // handleFile(fileUploaded);
   };
+
+  
 
   //
   const { data, isLoading, isError } = useGetUserProfileQuery();
@@ -144,9 +154,10 @@ export default function SettingForm({
                 height={50}
                 placeholder="blur"
                 blurDataURL={imageUrl}
+                className="rounded-full object-cover h-[50px] w-[50px]"
               />
-            ) : (
-              <NoProfile />
+            ) : (userProfile
+              // <NoProfile />
             )}
             <input
               type="file"
@@ -193,6 +204,7 @@ export default function SettingForm({
                     onChange={onChange}
                     error={errors[item?.name]?.message}
                     errors={errors}
+                    disabled={item?.disabled}
                   />
                 )}
               />

@@ -17,7 +17,8 @@ export default function Hero({
   giftTicket,
   openModalShareEvent,
   HeroSectionEvent,
-  makePayment
+  makePayment,
+  IsBought
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -60,15 +61,17 @@ export default function Hero({
             <a
               target="_blank"
               className=" text-white no-underline  "
-              href="https://calendar.google.com/calendar/r/eventedit?text=Your+Event+Names&dates=20140127T224000Z/20140320T221500Z&details=For+details,+link+here:+http://www.example.com&location=Waldorf+Astoria,+301+Park+Ave+,+New+York,+NY+10022&sf=true&output=xml"
+              href={`https://calendar.google.com/calendar/r/eventedit?text=${HeroSectionEvent?.name}&dates=${HeroSectionEvent?.event_date}&details=For+details,+link+here:+http://www.example.com&location=${HeroSectionEvent?.address}&sf=true&output=xml`}
             >
-              Add to Calendar
+              Set Reminder
             </a>
           </div>
         </div>
       </div>
     );
   }
+
+
 
   // console.log(HeroSectionEvent,'HeroSectionEvent')
 //bg-[url('/webp/bg1.webp')]
@@ -85,7 +88,7 @@ export default function Hero({
           />
         </div>
         <div className="relative">
-          <div className="  h-[100vh] relative flex flex-col justify-end  ">
+          <div className=" h-[90vh] md:h-[100vh] relative flex flex-col justify-end  ">
             <div className="h-[20vh]" />
 
             <div
@@ -139,9 +142,9 @@ export default function Hero({
                       {isOpen && <DropdownMenu />}
                       <ButtonComp
                       isDisabled={!HeroSectionEvent?.ticket?.code}
-                        onClick={openModal}
+                        onClick={IsBought?console.log('purchase Alery'):openModal}
                         className={`py-[12px] px-[39px] text-[13px] xl:text-[15px] font500`}
-                        btnText={`Get Ticket ${HeroSectionEvent?.ticket?.code||""} ${formatMoney(HeroSectionEvent?.ticket?.price||' ',false)}`}
+                        btnText={IsBought?`Ticket already purchased`:`Get Ticket ${HeroSectionEvent?.ticket?.code||""} ${formatMoney(HeroSectionEvent?.ticket?.price||' ',false)}`}
                         />
                       <div className="" onClick={() => setIsOpen(!isOpen)}>
                         <img
@@ -163,8 +166,8 @@ export default function Hero({
                         <ButtonComp
                           onClick={openModal}
                           className={`py-[12px] px-[20px] md:px-[34px] lg:px-[57px] text-[13px] md:text-[15px] font500 `}
-                          btnText={`Get Ticket ${HeroSectionEvent?.ticket?.code} ${HeroSectionEvent?.ticket?.price}`}
-                        />
+                          btnText={IsBought?`Ticket already purchased`:`Get Ticket ${HeroSectionEvent?.ticket?.code||""} ${formatMoney(HeroSectionEvent?.ticket?.price||' ',false)}`}
+                          />
                         <div onClick={() => setIsOpen(!isOpen)}>
                           <img
                             src="/webp/dots.png"
