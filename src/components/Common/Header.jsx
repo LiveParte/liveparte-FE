@@ -27,6 +27,15 @@ export default function Header({ className, openModal }) {
               width={148}
               height={23}
               alt="Picture of the author"
+              className="hidden md:block"
+            />
+            <Image
+              onClick={() => router.push("/")}
+              src="/svg/logo.svg"
+              width={87}
+              height={16}
+              alt="Picture of the author"
+              className="md:hidden"
             />
           </div>
           <div>
@@ -38,8 +47,8 @@ export default function Header({ className, openModal }) {
           </div>
         </div>
         <div className="text-[15px] text-white font500 flex-1 flex flex-col">
-          <Link onClick={handleCheckIfITHome} href={'/'} className="py-[12px]  cursor-pointer no-underline text-white">Browse events</Link>
-          <Link onClick={handleCheckIfITHome} href={'/'} className="py-[12px]  cursor-pointer no-underline text-white">On demand</Link>
+          <Link onClick={handleCheckIfITHome} href={'/event'} className="py-[12px]  cursor-pointer no-underline text-white">Browse events</Link>
+          <Link onClick={handleCheckIfITHome} href={'/event'} className="py-[12px]  cursor-pointer no-underline text-white">On demand</Link>
         </div>
 
         {/* <ButtonComp
