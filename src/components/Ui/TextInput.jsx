@@ -8,6 +8,7 @@ export function FloatingLabelInput({
   error,
   errors,
   name,
+  disabled=false
 }) {
   console.log(errors, "errorserrors");
   const [readOnly, setReadOnly] = React.useState(true);
@@ -32,14 +33,14 @@ export function FloatingLabelInput({
             {textFormat === "text" ? "Hide" : "Show"}
           </div>
         )}
-        <div className="relative">
+        <div className="relative bg-[#222428] rounded-[8px]">
           <input
             readOnly={readOnly}
             onFocus={() => setReadOnly(false)}
             onBlur={() => setReadOnly(true)}
             // type="text"
             id="floating_filled"
-            className="block rounded-[8px] z-10 px-[16px] pb-2.5 pt-[20px] w-full text-[13px] text-white bg-[#222428] focus:border-[1px] border-[0px]   appearance-none dark:text-white  focus:outline-none focus:ring-0 focus:border-[#63768D] peer h-[50px] "
+            className="block rounded-[8px] z-10 px-[16px] pb-2.5 pt-[20px] w-full text-[13px] text-white  focus:border-[1px] border-[0px]   appearance-none dark:text-white  focus:outline-none focus:ring-0 focus:border-[#63768D] peer h-[50px]  relative bg-transparent"
             placeholder=" "
             type={showPasswords || type || "text"}
             role="presentation"
@@ -49,6 +50,7 @@ export function FloatingLabelInput({
             name={name}
             value={value}
             onChange={onChange}
+            disabled={disabled}
           />
           <label
             // for="floating_filled"

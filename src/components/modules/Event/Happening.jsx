@@ -32,17 +32,7 @@ export default function Happening({ events, upComingEvent, OnDemandEvent }) {
               />
             )}
           />
-          {/* <div className="grid grid-cols-1 gap-[16px]  md:grid-cols-2  xl:grid-cols-4 md:gap-[40px] ">
-          {dummyShowData?.map(({ name, venue, showImage, isLive }, i) => (
-            <ShowsCard
-              key={i}
-              name={name}
-              venue={venue}
-              showImage={showImage.toString()}
-              isLive={isLive}
-            />
-          ))}
-        </div> */}
+          
         </div>
       </div>
       {/*  */}

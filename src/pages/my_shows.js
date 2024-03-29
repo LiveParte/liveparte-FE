@@ -19,12 +19,12 @@ export default function MyShows() {
     {
       name: "On demand",
     },
-    {
-      name: "Past",
-    },
+    // {
+    //   name: "Past",
+    // },
   ];
 
-  console.log(userShows?.event,user,'userShows')
+  // console.log(userShows?.event,user,'userShows')
   const [isActive, setIsActive] = useState(HeaderData[0]?.name);
   return (
     <div className="bg-[#060809] min-h-[100vh]  relative">
@@ -36,7 +36,7 @@ export default function MyShows() {
         setIsActive={setIsActive}
         title="My Shows"
       />
-      <Shows Data={userShows?.event} />
+      <Shows Data={userShows?.event} isLoading={isLoading} />
       <div className="absolute bottom-0 left-0 right-0">
         <Footer />
       </div>

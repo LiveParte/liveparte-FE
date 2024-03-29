@@ -10,7 +10,7 @@ import LoginSignUp from "@/components/modules/Event/Modal/Login&SignUp";
 import React, { useEffect, useState } from "react";
 import ShareEvent from "@/components/modules/EventDetails/modal/ShareEvent";
 import { useObject } from "@/Context/ObjectProvider";
-import { useGetEventDetailViaIdQuery } from "@/store/Event/eventApi";
+import { useGetEventDetailViaIdQuery, useUserShowsQuery } from "@/store/Event/eventApi";
 import { useRouter } from "next/router";
 import { usePaystackPayment } from "react-paystack";
 // import { PaystackConsumer } from 'react-paystack';
@@ -33,6 +33,13 @@ export default function EventId() {
   const { data, isLoading } = useGetEventDetailViaIdQuery(id, {
     skip: !id,
   });
+  const {data:userShows,isLoading:myShowLoader}=useUserShowsQuery(user?._id,{
+    skip:!user?._id
+  })
+
+  const IsBought =userShows?.event?.find((item)=>item?._id===id)?true:false;
+
+  console.log(userShows?.event,data,IsBought,'userShows')
   const config = {
     reference: new Date().getTime().toString(),
     email: userDetail?.email||"user@example.com",
@@ -181,6 +188,7 @@ export default function EventId() {
         giftTicket={openModalGiftTicket}
         openModalShareEvent={openModalShareEvent}
         notEvent={false}
+        IsBought={IsBought}
       />
       {/* <Dropdown  placement="top" label="Dropdown button" dismissOnClick={false}>
       <DropdownItem>Dashboard</DropdownItem>

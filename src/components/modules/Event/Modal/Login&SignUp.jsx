@@ -168,7 +168,7 @@ export default function LoginSignUp({
 
   return (
     <div
-      className={`bg-[#1B1C20] relative pb-[48px] px-[16px] pt-[25px] lg:pt-[30px]  h-[90vh] overflow-y-scroll customScrollHorizontal ${className}  md:h-auto `}
+      className={`bg-[#1B1C20] relative pb-[48px] px-[16px] pt-[25px] lg:pt-[30px]  h-[80vh] overflow-y-scroll customScrollHorizontal ${className}  md:h-auto `}
     >
       <div className="flex justify-between items-center mb-[45px]">
         <div></div>

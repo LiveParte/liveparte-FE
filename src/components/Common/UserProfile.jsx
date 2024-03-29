@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { selectCurrentUserData } from "@/store/User";
 import {  useSelector,useDispatch } from 'react-redux';
+import { Avatar3 } from "../../../public/svg/avatars";
 
 
 
@@ -11,7 +12,7 @@ export default function UserProfile({onClick}) {
   const [userProfile,setUserProfile]=useState();
   const user =useSelector(selectCurrentUserData);
   useEffect(() => {
-    setUserProfile(NoImageUser[checkIfNonImageExist?.nonProfileImage])
+    setUserProfile(NoImageUser[checkIfNonImageExist?.nonProfileImage]||Avatar3)
   }, [checkIfNonImageExist?.nonProfileImage,user])
   
   // console.log(userProfile,NoImageUser[checkIfNonImageExist?.nonProfileImage],'user')

@@ -6,7 +6,8 @@ import ButtonComp from "@/components/Ui/button";
 import { useRouter } from "next/router";
 
 export default function Shows({
-  Data=[]
+  Data=[],
+  isLoading=false
 }) {
   const router = useRouter();
   const container =
@@ -36,7 +37,7 @@ export default function Shows({
         )}
 
         {/* No SHow */}
-        {isLength === 0 && (
+        {!isLoading&&isLength === 0 && (
           <div className="pb-[100px] lg:pb-[247px] h-[60vh] flex flex-col justify-center items-center">
             <div className="text-[24px] font600 text-[#FFFFFF] mb-[36px]">
               You don’t have any event ticket purchased
