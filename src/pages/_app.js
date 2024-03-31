@@ -21,7 +21,7 @@ export default function App({ Component, pageProps }) {
         <Provider store={store}>
           <ToastContainer
             className={`z-[9999]`}
-            position="top-right"
+            position="bottom-center"
             autoClose={5000}
             hideProgressBar={false}
             newestOnTop={false}
@@ -30,6 +30,8 @@ export default function App({ Component, pageProps }) {
             pauseOnFocusLoss
             draggable
             pauseOnHover
+          
+            // style={{}}
           />
           <Component {...pageProps} />
         </Provider>

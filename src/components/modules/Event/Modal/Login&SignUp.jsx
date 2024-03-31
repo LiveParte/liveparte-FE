@@ -16,7 +16,7 @@ import { useDispatch } from "react-redux";
 import { setUserData } from "@/store/User";
 import LoginPage from "./Module/LoginPage";
 import SignUpPage from "./Module/SignUp";
-import { randomBetweenOneAndTen } from "@/utils/reusableComponent";
+import { ErrorNotification, SuccessNotification, randomBetweenOneAndTen } from "@/utils/reusableComponent";
 export default function LoginSignUp({
   closeModal,
   pageName = "Login",
@@ -141,11 +141,14 @@ export default function LoginSignUp({
     }
 
     if (handleRegisterUser?.error?.message === "Unauthorized") {
-        toast.error("Invalid credentials");
+        // toast.error("Invalid credentials");
+        ErrorNotification({message: 'Invalid credentials'})
     }
 
     if (response?.user?.createdAt) {
-        toast.success(`User Successfully Logged in`);
+      SuccessNotification({message: "User Successfully Logged in"})
+
+        // toast.success(`User Successfully Logged in`);
         storage.localStorage.set(
             accessTokenStorageName,
             encryptText(response?.accessToken)
@@ -166,6 +169,10 @@ export default function LoginSignUp({
 }
 
 
+async function testNotification (){
+ 
+}
+
   return (
     <div
       className={`bg-[#1B1C20] relative pb-[48px] px-[16px] pt-[25px] lg:pt-[30px]  h-[80vh] overflow-y-scroll customScrollHorizontal ${className}  md:h-auto `}
@@ -182,7 +189,8 @@ export default function LoginSignUp({
             Log In
           </div>
           <div
-            onClick={() => setToggle("SignUp")}
+            onClick={testNotification}
+            // onClick={() => setToggle("SignUp")}
             className={` h-[40px] flex justify-center items-center ${
               toggle !== "Login" ? isActive : notActive
             }`}

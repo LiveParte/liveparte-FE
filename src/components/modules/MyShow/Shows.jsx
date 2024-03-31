@@ -1,9 +1,9 @@
 import Carousel from "@/components/Common/Carousel";
-import ShowsCard from "@/components/Common/Shows";
 import React from "react";
 import { dummyShowDataII } from "../Event/Data";
 import ButtonComp from "@/components/Ui/button";
 import { useRouter } from "next/router";
+import ShowsCard from "@/components/Common/MyShow/Shows";
 
 export default function Shows({
   Data=[],
@@ -23,7 +23,7 @@ export default function Shows({
                 key={index}
                 id={item?.id}
                 name={item?.name}
-                venue={item?.venue}
+                venue={item?.venue||item?.address}
                 showImage={item?.thumbnail_url.toString()}
                 isLive={false}
                 item={item}

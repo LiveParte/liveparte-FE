@@ -1,19 +1,19 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import ButtonComp from "../Ui/button";
+import ButtonComp from "../../Ui/button";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import GiftTicket from "../modules/EventDetails/modal/GiftTicket";
-import PurchasePaartyCoins from "../modules/LiveStream/submodules/PurchasePaartyCoins";
-import MyModal from "../Ui/Modal";
-import LoginSignUp from "../modules/Event/Modal/Login&SignUp";
-import CustomDropDown from "./CustomDropDown";
+import GiftTicket from "../../modules/EventDetails/modal/GiftTicket";
+import PurchasePaartyCoins from "../../modules/LiveStream/submodules/PurchasePaartyCoins";
+import MyModal from "../../Ui/Modal";
+import LoginSignUp from "../../modules/Event/Modal/Login&SignUp";
+import CustomDropDown from "../CustomDropDown";
 import { storage } from "@/utils/helper";
 import { useDispatch } from "react-redux";
 import { logout, setUserData } from "@/store/User";
 import dynamic from "next/dynamic";
 // import { Avatar1 } from "../../../public/svg/avatars";
-import UserProfile from "./UserProfile";
+import UserProfile from "../UserProfile";
 // const UserProfile =dynamic(()=>import('./UserProfile'),{src:false})
 
 export default function AuthHeader({ className, openModal, showNav = false }) {
@@ -215,8 +215,8 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           <Image
             onClick={() => router.push("/")}
             src="/svg/logo.svg"
-            width={87}
-            height={16}
+            width={110}
+            height={25}
             alt="Picture of the author"
             className="md:hidden"
           />
@@ -225,14 +225,14 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
             <div className="flex items-center  lg:gap-[18px] xl:gap-[24px] !hover:scale-100">
               <ButtonComp
                 btnText="Browse event"
-                className="text-[15px] font-medium  hidden lg:block !py-[11px] px-[5px] xl:px-[32px]  gap-[10px] !bg-transparent rounded-[999px]   font500 text-white "
+                className={`text-[15px] font-medium  hidden lg:block  px-[5px] xl:px-[32px]  gap-[10px] !bg-transparent rounded-[999px] !border-none  font500 text-white  ${blur}`}
                 onClick={() => router.push("/event")}
               />
-              <ButtonComp
+              {/* <ButtonComp
                 btnText="On demand"
                 className="text-[15px] font-medium  hidden lg:block !py-[11px] px-[5px] xl:px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white "
                 onClick={() => router.push("/event")}
-              />
+              /> */}
               <ButtonComp
                 btnText="My shows"
                 className="text-[15px] font-medium  hidden lg:block !py-[11px] px-[5px] xl:px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white "
@@ -277,7 +277,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
               <ButtonComp
                 onClick={() => setDropDown(true)}
                 btnText="Menu"
-                className="text-[13px] font-medium  lg:hidden !py-[8px] !px-[24px] gap-[10px] !bg-[#BAD6F70F] rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px] h-fit"
+                className="text-[13px] font-medium  lg:hidden !py-[8px] !px-[24px] gap-[10px] !bg-[#BAD6F70F] leading-none rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px] h-fit "
               />
             </div>
           </div>

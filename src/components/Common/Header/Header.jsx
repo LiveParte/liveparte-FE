@@ -29,14 +29,14 @@ export default function Header({ className, openModal }) {
               alt="Picture of the author"
               className="hidden md:block"
             />
-            <Image
-              onClick={() => router.push("/")}
-              src="/svg/logo.svg"
-              width={87}
-              height={16}
-              alt="Picture of the author"
-              className="md:hidden"
-            />
+             <Image
+            onClick={() => router.push("/")}
+            src="/svg/logo.svg"
+            width={110}
+            height={25}
+            alt="Picture of the author"
+            className="md:hidden"
+          />
           </div>
           <div>
             <ButtonComp
@@ -99,7 +99,7 @@ export default function Header({ className, openModal }) {
           <div className="flex items-center gap-[24px]">
             <ButtonComp
               btnText="Browse event"
-              className={`text-[15px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-[#BAD6F70F]  rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px]  focus:${isFocused}`}
+              className={`text-[15px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-[#06080933]  rounded-[999px]  font500 text-white backdrop-blur-[60px]  focus:${isFocused}`}
               onClick={() => router.push("/event")}
             />
             <ButtonComp
@@ -111,7 +111,7 @@ export default function Header({ className, openModal }) {
           <div>
             <div className="hidden lg:flex  gap-x-[40px] items-center">
             <ButtonComp
-                 onClick={()=>openModal('Login')}
+              onClick={()=>openModal('Login')}
               btnText="Log In"
               className="text-[13px] font-medium font500 bg-transparent px-0 text-white font500"
             />

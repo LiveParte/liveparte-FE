@@ -5,7 +5,7 @@ export default function ButtonComp({ className, btnText, onClick, isLoading,isDi
     <button
       onClick={onClick}
       disabled={isDisabled}
-      className={` bg-[#FFFFFF] h-[45px] px-[16px] rounded-[8px] ${isLoading&&'!bg-[#343F4B] text-[#63768D]'} ${className} hover:scale-100 transition-transform duration-300 ease-in-out flex justify-center items-center gap-1 `}
+      className={` bg-[#FFFFFF] h-[45px] px-[16px] !leading-[0px]  rounded-[8px] ${isLoading||isDisabled&&'!bg-[#343F4B] text-[#63768D]'} ${className} transition-transform duration-300 ease-in-out flex justify-center items-center gap-1 `}
     >
       {isLoading && (
         <div

@@ -1,8 +1,9 @@
 import { MainContainer } from "@/utils/styleReuse";
 import React from "react";
-import ShowsCard from "@/components/Common/Shows";
+// import ShowsCard from "@/components/Common/Shows";
 import { dummyShowData } from "./Data";
 import Carousel from "@/components/Common/Carousel";
+import ShowsCard from "@/components/Common/MyShow/Shows";
 
 export default function Happening({ events, upComingEvent, OnDemandEvent }) {
   const container = "pl-[20px] pr-[20px] lg:px-[60px]";

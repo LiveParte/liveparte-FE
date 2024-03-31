@@ -1,4 +1,4 @@
-import Header from "@/components/Common/Header";
+import Header from "@/components/Common/Header/Header";
 import React, { useEffect, useRef, useState } from "react";
 import { Daviod } from "../../../../public/svg";
 import { MainContainer } from "@/utils/styleReuse";
@@ -95,7 +95,8 @@ export default function Hero({
               className={`relative z-40  flex flex-col  md:justify-start items-center md:items-start  text-center  md:text-start`}
             >
               <Daviod />
-              <div className="mt-[16px] text-[45px] lg:text-[92px] md:text-left font-1 text-white font-bold uppercase lg:mb-[32px] leading-[46px] lg:leading-[90px] lg:w-[75%]">
+              <div className="mt-[16px] text-[43px] lg:text-[92px] md:text-left font-1 text-white font-bold uppercase lg:mb-[32px] leading-[46px] lg:leading-[90px] lg:w-[75%] line-clamp-3">
+                {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam odit vitae repudiandae voluptate ea deleniti ex eligendi sapiente modi. Beatae quidem magnam quis labore atque sit placeat quae itaque ullam! */}
                 {HeroSectionEvent?.address || "Timeless tour - Newyork"}
               </div>
               {/*  */}
@@ -141,7 +142,7 @@ export default function Hero({
                     <div className="mb-[100px] hidden md:flex gap-[16px] items-center relative">
                       {isOpen && <DropdownMenu />}
                       <ButtonComp
-                      isDisabled={!HeroSectionEvent?.ticket?.code}
+                      isDisabled={!HeroSectionEvent?.ticket?.code||IsBought}
                         onClick={IsBought?console.log('purchase Alery'):openModal}
                         className={`py-[12px] px-[39px] text-[13px] xl:text-[15px] font500`}
                         btnText={IsBought?`Ticket already purchased`:`Get Ticket ${HeroSectionEvent?.ticket?.code||""} ${formatMoney(HeroSectionEvent?.ticket?.price||' ',false)}`}
@@ -164,6 +165,7 @@ export default function Hero({
                       </div>
                       <div className="flex items-center justify-center gap-3">
                         <ButtonComp
+                        isDisabled={IsBought}
                           onClick={openModal}
                           className={`py-[12px] px-[20px] md:px-[34px] lg:px-[57px] text-[13px] md:text-[15px] font500 `}
                           btnText={IsBought?`Ticket already purchased`:`Get Ticket ${HeroSectionEvent?.ticket?.code||""} ${formatMoney(HeroSectionEvent?.ticket?.price||' ',false)}`}

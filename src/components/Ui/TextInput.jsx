@@ -24,7 +24,8 @@ export function FloatingLabelInput({
 
   return (
     <>
-      <div class="relative">
+      <div class="relative ">
+       
         {type === "password" && (
           <div
             onClick={handleSwitchPassword}
@@ -33,16 +34,14 @@ export function FloatingLabelInput({
             {textFormat === "text" ? "Hide" : "Show"}
           </div>
         )}
-        <div className="relative bg-[#222428] rounded-[8px]">
+        <div className="relative bg-[#222428] rounded-[8px] cursor-pointer">
           <input
            placeholder=" "
            type={showPasswords || type || "text"}
            role="presentation"
-           // autocomplete="new-password"
            autocomplete="off"
            ontouchstart="this.removeAttribute('readonly');"
            onfocus="this.removeAttribute('readonly');"
-           // autoComplete="off"
 
            name={name}
            value={value}
@@ -53,7 +52,7 @@ export function FloatingLabelInput({
             onBlur={() => setReadOnly(true)}
             // type="text"
             id="floating_filled"
-            className="block rounded-[8px] z-10 px-[16px] pb-2.5 pt-[20px] w-full text-[13px] text-white  focus:border-[1px] border-[0px]   appearance-none dark:text-white  focus:outline-none focus:ring-0 focus:border-[#63768D] peer h-[50px]  relative bg-transparent"
+            className={`block rounded-[8px] z-10 px-[16px] pb-2.5 pt-[20px] w-full text-[13px] text-white  focus:border-[1px] border-[0px]   appearance-none dark:text-white  focus:outline-none focus:ring-0 focus:border-[#63768D] peer h-[50px]  relative bg-transparent ${disabled&&'cursor-not-allowed'}`}
            
           />
           <label

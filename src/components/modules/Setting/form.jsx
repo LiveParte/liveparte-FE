@@ -144,7 +144,7 @@ export default function SettingForm({
   return (
     <div className="px-[20px] lg:px-[120px] md:w-[60vw] xl:w-[40vw]">
       {isActive == "Profile" && (
-        <div className="mb-[29px] flex items-center gap-[12px] text-white">
+        <div className="mb-[29px] flex items-center gap-[12px] text-white ">
           <div className="h-[48px] w-[48px]">
             {/* <NoProfile /> */}
             {imageUrl ? (
@@ -183,7 +183,9 @@ export default function SettingForm({
         {isActive == "Profile" && (
           <div className="flex flex-col gap-[20px] ">
             {SettingFormLabel()?.map((item, index) => (
+              <div className="cursor-not-allowed">
               <Controller
+              
                 key={index}
                 control={control}
                 name={item?.name}
@@ -208,6 +210,7 @@ export default function SettingForm({
                   />
                 )}
               />
+              </div>
             ))}
             <div className="mt-[40px] lg:mt-[32px]">
               <ButtonComp
