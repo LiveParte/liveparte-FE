@@ -31,7 +31,7 @@ export default function SignUpPage({
 
       <div className="flex items-center text-[13px] text-white  py-[10px] mb-[29px]">
         <div className="bg-[#343F4B]  h-[1px] flex-grow-1"></div>
-        <div className="px-[38px]"> Or you can</div>
+        <div className="px-[38px]"> OR</div>
 
         <div className="bg-[#343F4B]  h-[1px] flex-grow-1"></div>
       </div>
@@ -64,7 +64,7 @@ export default function SignUpPage({
     ))}
     <div className="mt-[24px]">
       <ButtonComp
-        btnText={"Sign Up and Continue"}
+        btnText={"Sign up to Continue"}
         className={`w-full text-[13px] font500 `}
         onClick={handleSubmit(handleLogin)}
         isLoading={registerLoader}

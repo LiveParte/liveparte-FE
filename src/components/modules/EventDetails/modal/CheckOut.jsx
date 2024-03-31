@@ -60,7 +60,7 @@ export default function CheckOut({
         <PaystackConsumer {...componentProps} >
           {({initializePayment}) =>
            <ButtonComp
-              btnText={`Proceed To Make Payment ${
+              btnText={`Proceed To Make Payment - ${
                 Data?.ticket?.code
               } ${formatMoney(Data?.ticket?.price, false || "0")} `}
               className={`w-full text-[13px] font500] h-[44px] `}

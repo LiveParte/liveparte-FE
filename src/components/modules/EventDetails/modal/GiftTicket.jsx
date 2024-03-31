@@ -26,7 +26,7 @@ export default function GiftTicket({
         </div>
       </nav>
 
-      <main>
+      <main >
         <div className="flex items-center gap-[17px]  mb-[54px]">
           <div>
             <img
@@ -62,7 +62,7 @@ export default function GiftTicket({
         </form>
 
         <ButtonComp
-          btnText={`Proceed To Make Payment ${Data?.ticket?.code} ${formatMoney(Data?.ticket?.price,false||'0')} `}
+          btnText={`Proceed To Make Payment ${Data?.ticket?.code||""} ${formatMoney(Data?.ticket?.price||"0",false||'0')} `}
           className={`w-full text-[13px] font500] h-[44px] mt-[54px]`}
         />
       </main>

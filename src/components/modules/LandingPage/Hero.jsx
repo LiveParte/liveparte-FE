@@ -3,7 +3,8 @@ import { MainContainer } from "@/utils/styleReuse";
 import ButtonComp from "@/components/Ui/button";
 import dynamic from 'next/dynamic'
 import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
-const Animate =dynamic(()=>import('./submodules/Animate'),{ssr:false});
+import Animate from "./submodules/Animate";
+// const Animate =dynamic(()=>import('./submodules/Animate'),{ssr:false});
 
 export default function Hero({
   // notEvent = true,

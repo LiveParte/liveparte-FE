@@ -26,7 +26,7 @@ export default function Header({
               onClick={() => setIsActive && setIsActive(item?.name)}
               className={`${
                 isActive === item?.name
-                  ? "border-[1px] border-[#262C32] rounded-[999px] px-[18px] lg:px-[32px] py-[11px] bg-[#BAD6F70F]"
+                  ? "border-[1px] border-[#06080900] rounded-[8px] px-[25px] lg:px-[32px] py-[11px] bg-[#06080900]"
                   : "px-[15px] lg:px-[32px]"
               } text-[18px] font500 cursor-pointer px-[15px] py-[11px] text-nowrap `}
             >
@@ -41,7 +41,7 @@ export default function Header({
               onClick={() => setIsActive && setIsActive(item?.name)}
               className={`${
                 isActive === item?.name
-                  ? "border-[1px] border-[#262C32] rounded-[999px] px-[18px] lg:px-[32px] py-[11px] bg-[#BAD6F70F]"
+                  ? "border-[1px] border-[#06080900] rounded-[8px] px-[18px] lg:px-[32px] py-[11px] bg-[#BAD6F70F]"
                   : "px-[15px] lg:px-[32px]"
               } text-[18px] font500 cursor-pointer px-[15px] py-[11px] text-nowrap `}
             >

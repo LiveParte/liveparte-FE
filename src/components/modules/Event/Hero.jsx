@@ -145,7 +145,7 @@ export default function Hero({
                       isDisabled={!HeroSectionEvent?.ticket?.code||IsBought}
                         onClick={IsBought?console.log('purchase Alery'):openModal}
                         className={`py-[12px] px-[39px] text-[13px] xl:text-[15px] font500`}
-                        btnText={IsBought?`Ticket already purchased`:`Get Ticket ${HeroSectionEvent?.ticket?.code||""} ${formatMoney(HeroSectionEvent?.ticket?.price||' ',false)}`}
+                        btnText={IsBought?`Ticket already purchased`:`Get Ticket - ${HeroSectionEvent?.ticket?.code||""} ${formatMoney(HeroSectionEvent?.ticket?.price||' ',true)}`}
                         />
                       <div className="" onClick={() => setIsOpen(!isOpen)}>
                         <img
@@ -168,7 +168,7 @@ export default function Hero({
                         isDisabled={IsBought}
                           onClick={openModal}
                           className={`py-[12px] px-[20px] md:px-[34px] lg:px-[57px] text-[13px] md:text-[15px] font500 `}
-                          btnText={IsBought?`Ticket already purchased`:`Get Ticket ${HeroSectionEvent?.ticket?.code||""} ${formatMoney(HeroSectionEvent?.ticket?.price||' ',false)}`}
+                          btnText={IsBought?`Ticket already purchased`:`Get Ticket - ${HeroSectionEvent?.ticket?.code||""} ${formatMoney(HeroSectionEvent?.ticket?.price||' ',true)}`}
                           />
                         <div onClick={() => setIsOpen(!isOpen)}>
                           <img

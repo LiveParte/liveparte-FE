@@ -26,9 +26,15 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
   const [isOpenPC, setIsOpenPC] = useState(false);
   const dropdownRef = useRef(null);
   const purchaseCoinRef = useRef(null);
+  const isMyShow =router?.pathname=="/my_shows";
+  const isEvent =router?.pathname==="/event"
+  const isFocused =`hover:!bg-[#BAD6F70F] hover:rounded-[8px]  hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`
+  const isSelected =` rounded-[8px]  hover:border-[0px] font500 backdrop-blur-[60px] !bg-[#BAD6F70F]`
   function handleCloseModal() {
     setModalName();
   }
+
+  console.log(isMyShow&&isSelected,router?.pathname,'router?.pathname')
 
   function handleLogOut() {
     dispatch(logout());
@@ -109,7 +115,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           <div className="py-[15px]  cursor-pointer ">On demand</div>
           <Link
             href={"/my_shows"}
-            className="py-[12px]  cursor-pointer no-underline text-white mb-2"
+            className={`py-[12px]  cursor-pointer no-underline text-white mb-2 ${isMyShow&&isSelected}`}
           >
             My Show
           </Link>
@@ -225,7 +231,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
             <div className="flex items-center  lg:gap-[18px] xl:gap-[24px] !hover:scale-100">
               <ButtonComp
                 btnText="Browse event"
-                className={`text-[15px] font-medium  hidden lg:block  px-[5px] xl:px-[32px]  gap-[10px] !bg-transparent rounded-[999px] !border-none  font500 text-white  ${blur}`}
+                className={`text-[15px] font-medium  hidden lg:block  px-[16px] md:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${isEvent &&isSelected}`}
                 onClick={() => router.push("/event")}
               />
               {/* <ButtonComp
@@ -235,8 +241,9 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
               /> */}
               <ButtonComp
                 btnText="My shows"
-                className="text-[15px] font-medium  hidden lg:block !py-[11px] px-[5px] xl:px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white "
+                className={`  text-[15px] font-medium  hidden lg:block  px-[16px] md:px-[32px]   gap-[10px]    font500 text-white  ${isFocused} ${isMyShow ?isSelected:'bg-transparent'}`}
                 onClick={() => router.push("/my_shows")}
+                
               />
             </div>
           )}
@@ -277,7 +284,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
               <ButtonComp
                 onClick={() => setDropDown(true)}
                 btnText="Menu"
-                className="text-[13px] font-medium  lg:hidden !py-[8px] !px-[24px] gap-[10px] !bg-[#BAD6F70F] leading-none rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px] h-fit "
+                className="text-[13px] font-medium  lg:hidden !py-[16px] !px-[24px] gap-[10px] !bg-[#BAD6F70F] leading-none rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px] h-fit "
               />
             </div>
           </div>

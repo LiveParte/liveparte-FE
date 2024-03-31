@@ -17,7 +17,7 @@ export default function ImageOrVideo({ videoRef, image,isPlaying }) {
         objectFit="cover"
         placeholder="blur"
         sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
-
+        loading="lazy"
       />
 
       <video

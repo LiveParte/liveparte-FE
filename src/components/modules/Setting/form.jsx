@@ -167,8 +167,8 @@ export default function SettingForm({
             />
           </div>
           <div className="text-[12px] leading-[20px] ">
-            Upload your profile photo, it should be a maximum{" "}
-            <br className="hidden md:block" /> size of 5 MB.
+            Upload your profile photo, it should be a maximum
+            size of 5 MB.
             <span
               onClick={handleClick}
               className="ml-2 text-[#FA4354] cursor-pointer hover:underline"
