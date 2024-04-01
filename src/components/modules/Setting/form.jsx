@@ -11,9 +11,10 @@ import {
 } from "@/store/User/userApi";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
-import { CheckIfArray, NoImageUser, storage } from "@/utils/helper";
+import { CheckIfArray, NoImageUser, storage, userDetailStorageName } from "@/utils/helper";
 import { Avatar3 } from "../../../../public/svg/avatars";
 import { selectCurrentUserData } from "@/store/User";
+import { ErrorNotification, replaceDashWithSpace, SuccessNotification } from "@/utils/reusableComponent";
 
 export default function SettingForm({
   isActive,
@@ -25,6 +26,8 @@ export default function SettingForm({
   const checkIfNonImageExist = storage.localStorage.get("noUserProfileImage");
   const [userProfile,setUserProfile]=useState();
   const user =useSelector(selectCurrentUserData);
+  let userInfo =storage["localStorage"]?.get(userDetailStorageName)
+
   useEffect(() => {
     setUserProfile(NoImageUser[checkIfNonImageExist?.nonProfileImage]||Avatar3)
   }, [checkIfNonImageExist?.nonProfileImage])
@@ -68,11 +71,11 @@ export default function SettingForm({
   // console.log(data,'datadata')
 
   useEffect(() => {
-    setValue("email", data?.email||user?.email);
-    setValue("id", data?._id)||user?._id;
-    setValue("phone", data?.phone||user?.phone);
-    setValue("fullName", data?.fullName||user?.fullName);
-  }, [data?._id, data,user]);
+    setValue("email", data?.email||userInfo?.email);
+    setValue("id", data?._id)||userInfo?._id;
+    setValue("phone", data?.phone||userInfo?.phone);
+    setValue("fullName", data?.fullName||replaceDashWithSpace(userInfo?.username?.toString()) );
+  }, [data?._id, data,userInfo]);
 
   const confirmPassword = watch("confirmPassword");
 
@@ -90,11 +93,12 @@ export default function SettingForm({
 
     if (response?.statusCode && response?.statusCode !== 200) {
       CheckIfArray(response?.message)
-        ? toast.error(response?.message[0])
-        : toast.error(response?.message);
+        ? ErrorNotification({message:response?.message[0]})
+        :  ErrorNotification({message:response?.message})
     }
     if (response?.updatedUser?._id) {
-      toast.success(response?.message);
+      SuccessNotification({message: response?.message})
+      // toast.success(response?.message);
       // storage.localStorage.set('accessTokenLiveParte1',response?.accessToken);
 
       // dispatch(setUserData(response?.user));

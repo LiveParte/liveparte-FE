@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 import { CloseModal, NoProfile } from "../../../../../public/svg";
 import {
   useLoginApiMutation,
+  userApi,
   useRegisterApiMutation,
 } from "@/store/User/userApi";
 import { useForm, Controller } from "react-hook-form";
@@ -23,14 +24,17 @@ import {
   ErrorNotification,
   SuccessNotification,
   randomBetweenOneAndTen,
+  replaceSpaceWithDash,
 } from "@/utils/reusableComponent";
+import { eventApi } from "@/store/Event/eventApi";
+import { transactionApi } from "@/store/Transaction/transactionApi";
 export default function LoginSignUp({
   closeModal,
   pageName = "Login",
   className,
   handleForgetPasswordToggle,
   onNext,
-  openModal
+  openModal,
 }) {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -38,7 +42,7 @@ export default function LoginSignUp({
   const [toggle, setToggle] = useState("Login");
   const isActive = `text-white border-[1px] border-[#48515d]  rounded-[999px] bg-[#2e3239] px-[30px] lg:px-[50px] cursor-pointer `;
   const notActive = `text-[#495969] px-[30px] lg:px-[50px] cursor-pointer `;
-  const isEvent =router?.pathname ==="/event/[id]"
+  const isEvent = router?.pathname === "/event/[id]";
   const [
     RegisterUser,
     { isLoading: registerLoader, isError: registerIsError },
@@ -68,6 +72,9 @@ export default function LoginSignUp({
   }, [pageName]);
 
   async function handleRegister(e) {
+    dispatch(userApi.util.resetApiState());
+    dispatch(eventApi.util.resetApiState());
+    dispatch(transactionApi.util.resetApiState());
     if (e?.password !== e?.confirmPassword) {
       return setError("confirmPassword", {
         type: "custom",
@@ -78,7 +85,7 @@ export default function LoginSignUp({
     // e.preventDefault();
     const payload = {
       ...e,
-      username: e.email,
+      username: replaceSpaceWithDash(e.fullName) 
     };
     const handleRegisterUser = await RegisterUser(payload);
     const response = handleRegisterUser?.data;
@@ -93,9 +100,12 @@ export default function LoginSignUp({
           message: "Email is already in use",
         });
       }
+
+      console.log( response?.message[0] ||
+        response?.message[0],'hehehehe')
       if (
-        response?.message ||
-        response?.message[0] ==
+        response?.message[0] 
+        ==
           "Password should have 1 upper case, lowcase letter along with a number and special character."
       ) {
         return setError("password", {
@@ -113,7 +123,8 @@ export default function LoginSignUp({
         id: response?.user?._id,
         nonProfileImage: randomBetweenOneAndTen(),
       });
-      toast.success(`User Register Successfully in`);
+      SuccessNotification({message:`User Register Successfully in`})
+      // toast.success(`User Register Successfully in`);
       reset();
       setToggle("Login");
       // storage.localStorage.set('accessTokenLiveParte1',response?.accessToken);
@@ -121,11 +132,12 @@ export default function LoginSignUp({
         accessTokenStorageName,
         encryptText(response?.accessToken)
       );
-      storage.localStorage.set(
-        userDetailStorageName,
-        encryptObject(response?.user)
-      );
+
+     
+      storage.localStorage.set(userDetailStorageName, response?.user);
       dispatch(setUserData(response?.user));
+
+      // console.log()
       if (router?.pathname === "/") {
         return router.push("/event");
       }
@@ -138,6 +150,9 @@ export default function LoginSignUp({
   }
 
   async function handleLogin(e) {
+    dispatch(userApi.util.resetApiState());
+    dispatch(eventApi.util.resetApiState());
+    dispatch(transactionApi.util.resetApiState());
     // e.preventDefault();
     const payload = {
       ...e,
@@ -172,14 +187,15 @@ export default function LoginSignUp({
 
     if (response?.user?.createdAt) {
       SuccessNotification({ message: "User Successfully Logged in" });
-
+      dispatch(setUserData(response?.user));
       // toast.success(`User Successfully Logged in`);
       storage.localStorage.set(
         accessTokenStorageName,
         encryptText(response?.accessToken)
       );
+
       storage.localStorage.set(userDetailStorageName, response?.user);
-      dispatch(setUserData(response?.user));
+      
       if (router?.pathname === "/") {
         return router.push("/event");
       }

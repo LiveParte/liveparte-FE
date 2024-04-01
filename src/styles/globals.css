@@ -314,3 +314,7 @@ body {
   min-width: 360px;
   overflow: hidden;
 }
+
+/* .Toastify__progress-bar--wrp {
+  display: none !important;
+} */
