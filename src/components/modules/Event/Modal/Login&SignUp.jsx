@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { CloseModal, NoProfile } from "../../../../../public/svg";
-import { useLoginApiMutation, useRegisterApiMutation } from "@/store/User/userApi";
+import {
+  useLoginApiMutation,
+  useRegisterApiMutation,
+} from "@/store/User/userApi";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 import {
@@ -16,34 +19,40 @@ import { useDispatch } from "react-redux";
 import { setUserData } from "@/store/User";
 import LoginPage from "./Module/LoginPage";
 import SignUpPage from "./Module/SignUp";
-import { randomBetweenOneAndTen } from "@/utils/reusableComponent";
+import {
+  ErrorNotification,
+  SuccessNotification,
+  randomBetweenOneAndTen,
+} from "@/utils/reusableComponent";
 export default function LoginSignUp({
   closeModal,
   pageName = "Login",
   className,
   handleForgetPasswordToggle,
-  onNext
+  onNext,
+  openModal
 }) {
   const router = useRouter();
   const dispatch = useDispatch();
-  console.log(router?.pathname,'routerrouter')
+  // console.log(router?.pathname,'routerrouter')
   const [toggle, setToggle] = useState("Login");
   const isActive = `text-white border-[1px] border-[#48515d]  rounded-[999px] bg-[#2e3239] px-[30px] lg:px-[50px] cursor-pointer `;
   const notActive = `text-[#495969] px-[30px] lg:px-[50px] cursor-pointer `;
+  const isEvent =router?.pathname ==="/event/[id]"
   const [
     RegisterUser,
     { isLoading: registerLoader, isError: registerIsError },
   ] = useRegisterApiMutation();
 
-  const [LoginUser,{isLoading:loginLoader,isError:loginIsError}]=useLoginApiMutation();
-  const checkIfNonImageExist =storage.localStorage.get('noUserProfileImage');
+  const [LoginUser, { isLoading: loginLoader, isError: loginIsError }] =
+    useLoginApiMutation();
+  const checkIfNonImageExist = storage.localStorage.get("noUserProfileImage");
   // console.log(checkIfNonImageExist,'checkIfNonImageExist')
-  const { control, handleSubmit, getValues,reset,setError } = useForm({
+  const { control, handleSubmit, getValues, reset, setError } = useForm({
     defaultValues: {
-     
-      email: "",
+      email: "test4@gmail.com",
       username: "",
-      password: "",
+      password: "Password@1",
       phoneNumber: "",
       fullName: "",
       confirmPassword: "",
@@ -59,9 +68,12 @@ export default function LoginSignUp({
   }, [pageName]);
 
   async function handleRegister(e) {
-
-    if(e?.password !== e?.confirmPassword){
-     return setError('confirmPassword', { type: 'custom', message: 'The password and confirm password do not match. Please make sure they are the same.' });
+    if (e?.password !== e?.confirmPassword) {
+      return setError("confirmPassword", {
+        type: "custom",
+        message:
+          "The password and confirm password do not match. Please make sure they are the same.",
+      });
     }
     // e.preventDefault();
     const payload = {
@@ -75,22 +87,35 @@ export default function LoginSignUp({
     // console.log(handleRegisterUser, UserString, "handleRegisterUser");
     // toast('Hello! RegisterUser')
     if (response?.statusCode && response?.statusCode !== 200) {
-      if(response?.message==="Email is already in use"){
-        return  setError('email', { type: 'custom', message: 'Email is already in use' });
+      if (response?.message === "Email is already in use") {
+        return setError("email", {
+          type: "custom",
+          message: "Email is already in use",
+        });
+      }
+      if (
+        response?.message ||
+        response?.message[0] ==
+          "Password should have 1 upper case, lowcase letter along with a number and special character."
+      ) {
+        return setError("password", {
+          type: "custom",
+          message:
+            "Password should have 1 upper case, lowcase letter along with a number and special character.",
+        });
       }
       CheckIfArray(response?.message)
-        ? toast.error(response?.message[0])
-        : toast.error(response?.message);
-        
+        ? ErrorNotification(response?.message[0])
+        : ErrorNotification(response?.message);
     }
     if (response?.user?.createdAt) {
-      storage.localStorage.set('noUserProfileImage',{
-        id:response?.user?._id,
-        nonProfileImage:randomBetweenOneAndTen()
-      })
+      storage.localStorage.set("noUserProfileImage", {
+        id: response?.user?._id,
+        nonProfileImage: randomBetweenOneAndTen(),
+      });
       toast.success(`User Register Successfully in`);
       reset();
-      setToggle('Login')
+      setToggle("Login");
       // storage.localStorage.set('accessTokenLiveParte1',response?.accessToken);
       storage.localStorage.set(
         accessTokenStorageName,
@@ -101,13 +126,13 @@ export default function LoginSignUp({
         encryptObject(response?.user)
       );
       dispatch(setUserData(response?.user));
-      if(router?.pathname ==="/"){
-        return  router.push("/event");
-       }
-       if(onNext){
-         return onNext();
-       }
-       closeModal();
+      if (router?.pathname === "/") {
+        return router.push("/event");
+      }
+      if (onNext) {
+        return onNext();
+      }
+      closeModal();
       // router.push("/my_shows");
     }
   }
@@ -115,10 +140,10 @@ export default function LoginSignUp({
   async function handleLogin(e) {
     // e.preventDefault();
     const payload = {
-        ...e,
-        usernameOrEmail: e.email,
+      ...e,
+      usernameOrEmail: e.email,
     };
-    
+
     const handleRegisterUser = await LoginUser(payload);
     const response = handleRegisterUser?.data;
     const UserString = JSON.stringify(response?.user);
@@ -127,44 +152,43 @@ export default function LoginSignUp({
     // toast('Hello! RegisterUser')
 
     if (!checkIfNonImageExist?.id) {
-        storage.localStorage.set('noUserProfileImage', {
-            id: response?.user?._id,
-            nonProfileImage: randomBetweenOneAndTen()
-        });
+      storage.localStorage.set("noUserProfileImage", {
+        id: response?.user?._id,
+        nonProfileImage: randomBetweenOneAndTen(),
+      });
     } else {
-        if (response?.user?._id !== checkIfNonImageExist?.id) {
-            storage.localStorage.set('noUserProfileImage', {
-                id: response?.user?._id,
-                nonProfileImage: randomBetweenOneAndTen()
-            });
-        }
+      if (response?.user?._id !== checkIfNonImageExist?.id) {
+        storage.localStorage.set("noUserProfileImage", {
+          id: response?.user?._id,
+          nonProfileImage: randomBetweenOneAndTen(),
+        });
+      }
     }
 
     if (handleRegisterUser?.error?.message === "Unauthorized") {
-        toast.error("Invalid credentials");
+      // toast.error("Invalid credentials");
+      ErrorNotification({ message: "Invalid credentials" });
     }
 
     if (response?.user?.createdAt) {
-        toast.success(`User Successfully Logged in`);
-        storage.localStorage.set(
-            accessTokenStorageName,
-            encryptText(response?.accessToken)
-        );
-        storage.localStorage.set(
-            userDetailStorageName,
-            UserString
-        );
-        dispatch(setUserData(response?.user));
-        if (router?.pathname === "/") {
-            return router.push("/event");
-        }
-        if (onNext) {
-            return onNext();
-        }
-        closeModal();
-    }
-}
+      SuccessNotification({ message: "User Successfully Logged in" });
 
+      // toast.success(`User Successfully Logged in`);
+      storage.localStorage.set(
+        accessTokenStorageName,
+        encryptText(response?.accessToken)
+      );
+      storage.localStorage.set(userDetailStorageName, response?.user);
+      dispatch(setUserData(response?.user));
+      if (router?.pathname === "/") {
+        return router.push("/event");
+      }
+      if (onNext) {
+        return onNext(response?.user);
+      }
+      closeModal();
+    }
+  }
 
   return (
     <div
@@ -182,6 +206,7 @@ export default function LoginSignUp({
             Log In
           </div>
           <div
+            // onClick={testNotification}
             onClick={() => setToggle("SignUp")}
             className={` h-[40px] flex justify-center items-center ${
               toggle !== "Login" ? isActive : notActive
@@ -196,23 +221,26 @@ export default function LoginSignUp({
       </div>
       {toggle === "Login" && (
         <LoginPage
-        handleLogin={handleLogin}
-        handleSubmit={handleSubmit}
-        Controller={Controller}
-        control={control}
-        handleForgetPasswordToggle={handleForgetPasswordToggle}
-        isLoading={loginLoader}
+          handleLogin={handleLogin}
+          handleSubmit={handleSubmit}
+          Controller={Controller}
+          control={control}
+          handleForgetPasswordToggle={handleForgetPasswordToggle}
+          isLoading={loginLoader}
+          openModal={openModal}
+          isEvent={isEvent}
         />
       )}
 
       {toggle !== "Login" && (
-       <SignUpPage
-       handleLogin={handleRegister}
-       handleSubmit={handleSubmit}
-       Controller={Controller}
-       control={control}
-       registerLoader={registerLoader}
-       />
+        <SignUpPage
+          handleLogin={handleRegister}
+          handleSubmit={handleSubmit}
+          Controller={Controller}
+          control={control}
+          registerLoader={registerLoader}
+          isEvent={isEvent}
+        />
       )}
     </div>
   );

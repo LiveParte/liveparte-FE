@@ -2,11 +2,11 @@ import { accessTokenStorageName, decryptObject, storage, userDetailStorageName }
 import { createSlice ,current} from "@reduxjs/toolkit";
 // import { storage } from "../../utils/helper";
 // let userInfo =storage["localStorage"].get(userDetailStorageName)&& decryptObject(storage["localStorage"].get(userDetailStorageName));
-let userInfo =storage["localStorage"].get(userDetailStorageName)&& JSON.parse(storage["localStorage"].get(userDetailStorageName));
-
+let userInfo =storage["localStorage"].get(userDetailStorageName)
+  console.log("userInfo33",userInfo)
 const initialState = {
 //   loading: storage["localStorage"].get('user')?.user?true:false,
-  isLoggedIn: false,
+  isLoggedIn: storage["localStorage"].get(accessTokenStorageName)&&true,
   userInfo:userInfo, // for user object
  
   error: null,
@@ -38,7 +38,6 @@ export const authSlice = createSlice({
     state
     },
     logout: (state)=>{
-      state.pharamData = null;
       state.userData = null;
       state.userInfo={},
       storage["localStorage"].remove(userDetailStorageName);

@@ -9,6 +9,7 @@ import LoginSignUp from "@/components/modules/Event/Modal/Login&SignUp";
 import WithAuth from "@/components/Layout/WithAuth";
 import { useGetAllEventQuery, useGetEventOnDemandQuery } from "@/store/Event/eventApi";
 import moment from "moment";
+import ForgetPassword from "@/components/modules/Event/Modal/submodules/ForgetPassword/ForgetPassword";
 
 export default function Home() {
   const router = useRouter();
@@ -48,21 +49,27 @@ export default function Home() {
   const modalPage =[
     {
       name:'Login',
-      component:<LoginSignUp className={`min-h-[75vh] tallT:min-h-[65vh]`} closeModal={closeModal} />
+      component:<LoginSignUp 
+      handleForgetPasswordToggle={()=>openModal('ForgetPassword')}
+    className={``} closeModal={closeModal} />
     },
     {
       name:'SignUp',
       component:<LoginSignUp className={`xl:min-h-[75vh] tallT:min-h-[65vh]`} pageName="signUp" closeModal={closeModal} />
     },
+    {
+      name:`ForgetPassword`,
+      component:<ForgetPassword closeModal={closeModal} openModal={openModal}/>
+    }
   ]
 
   return (
     <NoAuth>
       <MyModal
         bodyComponent={modalPage?.find((item)=>item?.name===isOpen)?.component}
-        containerStyle={`!bg-[#1B1C20]  border-[1px] border-[#343F4B] rounded-[16px]  !w-[586px] min-h-[75vh] tallT:min-h-[65vh]`}
+        containerStyle={`!bg-[#1B1C20]  border-[1px] border-[#343F4B] rounded-[16px]  !w-[586px]  `}
         isOpen={isOpen?true:false}
-        closeModal={closeModal}
+        closeModal={()=>isOpen==="ForgetPassword"?openModal("ForgetPassword"):closeModal()}
         openModal={openModal}
       />
       <Hero HeroSectionEvent={HeroSectionEvent} openModal={openModal} router={router} notEvent={true} />

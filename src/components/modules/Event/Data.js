@@ -97,6 +97,7 @@ export const LoginForm =()=>{
         {
             name:'email',
             label:'Email Address',
+            pattern:REGEX_PATTERNS?.EMAIL
             // type:''
         },
         {

@@ -1,4 +1,4 @@
-import AuthHeader from "@/components/Common/AuthHeader";
+import AuthHeader from "@/components/Common/Header/AuthHeader";
 import Footer from "@/components/Common/Footer";
 import WithAuth from "@/components/Layout/WithAuth";
 import Header from "@/components/modules/MyShow/Header";

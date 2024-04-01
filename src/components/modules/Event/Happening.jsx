@@ -1,14 +1,15 @@
 import { MainContainer } from "@/utils/styleReuse";
 import React from "react";
-import ShowsCard from "@/components/Common/Shows";
+// import ShowsCard from "@/components/Common/Shows";
 import { dummyShowData } from "./Data";
 import Carousel from "@/components/Common/Carousel";
+import ShowsCard from "@/components/Common/MyShow/Shows";
 
 export default function Happening({ events, upComingEvent, OnDemandEvent }) {
   const container = "pl-[20px] pr-[20px] lg:px-[60px]";
   return (
     <div className="bg-[#060809] ">
-      <div className={` py-[30px] pb-[72px] lg:pb-[150px]`}>
+      <div className={` py-[30px] pb-[42px] lg:pb-[150px]`}>
         <div
           className={`text-[20px] font500 text-white ${MainContainer} mb-[40px]`}
         >
@@ -36,7 +37,7 @@ export default function Happening({ events, upComingEvent, OnDemandEvent }) {
         </div>
       </div>
       {/*  */}
-      <div className={`bg-[#060809]  py-[30px] pb-[72px] lg:pb-[150px]`}>
+      <div className={`bg-[#060809]  py-[30px] pb-[42px] lg:pb-[150px]`}>
         <div
           className={`text-[20px] font500 text-white ${MainContainer} mb-[40px]`}
         >

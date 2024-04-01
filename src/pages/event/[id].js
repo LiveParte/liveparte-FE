@@ -10,7 +10,14 @@ import LoginSignUp from "@/components/modules/Event/Modal/Login&SignUp";
 import React, { useEffect, useState } from "react";
 import ShareEvent from "@/components/modules/EventDetails/modal/ShareEvent";
 import { useObject } from "@/Context/ObjectProvider";
-import { useGetEventDetailViaIdQuery, useUserShowsQuery } from "@/store/Event/eventApi";
+import {
+  eventApi,
+  useGetEventDetailViaIdQuery,
+  useLazyUserShowsQuery,
+  useUserShowsQuery,
+} from "@/store/Event/eventApi";
+import { useDispatch } from "react-redux";
+
 import { useRouter } from "next/router";
 import { usePaystackPayment } from "react-paystack";
 // import { PaystackConsumer } from 'react-paystack';
@@ -19,12 +26,13 @@ import { useSelector } from "react-redux";
 import { selectCurrentUserData } from "@/store/User";
 
 export default function EventId() {
+  const dispatch = useDispatch()
   const [userDetail, setUserDetail] = useState(false);
   const user = useSelector(selectCurrentUserData) || false;
 
   useEffect(() => {
     setUserDetail(user);
-  }, [user?._id,user]);
+  }, [user?._id, user]);
   const router = useRouter();
   const { id } = router.query;
   let [isOpen, setIsOpen] = useState();
@@ -33,23 +41,37 @@ export default function EventId() {
   const { data, isLoading } = useGetEventDetailViaIdQuery(id, {
     skip: !id,
   });
-  const {data:userShows,isLoading:myShowLoader}=useUserShowsQuery(user?._id,{
-    skip:!user?._id
-  })
+  const {
+    data: userShows,
+    isLoading: myShowLoader,
+    refetch: userShowRefetch,
+  } = useUserShowsQuery(user?._id, {
+    skip: !user?._id,
+  });
 
-  const IsBought =userShows?.event?.find((item)=>item?._id===id)?true:false;
+  // const [handleUserShow,{isLoading:userShowLoader}] =useLazyUserShowsQuery();
 
-  console.log(userShows?.event,data,IsBought,'userShows')
+  // const handleUserShowFun = async() =>{
+  //     const response = await handleUserShow(user?.id);
+  //     console.log(response)
+  // }
+
+
+  const IsBought = userShows?.event?.find((item) => item?._id === id)
+    ? true
+    : false;
+
+  console.log(user ,"userShows");
   const config = {
     reference: new Date().getTime().toString(),
-    email: userDetail?.email||"user@example.com",
+    email: userDetail?.email || "user@example.com",
     amount: data?.ticket?.price * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
     publicKey: "pk_test_9b34d7cad3b54108b6eb034c951d89366eadcc3d",
     metadata: {
       custom_fields: [
         {
           event_id: data?._id,
-          ticket_id: data?.ticket?._id          ,
+          ticket_id: data?.ticket?._id,
           purchase_date: new Date(),
         },
         // To pass extra metadata, add an object with the same fields as above
@@ -57,11 +79,10 @@ export default function EventId() {
     },
   };
 
-
   const initializePayment = usePaystackPayment(config);
   const { myObject } = useObject();
 
-  console.log(data, new Date(), data,"myObject");
+  console.log(data, new Date(), data, "myObject");
 
   // you can call this function anything
   const onSuccess = (e) => {
@@ -116,7 +137,7 @@ export default function EventId() {
     // console.log(response);
     if (response?.data?.createdPurchase?._id) {
       closeModal();
-      router.push('/my_shows')
+      router.push("/my_shows");
     }
   };
   // you can call this function anything
@@ -142,6 +163,7 @@ export default function EventId() {
           handleSuccess={handleSuccess}
           handleClose={handleClose}
           closeModal={closeModal}
+          IsBought={IsBought}
         />
       ),
     },
@@ -156,7 +178,12 @@ export default function EventId() {
       component: (
         <LoginSignUp
           closeModal={closeModal}
-          onNext={() => setIsOpen("checkout")}
+          onNext={(userDetail) => {
+            dispatch(eventApi.endpoints.userShows.initiate(userDetail?._id, {forceRefetch: true}));
+
+            // userShowRefetch();
+            setIsOpen("checkout");
+          }}
         />
       ),
     },
@@ -189,6 +216,7 @@ export default function EventId() {
         openModalShareEvent={openModalShareEvent}
         notEvent={false}
         IsBought={IsBought}
+        myShowLoader={myShowLoader}
       />
       {/* <Dropdown  placement="top" label="Dropdown button" dismissOnClick={false}>
       <DropdownItem>Dashboard</DropdownItem>
@@ -196,7 +224,7 @@ export default function EventId() {
       <DropdownItem>Earnings</DropdownItem>
       <DropdownItem>Sign out</DropdownItem>
     </Dropdown> */}
-      <EventDetails HeroSectionEvent={data || myObject} />
+      <EventDetails HeroSectionEvent={data || myObject}  />
 
       {/* <PaystackHookExample/> */}
       {/* <Happening/> */}

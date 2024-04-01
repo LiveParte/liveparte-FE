@@ -40,7 +40,7 @@ export default function Home() {
     },
     {
       name:`ForgetPassword`,
-      component:<ForgetPassword openModal={openModal}/>
+      component:<ForgetPassword closeModal={closeModal} openModal={openModal}/>
     }
   ]
 
@@ -50,7 +50,9 @@ export default function Home() {
         bodyComponent={modalPage?.find((item)=>item?.name===isOpen)?.component}
         containerStyle={`!bg-[#1B1C20]  border-[1px] border-[#343F4B] rounded-[16px]  ${modalPage?.find((item)=>item?.name===isOpen)?.height}  !w-[586px] `}
         isOpen={isOpen?true:false}
-        closeModal={openModal}
+        closeModal={()=>isOpen==="ForgetPassword"?openModal("ForgetPassword"):closeModal()}
+        // closeModal={isOpen==="ForgetPassword"?openModal:closeModal}
+
         openModal={openModal}
       />}
       <Hero openModal={openModal} router={router} notEvent={true} />

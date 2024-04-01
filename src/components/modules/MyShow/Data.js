@@ -13,6 +13,7 @@ export const SettingFormLabel =()=>{
             type:'text',
             pattern:REGEX_PATTERNS?.EMAIL,
             disabled:true,
+            className:'cursor-'
         },
         {
             name:'phone',

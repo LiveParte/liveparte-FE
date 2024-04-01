@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useRouter } from "next/router";
-import { logout, selectCurrentUserData } from "@/store/User";
+import { isAuth, logout, selectCurrentUserData } from "@/store/User";
 import { useGetUserProfileQuery } from "@/store/User/userApi";
 import { decryptObject, storage, userDetailStorageName } from "@/utils/helper";
 import {  useSelector,useDispatch } from 'react-redux';
@@ -9,34 +9,50 @@ import {  useSelector,useDispatch } from 'react-redux';
 function WithAuth({ children }) {
   const router = useRouter();
   const dispatch = useDispatch()
-  // let userInfo =storage["localStorage"]?.get(userDetailStorageName)&& decryptObject(storage["localStorage"]?.get(userDetailStorageName));
+  let userInfo =storage["localStorage"]?.get(userDetailStorageName)
   const {isLoading,isError} =useGetUserProfileQuery();
   // alert("hello")
   const user =useSelector(selectCurrentUserData);
-   console.log(user,'useSelector')
-  const isAuthenticated =false;
+  const isAuthenticated =useSelector(isAuth);
+   console.log(userInfo,'useSelector')
+  // const isAuthenticated =false;
 
   console.log(isAuthenticated,user,'isAuthenticated')
 
   useEffect(() => {
-    if (isAuthenticated) {
+    if (!isAuthenticated) {
       router.push("/");
       
     }
   }, [isAuthenticated]);
 
   useEffect(() => {
-    if(!isLoading){
-    if (isError) {
+    if (!user?._id) {
+      router.push("/");
+      // dispatch(logout())
+    }
+  }, [user,userInfo]);
+
+  useEffect(() => {
+    if (!userInfo?._id) {
       router.push("/");
       dispatch(logout())
+      // dispatch(logout())
+    }
+  }, [userInfo?.id]);
+
+  useEffect(() => {
+    if(!isLoading){
+    if (isError) {
+      // router.push("/");
+      // dispatch(logout())
     }
   }
   }, [isError,isLoading]);
 
   return (
     <div className="min-h-[100vh] bg-white">
-      {!isAuthenticated ? children : <div></div>}
+      {true ? children : <div></div>}
     </div>
   );
 }

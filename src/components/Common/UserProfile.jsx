@@ -13,7 +13,7 @@ export default function UserProfile({onClick}) {
   const user =useSelector(selectCurrentUserData);
   useEffect(() => {
     setUserProfile(NoImageUser[checkIfNonImageExist?.nonProfileImage]||Avatar3)
-  }, [checkIfNonImageExist?.nonProfileImage,user])
+  }, [checkIfNonImageExist?.nonProfileImage])
   
   // console.log(userProfile,NoImageUser[checkIfNonImageExist?.nonProfileImage],'user')
   return (

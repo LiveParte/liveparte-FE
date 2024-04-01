@@ -1,9 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { MainContainer } from "@/utils/styleReuse";
 import ButtonComp from "@/components/Ui/button";
 import dynamic from 'next/dynamic'
 import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
-const Animate =dynamic(()=>import('./submodules/Animate'),{ssr:false});
+import Animate from "./submodules/Animate";
+// const Animate =dynamic(()=>import('./submodules/Animate'),{ssr:false});
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Hero({
   // notEvent = true,
@@ -17,42 +19,48 @@ export default function Hero({
 
   //
   const [textChange, setTextChange] = useState("");
-  const words = ["Concerts", "Groove", "Parte", "Event"]; // Array of words to cycle through
-  const [currentWordIndex, setCurrentWordIndex] = useState(0);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  // const words = ["Concerts", "Groove", "Parte", "Event"];
+  const words = useMemo(() => ["Concerts", "Groove", "Parte", "Event"], []);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      // Increment currentWordIndex to rotate through the words
-      setCurrentWordIndex((prevIndex) => (prevIndex + 1) % words.length);
-      // Fade out the text and then update it after a delay
-      setTimeout(() => {
-        setTextChange(words[currentWordIndex]);
-      }, 1000); // Adjust the delay time as needed
-    }, 2000); // Change word every 5 seconds
+    const intervalId = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % words.length);
+    }, 4000);
 
-    return () => clearInterval(interval); // Cleanup interval on component unmount
-  }, [textChange, currentWordIndex]);
-
-  useEffect(() => {
-    function handleClickOutside(event) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-        // Clicked outside the dropdown, so close it
-        setIsOpen(false);
-      }
-    }
-
-    // Bind the event listener
-    document.addEventListener("mousedown", handleClickOutside);
-    // Unbind the event listener on component unmount
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
+    return () => clearInterval(intervalId);
   }, []);
+
+  useEffect(() => {
+    setTextChange(words[currentIndex]);
+  }, [currentIndex]);
+
+  
+
+
+  console.log(textChange,'textChange')
+
+
+  // useEffect(() => {
+  //   function handleClickOutside(event) {
+  //     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+  //       // Clicked outside the dropdown, so close it
+  //       setIsOpen(false);
+  //     }
+  //   }
+
+  //   // Bind the event listener
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   // Unbind the event listener on component unmount
+  //   return () => {
+  //     document.removeEventListener("mousedown", handleClickOutside);
+  //   };
+  // }, []);
   //bg-[url('/webp/1.png')]
 
-const Anima = () =>{
-  return  <Animate textChange={textChange}/>
-}
+// const Anima = useMemo(() =>{
+//   return  <Animate textChange={textChange}/>
+// })
 
   return (
     <div className="relative min-h-[90vh]  md:min-h-[100vh]">
@@ -66,7 +74,7 @@ const Anima = () =>{
           />
         </div>
         <div className="relative">
-          <div className="  min-h-[90vh] md:min-h-[100vh] relative flex flex-col justify-end md:justify-end  ">
+          <div className="  min-h-[100dvh] md:h-screen relative flex flex-col justify-end md:justify-end  ">
             {/* <div className="h-[45vh] md:h-[20vh]" /> */}
 
             <div
@@ -79,7 +87,8 @@ const Anima = () =>{
                    {/* {textChange} */}
                    {/* <span className="inline-block animate-bounce">Okay</span> */}
 
-                   <Anima/>
+                    <Animate textChange={textChange}/>
+   
                   </div>
                 </div>
                 <div className="text-white w-[75vw] md:w-[65vw] lg:w-[45vw]  lg:tracking-normal  mb-[80px] md:mb-[60px] :-text-start md:text-start text-[13px] md:text-[20px] font400">

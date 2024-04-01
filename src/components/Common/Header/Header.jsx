@@ -6,18 +6,19 @@ import ButtonComp from "@/components/Ui/button";
 import { MainContainer } from "@/utils/styleReuse";
 export default function Header({ className, openModal }) {
   const router = useRouter();
-  const isHome =router?.pathname==="/"
+  const isHome =router?.pathname==="/";
+  const isEvents =router?.pathname==='/events';
   // const MainContainer = `px-[20px] md:px-[40px] lg:px-[120px] relative`;
   const [dropDown, setDropDown] = useState(false);
-  const isFocused =` hover:!bg-[#BAD6F70F] hover:rounded-[999px] hover:border-[#262C32] hover:border-[1px] hover:font500  hover:backdrop-blur-[60px]`
-
+  const isFocused =` hover:!bg-[#06080900] hover:rounded-[8px]  hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`
+  const isSelected =isEvents&&`!bg-[#06080900] rounded-[8px]  hover:border-[0px] font500 backdrop-blur-[60px]`
   const handleCheckIfITHome = () =>{
     isHome&&setDropDown(false)
   }
 
   const MenuDropdown = () => {
     return (
-      <div className="bg-[#1B1C20]  left-0 right-0 top-0 bottom-0 z-[99] px-[24px] py-[14px] lg:py-[30px] overflow-hidden h-[100vh]  flex flex-col fixed">
+      <div className="bg-[#1B1C20]  left-0 right-0 top-0 bottom-0 z-[99] px-[24px] py-[14px] lg:py-[30px] overflow-hidden  flex flex-col fixed ">
         <div className="flex justify-between items-center mb-[28px] ">
           <div>
             {" "}
@@ -32,7 +33,7 @@ export default function Header({ className, openModal }) {
             <Image
               onClick={() => router.push("/")}
               src="/svg/logo.svg"
-              width={87}
+              width={120}
               height={16}
               alt="Picture of the author"
               className="md:hidden"
@@ -41,7 +42,7 @@ export default function Header({ className, openModal }) {
           <div>
             <ButtonComp
               btnText={`close`}
-              className={`px-[24px] py-[8px] text-[13px] font500 h-fit border-[#262C32] border-[1px] !bg-[#25272d] !text-white !rounded-full`}
+              className={`px-[24px] py-[16px] text-[13px] font500 h-fit border-[#262C32] border-[1px] !bg-[#25272d] !text-white !rounded-full`}
               onClick={() => setDropDown(false)}
             />
           </div>
@@ -64,7 +65,7 @@ export default function Header({ className, openModal }) {
           <ButtonComp
             onClick={() => openModal(`Login`)}
             btnText={`Login`}
-            className={`text-[13px] font500 mb-[50px]  w-full !bg-[#27292e] text-white`}
+            className={`text-[13px] font500 mb-[0px]  w-full !bg-[#27292e] text-white`}
           />
       </div>
     );
@@ -99,19 +100,19 @@ export default function Header({ className, openModal }) {
           <div className="flex items-center gap-[24px]">
             <ButtonComp
               btnText="Browse event"
-              className={`text-[15px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-[#BAD6F70F]  rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px]  focus:${isFocused}`}
+              className={`text-[15px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-[#06080900]    font500 text-white backdrop-blur-[60px]  focus:${isFocused} ${isSelected}`}
               onClick={() => router.push("/event")}
             />
             <ButtonComp
               btnText="On demand"
-              className={`text-[15px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white ${isFocused} `}
+              className={`text-[15px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-transparent    font500 text-white ${isFocused} `}
               onClick={() => router.push("/event")}
             />
           </div>
           <div>
             <div className="hidden lg:flex  gap-x-[40px] items-center">
             <ButtonComp
-                 onClick={()=>openModal('Login')}
+              onClick={()=>openModal('Login')}
               btnText="Log In"
               className="text-[13px] font-medium font500 bg-transparent px-0 text-white font500"
             />
@@ -124,7 +125,7 @@ export default function Header({ className, openModal }) {
             <ButtonComp
               onClick={() => setDropDown(true)}
               btnText="Menu"
-              className="text-[13px] font-medium  lg:hidden !py-[8px] !px-[24px] gap-[10px] !bg-[#BAD6F70F] rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px] h-fit"
+              className="text-[13px] font-medium  lg:hidden !py-[16px] !px-[24px] gap-[10px] !bg-[#BAD6F70F] rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px] h-fit"
             />
           </div>
         </div>

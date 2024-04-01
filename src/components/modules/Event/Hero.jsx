@@ -1,4 +1,4 @@
-import Header from "@/components/Common/Header";
+import Header from "@/components/Common/Header/Header";
 import React, { useEffect, useRef, useState } from "react";
 import { Daviod } from "../../../../public/svg";
 import { MainContainer } from "@/utils/styleReuse";
@@ -18,7 +18,8 @@ export default function Hero({
   openModalShareEvent,
   HeroSectionEvent,
   makePayment,
-  IsBought
+  IsBought,
+  myShowLoader
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -88,14 +89,15 @@ export default function Hero({
           />
         </div>
         <div className="relative">
-          <div className=" h-[90vh] md:h-[100vh] relative flex flex-col justify-end  ">
+          <div className=" min-h-[100dvh] md:h-screen relative flex flex-col justify-end  ">
             <div className="h-[20vh]" />
 
             <div
               className={`relative z-40  flex flex-col  md:justify-start items-center md:items-start  text-center  md:text-start`}
             >
               <Daviod />
-              <div className="mt-[16px] text-[45px] lg:text-[92px] md:text-left font-1 text-white font-bold uppercase lg:mb-[32px] leading-[46px] lg:leading-[90px] lg:w-[75%]">
+              <div className="mt-[16px] text-[43px] lg:text-[92px] md:text-left font-1 text-white font-bold uppercase lg:mb-[32px] leading-[46px] lg:leading-[90px] lg:w-[75%] line-clamp-4">
+                {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam odit vitae repudiandae voluptate ea deleniti ex eligendi sapiente modi. Beatae quidem magnam quis labore atque sit placeat quae itaque ullam! */}
                 {HeroSectionEvent?.address || "Timeless tour - Newyork"}
               </div>
               {/*  */}
@@ -141,10 +143,10 @@ export default function Hero({
                     <div className="mb-[100px] hidden md:flex gap-[16px] items-center relative">
                       {isOpen && <DropdownMenu />}
                       <ButtonComp
-                      isDisabled={!HeroSectionEvent?.ticket?.code}
+                      isDisabled={!HeroSectionEvent?.ticket?.code||IsBought||myShowLoader}
                         onClick={IsBought?console.log('purchase Alery'):openModal}
                         className={`py-[12px] px-[39px] text-[13px] xl:text-[15px] font500`}
-                        btnText={IsBought?`Ticket already purchased`:`Get Ticket ${HeroSectionEvent?.ticket?.code||""} ${formatMoney(HeroSectionEvent?.ticket?.price||' ',false)}`}
+                        btnText={IsBought?`Ticket already purchased`:`Get Ticket - ${HeroSectionEvent?.ticket?.code||""} ${formatMoney(HeroSectionEvent?.ticket?.price||' ',true)}`}
                         />
                       <div className="" onClick={() => setIsOpen(!isOpen)}>
                         <img
@@ -164,9 +166,10 @@ export default function Hero({
                       </div>
                       <div className="flex items-center justify-center gap-3">
                         <ButtonComp
-                          onClick={openModal}
+                      isDisabled={!HeroSectionEvent?.ticket?.code||IsBought||myShowLoader}
+                      onClick={openModal}
                           className={`py-[12px] px-[20px] md:px-[34px] lg:px-[57px] text-[13px] md:text-[15px] font500 `}
-                          btnText={IsBought?`Ticket already purchased`:`Get Ticket ${HeroSectionEvent?.ticket?.code||""} ${formatMoney(HeroSectionEvent?.ticket?.price||' ',false)}`}
+                          btnText={IsBought?`Ticket already purchased`:`Get Ticket - ${HeroSectionEvent?.ticket?.code||""} ${formatMoney(HeroSectionEvent?.ticket?.price||' ',true)}`}
                           />
                         <div onClick={() => setIsOpen(!isOpen)}>
                           <img
