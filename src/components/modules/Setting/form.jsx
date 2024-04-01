@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { FloatingLabelInput } from "@/components/Ui/TextInput";
 import ButtonComp from "@/components/Ui/button";
 import { SecurityFormLabel, SettingFormLabel } from "../MyShow/Data";
-import { NoProfile } from "../../../../public/svg";
+import { useSelector } from "react-redux";
 import Image from "next/image";
 import {
   useChangePasswordMutation,
@@ -13,6 +13,7 @@ import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 import { CheckIfArray, NoImageUser, storage } from "@/utils/helper";
 import { Avatar3 } from "../../../../public/svg/avatars";
+import { selectCurrentUserData } from "@/store/User";
 
 export default function SettingForm({
   isActive,
@@ -23,7 +24,7 @@ export default function SettingForm({
 
   const checkIfNonImageExist = storage.localStorage.get("noUserProfileImage");
   const [userProfile,setUserProfile]=useState();
-  // const user =useSelector(selectCurrentUserData);
+  const user =useSelector(selectCurrentUserData);
   useEffect(() => {
     setUserProfile(NoImageUser[checkIfNonImageExist?.nonProfileImage]||Avatar3)
   }, [checkIfNonImageExist?.nonProfileImage])
@@ -67,11 +68,11 @@ export default function SettingForm({
   // console.log(data,'datadata')
 
   useEffect(() => {
-    setValue("email", data?.email);
-    setValue("id", data?._id);
-    setValue("phone", data?.phone);
-    setValue("fullName", data?.fullName);
-  }, [data?._id, data]);
+    setValue("email", data?.email||user?.email);
+    setValue("id", data?._id)||user?._id;
+    setValue("phone", data?.phone||user?.phone);
+    setValue("fullName", data?.fullName||user?.fullName);
+  }, [data?._id, data,user]);
 
   const confirmPassword = watch("confirmPassword");
 
@@ -166,7 +167,7 @@ export default function SettingForm({
               style={{ display: "none" }} // Make the file input element invisible
             />
           </div>
-          <div className="text-[12px] leading-[20px] ">
+          <div className="text-[12px] leading-[20px]  md:w-[60%]">
             Upload your profile photo, it should be a maximum
             size of 5 MB.
             <span

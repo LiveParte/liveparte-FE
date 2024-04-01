@@ -77,6 +77,7 @@ useGetEventOnDemandQuery,
 useGetEventStreamQuery,
 useGetEventViaIdQuery,
 useGetEventDetailViaIdQuery,
-useUserShowsQuery
+useUserShowsQuery,
+useLazyUserShowsQuery
  
 } = eventApi;

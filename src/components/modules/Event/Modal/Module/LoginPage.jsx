@@ -5,8 +5,9 @@ import { GoogleIcon } from '../../../../../../public/svg'
 import { FloatingLabelInput } from '@/components/Ui/TextInput'
 
 export default function LoginPage({
-    Controller,control,handleSubmit,handleLogin,handleForgetPasswordToggle,isLoading
+    Controller,control,handleSubmit,handleLogin,handleForgetPasswordToggle,isLoading,openModal,isEvent
 }) {
+  
   return (
     <form
     className="px-[15px] lg:px-[50px] flex flex-col gap-[20px] lg:pb-[0px]"
@@ -63,7 +64,7 @@ export default function LoginPage({
     ))}
     <div className="mt-[24px]">
       <ButtonComp
-        btnText={"Login to Continue"}
+        btnText={isEvent?"Login to Continue":'Login and Continue'}
         className={`w-full text-[13px] font500   mb-[30px]`}
         onClick={handleSubmit(handleLogin)}
         isLoading={isLoading}

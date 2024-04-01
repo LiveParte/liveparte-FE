@@ -30,6 +30,7 @@ export default function LoginSignUp({
   className,
   handleForgetPasswordToggle,
   onNext,
+  openModal
 }) {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -37,6 +38,7 @@ export default function LoginSignUp({
   const [toggle, setToggle] = useState("Login");
   const isActive = `text-white border-[1px] border-[#48515d]  rounded-[999px] bg-[#2e3239] px-[30px] lg:px-[50px] cursor-pointer `;
   const notActive = `text-[#495969] px-[30px] lg:px-[50px] cursor-pointer `;
+  const isEvent =router?.pathname ==="/event/[id]"
   const [
     RegisterUser,
     { isLoading: registerLoader, isError: registerIsError },
@@ -48,9 +50,9 @@ export default function LoginSignUp({
   // console.log(checkIfNonImageExist,'checkIfNonImageExist')
   const { control, handleSubmit, getValues, reset, setError } = useForm({
     defaultValues: {
-      email: "",
+      email: "test4@gmail.com",
       username: "",
-      password: "",
+      password: "Password@1",
       phoneNumber: "",
       fullName: "",
       confirmPassword: "",
@@ -176,13 +178,13 @@ export default function LoginSignUp({
         accessTokenStorageName,
         encryptText(response?.accessToken)
       );
-      storage.localStorage.set(userDetailStorageName, UserString);
+      storage.localStorage.set(userDetailStorageName, response?.user);
       dispatch(setUserData(response?.user));
       if (router?.pathname === "/") {
         return router.push("/event");
       }
       if (onNext) {
-        return onNext();
+        return onNext(response?.user);
       }
       closeModal();
     }
@@ -225,6 +227,8 @@ export default function LoginSignUp({
           control={control}
           handleForgetPasswordToggle={handleForgetPasswordToggle}
           isLoading={loginLoader}
+          openModal={openModal}
+          isEvent={isEvent}
         />
       )}
 
@@ -235,6 +239,7 @@ export default function LoginSignUp({
           Controller={Controller}
           control={control}
           registerLoader={registerLoader}
+          isEvent={isEvent}
         />
       )}
     </div>

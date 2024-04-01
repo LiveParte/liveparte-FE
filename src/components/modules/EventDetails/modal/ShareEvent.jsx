@@ -40,7 +40,7 @@ export default function ShareEvent({
         <div className="text-[18px]  text-white">Share event</div>
         <div className="text-[#63768D] text-[18px] flex items-center gap-[12px]">
           {/* <CountdownTimerII initialTime={5} onTimerEnd={handleAction}/> */}
-        <div className="cursor-pointer absolute" onClick={closeModal&&closeModal}> <CloseII /></div>
+        <div className="cursor-pointer absolute right-5 md:right-0" onClick={closeModal&&closeModal}> <CloseII /></div>
         </div>
       </nav>
 
@@ -58,8 +58,8 @@ export default function ShareEvent({
             <div className="text-[14px] text-white font500 mb-[8px]">
               Timeless tour - Newyork
             </div>
-            <div className="text-[#B4BECB] text-[15px] mb-[6px] flex items-center">
-            Apr 24 <div className="rounded-full h-[4px] w-[4px] bg-[#D9D9D9] mx-[8px]"></div> O2 Cinema Arena Concert
+            <div className="text-[#B4BECB] text-[15px] mb-[6px] flex items-center ">
+            Apr 24 <div className="rounded-full h-[4px] w-[4px] bg-[#D9D9D9] mx-[8px] hidden md:block"></div> O2 Cinema Arena Concert
             </div>
             <div className="text-[14px] text-white font500">{Data?.ticket?.code} {formatMoney(Data?.ticket?.price,false||'0')} </div>
           </div>

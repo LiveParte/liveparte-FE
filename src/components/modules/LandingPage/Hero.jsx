@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { MainContainer } from "@/utils/styleReuse";
 import ButtonComp from "@/components/Ui/button";
 import dynamic from 'next/dynamic'
 import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
 import Animate from "./submodules/Animate";
 // const Animate =dynamic(()=>import('./submodules/Animate'),{ssr:false});
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Hero({
   // notEvent = true,
@@ -19,7 +20,8 @@ export default function Hero({
   //
   const [textChange, setTextChange] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
-  const words = ["Concerts", "Groove", "Parte", "Event"];
+  // const words = ["Concerts", "Groove", "Parte", "Event"];
+  const words = useMemo(() => ["Concerts", "Groove", "Parte", "Event"], []);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -56,9 +58,9 @@ export default function Hero({
   // }, []);
   //bg-[url('/webp/1.png')]
 
-const Anima = () =>{
-  return  <Animate textChange={textChange}/>
-}
+// const Anima = useMemo(() =>{
+//   return  <Animate textChange={textChange}/>
+// })
 
   return (
     <div className="relative min-h-[90vh]  md:min-h-[100vh]">
@@ -85,7 +87,8 @@ const Anima = () =>{
                    {/* {textChange} */}
                    {/* <span className="inline-block animate-bounce">Okay</span> */}
 
-                   {/* <Anima/> */}
+                    <Animate textChange={textChange}/>
+   
                   </div>
                 </div>
                 <div className="text-white w-[75vw] md:w-[65vw] lg:w-[45vw]  lg:tracking-normal  mb-[80px] md:mb-[60px] :-text-start md:text-start text-[13px] md:text-[20px] font400">

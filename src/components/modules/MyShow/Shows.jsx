@@ -7,7 +7,7 @@ import ShowsCard from "@/components/Common/MyShow/Shows";
 
 export default function Shows({
   Data=[],
-  isLoading=false
+  isLoading
 }) {
   const router = useRouter();
   const container =
@@ -18,7 +18,7 @@ export default function Shows({
       <div className={container}>
         {isLength > 0 && (
           <div className=" grid-cols-2  md:grid-cols-2  xl:grid-cols-4 gap-[20px] lg:gap-x-[40px] gap-y-[40px] lg:gap-y-[104px] pb-[100px] lg:pb-[247px]  grid">
-            {Data?.map((item, index) => (
+            {!isLoading&&Data?.map((item, index) => (
               <ShowsCard
                 key={index}
                 id={item?.id}
@@ -39,7 +39,7 @@ export default function Shows({
         {/* No SHow */}
         {!isLoading&&isLength === 0 && (
           <div className="pb-[100px] lg:pb-[247px] h-[60vh] flex flex-col justify-center items-center">
-            <div className="text-[24px] font600 text-[#FFFFFF] mb-[36px]">
+            <div className="text-[24px] text-center md:text-left font600 text-[#FFFFFF] mb-[36px]">
               You don’t have any event ticket purchased
             </div>
             <ButtonComp

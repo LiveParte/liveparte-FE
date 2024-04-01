@@ -14,6 +14,10 @@ import { logout, setUserData } from "@/store/User";
 import dynamic from "next/dynamic";
 // import { Avatar1 } from "../../../public/svg/avatars";
 import UserProfile from "../UserProfile";
+import { baseQuery } from "@/store/api";
+import { userApi } from "@/store/User/userApi";
+import { eventApi } from "@/store/Event/eventApi";
+import { transactionApi } from "@/store/Transaction/transactionApi";
 // const UserProfile =dynamic(()=>import('./UserProfile'),{src:false})
 
 export default function AuthHeader({ className, openModal, showNav = false }) {
@@ -27,7 +31,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
   const dropdownRef = useRef(null);
   const purchaseCoinRef = useRef(null);
   const isMyShow =router?.pathname=="/my_shows";
-  const isEvent =router?.pathname==="/event"
+  const isEvent =router?.pathname==="/event" || router?.pathname=='/event/[id]'
   const isFocused =`hover:!bg-[#BAD6F70F] hover:rounded-[8px]  hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`
   const isSelected =` rounded-[8px]  hover:border-[0px] font500 backdrop-blur-[60px] !bg-[#BAD6F70F]`
   function handleCloseModal() {
@@ -37,11 +41,23 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
   console.log(isMyShow&&isSelected,router?.pathname,'router?.pathname')
 
   function handleLogOut() {
+    dispatch(userApi.util.resetApiState());
+    dispatch(eventApi.util.resetApiState());
+    dispatch(transactionApi.util.resetApiState());
     dispatch(logout());
     // localStorage.removeItem(userDetailStorageName);
     // localStorage.removeItem(accessTokenStorageName);
+   
+
     if (router?.pathname === "/my_shows" || router?.pathname === "/setting") {
+      dispatch(userApi.util.resetApiState());
+      dispatch(eventApi.util.resetApiState());
+      dispatch(transactionApi.util.resetApiState());
+      dispatch(userApi.endpoints.getUserProfile.initiate({forceRefetch: true}));
+
+      // window.location.reload();
       return router.push("/");
+      
     }
   }
 
@@ -106,16 +122,18 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
         </div>
         {/*  */}
         <div className="text-[15px] text-white font500 flex-1  mb-[60px]">
+          <div className='py-[15px]'>
           <Link
-            href={"/"}
-            className="py-[15px]  cursor-pointer text-white no-underline"
+            href={"/event"}
+            className="  cursor-pointer text-white no-underline"
           >
             Browse events
           </Link>
-          <div className="py-[15px]  cursor-pointer ">On demand</div>
+          </div>
+          {/* <div className="py-[15px]  cursor-pointer ">On demand</div> */}
           <Link
             href={"/my_shows"}
-            className={`py-[12px]  cursor-pointer no-underline text-white mb-2 ${isMyShow&&isSelected}`}
+            className={`py-[12px]  cursor-pointer no-underline text-white mb-2 `}
           >
             My Show
           </Link>

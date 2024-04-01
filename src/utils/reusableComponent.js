@@ -47,7 +47,7 @@ export function GetTransformedImageUrl(
   const cloudName = urlParts[cloudNameIndex]; // Get the cloud name from the URL
 
   const transformedImageUrl = `https://res.cloudinary.com/dammymoses/image/upload/w_${width}/h_${height}/${cloudName}/LiveParte/${imageName}`;
-  console.log(cloudinaryUrl, urlParts, transformedImageUrl, "cloudinaryUrl");
+  // console.log(cloudinaryUrl, urlParts, transformedImageUrl, "cloudinaryUrl");
   return transformedImageUrl;
 }
 
@@ -58,7 +58,8 @@ export function randomBetweenOneAndTen() {
 export function SuccessNotification({ message }) {
    toast?.success(message, {
     icon: <SuccessNotificationIcon />,
-    style: { background: "#CCEDEB", color: "#060809" },
+    style: { background: "#CCEDEB", color: "#060809",fontSize:13,height:30 },
+    className:'font400'
   });
   
 }

@@ -52,7 +52,7 @@ export function FloatingLabelInput({
             onBlur={() => setReadOnly(true)}
             // type="text"
             id="floating_filled"
-            className={`block rounded-[8px] z-10 px-[16px] pb-2.5 pt-[20px] w-full text-[13px] text-white  focus:border-[1px] border-[0px]   appearance-none dark:text-white  focus:outline-none focus:ring-0 focus:border-[#63768D] peer h-[50px]  relative bg-transparent ${disabled&&'cursor-not-allowed'}`}
+            className={`block rounded-[8px] z-10 px-[16px] pb-2.5 pt-[20px] w-full text-[13px]  focus:border-[1px] border-[0px]   appearance-none dark:text-white  focus:outline-none focus:ring-0 focus:border-[#63768D] peer h-[50px]  relative bg-transparent ${disabled?'cursor-not-allowed !text-[#63768D]':'text-white '} `}
            
           />
           <label

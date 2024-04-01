@@ -18,7 +18,8 @@ export default function Hero({
   openModalShareEvent,
   HeroSectionEvent,
   makePayment,
-  IsBought
+  IsBought,
+  myShowLoader
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -142,7 +143,7 @@ export default function Hero({
                     <div className="mb-[100px] hidden md:flex gap-[16px] items-center relative">
                       {isOpen && <DropdownMenu />}
                       <ButtonComp
-                      isDisabled={!HeroSectionEvent?.ticket?.code||IsBought}
+                      isDisabled={!HeroSectionEvent?.ticket?.code||IsBought||myShowLoader}
                         onClick={IsBought?console.log('purchase Alery'):openModal}
                         className={`py-[12px] px-[39px] text-[13px] xl:text-[15px] font500`}
                         btnText={IsBought?`Ticket already purchased`:`Get Ticket - ${HeroSectionEvent?.ticket?.code||""} ${formatMoney(HeroSectionEvent?.ticket?.price||' ',true)}`}
@@ -165,8 +166,8 @@ export default function Hero({
                       </div>
                       <div className="flex items-center justify-center gap-3">
                         <ButtonComp
-                        isDisabled={IsBought}
-                          onClick={openModal}
+                      isDisabled={!HeroSectionEvent?.ticket?.code||IsBought||myShowLoader}
+                      onClick={openModal}
                           className={`py-[12px] px-[20px] md:px-[34px] lg:px-[57px] text-[13px] md:text-[15px] font500 `}
                           btnText={IsBought?`Ticket already purchased`:`Get Ticket - ${HeroSectionEvent?.ticket?.code||""} ${formatMoney(HeroSectionEvent?.ticket?.price||' ',true)}`}
                           />
