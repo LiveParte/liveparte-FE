@@ -13,7 +13,7 @@ function WithAuth({ children }) {
   const {isLoading,isError} =useGetUserProfileQuery();
   // alert("hello")
   const user =useSelector(selectCurrentUserData);
-  const isAuthenticated =useSelector(isAuth);
+  const isAuthenticated =userInfo?._id;
    console.log(userInfo,'useSelector')
   // const isAuthenticated =false;
 
@@ -34,11 +34,13 @@ function WithAuth({ children }) {
   }, [user,userInfo]);
 
   useEffect(() => {
+    if(!isLoading){
     if (!userInfo?._id) {
       router.push("/");
       dispatch(logout())
       // dispatch(logout())
     }
+  }
   }, [userInfo?.id]);
 
   useEffect(() => {

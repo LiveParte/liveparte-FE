@@ -8,13 +8,14 @@ import { selectCurrentUserData } from "@/store/User";
 import React, { useEffect, useState } from "react";
 import {  useSelector } from 'react-redux';
 import WithAuth from "@/components/Layout/WithAuth";
+import { storage, userDetailStorageName } from "@/utils/helper";
 const Shows =dynamic(()=>import('@/components/modules/MyShow/Shows'),{ssr:false})
 export default function MyShows() {
   const user =useSelector(selectCurrentUserData);
-
+  let userInfo =storage["localStorage"]?.get(userDetailStorageName)
   console.log(user,'user')
-  const {data:userShows,isLoading,refetch,isSuccess}=useUserShowsQuery(user?._id,{
-    skip:!user?._id
+  const {data:userShows,isLoading,refetch,isSuccess}=useUserShowsQuery(userInfo?._id,{
+    skip:!userInfo?._id
   })
   const HeaderData = [
     {
@@ -36,7 +37,7 @@ export default function MyShows() {
   // console.log(userShows?.event,user,'userShows')
   const [isActive, setIsActive] = useState(HeaderData[0]?.name);
   return (
-    <WithAuth>
+    <>
     <div className="bg-[#060809] min-h-[100vh]  relative">
       <AuthHeader showNav={true} />
 
@@ -51,6 +52,6 @@ export default function MyShows() {
         <Footer />
       </div>
     </div>
-    </WithAuth>
+    </>
   );
 }

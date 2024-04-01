@@ -73,3 +73,14 @@ export function ErrorNotification({ message }) {
  
 }
 
+
+export function replaceSpaceWithDash(str) {
+  return str.replace(/\s+/g, '999');
+
+}
+
+
+export function replaceDashWithSpace(str) {
+  return str?.replace(/999/g, ' ');
+
+}

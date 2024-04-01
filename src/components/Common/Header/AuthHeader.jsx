@@ -50,9 +50,9 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
    
 
     if (router?.pathname === "/my_shows" || router?.pathname === "/setting") {
-      dispatch(userApi.util.resetApiState());
-      dispatch(eventApi.util.resetApiState());
-      dispatch(transactionApi.util.resetApiState());
+      dispatch(userApi.util.invalidateTags());
+      dispatch(eventApi.util.invalidateTags());
+      dispatch(transactionApi.util.invalidateTags());
       dispatch(userApi.endpoints.getUserProfile.initiate({forceRefetch: true}));
 
       // window.location.reload();

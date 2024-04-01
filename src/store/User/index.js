@@ -6,7 +6,7 @@ let userInfo =storage["localStorage"].get(userDetailStorageName)
   console.log("userInfo33",userInfo)
 const initialState = {
 //   loading: storage["localStorage"].get('user')?.user?true:false,
-  isLoggedIn: storage["localStorage"].get(accessTokenStorageName)&&true,
+  isLoggedIn: userInfo?._id?true:false,
   userInfo:userInfo, // for user object
  
   error: null,
@@ -33,7 +33,7 @@ export const authSlice = createSlice({
     //  alert(payload,'payloadpayload')
       state.loading=true,
       // state.isLoggedIn=true,
-      state.isLoggedIn=storage["localStorage"].get(accessTokenStorageName)&&true,
+      state.isLoggedIn=userInfo?._id?true:false,
       // alert("RechargeMater")
     state
     },

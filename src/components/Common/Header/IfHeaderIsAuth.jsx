@@ -6,7 +6,7 @@ import { selectCurrentUserData } from "@/store/User";
 
 export default function IfHeaderIsAuth({ openModalLoginSignUp, openModal }) {
   const [userDetail,setUserDetail]=useState(false)
-  const user = useSelector(selectCurrentUserData)||false;
+  const user = useSelector(selectCurrentUserData)||{};
 
   console.log(user,'user')
   useEffect(() => {

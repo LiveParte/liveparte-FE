@@ -24,11 +24,13 @@ import { usePaystackPayment } from "react-paystack";
 import { useCreatePurchaseMutation } from "@/store/Transaction/transactionApi";
 import { useSelector } from "react-redux";
 import { selectCurrentUserData } from "@/store/User";
+import { storage, userDetailStorageName } from "@/utils/helper";
 
 export default function EventId() {
   const dispatch = useDispatch()
   const [userDetail, setUserDetail] = useState(false);
-  const user = useSelector(selectCurrentUserData) || false;
+  const user = useSelector(selectCurrentUserData) || {};
+  let userInfo =storage["localStorage"]?.get(userDetailStorageName)
 
   useEffect(() => {
     setUserDetail(user);
@@ -45,8 +47,8 @@ export default function EventId() {
     data: userShows,
     isLoading: myShowLoader,
     refetch: userShowRefetch,
-  } = useUserShowsQuery(user?._id, {
-    skip: !user?._id,
+  } = useUserShowsQuery(userInfo?._id, {
+    skip: !userInfo?._id,
   });
 
   // const [handleUserShow,{isLoading:userShowLoader}] =useLazyUserShowsQuery();
@@ -130,7 +132,7 @@ export default function EventId() {
     const payload = {
       event_id: data?._id,
       ticket_id: data?.ticket?.id,
-      user_id: userDetail?._id,
+      user_id: userInfo?._id,
       purchase_date: new Date(),
     };
     const response = await CreatePurchase(payload);
