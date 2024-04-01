@@ -32,3 +32,8 @@
       transform: translateY(0);
     }
   }
+
+
+  .heightII{
+    max-height: -webkit-fill-available
+  }

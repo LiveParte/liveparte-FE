@@ -75,7 +75,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
 
   const MenuDropdown = () => {
     return (
-      <div className="bg-[#1B1C20]   left-0 right-0 top-0 bottom-0 z-[99] px-[24px] py-[14px] overflow-hidden  pb-[50px] mb:pb-[0px] h-[100vh] justify-between  flex flex-col fixed overflow-y-scroll">
+      <div className="bg-[#1B1C20]   left-0 right-0 top-0 bottom-0 z-[99] px-[24px] py-[14px] overflow-hidden  pb-[20px] mb:pb-[0px]  justify-between  flex flex-col fixed overflow-y-scroll">
         <div className="flex justify-between items-center mb-[28px] ">
           <div>
             {" "}
@@ -90,7 +90,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
             <Image
               onClick={() => router.push("/")}
               src="/svg/logo.svg"
-              width={87}
+              width={120}
               height={16}
               alt="Picture of the author"
               className="md:hidden"
@@ -99,7 +99,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           <div>
             <ButtonComp
               btnText={`close`}
-              className={`px-[24px] py-[8px] text-[13px] font500 h-fit border-[#262C32] rounded-[999px] border-[1px] !bg-[#25272d] !text-white`}
+              className={`px-[24px] py-[16px] text-[13px] font500 h-fit border-[#262C32] rounded-[999px] border-[1px] !bg-[#25272d] !text-white`}
               onClick={() => setDropDown(false)}
             />
           </div>
@@ -133,7 +133,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
         </div>
 
         <div>
-          <div className="text-[15px] text-white font500 flex-1  mb-[16px]">
+          <div className="text-[15px] text-white font500 flex-1  ">
             <Link
               href="/setting"
               className="py-[15px]  cursor-pointer text-white no-underline"
@@ -155,7 +155,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
             btnText={`Login`}
             className={`text-[13px] font500 mb-[28px]  w-full !bg-[#27292e] text-white`}
           /> */}
-          <div></div>
+          
         </div>
       </div>
     );

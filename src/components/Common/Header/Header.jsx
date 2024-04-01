@@ -18,7 +18,7 @@ export default function Header({ className, openModal }) {
 
   const MenuDropdown = () => {
     return (
-      <div className="bg-[#1B1C20]  left-0 right-0 top-0 bottom-0 z-[99] px-[24px] py-[14px] lg:py-[30px] overflow-hidden h-[100vh]  flex flex-col fixed">
+      <div className="bg-[#1B1C20]  left-0 right-0 top-0 bottom-0 z-[99] px-[24px] py-[14px] lg:py-[30px] overflow-hidden  flex flex-col fixed ">
         <div className="flex justify-between items-center mb-[28px] ">
           <div>
             {" "}
@@ -30,14 +30,14 @@ export default function Header({ className, openModal }) {
               alt="Picture of the author"
               className="hidden md:block"
             />
-             <Image
-            onClick={() => router.push("/")}
-            src="/svg/logo.svg"
-            width={110}
-            height={25}
-            alt="Picture of the author"
-            className="md:hidden"
-          />
+            <Image
+              onClick={() => router.push("/")}
+              src="/svg/logo.svg"
+              width={120}
+              height={16}
+              alt="Picture of the author"
+              className="md:hidden"
+            />
           </div>
           <div>
             <ButtonComp
@@ -65,7 +65,7 @@ export default function Header({ className, openModal }) {
           <ButtonComp
             onClick={() => openModal(`Login`)}
             btnText={`Login`}
-            className={`text-[13px] font500 mb-[50px]  w-full !bg-[#27292e] text-white`}
+            className={`text-[13px] font500 mb-[0px]  w-full !bg-[#27292e] text-white`}
           />
       </div>
     );
