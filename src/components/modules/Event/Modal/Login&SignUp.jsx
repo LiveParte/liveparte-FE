@@ -54,9 +54,9 @@ export default function LoginSignUp({
   // console.log(checkIfNonImageExist,'checkIfNonImageExist')
   const { control, handleSubmit, getValues, reset, setError } = useForm({
     defaultValues: {
-      email: "test4@gmail.com",
+      email: "",
       username: "",
-      password: "Password@1",
+      password: "",
       phoneNumber: "",
       fullName: "",
       confirmPassword: "",
