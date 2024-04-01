@@ -54,7 +54,7 @@ export default function CheckOut({
             </div>
             <div className="text-[14px] text-white font500">
               {Data?.ticket?.code}{" "}
-              {formatMoney(Data?.ticket?.price, false || "0")}{" "}
+              {formatMoney(Data?.ticket?.price||"0", false || "0")}
             </div>
           </div>
         </div>

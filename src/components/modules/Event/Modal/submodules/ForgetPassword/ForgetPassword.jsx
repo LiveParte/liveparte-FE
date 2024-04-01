@@ -56,12 +56,12 @@ export default function ForgetPassword({
 
   return (
     <div
-      className={`bg-[#1B1C20] relative pb-[48px] px-[16px] pt-[16px] lg:pt-[16px] ${className}  overflow-y-scroll`}
+      className={`bg-[#1B1C20] relative pb-[48px] px-[16px] pt-[16px] lg:pt-[16px] ${className}  overflow-y-scroll customScrollHorizontal`}
     >
       <div className="flex justify-between items-center mb-[0px]">
         <div></div>
        
-        <div className="flex justify-end pb-[10px] " onClick={closeModal}>
+        <div className="flex justify-end pb-[10px]  cursor-pointer" onClick={closeModal}>
           <CloseModal />
         </div>
       </div>

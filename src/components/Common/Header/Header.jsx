@@ -3,15 +3,17 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import Link from 'next/link'
 import ButtonComp from "@/components/Ui/button";
-import { MainContainer } from "@/utils/styleReuse";
+import { HeaderOnSelect, MainContainer } from "@/utils/styleReuse";
 export default function Header({ className, openModal }) {
   const router = useRouter();
   const isHome =router?.pathname==="/";
   const isEvents =router?.pathname==='/events';
   // const MainContainer = `px-[20px] md:px-[40px] lg:px-[120px] relative`;
   const [dropDown, setDropDown] = useState(false);
-  const isFocused =` hover:!bg-[#06080900] hover:rounded-[8px]  hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`
-  const isSelected =isEvents&&`!bg-[#06080900] rounded-[8px]  hover:border-[0px] font500 backdrop-blur-[60px]`
+  const isMyShow =router?.pathname=="/my_shows";
+  const isEvent =router?.pathname==="/event" || router?.pathname=='/event/[id]'
+  const isFocused =`hover:!bg-[#FFFFFF26] hover:rounded-[8px]  hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`
+  const isSelected =HeaderOnSelect
   const handleCheckIfITHome = () =>{
     isHome&&setDropDown(false)
   }
@@ -100,12 +102,12 @@ export default function Header({ className, openModal }) {
           <div className="flex items-center gap-[24px]">
             <ButtonComp
               btnText="Browse event"
-              className={`text-[15px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-[#06080900]    font500 text-white backdrop-blur-[60px]  focus:${isFocused} ${isSelected}`}
+              className={` font-medium  hidden lg:block  px-[16px] md:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${isEvent &&isSelected}  text-[13px]   h-[32px]`}
               onClick={() => router.push("/event")}
             />
             <ButtonComp
               btnText="On demand"
-              className={`text-[15px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-transparent    font500 text-white ${isFocused} `}
+              className={` font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-transparent    font500 text-white ${isFocused}   text-[13px]   h-[32px]`}
               onClick={() => router.push("/event")}
             />
           </div>

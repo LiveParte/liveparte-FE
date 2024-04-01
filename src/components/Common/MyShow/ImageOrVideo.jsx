@@ -6,7 +6,7 @@ export default function ImageOrVideo({ videoRef, image,isPlaying }) {
     <>
       <Image
         src={image}
-        blurDataURL={image}
+        blurDataURL={'/webp/show2.png'}
         className={`absolute left-0 right-0 top-0 bottom-0 ${
           !isPlaying ? "z-30" : "z-0"
         }`}
@@ -19,7 +19,6 @@ export default function ImageOrVideo({ videoRef, image,isPlaying }) {
         sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
         loading="lazy"
       />
-
       <video
         ref={videoRef}
         // autoPlay={hoveredVideoIndex===item?._id?true:false}

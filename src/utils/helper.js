@@ -180,7 +180,7 @@ export const decryptObject = (encryptedJson) => {
 //   var encryptedJson1 = CryptoJS.AES.encrypt(JSON.stringify(data), secretKey).toString();
   var bytes  = CryptoJS.AES.decrypt(encryptedJson, secretKey);
 var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-console.log(decryptedData); 
+// console.log(decryptedData); 
 return decryptedData;
  
   if(encryptedJson){

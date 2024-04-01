@@ -40,7 +40,7 @@ export default function ShareEvent({
         <div className="text-[18px]  text-white">Share event</div>
         <div className="text-[#63768D] text-[18px] flex items-center gap-[12px]">
           {/* <CountdownTimerII initialTime={5} onTimerEnd={handleAction}/> */}
-        <div className="cursor-pointer absolute right-5 md:right-0" onClick={closeModal&&closeModal}> <CloseII /></div>
+        <div className="cursor-pointer absolute right-5 md:right-5" onClick={closeModal&&closeModal}> <CloseII /></div>
         </div>
       </nav>
 

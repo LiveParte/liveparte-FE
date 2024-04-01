@@ -111,7 +111,7 @@ export default function SettingForm({
       ...data,
     };
 
-    console.log(payload);
+    // console.log(payload);
     if (payload?.newPassword !== payload?.confirmPassword) {
       return setError("confirmPassword", {
         type: "custom",
@@ -173,7 +173,7 @@ export default function SettingForm({
           </div>
           <div className="text-[12px] leading-[20px]  md:w-[60%]">
             Upload your profile photo, it should be a maximum
-            size of 5 MB.
+            size of <span className="text-nowrap">5 MB</span>.
             <span
               onClick={handleClick}
               className="ml-2 text-[#FA4354] cursor-pointer hover:underline"

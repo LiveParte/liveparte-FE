@@ -57,6 +57,8 @@ export default function Happening({ events, upComingEvent, OnDemandEvent }) {
                 showImage={item?.thumbnail_url?.toString()}
                 eventDate={item?.event_date}
                 isLive={false}
+                showVideo={false}
+                isPlayIcon={false}
               />
             )}
           />

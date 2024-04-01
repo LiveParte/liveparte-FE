@@ -14,10 +14,10 @@ function WithAuth({ children }) {
   // alert("hello")
   const user =useSelector(selectCurrentUserData);
   const isAuthenticated =userInfo?._id;
-   console.log(userInfo,'useSelector')
+  //  console.log(userInfo,'useSelector')
   // const isAuthenticated =false;
 
-  console.log(isAuthenticated,user,'isAuthenticated')
+  // console.log(isAuthenticated,user,'isAuthenticated')
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -26,12 +26,12 @@ function WithAuth({ children }) {
     }
   }, [isAuthenticated]);
 
-  useEffect(() => {
-    if (!user?._id) {
-      router.push("/");
-      // dispatch(logout())
-    }
-  }, [user,userInfo]);
+  // useEffect(() => {
+  //   if (!user?._id) {
+  //     router.push("/");
+  //     // dispatch(logout())
+  //   }
+  // }, [user,userInfo]);
 
   useEffect(() => {
     if(!isLoading){
