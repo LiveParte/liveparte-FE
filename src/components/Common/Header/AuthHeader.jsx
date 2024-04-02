@@ -1,17 +1,29 @@
 import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
-import ButtonComp from "../Ui/button";
+import ButtonComp from "../../Ui/button";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import Login from "../modules/Event/Modal/submodules/Login";
-import GiftTicket from "../modules/EventDetails/modal/GiftTicket";
-import PurchasePaartyCoins from "../modules/LiveStream/submodules/PurchasePaartyCoins";
-import MyModal from "../Ui/Modal";
-import LoginSignUp from "../modules/Event/Modal/Login&SignUp";
-import CustomDropDown from "./CustomDropDown";
+import GiftTicket from "../../modules/EventDetails/modal/GiftTicket";
+import PurchasePaartyCoins from "../../modules/LiveStream/submodules/PurchasePaartyCoins";
+import MyModal from "../../Ui/Modal";
+import LoginSignUp from "../../modules/Event/Modal/Login&SignUp";
+import CustomDropDown from "../CustomDropDown";
+import { storage } from "@/utils/helper";
+import { useDispatch } from "react-redux";
+import { logout, setUserData } from "@/store/User";
+import dynamic from "next/dynamic";
+// import { Avatar1 } from "../../../public/svg/avatars";
+import UserProfile from "../UserProfile";
+import { baseQuery } from "@/store/api";
+import { userApi } from "@/store/User/userApi";
+import { eventApi } from "@/store/Event/eventApi";
+import { transactionApi } from "@/store/Transaction/transactionApi";
+import { HeaderOnSelect } from "@/utils/styleReuse";
+// const UserProfile =dynamic(()=>import('./UserProfile'),{src:false})
 
 export default function AuthHeader({ className, openModal, showNav = false }) {
   const router = useRouter();
+  const dispatch = useDispatch();
   const MainContainer = `px-[20px] md:px-[40px] lg:px-[120px] relative`;
   const [dropDown, setDropDown] = useState(false);
   const [modalName, setModalName] = useState();
@@ -19,24 +31,35 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
   const [isOpenPC, setIsOpenPC] = useState(false);
   const dropdownRef = useRef(null);
   const purchaseCoinRef = useRef(null);
-  // useEffect(() => {
-  //   function handleClickOutside(event) {
-  //     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-  //       // Clicked outside the dropdown, so close it
-  //       setIsOpen(false);
-  //     }
-  //   }
-
-  //   // Bind the event listener
-  //   document.addEventListener("mousedown", handleClickOutside);
-
-  //   // Unbind the event listener on component unmount
-  //   return () => {
-  //     document.removeEventListener("mousedown", handleClickOutside);
-  //   };
-  // }, []);
+  const isMyShow =router?.pathname=="/my_shows";
+  const isEvent =router?.pathname==="/event" || router?.pathname=='/event/[id]'
+  const isFocused =`hover:!bg-[#FFFFFF26] hover:rounded-[8px]  hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`
+  const isSelected =HeaderOnSelect;
   function handleCloseModal() {
     setModalName();
+  }
+
+  // console.log(isMyShow&&isSelected,router?.pathname,'router?.pathname')
+
+  function handleLogOut() {
+    dispatch(userApi.util.resetApiState());
+    dispatch(eventApi.util.resetApiState());
+    dispatch(transactionApi.util.resetApiState());
+    dispatch(logout());
+    // localStorage.removeItem(userDetailStorageName);
+    // localStorage.removeItem(accessTokenStorageName);
+   
+
+    if (router?.pathname === "/my_shows" || router?.pathname === "/setting") {
+      dispatch(userApi.util.invalidateTags());
+      dispatch(eventApi.util.invalidateTags());
+      dispatch(transactionApi.util.invalidateTags());
+      dispatch(userApi.endpoints.getUserProfile.initiate({forceRefetch: true}));
+
+      // window.location.reload();
+      return router.push("/");
+      
+    }
   }
 
   const modalComponent = [
@@ -58,7 +81,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
       name: "purchaseCoin",
       component: (
         <PurchasePaartyCoins
-        path={2}
+          path={2}
           containerStyle={`bg-[#1B1C20]`}
           closeModal={handleCloseModal}
           onClose={handleCloseModal}
@@ -69,73 +92,78 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
 
   const MenuDropdown = () => {
     return (
-      <div className="bg-[#1B1C20]  left-0 right-0 top-0 bottom-0 z-[99] px-[24px] py-[14px] overflow-hidden h-[100vh] justify-between  flex flex-col fixed overflow-y-scroll">
+      <div className="bg-[#1B1C20]   left-0 right-0 top-0 bottom-0 z-[99] px-[24px] py-[14px] overflow-hidden  pb-[20px] mb:pb-[0px]  justify-between  flex flex-col fixed overflow-y-scroll">
         <div className="flex justify-between items-center mb-[28px] ">
           <div>
             {" "}
             <Image
-            onClick={() => router.push("/")}
-            src="/svg/logo.svg"
-            width={148}
-            height={23}
-            alt="Picture of the author"
-            className="hidden md:block"
-          />
-           <Image
-            onClick={() => router.push("/")}
-            src="/svg/logo.svg"
-            width={87}
-            height={16}
-            alt="Picture of the author"
-            className="md:hidden"
-          />
+              onClick={() => router.push("/")}
+              src="/svg/logo.svg"
+              width={148}
+              height={23}
+              alt="Picture of the author"
+              className="hidden md:block"
+            />
+            <Image
+              onClick={() => router.push("/")}
+              src="/svg/logo.svg"
+              width={120}
+              height={16}
+              alt="Picture of the author"
+              className="md:hidden"
+            />
           </div>
           <div>
             <ButtonComp
               btnText={`close`}
-              className={`px-[24px] py-[8px] text-[13px] font500 h-fit border-[#262C32] rounded-[999px] border-[1px] !bg-[#25272d] !text-white`}
+              className={`px-[24px] py-[16px] text-[13px] font500 h-fit border-[#262C32] rounded-[999px] border-[1px] !bg-[#25272d] !text-white`}
               onClick={() => setDropDown(false)}
             />
           </div>
         </div>
         {/*  */}
         <div className="text-[15px] text-white font500 flex-1  mb-[60px]">
+          <div className='py-[15px]'>
           <Link
-            href={"/"}
-            className="py-[15px]  cursor-pointer text-white no-underline"
+            href={"/event"}
+            className="  cursor-pointer text-white no-underline"
           >
             Browse events
           </Link>
-          <div className="py-[15px]  cursor-pointer ">On demand</div>
+          </div>
+          {/* <div className="py-[15px]  cursor-pointer ">On demand</div> */}
           <Link
             href={"/my_shows"}
-            className="py-[12px]  cursor-pointer no-underline text-white mb-2"
+            className={`py-[12px]  cursor-pointer no-underline text-white mb-2 `}
           >
             My Show
           </Link>
           <div className="flex justify-between items-center py-[18px]">
             <div className="text-[13px] flex items-center gap-[5px] ">
-              <Image src={`/svg/coin1.svg`} width={24} height={24} /> 100 Coins
+              <Image src={`/svg/coin1.svg`} width={24} height={24} alt="coin" />{" "}
+              100 Coins
             </div>
             <ButtonComp
               onClick={() => setModalName(`purchaseCoin`)}
               btnText={`Add Coins`}
-              className={`h-[30px] !bg-[#BACFF70A] shadow-1 shadow-2 shadow-3 text-[13px] rounded-[999px]`}
+              className={`h-[30px] !bg-[#BACFF70A] shadow-1 shadow-2 shadow-3 text-[13px] rounded-[999px] border-[#BACFF70A] border-[0.5px]`}
             />
           </div>
         </div>
 
         <div>
-          <div className="text-[15px] text-white font500 flex-1  mb-[16px]">
+          <div className="text-[15px] text-white font500 flex-1  ">
             <Link
               href="/setting"
               className="py-[15px]  cursor-pointer text-white no-underline"
             >
               Settings
             </Link>
-            <div className="py-[15px] cursor-pointer">Log out</div>
+            <div onClick={handleLogOut} className="py-[15px] cursor-pointer">
+              Log out
+            </div>
           </div>
-
+          {/* 
           <ButtonComp
             onClick={() => setModalName("Signup")}
             btnText={`Sign Up`}
@@ -145,8 +173,8 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
             onClick={() => setModalName(`Login/Signup`)}
             btnText={`Login`}
             className={`text-[13px] font500 mb-[28px]  w-full !bg-[#27292e] text-white`}
-          />
-          <div></div>
+          /> */}
+          
         </div>
       </div>
     );
@@ -154,7 +182,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
 
   function ProfileDropdown() {
     return (
-      <CustomDropDown  dropdownRef={dropdownRef} setIsOpen={setIsOpen}>
+      <CustomDropDown dropdownRef={dropdownRef} setIsOpen={setIsOpen}>
         <div className=" bg-[#1B1C20] border-[1px] text-left border-[#343F4B] font500 text-[13px] md:text-[14px] text-white  rounded-[16px] md:w-[230px]    px-[40px] py-[24px]">
           <Link
             href={"/setting"}
@@ -162,26 +190,28 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           >
             Settings
           </Link>
-          <div className="py-[12px]">Log out</div>
+          <div onClick={handleLogOut} className="py-[12px] cursor-pointer">
+            Log out
+          </div>
           {/* <div className="py-[12px]">Add to Calendar</div> */}
         </div>
       </CustomDropDown>
     );
   }
+  
   function PurchasePaartyCoinsDropdown() {
     return (
-      <CustomDropDown
-      
-      dropdownRef={purchaseCoinRef} setIsOpen={setIsOpenPC}>
+      <CustomDropDown dropdownRef={purchaseCoinRef} setIsOpen={setIsOpenPC}>
         <PurchasePaartyCoins
-        path={2}
-        onClose={()=>setIsOpenPC(false)}
-        containerStyle={`bg-[#1B1C20] !rounded-[16px]`}
+          path={2}
+          onClose={() => setIsOpenPC(false)}
+          containerStyle={`bg-[#1B1C20] !rounded-[16px]`}
         />
       </CustomDropDown>
     );
   }
   // border-[#262C32] border-[1px]
+  const blur = `backdrop-blur-[60px]`;
   return (
     <>
       <MyModal
@@ -195,12 +225,12 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
       {dropDown && <MenuDropdown />}
 
       <div
-        className={`py-[14px] lg:py-[32px] mb-[34px] lg:mb-[75px]  font400 ${MainContainer} ${className} `}
+        className={`py-[14px] lg:py-[16px] mb-[34px] lg:mb-[75px]  font400 ${MainContainer} ${className} `}
       >
-        <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover  bg-[url('/webp/header.png')] z-30"></div>
+        <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover opacity-30  bg-[url('/webp/header.png')] z-30"></div>
         {/* <LogoWhite/> */}
         <div className="flex items-center justify-between z-50 relative cursor-pointer">
-        <Image
+          <Image
             onClick={() => router.push("/")}
             src="/svg/logo.svg"
             width={148}
@@ -208,11 +238,11 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
             alt="Picture of the author"
             className="hidden md:block"
           />
-           <Image
+          <Image
             onClick={() => router.push("/")}
             src="/svg/logo.svg"
-            width={87}
-            height={16}
+            width={120}
+            height={25}
             alt="Picture of the author"
             className="md:hidden"
           />
@@ -221,18 +251,19 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
             <div className="flex items-center  lg:gap-[18px] xl:gap-[24px] !hover:scale-100">
               <ButtonComp
                 btnText="Browse event"
-                className="text-[15px] font-medium  hidden lg:block !py-[11px] px-[5px] xl:px-[32px]  gap-[10px] !bg-transparent rounded-[999px]   font500 text-white backdrop-blur-[60px]"
-                onClick={() => router.push("/")}
+                className={` font-medium  hidden lg:block   h-[32px] text-[13px] px-[16px] md:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${isEvent &&isSelected}`}
+                onClick={() => router.push("/event")}
               />
-              <ButtonComp
+              {/* <ButtonComp
                 btnText="On demand"
-                className="text-[15px] font-medium  hidden lg:block !py-[11px] px-[5px] xl:px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white backdrop-blur-[60px]"
-                // onClick={() => router.push("/")}
-              />
+                className="text-[15px] font-medium  hidden lg:block !py-[11px] px-[5px] xl:px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white "
+                onClick={() => router.push("/event")}
+              /> */}
               <ButtonComp
                 btnText="My shows"
-                className="text-[15px] font-medium  hidden lg:block !py-[11px] px-[5px] xl:px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white backdrop-blur-[60px]"
-                onClick={() => router.push("/my_shows")}
+                className={`  text-[13px]   h-[32px] font-medium  hidden lg:block  px-[16px] md:px-[32px]   gap-[10px]    font500 text-white  ${isFocused} ${isMyShow ?isSelected:'bg-transparent'}`}
+                onClick={() => router.push("/myshows")}
+                
               />
             </div>
           )}
@@ -244,25 +275,28 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
                   Coins
                 </div>
                 <div ref={purchaseCoinRef} className="relative">
-              {isOpenPC &&<PurchasePaartyCoinsDropdown/>}
+                  {isOpenPC && <PurchasePaartyCoinsDropdown />}
                   <ButtonComp
                     btnText={`Add Coins`}
-                    className={`!h-[32px] py-[6px] px-[17px] !bg-[#BACFF70A] rounded-[999px] shadow-1 shadow-2 shadow-3 text-[10px]`}
-                  onClick={()=>setIsOpenPC(!isOpenPC)}
+                    className={`!h-[32px] py-[6px] px-[17px] !bg-[#BACFF70A] rounded-[999px]  text-[10px] shadow-4`}
+                    onClick={() => setIsOpenPC(!isOpenPC)}
                   />
                 </div>
               </div>
               <div className="hidden md:block">
                 <div className="relative">
                   {isOpen && <ProfileDropdown />}
-                  <Image
+                  <UserProfile onClick={() => setIsOpen(!isOpen)} />
+                  {/* <Avatar1/> */}
+                  {/* <Image
                     src={`/webp/profile.png`}
                     width={40}
                     height={40}
                     onClick={() => setIsOpen(!isOpen)}
+                    alt="profile"
                     // placeholder="blur"
                     // blurDataURL=""
-                  />
+                  /> */}
                 </div>
               </div>
             </div>
@@ -270,7 +304,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
               <ButtonComp
                 onClick={() => setDropDown(true)}
                 btnText="Menu"
-                className="text-[13px] font-medium  lg:hidden !py-[8px] !px-[24px] gap-[10px] !bg-[#BAD6F70F] rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px] h-fit"
+                className="text-[13px] font-medium  lg:hidden !py-[16px] !px-[24px] gap-[10px] !bg-[#BAD6F70F] leading-none rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px] h-fit "
               />
             </div>
           </div>

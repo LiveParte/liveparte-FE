@@ -1,16 +1,17 @@
-import { storage } from "@/utils/helper";
+import { accessTokenStorageName, decryptObject, storage, userDetailStorageName } from "@/utils/helper";
 import { createSlice ,current} from "@reduxjs/toolkit";
 // import { storage } from "../../utils/helper";
-let userInfo ='';
+// let userInfo =storage["localStorage"].get(userDetailStorageName)&& decryptObject(storage["localStorage"].get(userDetailStorageName));
+let userInfo =storage["localStorage"].get(userDetailStorageName)
+  console.log("userInfo33",userInfo)
 const initialState = {
 //   loading: storage["localStorage"].get('user')?.user?true:false,
-  isLoggedIn: false,
-  userInfo:(userInfo &&typeof userInfo ==="string")&& JSON.parse(storage["localStorage"].get('RechargeMater_User')), // for user object
-  userAllDetails : storage["localStorage"].get('RechargeMater_User'),
-  // userToken: getAuthToken(), // for storing the JWT
+  isLoggedIn: userInfo?._id?true:false,
+  userInfo:userInfo, // for user object
+ 
   error: null,
   success: false, 
-  isLoggedIn: storage["localStorage"].get('RechargeMater_accessToken')&&true,
+  // isLoggedIn: storage["localStorage"].get('RechargeMater_accessToken')&&true,
   // 
 };
 
@@ -27,22 +28,23 @@ export const authSlice = createSlice({
     },
     setUserData: (state, {payload}) => {
       state.userData = payload;
-      state.token= payload.token
-      // storage["cookieStorage"].set("RechargeMater_User", payload)
-    state.userInfo=JSON.parse(storage["localStorage"].get('RechargeMater_User')),
+   
+      state.userInfo=userInfo||payload,
+    //  alert(payload,'payloadpayload')
       state.loading=true,
       // state.isLoggedIn=true,
-      state.isLoggedIn=storage["localStorage"].get('RechargeMater_accessToken')&&true,
+      state.isLoggedIn=userInfo?._id?true:false,
       // alert("RechargeMater")
     state
     },
     logout: (state)=>{
-      state.pharamData = null;
       state.userData = null;
-      storage["localStorage"].remove("RechargeMater_User");
-      storage["localStorage"].remove("RechargeMater_accessToken")
+      state.userInfo={},
+      storage["localStorage"].remove(userDetailStorageName);
+      storage["localStorage"].remove(accessTokenStorageName)
 
-      state.isLoggedIn=false
+      state.isLoggedIn=false;
+     
     }
   },
 });

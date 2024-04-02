@@ -10,6 +10,7 @@ import FavoriteShow from "@/components/modules/LandingPage/FavoriteShows";
 import Features from "@/components/modules/LandingPage/Features";
 import ArtistList from "@/components/modules/LandingPage/Artist";
 import FAQ from "@/components/modules/LandingPage/FAQ";
+import ForgetPassword from "@/components/modules/Event/Modal/submodules/ForgetPassword/ForgetPassword";
 
 export default function Home() {
   const router = useRouter();
@@ -26,23 +27,34 @@ export default function Home() {
   const modalPage =[
     {
       name:'Login',
-      component:<LoginSignUp className={`min-h-[75vh] tallT:min-h-[65vh]`} closeModal={closeModal} />
+      component:<LoginSignUp 
+      handleForgetPasswordToggle={()=>openModal('ForgetPassword')}
+      // className={`min-h-[75vh] tallT:min-h-[65vh]`} 
+      closeModal={closeModal} />,
+      height:''
     },
     {
       name:'SignUp',
-      component:<LoginSignUp className={`xl:min-h-[75vh] tallT:min-h-[65vh]`} pageName="signUp" closeModal={closeModal} />
+      component:<LoginSignUp className={`xl:min-h-[75vh] tallT:min-h-[65vh]`} pageName="signUp" closeModal={closeModal} />,
+      height:''
     },
+    {
+      name:`ForgetPassword`,
+      component:<ForgetPassword closeModal={closeModal} openModal={openModal}/>
+    }
   ]
 
   return (
     <NoAuth>
-      <MyModal
+      {isOpen &&<MyModal
         bodyComponent={modalPage?.find((item)=>item?.name===isOpen)?.component}
-        containerStyle={`!bg-[#1B1C20]  border-[1px] border-[#343F4B] rounded-[16px]  !w-[586px] min-h-[75vh] tallT:min-h-[65vh]`}
+        containerStyle={`!bg-[#1B1C20]  border-[1px] border-[#343F4B] rounded-[16px]  ${modalPage?.find((item)=>item?.name===isOpen)?.height}  !w-[586px] `}
         isOpen={isOpen?true:false}
-        closeModal={closeModal}
+        closeModal={()=>isOpen==="ForgetPassword"?openModal("ForgetPassword"):closeModal()}
+        // closeModal={isOpen==="ForgetPassword"?openModal:closeModal}
+
         openModal={openModal}
-      />
+      />}
       <Hero openModal={openModal} router={router} notEvent={true} />
       <FavoriteShow/>
       <Features/>

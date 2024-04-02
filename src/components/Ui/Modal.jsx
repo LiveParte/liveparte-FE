@@ -4,7 +4,7 @@ import { Fragment, useState } from 'react'
 export default function MyModal({
   bodyComponent,
   isOpen,
-  closeModal,
+  closeModal={},
   containerStyle
 }) {
   
@@ -13,7 +13,7 @@ export default function MyModal({
     <>
     
       <Transition appear show={isOpen} as={Fragment}>
-        <Dialog as="div" className="relative z-[9999]" onClose={closeModal}>
+        <Dialog as="div" className="relative z-[9998]" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"
@@ -37,7 +37,7 @@ export default function MyModal({
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className={`lg:w-[60%] transform overflow-hidden bg-transparent text-left align-middle shadow-xl transition-all ${containerStyle}`}>
+                <Dialog.Panel className={`lg:w-[60%] transform overflow-hidden bg-transparent text-left align-middle shadow-xl max-h-[90vh] transition-all ${containerStyle}`}>
                  {bodyComponent}
                 </Dialog.Panel>
               </Transition.Child>

@@ -21,7 +21,7 @@ export const FeatureData = [
   },
   {
     name: "Gift your favs",
-    dec: "Send gifts to your favourite artistewith cash equivalent coins duringand after live shows.",
+    dec: "Send gifts to your favourite artiste with cash equivalent coins during and after live shows.",
     icon: <Feature3con />,
     color:'text-[#FFC41B]'
   },
@@ -31,7 +31,7 @@ export const FeatureData = [
 
 export const FAQData =[
   {
-    name:`How long will livestreams  last?<br/> <div class='hidden xl:block invisible'> .</div>`,
+    name:`How long will livestreams  last?`,
     desc:`Livestreams are real live events and  the length of the event is entirely  up to the artist and venues.`
 
   },
@@ -40,7 +40,23 @@ export const FAQData =[
     desc:`We accept all methods of payment; Bank  transfer, Card payment, Mobile Money  transfer.`
   },
   {
-    name:`Can I watch the event for  free? <br/> <div class='hidden xl:block invisible'>. </div>`,
+    name:`Can I watch the event for  free? `,
     desc:`No, you have to pay for the event ticket to get  access to watch the event live, you can also  come back to watch the event even after it has  ended.`
   }
 ]
+
+// export const FAQData =[
+//   {
+//     name:`How long will livestreams  last?<br/> <div class='hidden xl:block invisible width1300:hidden'> .</div>`,
+//     desc:`Livestreams are real live events and  the length of the event is entirely  up to the artist and venues.`
+
+//   },
+//   {
+//     name:`What payment methods are  accepted?`,
+//     desc:`We accept all methods of payment; Bank  transfer, Card payment, Mobile Money  transfer.`
+//   },
+//   {
+//     name:`Can I watch the event for  free? <br/> <div class='hidden xl:block invisible width1300:hidden'>. </div>`,
+//     desc:`No, you have to pay for the event ticket to get  access to watch the event live, you can also  come back to watch the event even after it has  ended.`
+//   }
+// ]

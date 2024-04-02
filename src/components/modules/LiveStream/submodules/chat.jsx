@@ -64,7 +64,7 @@ export default function Chat() {
        </div>
       <div className=" h-full flex flex-col">
         <div className=" px-[16px]   flex  items-end">
-         <div className="flex-1 lg:w-full overflow-y-scroll h-[35vh] lg:h-[60vh]">
+         <div className="flex-1 lg:w-full overflow-y-scroll h-[35vh] lg:h-[60vh]  ">
          <ChatList />
           <ChatList />
           <ChatList />
@@ -80,7 +80,7 @@ export default function Chat() {
          </div>
          <div>
          <div className="lg:hidden  flex flex-col items-end gap-[16px] pb-[16px]">
-                  <Image src={`/svg/reaction1.svg`} width={32} height={32} />
+                  <Image src={`/svg/reaction1.svg`} width={32} height={32} alt="reaction yarn " />
                   <Image src={`/svg/reaction2.svg`} width={32} height={32} />
                   <Image src={`/svg/reaction3.svg`} width={32} height={32} />
                 </div>

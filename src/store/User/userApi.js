@@ -4,72 +4,61 @@ import { baseQuery } from "../api";
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: baseQuery,
-  tagTypes:['users','coupon','admin'],
+  tagTypes: ["user"],
 
   endpoints: (builder) => ({
     getUserProfile: builder.query({
       query: (body) => ({
-        url: '/user/profile',
+        url: "/auth/profile",
         method: "GET",
         body,
       }),
+      providesTags: ["user"],
     }),
-    getUsers: builder.query({
-      query: (status='') => ({
-        url: `admin/fetch-users${status?`?userType=${status}`:''}`,
-        method: "GET",
+    updateProfile: builder.mutation({
+      query: (payload) => ({
+        url: `/users/${payload?.id}`,
+        method: "PATCH",
+        body: payload,
         // body,
       }),
-      providesTags:['users']
+      invalidatesTags: ["user"],
+      // providesTags:['users']
     }),
-    
+    //auth/register
+    registerApi: builder.mutation({
+      query: (payload) => ({
+        url: "/auth/register",
+        method: "POST",
+        body: payload,
+      }),
+    }),
     loginApi: builder.mutation({
       query: (payload) => ({
-        url: "authentication",
+        url: "auth/login",
         method: "POST",
         body: payload,
       }),
     }),
-      ChangeUserStatus: builder.mutation({
-      query: ({
-        id:id,status
-      }) => ({
-        url: `users/${id}`,
-        method: "PATCH",
-        body: {
-          "isActive": status 
-        },
-      }),
-      invalidatesTags:['users']
-    }),
-    getAllAdmin: builder.query({
+    changePassword: builder.mutation({
       query: (payload) => ({
-        url: "admin/admin-management",
-        method: "GET",
-        body: payload,
-      }),
-      providesTags:['admin']
-    }),
-    addAdminUser: builder.mutation({
-      query: (payload) => ({
-        url: "admin/admin-management",
+        url: "auth/change-password",
         method: "POST",
         body: payload,
       }),
-      invalidatesTags:['admin']
+      invalidatesTags: ["user"],
     }),
-//users/35
+    //users/35
     //company/manager/:userId/update
     //admin/admin-management
-   
+    //auth/change-password
   }),
 });
 
 export const {
- useLoginApiMutation,
- useGetUsersQuery,
- useChangeUserStatusMutation,
- useGetAllAdminQuery,
- useAddAdminUserMutation
- 
+  useLoginApiMutation,
+  useUpdateProfileMutation,
+  useRegisterApiMutation,
+  useGetUserProfileQuery,
+  useChangePasswordMutation
 } = userApi;

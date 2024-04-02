@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { userApi } from "./User/userApi";
 import { authSlice } from "./User";
-import { dashboardApi } from "./Dashboard/dashboardApi";
+import { eventApi } from "./Event/eventApi";
 import { transactionApi } from "./Transaction/transactionApi";
 
 export const store = configureStore({
@@ -9,14 +9,14 @@ export const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
     [userApi.reducerPath]: userApi.reducer,
-    [dashboardApi.reducerPath]: dashboardApi.reducer,
+    [eventApi.reducerPath]: eventApi.reducer,
     [transactionApi.reducerPath]: transactionApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       userApi.middleware,
-      dashboardApi.middleware,
-      transactionApi.middleware
+      eventApi.middleware,
+      transactionApi?.middleware
     ),
 });
 

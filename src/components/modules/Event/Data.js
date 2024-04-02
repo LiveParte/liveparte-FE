@@ -1,3 +1,5 @@
+import { REGEX_PATTERNS } from "@/utils/constants/errors"
+
 export const dummyShowData=[
     {
         name:'REMA',
@@ -93,12 +95,13 @@ export const dummyShowDataII=[
 export const LoginForm =()=>{
     return [
         {
-            name:'',
+            name:'email',
             label:'Email Address',
+            pattern:REGEX_PATTERNS?.EMAIL
             // type:''
         },
         {
-            name:'',
+            name:'password',
             label:'Password',
             type:'password'
         },
@@ -109,23 +112,59 @@ export const LoginForm =()=>{
 export const SignUpForm =()=>{
     return [
         {
-            name:'',
+            name:'fullName',
             label:'Name',
             // type:''
         },
         {
-            name:'',
+            name:'email',
+            label:'Email Address',
+            pattern:REGEX_PATTERNS?.EMAIL
+            // type:''
+        },
+        // {
+        //     name:'phoneNumber',
+        //     label:'Phone number',
+        //     type:'tel',
+        //     pattern:REGEX_PATTERNS?.NUMBER
+        // },
+        {
+            name:'password',
+            label:'Password',
+            type:'password'
+        },
+        {
+            name:'confirmPassword',
+            label:'Confirm Password',
+            type:'password'
+        },
+    ]
+}
+
+export const ForgetPasswordForm =()=>{
+    return [
+        {
+            name:'email',
             label:'Email Address',
             // type:''
         },
+      
+    ]
+}
+
+
+
+export const SecurityFormLabel =()=>{
+    return [
+       
         {
-            name:'',
-            label:'Phone number',
-            type:'tel'
+            name:'password',
+            label:'New password',
+            type:'password'
         },
         {
-            name:'',
-            label:'Password',
+            name:'confirmPassword',
+            label:'Confirm password',
             type:'password'
         },
     ]

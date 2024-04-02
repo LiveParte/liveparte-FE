@@ -1,4 +1,3 @@
-import { Head } from "next/document";
 import React from "react";
 
 function NoAuth({ children }) {
@@ -11,7 +10,7 @@ function NoAuth({ children }) {
 
       <div className="min-h-[100vh] bg-white">{children}</div>
     </>
-  );
+  )
 }
 
 export default NoAuth;

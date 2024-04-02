@@ -6,21 +6,23 @@ import { FloatingLabelTextArea } from "@/components/Ui/TextArea";
 import { CountdownTimerII } from "@/utils/reusableComponent";
 import { useRouter } from "next/router";
 import { CloseII } from "../../../../../public/svg";
+import { formatMoney } from "@/utils/formatMoney";
 
-
-export default function GiftTicket({
-  closeModal
-}) {
+export default function GiftTicket({ closeModal, Data }) {
   const router = useRouter();
-  const handleAction = () =>{
-    router.push('/event_time_out')
-  }
+  const handleAction = () => {
+    router.push("/event_time_out");
+  };
   return (
-    <div className="bg-[#1B1C20] pb-[56px] px-[16px] lg:px-[56px] pt-[16px] lg:pt-[24px]">
+    <div className="bg-[#1B1C20] pb-[56px] px-[16px] lg:px-[56px] pt-[16px] lg:pt-[24px] overflow-y-scroll customScrollHorizontal max-h-[80vh]">
       <nav className="flex justify-between items-center mb-[32px]">
         <div className="text-[18px]  text-white">Gift Ticket</div>
-        <div className="text-[#63768D] text-[18px] flex items-center gap-[12px]"><CountdownTimerII initialTime={5} onTimerEnd={handleAction}/>
-        <span className="cursor-pointer" onClick={closeModal&&closeModal}> <CloseII /></span>
+        <div className="text-[#63768D] text-[18px] flex items-center gap-[12px]">
+          <CountdownTimerII initialTime={5} onTimerEnd={handleAction} />
+          <span className="cursor-pointer" onClick={closeModal && closeModal}>
+            {" "}
+            <CloseII />
+          </span>
         </div>
       </nav>
 
@@ -28,7 +30,7 @@ export default function GiftTicket({
         <div className="flex items-center gap-[17px]  mb-[54px]">
           <div>
             <img
-              src="/webp/bg1.webp"
+              src={Data?.thumbnail_url || "/webp/bg1.webp"}
               className="w-[89px] h-[89px] object-cover rounded-[8px]"
             />
           </div>
@@ -36,30 +38,30 @@ export default function GiftTicket({
             <div className="text-[#63768D] text-[13px] mb-[5px]">
               Livestream ticket
             </div>
-            <div className="text-[14px] text-white font500 mb-[5px]">
-              Timeless tour - Newyork
+            <div className="text-[14px] text-white font500 mb-[5px] lg:w-[70%]">
+              {Data?.address}
             </div>
-            <div className="text-[14px] text-white font500">₦48,000 </div>
+            <div className="text-[14px] text-white font500">
+              {Data?.ticket?.code}{" "}
+              {formatMoney(Data?.ticket?.price, false || "0")}
+            </div>
           </div>
         </div>
 
         <form className="flex flex-col gap-[16px]">
-          {GiftTicketForm()?.map((item,i)=>item?.type==="textarea"?
-           <FloatingLabelTextArea
-           key={i}
-           label={item?.label}
-           />
-           :
-          <FloatingLabelInput
-          key={i}
-          label={item?.label}
-          />
-         
+          {GiftTicketForm()?.map((item, i) =>
+            item?.type === "textarea" ? (
+              <FloatingLabelTextArea key={i} label={item?.label} />
+            ) : (
+              <FloatingLabelInput key={i} label={item?.label} />
+            )
           )}
         </form>
 
         <ButtonComp
-          btnText={`Proceed To Make Payment ₦48,000 `}
+          btnText={`Proceed To Make Payment ${
+            Data?.ticket?.code || ""
+          } ${formatMoney(Data?.ticket?.price || "0", false || "0")} `}
           className={`w-full text-[13px] font500] h-[44px] mt-[54px]`}
         />
       </main>
