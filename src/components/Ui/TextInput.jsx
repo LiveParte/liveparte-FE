@@ -10,7 +10,7 @@ export function FloatingLabelInput({
   name,
   disabled = false,
 }) {
-  console.log(errors, "errorserrors");
+  // console.log(errors, "errorserrors");
   const [readOnly, setReadOnly] = React.useState(true);
   const [showPasswords, setShowPasswords] = React.useState("");
   const textFormat = showPasswords || type;
@@ -39,7 +39,8 @@ export function FloatingLabelInput({
            placeholder=" "
            type={showPasswords || type || "text"}
            role="presentation"
-           autocomplete="off"
+           autocomplete={type==="password"?"new-password":"off"}
+          //  autocomplete="new-password"
            ontouchstart="this.removeAttribute('readonly');"
            onfocus="this.removeAttribute('readonly');"
 
@@ -57,13 +58,13 @@ export function FloatingLabelInput({
           />
           <label
             // for="floating_filled"
-            className="absolute z-0  text-[13px] peer-focus:text-[14px] text-[#63768D] dark:text-[#63768D] duration-300 transform -translate-y-[8px] scale-75 peer-focus:top-[20px] top-[12px]  origin-[0] start-[16px] peer-focus:text-[#63768D] peer-focus:dark:text-[#63768D] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-[3px] peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto cursor-not-allowed"
+            className="absolute z-0  text-[13px] peer-focus:text-[14px] text-[#63768D] dark:text-[#63768D] duration-300 transform -translate-y-[8px] scale-75 peer-focus:top-[20px] top-[12px]  origin-[0] start-[16px] peer-focus:text-[#63768D] peer-focus:dark:text-[#63768D] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-[3px] peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto cursor-not-allowed font400"
           >
             {label}
           </label>
         </div>
         {error && (
-          <div className="text-red-600 font400 text-[14px]">{error}</div>
+          <div className="text-red-600 font400 text-[12px]">{error}</div>
         )}
       </div>
     </>

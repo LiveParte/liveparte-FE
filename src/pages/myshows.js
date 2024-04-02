@@ -13,7 +13,7 @@ const Shows =dynamic(()=>import('@/components/modules/MyShow/Shows'),{ssr:false}
 export default function MyShows() {
   const user =useSelector(selectCurrentUserData);
   let userInfo =storage["localStorage"]?.get(userDetailStorageName)
-  console.log(user,'user')
+  // console.log(user,'user')
   const {data:userShows,isLoading,refetch,isSuccess}=useUserShowsQuery(userInfo?._id,{
     skip:!userInfo?._id
   })

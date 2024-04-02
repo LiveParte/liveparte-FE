@@ -18,6 +18,7 @@ import { baseQuery } from "@/store/api";
 import { userApi } from "@/store/User/userApi";
 import { eventApi } from "@/store/Event/eventApi";
 import { transactionApi } from "@/store/Transaction/transactionApi";
+import { HeaderOnSelect } from "@/utils/styleReuse";
 // const UserProfile =dynamic(()=>import('./UserProfile'),{src:false})
 
 export default function AuthHeader({ className, openModal, showNav = false }) {
@@ -32,13 +33,13 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
   const purchaseCoinRef = useRef(null);
   const isMyShow =router?.pathname=="/my_shows";
   const isEvent =router?.pathname==="/event" || router?.pathname=='/event/[id]'
-  const isFocused =`hover:!bg-[#BAD6F70F] hover:rounded-[8px]  hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`
-  const isSelected =` rounded-[8px]  hover:border-[0px] font500 backdrop-blur-[60px] !bg-[#BAD6F70F]`
+  const isFocused =`hover:!bg-[#FFFFFF26] hover:rounded-[8px]  hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`
+  const isSelected =HeaderOnSelect;
   function handleCloseModal() {
     setModalName();
   }
 
-  console.log(isMyShow&&isSelected,router?.pathname,'router?.pathname')
+  // console.log(isMyShow&&isSelected,router?.pathname,'router?.pathname')
 
   function handleLogOut() {
     dispatch(userApi.util.resetApiState());
@@ -197,6 +198,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
       </CustomDropDown>
     );
   }
+  
   function PurchasePaartyCoinsDropdown() {
     return (
       <CustomDropDown dropdownRef={purchaseCoinRef} setIsOpen={setIsOpenPC}>
@@ -239,7 +241,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           <Image
             onClick={() => router.push("/")}
             src="/svg/logo.svg"
-            width={110}
+            width={120}
             height={25}
             alt="Picture of the author"
             className="md:hidden"
@@ -249,7 +251,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
             <div className="flex items-center  lg:gap-[18px] xl:gap-[24px] !hover:scale-100">
               <ButtonComp
                 btnText="Browse event"
-                className={`text-[15px] font-medium  hidden lg:block  px-[16px] md:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${isEvent &&isSelected}`}
+                className={` font-medium  hidden lg:block   h-[32px] text-[13px] px-[16px] md:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${isEvent &&isSelected}`}
                 onClick={() => router.push("/event")}
               />
               {/* <ButtonComp
@@ -259,7 +261,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
               /> */}
               <ButtonComp
                 btnText="My shows"
-                className={`  text-[15px] font-medium  hidden lg:block  px-[16px] md:px-[32px]   gap-[10px]    font500 text-white  ${isFocused} ${isMyShow ?isSelected:'bg-transparent'}`}
+                className={`  text-[13px]   h-[32px] font-medium  hidden lg:block  px-[16px] md:px-[32px]   gap-[10px]    font500 text-white  ${isFocused} ${isMyShow ?isSelected:'bg-transparent'}`}
                 onClick={() => router.push("/my_shows")}
                 
               />

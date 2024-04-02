@@ -20,7 +20,7 @@ export default function LiveStreamVideo({
   const appId = "Agora Project App ID";
   const user = useSelector(selectCurrentUserData);
 
-  console.log(user, "user");
+  // console.log(user, "user");
 
   const [micOn, setMic] = useState(true);
   const [cameraOn, setCamera] = useState(true);
@@ -47,7 +47,7 @@ export default function LiveStreamVideo({
   return (
     <div className="w-full h-[40vh] lg:h-[70vh]  bg-cover lg:rounded-[16px] overflow-hidden ">
       <div id="remoteVideoGrid">
-        {console.log(remoteUsers, "remoteUsers")}
+        {/* {console.log(remoteUsers, "remoteUsers")} */}
         {remoteUsers.map((user) => (
           <div
             key={user.uid}

@@ -11,11 +11,11 @@ export default function SignUpPage({
 }) {
   return (
     <form
-    className="px-[15px] lg:px-[50px] flex flex-col gap-[20px] lg:pb-[0px]"
+    className="px-[15px] lg:px-[50px] flex flex-col  lg:pb-[0px]"
     autoComplete="off"
   >
     <div className="w-full ">
-      <div className="mb-[28px] ">
+      <div className="">
         <ButtonComp
         onClick={(e)=>{
           e.preventDefault();
@@ -30,13 +30,16 @@ export default function SignUpPage({
         />
       </div>
 
-      <div className="flex items-center text-[13px] text-white  py-[10px] mb-[29px]">
+     
+      <div className="flex items-center text-[13px] text-white  py-[28px] ">
         <div className="bg-[#343F4B]  h-[1px] flex-grow-1"></div>
         <div className="px-[38px]"> OR</div>
 
         <div className="bg-[#343F4B]  h-[1px] flex-grow-1"></div>
       </div>
     </div>
+    <div className='flex flex-col gap-[20px]'>
+
     {SignUpForm()?.map((item, index) => (
       <Controller
       key={index}
@@ -63,9 +66,10 @@ export default function SignUpPage({
         )}
       />
     ))}
+    </div>
     <div className="mt-[24px]">
       <ButtonComp
-        btnText={isEvent?"Sign up to Continue":"Sign Up and Continue"}
+        btnText={isEvent?"Sign up to Continue":"Sign Up"}
         className={`w-full text-[13px] font500 `}
         onClick={handleSubmit(handleLogin)}
         isLoading={registerLoader}

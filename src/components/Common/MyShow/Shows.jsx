@@ -20,6 +20,8 @@ export default function ShowsCard({
   eventDate,
   item,
   onNext,
+  isPlayIcon=true,
+  showVideo = true,
 }) {
   const backgroundImage = `https://res.cloudinary.com/dammymoses/image/upload/v1710175667/LiveParte/a7_zeemus.png`;
   const router = useRouter();
@@ -30,7 +32,7 @@ export default function ShowsCard({
   }, [showImage, backgroundImage]);
 
   const videoRef = useRef(null);
-
+  const noVideoRef = useRef(null);
   const backUrl =
     id == 1
       ? `bg-[url('https://res.cloudinary.com/dammymoses/image/upload/v1710175667/LiveParte/a7_zeemus.png')]`
@@ -64,16 +66,17 @@ export default function ShowsCard({
       <ImageOrVideo
         image={showImage || backgroundImage}
         isPlaying={isPlaying}
-        videoRef={videoRef}
+        videoRef={showVideo ?videoRef:noVideoRef}
       />
 
       <div
         className="flex items-center justify-center absolute inset-0 z-50"
         // onMouseLeave={handleMouseLeave}
       >
-        <div className=" group-hover:block transition-all group-hover:duration-300 group-hover:ease-in-out">
+      {isPlayIcon &&  <div className=" hidden group-hover:block transition-all group-hover:duration-300 group-hover:ease-in-out">
           <Play />
         </div>
+}
       </div>
       <ShowDetails
         eventDate={eventDate}

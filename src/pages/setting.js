@@ -30,7 +30,7 @@ export default function Setting() {
   const CloudinaryUpload = (photo) => {
     setIsLoading(true);
     const data = new FormData();
-    console.log(photo, "photophoto");
+    // console.log(photo, "photophoto");
     data.append("file", photo);
     data.append("upload_preset", "ohxuujig");
     data.append("cloud_name", "dammymoses");
@@ -40,7 +40,7 @@ export default function Setting() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data.secure_url);
+        // console.log(data.secure_url);
         setImageUrl(data.secure_url);
       })
       .catch((err) => {

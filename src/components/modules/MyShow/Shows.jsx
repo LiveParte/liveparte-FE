@@ -29,7 +29,7 @@ export default function Shows({
                 item={item}
                 onNext={(item)=>{
                   router.push('/livestream')
-                  console.log(item,'item')
+                  // console.log(item,'item')
                 }}  
               />
             ))}

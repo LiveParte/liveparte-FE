@@ -32,9 +32,9 @@ export default function EventId() {
   const user = useSelector(selectCurrentUserData) || {};
   let userInfo =storage["localStorage"]?.get(userDetailStorageName)
 
-  useEffect(() => {
-    setUserDetail(user);
-  }, [user?._id, user]);
+  // useEffect(() => {
+  //   setUserDetail(user);
+  // }, [user?._id, user]);
   const router = useRouter();
   const { id } = router.query;
   let [isOpen, setIsOpen] = useState();
@@ -63,7 +63,7 @@ export default function EventId() {
     ? true
     : false;
 
-  console.log(user ,"userShows");
+  // console.log(user ,"userShows");
   const config = {
     reference: new Date().getTime().toString(),
     email: userDetail?.email || "user@example.com",
@@ -84,18 +84,18 @@ export default function EventId() {
   const initializePayment = usePaystackPayment(config);
   const { myObject } = useObject();
 
-  console.log(data, new Date(), data, "myObject");
+  // console.log(data, new Date(), data, "myObject");
 
   // you can call this function anything
   const onSuccess = (e) => {
     // Implementation for whatever you want to do with reference and after success call.
-    console.log(e, "reference");
+    // console.log(e, "reference");
   };
 
   // you can call this function anything
   const onClose = () => {
     // implementation for  whatever you want to do when the Paystack dialog closed.
-    console.log("closed");
+    // console.log("closed");
   };
 
   // useEffect(() => {
@@ -107,7 +107,7 @@ export default function EventId() {
   }
 
   function openModal() {
-    console.log(userDetail, "userDetail");
+    // console.log(userDetail, "userDetail");
     if (!userDetail?._id) {
       return openModalLoginSignUp();
     }
@@ -128,7 +128,7 @@ export default function EventId() {
 
   const handleSuccess = async (reference) => {
     // Implementation for whatever you want to do with reference and after success call.
-    console.log(reference, "reference");
+    // console.log(reference, "reference");
     const payload = {
       event_id: data?._id,
       ticket_id: data?.ticket?.id,
@@ -145,7 +145,7 @@ export default function EventId() {
   // you can call this function anything
   const handleClose = () => {
     // implementation for  whatever you want to do when the Paystack dialog closed.
-    console.log("closed");
+    // console.log("closed");
   };
 
   const componentProps = {

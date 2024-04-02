@@ -8,7 +8,7 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp, openModal }) {
   const [userDetail,setUserDetail]=useState(false)
   const user = useSelector(selectCurrentUserData)||{};
 
-  console.log(user,'user')
+  // console.log(user,'user')
   useEffect(() => {
     setUserDetail(user?._id)
   }, [user?._id])
