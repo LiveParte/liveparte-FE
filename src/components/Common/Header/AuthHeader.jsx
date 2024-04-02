@@ -262,7 +262,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
               <ButtonComp
                 btnText="My shows"
                 className={`  text-[13px]   h-[32px] font-medium  hidden lg:block  px-[16px] md:px-[32px]   gap-[10px]    font500 text-white  ${isFocused} ${isMyShow ?isSelected:'bg-transparent'}`}
-                onClick={() => router.push("/my_shows")}
+                onClick={() => router.push("/myshows")}
                 
               />
             </div>
