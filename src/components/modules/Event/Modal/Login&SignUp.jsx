@@ -30,7 +30,7 @@ import { eventApi } from "@/store/Event/eventApi";
 import { transactionApi } from "@/store/Transaction/transactionApi";
 export default function LoginSignUp({
   closeModal,
-  pageName = "Login",
+  pageName = "",
   className,
   handleForgetPasswordToggle,
   onNext,
@@ -75,7 +75,7 @@ export default function LoginSignUp({
   });
 
 
-  // console.log(getValues(), "getValues");
+  console.log(pageName, "pageName");
 
   useEffect(() => {
     if (pageName) {
@@ -105,7 +105,7 @@ export default function LoginSignUp({
     // toast('Hello! RegisterUser')
     if (response?.statusCode && response?.statusCode !== 200) {
       if (response?.message === "Email is already in use") {
-        return setError("email", {
+        return setError2("email", {
           type: "custom",
           message: "Email is already in use",
         });

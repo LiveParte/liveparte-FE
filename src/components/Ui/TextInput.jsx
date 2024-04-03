@@ -48,7 +48,7 @@ export function FloatingLabelInput({
            value={value}
            onChange={onChange}
            disabled={disabled}
-            readOnly={readOnly}
+            // readOnly={readOnly}
             onFocus={() => setReadOnly(false)}
             onBlur={() => setReadOnly(true)}
             // type="text"
