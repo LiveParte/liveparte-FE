@@ -17,10 +17,12 @@ export const LogoImage  = ({router}) =>(
             <Image
               onClick={() => router.push("/")}
               src="/svg/logo.svg"
-              width={103}
+              width={130}
               height={19}
               alt="Picture of the author"
               className="md:hidden"
+              style={{ width: '28vw' }} 
+              // fill
             />
     </>
 )
