@@ -50,7 +50,7 @@ export default function Hero({
       <div className=" absolute dropdownIII transform translate-x-0 -translate-y-[60px] z-50">
         <div className=" bg-[#1B1C20] border-[1px] text-left border-[#343F4B] text-[13px] md:text-[14px] text-white  rounded-[16px] md:w-[327px] w-[80vw]     px-[40px] py-[24px]">
           <div className="py-[12px] cursor-pointer " onClick={giftTicket}>
-            Gift a ticket
+            Gift ticket
           </div>
           <div
             className="my-[12px] cursor-pointer"

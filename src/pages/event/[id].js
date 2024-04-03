@@ -139,7 +139,7 @@ export default function EventId() {
     // console.log(response);
     if (response?.data?.createdPurchase?._id) {
       closeModal();
-      router.push("/my_shows");
+      router.push("/myshows");
     }
   };
   // you can call this function anything
