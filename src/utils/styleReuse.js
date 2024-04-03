@@ -12,7 +12,7 @@ export const LogoImage = ({ router }) => (
       width={130}
       height={23}
       alt="Picture of the author"
-      className="hidden md:block"
+      className="hidden md:block cursor-pointer"
     />
     <Image
       onClick={() => router.push("/")}
@@ -20,7 +20,7 @@ export const LogoImage = ({ router }) => (
       width={130}
       height={19}
       alt="Picture of the author"
-      className="md:hidden"
+      className="md:hidden cursor-pointer"
       style={{ width: "30vw" }}
       // fill
     />

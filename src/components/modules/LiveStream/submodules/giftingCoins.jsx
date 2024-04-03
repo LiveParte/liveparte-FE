@@ -14,7 +14,9 @@ export default function GiftingCoins({
       <div className="border-[#343F4B] border-[1px] bg-[#27292E]  flex items-center px-[12px] rounded-[8px] py-[7px] gap-[12px] mb-[16px] !h-[35px]">
         <Image src={`/svg/coins.svg`} width={16} height={16} />
 
-        <input className=" w-full bg-transparent border-0 outline-none text-[18px]" />
+        <input 
+        style={{boxShadow:'none'}}
+        className=" w-full bg-transparent border-0 outline-none text-[18px] border-none " type="number" />
       </div>
 
       <div className="mb-[16px]">

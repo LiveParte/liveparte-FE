@@ -7,7 +7,7 @@ import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
 import moment from "moment";
 import { useObject } from "@/Context/ObjectProvider";
 import { formatMoney } from "@/utils/formatMoney";
-import { GetTransformedImageUrl } from "@/utils/reusableComponent";
+import { CopyEventLink, GetTransformedImageUrl } from "@/utils/reusableComponent";
 
 export default function Hero({
   notEvent = true,
@@ -50,7 +50,7 @@ export default function Hero({
       <div className=" absolute dropdownIII transform translate-x-0 -translate-y-[60px] z-50">
         <div className=" bg-[#1B1C20] border-[1px] text-left border-[#343F4B] text-[13px] md:text-[14px] text-white  rounded-[16px] md:w-[327px] w-[80vw]     px-[40px] py-[24px]">
           <div className="py-[12px] cursor-pointer " onClick={giftTicket}>
-            Gift ticket
+            Gift Ticket
           </div>
           <div
             className="my-[12px] cursor-pointer"
@@ -78,7 +78,7 @@ export default function Hero({
               <b>Date:</b>${HeroSectionEvent?.event_date}
               <br/>
               <b>Time:</b>${ moment(HeroSectionEvent?.event_date).format('h:mm')}
-              &location=${HeroSectionEvent?.address}&sf=true&output=xml`}
+              &location=${CopyEventLink({link:HeroSectionEvent?._id})}&sf=true&output=xml`}
             >
               Set Reminder
             </a>

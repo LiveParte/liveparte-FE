@@ -7,8 +7,10 @@ import React, { useEffect, useState } from "react";
 import {  useSelector } from 'react-redux';
 import WithAuth from "@/components/Layout/WithAuth";
 import { storage, userDetailStorageName } from "@/utils/helper";
-import Header from "@/components/modules/MyShow/Header";
+import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
+// import Header from "@/components/modules/MyShow/Header";
 const Shows =dynamic(()=>import('@/components/modules/MyShow/Shows'),{ssr:false})
+const Header =dynamic(()=>import('@/components/modules/MyShow/Header'),{ssr:false})
 export default function MyShows() {
   const user =useSelector(selectCurrentUserData);
   let userInfo =storage["localStorage"]?.get(userDetailStorageName)
@@ -21,7 +23,7 @@ export default function MyShows() {
       name: "Upcoming",
     },
     {
-      name: "On demand",
+      name: "On Demand",
     },
     // {
     //   name: "Past",
@@ -38,7 +40,7 @@ export default function MyShows() {
   return (
     <WithAuth>
     <div className="bg-[#060809] min-h-[100vh]  relative">
-      <AuthHeader showNav={true} />
+      <IfHeaderIsAuth/>
 
       <Header
         Data={HeaderData}

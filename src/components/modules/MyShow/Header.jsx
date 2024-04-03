@@ -26,7 +26,7 @@ const Header = React.memo(
               <div
                 key={i}
                 onClick={() => setIsActive && setIsActive(item?.name)}
-                className={`text-[18px] font500 cursor-pointer px-[15px] md:px-[25px]    text-nowrap lg:px-[32px] py-[11px] ${
+                className={`text-[14px] font500 cursor-pointer px-[15px] md:px-[25px]   flex justify-center items-center leading-none  text-nowrap lg:px-[32px] h-[36px] ${
                   isActive === item?.name
                     ? ` rounded-[8px]  ${HeaderOnSelect} ]`
                     : ""

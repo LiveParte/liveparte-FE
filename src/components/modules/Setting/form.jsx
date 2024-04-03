@@ -87,7 +87,8 @@ export default function SettingForm({
     const handleRegisterUser = await UpdateUser(payload);
     const response = handleRegisterUser?.data;
 
-    // console.log(handleRegisterUser, "responseresponseresponse");
+    console.log(response?.updatedUser      , "responseresponseresponse");
+    storage.localStorage.set(userDetailStorageName, response?.updatedUser)
 
     const UserString = JSON.stringify(response?.user);
 
@@ -121,7 +122,7 @@ export default function SettingForm({
     const handleRegisterUser = await UpdatePassword(payload);
     const response = handleRegisterUser?.data;
 
-    // console.log(handleRegisterUser, "responseresponseresponse");
+
 
     if (response?.statusCode && response?.statusCode !== 200) {
       if (CheckIfArray(response?.message)) {
@@ -154,7 +155,7 @@ export default function SettingForm({
             {/* <NoProfile /> */}
             {(imageUrl||userInfo?.profile_image) ? (
               <Image
-                src={userInfo?.profile_image ||imageUrl}
+                src={imageUrl||userInfo?.profile_image }
                 width={50}
                 height={50}
                 placeholder="blur"

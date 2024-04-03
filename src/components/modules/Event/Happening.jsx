@@ -13,7 +13,7 @@ export default function Happening({ events, upComingEvent, OnDemandEvent }) {
         <div
           className={`text-[20px] font500 text-white ${MainContainer} mb-[40px]`}
         >
-          Happening now
+          Happening Now
         </div>
 
         {/*  */}

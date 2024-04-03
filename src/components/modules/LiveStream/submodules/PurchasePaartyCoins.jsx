@@ -12,8 +12,9 @@ export default function PurchasePaartyCoins({
     <div className={`px-[34px] pt-[16px] bg-[#060809] w-full  ${containerStyle}`}>
       <LiveStreamHeader path={path} title={`Purchase Parte Coins`} onClose={onClose} onBack={onBack} />
       <div className=" relative flex overflow-hidden  h-[35px] mb-[16px] rounded-[8px] px-[12px] border-[#343F4B] border-[1px]">
-        <input className="flex-1 bg-transparent border-none outline-none mr-20  text-white outline-none" 
-        // type="number"
+        <input className="flex-1 bg-transparent outline-none mr-20  text-white border-none" 
+        type="number"
+        style={{boxShadow:'none'}}
         />
         <div className="flex items-center  bg-[#343F4B] h-full absolute right-0 pr-[12px] pl-[8px]">
           <Image src={`/svg/coin1.svg`} alt="coins" width={16} height={16} />

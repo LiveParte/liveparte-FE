@@ -2,26 +2,40 @@ import { NoImageUser, storage } from "@/utils/helper";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { selectCurrentUserData } from "@/store/User";
-import {  useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from "react-redux";
 import { Avatar3 } from "../../../public/svg/avatars";
-import Image from 'next/image';
+import Image from "next/image";
 
-
-export default function UserProfile({onClick}) {
+export default function UserProfile({ onClick }) {
   const checkIfNonImageExist = storage.localStorage.get("noUserProfileImage");
   const UserLiveParte = storage.localStorage.get("UserLiveParte");
-  // 
-  const [userProfile,setUserProfile]=useState();
-  const user =useSelector(selectCurrentUserData);
+  const [userProfilePic,setUserProfilePic]=useState();
+  //
+  const [userProfile, setUserProfile] = useState();
+  const user = useSelector(selectCurrentUserData);
   useEffect(() => {
-    setUserProfile(NoImageUser[checkIfNonImageExist?.nonProfileImage]||Avatar3)
-  }, [checkIfNonImageExist?.nonProfileImage])
-  
-  // console.log(UserLiveParte,'user')
+    setUserProfile(
+      NoImageUser[checkIfNonImageExist?.nonProfileImage] || Avatar3
+    );
+  }, [checkIfNonImageExist?.nonProfileImage]);
+
+ useEffect(() => {
+  setUserProfilePic(UserLiveParte?.profile_image)
+ }, [UserLiveParte?.profile_image])
+ 
+  console.log(UserLiveParte,'UserLiveParte?.profile_image')
   return (
     <div onClick={onClick}>
-     {UserLiveParte?.profile_image? <Image src={UserLiveParte?.profile_image} width={40} height={40} className="object-cover"/>:
-        userProfile}
+      {userProfilePic ? (
+        <Image
+          src={userProfilePic}
+          width={40}
+          height={40}
+          className="object-cover rounded-full h-[40px] w-[40px]"
+        />
+      ) : (
+        userProfile
+      )}
     </div>
   );
 }

@@ -26,7 +26,7 @@ export default function ShowDetails({
                 <div className="mt-[8px] lg:mt-[22px] ml-[8px] lg:ml-[16px] rounded-[9px] flex gap-[8px] items-center px-[5px] lg:px-[10px] py-[6px] bg-[#06080933] backdrop-blur-[60px] w-fit ">
                   <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div>
                   <div className="text-[11px] lg:text-[13px] xl:text-[15px] text-white ">
-                    Happening now
+                    Happening Now
                   </div>
                 </div>
               ) : (

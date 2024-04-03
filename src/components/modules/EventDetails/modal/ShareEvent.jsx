@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import { GiftTicketForm } from "../Data";
 import { FloatingLabelInput } from "@/components/Ui/TextInput";
 import { FloatingLabelTextArea } from "@/components/Ui/TextArea";
-import { CountdownTimerII, SuccessNotification } from "@/utils/reusableComponent";
+import { CopyEventLink, CountdownTimerII, SuccessNotification } from "@/utils/reusableComponent";
 import { useRouter } from "next/router";
 import { CloseII } from "../../../../../public/svg";
 import { formatMoney } from "@/utils/formatMoney";
@@ -68,14 +68,14 @@ export default function ShareEvent({
         <div className="flex items-center h-[50px] border-none rounded-[8px] bg-[#222428] border-[#343F4B] border-[1px]">
           <input className="flex-1 flex-grow-1 bg-transparent px-[16px] outline-none text-[#63768D] text-[13px]"
             ref={inputRef}
-          value={`http://44.208.167.228:3005/event/${Data?._id}`}
+          value={CopyEventLink({link:Data?._id})}
           disabled
           />
           
         <ButtonComp
           btnText={`Copy link `}
           className={` text-[13px] font500 h-[34px] mr-[8px]`}
-          onClick={()=>copyTextToClipboard(`http://44.208.167.228:3005/event/${Data?._id}`)}
+          onClick={()=>copyTextToClipboard(CopyEventLink({link:Data?._id}))}
         />
         </div>
 

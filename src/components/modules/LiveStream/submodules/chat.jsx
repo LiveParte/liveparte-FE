@@ -3,7 +3,9 @@ import React, { useState } from "react";
 import Image from "next/image";
 import GiftingCoins from "./giftingCoins";
 import PurchasePaartyCoins from "./PurchasePaartyCoins";
-export default function Chat() {
+export default function Chat({
+  onLeave
+}) {
     const [payFlow,setPayFlow]=useState();
     const paymentFlow = [
         {
@@ -54,17 +56,21 @@ export default function Chat() {
   };
   return (
     <div className=" h-full flex flex-col">
-       <div className="py-[7px]  lg:pt-[16px] px-[16px] ">
+      <div className="flex justify-between items-center px-[15px] border-b-[1px] border-b-[#343F4B]  pb-[16px] mb-2">
+      <div className="py-[7px]  lg:pt-[16px] px-[16px] ">
        <div className="lg:hidden text-[15px] text-white font-1 font-bold uppercase mb-[8px] leading-[20px]">
         timeless tour - new york
         </div>
-      <div className=" font-1 text-[13px] lg:text-[22px] text-white uppercase font-bold pb-[16px]  border-b-[1px] border-b-[#343F4B]">
+      <div className=" font-1 text-[13px] lg:text-[22px] text-white uppercase font-bold  ">
         Chat
       </div>
        </div>
+
+       <ButtonComp onClick={onLeave&&onLeave} className={`!h-[30px] text-[13px] bg-[#BAD6F70F] text-white px-[24px] rounded-full font500 border-[1px] border-[#262C32] leading-none items-center py-[10px]`} btnText={'Leave'}/>
+      </div>
       <div className=" h-full flex flex-col">
         <div className=" px-[16px]   flex  items-end">
-         <div className="flex-1 lg:w-full overflow-y-scroll h-[35vh] lg:h-[60vh]  ">
+         <div className="flex-1 lg:w-full overflow-y-scroll h-[35vh] lg:h-[60vh]   font400">
          <ChatList />
           <ChatList />
           <ChatList />

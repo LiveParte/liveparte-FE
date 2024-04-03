@@ -8,9 +8,12 @@ import { useRouter } from "next/router";
 import { LogoWhiteMobile } from "../../../../public/svg";
 import AgoraRTC, { AgoraRTCProvider, useRTCClient } from "agora-rtc-react";
 import LiveStreamVideo from "./submodules/livestreamVideo";
+import { myShowLink } from "@/utils/reusableComponent";
+import { LogoImage } from "@/utils/styleReuse";
 // Render a YouTube video player
 export default function LiveStream() {
   const [activeConnection, setActiveConnection] = useState(true);
+  
 
   const agoraClient = useRTCClient(
     AgoraRTC.createClient({ codec: "vp8", mode: "rtc" })
@@ -21,7 +24,8 @@ export default function LiveStream() {
     <AgoraRTCProvider client={agoraClient}>
       <main className={`${MainContainer}`}>
         <div className="pt-[32px] pb-[27px] hidden lg:block">
-          <LogoWhiteMobile />
+          {/* <LogoWhiteMobile /> */}
+          <LogoImage router={router}/>
         </div>
 
         <div className="flex flex-col lg:flex-row gap-[16px] ">
@@ -96,7 +100,10 @@ export default function LiveStream() {
             </div>
           </div>
           <div className=" lg:w-[25%] lg:rounded-[26px] bg-[#222428]">
-            <Chat />
+            <Chat onLeave={()=>{
+               setActiveConnection(false);
+               router.push(myShowLink);
+            }} />
           </div>
         </div>
       </main>

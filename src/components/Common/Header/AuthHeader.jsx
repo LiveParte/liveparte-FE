@@ -11,7 +11,7 @@ import CustomDropDown from "../CustomDropDown";
 import { storage } from "@/utils/helper";
 import { useDispatch } from "react-redux";
 import { logout, setUserData } from "@/store/User";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 // import { Avatar1 } from "../../../public/svg/avatars";
 import UserProfile from "../UserProfile";
 import { baseQuery } from "@/store/api";
@@ -19,6 +19,7 @@ import { userApi } from "@/store/User/userApi";
 import { eventApi } from "@/store/Event/eventApi";
 import { transactionApi } from "@/store/Transaction/transactionApi";
 import { HeaderOnSelect, LogoImage } from "@/utils/styleReuse";
+import {  eventLink, myShowLink } from "@/utils/reusableComponent";
 // const UserProfile =dynamic(()=>import('./UserProfile'),{src:false})
 
 export default function AuthHeader({ className, openModal, showNav = false }) {
@@ -31,7 +32,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
   const [isOpenPC, setIsOpenPC] = useState(false);
   const dropdownRef = useRef(null);
   const purchaseCoinRef = useRef(null);
-  const isMyShow =router?.pathname=="/myshows";
+  const isMyShow =router?.pathname==myShowLink;
   const isEvent =router?.pathname==="/event" || router?.pathname=='/event/[id]'
   const isFocused =`hover:!bg-[#FFFFFF26] hover:rounded-[8px]  hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`
   const isSelected =HeaderOnSelect;
@@ -50,7 +51,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
     // localStorage.removeItem(accessTokenStorageName);
    
 
-    if (router?.pathname === "/my_shows" || router?.pathname === "/setting") {
+    if (router?.pathname === myShowLink || router?.pathname === "/setting") {
       dispatch(userApi.util.invalidateTags());
       dispatch(eventApi.util.invalidateTags());
       dispatch(transactionApi.util.invalidateTags());
@@ -92,7 +93,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
 
   const MenuDropdown = () => {
     return (
-      <div className="bg-[#1B1C20]   left-0 right-0 top-0 bottom-0 z-[99] px-[24px] py-[14px] overflow-hidden  pb-[20px] mb:pb-[0px]  justify-between  flex flex-col fixed overflow-y-scroll">
+      <div className="bg-[#1B1C20]   left-0 right-0 top-0 bottom-0 z-[99] px-[24px] py-[14px] overflow-hidden  pb-[20px] mb:pb-[0px]  justify-between lg:hidden  flex flex-col fixed overflow-y-scroll ">
         <div className="flex justify-between items-center mb-[28px] ">
           <div>
             {" "}
@@ -100,7 +101,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           </div>
           <div>
             <ButtonComp
-              btnText={`close`}
+              btnText={`Close`}
               className={`px-[24px] !h-[30px]  text-[13px] font500 md:h-fit border-[#262C32] rounded-[999px] border-[1px] !bg-[#25272d] !text-white`}
               onClick={() => setDropDown(false)}
             />
@@ -108,22 +109,22 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
         </div>
         {/*  */}
         <div className="text-[15px] text-white font500 flex-1  mb-[60px]">
-          <div className='py-[15px]'>
+          <div className='py-[25px]'>
           <Link
             href={"/event"}
             className="  cursor-pointer text-white no-underline"
           >
-            Browse events
+            Browse Events
           </Link>
           </div>
           {/* <div className="py-[15px]  cursor-pointer ">On demand</div> */}
           <Link
-            href={"/myshows"}
-            className={`py-[12px]  cursor-pointer no-underline text-white mb-2 `}
+            href={myShowLink}
+            className={`py-[25px]  cursor-pointer no-underline text-white mb-2 `}
           >
-            My Show
+            My Shows
           </Link>
-          <div className="flex justify-between items-center py-[18px]">
+          <div className="flex justify-between items-center py-[25px]">
             <div className="text-[13px] flex items-center gap-[5px] ">
               <Image src={`/svg/coin1.svg`} width={24} height={24} alt="coin" />{" "}
               100 Coins
@@ -140,11 +141,11 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           <div className="text-[15px] text-white font500 flex-1  ">
             <Link
               href="/setting"
-              className="py-[15px]  cursor-pointer text-white no-underline"
+              className="py-[25px]  cursor-pointer text-white no-underline"
             >
               Settings
             </Link>
-            <div onClick={handleLogOut} className="py-[15px] cursor-pointer">
+            <div onClick={handleLogOut} className="py-[25px] cursor-pointer">
               Log out
             </div>
           </div>
@@ -220,9 +221,10 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           {showNav && (
             <div className="flex items-center  lg:gap-[18px] xl:gap-[24px] !hover:scale-100">
               <ButtonComp
-                btnText="Browse event"
+                btnText="Browse Events"
                 className={` font-medium  hidden lg:block   h-[32px] text-[13px] px-[16px] md:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${isEvent &&isSelected}`}
-                onClick={() => router.push("/event")}
+                onClick={() => router.push(eventLink)}
+
               />
               {/* <ButtonComp
                 btnText="On demand"
@@ -230,9 +232,9 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
                 onClick={() => router.push("/event")}
               /> */}
               <ButtonComp
-                btnText="My shows"
+                btnText="My Shows"
                 className={`  text-[13px]   h-[32px] font-medium  hidden lg:block  px-[16px] md:px-[32px]   gap-[10px]    font500 text-white  ${isFocused} ${isMyShow ?isSelected:'bg-transparent'}`}
-                onClick={() => router.push("/myshows")}
+                onClick={() => router.push(myShowLink)}
                 
               />
             </div>
@@ -241,7 +243,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
             <div className="flex items-center  gap-[18px]">
               <div className=" gap-[16px] items-center text-white font500 hidden lg:flex">
                 <div className="text-[13px] flex items-center gap-[5px]">
-                  <Image src={`/svg/coins.svg`} width={24} height={24} /> 100
+                  <Image src={`/svg/coins.svg`} width={24} height={24} alt="coins" /> 100
                   Coins
                 </div>
                 <div ref={purchaseCoinRef} className="relative">

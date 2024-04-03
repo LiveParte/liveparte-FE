@@ -25,6 +25,7 @@ import { useCreatePurchaseMutation } from "@/store/Transaction/transactionApi";
 import { useSelector } from "react-redux";
 import { selectCurrentUserData } from "@/store/User";
 import { storage, userDetailStorageName } from "@/utils/helper";
+import { myShowLink } from "@/utils/reusableComponent";
 
 export default function EventId() {
   const dispatch = useDispatch()
@@ -139,7 +140,7 @@ export default function EventId() {
     // console.log(response);
     if (response?.data?.createdPurchase?._id) {
       closeModal();
-      router.push("/myshows");
+      router.push(myShowLink);
     }
   };
   // you can call this function anything

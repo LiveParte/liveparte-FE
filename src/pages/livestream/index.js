@@ -8,7 +8,7 @@ const LiveStream =dynamic(()=>import('@/components/modules/LiveStream/LiveStream
 export default function index() {
   return (
    <>
-    <div className='bg-[#060809] h-[100vh] overflow-hidden'>
+    <div className='bg-[#060809] h-[100dvh] md:h-[100vh] overflow-hidden'>
       <LiveStream/>
     </div>
    </>
