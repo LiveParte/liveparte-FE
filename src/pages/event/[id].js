@@ -108,7 +108,7 @@ export default function EventId() {
 
   function openModal() {
     // console.log(userDetail, "userDetail");
-    if (!userDetail?._id) {
+    if (!userInfo?._id) {
       return openModalLoginSignUp();
     }
     setIsOpen("checkout");

@@ -22,6 +22,7 @@ module.exports = {
         'tallI': { 'raw': '(max-height: 720px)' },
         'tallT': { 'raw': '(max-width: 1100px)' },
         'width1300': { 'raw': '(max-width: 1476px)' },
+        'smallWidth': { 'raw': '(min-width: 320px)' },
         //1100
         // => @media (min-height: 800px) { ... }
       }

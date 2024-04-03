@@ -18,7 +18,7 @@ import { baseQuery } from "@/store/api";
 import { userApi } from "@/store/User/userApi";
 import { eventApi } from "@/store/Event/eventApi";
 import { transactionApi } from "@/store/Transaction/transactionApi";
-import { HeaderOnSelect } from "@/utils/styleReuse";
+import { HeaderOnSelect, LogoImage } from "@/utils/styleReuse";
 // const UserProfile =dynamic(()=>import('./UserProfile'),{src:false})
 
 export default function AuthHeader({ className, openModal, showNav = false }) {
@@ -31,7 +31,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
   const [isOpenPC, setIsOpenPC] = useState(false);
   const dropdownRef = useRef(null);
   const purchaseCoinRef = useRef(null);
-  const isMyShow =router?.pathname=="/my_shows";
+  const isMyShow =router?.pathname=="/myshows";
   const isEvent =router?.pathname==="/event" || router?.pathname=='/event/[id]'
   const isFocused =`hover:!bg-[#FFFFFF26] hover:rounded-[8px]  hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`
   const isSelected =HeaderOnSelect;
@@ -96,27 +96,12 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
         <div className="flex justify-between items-center mb-[28px] ">
           <div>
             {" "}
-            <Image
-              onClick={() => router.push("/")}
-              src="/svg/logo.svg"
-              width={148}
-              height={23}
-              alt="Picture of the author"
-              className="hidden md:block"
-            />
-            <Image
-              onClick={() => router.push("/")}
-              src="/svg/logo.svg"
-              width={120}
-              height={16}
-              alt="Picture of the author"
-              className="md:hidden"
-            />
+            <LogoImage router={router}/>
           </div>
           <div>
             <ButtonComp
               btnText={`close`}
-              className={`px-[24px] py-[16px] text-[13px] font500 h-fit border-[#262C32] rounded-[999px] border-[1px] !bg-[#25272d] !text-white`}
+              className={`px-[24px] !h-[30px]  text-[13px] font500 md:h-fit border-[#262C32] rounded-[999px] border-[1px] !bg-[#25272d] !text-white`}
               onClick={() => setDropDown(false)}
             />
           </div>
@@ -133,7 +118,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           </div>
           {/* <div className="py-[15px]  cursor-pointer ">On demand</div> */}
           <Link
-            href={"/my_shows"}
+            href={"/myshows"}
             className={`py-[12px]  cursor-pointer no-underline text-white mb-2 `}
           >
             My Show
@@ -230,22 +215,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
         <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover opacity-30  bg-[url('/webp/header.png')] z-30"></div>
         {/* <LogoWhite/> */}
         <div className="flex items-center justify-between z-50 relative cursor-pointer">
-          <Image
-            onClick={() => router.push("/")}
-            src="/svg/logo.svg"
-            width={148}
-            height={23}
-            alt="Picture of the author"
-            className="hidden md:block"
-          />
-          <Image
-            onClick={() => router.push("/")}
-            src="/svg/logo.svg"
-            width={120}
-            height={25}
-            alt="Picture of the author"
-            className="md:hidden"
-          />
+        <LogoImage router={router}/>
 
           {showNav && (
             <div className="flex items-center  lg:gap-[18px] xl:gap-[24px] !hover:scale-100">
@@ -304,7 +274,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
               <ButtonComp
                 onClick={() => setDropDown(true)}
                 btnText="Menu"
-                className="text-[13px] font-medium  lg:hidden !py-[16px] !px-[24px] gap-[10px] !bg-[#BAD6F70F] leading-none rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px] h-fit "
+                className="text-[13px] font-medium !h-[30px]  lg:hidden  !px-[24px] gap-[10px] !bg-[#BAD6F70F] leading-none rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px] md:h-fit "
               />
             </div>
           </div>

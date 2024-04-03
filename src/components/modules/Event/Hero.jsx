@@ -19,13 +19,15 @@ export default function Hero({
   HeroSectionEvent,
   makePayment,
   IsBought,
-  myShowLoader
+  myShowLoader,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const { setMyObject } = useObject();
   const [event, setEvent] = useState();
   const { myObject } = useObject();
+
+  console.log(HeroSectionEvent,'HeroSectionEvent')
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -42,8 +44,6 @@ export default function Hero({
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
-
-
 
   function DropdownMenu() {
     return (
@@ -62,7 +62,23 @@ export default function Hero({
             <a
               target="_blank"
               className=" text-white no-underline  "
-              href={`https://calendar.google.com/calendar/r/eventedit?text=${HeroSectionEvent?.name}&dates=${HeroSectionEvent?.event_date}&details=For+details,+link+here:+http://www.example.com&location=${HeroSectionEvent?.address}&sf=true&output=xml`}
+              href={`https://calendar.google.com/calendar/r/eventedit?text=${HeroSectionEvent?.name}&dates=${HeroSectionEvent?.event_date}&details=<b>${HeroSectionEvent?.name}</b>
+              <br/>
+              <br/>
+              <b>Location:</b>${HeroSectionEvent?.country}
+              <br/>
+              <br/>
+              <b>Description:</b>${HeroSectionEvent?.description}
+              <br/>
+              <br/>
+              <b>Event Details:</b>
+              <br/>
+              <b>Venue:</b>${HeroSectionEvent?.address}
+              <br/>
+              <b>Date:</b>${HeroSectionEvent?.event_date}
+              <br/>
+              <b>Time:</b>${ moment(HeroSectionEvent?.event_date).format('h:mm')}
+              &location=${HeroSectionEvent?.address}&sf=true&output=xml`}
             >
               Set Reminder
             </a>
@@ -72,14 +88,21 @@ export default function Hero({
     );
   }
 
-
-
   // console.log(HeroSectionEvent,'HeroSectionEvent')
-//bg-[url('/webp/bg1.webp')]
+  //bg-[url('/webp/bg1.webp')]
   return (
     <div
       className={`relative font400   bg-cover bg-center  xl:bg-top ${MainContainer} `}
-      style={{ backgroundImage: HeroSectionEvent?.thumbnail_url&&`url(${GetTransformedImageUrl(HeroSectionEvent?.thumbnail_url,1140,1830)})`,backgroundAttachment:'fixed' }}
+      style={{
+        backgroundImage:
+          HeroSectionEvent?.thumbnail_url &&
+          `url(${GetTransformedImageUrl(
+            HeroSectionEvent?.thumbnail_url,
+            1140,
+            1830
+          )})`,
+        backgroundAttachment: "fixed",
+      }}
     >
       <div className="">
         <div className="absolute left-0 right-0">
@@ -95,10 +118,15 @@ export default function Hero({
             <div
               className={`relative z-40  mt-[40vh] flex flex-col  md:justify-start items-center md:items-start  text-center  md:text-start`}
             >
+              <div className="hidden md:block">
               <Daviod />
+              </div>
+              <div className="block md:hidden">
+              <Daviod width="77" height="35" />
+              </div>
               <div className="mt-[16px] text-[36px] lg:text-[92px] md:text-left font-1 text-white font-bold uppercase lg:mb-[32px] leading-[40px] md:leading-[46px] lg:leading-[90px] lg:w-[75%] line-clamp-3">
                 {/* Lorem ipsum dolor sit amet consectetur adipisicing elit. Aperiam odit vitae repudiandae voluptate ea deleniti ex eligendi sapiente modi. Beatae quidem magnam quis labore atque sit placeat quae itaque ullam! */}
-                {HeroSectionEvent?.address }
+                {HeroSectionEvent?.address}
               </div>
               {/*  */}
               {notEvent ? (
@@ -143,11 +171,26 @@ export default function Hero({
                     <div className="mb-[100px] hidden md:flex gap-[16px] items-center relative">
                       {isOpen && <DropdownMenu />}
                       <ButtonComp
-                      isDisabled={!HeroSectionEvent?.ticket?.code||IsBought||myShowLoader}
-                        onClick={IsBought?console.log('purchase Alery'):openModal}
+                        isDisabled={
+                          !HeroSectionEvent?.ticket?.code ||
+                          IsBought ||
+                          myShowLoader
+                        }
+                        onClick={
+                          IsBought ? console.log("purchase Alery") : openModal
+                        }
                         className={`py-[12px] px-[39px] text-[13px] xl:text-[15px] font500`}
-                        btnText={IsBought?`Ticket already purchased`:`Get Ticket - ${HeroSectionEvent?.ticket?.code||""} ${formatMoney(HeroSectionEvent?.ticket?.price||' ',true)}`}
-                        />
+                        btnText={
+                          IsBought
+                            ? `Ticket already purchased`
+                            : `Get Ticket - ${
+                                HeroSectionEvent?.ticket?.code || ""
+                              } ${formatMoney(
+                                HeroSectionEvent?.ticket?.price || " ",
+                                true
+                              )}`
+                        }
+                      />
                       <div className="" onClick={() => setIsOpen(!isOpen)}>
                         <img
                           src="/webp/dots.png"
@@ -166,11 +209,24 @@ export default function Hero({
                       </div>
                       <div className="flex items-center justify-center gap-3">
                         <ButtonComp
-                      isDisabled={!HeroSectionEvent?.ticket?.code||IsBought||myShowLoader}
-                      onClick={openModal}
+                          isDisabled={
+                            !HeroSectionEvent?.ticket?.code ||
+                            IsBought ||
+                            myShowLoader
+                          }
+                          onClick={openModal}
                           className={`py-[12px] px-[20px] md:px-[34px] lg:px-[57px] text-[13px] md:text-[15px] font500 `}
-                          btnText={IsBought?`Ticket already purchased`:`Get Ticket - ${HeroSectionEvent?.ticket?.code||""} ${formatMoney(HeroSectionEvent?.ticket?.price||' ',true)}`}
-                          />
+                          btnText={
+                            IsBought
+                              ? `Ticket already purchased`
+                              : `Get Ticket - ${
+                                  HeroSectionEvent?.ticket?.code || ""
+                                } ${formatMoney(
+                                  HeroSectionEvent?.ticket?.price || " ",
+                                  true
+                                )}`
+                          }
+                        />
                         <div onClick={() => setIsOpen(!isOpen)}>
                           <img
                             src="/webp/dots.png"

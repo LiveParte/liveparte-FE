@@ -3,7 +3,8 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import Link from 'next/link'
 import ButtonComp from "@/components/Ui/button";
-import { HeaderOnSelect, MainContainer } from "@/utils/styleReuse";
+import { HeaderOnSelect, LogoImage, MainContainer } from "@/utils/styleReuse";
+import MyModal from "@/components/Ui/Modal";
 export default function Header({ className, openModal }) {
   const router = useRouter();
   const isHome =router?.pathname==="/";
@@ -24,27 +25,12 @@ export default function Header({ className, openModal }) {
         <div className="flex justify-between items-center mb-[28px] ">
           <div>
             {" "}
-            <Image
-              onClick={() => router.push("/")}
-              src="/svg/logo.svg"
-              width={148}
-              height={23}
-              alt="Picture of the author"
-              className="hidden md:block"
-            />
-            <Image
-              onClick={() => router.push("/")}
-              src="/svg/logo.svg"
-              width={120}
-              height={16}
-              alt="Picture of the author"
-              className="md:hidden"
-            />
+            <LogoImage router={router}/>
           </div>
           <div>
             <ButtonComp
               btnText={`close`}
-              className={`px-[24px] py-[16px] text-[13px] font500 h-fit border-[#262C32] border-[1px] !bg-[#25272d] !text-white !rounded-full`}
+              className={`px-[24px] !h-[30px] text-[13px] font500 md:h-fit border-[#262C32] border-[1px] !bg-[#25272d] !text-white !rounded-full`}
               onClick={() => setDropDown(false)}
             />
           </div>
@@ -75,6 +61,7 @@ export default function Header({ className, openModal }) {
   return (
     <>
       {dropDown && <MenuDropdown />}
+     
 
       <div
         className={`pt-[14px]  lg:pt-[16px] pb-[16px]  font400 ${className} ${MainContainer}`}
@@ -82,22 +69,7 @@ export default function Header({ className, openModal }) {
         <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover  bg-[url('/webp/header.png')] z-30 opacity-25"></div>
         {/* <LogoWhite/> */}
         <div className="flex justify-between z-50 relative cursor-pointer">
-          <Image
-            onClick={() => router.push("/")}
-            src="/svg/logo.svg"
-            width={148}
-            height={23}
-            alt="Picture of the author"
-            className="hidden md:block"
-          />
-           <Image
-            onClick={() => router.push("/")}
-            src="/svg/logo.svg"
-            width={87}
-            height={16}
-            alt="Picture of the author"
-            className="md:hidden "
-          />
+        <LogoImage router={router}/>
 
           <div className="flex items-center gap-[24px]">
             <ButtonComp
@@ -127,7 +99,7 @@ export default function Header({ className, openModal }) {
             <ButtonComp
               onClick={() => setDropDown(true)}
               btnText="Menu"
-              className="text-[13px] font-medium  lg:hidden !py-[16px] !px-[24px] gap-[10px] !bg-[#BAD6F70F] rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px] h-fit"
+              className="text-[13px] font-medium  lg:hidden !h-[30px] !px-[24px] gap-[10px] !bg-[#BAD6F70F] rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px] md:h-fit"
             />
           </div>
         </div>

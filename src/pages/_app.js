@@ -22,7 +22,7 @@ export default function App({ Component, pageProps }) {
           <ToastContainer
             className={`z-[9999]`}
             position="bottom-center"
-            autoClose={500}
+            autoClose={5000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
