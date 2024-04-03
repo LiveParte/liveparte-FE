@@ -36,7 +36,7 @@ export default function Happening({ events, upComingEvent, OnDemandEvent }) {
           
         </div>
       </div>
-      {/*  */}
+      
       <div className={`bg-[#060809]  py-[30px] pb-[42px] lg:pb-[150px]`}>
         <div
           className={`text-[20px] font500 text-white ${MainContainer} mb-[40px]`}
@@ -44,13 +44,12 @@ export default function Happening({ events, upComingEvent, OnDemandEvent }) {
           Upcoming
         </div>
 
-        {/*  */}
+    
         <div className={container}>
           <Carousel
             Data={upComingEvent}
             renderItem={(item, i) => (
               <ShowsCard
-                // key={i}
                 id={item?.id}
                 name={item?.name}
                 venue={item?.address}
@@ -72,13 +71,13 @@ export default function Happening({ events, upComingEvent, OnDemandEvent }) {
           Watch On Demand
         </div>
 
-        {/*  */}
+       
         <div className={container}>
           <Carousel
             Data={OnDemandEvent}
             renderItem={(item, i) => (
               <ShowsCard
-                // key={i}
+           
                 id={item?.id}
                 name={item?.name}
                 venue={item?.address}
@@ -88,17 +87,7 @@ export default function Happening({ events, upComingEvent, OnDemandEvent }) {
               />
             )}
           />
-          {/* <div className="grid grid-cols-1  md:grid-cols-2  xl:grid-cols-4 md:gap-[40px] ">
-          {dummyShowData?.map(({ name, venue, showImage, isLive }, i) => (
-            <ShowsCard
-              key={i}
-              name={name}
-              venue={venue}
-              showImage={showImage.toString()}
-              isLive={isLive}
-            />
-          ))}
-        </div> */}
+         
         </div>
       </div>
     </div>

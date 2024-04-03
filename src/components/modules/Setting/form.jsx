@@ -152,13 +152,13 @@ export default function SettingForm({
         <div className="mb-[29px] flex items-center gap-[12px] text-white ">
           <div className="h-[48px] w-[48px]">
             {/* <NoProfile /> */}
-            {imageUrl ? (
+            {(imageUrl||userInfo?.profile_image) ? (
               <Image
-                src={imageUrl}
+                src={userInfo?.profile_image ||imageUrl}
                 width={50}
                 height={50}
                 placeholder="blur"
-                blurDataURL={imageUrl}
+                blurDataURL={userInfo?.profile_image||imageUrl}
                 className="rounded-full object-cover h-[50px] w-[50px]"
               />
             ) : (userProfile
