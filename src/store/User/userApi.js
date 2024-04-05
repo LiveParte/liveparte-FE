@@ -46,7 +46,15 @@ export const userApi = createApi({
         method: "POST",
         body: payload,
       }),
-      invalidatesTags: ["user"],
+      // invalidatesTags: ["user"],
+    }),
+    restPassword: builder.mutation({
+      query: (payload) => ({
+        url: "/auth/reset-password",
+        method: "POST",
+        body: payload,
+      }),
+      // invalidatesTags: ["user"],
     }),
     forgetPassword: builder.mutation({
       query: (payload) => ({
@@ -69,5 +77,6 @@ export const {
   useRegisterApiMutation,
   useGetUserProfileQuery,
   useChangePasswordMutation,
-  useForgetPasswordMutation
+  useForgetPasswordMutation,
+
 } = userApi;

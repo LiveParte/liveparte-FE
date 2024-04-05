@@ -4,12 +4,14 @@ import { dummyShowDataII } from "../Event/Data";
 import ButtonComp from "@/components/Ui/button";
 import { useRouter } from "next/router";
 import ShowsCard from "@/components/Common/MyShow/Shows";
+import { useObject } from "@/Context/ObjectProvider";
 
 export default function Shows({
   Data=[],
   isLoading
 }) {
   const router = useRouter();
+  const {setLiveStreamShow} =useObject()
   const container =
     "px-[20px] md:px-[40px] lg:px-[120px] ";
   const isLength = Data?.length;
@@ -28,7 +30,9 @@ export default function Shows({
                 isLive={false}
                 item={item}
                 onNext={(item)=>{
+                  setLiveStreamShow(item);
                   router.push('/livestream')
+
                   // console.log(item,'item')
                 }}  
               />
