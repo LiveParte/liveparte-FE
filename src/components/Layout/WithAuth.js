@@ -44,11 +44,11 @@ function WithAuth({ children }) {
   }, [userInfo?.id]);
 
   useEffect(() => {
-    if(!isLoading){
-    if (isError) {
-      // router.push("/");
+    if(!isLoading && isError){
+ 
+      router.push("/");
       // dispatch(logout())
-    }
+    
   }
   }, [isError,isLoading]);
 

@@ -3,9 +3,10 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import Link from 'next/link'
 import ButtonComp from "@/components/Ui/button";
-import { HeaderOnSelect, LogoImage, MainContainer } from "@/utils/styleReuse";
+import MyPage, { HeaderOnSelect, MainContainer } from "@/utils/styleReuse";
 import MyModal from "@/components/Ui/Modal";
 import { eventLink, myShow } from "@/utils/reusableComponent";
+import LogoImage2 from "@/utils/LogoImage";
 export default function Header({ className, openModal }) {
   const router = useRouter();
   const isHome =router?.pathname==="/";
@@ -24,9 +25,11 @@ export default function Header({ className, openModal }) {
     return (
       <div className="bg-[#1B1C20]  left-0 right-0 top-0 bottom-0 z-[99] px-[24px] py-[14px] lg:py-[30px] overflow-hidden  flex flex-col fixed ">
         <div className="flex justify-between items-center mb-[28px] ">
-          <div>
+          <div className="text-white">
             {" "}
-            <LogoImage router={router}/>
+            <LogoImage2 router={router}/>
+            {/* <MyPage router={router}/> */}
+            {/* Logo */}
           </div>
           <div>
             <ButtonComp
@@ -65,12 +68,13 @@ export default function Header({ className, openModal }) {
      
 
       <div
-        className={`pt-[14px]  lg:pt-[16px] pb-[16px]  font400 ${className} ${MainContainer}`}
+        className={`pt-[14px]  lg:pt-[16px] pb-[16px]  font400 ${className} ${MainContainer} relative`}
       >
-        <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover  bg-[url('/webp/header.png')] z-30 opacity-25"></div>
+        {/* <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover  bg-[url('/webp/header.png')] z-30 opacity-25"></div> */}
         {/* <LogoWhite/> */}
-        <div className="flex justify-between z-50 relative cursor-pointer">
-        <LogoImage router={router}/>
+        <div className="flex justify-between   cursor-pointer relative">
+          <LogoImage2/>
+        {/* <LogoImage router={router}/> */}
 
           <div className="flex items-center gap-[24px]">
             <ButtonComp
@@ -100,7 +104,7 @@ export default function Header({ className, openModal }) {
             <ButtonComp
               onClick={() => setDropDown(true)}
               btnText="Menu"
-              className="text-[13px] font-medium  lg:hidden !h-[30px] !px-[24px] gap-[10px] !bg-[#BAD6F70F] rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px] md:h-fit"
+              className="text-[13px] font-medium  lg:hidden !h-[30px] !px-[24px] gap-[10px] !bg-[#BAD6F70F] rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px] md:h-fit "
             />
           </div>
         </div>

@@ -4,6 +4,16 @@ import { authSlice } from "./User";
 import { eventApi } from "./Event/eventApi";
 import { transactionApi } from "./Transaction/transactionApi";
 
+
+//MIDDLEWARE
+// const cartMiddleware = ({ getState }) => {
+//   return (next) => (action) => {
+//     const result = next(action);
+//     localStorage.setItem("cartData", JSON.stringify(getState()));
+//     return result;
+//   };
+// };
+
 export const store = configureStore({
   // preloadedState: result ? { auth: result } : undefined,
   reducer: {
@@ -16,7 +26,8 @@ export const store = configureStore({
     getDefaultMiddleware().concat(
       userApi.middleware,
       eventApi.middleware,
-      transactionApi?.middleware
+      transactionApi?.middleware,
+      // cartMiddleware
     ),
 });
 

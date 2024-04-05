@@ -217,8 +217,9 @@ export default function LoginSignUp({
   }
 
   return (
-    <div
-      className={`bg-[#1B1C20] relative pb-[48px] px-[16px] py-[40px] lg:py-[55px]  max-h-[80vh] overflow-y-scroll customScrollHorizontal ${className}  md:h-auto `}
+    <div className="flex flex-col flex-grow-1 overflow-y-scroll">
+      <div
+      className={`bg-[#1B1C20] relative pb-[48px] px-[16px] py-[40px] lg:py-[55px]  h-full  max-h-[75vh] md:max-h-[80vh] overflow-y-scroll customScrollHorizontal ${className}  md:h-auto `}
     >
       <div className="flex justify-between items-center mb-[45px]">
         <div className="pb-[10px] w-[27px]"></div>
@@ -232,7 +233,7 @@ export default function LoginSignUp({
             Log In
           </div>
           <div
-            // onClick={testNotification}
+            // onClick={testNot ification}
             onClick={() => setToggle("SignUp")}
             className={` h-[40px] flex justify-center items-center ${
               toggle !== "Login" ? isActive : notActive
@@ -268,6 +269,7 @@ export default function LoginSignUp({
           isEvent={isEvent}
         />
       )}
+    </div>
     </div>
   );
 }

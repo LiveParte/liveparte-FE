@@ -40,7 +40,7 @@ export default function Hero({
       <div
         className={`absolute left-0 right-0 top-0 bottom-0 ${MainContainer}`}
       >
-        <div className="absolute left-0 right-0">
+        <div className="absolute left-0 right-0 z-50">
           <IfHeaderIsAuth
             openModal={openModal}
             openModalLoginSignUp={openModalLoginSignUp}

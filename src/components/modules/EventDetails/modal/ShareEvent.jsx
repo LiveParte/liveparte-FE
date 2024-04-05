@@ -1,8 +1,6 @@
 import ButtonComp from "@/components/Ui/button";
 import React, { useRef } from "react";
-import { GiftTicketForm } from "../Data";
-import { FloatingLabelInput } from "@/components/Ui/TextInput";
-import { FloatingLabelTextArea } from "@/components/Ui/TextArea";
+import { useCopyToClipboard } from 'usehooks-ts'
 import { CopyEventLink, CountdownTimerII, SuccessNotification } from "@/utils/reusableComponent";
 import { useRouter } from "next/router";
 import { CloseII } from "../../../../../public/svg";
@@ -13,27 +11,45 @@ export default function ShareEvent({
   closeModal,
   Data
 }) {
+  const [copiedText, copy] = useCopyToClipboard()
   const router = useRouter();
   const inputRef = useRef(null);
   const handleAction = () =>{
     // router.push('/event_time_out')
   }
 
-  async function copyTextToClipboard(text) {
-    if ('clipboard' in navigator) {
-       await navigator.clipboard.writeText(text);
-       return SuccessNotification({message: 'Text copied successfully'})
+  // async function copyTextToClipboard(text) {
+  //   if ('clipboard' in navigator) {
+  //      await navigator.clipboard.writeText(text);
+   
 
-    } else {
-      return document.execCommand('copy', true, text);
-    }
+  //   } else {
+  //     return document.execCommand('copy', true, text);
+  //   }
     
+  // }
+
+  const handleCopy = (text) => () => {
+    copy(text)
+      .then(() => {
+        console.log('Copied!', { text })
+      })
+      .catch(error => {
+        console.error('Failed to copy!', error)
+      })
   }
-  const copyToClipboard = () => {
-    inputRef.current.select();
-    document.execCommand('copy');
-    // alert('Text copied to clipboard');
-  };
+
+  const copyTextToClipboard = (text) => () => {
+    copy(text)
+      .then(() => {
+        return SuccessNotification({message: 'Text copied successfully'})
+        // console.log('Copied!', { text })
+      })
+      .catch(error => {
+        // console.error('Failed to copy!', error)
+      })
+  }
+  
   return (
     <div className="bg-[#1B1C20] pb-[56px] px-[16px] lg:px-[56px] pt-[16px] lg:pt-[24px]">
       <nav className="flex justify-between items-center mb-[32px]">
@@ -75,7 +91,7 @@ export default function ShareEvent({
         <ButtonComp
           btnText={`Copy link `}
           className={` text-[13px] font500 h-[34px] mr-[8px]`}
-          onClick={()=>copyTextToClipboard(CopyEventLink({link:Data?._id}))}
+          onClick={handleCopy(CopyEventLink({link:Data?._id}))}
         />
         </div>
 
