@@ -1,28 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { CloseModal, GoogleIcon } from "../../../../../../../public/svg";
-import ButtonComp from "@/components/Ui/button";
-import { FloatingLabelInput } from "@/components/Ui/TextInput";
-import { LoginForm, SignUpForm } from "../../../Data";
-import { useRegisterApiMutation } from "@/store/User/userApi";
+import { CloseModal, } from "../../../../../../../public/svg";
+
+import { useForgetPasswordMutation, useRegisterApiMutation } from "@/store/User/userApi";
 import { useForm, Controller } from "react-hook-form";
-import { toast } from "react-toastify";
-import {
-  CheckIfArray,
-  accessTokenStorageName,
-  encryptObject,
-  encryptText,
-  storage,
-  userDetailStorageName,
-} from "@/utils/helper";
 import { useDispatch } from "react-redux";
-import { setUserData } from "@/store/User";
-import LoginPage from "../../Module/LoginPage";
-import SignUpPage from "../../Module/SignUp";
 import EnterEmail from "./modules/EnterEmail";
 import EmailSent from "./modules/EmailSent";
 import EnterPassword from "./modules/EnterPassword";
 import IsSuccessPage from "./modules/IsSuccessPage";
+import { ErrorNotification, SuccessNotification } from "@/utils/reusableComponent";
 
 export default function ForgetPassword({
   closeModal,
@@ -33,11 +20,32 @@ export default function ForgetPassword({
   const router = useRouter();
   const dispatch = useDispatch();
   const [selectPage,setSelectPage] =useState('EnterEmail')
+  const [forgetPassword,{isLoading,}]=useForgetPasswordMutation();
+  const { control, handleSubmit, getValues } = useForm({
+    defaultValues: {
+      email: "",
+   
+    },
+  });
+
+  const handleForgetPassword = async(data)=>{
+    console.log(data)
+    const responses = await forgetPassword(data);
+    console.log(responses)
+    if(responses?.data){
+      return SuccessNotification({message:responses?.data?.message})
+    }
+    return ErrorNotification({message:'Something went wrong'})
+    // setSelectPage('MailSent')
+
+  }
 
   const ForgetPasswordPage = [
     {
       name:'EnterEmail',
-      component:<EnterEmail onNext={()=>setSelectPage('MailSent')}/>
+      component:<EnterEmail control={control} isLoading={isLoading} handleSubmit={handleSubmit} onNext={(item)=>{
+        handleForgetPassword(item)
+      }}/>
     },
     {
       name:'MailSent',

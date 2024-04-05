@@ -47,7 +47,7 @@ function WithAuth({ children }) {
     if(!isLoading && isError){
  
       router.push("/");
-      // dispatch(logout())
+      dispatch(logout())
     
   }
   }, [isError,isLoading]);

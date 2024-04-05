@@ -66,11 +66,11 @@ export default function Chat({
       </div>
        </div>
 
-       <ButtonComp onClick={onLeave&&onLeave} className={`!h-[30px] text-[13px] bg-[#BAD6F70F] text-white px-[24px] rounded-full font500 border-[1px] border-[#262C32] leading-none items-center py-[10px]`} btnText={'Leave'}/>
+       <ButtonComp onClick={onLeave&&onLeave} className={`!h-[30px] text-[13px] !bg-[#BAD6F70F] text-white px-[24px] rounded-full font500 border-[1px] border-[#262C32] leading-none items-center py-[10px] block md:hidden`} btnText={'Leave'}/>
       </div>
       <div className=" h-full flex flex-col">
         <div className=" px-[16px]   flex  items-end">
-         <div className="flex-1 lg:w-full overflow-y-scroll h-[35vh] lg:h-[60vh]   font400">
+         <div className="flex-1 lg:w-full overflow-y-scroll h-[35vh] lg:h-[60vh]   font400  customScrollHorizontal">
          <ChatList />
           <ChatList />
           <ChatList />

@@ -2,8 +2,9 @@ import Image from "next/image";
 import React from "react";
 
 export default function ImageOrVideo({ videoRef, image,isPlaying }) {
+  console.log(isPlaying,'isPlaying')
   return (
-    <>
+    <>{!isPlaying?
       <Image
         src={image}
         blurDataURL={'/webp/show2.png'}
@@ -19,9 +20,10 @@ export default function ImageOrVideo({ videoRef, image,isPlaying }) {
         sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
         loading="lazy"
       />
-      <video
-        ref={videoRef}
-        // autoPlay={hoveredVideoIndex===item?._id?true:false}
+      :
+       <video
+        // ref={videoRef}
+        autoPlay
         loop
         muted
         className={`absolute left-0 right-0 top-0 bottom-0 object-cover h-full w-full z-20 ${
@@ -36,7 +38,7 @@ export default function ImageOrVideo({ videoRef, image,isPlaying }) {
           type="video/mp4"
         />
         Your browser does not support the video tag.
-      </video>
+      </video> }
     </>
   );
 }

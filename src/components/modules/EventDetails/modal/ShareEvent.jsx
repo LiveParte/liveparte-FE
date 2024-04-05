@@ -1,10 +1,11 @@
 import ButtonComp from "@/components/Ui/button";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useCopyToClipboard } from 'usehooks-ts'
 import { CopyEventLink, CountdownTimerII, SuccessNotification } from "@/utils/reusableComponent";
 import { useRouter } from "next/router";
 import { CloseII } from "../../../../../public/svg";
 import { formatMoney } from "@/utils/formatMoney";
+import CopyToClipboard from "react-copy-to-clipboard";
 
 
 export default function ShareEvent({
@@ -14,6 +15,9 @@ export default function ShareEvent({
   const [copiedText, copy] = useCopyToClipboard()
   const router = useRouter();
   const inputRef = useRef(null);
+  const [value, setValue] = useState('');
+  const [copied, setCopied] = useState(false);
+  const [copyStatus, setCopyStatus] = useState('');
   const handleAction = () =>{
     // router.push('/event_time_out')
   }
@@ -29,26 +33,16 @@ export default function ShareEvent({
     
   // }
 
-  const handleCopy = (text) => () => {
-    copy(text)
-      .then(() => {
-        console.log('Copied!', { text })
-      })
-      .catch(error => {
-        console.error('Failed to copy!', error)
-      })
-  }
-
-  const copyTextToClipboard = (text) => () => {
-    copy(text)
-      .then(() => {
-        return SuccessNotification({message: 'Text copied successfully'})
-        // console.log('Copied!', { text })
-      })
-      .catch(error => {
-        // console.error('Failed to copy!', error)
-      })
-  }
+  const handleCopy = (text, result) => {
+    if (result) {
+      setCopied(true);
+      setCopyStatus('Copied successfully!');
+      SuccessNotification({message: 'Copied successfully'})
+    } else {
+      setCopied(false);
+      setCopyStatus('Copy failed!');
+    }
+  };
   
   return (
     <div className="bg-[#1B1C20] pb-[56px] px-[16px] lg:px-[56px] pt-[16px] lg:pt-[24px]">
@@ -82,20 +76,26 @@ export default function ShareEvent({
         </div>
 
         <div className="flex items-center h-[50px] border-none rounded-[8px] bg-[#222428] border-[#343F4B] border-[1px]">
-          <input className="flex-1 flex-grow-1 bg-transparent px-[16px] outline-none text-[#63768D] text-[13px]"
+          <input className="flex-1 flex-grow-1 bg-transparent px-[16px] outline-none text-[#63768D] text-[13px] w-full"
             ref={inputRef}
           value={CopyEventLink({link:Data?._id})}
           disabled
           />
           
-        <ButtonComp
-          btnText={`Copy link `}
-          className={` text-[13px] font500 h-[34px] mr-[8px]`}
-          onClick={handleCopy(CopyEventLink({link:Data?._id}))}
-        />
+          <div className="mr-[2px]">
+          <CopyToClipboard text={CopyEventLink({link:Data?._id})} onCopy={handleCopy}>
+      <ButtonComp
+      btnText={`Copy link `}
+          className={` text-[13px] font500 h-[34px]`}
+        />   
+      </CopyToClipboard>
+       
+        </div>
         </div>
 
-       
+
+     
+
       </main>
     </div>
   );
