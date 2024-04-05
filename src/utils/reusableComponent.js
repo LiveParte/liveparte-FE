@@ -84,3 +84,11 @@ export function replaceDashWithSpace(str) {
   return str?.replace(/999/g, ' ');
 
 }
+
+
+export const myShowLink=`/myshows`;
+export const eventLink=`/event`
+
+export const CopyEventLink =({link})=>{
+  return  `http://44.208.167.228:3005/event/${link}`
+}

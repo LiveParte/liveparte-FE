@@ -25,7 +25,7 @@ export default function ShowsCard({
 }) {
   const backgroundImage = `https://res.cloudinary.com/dammymoses/image/upload/v1710175667/LiveParte/a7_zeemus.png`;
   const router = useRouter();
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [posterImage, setPosterImage] = useState();
   useEffect(() => {
     setPosterImage(showImage || backgroundImage);
@@ -65,7 +65,7 @@ export default function ShowsCard({
     >
       <ImageOrVideo
         image={showImage || backgroundImage}
-        isPlaying={isPlaying}
+        isPlaying={showVideo?isPlaying:false}
         videoRef={showVideo ?videoRef:noVideoRef}
       />
 

@@ -48,6 +48,14 @@ export const userApi = createApi({
       }),
       invalidatesTags: ["user"],
     }),
+    forgetPassword: builder.mutation({
+      query: (payload) => ({
+        url: "auth/forgot-password",
+        method: "POST",
+        body: payload,
+      }),
+      // invalidatesTags: ["user"],
+    }),
     //users/35
     //company/manager/:userId/update
     //admin/admin-management
@@ -60,5 +68,6 @@ export const {
   useUpdateProfileMutation,
   useRegisterApiMutation,
   useGetUserProfileQuery,
-  useChangePasswordMutation
+  useChangePasswordMutation,
+  useForgetPasswordMutation
 } = userApi;

@@ -1,10 +1,22 @@
+import dynamic from 'next/dynamic';
+
+const Hero = dynamic(() => import('@/components/modules/Event/Hero'), {
+  ssr: false
+});
+const Happening = dynamic(() => import('@/components/modules/Event/Happening'), {
+  ssr: false
+});
+const Footer = dynamic(() => import('@/components/Common/Footer'), {
+  ssr: false
+});
 import NoAuth from "@/components/Layout/NoAuth";
-import Hero from "@/components/modules/Event/Hero";
-import Happening from "@/components/modules/Event/Happening";
-import Footer from "@/components/Common/Footer";
+// import Hero from "@/components/modules/Event/Hero";
+// import Happening from "@/components/modules/Event/Happening";
+// import Footer from "@/components/Common/Footer";
 import { useRouter } from "next/router";
 import { useGetAllEventQuery, useGetEventOnDemandQuery } from "@/store/Event/eventApi";
 import moment from "moment";
+
 
 export default function Home() {
   const router = useRouter();
@@ -24,7 +36,7 @@ export default function Home() {
         // Get the current date as a moment object
         const currentDate = moment();
         // Check if the 'event_date' is in the future (upcoming event)
-        return eventDate.isAfter(currentDate);
+        return data;
     }
     // Exclude events with "Event Date"
     return false;
@@ -34,11 +46,13 @@ export default function Home() {
 
 
   return (
-    <NoAuth>
+   <div className='min-h-[100vh] bg-black'>
+     <NoAuth>
       <Hero HeroSectionEvent={HeroSectionEvent}  router={router} notEvent={true} />
       <Happening events={HappeningNow} upComingEvent={filteredEvents}  OnDemandEvent={OnDemandEvent}/>
       <Footer />
      
     </NoAuth>
+   </div>
   );
 }

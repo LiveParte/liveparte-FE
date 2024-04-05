@@ -1,15 +1,19 @@
 import Footer from "@/components/Common/Footer";
 import NoAuth from "@/components/Layout/NoAuth";
+import dynamic from 'next/dynamic'
 // import DropDown from '@/components/Ui/DropDown'
 import MyModal from "@/components/Ui/Modal";
 import EventDetails from "@/components/modules/EventDetails";
 import CheckOut from "@/components/modules/EventDetails/modal/CheckOut";
 import GiftTicket from "@/components/modules/EventDetails/modal/GiftTicket";
-import Hero from "@/components/modules/Event/Hero";
+// import Hero from "@/components/modules/Event/Hero";
 import LoginSignUp from "@/components/modules/Event/Modal/Login&SignUp";
 import React, { useEffect, useState } from "react";
 import ShareEvent from "@/components/modules/EventDetails/modal/ShareEvent";
 import { useObject } from "@/Context/ObjectProvider";
+const Hero = dynamic(() => import('@/components/modules/Event/Hero'), {
+  ssr: false
+});
 import {
   eventApi,
   useGetEventDetailViaIdQuery,
@@ -25,6 +29,7 @@ import { useCreatePurchaseMutation } from "@/store/Transaction/transactionApi";
 import { useSelector } from "react-redux";
 import { selectCurrentUserData } from "@/store/User";
 import { storage, userDetailStorageName } from "@/utils/helper";
+import { myShowLink } from "@/utils/reusableComponent";
 
 export default function EventId() {
   const dispatch = useDispatch()
@@ -84,20 +89,7 @@ export default function EventId() {
   const initializePayment = usePaystackPayment(config);
   const { myObject } = useObject();
 
-  // console.log(data, new Date(), data, "myObject");
-
-  // you can call this function anything
-  const onSuccess = (e) => {
-    // Implementation for whatever you want to do with reference and after success call.
-    // console.log(e, "reference");
-  };
-
-  // you can call this function anything
-  const onClose = () => {
-    // implementation for  whatever you want to do when the Paystack dialog closed.
-    // console.log("closed");
-  };
-
+ 
   // useEffect(() => {
   //   setEvent(myObject);
   // }, [myObject?._id]);
@@ -139,7 +131,7 @@ export default function EventId() {
     // console.log(response);
     if (response?.data?.createdPurchase?._id) {
       closeModal();
-      router.push("/myshows");
+      router.push(myShowLink);
     }
   };
   // you can call this function anything

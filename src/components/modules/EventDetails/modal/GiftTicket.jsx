@@ -14,7 +14,7 @@ export default function GiftTicket({ closeModal, Data }) {
     router.push("/event_time_out");
   };
   return (
-    <div className="bg-[#1B1C20] pb-[56px] px-[16px] lg:px-[56px] pt-[16px] lg:pt-[24px] overflow-y-scroll customScrollHorizontal max-h-[80vh]">
+    <div className="bg-[#1B1C20] pb-[56px] px-[16px] lg:px-[56px] pt-[16px] lg:pt-[24px] overflow-y-scroll customScrollHorizontal max-h-[90vh]">
       <nav className="flex justify-between items-center mb-[32px]">
         <div className="text-[18px]  text-white">Gift Ticket</div>
         <div className="text-[#63768D] text-[18px] flex items-center gap-[12px]">

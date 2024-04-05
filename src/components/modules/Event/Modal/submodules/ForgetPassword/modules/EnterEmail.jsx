@@ -7,16 +7,8 @@ import {
   SignUpForm,
 } from "@/components/modules/Event/Data";
 import ButtonComp from "@/components/Ui/button";
-export default function EnterEmail({onNext}) {
-  const { control, handleSubmit, getValues } = useForm({
-    defaultValues: {
-      email: "",
-      username: "",
-      password: "",
-      phoneNumber: "",
-      fullName: "",
-    },
-  });
+export default function EnterEmail({onNext,control,handleSubmit,isLoading}) {
+ 
   return (
     <div className="text-white px-[20px]">
       <div className="text-center mb-[48px]">
@@ -57,11 +49,9 @@ export default function EnterEmail({onNext}) {
           <ButtonComp
             btnText={"Recover Password"}
             className={`w-full text-[13px] font500 !bg-[#fff] !text-[#060809] mb-[30px]`}
-            onClick={(e)=>{
-                e.preventDefault();
-                onNext();
-                // handleSubmit(setSelectPage)
-            }}
+            onClick={handleSubmit(onNext)}
+            isLoading={isLoading}
+            isDisabled={isLoading}
           />
         </div>
       </form>

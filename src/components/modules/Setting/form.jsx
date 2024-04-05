@@ -87,7 +87,8 @@ export default function SettingForm({
     const handleRegisterUser = await UpdateUser(payload);
     const response = handleRegisterUser?.data;
 
-    // console.log(handleRegisterUser, "responseresponseresponse");
+    console.log(response?.updatedUser      , "responseresponseresponse");
+    storage.localStorage.set(userDetailStorageName, response?.updatedUser)
 
     const UserString = JSON.stringify(response?.user);
 
@@ -121,7 +122,7 @@ export default function SettingForm({
     const handleRegisterUser = await UpdatePassword(payload);
     const response = handleRegisterUser?.data;
 
-    // console.log(handleRegisterUser, "responseresponseresponse");
+
 
     if (response?.statusCode && response?.statusCode !== 200) {
       if (CheckIfArray(response?.message)) {
@@ -150,20 +151,22 @@ export default function SettingForm({
     <div className="px-[20px] lg:px-[120px] md:w-[60vw] xl:w-[40vw]">
       {isActive == "Profile" && (
         <div className="mb-[29px] flex items-center gap-[12px] text-white ">
-          <div className="h-[48px] w-[48px]">
+          <div className="h-[40px] w-[40px]">
             {/* <NoProfile /> */}
-            {imageUrl ? (
+            <div className="h-[40px] w-[40px]">
+            {(imageUrl||userInfo?.profile_image) ? (
               <Image
-                src={imageUrl}
-                width={50}
-                height={50}
+                src={imageUrl||userInfo?.profile_image }
+                width={40}
+                height={40}
                 placeholder="blur"
-                blurDataURL={imageUrl}
-                className="rounded-full object-cover h-[50px] w-[50px]"
+                blurDataURL={userInfo?.profile_image||imageUrl}
+                className="rounded-full object-cover h-[40px] w-[40px]"
               />
             ) : (userProfile
               // <NoProfile />
             )}
+            </div>
             <input
               type="file"
               onChange={handleChange}

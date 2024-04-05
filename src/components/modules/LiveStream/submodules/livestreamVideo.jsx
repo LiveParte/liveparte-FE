@@ -16,7 +16,9 @@ import { selectCurrentUserData } from "@/store/User";
 export default function LiveStreamVideo({
   activeConnection,
   setActiveConnection,
+  isLive
 }) {
+  
   const appId = "Agora Project App ID";
   const user = useSelector(selectCurrentUserData);
 
@@ -46,8 +48,24 @@ export default function LiveStreamVideo({
   //bg-[url('/webp/livestream.webp')]
   return (
     <div className="w-full h-[40vh] lg:h-[70vh]  bg-cover lg:rounded-[16px] overflow-hidden ">
+        {!isLive?<video
+        controls
+        // ref={videoRef}
+        autoPlay
+        // loop
+        // muted
+        className={`absolute left-0 right-0 top-0 bottom-0 object-cover h-full w-full z-20  `}
+        // poster={image}
+        // onMouseEnter={handleMouseEnter}
+        // onMouseLeave={handleMouseLeave}
+      >
+        <source
+          src={`https://res.cloudinary.com/dammymoses/video/upload/v1708675597/LiveParte/Screen_Recording_2024-02-18_at_19.05.07_wa31aj.mov`}
+          type="video/mp4"
+        />
+        Your browser does not support the video tag.
+      </video>:
       <div id="remoteVideoGrid">
-        {/* {console.log(remoteUsers, "remoteUsers")} */}
         {remoteUsers.map((user) => (
           <div
             key={user.uid}
@@ -56,7 +74,7 @@ export default function LiveStreamVideo({
             <RemoteUser user={user} />
           </div>
         ))}
-      </div>
+      </div> }
     </div>
   );
 }

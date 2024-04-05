@@ -217,11 +217,12 @@ export default function LoginSignUp({
   }
 
   return (
-    <div
-      className={`bg-[#1B1C20] relative pb-[48px] px-[16px] py-[40px] lg:py-[55px]  max-h-[80vh] overflow-y-scroll customScrollHorizontal ${className}  md:h-auto `}
+    <div className="flex flex-col flex-grow-1 overflow-y-scroll customScrollHorizontal relative">
+      <div
+      className={`bg-[#1B1C20] relative pb-[48px] px-[16px] py-[40px] lg:py-[55px]  h-full  max-h-[75vh] md:max-h-[80vh] overflow-y-scroll customScrollHorizontal ${className}  md:h-auto `}
     >
-      <div className="flex justify-between items-center mb-[45px]">
-        <div className="pb-[10px] w-[27px]"></div>
+      <div className="flex justify-center items-center mb-[45px]">
+        {/* <div className="pb-[10px] w-[27px]"></div> */}
         <div className="flex border-[#343F4B] border-[1px] justify-center items-center rounded-[999px] bg-[#25272d] text-[14px] font500 h-[40px] ">
           <div
             onClick={() => setToggle("Login")}
@@ -232,7 +233,7 @@ export default function LoginSignUp({
             Log In
           </div>
           <div
-            // onClick={testNotification}
+            // onClick={testNot ification}
             onClick={() => setToggle("SignUp")}
             className={` h-[40px] flex justify-center items-center ${
               toggle !== "Login" ? isActive : notActive
@@ -241,7 +242,7 @@ export default function LoginSignUp({
             Sign Up
           </div>
         </div>
-        <div className="flex justify-end pb-[10px]  cursor-pointer" onClick={closeModal}>
+        <div className="flex justify-end pb-[10px]  cursor-pointer absolute right-5 top-5" onClick={closeModal}>
           <CloseModal />
         </div>
       </div>
@@ -268,6 +269,7 @@ export default function LoginSignUp({
           isEvent={isEvent}
         />
       )}
+    </div>
     </div>
   );
 }
