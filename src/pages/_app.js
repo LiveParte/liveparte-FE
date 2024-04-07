@@ -16,6 +16,8 @@ export default function App({ Component, pageProps }) {
 
       <Head>
         <title>Live Parte</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+
       </Head>
       <ObjectProvider>
         <Provider store={store}>

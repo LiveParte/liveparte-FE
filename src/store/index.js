@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { userApi } from "./User/userApi";
-import { authSlice } from "./User";
+import { authSlice, setUserData } from "./User";
 import { eventApi } from "./Event/eventApi";
 import { transactionApi } from "./Transaction/transactionApi";
+import { userDetailStorageName } from "@/utils/helper";
 
 
 //MIDDLEWARE
@@ -31,5 +32,14 @@ export const store = configureStore({
     ),
 });
 
+// Check if user login data exists in localStorage
+// const storedUserData = localStorage.getItem(userDetailStorageName);
+
+// // If user login data exists, dispatch action to update Redux store
+// if (storedUserData) {
+//   const userData = JSON.parse(storedUserData);
+//   store.dispatch(setUserData(userData));
+// }
+// 
 export default store;
 // setupListeners(store.dispatch);

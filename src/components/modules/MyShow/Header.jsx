@@ -21,12 +21,12 @@ const Header = React.memo(
           <div className="font-1 text-[35px] font-bold text-[#FFFFFF] mb-[35px]">
             {title}
           </div>
-          <div className="flex items-center  justify-start gap-[10px] lg:gap-[24px] text-white  overflow-x-scroll md:hidden  ">
+          <div className="flex items-center  justify-start gap-[10px] lg:gap-[24px] text-white   md:hidden  ">
             {Data?.map((item, i) => (
               <div
                 key={i}
                 onClick={() => setIsActive && setIsActive(item?.name)}
-                className={`text-[14px] font500 cursor-pointer px-[15px] md:px-[25px]   flex justify-center items-center leading-none  text-nowrap lg:px-[32px] h-[36px] ${
+                className={`text-[14px] font500 cursor-pointer px-[15px] md:px-[25px] customScrollVertical  flex justify-center items-center leading-none  text-nowrap lg:px-[32px] h-[36px] ${
                   isActive === item?.name
                     ? ` rounded-[8px]  ${HeaderOnSelect} ]`
                     : ""
@@ -41,7 +41,7 @@ const Header = React.memo(
               <div
                 key={i}
                 onClick={() => setIsActive && setIsActive(item?.name)}
-                className={`lg:px-[32px] px-[18px] py-[11px] rounded-[8px]  ${
+                className={`lg:px-[32px] px-[18px] py-[11px] rounded-[8px]  customScrollVertical ${
                   isActive === item?.name
                     ? `${HeaderOnSelect}`
                     : ""

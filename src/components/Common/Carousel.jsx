@@ -4,9 +4,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
+const SwiperLazyLoading = withLazyLoad(Swiper);
 
 // import required modules
 import { Pagination } from "swiper/modules";
+import withLazyLoad from "./LazyLoading/lazyLoading";
 
 export default function Carousel({ renderItem, Data = [] }) {
   return (

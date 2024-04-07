@@ -48,7 +48,7 @@ export default function EnterEmail({onNext,control,handleSubmit,isLoading}) {
         <div className="mt-[32px]">
           <ButtonComp
             btnText={"Recover Password"}
-            className={`w-full text-[13px] font500 !bg-[#fff] !text-[#060809] mb-[30px]`}
+            className={`w-full text-[13px] font500 bg-[#fff] !text-[#060809] mb-[30px]`}
             onClick={handleSubmit(onNext)}
             isLoading={isLoading}
             isDisabled={isLoading}

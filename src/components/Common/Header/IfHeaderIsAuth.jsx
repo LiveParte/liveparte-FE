@@ -6,18 +6,32 @@ import { selectCurrentUserData } from "@/store/User";
 import LoginSignUp from "@/components/modules/Event/Modal/Login&SignUp";
 import ForgetPassword from "@/components/modules/Event/Modal/submodules/ForgetPassword/ForgetPassword";
 import MyModal from "@/components/Ui/Modal";
+import { useRouter } from "next/router";
 
 export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
   const [userDetail, setUserDetail] = useState(false);
+  const router = useRouter();
   const user = useSelector(selectCurrentUserData) || {};
   let [isOpen, setIsOpen] = useState(false);
-
+  const { token } = router.query;
+  console.log(router?.pathname,token)
   // console.log("helllo");
 
   // console.log(user,'user')
   useEffect(() => {
     setUserDetail(user?._id);
   }, [user?._id]);
+
+  useEffect(() => {
+    if(router?.pathname==='/reset-password'){
+      openModal('ForgetPassword')
+    }
+    if(router?.pathname==='/login'){
+      openModal('Login')
+    }
+    
+  }, [router?.pathname])
+  
 
   function closeModal() {
     setIsOpen();
@@ -51,7 +65,13 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
     {
       name: `ForgetPassword`,
       component: (
-        <ForgetPassword closeModal={closeModal} openModal={openModal} />
+        <ForgetPassword
+        token={token}
+        Path ={router?.pathname==='/reset-password'?'EnterPassword':''}
+        closeModal={()=>{
+          closeModal();
+          router.push('/')
+        }} openModal={openModal} />
       ),
     },
   ];

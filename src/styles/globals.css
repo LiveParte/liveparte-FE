@@ -215,6 +215,23 @@ img, video {
   background-clip: content-box;
 }
 
+.customScrollVertical::-webkit-scrollbar {
+  width: 10px; /* Adjust width as needed */
+  height: auto; /* Reset height to auto for vertical scrollbar */
+}
+
+.customScrollVertical::-webkit-scrollbar-track {
+  border-radius: 10px;
+  background-color: white;
+}
+
+.customScrollVertical::-webkit-scrollbar-thumb {
+  border: 1px solid transparent;
+  border-radius: 100px;
+  background-color: #fa4354;
+  background-clip: content-box;
+}
+
 /*  */
 
 

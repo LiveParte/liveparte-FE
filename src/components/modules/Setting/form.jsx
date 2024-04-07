@@ -50,6 +50,7 @@ export default function SettingForm({
   const { data, isLoading, isError } = useGetUserProfileQuery();
   const [UpdatePassword, { isLoading: updatePasswordLoader }] =
     useChangePasswordMutation();
+    
   const [UpdateUser, { isLoading: updateUserLoader }] =
     useUpdateProfileMutation();
 

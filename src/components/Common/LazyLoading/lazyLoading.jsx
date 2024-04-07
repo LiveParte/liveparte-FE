@@ -14,9 +14,9 @@ const withLazyLoad = (WrappedComponent, threshold = 0.5) => {
     }, [isInView, hasLoaded]);
 
     return (
-      <div ref={ref}>
+      <span ref={ref}>
         {hasLoaded ? <WrappedComponent {...props} /> : <div className='bg-[#060809] h-[100vh]'></div>}
-      </div>
+      </span>
     );
   };
 };
