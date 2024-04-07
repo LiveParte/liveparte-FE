@@ -72,7 +72,7 @@ export default function Hero({
                   world from the comfort of your devices
                 </div>
 
-                <div className="hidden md:flex mb-[40px] md:mb-[80px] lg:mb-[120px] ">
+                <div className="hidden md:flex mb-[40px] md:mb-[70px] lg:mb-[80px] ">
                   <ButtonComp
                     btnText={`Browse Events`}
                     className={`text-start text-[13px] font500  py-[12px] px-[31px]`}
