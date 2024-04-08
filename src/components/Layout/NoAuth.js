@@ -8,7 +8,7 @@ function NoAuth({ children }) {
         {/* <meta property="og:title" content="My page title" key="title" /> */}
       {/* </Head> */}
 
-      <div className="min-h-[100vh] bg-white">{children}</div>
+      <div className="min-h-[100vh] bg-[bg-[#000000]]">{children}</div>
     </>
   )
 }

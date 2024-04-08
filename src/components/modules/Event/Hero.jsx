@@ -28,6 +28,7 @@ export default function Hero({
   const { myObject } = useObject();
 
   console.log(HeroSectionEvent,'HeroSectionEvent')
+  const eventIsPurchase =HeroSectionEvent?.pruchase?.id;
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -105,7 +106,7 @@ export default function Hero({
       }}
     >
       <div className="">
-        <div className="absolute left-0 right-0  z-50">
+      <div className="absolute left-0 right-0  ">
           <IfHeaderIsAuth
             openModal={openModalLoginSignUp || openModal}
             className="absolute top-0 left-0 right-0"
@@ -171,17 +172,13 @@ export default function Hero({
                     <div className="mb-[100px] hidden md:flex gap-[16px] items-center relative">
                       {isOpen && <DropdownMenu />}
                       <ButtonComp
-                        isDisabled={
-                          !HeroSectionEvent?.ticket?.code ||
-                          IsBought ||
-                          myShowLoader
-                        }
+                       isDisabled={eventIsPurchase}
                         onClick={
-                          IsBought ? console.log("purchase Alery") : openModal
+                          eventIsPurchase ? null: openModal
                         }
                         className={`py-[12px] px-[39px] text-[13px] xl:text-[15px] font500`}
                         btnText={
-                          IsBought
+                          eventIsPurchase
                             ? `Ticket already purchased`
                             : `Get Ticket - ${
                                 HeroSectionEvent?.ticket?.code || ""
@@ -211,13 +208,13 @@ export default function Hero({
                         <ButtonComp
                           isDisabled={
                             !HeroSectionEvent?.ticket?.code ||
-                            IsBought ||
+                            eventIsPurchase ||
                             myShowLoader
                           }
                           onClick={openModal}
                           className={`py-[12px] px-[20px] md:px-[34px] lg:px-[57px] text-[13px] md:text-[15px] font500 `}
                           btnText={
-                            IsBought
+                            eventIsPurchase
                               ? `Ticket already purchased`
                               : `Get Ticket - ${
                                   HeroSectionEvent?.ticket?.code || ""

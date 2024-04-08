@@ -1,25 +1,36 @@
 import React from 'react';
-import { geolocated } from 'react-geolocated';
+import { useGeolocated } from 'react-geolocated';
 
-class MyComponent extends React.Component {
-  render() {
-    return !this.props.isGeolocationAvailable ? (
-      <div>Your browser does not support Geolocation</div>
-    ) : !this.props.isGeolocationEnabled ? (
-      <div>Geolocation is not enabled</div>
-    ) : this.props.coords ? (
-      <div>
-        Latitude: {this.props.coords.latitude}, Longitude: {this.props.coords.longitude}
-      </div>
-    ) : (
-      <div>Getting the location data&hellip;</div>
-    );
+const MyLocationComponent = () => {
+  const { coords, isGeolocationAvailable, isGeolocationEnabled, positionError } = useGeolocated({
+      // Optional configuration options (see details below)
+  });
+
+  // Handle different location states
+  if (!isGeolocationAvailable) {
+      return <div>Geolocation is not supported by your browser.</div>;
   }
-}
 
-export default geolocated({
-  positionOptions: {
-    enableHighAccuracy: false,
-  },
-  userDecisionTimeout: 5000,
-})(MyComponent);
+  if (!isGeolocationEnabled) {
+      return <div>Geolocation is disabled. Please enable it to use this feature.</div>;
+  }
+
+  if (positionError) {
+      return <div>Error retrieving location: {positionError.message}</div>;
+  }
+
+  if (coords) {
+      const { latitude, longitude } = coords;
+      // Use the latitude and longitude for your application logic
+      return (
+          <div>
+              Your location: Latitude: {latitude}, Longitude: {longitude}
+          </div>
+      );
+  }
+
+  return <div>Loading location...</div>;
+};
+
+export default MyLocationComponent;
+

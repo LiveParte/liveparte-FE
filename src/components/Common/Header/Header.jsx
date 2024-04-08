@@ -68,11 +68,11 @@ export default function Header({ className, openModal }) {
      
 
       <div
-        className={`pt-[14px]  lg:pt-[16px] pb-[16px]  font400 ${className} ${MainContainer} relative`}
+        className={`pt-[14px]  lg:pt-[16px] pb-[16px]  font400 ${className} ${MainContainer} relative z-50`}
       >
-        {/* <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover  bg-[url('/webp/header.png')] z-30 opacity-25"></div> */}
+        <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover  bg-[url('/webp/header.png')] z-30 opacity-25 pointer-events-none"></div>
         {/* <LogoWhite/> */}
-        <div className="flex justify-between   cursor-pointer relative">
+        <div className="flex justify-between   cursor-pointer relative  z-90" style={{zIndex:90}}>
           <LogoImage2/>
         {/* <LogoImage router={router}/> */}
 

@@ -14,10 +14,10 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
   const user = useSelector(selectCurrentUserData) || {};
   let [isOpen, setIsOpen] = useState(false);
   const { token } = router.query;
-  console.log(router?.pathname,token)
+  // console.log(router?.pathname,token)
   // console.log("helllo");
 
-  // console.log(user,'user')
+  console.log(user,'user')
   useEffect(() => {
     setUserDetail(user?._id);
   }, [user?._id]);

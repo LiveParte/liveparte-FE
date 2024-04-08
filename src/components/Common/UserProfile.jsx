@@ -9,33 +9,31 @@ import { useGetUserProfileQuery } from "@/store/User/userApi";
 
 export default function UserProfile({ onClick }) {
   const checkIfNonImageExist = storage.localStorage.get("noUserProfileImage");
-  const UserLiveParte = storage.localStorage.get("UserLiveParte");
-  const [userProfilePic,setUserProfilePic]=useState();
-  const {data,isLoading,isError} =useGetUserProfileQuery();
+  // const UserLiveParte = storage.localStorage.get("UserLiveParte");
+  const [userProfilePic, setUserProfilePic] = useState();
+  const { data, isLoading, isError } = useGetUserProfileQuery();
 
-  console.log(data?.
-    profile_image,'datadata')
+  // console.log(data?.profile_image, "datadata");
 
   //
   const [userProfile, setUserProfile] = useState();
-  const user = useSelector(selectCurrentUserData);
+  const UserLiveParte = useSelector(selectCurrentUserData);
   useEffect(() => {
     setUserProfile(
       NoImageUser[checkIfNonImageExist?.nonProfileImage] || Avatar3
     );
   }, [checkIfNonImageExist?.nonProfileImage]);
 
- useEffect(() => {
-  setUserProfilePic(UserLiveParte?.profile_image)
- }, [UserLiveParte?.profile_image])
- 
-  console.log(UserLiveParte,'UserLiveParte?.profile_image')
+  useEffect(() => {
+    setUserProfilePic(UserLiveParte?.profile_image);
+  }, [UserLiveParte?.profile_image]);
+
+  console.log(UserLiveParte, "UserLiveParte?.profile_image");
   return (
     <div onClick={onClick}>
       {userProfilePic ? (
         <Image
-          src={data?.
-            profile_image||userProfilePic}
+          src={data?.profile_image || userProfilePic}
           width={40}
           height={40}
           className="object-cover rounded-full h-[40px] w-[40px]"

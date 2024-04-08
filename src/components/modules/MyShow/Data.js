@@ -3,7 +3,7 @@ import { REGEX_PATTERNS } from "@/utils/constants/errors";
 export const SettingFormLabel =()=>{
     return [
         {
-            name:'fullName',
+            name:'username',
             label:'Name',
             type:'text'
         },
