@@ -6,6 +6,7 @@ import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
 import Animate from "./submodules/Animate";
 // const Animate =dynamic(()=>import('./submodules/Animate'),{ssr:false});
 import { motion, AnimatePresence } from "framer-motion";
+import { eventLink } from "@/utils/reusableComponent";
 
 export default function Hero({
   // notEvent = true,
@@ -76,14 +77,14 @@ export default function Hero({
                   <ButtonComp
                     btnText={`Browse Events`}
                     className={`text-start text-[13px] font500  py-[12px] px-[31px]`}
-                    onClick={() => router.push("/event")}
+                    onClick={() => router.push(eventLink)}
                   />
                 </div>
                 <div className=" md:hidden  md:mb-[120px] fixed left-0 right-0 -bottom-[2px]">
                   <ButtonComp
                     btnText={`Browse Events`}
                     className={` text-[15px] font500  py-[12px] px-[31px] w-full text-center h-[70px] rounded-none`}
-                    onClick={() => router.push("/event")}
+                    onClick={() => router.push(eventLink)}
                   />
                 </div>
               </div>

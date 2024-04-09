@@ -111,7 +111,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
         <div className="text-[15px] text-white font500 flex-1  mb-[60px]">
           <div className='py-[25px]'>
           <Link
-            href={"/event"}
+            href={eventLink}
             className="  cursor-pointer text-white no-underline"
           >
             Browse Events

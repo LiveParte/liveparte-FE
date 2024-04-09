@@ -1,5 +1,4 @@
 // import dynamic from "next/dynamic";
-import { MainContainer } from "@/utils/styleReuse";
 import React from "react";
 // import LazyLoadComponent from "@/components/Common/LazyComponent";
 import Upcoming from "./submodules/Upcoming";
@@ -9,12 +8,11 @@ import WatchOnDemand from "./submodules/WatchOnDemand";
 
 const LazyComponentWithLazyLoad = withLazyLoad(Upcoming);
 const HappeningNowLazyLoading = withLazyLoad(HappeningNow);
-const WatchOnDemandLazyLoading = withLazyLoad(WatchOnDemand);
 
 export default function Happening({
   events = [],
   upComingEvent = [],
-  OnDemandEvent = [],
+ 
 }) {
   const container = "pl-[20px] pr-[20px] lg:px-[60px]";
   return (
@@ -26,9 +24,9 @@ export default function Happening({
       {upComingEvent?.length > 0 && (
         <LazyComponentWithLazyLoad upComingEvent={upComingEvent} />
       )}
-      {OnDemandEvent?.length > 0 && (
+      {/* {OnDemandEvent?.length > 0 && (
         <WatchOnDemandLazyLoading OnDemandEvent={upComingEvent} />
-      )}
+      )} */}
     </div>
   );
 }

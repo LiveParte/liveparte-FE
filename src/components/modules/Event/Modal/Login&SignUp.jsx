@@ -45,7 +45,7 @@ export default function LoginSignUp({
   const [toggle, setToggle] = useState("Login");
   const isActive = `text-white border-[1px] border-[#48515d]  rounded-[999px] bg-[#2e3239] px-[30px] lg:px-[20px] cursor-pointer `;
   const notActive = `text-[#495969] px-[30px] lg:px-[20px] cursor-pointer `;
-  const isEvent = router?.pathname === "/event/[id]";
+  const isEvent = router?.pathname === singleEventLink;
   const [
     RegisterUser,
     { isLoading: registerLoader, isError: registerIsError },
@@ -181,7 +181,7 @@ export default function LoginSignUp({
 
       // console.log()
       if (router?.pathname === "/") {
-        return router.push("/event");
+        return router.push(eventLink);
       }
       if (onNext) {
         return onNext();

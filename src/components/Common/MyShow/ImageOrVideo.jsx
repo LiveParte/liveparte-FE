@@ -2,13 +2,17 @@ import Image from "next/image";
 import React from "react";
 
 export default function ImageOrVideo({ videoRef, image,isPlaying }) {
-  console.log(isPlaying,'isPlaying')
+
   return (
-    <>{!isPlaying?
+    <>
+    <div           className="flex-[1] flex justify-center items-center absolute left-0 right-0 top-[0px] bottom-0  bg-gradient-to-t from-[#00000079] z-50"
+></div>
+    {
+      !isPlaying?
       <Image
         src={image}
         blurDataURL={'/webp/show2.png'}
-        className={`absolute left-0 right-0 top-0 bottom-0 ${
+        className={`relative left-0 right-0 top-0 bottom-0 ${
           !isPlaying ? "z-30" : "z-0"
         }`}
         // width={'100%'}
@@ -38,7 +42,8 @@ export default function ImageOrVideo({ videoRef, image,isPlaying }) {
           type="video/mp4"
         />
         Your browser does not support the video tag.
-      </video> }
+      </video> 
+      }
     </>
   );
 }

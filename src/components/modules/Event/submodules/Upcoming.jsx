@@ -1,21 +1,34 @@
 import Carousel from '@/components/Common/Carousel'
 import ShowsCard from '@/components/Common/MyShow/Shows'
 import { MainContainer } from '@/utils/styleReuse'
+import { useSwiper } from 'swiper/react';
+import { ArrowLeft, ArrowRight } from '../../../../../public/svg';
 
 export default function Upcoming({upComingEvent}) {
-    const container = "pl-[20px] pr-[20px] lg:px-[60px]";
+  const swiper = useSwiper();
 
+    const container = "pl-[20px] pr-[20px] lg:px-[60px]";
+console.log(upComingEvent,'upComingEvent')
   return (
-    <div className={`bg-[#060809]  py-[30px] pb-[42px] lg:pb-[150px]`}>
-        <div
-          className={`text-[20px] font500 text-white ${MainContainer} mb-[40px]`}
-        >
-          Upcoming
-        </div>
+    <div className={`bg-[#060809]  py-[30px] pb-[42px] lg:pb-[77px]`}>
+        <div className={`flex justify-between items-center ${MainContainer}  mb-[40px]`}>
+      <div
+        className={`text-[20px] font500 text-white `}
+      >
+        Upcoming
+      </div>
+      <div className="flex items-center gap-[16px]">
+        <div className="button-prev1"><ArrowLeft/></div>
+        <div className="button-next1" ><ArrowRight/></div>
+      </div>
+       
+      </div>
 
     
         <div className={container}>
           <Carousel
+          leftBtnName=".button-prev1"
+          rightBtnName=".button-next1"
             Data={upComingEvent}
             renderItem={(item, i) => (
               <ShowsCard
@@ -27,6 +40,7 @@ export default function Upcoming({upComingEvent}) {
                 isLive={false}
                 showVideo={false}
                 isPlayIcon={false}
+                item={item}
               />
             )}
           />

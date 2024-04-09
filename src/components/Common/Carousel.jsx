@@ -4,16 +4,24 @@ import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-const SwiperLazyLoading = withLazyLoad(Swiper);
 
 // import required modules
-import { Pagination } from "swiper/modules";
-import withLazyLoad from "./LazyLoading/lazyLoading";
+import { Navigation, Pagination } from "swiper/modules";
 
-export default function Carousel({ renderItem, Data = [] }) {
+export default function Carousel({
+  renderItem,
+  Data = [],
+  rightBtnName = "",
+  leftBtnName = "",
+}) {
   return (
     <>
       <Swiper
+        modules={[Navigation]}
+        navigation={{
+          prevEl: rightBtnName,
+          nextEl: leftBtnName,
+        }}
         slidesPerView={2}
         spaceBetween={30}
         pagination={{
@@ -41,7 +49,6 @@ export default function Carousel({ renderItem, Data = [] }) {
             spaceBetween: 20,
           },
         }}
-        modules={[]}
         className="mySwiper text-white"
       >
         {Data?.map((item, index) => (

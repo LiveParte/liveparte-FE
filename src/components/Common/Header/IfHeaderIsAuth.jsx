@@ -17,21 +17,19 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
   // console.log(router?.pathname,token)
   // console.log("helllo");
 
-  console.log(user,'user')
+  console.log(user, "user");
   useEffect(() => {
     setUserDetail(user?._id);
   }, [user?._id]);
 
   useEffect(() => {
-    if(router?.pathname==='/reset-password'){
-      openModal('ForgetPassword')
+    if (router?.pathname === "/reset-password") {
+      openModal("ForgetPassword");
     }
-    if(router?.pathname==='/login'){
-      openModal('Login')
+    if (router?.pathname === "/login") {
+      openModal("Login");
     }
-    
-  }, [router?.pathname])
-  
+  }, [router?.pathname]);
 
   function closeModal() {
     setIsOpen();
@@ -66,12 +64,14 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
       name: `ForgetPassword`,
       component: (
         <ForgetPassword
-        token={token}
-        Path ={router?.pathname==='/reset-password'?'EnterPassword':''}
-        closeModal={()=>{
-          closeModal();
-          router.push('/')
-        }} openModal={openModal} />
+          token={token}
+          Path={router?.pathname === "/reset-password" ? "EnterPassword" : ""}
+          closeModal={() => {
+            closeModal();
+            router.push("/");
+          }}
+          openModal={openModal}
+        />
       ),
     },
   ];
