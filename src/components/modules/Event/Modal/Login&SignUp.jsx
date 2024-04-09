@@ -43,8 +43,8 @@ export default function LoginSignUp({
   const { id } = router?.query;
   console.log(router, "routerrouter");
   const [toggle, setToggle] = useState("Login");
-  const isActive = `text-white border-[1px] border-[#48515d]  rounded-[999px] bg-[#2e3239] px-[30px] lg:px-[50px] cursor-pointer `;
-  const notActive = `text-[#495969] px-[30px] lg:px-[50px] cursor-pointer `;
+  const isActive = `text-white border-[1px] border-[#48515d]  rounded-[999px] bg-[#2e3239] px-[30px] lg:px-[20px] cursor-pointer `;
+  const notActive = `text-[#495969] px-[30px] lg:px-[20px] cursor-pointer `;
   const isEvent = router?.pathname === "/event/[id]";
   const [
     RegisterUser,
@@ -257,14 +257,14 @@ export default function LoginSignUp({
   return (
     <div className="flex flex-col flex-grow-1 overflow-y-scroll customScrollHorizontal relative">
       <div
-        className={`bg-[#1B1C20] relative pb-[48px] px-[16px] py-[40px] lg:py-[55px]  h-full  max-h-[75vh] md:max-h-[80vh] overflow-y-scroll customScrollHorizontal ${className}  md:h-auto `}
+        className={`bg-[#1B1C20] relative pb-[48px] px-[16px] py-[40px] lg:py-[55px]  h-full  max-h-[75vh] md:max-h-[90vh] overflow-y-scroll customScrollHorizontal ${className}  md:h-auto `}
       >
-        <div className="flex justify-center items-center mb-[45px]">
+        <div className="flex justify-center items-center mb-[35px]">
           {/* <div className="pb-[10px] w-[27px]"></div> */}
-          <div className="flex border-[#343F4B] border-[1px] justify-center items-center rounded-[999px] bg-[#25272d] text-[14px] font500 h-[40px] ">
+          <div className="flex border-[#343F4B] border-[1px] justify-center items-center rounded-[999px] bg-[#25272d] text-[14px] font500 h-[33px] ">
             <div
               onClick={() => setToggle("Login")}
-              className={` h-[40px] flex justify-center items-center   ${
+              className={` h-[30px] flex justify-center items-center   ${
                 toggle === "Login" ? isActive : notActive
               }`}
             >
@@ -273,7 +273,7 @@ export default function LoginSignUp({
             <div
               // onClick={testNot ification}
               onClick={() => setToggle("SignUp")}
-              className={` h-[40px] flex justify-center items-center ${
+              className={` h-[30px] flex justify-center items-center ${
                 toggle !== "Login" ? isActive : notActive
               }`}
             >

@@ -11,7 +11,7 @@ function WithAuth({ children }) {
   const dispatch = useDispatch()
   // let userInfo =storage["localStorage"]?.get(userDetailStorageName)
   const {isLoading,isError} =useGetUserProfileQuery();
-  const [isAuth,setIsAuth] =useState(true);
+  const [isAuth,setIsAuth] =useState(false);
   // alert("hello")
   const userInfo =useSelector(selectCurrentUserData);
   const isAuthenticated =userInfo?._id;
