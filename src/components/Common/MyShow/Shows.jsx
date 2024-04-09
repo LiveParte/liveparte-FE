@@ -90,14 +90,14 @@ export default function ShowsCard({
             {showHeader && (
               <span className="flex-1">
                 {isLive||onDemand ? (
-                  <div className="mt-[8px] lg:mt-[22px] ml-[8px] lg:ml-[16px] rounded-[9px] flex gap-[8px] items-center px-[5px] lg:px-[10px] py-[6px] bg-[#06080933] backdrop-blur-[60px] w-fit ">
+                  <div className="mt-[8px] lg:mt-[12px] ml-[8px] lg:ml-[14px] rounded-[9px] flex gap-[8px] items-center px-[5px] lg:px-[10px] py-[6px] bg-[#06080933] backdrop-blur-[60px] w-fit ">
                     <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div>
-                    <div className="text-[11px] lg:text-[13px]  text-white  ">
+                    <div className="text-[11px] lg:text-[13px]  text-white  " style={{letterSpacing:'0.5px'}}>
                       {onDemand?'On Demand':'Happening Now'}
                     </div>
                   </div>
                 ) : (
-                  <div className="bg-[#06080933] w-fit text-white px-[9px] py-[6px] mt-[8px] lg:mt-[22px] ml-[8px] lg:ml-[16px] rounded-[9px] text-[11px] lg:text-[13px] xl:text-[15px]">
+                  <div className="bg-[#06080933] w-fit text-white px-[9px] py-[6px] mt-[8px] lg:mt-[12px] ml-[8px] lg:ml-[14px] rounded-[9px] text-[11px] lg:text-[13px] xl:text-[15px]">
                     {eventDate === "Event Date"
                       ? "  March 24  "
                       : moment(eventDate).format("MMMM DD")}
