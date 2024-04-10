@@ -2,15 +2,15 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import { baseQuery } from "../api";
 
 
-const useQuestionMarkOrAnd= (itemA='',itemB='',itemC='')=>{
-  let Symbol =itemA||itemB||itemC?'&':'?'
-  return Symbol;
-}
+// const useQuestionMarkOrAnd= (itemA='',itemB='',itemC='')=>{
+//   let Symbol =itemA||itemB||itemC?'&':'?'
+//   return Symbol;
+// }
 
 export const eventApi = createApi({
   reducerPath: "eventApi",
   baseQuery: baseQuery,
-  tagTypes:['coupon'],
+  tagTypes:['event','singleEvent'],
   endpoints: (builder) => ({
    
     getAllEvent: builder.query({
@@ -51,6 +51,7 @@ export const eventApi = createApi({
         method: "GET",
         // body,
       }),
+      invalidatesTags:['singleEvent']
       
     }),
     userShows: builder.query({

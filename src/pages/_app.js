@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import { ObjectProvider } from "@/Context/ObjectProvider";
+import { middleware } from '@/middleware/authMiddleware'; // Import your middleware
 
 export default function App({ Component, pageProps }) {
   return (

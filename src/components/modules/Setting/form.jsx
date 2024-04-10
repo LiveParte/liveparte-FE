@@ -11,10 +11,19 @@ import {
 } from "@/store/User/userApi";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
-import { CheckIfArray, NoImageUser, storage, userDetailStorageName } from "@/utils/helper";
+import {
+  CheckIfArray,
+  NoImageUser,
+  storage,
+  userDetailStorageName,
+} from "@/utils/helper";
 import { Avatar3 } from "../../../../public/svg/avatars";
 import { selectCurrentUserData } from "@/store/User";
-import { ErrorNotification, replaceDashWithSpace, SuccessNotification } from "@/utils/reusableComponent";
+import {
+  ErrorNotification,
+  replaceDashWithSpace,
+  SuccessNotification,
+} from "@/utils/reusableComponent";
 
 export default function SettingForm({
   isActive,
@@ -22,15 +31,16 @@ export default function SettingForm({
   imageUrl,
   isImageUrlLoading,
 }) {
-
   const checkIfNonImageExist = storage.localStorage.get("noUserProfileImage");
-  const [userProfile,setUserProfile]=useState();
-  const user =useSelector(selectCurrentUserData);
-  let userInfo =storage["localStorage"]?.get(userDetailStorageName)
+  const [userProfile, setUserProfile] = useState();
+  const userInfo = useSelector(selectCurrentUserData);
+  // let userInfo =storage["localStorage"]?.get(userDetailStorageName)
 
   useEffect(() => {
-    setUserProfile(NoImageUser[checkIfNonImageExist?.nonProfileImage]||Avatar3)
-  }, [checkIfNonImageExist?.nonProfileImage])
+    setUserProfile(
+      NoImageUser[checkIfNonImageExist?.nonProfileImage] || Avatar3
+    );
+  }, [checkIfNonImageExist?.nonProfileImage]);
   //upload Image
   const hiddenFileInput = useRef(null);
 
@@ -44,19 +54,17 @@ export default function SettingForm({
     // handleFile(fileUploaded);
   };
 
-  
-
   //
   const { data, isLoading, isError } = useGetUserProfileQuery();
   const [UpdatePassword, { isLoading: updatePasswordLoader }] =
     useChangePasswordMutation();
-    
+
   const [UpdateUser, { isLoading: updateUserLoader }] =
     useUpdateProfileMutation();
 
   const { control, handleSubmit, setValue, watch, setError, reset } = useForm({
     defaultValues: {
-      fullName: "",
+      username: "",
       email: "",
       phone: "",
       country: "Nigeria",
@@ -72,34 +80,38 @@ export default function SettingForm({
   // console.log(data,'datadata')
 
   useEffect(() => {
-    setValue("email", data?.email||userInfo?.email);
-    setValue("id", data?._id)||userInfo?._id;
-    setValue("phone", data?.phone||userInfo?.phone);
-    setValue("fullName", data?.fullName||replaceDashWithSpace(userInfo?.username?.toString()) );
-  }, [data?._id, data,userInfo]);
+    setValue("email", data?.email || userInfo?.email);
+    setValue("id", data?._id) || userInfo?._id;
+    setValue("phone", data?.phone || userInfo?.phone);
+    setValue(
+      "username",
+      data?.fullName ||data?.username
+    );
+  }, [data?._id, data, userInfo]);
 
   const confirmPassword = watch("confirmPassword");
 
   async function handleUpdateUser(data) {
     const payload = {
       ...data,
+      fullName:data?.username,
       profile_image: imageUrl,
     };
     const handleRegisterUser = await UpdateUser(payload);
     const response = handleRegisterUser?.data;
 
-    console.log(response?.updatedUser      , "responseresponseresponse");
-    storage.localStorage.set(userDetailStorageName, response?.updatedUser)
+    // console.log(response?.updatedUser      , "responseresponseresponse");
+    storage.localStorage.set(userDetailStorageName, JSON.stringify(response?.updatedUser));
 
     const UserString = JSON.stringify(response?.user);
 
     if (response?.statusCode && response?.statusCode !== 200) {
       CheckIfArray(response?.message)
-        ? ErrorNotification({message:response?.message[0]})
-        :  ErrorNotification({message:response?.message})
+        ? ErrorNotification({ message: response?.message[0] })
+        : ErrorNotification({ message: response?.message });
     }
     if (response?.updatedUser?._id) {
-      SuccessNotification({message: response?.message})
+      SuccessNotification({ message: response?.message });
       // toast.success(response?.message);
       // storage.localStorage.set('accessTokenLiveParte1',response?.accessToken);
 
@@ -122,8 +134,6 @@ export default function SettingForm({
     }
     const handleRegisterUser = await UpdatePassword(payload);
     const response = handleRegisterUser?.data;
-
-
 
     if (response?.statusCode && response?.statusCode !== 200) {
       if (CheckIfArray(response?.message)) {
@@ -148,6 +158,18 @@ export default function SettingForm({
     }
   }
 
+  function EnableButtonIfDateChanges() {
+    return false
+    
+  }
+
+  console.log(
+    watch("username")===
+      userInfo?.fullName,
+    userInfo,
+    "userInfo"
+  );
+
   return (
     <div className="px-[20px] lg:px-[120px] md:w-[60vw] xl:w-[40vw]">
       {isActive == "Profile" && (
@@ -155,18 +177,19 @@ export default function SettingForm({
           <div className="h-[40px] w-[40px]">
             {/* <NoProfile /> */}
             <div className="h-[40px] w-[40px]">
-            {(imageUrl||userInfo?.profile_image) ? (
-              <Image
-                src={imageUrl||userInfo?.profile_image }
-                width={40}
-                height={40}
-                placeholder="blur"
-                blurDataURL={userInfo?.profile_image||imageUrl}
-                className="rounded-full object-cover h-[40px] w-[40px]"
-              />
-            ) : (userProfile
-              // <NoProfile />
-            )}
+              {imageUrl || userInfo?.profile_image ? (
+                <Image
+                  src={imageUrl || userInfo?.profile_image}
+                  width={40}
+                  height={40}
+                  placeholder="blur"
+                  blurDataURL={userInfo?.profile_image || imageUrl}
+                  className="rounded-full object-cover h-[40px] w-[40px]"
+                />
+              ) : (
+                userProfile
+                // <NoProfile />
+              )}
             </div>
             <input
               type="file"
@@ -176,8 +199,8 @@ export default function SettingForm({
             />
           </div>
           <div className="text-[12px] leading-[20px]  md:w-[60%]">
-            Upload your profile photo, it should be a maximum
-            size of <span className="text-nowrap">5 MB</span>.
+            Upload your profile photo, it should be a maximum size of{" "}
+            <span className="text-nowrap">5 MB</span>.
             <span
               onClick={handleClick}
               className="ml-2 text-[#FA4354] cursor-pointer hover:underline"
@@ -193,32 +216,31 @@ export default function SettingForm({
           <div className="flex flex-col gap-[20px] ">
             {SettingFormLabel()?.map((item, index) => (
               <div className="cursor-not-allowed">
-              <Controller
-              
-                key={index}
-                control={control}
-                name={item?.name}
-                rules={{
-                  required: `${item?.label} is required`,
-                  pattern: item?.pattern,
-                }}
-                render={({
-                  field: { onChange, value },
-                  formState: { errors },
-                }) => (
-                  <FloatingLabelInput
-                    key={index}
-                    label={item?.label}
-                    type={item?.type}
-                    name={item?.name}
-                    value={value}
-                    onChange={onChange}
-                    error={errors[item?.name]?.message}
-                    errors={errors}
-                    disabled={item?.disabled}
-                  />
-                )}
-              />
+                <Controller
+                  key={index}
+                  control={control}
+                  name={item?.name}
+                  rules={{
+                    required: `${item?.label} is required`,
+                    pattern: item?.pattern,
+                  }}
+                  render={({
+                    field: { onChange, value },
+                    formState: { errors },
+                  }) => (
+                    <FloatingLabelInput
+                      key={index}
+                      label={item?.label}
+                      type={item?.type}
+                      name={item?.name}
+                      value={value}
+                      onChange={onChange}
+                      error={errors[item?.name]?.message}
+                      errors={errors}
+                      disabled={item?.disabled}
+                    />
+                  )}
+                />
               </div>
             ))}
             <div className="mt-[40px] lg:mt-[32px]">
@@ -227,7 +249,11 @@ export default function SettingForm({
                 className={`w-full text-[13px] font500`}
                 onClick={handleSubmit(handleUpdateUser)}
                 isLoading={isImageUrlLoading || updateUserLoader}
-                isDisabled={isImageUrlLoading || isLoading}
+                isDisabled={
+                  isImageUrlLoading ||
+                  isLoading ||
+                  EnableButtonIfDateChanges()
+                }
               />
             </div>
           </div>
@@ -268,6 +294,7 @@ export default function SettingForm({
                 className={`w-full text-[13px] font500`}
                 onClick={handleSubmit(handleUpdatePassword)}
                 isLoading={isImageUrlLoading || updatePasswordLoader}
+                isDisabled={EnableButtonIfDateChanges()}
               />
             </div>
           </div>

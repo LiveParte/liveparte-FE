@@ -34,8 +34,8 @@ import { myShowLink } from "@/utils/reusableComponent";
 export default function EventId() {
   const dispatch = useDispatch()
   const [userDetail, setUserDetail] = useState(false);
-  const user = useSelector(selectCurrentUserData) || {};
-  let userInfo =storage["localStorage"]?.get(userDetailStorageName)
+  const userInfo = useSelector(selectCurrentUserData) || {};
+  // let userInfo =storage["localStorage"]?.get(userDetailStorageName)
 
   // useEffect(() => {
   //   setUserDetail(user);
@@ -45,17 +45,10 @@ export default function EventId() {
   let [isOpen, setIsOpen] = useState();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [CreatePurchase, { isLoading: cpLoader }] = useCreatePurchaseMutation();
-  const { data, isLoading } = useGetEventDetailViaIdQuery(id, {
+  const { data, isLoading,refetch } = useGetEventDetailViaIdQuery(id, {
     skip: !id,
   });
-  const {
-    data: userShows,
-    isLoading: myShowLoader,
-    refetch: userShowRefetch,
-  } = useUserShowsQuery(userInfo?._id, {
-    skip: !userInfo?._id,
-  });
-
+ 
   // const [handleUserShow,{isLoading:userShowLoader}] =useLazyUserShowsQuery();
 
   // const handleUserShowFun = async() =>{
@@ -63,11 +56,16 @@ export default function EventId() {
   //     console.log(response)
   // }
 
+  useEffect(() => {
+    if(userInfo?._id){
+      refetch();
+    }
+  }, [userInfo?._id])
+  
 
-  const IsBought = userShows?.event?.find((item) => item?._id === id)
-    ? true
-    : false;
 
+
+  
   // console.log(user ,"userShows");
   const config = {
     reference: new Date().getTime().toString(),
@@ -157,7 +155,7 @@ export default function EventId() {
           handleSuccess={handleSuccess}
           handleClose={handleClose}
           closeModal={closeModal}
-          IsBought={IsBought}
+          IsBought={false}
         />
       ),
     },
@@ -203,14 +201,13 @@ export default function EventId() {
         />
       )}
       <Hero
-        HeroSectionEvent={{ ...data, ...myObject }}
+        HeroSectionEvent={{ ...data?.event,...data, ...myObject }}
         openModalLoginSignUp={openModalLoginSignUp}
         openModal={openModal}
         giftTicket={openModalGiftTicket}
         openModalShareEvent={openModalShareEvent}
         notEvent={false}
-        IsBought={IsBought}
-        myShowLoader={myShowLoader}
+        
       />
       {/* <Dropdown  placement="top" label="Dropdown button" dismissOnClick={false}>
       <DropdownItem>Dashboard</DropdownItem>

@@ -12,8 +12,8 @@ import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
 const Shows =dynamic(()=>import('@/components/modules/MyShow/Shows'),{ssr:false})
 const Header =dynamic(()=>import('@/components/modules/MyShow/Header'),{ssr:false})
 export default function MyShows() {
-  const user =useSelector(selectCurrentUserData);
-  let userInfo =storage["localStorage"]?.get(userDetailStorageName)
+  const userInfo =useSelector(selectCurrentUserData);
+  // let userInfo =storage["localStorage"]?.get(userDetailStorageName)
   // console.log(user,'user')
   const {data:userShows,isLoading,refetch,isSuccess}=useUserShowsQuery(userInfo?._id,{
     skip:!userInfo?._id

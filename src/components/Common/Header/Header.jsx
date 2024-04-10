@@ -1,20 +1,19 @@
 import React, { useState } from "react";
-import Image from "next/image";
 import { useRouter } from "next/router";
 import Link from 'next/link'
 import ButtonComp from "@/components/Ui/button";
-import MyPage, { HeaderOnSelect, MainContainer } from "@/utils/styleReuse";
-import MyModal from "@/components/Ui/Modal";
-import { eventLink, myShow } from "@/utils/reusableComponent";
+import  { HeaderOnSelect, MainContainer } from "@/utils/styleReuse";
+import { eventLink, myShow, myShowLink, onDemandLink, singleEventLink } from "@/utils/reusableComponent";
 import LogoImage2 from "@/utils/LogoImage";
 export default function Header({ className, openModal }) {
   const router = useRouter();
   const isHome =router?.pathname==="/";
-  const isEvents =router?.pathname==='/events';
+  const isEvents =router?.pathname===eventLink;
   // const MainContainer = `px-[20px] md:px-[40px] lg:px-[120px] relative`;
   const [dropDown, setDropDown] = useState(false);
   const isMyShow =router?.pathname==myShow
-  const isEvent =router?.pathname==="/event" || router?.pathname=='/event/[id]'
+  const isEvent =router?.pathname===eventLink || router?.pathname==singleEventLink
+  const isOnDemand =router?.pathname===onDemandLink
   const isFocused =`hover:!bg-[#FFFFFF26] hover:rounded-[8px]  hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`
   const isSelected =HeaderOnSelect
   const handleCheckIfITHome = () =>{
@@ -68,11 +67,11 @@ export default function Header({ className, openModal }) {
      
 
       <div
-        className={`pt-[14px]  lg:pt-[16px] pb-[16px]  font400 ${className} ${MainContainer} relative`}
+        className={`pt-[14px]  lg:pt-[16px] pb-[16px]  font400 ${className} ${MainContainer} relative z-50`}
       >
-        {/* <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover  bg-[url('/webp/header.png')] z-30 opacity-25"></div> */}
+        <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover  bg-[url('/webp/header.png')] z-30 opacity-25 pointer-events-none"></div>
         {/* <LogoWhite/> */}
-        <div className="flex justify-between   cursor-pointer relative">
+        <div className="flex justify-between   cursor-pointer relative  z-90" style={{zIndex:90}}>
           <LogoImage2/>
         {/* <LogoImage router={router}/> */}
 
@@ -80,12 +79,12 @@ export default function Header({ className, openModal }) {
             <ButtonComp
               btnText="Browse Events"
               className={` font-medium  hidden lg:block  px-[16px] md:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${isEvent &&isSelected}  text-[13px]   !h-[32px]`}
-              onClick={() => router.push("/event")}
+              onClick={() => router.push(eventLink)}
             />
             <ButtonComp
               btnText="On Demand"
-              className={` font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-transparent    font500 text-white ${isFocused}   text-[13px]   !h-[32px]`}
-              onClick={() => router.push("/event")}
+              className={` font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-transparent    font500 text-white ${isFocused}   text-[13px] ${isOnDemand &&isSelected}  !h-[32px]`}
+              onClick={() => router.push(onDemandLink)}
             />
           </div>
           <div>

@@ -12,7 +12,7 @@ export default function ButtonComp({
       onClick={onClick}
       disabled={isDisabled}
       className={` bg-[#FFFFFF] h-[45px] px-[16px] !leading-[0px]  rounded-[8px] outline-none  ${className} transition-transform duration-300 ease-in-out flex justify-center items-center gap-1 ${
-        (isLoading) && "!bg-[#343F4B] !text-[#63768D]"
+        (isLoading||isDisabled) && "!bg-[#343F4B] !text-[#63768D]"
       }  `}
     >
       {isLoading && (

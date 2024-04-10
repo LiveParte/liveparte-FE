@@ -10,7 +10,7 @@ export default function LoginPage({
   
   return (
     <form
-    className="px-[15px] lg:px-[50px] flex flex-col  lg:pb-[0px]"
+    className="px-[15px] lg:px-[30px] flex flex-col  lg:pb-[0px]"
     autoComplete="off"
   >
     <div className="w-full ">
@@ -31,7 +31,7 @@ export default function LoginPage({
 
       <div className="flex items-center text-[13px] text-white  py-[28px] ">
         <div className="bg-[#343F4B]  h-[1px] flex-grow-1"></div>
-        <div className="px-[38px]"> OR</div>
+        <div className="px-[28px] tracking-[1.5px]"> Or</div>
 
         <div className="bg-[#343F4B]  h-[1px] flex-grow-1"></div>
       </div>

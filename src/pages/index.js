@@ -2,7 +2,7 @@ import NoAuth from "@/components/Layout/NoAuth";
 import Footer from "@/components/Common/Footer";
 import { useRouter } from "next/router";
 import dynamic from 'next/dynamic';
-
+// import MyLocation from '../components/Common/GetLOcation.jsx'
 // const Hero = dynamic(() => import('@/components/modules/LandingPage/Hero'), {
 //   ssr: false
 // });
@@ -15,9 +15,9 @@ import dynamic from 'next/dynamic';
 // const ArtistList = dynamic(() => import('@/components/modules/LandingPage/Artist'), {
 //   ssr: false
 // });
-// const FAQ = dynamic(() => import('@/components/modules/LandingPage/FAQ'), {
-//   ssr: false
-// });
+const MyLocationComponent = dynamic(() => import('@/components/Common/GetLOcation'), {
+  ssr: false
+});
 import Hero  from "@/components/modules/LandingPage/Hero";
 import FavoriteShow from "@/components/modules/LandingPage/FavoriteShows";
 import Features from "@/components/modules/LandingPage/Features";
@@ -25,6 +25,7 @@ import ArtistList from "@/components/modules/LandingPage/Artist";
 import FAQ from "@/components/modules/LandingPage/FAQ";
 import LazyLoader from "@/components/Common/LazyComponent";
 import withLazyLoad from "@/components/Common/LazyLoading/lazyLoading";
+// import MyLocationComponent from "@/components/Common/GetLOcation";
 const LazyComponentWithLazyLoad = withLazyLoad(Hero);
 const LazyComponentWithLazyLoad1 = withLazyLoad(FavoriteShow);
 const LazyComponentWithLazyLoad2= withLazyLoad(Features);
@@ -40,7 +41,9 @@ export default function Home() {
   return (
     <NoAuth>
       {/* <LazyLoader> */}
-      <LazyComponentWithLazyLoad router={router} notEvent={true} />
+      {/* <MyLocationComponent/> */}
+      <Hero/>
+      {/* <LazyComponentWithLazyLoad router={router} notEvent={true} /> */}
       {/* </LazyLoader> */}
    {/* <LazyLoader>  */}
       <LazyComponentWithLazyLoad1 />

@@ -5,7 +5,7 @@ import { Media, Video } from "@vidstack/player-react";
 import Image from "next/image";
 import Chat from "./submodules/chat";
 import { useRouter } from "next/router";
-import { LogoWhiteMobile } from "../../../../public/svg";
+import { FullScreenIcon, LogoWhiteMobile } from "../../../../public/svg";
 import AgoraRTC, { AgoraRTCProvider, useRTCClient } from "agora-rtc-react";
 import LiveStreamVideo from "./submodules/livestreamVideo";
 import { myShowLink } from "@/utils/reusableComponent";
@@ -67,29 +67,7 @@ export default function LiveStream({
               </div>
 }
                 <div className="text-[13px]  gap-[8px] items-center hidden lg:flex">
-                  <svg
-                    width="15"
-                    height="15"
-                    viewBox="0 0 15 15"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <rect
-                      opacity="0.12"
-                      x="1.25"
-                      y="1.25"
-                      width="12.5"
-                      height="12.5"
-                      rx="4"
-                      fill="white"
-                    />
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M4.6875 1.75C3.06516 1.75 1.75 3.06516 1.75 4.6875V5C1.75 5.27614 1.52614 5.5 1.25 5.5C0.973858 5.5 0.75 5.27614 0.75 5V4.6875C0.75 2.51288 2.51288 0.75 4.6875 0.75H5C5.27614 0.75 5.5 0.973858 5.5 1.25C5.5 1.52614 5.27614 1.75 5 1.75H4.6875ZM9.5 1.25C9.5 0.973858 9.72386 0.75 10 0.75H10.3125C12.4871 0.75 14.25 2.51288 14.25 4.6875V5C14.25 5.27614 14.0261 5.5 13.75 5.5C13.4739 5.5 13.25 5.27614 13.25 5V4.6875C13.25 3.06516 11.9348 1.75 10.3125 1.75H10C9.72386 1.75 9.5 1.52614 9.5 1.25ZM1.25 9.5C1.52614 9.5 1.75 9.72386 1.75 10V10.3125C1.75 11.9348 3.06516 13.25 4.6875 13.25H5C5.27614 13.25 5.5 13.4739 5.5 13.75C5.5 14.0261 5.27614 14.25 5 14.25H4.6875C2.51288 14.25 0.75 12.4871 0.75 10.3125V10C0.75 9.72386 0.973858 9.5 1.25 9.5ZM13.75 9.5C14.0261 9.5 14.25 9.72386 14.25 10V10.3125C14.25 12.4871 12.4871 14.25 10.3125 14.25H10C9.72386 14.25 9.5 14.0261 9.5 13.75C9.5 13.4739 9.72386 13.25 10 13.25H10.3125C11.9348 13.25 13.25 11.9348 13.25 10.3125V10C13.25 9.72386 13.4739 9.5 13.75 9.5Z"
-                      fill="white"
-                    />
-                  </svg>
+                 <FullScreenIcon/>
                   Fullscreen
                 </div>
               </div>

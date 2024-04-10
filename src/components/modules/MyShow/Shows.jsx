@@ -5,6 +5,9 @@ import ButtonComp from "@/components/Ui/button";
 import { useRouter } from "next/router";
 import ShowsCard from "@/components/Common/MyShow/Shows";
 import { useObject } from "@/Context/ObjectProvider";
+import { eventLink } from "@/utils/reusableComponent";
+import UserShowsCard from "@/components/Common/MyShowUser/Shows";
+// import UserShowsCard from "@/components/UserShow";
 
 export default function Shows({
   Data=[],
@@ -21,7 +24,7 @@ export default function Shows({
         {isLength > 0 && (
           <div className=" grid-cols-2  md:grid-cols-2  xl:grid-cols-4 gap-[20px] lg:gap-x-[40px] gap-y-[40px] lg:gap-y-[104px] pb-[100px] lg:pb-[247px]  grid">
             {!isLoading&&Data?.map((item, index) => (
-              <ShowsCard
+              <UserShowsCard
                 key={index}
                 id={item?.id}
                 name={item?.name}
@@ -50,7 +53,7 @@ export default function Shows({
               btnText={`Browse Events`}
               className={`text-[13px] text-[#000000] font500 h-[44px] rounded-[8px] px-[16px] py-[12px]`}
               onClick={()=>{
-                router.push('/event')
+                router.push(eventLink)
               }}
             />
           </div>

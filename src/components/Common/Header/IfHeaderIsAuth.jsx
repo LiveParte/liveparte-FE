@@ -14,24 +14,22 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
   const user = useSelector(selectCurrentUserData) || {};
   let [isOpen, setIsOpen] = useState(false);
   const { token } = router.query;
-  console.log(router?.pathname,token)
+  // console.log(router?.pathname,token)
   // console.log("helllo");
 
-  // console.log(user,'user')
+  console.log(user, "user");
   useEffect(() => {
     setUserDetail(user?._id);
   }, [user?._id]);
 
   useEffect(() => {
-    if(router?.pathname==='/reset-password'){
-      openModal('ForgetPassword')
+    if (router?.pathname === "/reset-password") {
+      openModal("ForgetPassword");
     }
-    if(router?.pathname==='/login'){
-      openModal('Login')
+    if (router?.pathname === "/login") {
+      openModal("Login");
     }
-    
-  }, [router?.pathname])
-  
+  }, [router?.pathname]);
 
   function closeModal() {
     setIsOpen();
@@ -66,12 +64,14 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
       name: `ForgetPassword`,
       component: (
         <ForgetPassword
-        token={token}
-        Path ={router?.pathname==='/reset-password'?'EnterPassword':''}
-        closeModal={()=>{
-          closeModal();
-          router.push('/')
-        }} openModal={openModal} />
+          token={token}
+          Path={router?.pathname === "/reset-password" ? "EnterPassword" : ""}
+          closeModal={() => {
+            closeModal();
+            router.push("/");
+          }}
+          openModal={openModal}
+        />
       ),
     },
   ];
@@ -83,7 +83,7 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
           bodyComponent={
             modalPage?.find((item) => item?.name === isOpen)?.component
           }
-          containerStyle={`!bg-[#1B1C20]  border-[1px] border-[#343F4B] rounded-[16px]  !w-[586px]  `}
+          containerStyle={`!bg-[#1B1C20]  border-[1px] border-[#343F4B] rounded-[16px]  !w-[447px]  `}
           isOpen={isOpen ? true : false}
           closeModal={() =>
             isOpen === "ForgetPassword"

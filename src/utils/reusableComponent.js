@@ -88,7 +88,8 @@ export function replaceDashWithSpace(str) {
 
 export const myShowLink=`/myshows`;
 export const eventLink=`/event`
-
+export const singleEventLink=`/event/[id]`
+export const onDemandLink=`/event/ondemand`
 export const CopyEventLink =({link})=>{
   return  `http://44.208.167.228:3005/event/${link}`
 }

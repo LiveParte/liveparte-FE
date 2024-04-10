@@ -78,5 +78,6 @@ export const {
   useGetUserProfileQuery,
   useChangePasswordMutation,
   useForgetPasswordMutation,
+  useRestPasswordMutation
 
 } = userApi;
