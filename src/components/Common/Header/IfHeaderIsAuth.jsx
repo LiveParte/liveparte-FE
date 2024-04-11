@@ -7,6 +7,7 @@ import LoginSignUp from "@/components/modules/Event/Modal/Login&SignUp";
 import ForgetPassword from "@/components/modules/Event/Modal/submodules/ForgetPassword/ForgetPassword";
 import MyModal from "@/components/Ui/Modal";
 import { useRouter } from "next/router";
+import { useObject } from "@/Context/ObjectProvider";
 
 export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
   const [userDetail, setUserDetail] = useState(false);
@@ -14,6 +15,7 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
   const user = useSelector(selectCurrentUserData) || {};
   let [isOpen, setIsOpen] = useState(false);
   const { token } = router.query;
+  const {routerLoader}=useObject()
   // console.log(router?.pathname,token)
   // console.log("helllo");
 
@@ -77,7 +79,19 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
   ];
 
   return (
-    <>
+    <div className="relative">
+   {routerLoader && 
+   <div className="absolute right-3 z-[999px] top-3">
+    <div
+          className="inline-block h-10 w-10 animate-spin rounded-full border-3 border-solid border-[#fff] border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
+          role="status"
+        >
+          <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
+            Loading...
+          </span>
+        </div>
+    </div>
+}
       {isOpen && (
         <MyModal
           bodyComponent={
@@ -101,6 +115,6 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
           className="absolute top-0 left-0 right-0"
         />
       )}
-    </>
+    </div>
   );
 }

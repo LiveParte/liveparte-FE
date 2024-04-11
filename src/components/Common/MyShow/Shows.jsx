@@ -78,7 +78,7 @@ export default function ShowsCard({
       }}
     >
       <div
-        className={` relative h-[25vh] md:h-[27vh] lg:h-[27vh] rounded-[8px] lg:rounded-[20px] ${backUrl} bg-cover bg-center bg-gradient-to-b from-black to-transparent  overflow-hidden group cursor-pointer duration-300 ease-in-out group-hover:opacity-100 relative mb-[16px]`}
+        className={` relative h-[25vh] md:h-[27vh] lg:h-[45vh] xl:h-[27vh] rounded-[8px] lg:rounded-[20px] ${backUrl} bg-cover bg-center bg-gradient-to-b from-black to-transparent  overflow-hidden group cursor-pointer duration-300 ease-in-out group-hover:opacity-100 relative mb-[16px]`}
       >
         <div>
           <ImageOrVideo

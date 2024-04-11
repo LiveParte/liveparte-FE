@@ -27,18 +27,18 @@ export default function ShowDetails({ onNext,item, id }) {
         ></div>
 
         <div className="text-start  px-1 relative text-white">
-          <div className="font-1 text-[24px] md:text-[24px] tallI:text-[60px] font-medium text-white mb-[4px]  md:mb-[8px] tall:leading-[32px] leading-[38px] md:leading-[28px] line-clamp-2   uppercase">
+          <div className="font-1 text-[24px] md:text-[24px] tallI:text-[60px] font-medium text-white mb-[4px]  md:mb-[8px]   line-clamp-2   uppercase">
             {item?.name}
           </div>
-          <div className="text-[#B4BECB] text-[14px] md:text-[15px] mb-[4px] mb:mb-[8px] font-medium font500 whitespace-nowrap overflow-hidden text-ellipsis  flex items-center">
+          <div className="text-[#B4BECB] text-[14px] md:text-[15px] mb-[4px] mb:mb-[8px] font-medium font500 whitespace-nowrap overflow-hidden text-ellipsis  flex items-center font400">
             {moment(item?.event_date).format("MMM DD")}
             <BsDot size={20} /> 
             {moment(item?.event_date).format('h:mm a')}
           </div>
-          <div className="text-[#B4BECB] text-[14px] md:text-[15px] mb-[10px] md:mb-[24px]  font-medium font500 whitespace-nowrap overflow-hidden text-ellipsis ">
+          <div className="text-[#B4BECB] text-[14px] md:text-[15px] mb-[10px] md:mb-[24px]  font-medium font500 whitespace-nowrap overflow-hidden text-ellipsis  font400">
             {item?.address}
           </div>
-          <div>₦ {formatMoney(10000, false)}</div>
+          <div className="font500 font-medium">₦ {formatMoney(10000, false)}</div>
         </div>
       </div>
     </div>
