@@ -13,11 +13,15 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
   const [userDetail, setUserDetail] = useState(false);
   const router = useRouter();
   const user = useSelector(selectCurrentUserData) || {};
-  let [isOpen, setIsOpen] = useState(false);
+  let [isOpen, setIsOpen] = useState();
   const { token } = router.query;
-  const {routerLoader}=useObject()
+  const {routerLoader}=useObject();
   // console.log(router?.pathname,token)
   // console.log("helllo");
+
+  const isRoute =routerLoader && routerLoader !== router?.pathname;
+  console.log(routerLoader,router?.pathname,'routerLoader')
+
 
   console.log(user, "user");
   useEffect(() => {
@@ -56,7 +60,7 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
       name: "SignUp",
       component: (
         <LoginSignUp
-          className={`xl:min-h-[75vh] tallT:min-h-[65vh]`}
+          className={`tallT:min-h-[65vh]`}
           pageName="signUp"
           closeModal={closeModal}
         />
@@ -80,7 +84,7 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
 
   return (
     <div className="relative">
-   {routerLoader && 
+   {isRoute && 
    <div className="absolute right-3 z-[999px] top-3">
     <div
           className="inline-block h-10 w-10 animate-spin rounded-full border-3 border-solid border-[#fff] border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
