@@ -37,10 +37,26 @@ const storedUserData = storage.localStorage.get(userDetailStorageName);
 console.log(storedUserData,'storedUserData')
 
 // If user login data exists, dispatch action to update Redux store
-if (storedUserData) {
-  const userData = JSON.parse(storedUserData);
-  store.dispatch(setUserData(userData));
-}
+const isJSON = (str) => {
+  try {
+    JSON.parse(str);
+    return true;
+  } catch (error) {
+    throw new SyntaxError("The provided data is not valid JSON.");
+  }
+};
 
+try {
+  if (storedUserData && isJSON(storedUserData)) {
+    const userData = JSON.parse(storedUserData);
+    store.dispatch(setUserData(userData));
+  } else {
+    console.error('Stored user data is not in JSON format or does not exist.');
+    // Handle the case where storedUserData is not in JSON format or does not exist
+  }
+} catch (error) {
+  console.error(error.message);
+  // Handle the specific error here if needed
+}
 export default store;
 // setupListeners(store.dispatch);
