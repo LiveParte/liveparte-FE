@@ -16,8 +16,8 @@ export default function OnDemandList({ OnDemandEvent = [],HeroSectionEvent }) {
         ))}
       </div>
      
-      <div className="my-5">
-      {OnDemandEvent?.length>=9 &&<Hero HeroSectionEvent={HeroSectionEvent}  notEvent={false} showHeader={false} showStatus={false}  />}
+      <div className="my-10">
+      {OnDemandEvent?.length>=9 &&<Hero HeroSectionEvent={HeroSectionEvent}  showTopGradient={true} notEvent={false} showHeader={false} showStatus={false}  />}
       </div>
       <div className={`grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-x-[24px] gap-y-[40px] md:gap-y-[104px] ${container}`}>
         {OnDemandEvent?.slice(8,OnDemandEvent?.length)?.map((item, i) => (

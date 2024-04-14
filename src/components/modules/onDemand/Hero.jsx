@@ -26,7 +26,8 @@ export default function Hero({
   IsBought,
   myShowLoader,
   showHeader=true,
-  showStatus=true
+  showStatus=true,
+  showTopGradient=false
 }) {
   const videoRef = useRef(null);
   const router = useRouter();
@@ -35,7 +36,7 @@ export default function Hero({
   const { setMyObject } = useObject();
   const [muted, setMuted] = useState(true);
 
-  // console.log(HeroSectionEvent, "HeroSectionEvent");
+  console.log(HeroSectionEvent, "HeroSectionEvent");
   const eventIsPurchase = HeroSectionEvent?.pruchase?.id;
   const isLive = HeroSectionEvent?.isLiveStreamed;
 
@@ -137,6 +138,7 @@ export default function Hero({
     <div
       className={`relative font400   bg-cover bg-center  xl:bg-top ${MainContainer} h-[100dvh] md:h-[100vh]`}
     >
+       {showTopGradient && <div className=" absolute top-0 left-0 right-0 h-[20vh]  z-50  bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>}
       <video
         // controls
         ref={videoRef}
@@ -155,7 +157,7 @@ export default function Hero({
         playsInline
       >
         <source
-          src={`https://res.cloudinary.com/dammymoses/video/upload/v1693130852/TestVideos/Change_To_A_Different_Header_On_Scroll_Using_Elementor_abehsm.mp4`}
+          src={HeroSectionEvent?.promotional_url}
           type="video/mp4"
         />
         Your browser does not support the video tag.

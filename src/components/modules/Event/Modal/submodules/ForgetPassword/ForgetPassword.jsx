@@ -65,7 +65,7 @@ export default function ForgetPassword({
       }
       // return ErrorNotification({message:responses?.data?.message})
     }
-
+  //  return setSelectPage("MailSent");
     return ErrorNotification({ message: "Something went wrong" });
     // setSelectPage('MailSent')
   };

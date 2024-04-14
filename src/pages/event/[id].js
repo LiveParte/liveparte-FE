@@ -45,7 +45,7 @@ export default function EventId() {
   let [isOpen, setIsOpen] = useState();
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [CreatePurchase, { isLoading: cpLoader }] = useCreatePurchaseMutation();
-  const { data, isLoading,refetch } = useGetEventDetailViaIdQuery(id, {
+  const { data, isLoading,refetch ,isSuccess} = useGetEventDetailViaIdQuery(id, {
     skip: !id,
   });
  
@@ -57,10 +57,10 @@ export default function EventId() {
   // }
 
   useEffect(() => {
-    if(userInfo?._id){
+    if(userInfo?._id&&isSuccess){
       refetch();
     }
-  }, [userInfo?._id])
+  }, [userInfo?._id,isSuccess])
   
 
 

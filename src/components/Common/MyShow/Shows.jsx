@@ -73,7 +73,7 @@ export default function ShowsCard({
 
         setMyObject(item);
         router.push({
-          pathname: `event/${id}`,
+          pathname: `event/${item?._id}`,
         });
       }}
     >
@@ -85,6 +85,7 @@ export default function ShowsCard({
             image={showImage || backgroundImage}
             isPlaying={showVideo ? isPlaying : false}
             videoRef={showVideo ? videoRef : noVideoRef}
+            item={item}
           />
           <div className="flex-1 absolute left-0 top-0 z-50">
             {showHeader && (

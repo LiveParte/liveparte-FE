@@ -27,7 +27,7 @@ export default function Home() {
 
   const HappeningNow = data?.event?.filter((item)=>item?.eventStarted==true);
   const OnDemandEvent =onDemandEvent?.event;
-  const HeroSectionEvent =data?.event[1];
+  const HeroSectionEvent =data?.event[2];
     const filteredEvents = data?.event.filter(event => {
     // Check if the 'event_date' is not equal to "Event Date"
     if (event.event_date !== "Event Date") {

@@ -17,13 +17,14 @@ const Footer = dynamic(() => import('@/components/Common/Footer'), {
 export default function OnDemandEvent() {
     const {data:onDemandEvent,isLoading:onDemandEventLoader}=useGetEventOnDemandQuery();
     const OnDemandEvent =onDemandEvent?.event;
-    const HeroSectionEvent =onDemandEvent?.event[1];
+    const HeroSectionEvent =onDemandEvent?.event[0];
+    const HeroSectionEvent2 =onDemandEvent?.event[3];
     const router = useRouter();
 
   return (
     <NoAuth>
     <Hero HeroSectionEvent={HeroSectionEvent}  router={router} notEvent={false} />
-    <OnDemandListLazyLoad OnDemandEvent={OnDemandEvent} HeroSectionEvent={HeroSectionEvent} />
+    <OnDemandListLazyLoad OnDemandEvent={OnDemandEvent} HeroSectionEvent={HeroSectionEvent2} />
     {/* <Happening events={HappeningNow} upComingEvent={filteredEvents}  OnDemandEvent={OnDemandEvent}/> */}
     <Footer />
    
