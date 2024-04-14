@@ -1,11 +1,14 @@
-import Carousel from "@/components/Common/Carousel";
+// import Carousel from "@/components/Common/Carousel";
 import ShowsCard from "@/components/Common/MyShow/Shows";
 import { MainContainer } from "@/utils/styleReuse";
 import { ArrowLeft, ArrowRight } from "../../../../../public/svg";
-
+import dynamic from "next/dynamic";
+import { useSwiper } from "swiper/react";
+const Carousel = dynamic(() => import('@/components/Common/Carousel'), {
+  ssr: false
+});
 export default function HappeningNow({ events = [] }) {
   const container = "pl-[20px] pr-[20px] lg:px-[60px]";
-
   return (
     <div className={` py-[30px] pb-[42px] lg:pb-[77px]`}>
       <div className={`flex justify-between items-center ${MainContainer}  mb-[40px]`}>

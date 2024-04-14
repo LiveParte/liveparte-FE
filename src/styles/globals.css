@@ -346,3 +346,30 @@ body {
   background: var(--red);
   transform-origin: 0%;
 }
+
+
+/* custom-swiper.css */
+
+/* Swiper Navigation Buttons */
+.custom-button-prev,
+.custom-button-next {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+/* Next Button */
+.custom-button-next {
+  &::after {
+    content: 'next';
+  }
+}
+
+/* RTL Mode */
+.swiper-rtl .custom-button-prev::after {
+  content: 'next';
+}

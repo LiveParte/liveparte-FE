@@ -10,7 +10,7 @@ const Footer = dynamic(() => import('@/components/Common/Footer'), {
   ssr: false
 });
 import NoAuth from "@/components/Layout/NoAuth";
-import Hero from "@/components/modules/Event/Hero";
+import Hero from "@/components/modules/onDemand/Hero";
 // import Happening from "@/components/modules/Event/Happening";
 // import Footer from "@/components/Common/Footer";
 import { useRouter } from "next/router";
@@ -48,8 +48,8 @@ export default function Home() {
   return (
    <div className='min-h-[100vh] bg-black'>
      <NoAuth>
-      <Hero HeroSectionEvent={HeroSectionEvent}  router={router} notEvent={true} />
-      <Happening events={HappeningNow} upComingEvent={filteredEvents}  OnDemandEvent={OnDemandEvent}/>
+      <Hero isOnDemand={false} HeroSectionEvent={HeroSectionEvent}  router={router} notEvent={true} />
+      <Happening  events={HappeningNow} upComingEvent={filteredEvents}  OnDemandEvent={OnDemandEvent}/>
       <Footer />
      
     </NoAuth>

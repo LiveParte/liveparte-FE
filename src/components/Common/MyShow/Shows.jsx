@@ -5,6 +5,7 @@ import moment from "moment";
 import { useRouter } from "next/router";
 import { useObject } from "@/Context/ObjectProvider";
 import Image from "next/image";
+import { eventLink, singleEventLink } from "@/utils/reusableComponent";
 // import ShowDetails from "./ShowDetails";
 // import ImageOrVideo from "";
 const ImageOrVideo = dynamic(() => import("./ImageOrVideo"), { ssr: false });
@@ -28,7 +29,7 @@ export default function ShowsCard({
   const router = useRouter();
   const [isPlaying, setIsPlaying] = useState(false);
   const [posterImage, setPosterImage] = useState();
-  const {setMyObject}=useObject()
+  const {setMyObject,setRouterLoader}=useObject()
   useEffect(() => {
     setPosterImage(showImage || backgroundImage);
   }, [showImage, backgroundImage]);
@@ -70,10 +71,10 @@ export default function ShowsCard({
         if (onNext) {
           return onNext(item);
         }
-
+        setRouterLoader(singleEventLink)
         setMyObject(item);
         router.push({
-          pathname: `event/${item?._id}`,
+          pathname: `${eventLink}/${item?._id}`,
         });
       }}
     >

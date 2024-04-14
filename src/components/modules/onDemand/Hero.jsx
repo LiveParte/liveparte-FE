@@ -27,7 +27,8 @@ export default function Hero({
   myShowLoader,
   showHeader=true,
   showStatus=true,
-  showTopGradient=false
+  showTopGradient=false,
+  isOnDemand=true
 }) {
   const videoRef = useRef(null);
   const router = useRouter();
@@ -199,7 +200,7 @@ export default function Hero({
                         });
                       }}
                     />
-                    <div>
+                    <div className="">
                       {(!isLive )? (
                         <div className="text-[13px] xl:text-[16px]  text-[#B4BECB] z-10 relative font500">
                           {HeroSectionEvent?.event_date !== "Event Date"
@@ -210,12 +211,23 @@ export default function Hero({
                           - Watch lives
                         </div>
                       ) : (showStatus&&
+                       <>{isOnDemand?
                         <div className="   flex gap-[8px] items-center   ">
-                          {/* <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div> */}
-                          <div className="text-[11px] lg:text-[13px]  text-white   font500">
-                            On Demand
-                          </div>
+                        {/* <div className="h-[8px] w-[8px] rounded-full bg-[#c6616b]"></div> */}
+                        <div className="text-[11px] lg:text-[13px]  text-white   font500">
+                          On Demand
                         </div>
+                      </div>
+                      :
+                      <div className="flex gap-[8px] items-center   ">
+                      <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div>
+                      <div className="text-[11px] lg:text-[13px]  text-white   font500">
+                      Happening Now
+                      </div>
+                    </div>
+                      }
+                       
+                       </>
                       )}
                     </div>
                   </div>

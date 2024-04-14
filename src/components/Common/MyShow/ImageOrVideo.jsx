@@ -30,7 +30,7 @@ export default function ImageOrVideo({ videoRef, image, isPlaying, item }) {
           className={`absolute left-0 right-0 top-0 bottom-0 object-cover h-full w-full z-20 ${
             isPlaying ? "z-20" : "z-10"
           }`}
-          poster={image}
+          poster={item?.thumbnail_url}
           // onMouseEnter={handleMouseEnter}
           // onMouseLeave={handleMouseLeave}
         >

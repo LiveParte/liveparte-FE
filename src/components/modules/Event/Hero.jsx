@@ -143,7 +143,7 @@ export default function Hero({
                       onClick={() => {
                         setMyObject(HeroSectionEvent);
                         router.push({
-                          pathname: `event/${HeroSectionEvent?._id}`,
+                          pathname: `${eventLink}/${HeroSectionEvent?._id}`,
                         });
                       }}
                     />
