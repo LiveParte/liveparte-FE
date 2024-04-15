@@ -30,6 +30,7 @@ import {
 } from "@/utils/reusableComponent";
 import { eventApi } from "@/store/Event/eventApi";
 import { transactionApi } from "@/store/Transaction/transactionApi";
+import { useObject } from "@/Context/ObjectProvider";
 export default function LoginSignUp({
   closeModal,
   pageName = "",
@@ -40,8 +41,9 @@ export default function LoginSignUp({
 }) {
   const router = useRouter();
   const dispatch = useDispatch();
+  const {setRouterLoader}=useObject()
   const { id } = router?.query;
-  console.log(router, "routerrouter");
+  // console.log(router, "routerrouter");
   const [toggle, setToggle] = useState("Login");
   const isActive = `text-white border-[1px] border-[#48515d]  rounded-[999px] bg-[#2e3239] px-[30px] lg:px-[20px] cursor-pointer `;
   const notActive = `text-[#495969] px-[30px] lg:px-[20px] cursor-pointer `;
@@ -181,6 +183,7 @@ export default function LoginSignUp({
 
       // console.log()
       if (router?.pathname === "/") {
+        setRouterLoader(eventLink)
         return router.push(eventLink);
       }
       if (onNext) {
@@ -245,6 +248,7 @@ export default function LoginSignUp({
 
       // }
       if (router?.pathname === "/") {
+        setRouterLoader(eventLink)
         return router.push(eventLink);
       }
       if (onNext) {

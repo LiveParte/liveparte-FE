@@ -13,6 +13,7 @@ import {
   GetTransformedImageUrl,
 } from "@/utils/reusableComponent";
 import { useRouter } from "next/router";
+import { isArray } from "@/utils/helper";
 
 export default function Hero({
   notEvent = true,
@@ -26,7 +27,9 @@ export default function Hero({
   IsBought,
   myShowLoader,
   showHeader=true,
-  showStatus=true
+  showStatus=true,
+  showTopGradient=false,
+  isOnDemand=true
 }) {
   const videoRef = useRef(null);
   const router = useRouter();
@@ -35,7 +38,7 @@ export default function Hero({
   const { setMyObject } = useObject();
   const [muted, setMuted] = useState(true);
 
-  // console.log(HeroSectionEvent, "HeroSectionEvent");
+  console.log(HeroSectionEvent, "HeroSectionEvent");
   const eventIsPurchase = HeroSectionEvent?.pruchase?.id;
   const isLive = HeroSectionEvent?.isLiveStreamed;
 
@@ -130,6 +133,11 @@ export default function Hero({
     };
   }, []);
 
+  const handleNavigate = (event) => {
+    event.preventDefault();
+    openModal(HeroSectionEvent)
+  }
+
 
   // console.log(HeroSectionEvent,'HeroSectionEvent')
   //bg-[url('/webp/bg1.webp')]
@@ -137,6 +145,7 @@ export default function Hero({
     <div
       className={`relative font400   bg-cover bg-center  xl:bg-top ${MainContainer} h-[100dvh] md:h-[100vh]`}
     >
+       {showTopGradient && <div className=" absolute top-0 left-0 right-0 h-[20vh]  z-50  bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>}
       <video
         // controls
         ref={videoRef}
@@ -155,7 +164,7 @@ export default function Hero({
         playsInline
       >
         <source
-          src={`https://res.cloudinary.com/dammymoses/video/upload/v1693130852/TestVideos/Change_To_A_Different_Header_On_Scroll_Using_Elementor_abehsm.mp4`}
+          src={HeroSectionEvent?.promotional_url}
           type="video/mp4"
         />
         Your browser does not support the video tag.
@@ -197,7 +206,7 @@ export default function Hero({
                         });
                       }}
                     />
-                    <div>
+                    <div className="">
                       {(!isLive )? (
                         <div className="text-[13px] xl:text-[16px]  text-[#B4BECB] z-10 relative font500">
                           {HeroSectionEvent?.event_date !== "Event Date"
@@ -208,12 +217,23 @@ export default function Hero({
                           - Watch lives
                         </div>
                       ) : (showStatus&&
+                       <>{isOnDemand?
                         <div className="   flex gap-[8px] items-center   ">
-                          {/* <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div> */}
-                          <div className="text-[11px] lg:text-[13px]  text-white   font500">
-                            On Demand
-                          </div>
+                        {/* <div className="h-[8px] w-[8px] rounded-full bg-[#c6616b]"></div> */}
+                        <div className="text-[11px] lg:text-[13px]  text-white   font500">
+                          On Demand
                         </div>
+                      </div>
+                      :
+                      <div className="flex gap-[8px] items-center   ">
+                      <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div>
+                      <div className="text-[11px] lg:text-[13px]  text-white   font500">
+                      Happening Now
+                      </div>
+                    </div>
+                      }
+                       
+                       </>
                       )}
                     </div>
                   </div>
@@ -254,15 +274,21 @@ export default function Hero({
                       {isOpen && <DropdownMenu />}
                       <ButtonComp
                         isDisabled={eventIsPurchase}
-                        onClick={eventIsPurchase ? null : openModal}
+                        onClick={()=>{
+                          if(eventIsPurchase){
+                            return 
+                          }
+                          openModal(HeroSectionEvent)
+                          // eventIsPurchase ? null : openModal(HeroSectionEvent)
+                        }}
                         className={`py-[12px] px-[39px] text-[13px] xl:text-[15px] font500`}
                         btnText={
                           eventIsPurchase
                             ? `Ticket already purchased`
                             : `Get Ticket - ${
-                                HeroSectionEvent?.ticket?.code || ""
-                              } ${formatMoney(
-                                HeroSectionEvent?.ticket?.price || " ",
+                                HeroSectionEvent?.ticket?.code || isArray(HeroSectionEvent?.tickets)?'':''
+                              } ₦${formatMoney(
+                                HeroSectionEvent?.ticket?.price ||isArray(HeroSectionEvent?.tickets) &&  HeroSectionEvent?.tickets[0]?.price || " ",
                                 true
                               )}`
                         }
@@ -308,7 +334,7 @@ export default function Hero({
                             eventIsPurchase ||
                             myShowLoader
                           }
-                          onClick={openModal}
+                          onClick={handleNavigate}
                           className={`py-[12px] px-[20px] md:px-[34px] lg:px-[57px] text-[13px] md:text-[15px] font500 `}
                           btnText={
                             eventIsPurchase

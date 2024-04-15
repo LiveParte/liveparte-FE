@@ -19,7 +19,7 @@ import { userApi } from "@/store/User/userApi";
 import { eventApi } from "@/store/Event/eventApi";
 import { transactionApi } from "@/store/Transaction/transactionApi";
 import { HeaderOnSelect, LogoImage } from "@/utils/styleReuse";
-import {  eventLink, myShowLink } from "@/utils/reusableComponent";
+import { eventLink, myShowLink } from "@/utils/reusableComponent";
 // const UserProfile =dynamic(()=>import('./UserProfile'),{src:false})
 
 export default function AuthHeader({ className, openModal, showNav = false }) {
@@ -32,10 +32,11 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
   const [isOpenPC, setIsOpenPC] = useState(false);
   const dropdownRef = useRef(null);
   const purchaseCoinRef = useRef(null);
-  const isMyShow =router?.pathname==myShowLink;
-  const isEvent =router?.pathname==="/event" || router?.pathname=='/event/[id]'
-  const isFocused =`hover:!bg-[#FFFFFF26] hover:rounded-[8px]  hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`
-  const isSelected =HeaderOnSelect;
+  const isMyShow = router?.pathname == myShowLink;
+  const isEvent =
+    router?.pathname === "/event" || router?.pathname == "/event/[id]";
+  const isFocused = `hover:!bg-[#FFFFFF26] hover:rounded-[8px]  hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`;
+  const isSelected = HeaderOnSelect;
   function handleCloseModal() {
     setModalName();
   }
@@ -49,17 +50,17 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
     dispatch(logout());
     // localStorage.removeItem(userDetailStorageName);
     // localStorage.removeItem(accessTokenStorageName);
-   
 
     if (router?.pathname === myShowLink || router?.pathname === "/setting") {
       dispatch(userApi.util.invalidateTags());
       dispatch(eventApi.util.invalidateTags());
       dispatch(transactionApi.util.invalidateTags());
-      dispatch(userApi.endpoints.getUserProfile.initiate({forceRefetch: true}));
+      dispatch(
+        userApi.endpoints.getUserProfile.initiate({ forceRefetch: true })
+      );
 
       // window.location.reload();
       return router.push("/");
-      
     }
   }
 
@@ -97,7 +98,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
         <div className="flex justify-between items-center mb-[28px] ">
           <div>
             {" "}
-            <LogoImage router={router}/>
+            <LogoImage router={router} />
           </div>
           <div>
             <ButtonComp
@@ -109,13 +110,13 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
         </div>
         {/*  */}
         <div className="text-[15px] text-white font500 flex-1  mb-[60px]">
-          <div className='py-[25px]'>
-          <Link
-            href={eventLink}
-            className="  cursor-pointer text-white no-underline"
-          >
-            Browse Events
-          </Link>
+          <div className="py-[25px]">
+            <Link
+              href={eventLink}
+              className="  cursor-pointer text-white no-underline"
+            >
+              Browse Events
+            </Link>
           </div>
           {/* <div className="py-[15px]  cursor-pointer ">On demand</div> */}
           <Link
@@ -160,7 +161,6 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
             btnText={`Login`}
             className={`text-[13px] font500 mb-[28px]  w-full !bg-[#27292e] text-white`}
           /> */}
-          
         </div>
       </div>
     );
@@ -184,7 +184,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
       </CustomDropDown>
     );
   }
-  
+
   function PurchasePaartyCoinsDropdown() {
     return (
       <CustomDropDown dropdownRef={purchaseCoinRef} setIsOpen={setIsOpenPC}>
@@ -215,16 +215,20 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
       >
         <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover opacity-30  bg-[url('/webp/header.png')] z-80 text-black"></div>
         {/* <LogoWhite/> */}
-        <div className="flex items-center justify-between z-50 relative cursor-pointer" style={{zIndex:90}}>
-        <LogoImage router={router}/>
+        <div
+          className="flex items-center justify-between z-50 relative cursor-pointer"
+          style={{ zIndex: 90 }}
+        >
+          <LogoImage router={router} />
 
           {showNav && (
             <div className="flex items-center  lg:gap-[18px] xl:gap-[24px] !hover:scale-100">
               <ButtonComp
                 btnText="Browse Events"
-                className={` font-medium  hidden lg:block   !h-[32px] text-[13px] px-[16px] md:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${isEvent &&isSelected}`}
+                className={` font-medium  hidden lg:block   !h-[32px] text-[13px] px-[16px] md:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${
+                  isEvent && isSelected
+                }`}
                 onClick={() => router.push(eventLink)}
-
               />
               {/* <ButtonComp
                 btnText="On demand"
@@ -233,9 +237,10 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
               /> */}
               <ButtonComp
                 btnText="My Shows"
-                className={`  text-[13px]   !h-[32px] font-medium  hidden lg:block  px-[16px] md:px-[32px]   gap-[10px]    font500 text-white  ${isFocused} ${isMyShow ?isSelected:'bg-transparent'}`}
+                className={`  text-[13px]   !h-[32px] font-medium  hidden lg:block  px-[16px] md:px-[32px]   gap-[10px]    font500 text-white  ${isFocused} ${
+                  isMyShow ? isSelected : "bg-transparent"
+                }`}
                 onClick={() => router.push(myShowLink)}
-                
               />
             </div>
           )}
@@ -243,8 +248,13 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
             <div className="flex items-center  gap-[18px]">
               <div className=" gap-[16px] items-center text-white font500 hidden lg:flex">
                 <div className="text-[13px] flex items-center gap-[5px]">
-                  <Image src={`/svg/coins.svg`} width={24} height={24} alt="coins" /> 100
-                  Coins
+                  <Image
+                    src={`/svg/coins.svg`}
+                    width={24}
+                    height={24}
+                    alt="coins"
+                  />{" "}
+                  100 Coins
                 </div>
                 <div ref={purchaseCoinRef} className="relative">
                   {isOpenPC && <PurchasePaartyCoinsDropdown />}

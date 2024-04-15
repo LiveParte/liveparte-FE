@@ -75,6 +75,7 @@ export default function SignUpPage({
         isLoading={registerLoader}
       />
     </div>
+    <div className='text-[#63768d] text-[13px] text-center px-[10px] mt-[19px] '>By continuing, you agree and accept the <span className='underline text-white'>Terms of Service</span> and <span className='underline text-white'>Privacy Policy</span> in the use of Liveparte</div>
   </form>
   )
 }

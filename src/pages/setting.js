@@ -32,9 +32,9 @@ export default function Setting() {
     const data = new FormData();
     // console.log(photo, "photophoto");
     data.append("file", photo);
-    data.append("upload_preset", "ohxuujig");
-    data.append("cloud_name", "dammymoses");
-    fetch("https://api.cloudinary.com/v1_1/dammymoses/image/upload", {
+    data.append("upload_preset", "wnvzkduq");
+    data.append("cloud_name", "dnvwcmqhw");
+    fetch("https://api.cloudinary.com/v1_1/dnvwcmqhw/image/upload", {
       method: "post",
       body: data,
     })
@@ -48,6 +48,7 @@ export default function Setting() {
       })
       .finally(() => {
         setIsLoading(false);
+       
       });
   };
 
@@ -71,6 +72,7 @@ export default function Setting() {
             imageUrl={imageUrl}
             CloudinaryUpload={CloudinaryUpload}
             isActive={isActive}
+            setImageUrl={setImageUrl}
           />
         </div>
         <div className="absolute left-0 right-0 bottom-0">

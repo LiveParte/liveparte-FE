@@ -5,6 +5,7 @@ import moment from "moment";
 import { useRouter } from "next/router";
 import { useObject } from "@/Context/ObjectProvider";
 import Image from "next/image";
+import { eventLink, singleEventLink } from "@/utils/reusableComponent";
 // import ShowDetails from "./ShowDetails";
 // import ImageOrVideo from "";
 const ImageOrVideo = dynamic(() => import("./ImageOrVideo"), { ssr: false });
@@ -28,7 +29,7 @@ export default function ShowsCard({
   const router = useRouter();
   const [isPlaying, setIsPlaying] = useState(false);
   const [posterImage, setPosterImage] = useState();
-  const {setMyObject}=useObject()
+  const {setMyObject,setRouterLoader}=useObject()
   useEffect(() => {
     setPosterImage(showImage || backgroundImage);
   }, [showImage, backgroundImage]);
@@ -70,21 +71,22 @@ export default function ShowsCard({
         if (onNext) {
           return onNext(item);
         }
-
+        setRouterLoader(singleEventLink)
         setMyObject(item);
         router.push({
-          pathname: `event/${id}`,
+          pathname: `${eventLink}/${item?._id}`,
         });
       }}
     >
       <div
-        className={` relative h-[25vh] md:h-[27vh] lg:h-[27vh] rounded-[8px] lg:rounded-[20px] ${backUrl} bg-cover bg-center bg-gradient-to-b from-black to-transparent  overflow-hidden group cursor-pointer duration-300 ease-in-out group-hover:opacity-100 relative mb-[16px]`}
+        className={` relative h-[25vh] md:h-[27vh] lg:h-[45vh] xl:h-[27vh] rounded-[8px] lg:rounded-[20px] ${backUrl} bg-cover bg-center bg-gradient-to-b from-black to-transparent  overflow-hidden group cursor-pointer duration-300 ease-in-out group-hover:opacity-100 relative mb-[16px]`}
       >
         <div>
           <ImageOrVideo
             image={showImage || backgroundImage}
             isPlaying={showVideo ? isPlaying : false}
             videoRef={showVideo ? videoRef : noVideoRef}
+            item={item}
           />
           <div className="flex-1 absolute left-0 top-0 z-50">
             {showHeader && (

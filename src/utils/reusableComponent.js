@@ -93,3 +93,27 @@ export const onDemandLink=`/event/ondemand`
 export const CopyEventLink =({link})=>{
   return  `http://44.208.167.228:3005/event/${link}`
 }
+
+
+export function GetEmailSearchUrl(email) {
+  const searchQuery = encodeURIComponent('partylive762');
+
+  // Check if the email domain matches Gmail
+  if (email.endsWith('@gmail.com')) {
+      return `https://mail.google.com/mail/u/0/#search/${searchQuery}`;
+  }
+
+  // Check if the email domain matches Yahoo Mail
+  if (email.endsWith('@yahoo.com')) {
+      return `https://mail.yahoo.com/search/?fr=uh3_mail_web_gs&type=10&searchTerm=${searchQuery}`;
+  }
+
+  // Check if the email domain matches Zoho Mail
+  if (email.endsWith('@zoho.com')) {
+      return `https://mail.zoho.com/${searchQuery}`;
+  }
+
+  // For other email providers, return a generic URL
+  // You might need to update this to match the search functionality of other email providers
+  return `https://www.example.com/search?email=${email}&q=${searchQuery}`;
+}

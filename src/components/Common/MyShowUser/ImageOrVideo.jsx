@@ -1,13 +1,13 @@
 import Image from "next/image";
 import React from "react";
 
-export default function ImageOrVideo({ videoRef, image,isPlaying }) {
-  console.log(isPlaying,'isPlaying')
+export default function ImageOrVideo({ videoRef, image,isPlaying,item }) {
+  // console.log(isPlaying,'isPlaying')
   return (
-    <>{!isPlaying?
-      <Image
-        src={image}
-        blurDataURL={'/webp/show2.png'}
+    <>{!isPlaying &&item?.thumbnail_url?
+       <Image
+      src={item?.thumbnail_url}
+      blurDataURL={item?.thumbnail_url}
         className={`absolute left-0 right-0 top-0 bottom-0 ${
           !isPlaying ? "z-30" : "z-0"
         }`}
@@ -34,7 +34,7 @@ export default function ImageOrVideo({ videoRef, image,isPlaying }) {
         // onMouseLeave={handleMouseLeave}
       >
         <source
-          src={`https://res.cloudinary.com/dammymoses/video/upload/v1708675597/LiveParte/Screen_Recording_2024-02-18_at_19.05.07_wa31aj.mov`}
+src={item?.promotional_url} 
           type="video/mp4"
         />
         Your browser does not support the video tag.

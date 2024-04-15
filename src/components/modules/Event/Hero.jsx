@@ -7,7 +7,11 @@ import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
 import moment from "moment";
 import { useObject } from "@/Context/ObjectProvider";
 import { formatMoney } from "@/utils/formatMoney";
-import { CopyEventLink, eventLink, GetTransformedImageUrl } from "@/utils/reusableComponent";
+import {
+  CopyEventLink,
+  eventLink,
+  GetTransformedImageUrl,
+} from "@/utils/reusableComponent";
 
 export default function Hero({
   notEvent = true,
@@ -27,9 +31,9 @@ export default function Hero({
   const [event, setEvent] = useState();
   const { myObject } = useObject();
 
-  console.log(HeroSectionEvent,'HeroSectionEvent')
-  const eventIsPurchase =HeroSectionEvent?.pruchase?.id;
-  const isLive =HeroSectionEvent?.isLiveStreamed;
+  console.log(HeroSectionEvent, "HeroSectionEvent");
+  const eventIsPurchase = HeroSectionEvent?.pruchase?.id;
+  const isLive = HeroSectionEvent?.isLiveStreamed;
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -64,7 +68,11 @@ export default function Hero({
             <a
               target="_blank"
               className=" text-white no-underline  "
-              href={`https://calendar.google.com/calendar/r/eventedit?text=${HeroSectionEvent?.name}&dates=${HeroSectionEvent?.event_date}&details=<b>${HeroSectionEvent?.name}</b>
+              href={`https://calendar.google.com/calendar/r/eventedit?text=${
+                HeroSectionEvent?.name
+              }&dates=${HeroSectionEvent?.event_date}&details=<b>${
+                HeroSectionEvent?.name
+              }</b>
               <br/>
               <br/>
               <b>Location:</b>${HeroSectionEvent?.country}
@@ -79,8 +87,10 @@ export default function Hero({
               <br/>
               <b>Date:</b>${HeroSectionEvent?.event_date}
               <br/>
-              <b>Time:</b>${ moment(HeroSectionEvent?.event_date).format('h:mm')}
-              &location=${CopyEventLink({link:HeroSectionEvent?._id})}&sf=true&output=xml`}
+              <b>Time:</b>${moment(HeroSectionEvent?.event_date).format("h:mm")}
+              &location=${CopyEventLink({
+                link: HeroSectionEvent?._id,
+              })}&sf=true&output=xml`}
             >
               Set Reminder
             </a>
@@ -94,20 +104,14 @@ export default function Hero({
   //bg-[url('/webp/bg1.webp')]
   return (
     <div
-      className={`relative font400   bg-cover bg-center  xl:bg-top ${MainContainer} `}
-      style={{
-        backgroundImage:
-          HeroSectionEvent?.thumbnail_url &&
-          `url(${GetTransformedImageUrl(
-            HeroSectionEvent?.thumbnail_url,
-            1140,
-            1830
-          )})`,
-        backgroundAttachment: "fixed",
-      }}
+    className={`relative font400 hello bg-cover bg-center xl:bg-top ${MainContainer}`}
+    style={{
+      backgroundImage: `url('${HeroSectionEvent?.thumbnail_url}')`,
+      backgroundAttachment: "fixed",
+    }}
     >
       <div className="">
-      <div className="absolute left-0 right-0  ">
+        <div className="absolute left-0 right-0  ">
           <IfHeaderIsAuth
             openModal={openModalLoginSignUp || openModal}
             className="absolute top-0 left-0 right-0"
@@ -121,10 +125,10 @@ export default function Hero({
               className={`relative z-40  mt-[40vh] flex flex-col  md:justify-start items-center md:items-start  text-center  md:text-start`}
             >
               <div className="hidden md:block">
-              <Daviod />
+                <Daviod />
               </div>
               <div className="block md:hidden">
-              <Daviod width="77" height="35" />
+                <Daviod width="77" height="35" />
               </div>
               <div className="mt-[16px] text-[36px] lg:text-[92px] md:text-left font-1 text-white font-bold uppercase lg:mb-[32px] leading-[40px] md:leading-[46px] lg:leading-[90px] lg:w-[80%] line-clamp-3">
                 {HeroSectionEvent?.address}
@@ -135,55 +139,60 @@ export default function Hero({
                   <div className="mb-[100px] hidden lg:flex gap-[16px] items-center ">
                     <ButtonComp
                       className={`py-[12px] px-[39px] text-[13px] xl:text-[15px] font500`}
-                      btnText={isLive?"Join The Event":"Learn More"}
+                      btnText={isLive ? "Join The Event" : "Learn More"}
                       onClick={() => {
                         setMyObject(HeroSectionEvent);
                         router.push({
-                          pathname: `event/${HeroSectionEvent?._id}`,
+                          pathname: `${eventLink}/${HeroSectionEvent?._id}`,
                         });
                       }}
                     />
-                   <div>{!isLive ?
-                   <div className="text-[13px] xl:text-[16px]  text-[#B4BECB] z-10 relative font500">
-                      {HeroSectionEvent?.event_date !== "Event Date"
-                        ? moment(HeroSectionEvent?.event_date).format(
-                            "MMMM DD, YYYY"
-                          )
-                        : `April 17, 2024`}{" "}
-                      - Watch lives
-                    </div>:
-                     <div className="   flex gap-[8px] items-center   ">
-                     <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div>
-                     <div className="text-[11px] lg:text-[13px]  text-white  ">
-                       Happening Now
-                     </div>
-                   </div>
-}
-                   </div>
+                    <div>
+                      {!isLive ? (
+                        <div className="text-[13px] xl:text-[16px]  text-[#B4BECB] z-10 relative font500">
+                          {HeroSectionEvent?.event_date !== "Event Date"
+                            ? moment(HeroSectionEvent?.event_date).format(
+                                "MMMM DD, YYYY"
+                              )
+                            : `April 17, 2024`}{" "}
+                          - Watch lives
+                        </div>
+                      ) : (
+                        <div className="   flex gap-[8px] items-center   ">
+                          <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div>
+                          <div className="text-[11px] lg:text-[13px]  text-white  ">
+                            Happening Now
+                          </div>
+                        </div>
+                      )}
+                    </div>
                   </div>
                   <div className="text-center mt-[20px] lg:mt-[40px] lg:hidden mb-[42px] font500">
                     <div className="mb-[24px]">
-                   {!isLive? <div className="text-[#B4BECB] text-[13px] md:text-[15px] z-10 relative  font500">
-                      {moment(HeroSectionEvent?.event_date).format(
+                      {!isLive ? (
+                        <div className="text-[#B4BECB] text-[13px] md:text-[15px] z-10 relative  font500">
+                          {moment(HeroSectionEvent?.event_date).format(
                             "MMM DD, YYYY"
-                          )} - Watch live
+                          )}{" "}
+                          - Watch live
+                        </div>
+                      ) : (
+                        <div className="   flex gap-[8px] items-center   justify-center md:justify-start">
+                          <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div>
+                          <div className="text-[11px] lg:text-[13px]  text-white  ">
+                            Happening Now
+                          </div>
+                        </div>
+                      )}
                     </div>
-                    :
-                    <div className="   flex gap-[8px] items-center   justify-center md:justify-start">
-                     <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div>
-                     <div className="text-[11px] lg:text-[13px]  text-white  ">
-                       Happening Now
-                     </div>
-                   </div>
-}
-                    </div>
-                   
 
                     <div>
                       <ButtonComp
                         className={`py-[12px] px-[57px] text-[13px] md:text-[15px] font500 `}
                         btnText={"Learn More"}
-                        onClick={() => router.push(`${eventLink}/${HeroSectionEvent?._id}`)}
+                        onClick={() =>
+                          router.push(`${eventLink}/${HeroSectionEvent?._id}`)
+                        }
                       />
                     </div>
                   </div>
@@ -194,10 +203,8 @@ export default function Hero({
                     <div className="mb-[100px] hidden md:flex gap-[16px] items-center relative">
                       {isOpen && <DropdownMenu />}
                       <ButtonComp
-                       isDisabled={eventIsPurchase}
-                        onClick={
-                          eventIsPurchase ? null: openModal
-                        }
+                        isDisabled={eventIsPurchase}
+                        onClick={eventIsPurchase ? null : openModal}
                         className={`py-[12px] px-[39px] text-[13px] xl:text-[15px] font500`}
                         btnText={
                           eventIsPurchase
@@ -217,28 +224,31 @@ export default function Hero({
                         />
                       </div>
 
-                     <div>
-                    {!isLive? <div className="text-[13px] xl:text-[16px]  text-[#B4BECB] z-10 relative font500">
-                        {moment(HeroSectionEvent?.event_date).format(
-                            "MMM DD, YYYY"
-                          )} - Watch live
+                      <div>
+                        {!isLive ? (
+                          <div className="text-[13px] xl:text-[16px]  text-[#B4BECB] z-10 relative font500">
+                            {moment(HeroSectionEvent?.event_date).format(
+                              "MMM DD, YYYY"
+                            )}{" "}
+                            - Watch live
+                          </div>
+                        ) : (
+                          <div className="   flex gap-[8px] items-center   ">
+                            <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div>
+                            <div className="text-[11px] lg:text-[13px]  text-white  ">
+                              Happening Now
+                            </div>
+                          </div>
+                        )}
                       </div>
-                      :
-                      <div className="   flex gap-[8px] items-center   ">
-                     <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div>
-                     <div className="text-[11px] lg:text-[13px]  text-white  ">
-                       Happening Now
-                     </div>
-                   </div>
-}
-                     </div>
                     </div>
                     <div className="text-center mt-[40px] md:hidden mb-[42px] relative">
                       {isOpen && <DropdownMenu />}
                       <div className="text-[#B4BECB] text-[13px] md:text-[15px] z-10 relative mb-[24px] font500">
                         {moment(HeroSectionEvent?.event_date).format(
-                            "MMM DD, YYYY"
-                          )} - Watch live
+                          "MMM DD, YYYY"
+                        )}{" "}
+                        - Watch live
                       </div>
                       <div className="flex items-center justify-center gap-3">
                         <ButtonComp

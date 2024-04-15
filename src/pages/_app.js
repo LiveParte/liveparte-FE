@@ -2,13 +2,13 @@ import store from "@/store";
 import Head from "next/head";
 import "@/styles/globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "@vidstack/react/player/styles/default/theme.css";
-import "@vidstack/react/player/styles/default/layouts/video.css";
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import { ObjectProvider } from "@/Context/ObjectProvider";
-import { middleware } from '@/middleware/authMiddleware'; // Import your middleware
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
 
 export default function App({ Component, pageProps }) {
   return (
@@ -17,8 +17,10 @@ export default function App({ Component, pageProps }) {
 
       <Head>
         <title>Live Parte</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
-
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
+        />
       </Head>
       <ObjectProvider>
         <Provider store={store}>
@@ -33,7 +35,7 @@ export default function App({ Component, pageProps }) {
             pauseOnFocusLoss
             draggable
             pauseOnHover
-            
+
             // style={{}}
           />
           <Component {...pageProps} />

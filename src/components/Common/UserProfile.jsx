@@ -13,22 +13,22 @@ export default function UserProfile({ onClick }) {
   const [userProfilePic, setUserProfilePic] = useState();
   const { data, isLoading, isError } = useGetUserProfileQuery();
 
-  // console.log(data?.profile_image, "datadata");
+  console.log(data?.profile_image, "datadata");
 
   //
   const [userProfile, setUserProfile] = useState();
   const UserLiveParte = useSelector(selectCurrentUserData);
   useEffect(() => {
+    if(UserLiveParte?.profile_image){
+      return setUserProfilePic(UserLiveParte?.profile_image);
+    }
     setUserProfile(
       NoImageUser[checkIfNonImageExist?.nonProfileImage] || Avatar3
     );
   }, [checkIfNonImageExist?.nonProfileImage]);
 
-  useEffect(() => {
-    setUserProfilePic(UserLiveParte?.profile_image);
-  }, [UserLiveParte?.profile_image]);
 
-  console.log(UserLiveParte,data, "UserLiveParte?.profile_image");
+  // console.log(UserLiveParte,data, "UserLiveParte?.profile_image");
   return (
     <div onClick={onClick}>
       {data?.profile_image ? (

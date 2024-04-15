@@ -7,16 +7,18 @@ import Animate from "./submodules/Animate";
 // const Animate =dynamic(()=>import('./submodules/Animate'),{ssr:false});
 import { motion, AnimatePresence } from "framer-motion";
 import { eventLink } from "@/utils/reusableComponent";
+import { useRouter } from "next/router";
 
 export default function Hero({
   // notEvent = true,
-  router,
+  // router,
   openModal,
   openModalLoginSignUp,
   // giftTicket,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
+  const router =useRouter()
 
   //
   const [textChange, setTextChange] = useState("");

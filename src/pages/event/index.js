@@ -10,25 +10,27 @@ const Footer = dynamic(() => import('@/components/Common/Footer'), {
   ssr: false
 });
 import NoAuth from "@/components/Layout/NoAuth";
-import Hero from "@/components/modules/Event/Hero";
+import Hero from "@/components/modules/onDemand/Hero";
 // import Happening from "@/components/modules/Event/Happening";
 // import Footer from "@/components/Common/Footer";
 import { useRouter } from "next/router";
 import { useGetAllEventQuery, useGetEventOnDemandQuery } from "@/store/Event/eventApi";
 import moment from "moment";
+import { isArray } from '@/utils/helper';
+import MyComponent from '@/components/Common/SwiperII';
 
 
 export default function Home() {
   const router = useRouter();
   const {data,isLoading,isError}=useGetAllEventQuery();
   const {data:onDemandEvent,isLoading:onDemandEventLoader}=useGetEventOnDemandQuery();
-  const randomIndex = Math.floor(Math.random() * data?.event.length);
+  // const randomIndex = Math.floor(Math.random() * data?.event.length);
 // const randomEvent = events[randomIndex];
 
   const HappeningNow = data?.event?.filter((item)=>item?.eventStarted==true);
   const OnDemandEvent =onDemandEvent?.event;
-  const HeroSectionEvent =data?.event[1];
-    const filteredEvents = data?.event.filter(event => {
+  const HeroSectionEvent =isArray(data?.event)&& data?.event[2];
+    const filteredEvents =isArray(data?.event)&&  data?.event.filter(event => {
     // Check if the 'event_date' is not equal to "Event Date"
     if (event.event_date !== "Event Date") {
         // Parse the 'event_date' string into a moment object
@@ -48,8 +50,9 @@ export default function Home() {
   return (
    <div className='min-h-[100vh] bg-black'>
      <NoAuth>
-      <Hero HeroSectionEvent={HeroSectionEvent}  router={router} notEvent={true} />
-      <Happening events={HappeningNow} upComingEvent={filteredEvents}  OnDemandEvent={OnDemandEvent}/>
+      {/* <MyComponent/> */}
+      <Hero isOnDemand={false} HeroSectionEvent={HeroSectionEvent}  router={router} notEvent={true} />
+      <Happening  events={HappeningNow} upComingEvent={filteredEvents}  OnDemandEvent={OnDemandEvent}/>
       <Footer />
      
     </NoAuth>

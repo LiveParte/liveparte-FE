@@ -67,6 +67,7 @@ export default function UserShowsCard({
         image={showImage || backgroundImage}
         isPlaying={showVideo?isPlaying:false}
         videoRef={showVideo ?videoRef:noVideoRef}
+        item={item}
       />
 
       <div
