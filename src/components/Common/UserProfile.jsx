@@ -28,7 +28,7 @@ export default function UserProfile({ onClick }) {
     setUserProfilePic(UserLiveParte?.profile_image);
   }, [UserLiveParte?.profile_image]);
 
-  console.log(UserLiveParte,data, "UserLiveParte?.profile_image");
+  // console.log(UserLiveParte,data, "UserLiveParte?.profile_image");
   return (
     <div onClick={onClick}>
       {data?.profile_image ? (

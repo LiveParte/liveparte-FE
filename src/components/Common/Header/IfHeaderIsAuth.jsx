@@ -20,10 +20,10 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
   // console.log("helllo");
 
   const isRoute =routerLoader && routerLoader !== router?.pathname;
-  console.log(routerLoader,router?.pathname,'routerLoader')
+  // console.log(routerLoader,router?.pathname,'routerLoader')
 
 
-  console.log(user, "user");
+  // console.log(user, "user");
   useEffect(() => {
     setUserDetail(user?._id);
   }, [user?._id]);

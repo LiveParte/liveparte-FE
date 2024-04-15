@@ -16,19 +16,20 @@ import Hero from "@/components/modules/onDemand/Hero";
 import { useRouter } from "next/router";
 import { useGetAllEventQuery, useGetEventOnDemandQuery } from "@/store/Event/eventApi";
 import moment from "moment";
+import { isArray } from '@/utils/helper';
 
 
 export default function Home() {
   const router = useRouter();
   const {data,isLoading,isError}=useGetAllEventQuery();
   const {data:onDemandEvent,isLoading:onDemandEventLoader}=useGetEventOnDemandQuery();
-  const randomIndex = Math.floor(Math.random() * data?.event.length);
+  // const randomIndex = Math.floor(Math.random() * data?.event.length);
 // const randomEvent = events[randomIndex];
 
   const HappeningNow = data?.event?.filter((item)=>item?.eventStarted==true);
   const OnDemandEvent =onDemandEvent?.event;
-  const HeroSectionEvent =data?.event[2];
-    const filteredEvents = data?.event.filter(event => {
+  const HeroSectionEvent =isArray(data?.event)&& data?.event[2];
+    const filteredEvents =isArray(data?.event)&&  data?.event.filter(event => {
     // Check if the 'event_date' is not equal to "Event Date"
     if (event.event_date !== "Event Date") {
         // Parse the 'event_date' string into a moment object

@@ -43,7 +43,7 @@ export default function LoginSignUp({
   const dispatch = useDispatch();
   const {setRouterLoader}=useObject()
   const { id } = router?.query;
-  console.log(router, "routerrouter");
+  // console.log(router, "routerrouter");
   const [toggle, setToggle] = useState("Login");
   const isActive = `text-white border-[1px] border-[#48515d]  rounded-[999px] bg-[#2e3239] px-[30px] lg:px-[20px] cursor-pointer `;
   const notActive = `text-[#495969] px-[30px] lg:px-[20px] cursor-pointer `;

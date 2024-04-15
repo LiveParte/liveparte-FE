@@ -45,9 +45,9 @@ export default function ForgetPassword({
   }, [Path]);
 
   const handleForgetPassword = async (data) => {
-    console.log(data);
+    // console.log(data);
     const responses = await forgetPassword(data);
-    console.log(responses);
+    // console.log(responses);
 
     if (
       responses?.data?.message ==
@@ -70,7 +70,7 @@ export default function ForgetPassword({
     // setSelectPage('MailSent')
   };
   const handleResetPassword = async (data) => {
-    console.log(data);
+    // console.log(data);
 
     if (data?.confirmPassword !== data?.password) {
       return setError("confirmPassword", {
@@ -83,7 +83,7 @@ export default function ForgetPassword({
       newPassword: data?.password,
     };
     const responses = await resetPassword(payload);
-    console.log(responses, "responses");
+    // console.log(responses, "responses");
     if (responses?.data?.message === "Password has been successfully reset") {
       router.push("/login");
       reset();

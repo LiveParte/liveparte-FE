@@ -9,6 +9,7 @@ export function FloatingLabelInput({
   errors,
   name,
   disabled = false,
+  onBlur,
 }) {
   // console.log(errors, "errorserrors");
   const [readOnly, setReadOnly] = React.useState(true);
@@ -25,7 +26,6 @@ export function FloatingLabelInput({
   return (
     <>
       <div className="relative ">
-       
         {type === "password" && (
           <div
             onClick={handleSwitchPassword}
@@ -36,25 +36,29 @@ export function FloatingLabelInput({
         )}
         <div className="relative bg-[#222428] rounded-[8px] cursor-pointer">
           <input
-           placeholder=" "
-           type={showPasswords || type || "text"}
-           role="presentation"
-           autoComplete={type==="password"?"new-password":"off"}
-          //  autocomplete="new-password"
-           ontouchstart="this.removeAttribute('readonly');"
-           onfocus="this.removeAttribute('readonly');"
-
-           name={name}
-           value={value}
-           onChange={onChange}
-           disabled={disabled}
+            placeholder=" "
+            type={showPasswords || type || "text"}
+            role="presentation"
+            autoComplete={type === "password" ? "new-password" : "off"}
+            //  autocomplete="new-password"
+            ontouchstart="this.removeAttribute('readonly');"
+            onfocus="this.removeAttribute('readonly');"
+            name={name}
+            value={value}
+            onChange={onChange}
+            disabled={disabled}
             // readOnly={readOnly}
             onFocus={() => setReadOnly(false)}
-            onBlur={() => setReadOnly(true)}
+            onBlur={() => {
+             
+              setReadOnly(true);
+              onBlur && onBlur();
+            }}
             // type="text"
             id={name}
-            className={`block rounded-[8px] z-10 px-[16px] pb-2.5 pt-[20px] w-full text-[13px]  focus:border-[1px] border-[0px]   appearance-none dark:text-white  focus:outline-none focus:ring-0 focus:border-[#63768D] peer h-[50px]  relative bg-transparent ${disabled?'cursor-not-allowed !text-[#63768D]':'text-white '} `}
-           
+            className={`block rounded-[8px] z-10 px-[16px] pb-2.5 pt-[20px] w-full text-[13px]  focus:border-[1px] border-[0px]   appearance-none dark:text-white  focus:outline-none focus:ring-0 focus:border-[#63768D] peer h-[50px]  relative bg-transparent ${
+              disabled ? "cursor-not-allowed !text-[#63768D]" : "text-white "
+            } `}
           />
           <label
             // for="floating_filled"

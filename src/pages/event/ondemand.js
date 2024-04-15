@@ -6,6 +6,7 @@ import { useGetEventOnDemandQuery } from '@/store/Event/eventApi';
 import { useRouter } from 'next/router';
 import OnDemandList from '@/components/modules/onDemand/OndemandList';
 import withLazyLoad from '@/components/Common/LazyLoading/lazyLoading';
+import { isArray } from '@/utils/helper';
 
 const OnDemandListLazyLoad = withLazyLoad(OnDemandList);
 const Hero = dynamic(() => import('@/components/modules/onDemand/Hero'), {
@@ -16,9 +17,9 @@ const Footer = dynamic(() => import('@/components/Common/Footer'), {
   });
 export default function OnDemandEvent() {
     const {data:onDemandEvent,isLoading:onDemandEventLoader}=useGetEventOnDemandQuery();
-    const OnDemandEvent =onDemandEvent?.event;
-    const HeroSectionEvent =onDemandEvent?.event[0];
-    const HeroSectionEvent2 =onDemandEvent?.event[3];
+    const OnDemandEvent =isArray(onDemandEvent?.event)? onDemandEvent?.event:false;
+    const HeroSectionEvent =isArray(onDemandEvent?.event)&& onDemandEvent?.event[0];
+    const HeroSectionEvent2 =isArray(onDemandEvent?.event)&& onDemandEvent?.event[3];
     const router = useRouter();
 
   return (

@@ -2,7 +2,7 @@ import Image from "next/image";
 import React from "react";
 
 export default function ImageOrVideo({ videoRef, image,isPlaying,item }) {
-  console.log(isPlaying,'isPlaying')
+  // console.log(isPlaying,'isPlaying')
   return (
     <>{!isPlaying &&item?.thumbnail_url?
        <Image

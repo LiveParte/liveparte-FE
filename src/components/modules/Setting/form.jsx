@@ -163,12 +163,12 @@ export default function SettingForm({
     
   }
 
-  console.log(
-    watch("username")===
-      userInfo?.fullName,
-    userInfo,
-    "userInfo"
-  );
+  // console.log(
+  //   watch("username")===
+  //     userInfo?.fullName,
+  //   userInfo,
+  //   "userInfo"
+  // );
 
   return (
     <div className="px-[20px] lg:px-[120px] md:w-[60vw] xl:w-[40vw]">

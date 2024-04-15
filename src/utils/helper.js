@@ -197,3 +197,8 @@ return decryptedData;
 export const NoImageUser =[
   <Avatar1/>,<Avatar2/>,<Avatar3/>,<Avatar4/>,<Avatar5/>,<Avatar6/>,<Avatar7/>,<Avatar8/>,<Avatar9/>,<Avatar10/>
 ]
+
+
+export function isArray(data) {
+  return Array.isArray(data);
+}

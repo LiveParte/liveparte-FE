@@ -8,7 +8,7 @@ import { BsDot } from "react-icons/bs";
 export default function ShowDetails({ onNext,item, id }) {
   const { setMyObject } = useObject();
   const router = useRouter();
-  console.log(item, "item");
+  // console.log(item, "item");
 
   return (
     <div className=" z-50 relative">
