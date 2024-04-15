@@ -41,8 +41,8 @@ export function FloatingLabelInput({
             role="presentation"
             autoComplete={type === "password" ? "new-password" : "off"}
             //  autocomplete="new-password"
-            ontouchstart="this.removeAttribute('readonly');"
-            onfocus="this.removeAttribute('readonly');"
+            // ontouchstart="this.removeAttribute('readonly');"
+            // onfocus="this.removeAttribute('readonly');"
             name={name}
             value={value}
             onChange={onChange}

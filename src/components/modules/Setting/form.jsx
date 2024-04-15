@@ -30,6 +30,7 @@ export default function SettingForm({
   CloudinaryUpload,
   imageUrl,
   isImageUrlLoading,
+  setImageUrl
 }) {
   const checkIfNonImageExist = storage.localStorage.get("noUserProfileImage");
   const [userProfile, setUserProfile] = useState();
@@ -112,6 +113,7 @@ export default function SettingForm({
     }
     if (response?.updatedUser?._id) {
       SuccessNotification({ message: response?.message });
+      setImageUrl()
       // toast.success(response?.message);
       // storage.localStorage.set('accessTokenLiveParte1',response?.accessToken);
 
@@ -158,9 +160,23 @@ export default function SettingForm({
     }
   }
 
-  function EnableButtonIfDateChanges() {
-    return false
-    
+
+
+  function CheckPhoneNumber(){
+    if(watch('phone') ===data?.phone){
+      return false
+    }
+    return true
+  }
+
+  function CheckUserName(){
+    if(watch('fullName') ===data?.fullName){
+      return false
+    }
+    if(watch('username') ===data?.username){
+      return false
+    }
+    return true
   }
 
   // console.log(
@@ -169,6 +185,9 @@ export default function SettingForm({
   //   userInfo,
   //   "userInfo"
   // );
+  // console.log(CheckPhoneNumber(),'CheckPhoneNumber')
+
+  const isChangedState =CheckPhoneNumber()||CheckUserName()||imageUrl;
 
   return (
     <div className="px-[20px] lg:px-[120px] md:w-[60vw] xl:w-[40vw]">
@@ -195,6 +214,7 @@ export default function SettingForm({
               type="file"
               onChange={handleChange}
               ref={hiddenFileInput}
+              accept="image/*"
               style={{ display: "none" }} // Make the file input element invisible
             />
           </div>
@@ -214,8 +234,8 @@ export default function SettingForm({
       <div className="lg:pb-[92px]" autoComplete={`false`}>
         {isActive == "Profile" && (
           <div className="flex flex-col gap-[20px] ">
-            {SettingFormLabel()?.map((item, index) => (
-              <div className="cursor-not-allowed">
+            {SettingFormLabel(CheckPhoneNumber,CheckUserName)?.map((item, index) => (
+              <div key={index} className="cursor-not-allowed">
                 <Controller
                   key={index}
                   control={control}
@@ -238,6 +258,7 @@ export default function SettingForm({
                       error={errors[item?.name]?.message}
                       errors={errors}
                       disabled={item?.disabled}
+                      onBlur={item?.onBlur}
                     />
                   )}
                 />
@@ -252,7 +273,7 @@ export default function SettingForm({
                 isDisabled={
                   isImageUrlLoading ||
                   isLoading ||
-                  EnableButtonIfDateChanges()
+                  !isChangedState
                 }
               />
             </div>
@@ -294,7 +315,7 @@ export default function SettingForm({
                 className={`w-full text-[13px] font500`}
                 onClick={handleSubmit(handleUpdatePassword)}
                 isLoading={isImageUrlLoading || updatePasswordLoader}
-                isDisabled={EnableButtonIfDateChanges()}
+                // isDisabled={}
               />
             </div>
           </div>

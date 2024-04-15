@@ -18,8 +18,17 @@ export default function HappeningNow({ events = [] }) {
         Happening Now
       </div>
       <div className="flex items-center gap-[16px]">
-        <div className="button-prev"><ArrowLeft/></div>
-        <div className="button-next" ><ArrowRight/></div>
+        
+        <div className="flex items-center gap-[16px]">
+        <div className="button-prev relative">
+          <ArrowLeft/>
+          <div className="bg-transparent absolute left-0 right-0 top-0 bottom-0 z-10"></div>
+        </div>
+        <div className="button-next relative" >
+        <ArrowRight/>
+          <div className="bg-transparent absolute left-0 right-0 top-0 bottom-0 z-10"></div>
+        </div>
+      </div>
       </div>
        
       </div>

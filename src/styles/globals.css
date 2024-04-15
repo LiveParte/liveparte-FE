@@ -1,44 +1,41 @@
 @import url("https://fonts.cdnfonts.com/css/md-nichrome-test");
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
-@import url('https://c.webfontfree.com/c.js?f=MatterSQ-Light');
-@import url('https://db.onlinewebfonts.com/c/367cb1d4d8a017fec88cbbcf75d6b3cc?family=Matter+SQ+Medium');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+@import url("https://c.webfontfree.com/c.js?f=MatterSQ-Light");
+@import url("https://db.onlinewebfonts.com/c/367cb1d4d8a017fec88cbbcf75d6b3cc?family=Matter+SQ+Medium");
 /* @import "~video-react/styles/scss/video-react";  */
-
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
 @font-face {
-  font-family: 'CustomFont';
-  src: url('/fonts/Matter/WEB/Matter-Light.woff')format('woff');
+  font-family: "CustomFont";
+  src: url("/fonts/Matter/WEB/Matter-Light.woff") format("woff");
 }
 
 @font-face {
-  font-family: 'CustomFontBold';
-  src: url('/fonts/Matter/WEB/Matter-SemiBold.woff')format('woff');
+  font-family: "CustomFontBold";
+  src: url("/fonts/Matter/WEB/Matter-SemiBold.woff") format("woff");
 }
 
 @font-face {
-  font-family: 'CustomFontMedium';
-  src: url('/fonts/Matter/WEB/Matter-Medium.woff')format('woff');
+  font-family: "CustomFontMedium";
+  src: url("/fonts/Matter/WEB/Matter-Medium.woff") format("woff");
 }
 
-.font400{
+.font400 {
   /* font-family: 'CustomFont' !important; */
-  font-family: 'CustomFont' !important;
+  font-family: "CustomFont" !important;
   /* font-weight: 100 !important; */
 }
 
-.font500{
-  font-family: 'CustomFontMedium' !important;
+.font500 {
+  font-family: "CustomFontMedium" !important;
 }
 
-.font600{
-  font-family: 'CustomFontBold' !important;
+.font600 {
+  font-family: "CustomFontBold" !important;
 }
-
 
 .gradient {
   /* background: linear-gradient(to right, #000000 0%, #000000 100%); */
@@ -68,16 +65,14 @@
 .font-1 {
   font-family: "MD Nichrome Test", sans-serif !important;
 }
-.font-2{
+.font-2 {
   font-family: "Inter", sans-serif;
 }
 
-body{
+body {
   /* font-family: 'CustomFont' !important; */
-  font-family: 'MatterSQ-Medium',sans-serif, cursive !important;
+  font-family: "MatterSQ-Medium", sans-serif, cursive !important;
 }
-
-
 
 .swiper {
   width: 100%;
@@ -143,60 +138,59 @@ body{
   }
 }
 
-
 .dropdownIII {
   position: absolute;
   inset: auto auto 0px 0px;
   /* transform: translate3d(0px, -60px, 0px); */
 }
 
-.dropdownII{
-      inset: -1px 1px 5px auto;
-    transform: translate3d(0px, 60.5px, 0px);
+.dropdownII {
+  inset: -1px 1px 5px auto;
+  transform: translate3d(0px, 60.5px, 0px);
 }
 
-
 .shadow-1 {
-  box-shadow: 0px 0px 0px 0px #BACFF71F inset;
+  box-shadow: 0px 0px 0px 0px #bacff71f inset;
 }
 
 .shadow-2 {
-  box-shadow: 0px 24px 48px 0px #A8D8F50F inset;
+  box-shadow: 0px 24px 48px 0px #a8d8f50f inset;
 }
 
 .shadow-3 {
-  box-shadow: 0px 1px 1px 0px #D8ECF833 inset;
+  box-shadow: 0px 1px 1px 0px #d8ecf833 inset;
 }
 
-.shadow-4{
-  box-shadow: 0px 0px 0px 2px #BACFF71F inset !important;
+.shadow-4 {
+  box-shadow: 0px 0px 0px 2px #bacff71f inset !important;
 }
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+  -webkit-appearance: none;
+  margin: 0;
 }
 
-input[type=number]{
+input[type="number"] {
   -moz-appearance: textfield;
 }
 
-img, video {
+img,
+video {
   /* height: 100vh !important; */
 }
 
-.vds-controls-group{
+.vds-controls-group {
   display: none;
 }
 
-.newRole video{
+.newRole video {
   object-fit: cover;
   height: 100vh;
 }
 
-.showImage{
-  box-shadow: inset 0 0 0 2000px rgba(0, 0,0, 0.2);
+.showImage {
+  box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.2);
 }
 
 .customScrollHorizontal::-webkit-scrollbar {
@@ -206,7 +200,7 @@ img, video {
 
 .customScrollHorizontal::-webkit-scrollbar-track {
   border-radius: 10px;
-  background-color:white
+  background-color: white;
 }
 
 .customScrollHorizontal::-webkit-scrollbar-thumb {
@@ -235,7 +229,6 @@ img, video {
 
 /*  */
 
-
 body {
   margin: 0;
 }
@@ -253,7 +246,7 @@ body {
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #099DFD);
+  filter: drop-shadow(0 0 2em #099dfd);
 }
 
 .card {
@@ -273,8 +266,8 @@ body {
 }
 
 .card button:hover {
-  border-color: #099DFD;
-  background-color: #099DFD;
+  border-color: #099dfd;
+  background-color: #099dfd;
 }
 
 #controlsToolbar {
@@ -290,9 +283,8 @@ body {
 }
 
 #mediaControls button:hover {
-  border-color: #099DFD;
+  border-color: #099dfd;
 }
-
 
 #endConnection {
   border-color: red;
@@ -347,7 +339,6 @@ body {
   transform-origin: 0%;
 }
 
-
 /* custom-swiper.css */
 
 /* Swiper Navigation Buttons */
@@ -365,11 +356,16 @@ body {
 /* Next Button */
 .custom-button-next {
   &::after {
-    content: 'next';
+    content: "next";
   }
 }
 
 /* RTL Mode */
 .swiper-rtl .custom-button-prev::after {
-  content: 'next';
+  content: "next";
+}
+
+img {
+  width: auto;
+  height: auto;
 }

@@ -13,6 +13,7 @@ import {
   GetTransformedImageUrl,
 } from "@/utils/reusableComponent";
 import { useRouter } from "next/router";
+import { isArray } from "@/utils/helper";
 
 export default function Hero({
   notEvent = true,
@@ -131,6 +132,11 @@ export default function Hero({
       video.removeEventListener('ended', handleEnded);
     };
   }, []);
+
+  const handleNavigate = (event) => {
+    event.preventDefault();
+    openModal(HeroSectionEvent)
+  }
 
 
   // console.log(HeroSectionEvent,'HeroSectionEvent')
@@ -268,15 +274,21 @@ export default function Hero({
                       {isOpen && <DropdownMenu />}
                       <ButtonComp
                         isDisabled={eventIsPurchase}
-                        onClick={eventIsPurchase ? null : openModal}
+                        onClick={()=>{
+                          if(eventIsPurchase){
+                            return 
+                          }
+                          openModal(HeroSectionEvent)
+                          // eventIsPurchase ? null : openModal(HeroSectionEvent)
+                        }}
                         className={`py-[12px] px-[39px] text-[13px] xl:text-[15px] font500`}
                         btnText={
                           eventIsPurchase
                             ? `Ticket already purchased`
                             : `Get Ticket - ${
-                                HeroSectionEvent?.ticket?.code || ""
-                              } ${formatMoney(
-                                HeroSectionEvent?.ticket?.price || " ",
+                                HeroSectionEvent?.ticket?.code || isArray(HeroSectionEvent?.tickets)?'':''
+                              } ₦${formatMoney(
+                                HeroSectionEvent?.ticket?.price ||isArray(HeroSectionEvent?.tickets) &&  HeroSectionEvent?.tickets[0]?.price || " ",
                                 true
                               )}`
                         }
@@ -322,7 +334,7 @@ export default function Hero({
                             eventIsPurchase ||
                             myShowLoader
                           }
-                          onClick={openModal}
+                          onClick={handleNavigate}
                           className={`py-[12px] px-[20px] md:px-[34px] lg:px-[57px] text-[13px] md:text-[15px] font500 `}
                           btnText={
                             eventIsPurchase

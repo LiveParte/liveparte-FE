@@ -17,6 +17,7 @@ import { useRouter } from "next/router";
 import { useGetAllEventQuery, useGetEventOnDemandQuery } from "@/store/Event/eventApi";
 import moment from "moment";
 import { isArray } from '@/utils/helper';
+import MyComponent from '@/components/Common/SwiperII';
 
 
 export default function Home() {
@@ -49,6 +50,7 @@ export default function Home() {
   return (
    <div className='min-h-[100vh] bg-black'>
      <NoAuth>
+      {/* <MyComponent/> */}
       <Hero isOnDemand={false} HeroSectionEvent={HeroSectionEvent}  router={router} notEvent={true} />
       <Happening  events={HappeningNow} upComingEvent={filteredEvents}  OnDemandEvent={OnDemandEvent}/>
       <Footer />
