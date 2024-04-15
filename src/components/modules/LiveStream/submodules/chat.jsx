@@ -34,6 +34,7 @@ export default function Chat({
           width={30}
           height={30}
           className="object-cover"
+          alt="profile-image-user"
         />
         <div>
           <div className="text-[#B4BECB] text-[11px] font500 leading-[14px] font500">
@@ -87,9 +88,9 @@ export default function Chat({
          </div>
          <div>
          <div className="lg:hidden  flex flex-col items-end gap-[16px] pb-[16px]">
-                  <Image src={`/svg/reaction1.svg`} width={32} height={32} alt="reaction yarn " />
-                  <Image src={`/svg/reaction2.svg`} width={32} height={32} />
-                  <Image src={`/svg/reaction3.svg`} width={32} height={32} />
+                  <Image src={`/svg/reaction1.svg`} width={32} height={32} alt="reaction1  " />
+                  <Image src={`/svg/reaction2.svg`} width={32} height={32} alt="reaction2  " />
+                  <Image src={`/svg/reaction3.svg`} width={32} height={32} alt="reaction3  " />
                 </div>
          </div>
         </div>
@@ -99,7 +100,7 @@ export default function Chat({
             <div 
             onClick={()=>setPayFlow('giftCoins')}
              className="lg:hidden text-white flex flex-col  items-center">
-            <Image src={`/svg/coins.svg`} width={24} height={24} className="mb-[2px]" />
+            <Image src={`/svg/coins.svg`} width={24} height={24} className="mb-[2px]" alt="coins" />
               <div className="text-[10px]">500</div>
             </div>
             <button
@@ -113,7 +114,7 @@ export default function Chat({
           <div className="relative text-white">
            
             <div className=" p-[4px] pr-[10px] rounded-[96px] hidden lg:flex gap-[9px] text-white text-[10px] font500 items-center  shadow-1 shadow-2 shadow-3 bg-[#BACFF70A] cursor-pointer relative w-fit" onClick={()=>setPayFlow('giftCoins')}>
-              <Image src={`/svg/coins.svg`} width={24} height={24} />
+              <Image src={`/svg/coins.svg`} width={24} height={24} alt="coins" />
               <div>0 Coin</div>
               <div className=" py-[4px] px-[9px] rounded-[96px] hidden lg:flex gap-[9px] text-white text-[10px] font500 items-center  shadow-1 shadow-2 shadow-3 bg-[#BACFF70A] cursor-pointer relative w-fit" onClick={()=>setPayFlow('giftCoins')}>
               <div> Send</div>

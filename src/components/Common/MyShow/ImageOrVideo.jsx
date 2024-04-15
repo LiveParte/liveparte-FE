@@ -5,7 +5,7 @@ export default function ImageOrVideo({ videoRef, image, isPlaying, item }) {
   return (
     <>
       <div className="flex-[1] flex justify-center items-center absolute left-0 right-0 top-[0px] bottom-0  bg-gradient-to-t from-[#00000079] z-50"></div>
-      {!isPlaying ? (
+      {true ? (
         <Image
           src={item?.thumbnail_url}
           blurDataURL={item?.thumbnail_url}

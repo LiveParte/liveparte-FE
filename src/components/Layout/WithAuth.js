@@ -22,7 +22,7 @@ function WithAuth({ children }) {
 
   useEffect(() => {
     setIsAuth(userInfo?._id)
-  }, [])
+  }, [userInfo?._id])
   
 
   useEffect(() => {
@@ -47,7 +47,7 @@ function WithAuth({ children }) {
       // dispatch(logout())
     }
   }
-  }, [userInfo?.id]);
+  }, [userInfo?.id,isLoading]);
 
   useEffect(() => {
     if(!isLoading && isError){

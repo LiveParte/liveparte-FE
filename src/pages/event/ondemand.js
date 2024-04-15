@@ -4,14 +4,17 @@ import React from "react";
 // import Hero from "@/components/modules/onDemand/Hero";
 import { useGetEventOnDemandQuery } from "@/store/Event/eventApi";
 import { useRouter } from "next/router";
-import OnDemandList from "@/components/modules/onDemand/OndemandList";
+// import OnDemandList from "@/components/modules/onDemand/OndemandList";
 import withLazyLoad from "@/components/Common/LazyLoading/lazyLoading";
 import { isArray } from "@/utils/helper";
 import { eventLink, singleEventLink } from "@/utils/reusableComponent";
 import { useObject } from "@/Context/ObjectProvider";
 
-const OnDemandListLazyLoad = withLazyLoad(OnDemandList);
+// const OnDemandListLazyLoad = withLazyLoad(OnDemandList);
 const Hero = dynamic(() => import("@/components/modules/onDemand/Hero"), {
+  ssr: false,
+});
+const OnDemandListLazyLoad = dynamic(() => import("@/components/modules/onDemand/OndemandList"), {
   ssr: false,
 });
 const Footer = dynamic(() => import("@/components/Common/Footer"), {
@@ -46,7 +49,6 @@ export default function OnDemandEvent() {
         OnDemandEvent={OnDemandEvent}
         HeroSectionEvent={HeroSectionEvent2}
       />
-      {/* <Happening events={HappeningNow} upComingEvent={filteredEvents}  OnDemandEvent={OnDemandEvent}/> */}
       <Footer />
     </NoAuth>
   );

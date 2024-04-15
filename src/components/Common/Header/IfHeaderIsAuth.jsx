@@ -84,7 +84,7 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
 
   return (
     <div className="relative">
-   {isRoute && 
+   {/* {isRoute && 
    <div className="absolute right-3 z-[999px] top-3">
     <div
           className="inline-block h-10 w-10 animate-spin rounded-full border-3 border-solid border-[#fff] border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
@@ -95,7 +95,7 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
           </span>
         </div>
     </div>
-}
+} */}
       {isOpen && (
         <MyModal
           bodyComponent={

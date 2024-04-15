@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import useIntersectionObserver from '.';
-// import useIntersectionObserver from './useIntersectionObserver';
 
 const withLazyLoad = (WrappedComponent, threshold = 0.5) => {
-  return (props) => {
+  const Wrapped = (props) => {
     const [isInView, ref] = useIntersectionObserver(threshold);
     const [hasLoaded, setHasLoaded] = useState(false);
 
@@ -19,6 +18,16 @@ const withLazyLoad = (WrappedComponent, threshold = 0.5) => {
       </span>
     );
   };
+
+  // Set displayName for better debugging
+  Wrapped.displayName = `withLazyLoad(${getDisplayName(WrappedComponent)})`;
+
+  return Wrapped;
+};
+
+// Helper function to get component name
+const getDisplayName = (WrappedComponent) => {
+  return WrappedComponent.displayName || WrappedComponent.name || 'Component';
 };
 
 export default withLazyLoad;

@@ -1,7 +1,6 @@
 import ButtonComp from "@/components/Ui/button";
 import React, { useState } from "react";
 import ReactPlayer from "react-player";
-import { Media, Video } from "@vidstack/player-react";
 import Image from "next/image";
 import Chat from "./submodules/chat";
 import { useRouter } from "next/router";
@@ -74,9 +73,9 @@ export default function LiveStream({
           {isLive &&    <div className="absolute left-0 right-0 px-[18px] -bottom-[5px] py-[17px] flex justify-end text-white z-50 bg-gradient-to-t h-[100px] items-end from-black lg:rounded-[16px]">
                 <div>
                   <div className="hidden lg:flex items-center gap-[16px]">
-                    <Image src={`/svg/reaction1.svg`} width={32} height={32} />
-                    <Image src={`/svg/reaction2.svg`} width={32} height={32} />
-                    <Image src={`/svg/reaction3.svg`} width={32} height={32} />
+                    <Image src={`/svg/reaction1.svg`} width={32} height={32} alt="reaction1" />
+                    <Image src={`/svg/reaction2.svg`} width={32} height={32} alt="reaction2"  />
+                    <Image src={`/svg/reaction3.svg`} width={32} height={32} alt="reaction3"  />
                   </div>
                 </div>
               </div>}

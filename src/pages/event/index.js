@@ -1,8 +1,8 @@
 import dynamic from 'next/dynamic';
 
-// const Hero = dynamic(() => import('@/components/modules/Event/Hero'), {
-//   ssr: false
-// });
+const Hero = dynamic(() => import('@/components/modules/Event/Hero'), {
+  ssr: false
+});
 const Happening = dynamic(() => import('@/components/modules/Event/Happening'), {
   ssr: false
 });
@@ -10,7 +10,7 @@ const Footer = dynamic(() => import('@/components/Common/Footer'), {
   ssr: false
 });
 import NoAuth from "@/components/Layout/NoAuth";
-import Hero from "@/components/modules/onDemand/Hero";
+// import Hero from "@/components/modules/onDemand/Hero";
 // import Happening from "@/components/modules/Event/Happening";
 // import Footer from "@/components/Common/Footer";
 import { useRouter } from "next/router";
@@ -50,7 +50,6 @@ export default function Home() {
   return (
    <div className='min-h-[100vh] bg-black'>
      <NoAuth>
-      {/* <MyComponent/> */}
       <Hero isOnDemand={false} HeroSectionEvent={HeroSectionEvent}  router={router} notEvent={true} />
       <Happening  events={HappeningNow} upComingEvent={filteredEvents}  OnDemandEvent={OnDemandEvent}/>
       <Footer />

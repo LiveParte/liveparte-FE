@@ -32,7 +32,7 @@ export default function MyShows() {
 
   useEffect(() => {
     isSuccess&&refetch()
-  }, [isSuccess])
+  }, [isSuccess,refetch])
   
 
   // console.log(userShows?.event,user,'userShows')

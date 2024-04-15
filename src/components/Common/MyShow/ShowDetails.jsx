@@ -28,7 +28,7 @@ export default function ShowDetails({ onNext,item, id }) {
         ></div>
 
         <div className="text-start  px-1 relative text-white">
-          <div className="font-1 text-[24px] md:text-[24px] tallI:text-[60px] font-medium text-white mb-[4px]  md:mb-[8px]   line-clamp-2 lg:line-clamp-1   uppercase">
+          <div className="font-1 text-[24px] md:text-[24px]  font-medium text-white mb-[4px]  md:mb-[8px]   line-clamp-2 lg:line-clamp-1   uppercase">
             {item?.name}
           </div>
           <div className="text-[#B4BECB] text-[14px] md:text-[15px] mb-[4px] mb:mb-[8px] font-medium font500 whitespace-nowrap overflow-hidden text-ellipsis  flex items-center font400">

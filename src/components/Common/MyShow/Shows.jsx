@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { useObject } from "@/Context/ObjectProvider";
 import Image from "next/image";
 import { eventLink, singleEventLink } from "@/utils/reusableComponent";
+import { isArray } from "@/utils/helper";
 // import ShowDetails from "./ShowDetails";
 // import ImageOrVideo from "";
 const ImageOrVideo = dynamic(() => import("./ImageOrVideo"), { ssr: false });
@@ -72,7 +73,9 @@ export default function ShowsCard({
           return onNext(item);
         }
         setRouterLoader(singleEventLink)
-        setMyObject(item);
+        // setMyObject(item);
+        setMyObject({...item,ticket:isArray(item?.tickets)&&item?.tickets[0]});
+
         router.push({
           pathname: `${eventLink}/${item?._id}`,
         });
