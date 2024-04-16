@@ -39,7 +39,7 @@ export default function Header({ className, openModal }) {
         </div>
         <div className="text-[15px] text-white font500 flex-1 flex flex-col">
           <Link onClick={handleCheckIfITHome} href={eventLink} className="py-[25px]  cursor-pointer no-underline text-white">Browse Events</Link>
-          <Link onClick={handleCheckIfITHome} href={eventLink} className="py-[12px]  cursor-pointer no-underline text-white">On Demand</Link>
+          <Link onClick={handleCheckIfITHome} href={onDemandLink} className="py-[12px]  cursor-pointer no-underline text-white">On Demand</Link>
         </div>
 
         {/* <ButtonComp

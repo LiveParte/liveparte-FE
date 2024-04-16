@@ -25,10 +25,10 @@ export default function Hero({
   makePayment,
   IsBought,
   myShowLoader,
-  showHeader=true,
-  showStatus=true,
-  showTopGradient=false,
-  isOnDemand=true
+  showHeader = true,
+  showStatus = true,
+  showTopGradient = false,
+  isOnDemand = true,
 }) {
   const videoRef = useRef(null);
   const router = useRouter();
@@ -36,9 +36,9 @@ export default function Hero({
   const dropdownRef = useRef(null);
   const [muted, setMuted] = useState(true);
 
-  console.log(HeroSectionEvent, "HeroSectionEvent");
   const eventIsPurchase = HeroSectionEvent?.pruchase?.id;
-  const isLive = HeroSectionEvent?.isLiveStreamed;
+  const isLive = HeroSectionEvent?.isLiveStreamed?true:false;
+  console.log(HeroSectionEvent,eventIsPurchase, "HeroSectionEvent");
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -133,9 +133,8 @@ export default function Hero({
 
   const handleNavigate = (event) => {
     event.preventDefault();
-    openModal(HeroSectionEvent)
-  }
-
+    openModal(HeroSectionEvent);
+  };
 
   // console.log(HeroSectionEvent,'HeroSectionEvent')
   //bg-[url('/webp/bg1.webp')]
@@ -143,7 +142,9 @@ export default function Hero({
     <div
       className={`relative font400   bg-cover bg-center  xl:bg-top ${MainContainer} h-[100dvh] md:h-[100vh]`}
     >
-       {showTopGradient && <div className=" absolute top-0 left-0 right-0 h-[20vh]  z-50  bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>}
+      {showTopGradient && (
+        <div className=" absolute top-0 left-0 right-0 h-[20vh]  z-50  bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>
+      )}
       <video
         // controls
         ref={videoRef}
@@ -161,19 +162,18 @@ export default function Hero({
         }}
         playsInline
       >
-        <source
-          src={HeroSectionEvent?.promotional_url}
-          type="video/mp4"
-        />
+        <source src={HeroSectionEvent?.promotional_url} type="video/mp4" />
         Your browser does not support the video tag.
       </video>
       <div className="">
-      {showHeader &&  <div className="absolute left-0 right-0  ">
-     <IfHeaderIsAuth
-            openModal={openModalLoginSignUp || openModal}
-            className="absolute top-0 left-0 right-0"
-          />
-        </div>}
+        {showHeader && (
+          <div className="absolute left-0 right-0  ">
+            <IfHeaderIsAuth
+              openModal={openModalLoginSignUp || openModal}
+              className="absolute top-0 left-0 right-0"
+            />
+          </div>
+        )}
         <div className="relative">
           <div className=" min-h-[100dvh] md:min-h-screen relative flex flex-col justify-end  ">
             {/* <div className="h-[100vh]" /> */}
@@ -204,7 +204,7 @@ export default function Hero({
                       }}
                     />
                     <div className="">
-                      {(!isLive )? (
+                      {!isLive ? (
                         <div className="text-[13px] xl:text-[16px]  text-[#B4BECB] z-10 relative font500">
                           {HeroSectionEvent?.event_date !== "Event Date"
                             ? moment(HeroSectionEvent?.event_date).format(
@@ -213,43 +213,47 @@ export default function Hero({
                             : `April 17, 2024`}{" "}
                           - Watch lives
                         </div>
-                      ) : (showStatus&&
-                       <>{isOnDemand?
-                        <div className="   flex gap-[8px] items-center   ">
-                        {/* <div className="h-[8px] w-[8px] rounded-full bg-[#c6616b]"></div> */}
-                        <div className="text-[11px] lg:text-[13px]  text-white   font500">
-                          On Demand
-                        </div>
-                      </div>
-                      :
-                      <div className="flex gap-[8px] items-center   ">
-                      <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div>
-                      <div className="text-[11px] lg:text-[13px]  text-white   font500">
-                      Happening Now
-                      </div>
-                    </div>
-                      }
-                       
-                       </>
+                      ) : (
+                        showStatus && (
+                          <>
+                            {isOnDemand ? (
+                              <div className="   flex gap-[8px] items-center   ">
+                                {/* <div className="h-[8px] w-[8px] rounded-full bg-[#c6616b]"></div> */}
+                                <div className="text-[11px] lg:text-[13px]  text-white   font500">
+                                  On Demand
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="flex gap-[8px] items-center   ">
+                                <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div>
+                                <div className="text-[11px] lg:text-[13px]  text-white   font500">
+                                  Happening Now
+                                </div>
+                              </div>
+                            )}
+                          </>
+                        )
                       )}
                     </div>
                   </div>
                   <div className="text-center mt-[20px] lg:mt-[40px] lg:hidden mb-[42px] font500">
                     <div className="mb-[24px]">
-                    {(!isLive )? (
+                      {!isLive ? (
                         <div className="text-[#B4BECB] text-[13px] md:text-[15px] z-10 relative  font500">
                           {moment(HeroSectionEvent?.event_date).format(
                             "MMM DD, YYYY"
                           )}{" "}
                           - Watch live
                         </div>
-                      ) : (showStatus&&
-                        <div className="   flex gap-[8px] items-center   justify-center md:justify-start">
-                          {/* <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div> */}
-                          <div className="text-[11px] lg:text-[13px]  text-white   font500">
-                            On Demand
+                      ) : (
+                        showStatus && (
+                          <div className="   flex gap-[8px] items-center   justify-center md:justify-start">
+                            {/* <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div> */}
+                            <div className="text-[11px] lg:text-[13px]  text-white   font500">
+                              On Demand
+                            </div>
                           </div>
-                        </div>
+                        )
                       )}
                     </div>
 
@@ -271,11 +275,11 @@ export default function Hero({
                       {isOpen && <DropdownMenu />}
                       <ButtonComp
                         isDisabled={eventIsPurchase}
-                        onClick={()=>{
-                          if(eventIsPurchase){
-                            return 
+                        onClick={() => {
+                          if (eventIsPurchase) {
+                            return;
                           }
-                          openModal(HeroSectionEvent)
+                          openModal(HeroSectionEvent);
                           // eventIsPurchase ? null : openModal(HeroSectionEvent)
                         }}
                         className={`py-[12px] px-[39px] text-[13px] xl:text-[15px] font500`}
@@ -283,9 +287,15 @@ export default function Hero({
                           eventIsPurchase
                             ? `Ticket already purchased`
                             : `Get Ticket - ${
-                                HeroSectionEvent?.ticket?.code || isArray(HeroSectionEvent?.tickets)?'':''
+                                HeroSectionEvent?.ticket?.code ||
+                                isArray(HeroSectionEvent?.tickets)
+                                  ? ""
+                                  : ""
                               } ₦${formatMoney(
-                                HeroSectionEvent?.ticket?.price ||isArray(HeroSectionEvent?.tickets) &&  HeroSectionEvent?.tickets[0]?.price || " ",
+                                HeroSectionEvent?.ticket?.price ||
+                                  (isArray(HeroSectionEvent?.tickets) &&
+                                    HeroSectionEvent?.tickets[0]?.price) ||
+                                  " ",
                                 true
                               )}`
                         }
@@ -299,20 +309,22 @@ export default function Hero({
                       </div>
 
                       <div>
-                      {(!isLive )? (
+                        {!isLive ? (
                           <div className="text-[13px] xl:text-[16px]  text-[#B4BECB] z-10 relative font500">
                             {moment(HeroSectionEvent?.event_date).format(
                               "MMM DD, YYYY"
                             )}{" "}
                             - Watch live
                           </div>
-                        ) : (showStatus&&
-                          <div className="   flex gap-[8px] items-center   ">
-                            {/* <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div> */}
-                            <div className="text-[11px] lg:text-[13px]  text-white  font500">
-                              On Demand
+                        ) : (
+                          showStatus && (
+                            <div className="   flex gap-[8px] items-center   ">
+                              {/* <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div> */}
+                              <div className="text-[11px] lg:text-[13px]  text-white  font500">
+                                On Demand
+                              </div>
                             </div>
-                          </div>
+                          )
                         )}
                       </div>
                     </div>
@@ -326,20 +338,28 @@ export default function Hero({
                       </div>
                       <div className="flex items-center justify-center gap-3">
                         <ButtonComp
-                          isDisabled={
-                            !HeroSectionEvent?.ticket?.code ||
-                            eventIsPurchase ||
-                            myShowLoader
-                          }
-                          onClick={handleNavigate}
+                          isDisabled={eventIsPurchase}
+                          onClick={() => {
+                            if (eventIsPurchase) {
+                              return;
+                            }
+                            openModal(HeroSectionEvent);
+                            // eventIsPurchase ? null : openModal(HeroSectionEvent)
+                          }}
                           className={`py-[12px] px-[20px] md:px-[34px] lg:px-[57px] text-[13px] md:text-[15px] font500 `}
                           btnText={
                             eventIsPurchase
                               ? `Ticket already purchased`
                               : `Get Ticket - ${
-                                  HeroSectionEvent?.ticket?.code || ""
-                                } ${formatMoney(
-                                  HeroSectionEvent?.ticket?.price || " ",
+                                  HeroSectionEvent?.ticket?.code ||
+                                  isArray(HeroSectionEvent?.tickets)
+                                    ? ""
+                                    : ""
+                                } ₦${formatMoney(
+                                  HeroSectionEvent?.ticket?.price ||
+                                    (isArray(HeroSectionEvent?.tickets) &&
+                                      HeroSectionEvent?.tickets[0]?.price) ||
+                                    " ",
                                   true
                                 )}`
                           }

@@ -73,7 +73,7 @@ export default function Chat({
       <div className=" h-full flex flex-col">
         <div className=" px-[16px]   flex  items-end">
          <div className="flex-1 lg:w-full overflow-y-scroll h-[35vh] lg:h-[60vh]   font400  customScrollHorizontal">
-         <ChatList />
+         {/* <ChatList />
           <ChatList />
           <ChatList />
           <ChatList />
@@ -84,7 +84,7 @@ export default function Chat({
           <ChatList />
           <ChatList />
           <ChatList />
-          <ChatList />
+          <ChatList /> */}
          </div>
          <div>
          <div className="lg:hidden  flex flex-col items-end gap-[16px] pb-[16px]">

@@ -31,7 +31,7 @@ export default function Hero({
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const dispatch = useDispatch();
-  const eventIsPurchase = HeroSectionEvent?.pruchase?.id;
+  const eventIsPurchase = HeroSectionEvent?.pruchase?.id?true:false;
   const isLive = HeroSectionEvent?.isLiveStreamed;
 
 
@@ -264,10 +264,7 @@ export default function Hero({
                       </div>
                       <div className="flex items-center justify-center gap-3">
                       {HeroSectionEvent?.ticket?.price&&  <ButtonComp
-                          isDisabled={
-                            !HeroSectionEvent?.ticket?.code ||
-                            eventIsPurchase ||
-                            myShowLoader
+                          isDisabled={eventIsPurchase
                           }
                           onClick={openModal}
                           className={`py-[12px] px-[20px] md:px-[34px] lg:px-[57px] text-[13px] md:text-[15px] font500 `}

@@ -16,12 +16,14 @@ export default function ShareEvent({
   const [copiedText, copy] = useCopyToClipboard()
   const router = useRouter();
   const inputRef = useRef(null);
+  const {id} =router?.query
   const [value, setValue] = useState('');
   const [copied, setCopied] = useState(false);
   const [copyStatus, setCopyStatus] = useState('');
   const handleAction = () =>{
     // router.push('/event_time_out')
   }
+  
 
   // async function copyTextToClipboard(text) {
   //   if ('clipboard' in navigator) {
@@ -85,12 +87,12 @@ export default function ShareEvent({
         <div className="flex items-center h-[50px] border-none rounded-[8px] bg-[#222428] border-[#343F4B] border-[1px]">
           <input className="flex-1 flex-grow-1 bg-transparent px-[16px] outline-none text-[#63768D] text-[13px] w-full"
             ref={inputRef}
-          value={CopyEventLink({link:Data?._id})}
+          value={CopyEventLink({link:id})}
           disabled
           />
           
           <div className="mr-[2px]">
-          <CopyToClipboard text={CopyEventLink({link:Data?._id})} onCopy={handleCopy}>
+          <CopyToClipboard text={CopyEventLink({link:id})} onCopy={handleCopy}>
       <ButtonComp
       btnText={`Copy link `}
           className={` text-[13px] font500 h-[34px]`}
