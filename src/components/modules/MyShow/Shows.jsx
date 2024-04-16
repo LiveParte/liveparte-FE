@@ -4,22 +4,23 @@ import { dummyShowDataII } from "../Event/Data";
 import ButtonComp from "@/components/Ui/button";
 import { useRouter } from "next/router";
 import ShowsCard from "@/components/Common/MyShow/Shows";
-import { useObject } from "@/Context/ObjectProvider";
-import { eventLink } from "@/utils/reusableComponent";
+import { eventLink, onDemandLink } from "@/utils/reusableComponent";
 import UserShowsCard from "@/components/Common/MyShowUser/Shows";
 // import UserShowsCard from "@/components/UserShow";
 
 export default function Shows({
   Data=[],
-  isLoading
+  isLoading,
+  isActive,
+  OnDemandData=[]
 }) {
   const router = useRouter();
-  const {setLiveStreamShow} =useObject()
   const container =
     "px-[20px] md:px-[40px] lg:px-[120px] ";
   const isLength = Data?.length;
   return (
-    <div className="pb-[50px] lg:pb-[10px]">
+    <>
+    { isActive=="Upcoming"&&<div className="pb-[50px] lg:pb-[10px]">
       <div className={container}>
         {isLength > 0 && (
           <div className=" grid-cols-2  md:grid-cols-2  xl:grid-cols-4 gap-[20px] lg:gap-x-[40px] gap-y-[40px] lg:gap-y-[104px] pb-[100px] lg:pb-[247px]  grid">
@@ -33,7 +34,6 @@ export default function Shows({
                 isLive={false}
                 item={item}
                 onNext={(item)=>{
-                  setLiveStreamShow(item);
                   router.push('/livestream')
 
                   // console.log(item,'item')
@@ -59,6 +59,48 @@ export default function Shows({
           </div>
         )}
       </div>
-    </div>
+    </div>}
+    { isActive=="On Demand"&&<div className="pb-[50px] lg:pb-[10px]">
+      <div className={container}>
+        {isLength > 0 && (
+          <div className=" grid-cols-2  md:grid-cols-2  xl:grid-cols-4 gap-[20px] lg:gap-x-[40px] gap-y-[40px] lg:gap-y-[104px] pb-[100px] lg:pb-[247px]  grid">
+            {!isLoading&&OnDemandData?.map((item, index) => (
+              <UserShowsCard
+                key={index}
+                id={item?.id}
+                name={item?.name}
+                venue={item?.venue||item?.address}
+                showImage={item?.thumbnail_url.toString()}
+                isLive={false}
+                item={item}
+                onNext={(item)=>{
+                  router.push('/livestream')
+
+                  // console.log(item,'item')
+                }}  
+              />
+            ))}
+          </div>
+        )}
+
+        {/* No SHow */}
+        {!isLoading&&OnDemandData?.length === 0 && (
+          <div className="pb-[100px] lg:pb-[247px] h-[40vh] flex flex-col justify-center items-center">
+            <div className="text-[24px] text-center md:text-left font600 text-[#FFFFFF] mb-[36px]">
+              You don’t have any on Demand Show
+            </div>
+            <ButtonComp
+              btnText={`Browse Events`}
+              className={`text-[13px] text-[#000000] font500 h-[44px] rounded-[8px] px-[16px] py-[12px]`}
+              onClick={()=>{
+                router.push(onDemandLink)
+              }}
+            />
+          </div>
+        )}
+      </div>
+    </div>}
+    </>
+   
   );
 }

@@ -1,4 +1,3 @@
-import { useObject } from "@/Context/ObjectProvider";
 import moment from "moment";
 import { useRouter } from "next/router";
 import React from "react";
@@ -13,7 +12,6 @@ export default function ShowDetails({
   item,
   id
 }) {
-  const { setMyObject } = useObject();
   const router = useRouter();
 
   return (
@@ -46,7 +44,6 @@ export default function ShowDetails({
               return onNext(item);
             }
 
-            setMyObject(item);
             router.push({
               pathname: `event/${id}`,
             });

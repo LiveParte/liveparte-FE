@@ -10,17 +10,15 @@ import GiftTicket from "@/components/modules/EventDetails/modal/GiftTicket";
 import LoginSignUp from "@/components/modules/Event/Modal/Login&SignUp";
 import React, { useEffect, useState } from "react";
 import ShareEvent from "@/components/modules/EventDetails/modal/ShareEvent";
-import { useObject } from "@/Context/ObjectProvider";
 const Hero = dynamic(() => import('@/components/modules/Event/Hero'), {
   ssr: false
 });
 import {
   eventApi,
   useGetEventDetailViaIdQuery,
-  useLazyUserShowsQuery,
-  useUserShowsQuery,
+ 
 } from "@/store/Event/eventApi";
-import { useDispatch } from "react-redux";
+import { useDispatch, useStore } from "react-redux";
 
 import { useRouter } from "next/router";
 import { usePaystackPayment } from "react-paystack";
@@ -30,11 +28,18 @@ import { useSelector } from "react-redux";
 import { selectCurrentUserData } from "@/store/User";
 import { storage, userDetailStorageName } from "@/utils/helper";
 import { myShowLink } from "@/utils/reusableComponent";
+import { selectEvent } from "@/store/Event";
 
 export default function EventId() {
   const dispatch = useDispatch()
+  
+  // const { event, setEvent } = useStore();
+
   const [userDetail, setUserDetail] = useState(false);
   const userInfo = useSelector(selectCurrentUserData) || {};
+  const shows = useSelector(selectEvent) || {};
+
+
   // let userInfo =storage["localStorage"]?.get(userDetailStorageName)
 
   // useEffect(() => {
@@ -85,9 +90,7 @@ export default function EventId() {
   };
 
   const initializePayment = usePaystackPayment(config);
-  const { myObject } = useObject();
-
-  console.log(myObject,'myObject')
+ 
 
  
   // useEffect(() => {
@@ -111,10 +114,15 @@ export default function EventId() {
   }
 
   function openModalGiftTicket() {
+    if (!userInfo?._id) {
+      return openModalLoginSignUp();
+    }
     setIsOpen("gift ticket");
   }
 
   function openModalShareEvent() {
+
+   
     setIsOpen("share event");
   }
 
@@ -151,7 +159,7 @@ export default function EventId() {
       name: "checkout",
       component: (
         <CheckOut
-          Data={{ ...data, ...myObject }}
+          Data={{ ...data, ...shows }}
           makePayment={() => initializePayment(handleSuccess, handleClose)}
           componentProps={componentProps}
           handleSuccess={handleSuccess}
@@ -164,7 +172,7 @@ export default function EventId() {
     {
       name: "gift ticket",
       component: (
-        <GiftTicket Data={{ ...data, ...myObject }} closeModal={closeModal} />
+        <GiftTicket Data={{ ...data, ...shows }} closeModal={closeModal} />
       ),
     },
     {
@@ -184,7 +192,7 @@ export default function EventId() {
     {
       name: "share event",
       component: (
-        <ShareEvent Data={{ ...data, ...myObject }} closeModal={closeModal} />
+        <ShareEvent Data={{ ...data, ...shows }} closeModal={closeModal} />
       ),
     },
   ];
@@ -196,14 +204,14 @@ export default function EventId() {
           bodyComponent={
             ModalList?.find((item, index) => item?.name == isOpen)?.component
           }
-          containerStyle={`bg-[#1B1C20] border-[1px] border-[#343F4B] rounded-[16px]  !w-[586px]`}
+          containerStyle={`bg-[#1B1C20] border-[1px] border-[#343F4B] rounded-[16px]  !w-[486px]`}
           isOpen={isOpen ? true : false}
           closeModal={closeModal}
           openModal={openModal}
         />
       )}
       <Hero
-        HeroSectionEvent={{ ...data?.event,...data, ...myObject }}
+        HeroSectionEvent={{ ...data?.event,...data, ...shows }}
         openModalLoginSignUp={openModalLoginSignUp}
         openModal={openModal}
         giftTicket={openModalGiftTicket}
@@ -217,7 +225,7 @@ export default function EventId() {
       <DropdownItem>Earnings</DropdownItem>
       <DropdownItem>Sign out</DropdownItem>
     </Dropdown> */}
-      <EventDetails HeroSectionEvent={data || myObject}  />
+      <EventDetails HeroSectionEvent={data || shows}  />
 
       {/* <PaystackHookExample/> */}
       {/* <Happening/> */}

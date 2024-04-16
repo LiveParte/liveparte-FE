@@ -48,7 +48,7 @@ export default function MyShows() {
         setIsActive={setIsActive}
         title="My Shows"
       />
-      <Shows Data={userShows?.event} isLoading={isLoading} />
+      <Shows Data={userShows?.event} isLoading={isLoading} isActive={isActive} />
       <div className="absolute bottom-0 left-0 right-0">
         <Footer />
       </div>

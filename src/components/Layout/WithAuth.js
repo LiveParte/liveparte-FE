@@ -8,14 +8,14 @@ import {  useSelector,useDispatch } from 'react-redux';
 
 function WithAuth({ children }) {
   const router = useRouter();
-  const dispatch = useDispatch()
+  const userInfo =useSelector(selectCurrentUserData);
+
   // let userInfo =storage["localStorage"]?.get(userDetailStorageName)
   const {isLoading,isError} =useGetUserProfileQuery();
   const [isAuth,setIsAuth] =useState(false);
   // alert("hello")
-  const userInfo =useSelector(selectCurrentUserData);
   const isAuthenticated =userInfo?._id;
-  //  console.log(userInfo,'useSelector')
+   console.log(userInfo,isError,'useSelector')
   // const isAuthenticated =false;
 
   // console.log(isAuthenticated,user,'isAuthenticated')

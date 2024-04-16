@@ -1,7 +1,9 @@
-import { useObject } from "@/Context/ObjectProvider";
+import { setEventData } from "@/store/Event";
+import { isArray } from "@/utils/helper";
 import moment from "moment";
 import { useRouter } from "next/router";
 import React from "react";
+import { useDispatch } from "react-redux";
 
 export default function ShowDetails({
   eventDate,
@@ -13,8 +15,8 @@ export default function ShowDetails({
   item,
   id
 }) {
-  const { setMyObject } = useObject();
   const router = useRouter();
+  const dispatch = useDispatch();
 
   return (
     <div className="h-full z-50 relative">
@@ -45,8 +47,9 @@ export default function ShowDetails({
             if (onNext) {
               return onNext(item);
             }
+            dispatch(setEventData({...{...item,ticket:isArray(item?.tickets)&&item?.tickets[0]}}));
 
-            setMyObject(item);
+            // setMyObject(item);
             router.push({
               pathname: `event/${id}`,
             });

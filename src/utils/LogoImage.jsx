@@ -1,5 +1,4 @@
 // Import dependencies and components
-import { useObject } from "@/Context/ObjectProvider";
 import Image from "next/image";
 import { useRouter } from "next/router";
 
@@ -10,11 +9,9 @@ export const IsHover = `hover:!bg-[#FFFFFF26] hover:rounded-[8px]  hover:border-
 
 export default function LogoImage2({  }) {
   const router =useRouter();
-  const {setRouterLoader}=useObject()
   // setRouterLoader(eventLink)
   
   const handleRoute = () => {
-    setRouterLoader();
     router.push("/");
   };
 

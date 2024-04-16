@@ -1,6 +1,7 @@
 import React from "react";
 import { BannerIcon, BannerIcon2, BannerSmall1 } from "../../../../../public/svg";
 import BlurryImage from "@/components/Common/LazyLoader";
+import Image from "next/image";
 
 export default function FavoriteShow() {
   return (
@@ -26,8 +27,8 @@ export default function FavoriteShow() {
           <BannerIcon2 />
         </div>
         <div className="flex justify-center items-center text-center ">
-          <BlurryImage
-            src={`/webp/2.png`}
+          <img
+            src={`/webp/2.webp`}
             // width={'80%'}
             className={`w-[80%]`}
             classNameMain={`flex justify-center`}

@@ -29,11 +29,11 @@ export default function Chat({
   const ChatList = () => {
     return (
       <div className="pb-[16px] flex items-center gap-[8px] w-[90%] lg:w-full">
-        <img
+        <Image
           src={`/webp/profile.png`}
           width={30}
           height={30}
-          className="object-cover"
+          className="object-cover h-[30px] w-[30px]"
           alt="profile-image-user"
         />
         <div>

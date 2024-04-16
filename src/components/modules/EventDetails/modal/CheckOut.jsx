@@ -5,6 +5,7 @@ import React from "react";
 import { CloseII } from "../../../../../public/svg";
 import { formatMoney } from "@/utils/formatMoney";
 import { PaystackConsumer } from "react-paystack";
+import Image from "next/image";
 
 export default function CheckOut({
   closeModal,
@@ -39,10 +40,12 @@ export default function CheckOut({
       <main>
         <div className="flex items-center gap-[17px]  mb-[56px]">
           <div>
-            <img
+            <Image
               src={Data?.thumbnail_url || "/webp/bg1.webp"}
               className="w-[89px] h-[89px] object-cover rounded-[8px]"
               alt="web"
+              width={89}
+              height={89}
             />
           </div>
           <div>
@@ -62,9 +65,7 @@ export default function CheckOut({
           {({initializePayment}) =>
            <ButtonComp
            isDisabled={IsBought}
-              btnText={IsBought?`Ticket already purchased`:`Proceed To Make Payment - ${
-                Data?.ticket?.code
-              } ${formatMoney(Data?.ticket?.price||"", false || "0")} `}
+              btnText={IsBought?`Ticket already purchased`:`Proceed To Make Payment -  ₦${formatMoney(Data?.ticket?.price||"", false || "0")} `}
               className={`w-full text-[13px] font500] h-[44px] `}
               onClick={() => initializePayment(handleSuccess, handleClose)}
             />

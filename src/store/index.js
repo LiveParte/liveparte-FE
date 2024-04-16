@@ -4,10 +4,12 @@ import { authSlice, setUserData } from "./User";
 import { eventApi } from "./Event/eventApi";
 import { transactionApi } from "./Transaction/transactionApi";
 import { storage, userDetailStorageName } from "@/utils/helper";
+import { eventSlice } from "./Event";
 
 export const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
+    event:eventSlice.reducer,
     [userApi.reducerPath]: userApi.reducer,
     [eventApi.reducerPath]: eventApi.reducer,
     [transactionApi.reducerPath]: transactionApi.reducer,
@@ -21,7 +23,6 @@ export const store = configureStore({
 });
 
 const storedUserData = storage.localStorage.get(userDetailStorageName);
-console.log(storedUserData, 'storedUserData');
 
 const isJSON = (str) => {
   try {

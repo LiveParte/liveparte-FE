@@ -3,10 +3,10 @@ import dynamic from "next/dynamic";
 import { Play } from "../../../../public/svg";
 import moment from "moment";
 import { useRouter } from "next/router";
-import { useObject } from "@/Context/ObjectProvider";
-import Image from "next/image";
 import { eventLink, singleEventLink } from "@/utils/reusableComponent";
 import { isArray } from "@/utils/helper";
+import { useDispatch } from "react-redux";
+import { setEventData } from "@/store/Event";
 // import ShowDetails from "./ShowDetails";
 // import ImageOrVideo from "";
 const ImageOrVideo = dynamic(() => import("./ImageOrVideo"), { ssr: false });
@@ -28,9 +28,10 @@ export default function ShowsCard({
 }) {
   const backgroundImage = `https://res.cloudinary.com/dammymoses/image/upload/v1710175667/LiveParte/a7_zeemus.png`;
   const router = useRouter();
+  const dispatch = useDispatch();
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [posterImage, setPosterImage] = useState();
-  const {setMyObject,setRouterLoader}=useObject()
   useEffect(() => {
     setPosterImage(showImage || backgroundImage);
   }, [showImage, backgroundImage]);
@@ -72,10 +73,7 @@ export default function ShowsCard({
         if (onNext) {
           return onNext(item);
         }
-        setRouterLoader(singleEventLink)
-        // setMyObject(item);
-        setMyObject({...item,ticket:isArray(item?.tickets)&&item?.tickets[0]});
-
+        dispatch(setEventData({...item,ticket:isArray(item?.tickets)&&item?.tickets[0]}));
         router.push({
           pathname: `${eventLink}/${item?._id}`,
         });

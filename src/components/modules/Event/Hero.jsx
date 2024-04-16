@@ -5,7 +5,6 @@ import { MainContainer } from "@/utils/styleReuse";
 import ButtonComp from "@/components/Ui/button";
 import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
 import moment from "moment";
-import { useObject } from "@/Context/ObjectProvider";
 import { formatMoney } from "@/utils/formatMoney";
 import {
   CopyEventLink,
@@ -14,6 +13,8 @@ import {
 } from "@/utils/reusableComponent";
 import Image from "next/image";
 import { isArray } from "@/utils/helper";
+import { useDispatch } from "react-redux";
+import { setEventData } from "@/store/Event";
 
 export default function Hero({
   notEvent = true,
@@ -29,13 +30,10 @@ export default function Hero({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const { setMyObject } = useObject();
-  const [event, setEvent] = useState();
-  const { myObject } = useObject();
-
-  console.log(HeroSectionEvent, "HeroSectionEvent");
+  const dispatch = useDispatch();
   const eventIsPurchase = HeroSectionEvent?.pruchase?.id;
   const isLive = HeroSectionEvent?.isLiveStreamed;
+
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -53,6 +51,11 @@ export default function Hero({
     };
   }, []);
 
+  // console.log(HeroSectionEvent,'HeroSectionEvent')
+  function replaceAmpersandWithAnd(str) {
+    return str.replace(/&/g, 'and');
+  }
+  
   function DropdownMenu() {
     return (
       <div className=" absolute dropdownIII transform translate-x-0 -translate-y-[60px] z-50">
@@ -66,32 +69,28 @@ export default function Hero({
           >
             Share Event
           </div>
+          {/* https://calendar.google.com/calendar/u/0/r/eventedit?text=test+add+calendar+event&location&details=test+add+calendar+event&dates=20210510/20210511 */}
           <div className="py-[12px]">
             <a
               target="_blank"
               className=" text-white no-underline  "
               href={`https://calendar.google.com/calendar/r/eventedit?text=${
                 HeroSectionEvent?.name
-              }&dates=${HeroSectionEvent?.event_date}&details=<b>${
-                HeroSectionEvent?.name
-              }</b>
+              }&dates=${HeroSectionEvent?.event_date}&details=<b>${replaceAmpersandWithAnd(HeroSectionEvent?.name)}</b><br/><br/><b>Location:</b>${replaceAmpersandWithAnd(HeroSectionEvent?.country)}
               <br/>
               <br/>
-              <b>Location:</b>${HeroSectionEvent?.country}
-              <br/>
-              <br/>
-              <b>Description:</b>${HeroSectionEvent?.description}
+              <b>Description:</b>${replaceAmpersandWithAnd(HeroSectionEvent?.description)}
               <br/>
               <br/>
               <b>Event Details:</b>
               <br/>
-              <b>Venue:</b>${HeroSectionEvent?.address}
+              <b>Venue:</b>${replaceAmpersandWithAnd(HeroSectionEvent?.address)}
               <br/>
-              <b>Date:</b>${HeroSectionEvent?.event_date}
+              <b>Date:</b>${replaceAmpersandWithAnd(HeroSectionEvent?.event_date)}
               <br/>
               <b>Time:</b>${moment(HeroSectionEvent?.event_date).format("h:mm")}
               &location=${CopyEventLink({
-                link: HeroSectionEvent?._id,
+                link: replaceAmpersandWithAnd(HeroSectionEvent?._id),
               })}&sf=true&output=xml`}
             >
               Set Reminder
@@ -101,6 +100,17 @@ export default function Hero({
       </div>
     );
   }
+
+  const handleGetTicketLearnMore = ()=>{
+    dispatch(setEventData({...{...HeroSectionEvent,ticket:isArray(HeroSectionEvent?.tickets)&&HeroSectionEvent?.tickets[0]}}));
+
+    // setMyObject({...HeroSectionEvent,ticket:isArray(HeroSectionEvent?.tickets)&&HeroSectionEvent?.tickets[0],food:'rice'});
+    router.push({
+      pathname: `${eventLink}/${HeroSectionEvent?._id}`,
+    });
+  }
+
+  // Zustand store
 
   // console.log(HeroSectionEvent,'HeroSectionEvent')
   //bg-[url('/webp/bg1.webp')]
@@ -142,12 +152,7 @@ export default function Hero({
                     <ButtonComp
                       className={`py-[12px] px-[39px] text-[13px] xl:text-[15px] font500`}
                       btnText={isLive ? "Join The Event" : "Learn More"}
-                      onClick={() => {
-                        setMyObject({...HeroSectionEvent,ticket:isArray(HeroSectionEvent?.tickets)&&HeroSectionEvent?.tickets[0],food:'rice'});
-                        router.push({
-                          pathname: `${eventLink}/${HeroSectionEvent?._id}`,
-                        });
-                      }}
+                      onClick={() => handleGetTicketLearnMore()}
                     />
                     <div>
                       {!isLive ? (
@@ -204,9 +209,10 @@ export default function Hero({
                   <div ref={dropdownRef}>
                     <div className="mb-[100px] hidden md:flex gap-[16px] items-center relative">
                       {isOpen && <DropdownMenu />}
+                      {HeroSectionEvent?.ticket?.price&& 
                       <ButtonComp
                         isDisabled={eventIsPurchase}
-                        onClick={eventIsPurchase ? null : openModal}
+                        onClick={openModal}
                         className={`py-[12px] px-[39px] text-[13px] xl:text-[15px] font500`}
                         btnText={
                           eventIsPurchase
@@ -219,6 +225,7 @@ export default function Hero({
                               )}`
                         }
                       />
+}
                       <div className="" onClick={() => setIsOpen(!isOpen)}>
                         <Image
                           src="/webp/dots.png"
@@ -256,7 +263,7 @@ export default function Hero({
                         - Watch live
                       </div>
                       <div className="flex items-center justify-center gap-3">
-                        <ButtonComp
+                      {HeroSectionEvent?.ticket?.price&&  <ButtonComp
                           isDisabled={
                             !HeroSectionEvent?.ticket?.code ||
                             eventIsPurchase ||
@@ -264,7 +271,7 @@ export default function Hero({
                           }
                           onClick={openModal}
                           className={`py-[12px] px-[20px] md:px-[34px] lg:px-[57px] text-[13px] md:text-[15px] font500 `}
-                          btnText={
+                          btnText={HeroSectionEvent?.ticket?.price&&
                             eventIsPurchase
                               ? `Ticket already purchased`
                               : `Get Ticket - ${
@@ -274,11 +281,14 @@ export default function Hero({
                                   true
                                 )}`
                           }
-                        />
+                        />}
                         <div onClick={() => setIsOpen(!isOpen)}>
-                          <img
+                          <Image
                             src="/webp/dots.png"
                             className="h-[44px] cursor-pointer"
+                            width={44}
+                            height={44}
+                            alt="dots"
                           />
                         </div>
                       </div>

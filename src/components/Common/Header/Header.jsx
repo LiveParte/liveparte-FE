@@ -3,17 +3,14 @@ import { useRouter } from "next/router";
 import Link from 'next/link'
 import ButtonComp from "@/components/Ui/button";
 import  { HeaderOnSelect, MainContainer } from "@/utils/styleReuse";
-import { eventLink, myShow, myShowLink, onDemandLink, singleEventLink } from "@/utils/reusableComponent";
+import { eventLink,  myShowLink, onDemandLink, singleEventLink } from "@/utils/reusableComponent";
 import LogoImage2 from "@/utils/LogoImage";
-import { useObject } from "@/Context/ObjectProvider";
 export default function Header({ className, openModal }) {
   const router = useRouter();
   const isHome =router?.pathname==="/";
   const isEvents =router?.pathname===eventLink;
   // const MainContainer = `px-[20px] md:px-[40px] lg:px-[120px] relative`;
   const [dropDown, setDropDown] = useState(false);
-  const {setRouterLoader} =useObject()
-  const isMyShow =router?.pathname==myShow
   const isEvent =router?.pathname===eventLink || router?.pathname==singleEventLink
   const isOnDemand =router?.pathname===onDemandLink
   const isFocused =`hover:!bg-[#FFFFFF26] hover:rounded-[8px]  hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`
@@ -82,7 +79,6 @@ export default function Header({ className, openModal }) {
               btnText="Browse Events"
               className={` font-medium  hidden lg:block  px-[16px] md:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${isEvent &&isSelected}  text-[13px]   !h-[32px]`}
               onClick={() => {
-                setRouterLoader(eventLink)
                 router.push(eventLink)
               }}
             />
@@ -90,7 +86,6 @@ export default function Header({ className, openModal }) {
               btnText="On Demand"
               className={` font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-transparent    font500 text-white ${isFocused}   text-[13px] ${isOnDemand &&isSelected}  !h-[32px]`}
               onClick={() => {
-                setRouterLoader(onDemandLink)
                 router.push(onDemandLink)
               }}
             />

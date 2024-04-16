@@ -5,7 +5,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
-import { ObjectProvider } from "@/Context/ObjectProvider";
 import NextNProgress from 'nextjs-progressbar';
 
 // Import Swiper styles
@@ -24,7 +23,6 @@ export default function App({ Component, pageProps }) {
           content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
         />
       </Head>
-      <ObjectProvider>
         <Provider store={store}>
           <ToastContainer
             className={`z-[9999]`}
@@ -43,7 +41,6 @@ export default function App({ Component, pageProps }) {
           <NextNProgress />
           <Component {...pageProps} />
         </Provider>
-      </ObjectProvider>
     </>
   );
 }

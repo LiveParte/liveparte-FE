@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { CloseII } from "../../../../../public/svg";
 import { formatMoney } from "@/utils/formatMoney";
 import CopyToClipboard from "react-copy-to-clipboard";
+import Image from "next/image";
 
 
 export default function ShareEvent({
@@ -57,10 +58,16 @@ export default function ShareEvent({
       <main>
         <div className="flex items-center gap-[17px]  mb-[54px]">
           <div>
-          <img
+          <Image
              src={Data?.
               thumbnail_url||"/webp/bg1.webp"}
               className="w-[89px] h-[89px] object-cover rounded-[8px]"
+              width={89}
+              height={89}
+              placeholder="blur"
+              blurDataURL={Data?.
+                thumbnail_url||"/webp/bg1.webp"}
+                alt="show-image"
             />
           </div>
           <div>
