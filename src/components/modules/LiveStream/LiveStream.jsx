@@ -72,7 +72,7 @@ export default function LiveStream({
         {isOpen && <ProfileDropdown />}
         <UserProfile   onClick={() => setIsOpen(!isOpen)}/>
        </div>
-        <div className="flex flex-col lg:flex-row gap-[16px] ">
+        <div className="flex flex-col lg:flex-row gap-[16px] takeScreen">
           <div className="  flex-1 bg-[#27292E] lg:pt-[32px] lg:px-[24px] lg:rounded-[16px]">
             <div className="px-[5px]  items-center justify-between mb-[23px] hidden lg:flex">
               <div className="text-[23px] font-semibold font-1 text-[#FFFFFF] uppercase">

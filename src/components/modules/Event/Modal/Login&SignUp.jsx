@@ -254,7 +254,7 @@ export default function LoginSignUp({
   return (
     <div className="flex flex-col flex-grow-1 overflow-y-scroll customScrollHorizontal relative">
       <div
-        className={`bg-[#1B1C20] relative pb-[48px] px-[16px] py-[40px] lg:py-[55px]  h-full  max-h-[75vh] md:max-h-[90vh] overflow-y-scroll customScrollHorizontal ${className}  md:h-auto `}
+        className={`bg-[#1B1C20] relative pb-[48px] px-[16px] py-[30px] lg:py-[30px]  h-full  max-h-[75vh] md:max-h-[90vh] overflow-y-scroll customScrollHorizontal ${className}  md:h-auto `}
       >
         <div className="flex justify-center items-center mb-[35px]">
           {/* <div className="pb-[10px] w-[27px]"></div> */}
