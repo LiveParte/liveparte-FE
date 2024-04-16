@@ -118,3 +118,12 @@ export function GetEmailSearchUrl(email) {
   // You might need to update this to match the search functionality of other email providers
   return `https://www.example.com/search?email=${email}&q=${searchQuery}`;
 }
+
+export const isJSON = (str) => {
+  try {
+    JSON.parse(str);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};

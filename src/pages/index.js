@@ -2,7 +2,6 @@ import NoAuth from "@/components/Layout/NoAuth";
 import Footer from "@/components/Common/Footer";
 import { useRouter } from "next/router";
 import dynamic from 'next/dynamic';
-import MyLocation from '../components/Common/GetLOcation.jsx'
 import Hero from "@/components/modules/LandingPage/Hero.jsx";
 // const Hero = dynamic(() => import('@/components/modules/LandingPage/Hero'), {
 //   ssr: false
