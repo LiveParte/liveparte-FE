@@ -115,23 +115,23 @@ export default function Hero({
     }
   };
 
-  useEffect(() => {
-    const video = videoRef.current;
-    const handleEnded = () => {
-      // Rewind to the beginning of the video
-      video.currentTime = 0;
-      // Play the video again
-      video.play();
-    };
+  // useEffect(() => {
+  //   const video = videoRef.current;
+  //   const handleEnded = () => {
+  //     // Rewind to the beginning of the video
+  //     video.currentTime = 0;
+  //     // Play the video again
+  //     video.play();
+  //   };
 
-    // Listen for the ended event to trigger looping
-    video.addEventListener('ended', handleEnded);
+  //   // Listen for the ended event to trigger looping
+  //   video.addEventListener('ended', handleEnded);
 
-    // Clean up event listener on unmount
-    return () => {
-      video.removeEventListener('ended', handleEnded);
-    };
-  }, []);
+  //   // Clean up event listener on unmount
+  //   return () => {
+  //     video.removeEventListener('ended', handleEnded);
+  //   };
+  // }, []);
 
   const handleNavigate = (event) => {
     event.preventDefault();

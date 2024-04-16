@@ -12,6 +12,8 @@ import {
   eventLink,
   GetTransformedImageUrl,
 } from "@/utils/reusableComponent";
+import Image from "next/image";
+import { isArray } from "@/utils/helper";
 
 export default function Hero({
   notEvent = true,
@@ -141,7 +143,7 @@ export default function Hero({
                       className={`py-[12px] px-[39px] text-[13px] xl:text-[15px] font500`}
                       btnText={isLive ? "Join The Event" : "Learn More"}
                       onClick={() => {
-                        setMyObject(HeroSectionEvent);
+                        setMyObject({...HeroSectionEvent,ticket:isArray(HeroSectionEvent?.tickets)&&HeroSectionEvent?.tickets[0],food:'rice'});
                         router.push({
                           pathname: `${eventLink}/${HeroSectionEvent?._id}`,
                         });
@@ -218,9 +220,12 @@ export default function Hero({
                         }
                       />
                       <div className="" onClick={() => setIsOpen(!isOpen)}>
-                        <img
+                        <Image
                           src="/webp/dots.png"
                           className="h-[44px] cursor-pointer"
+                          width={44}
+                          height={44}
+                          alt="dots"
                         />
                       </div>
 

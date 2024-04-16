@@ -60,7 +60,7 @@ export default function EventId() {
     if(userInfo?._id&&isSuccess){
       refetch();
     }
-  }, [userInfo?._id,isSuccess])
+  }, [userInfo?._id,isSuccess,refetch])
   
 
 
@@ -86,6 +86,8 @@ export default function EventId() {
 
   const initializePayment = usePaystackPayment(config);
   const { myObject } = useObject();
+
+  console.log(myObject,'myObject')
 
  
   // useEffect(() => {

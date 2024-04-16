@@ -25,7 +25,7 @@ export default function UserProfile({ onClick }) {
     setUserProfile(
       NoImageUser[checkIfNonImageExist?.nonProfileImage] || Avatar3
     );
-  }, [checkIfNonImageExist?.nonProfileImage]);
+  }, [checkIfNonImageExist?.nonProfileImage,UserLiveParte?.profile_image]);
 
 
   // console.log(UserLiveParte,data, "UserLiveParte?.profile_image");
@@ -37,6 +37,7 @@ export default function UserProfile({ onClick }) {
           width={40}
           height={40}
           className="object-cover rounded-full h-[40px] w-[40px]"
+          alt="profile-image"
         />
       ) : (
         userProfile

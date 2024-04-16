@@ -12,7 +12,7 @@ export default function GiftingCoins({
       <LiveStreamHeader title={`Gift Parte Coins`} onClose={onClose} />
 
       <div className="border-[#343F4B] border-[1px] bg-[#27292E]  flex items-center px-[12px] rounded-[8px] py-[7px] gap-[5px] mb-[16px] !h-[35px]">
-        <Image src={`/svg/coins.svg`} width={16} height={16} />
+        <Image src={`/svg/coins.svg`} width={16} height={16} alt="coins" className="w-[16px] g-[16px]" />
 
         <input 
         style={{boxShadow:'none'}}

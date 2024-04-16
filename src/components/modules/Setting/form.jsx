@@ -204,6 +204,7 @@ export default function SettingForm({
                   placeholder="blur"
                   blurDataURL={userInfo?.profile_image || imageUrl}
                   className="rounded-full object-cover h-[40px] w-[40px]"
+                  alt="user-profile-image"
                 />
               ) : (
                 userProfile
