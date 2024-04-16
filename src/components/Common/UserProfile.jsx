@@ -30,7 +30,7 @@ export default function UserProfile({ onClick }) {
 
   // console.log(UserLiveParte,data, "UserLiveParte?.profile_image");
   return (
-    <div onClick={onClick}>
+    <div className="cursor-pointer" onClick={onClick}>
       {data?.profile_image ? (
         <Image
           src={data?.profile_image || userProfilePic}

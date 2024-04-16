@@ -100,7 +100,7 @@ export default function SettingForm({
     };
     const handleRegisterUser = await UpdateUser(payload);
     const response = handleRegisterUser?.data;
-
+    // setValue('profile_image',response?.updatedUser?.profile_image)
     // console.log(response?.updatedUser      , "responseresponseresponse");
     storage.localStorage.set(userDetailStorageName, JSON.stringify(response?.updatedUser));
 
@@ -137,6 +137,7 @@ export default function SettingForm({
     const handleRegisterUser = await UpdatePassword(payload);
     const response = handleRegisterUser?.data;
 
+
     if (response?.statusCode && response?.statusCode !== 200) {
       if (CheckIfArray(response?.message)) {
         toast.error(response?.message[0]);
@@ -156,6 +157,7 @@ export default function SettingForm({
       setValue("id", data?._id);
       setValue("phone", data?.phone);
       setValue("fullName", data?.fullName);
+      // setValue('profile_image',data?.profile_image)
       return toast.success(response?.message);
     }
   }
@@ -198,11 +200,12 @@ export default function SettingForm({
             <div className="h-[40px] w-[40px]">
               {imageUrl || userInfo?.profile_image ? (
                 <Image
-                  src={imageUrl || userInfo?.profile_image}
+                  src={imageUrl || data?.profile_image||userInfo?.profile_image}
+                  key={imageUrl || data?.profile_image}
                   width={40}
                   height={40}
-                  placeholder="blur"
-                  blurDataURL={userInfo?.profile_image || imageUrl}
+                  // placeholder="blur"
+                  // blurDataURL={imageUrl || data?.profile_image}
                   className="rounded-full object-cover h-[40px] w-[40px]"
                   alt="user-profile-image"
                 />

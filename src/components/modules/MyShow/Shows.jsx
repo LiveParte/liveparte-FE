@@ -32,6 +32,7 @@ export default function Shows({
                 venue={item?.venue||item?.address}
                 showImage={item?.thumbnail_url.toString()}
                 isLive={false}
+                showVideo={false}
                 item={item}
                 onNext={(item)=>{
                   router.push('/livestream')
@@ -87,7 +88,7 @@ export default function Shows({
         {!isLoading&&OnDemandData?.length === 0 && (
           <div className="pb-[100px] lg:pb-[247px] h-[40vh] flex flex-col justify-center items-center">
             <div className="text-[24px] text-center md:text-left font600 text-[#FFFFFF] mb-[36px]">
-              You don’t have any on Demand Show
+              You don’t have any On Demand Show
             </div>
             <ButtonComp
               btnText={`Browse Events`}

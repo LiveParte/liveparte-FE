@@ -1,5 +1,5 @@
 import ButtonComp from "@/components/Ui/button";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import ReactPlayer from "react-player";
 import Image from "next/image";
 import Chat from "./submodules/chat";
@@ -9,26 +9,69 @@ import AgoraRTC, { AgoraRTCProvider, useRTCClient } from "agora-rtc-react";
 import LiveStreamVideo from "./submodules/livestreamVideo";
 import { myShowLink } from "@/utils/reusableComponent";
 import { LogoImage } from "@/utils/styleReuse";
+import UserProfile from "@/components/Common/UserProfile";
+import CustomDropDown from "@/components/Common/CustomDropDown";
+import { userApi } from "@/store/User/userApi";
+import { eventApi } from "@/store/Event/eventApi";
+import { transactionApi } from "@/store/Transaction/transactionApi";
+import { useDispatch } from "react-redux";
+import Link from "next/link";
 // Render a YouTube video player
 export default function LiveStream({
   isLive=false
 }) {
+  const router =useRouter();
+  const [isOpen, setIsOpen] = useState(false);
+  const dispatch =useDispatch();
   const [activeConnection, setActiveConnection] = useState(true);
-  
+  const dropdownRef = useRef(null);
+  function handleLogOut() {
+    dispatch(userApi.util.resetApiState());
+    dispatch(eventApi.util.resetApiState());
+    dispatch(transactionApi.util.resetApiState());
+    dispatch(logout());
+    // localStorage.removeItem(userDetailStorageName);
+    // localStorage.removeItem(accessTokenStorageName);
 
+    if (router?.pathname === myShowLink || router?.pathname === "/setting") {
+     
+      // window.location.reload();
+      return router.push("/");
+    }
+  }
+  function ProfileDropdown() {
+    return (
+      <CustomDropDown dropdownRef={dropdownRef} setIsOpen={setIsOpen}>
+        <div className=" bg-[#1B1C20] border-[1px] text-left border-[#343F4B] font500 text-[13px] md:text-[14px] text-white  rounded-[16px] md:w-[230px]    px-[40px] py-[24px]">
+          <Link
+            href={"/setting"}
+            className="py-[12px] cursor-pointer no-underline text-white "
+          >
+            Settings
+          </Link>
+          <div onClick={handleLogOut} className="py-[12px] cursor-pointer">
+            Log out
+          </div>
+          {/* <div className="py-[12px]">Add to Calendar</div> */}
+        </div>
+      </CustomDropDown>
+    );
+  }
   const agoraClient = useRTCClient(
     AgoraRTC.createClient({ codec: "vp8", mode: "rtc" })
   ); // Initialize Agora Client
   const MainContainer = `lg:px-[20px] lg:px-[60px] lg:px-[120px] relative`;
-  const router = useRouter();
   return (
     <AgoraRTCProvider client={agoraClient}>
       <main className={`${MainContainer}`}>
-        <div className="pt-[32px] pb-[27px] hidden lg:block">
-          {/* <LogoWhiteMobile /> */}
+       <div className="flex items-center justify-between">
+       <div className="pt-[32px] pb-[27px] hidden lg:block">
           <LogoImage router={router}/>
+         
         </div>
-
+        {isOpen && <ProfileDropdown />}
+        <UserProfile   onClick={() => setIsOpen(!isOpen)}/>
+       </div>
         <div className="flex flex-col lg:flex-row gap-[16px] ">
           <div className="  flex-1 bg-[#27292E] lg:pt-[32px] lg:px-[24px] lg:rounded-[16px]">
             <div className="px-[5px]  items-center justify-between mb-[23px] hidden lg:flex">
