@@ -10,14 +10,11 @@ const Footer = dynamic(() => import('@/components/Common/Footer'), {
   ssr: false
 });
 import NoAuth from "@/components/Layout/NoAuth";
-// import Hero from "@/components/modules/onDemand/Hero";
-// import Happening from "@/components/modules/Event/Happening";
-// import Footer from "@/components/Common/Footer";
 import { useRouter } from "next/router";
 import { useGetAllEventQuery, useGetEventOnDemandQuery } from "@/store/Event/eventApi";
 import moment from "moment";
 import { isArray } from '@/utils/helper';
-import MyComponent from '@/components/Common/SwiperII';
+import { Suspense } from 'react';
 
 
 export default function Home() {
@@ -50,7 +47,10 @@ export default function Home() {
   return (
    <div className='min-h-[100vh] bg-black'>
      <NoAuth>
+      {/* <Suspense fallback={<div>loading</div>}> */}
       <Hero isOnDemand={false} HeroSectionEvent={HeroSectionEvent}  router={router} notEvent={true} />
+
+      {/* </Suspense> */}
       <Happening  events={HappeningNow} upComingEvent={filteredEvents}  OnDemandEvent={OnDemandEvent}/>
       <Footer />
      

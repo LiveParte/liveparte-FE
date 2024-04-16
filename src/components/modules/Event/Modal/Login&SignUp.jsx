@@ -30,7 +30,6 @@ import {
 } from "@/utils/reusableComponent";
 import { eventApi } from "@/store/Event/eventApi";
 import { transactionApi } from "@/store/Transaction/transactionApi";
-import { useObject } from "@/Context/ObjectProvider";
 export default function LoginSignUp({
   closeModal,
   pageName = "",
@@ -41,7 +40,6 @@ export default function LoginSignUp({
 }) {
   const router = useRouter();
   const dispatch = useDispatch();
-  const {setRouterLoader}=useObject()
   const { id } = router?.query;
   // console.log(router, "routerrouter");
   const [toggle, setToggle] = useState("Login");
@@ -94,18 +92,18 @@ export default function LoginSignUp({
   }, [pageName]);
 
   async function handleRegister(e) {
-    if (e?.password !== e?.confirmPassword) {
-      return setError("confirmPassword", {
-        type: "custom",
-        message:
-          "The password and confirm password do not match. Please make sure they are the same.",
-      });
-    }
+    // if (e?.password !== e?.confirmPassword) {
+    //   return setError("confirmPassword", {
+    //     type: "custom",
+    //     message:
+    //       "The password and confirm password do not match. Please make sure they are the same.",
+    //   });
+    // }
     // e.preventDefault();
     const payload = {
       ...e,
-      username:e.fullName,
-      fullName:e?.fullName
+      username: e.fullName,
+      fullName: e?.fullName,
     };
     const handleRegisterUser = await RegisterUser(payload);
     const response = handleRegisterUser?.data;
@@ -127,9 +125,6 @@ export default function LoginSignUp({
           message: " Username is already in use",
         });
       }
-
-     
-      
 
       // response?.message[0],'hehehehe')
       if (
@@ -176,14 +171,13 @@ export default function LoginSignUp({
       );
 
       // store.dispatch(setUserData(userData));
-      
+
       storage.localStorage.set(userDetailStorageName, UserString);
       dispatch(setUserData(response?.user));
       // dispatch(baseApi.util.resetApiState());
 
       // console.log()
       if (router?.pathname === "/") {
-        setRouterLoader(eventLink)
         return router.push(eventLink);
       }
       if (onNext) {
@@ -248,7 +242,6 @@ export default function LoginSignUp({
 
       // }
       if (router?.pathname === "/") {
-        setRouterLoader(eventLink)
         return router.push(eventLink);
       }
       if (onNext) {
@@ -285,7 +278,7 @@ export default function LoginSignUp({
             </div>
           </div>
           <div
-            className="flex justify-end pb-[10px]  cursor-pointer absolute right-5 top-5"
+            className="flex justify-end pb-[10px]  cursor-pointer fixed right-5 top-5"
             onClick={closeModal}
           >
             <CloseModal />

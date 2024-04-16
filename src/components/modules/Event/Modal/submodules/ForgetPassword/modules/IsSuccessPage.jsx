@@ -9,6 +9,7 @@ import {
 import ButtonComp from "@/components/Ui/button";
 import { EmailSentIcon } from "../../../../../../../../public/svg";
 import BlurryImage from "@/components/Common/LazyLoader";
+import Image from "next/image";
 export default function IsSuccessPage({onNext}) {
   const { control, handleSubmit, getValues } = useForm({
     defaultValues: {
@@ -22,9 +23,13 @@ export default function IsSuccessPage({onNext}) {
   return (
     <div className="text-white px-[5vw]">
         {/* <EmailSentIcon/> */}
-        <BlurryImage
+        <Image
         src={`/svg/success.svg`}
-        classNameMain={'flex justify-center mb-[32px]'}
+        classNameMain={'flex justify-center mb-[32px] max-h-[87] max-w-[97'}
+         width={97}
+        height={87}
+        alt="success"
+      
         />
       <div className="text-center mb-[38px]">
         <div className=" text-[18px] font-medium mb-[8px]">

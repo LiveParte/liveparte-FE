@@ -5,7 +5,6 @@ import { MainContainer } from "@/utils/styleReuse";
 import ButtonComp from "@/components/Ui/button";
 import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
 import moment from "moment";
-import { useObject } from "@/Context/ObjectProvider";
 import { formatMoney } from "@/utils/formatMoney";
 import {
   CopyEventLink,
@@ -35,7 +34,6 @@ export default function Hero({
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const { setMyObject } = useObject();
   const [muted, setMuted] = useState(true);
 
   console.log(HeroSectionEvent, "HeroSectionEvent");
@@ -200,7 +198,6 @@ export default function Hero({
                       className={`py-[12px] px-[39px] text-[13px] xl:text-[15px] font500`}
                       btnText={isLive ? "Join The Event" : "Learn More"}
                       onClick={() => {
-                        setMyObject(HeroSectionEvent);
                         router.push({
                           pathname: `event/${HeroSectionEvent?._id}`,
                         });

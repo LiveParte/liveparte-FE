@@ -1,4 +1,3 @@
-import { useObject } from "@/Context/ObjectProvider";
 import { formatMoney } from "@/utils/formatMoney";
 import { isArray } from "@/utils/helper";
 import moment from "moment";
@@ -6,8 +5,7 @@ import { useRouter } from "next/router";
 import React from "react";
 import { BsDot } from "react-icons/bs";
 
-export default function ShowDetails({ onNext,item, id }) {
-  const { setMyObject } = useObject();
+export default function ShowDetails({ onNext, item, id }) {
   const router = useRouter();
   // console.log(item, "item");
 
@@ -20,7 +18,7 @@ export default function ShowDetails({ onNext,item, id }) {
               return onNext(item);
             }
 
-            setMyObject(item);
+           
             router.push({
               pathname: `event/${id}`,
             });
@@ -33,13 +31,19 @@ export default function ShowDetails({ onNext,item, id }) {
           </div>
           <div className="text-[#B4BECB] text-[14px] md:text-[15px] mb-[4px] mb:mb-[8px] font-medium font500 whitespace-nowrap overflow-hidden text-ellipsis  flex items-center font400">
             {moment(item?.event_date).format("MMM DD")}
-            <BsDot size={20} /> 
-            {moment(item?.event_date).format('h:mm a')}
+            <BsDot size={20} />
+            {moment(item?.event_date).format("h:mm a")}
           </div>
           <div className="text-[#B4BECB] text-[14px] md:text-[15px] mb-[10px] md:mb-[24px]  font-medium font500 whitespace-nowrap overflow-hidden text-ellipsis  font400">
             {item?.address}
           </div>
-          <div className="font500 font-medium">₦ {formatMoney(isArray(item?.tickets)&& item?.tickets[0]?.price, false)}</div>
+          <div className="font500 font-medium">
+            ₦{" "}
+            {formatMoney(
+              isArray(item?.tickets) && item?.tickets[0]?.price,
+              false
+            )}
+          </div>
         </div>
       </div>
     </div>

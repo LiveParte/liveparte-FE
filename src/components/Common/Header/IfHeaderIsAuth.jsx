@@ -7,7 +7,6 @@ import LoginSignUp from "@/components/modules/Event/Modal/Login&SignUp";
 import ForgetPassword from "@/components/modules/Event/Modal/submodules/ForgetPassword/ForgetPassword";
 import MyModal from "@/components/Ui/Modal";
 import { useRouter } from "next/router";
-import { useObject } from "@/Context/ObjectProvider";
 
 export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
   const [userDetail, setUserDetail] = useState(false);
@@ -15,12 +14,9 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
   const user = useSelector(selectCurrentUserData) || {};
   let [isOpen, setIsOpen] = useState();
   const { token } = router.query;
-  const {routerLoader}=useObject();
   // console.log(router?.pathname,token)
   // console.log("helllo");
 
-  const isRoute =routerLoader && routerLoader !== router?.pathname;
-  // console.log(routerLoader,router?.pathname,'routerLoader')
 
 
   // console.log(user, "user");

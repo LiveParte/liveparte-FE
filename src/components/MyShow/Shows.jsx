@@ -1,12 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { Play } from "../../../../public/svg";
-import moment from "moment";
 import { useRouter } from "next/router";
-import { useObject } from "@/Context/ObjectProvider";
-import Image from "next/image";
-// import ShowDetails from "./ShowDetails";
-// import ImageOrVideo from "";
+
 const ImageOrVideo = dynamic(() => import("./ImageOrVideo"), { ssr: false });
 const ShowDetails = dynamic(() => import("./ShowDetails"), { ssr: false });
 

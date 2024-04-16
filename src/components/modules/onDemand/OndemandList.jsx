@@ -9,7 +9,7 @@ export default function OnDemandList({ OnDemandEvent = [],HeroSectionEvent }) {
   const container = "pl-[20px] pr-[20px] lg:px-[60px]";
 
   return (
-    <div className={` mt-[32px] mb-[100px]`}>
+    <div className={` pt-[32px] mb-[100px] bg-black`}>
       <div className={`grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-x-[24px] gap-y-[40px] md:gap-y-[104px] ${container}`}>
         {OnDemandEvent?.slice(0,8)?.map((item, i) => (
           <ShowsCard onDemand={true} key={i} item={item} />
