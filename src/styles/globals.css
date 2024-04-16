@@ -72,6 +72,8 @@
 body {
   /* font-family: 'CustomFont' !important; */
   font-family: "MatterSQ-Medium", sans-serif, cursive !important;
+  min-height: 100vh;
+  background-color: black !important;
 }
 
 .swiper {

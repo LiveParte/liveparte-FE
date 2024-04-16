@@ -5,6 +5,7 @@ import { eventApi } from "./Event/eventApi";
 import { transactionApi } from "./Transaction/transactionApi";
 import { storage, userDetailStorageName } from "@/utils/helper";
 import { eventSlice } from "./Event";
+import { isJSON } from "@/utils/reusableComponent";
 
 export const store = configureStore({
   reducer: {
@@ -24,24 +25,17 @@ export const store = configureStore({
 
 const storedUserData = storage.localStorage.get(userDetailStorageName);
 
-const isJSON = (str) => {
-  try {
-    JSON.parse(str);
-    return true;
-  } catch (error) {
-    return false;
-  }
-};
 
-try {
-  if (storedUserData && isJSON(storedUserData)) {
-    const userData = JSON.parse(storedUserData);
-    store.dispatch(setUserData(userData));
-  } else {
-    console.error('Stored user data is not in JSON format or does not exist.');
-  }
-} catch (error) {
-  console.error(error.message);
+if (storedUserData && isJSON(storedUserData)) {
+  const userData = JSON.parse(storedUserData);
+  store.dispatch(setUserData(userData));
+} else {
+  // console.error('Stored user data is not in JSON format or does not exist.');
 }
+// try {
+  
+// } catch (error) {
+//   // console.error(error.message);
+// }
 
 export default store;

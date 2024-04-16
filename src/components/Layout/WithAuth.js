@@ -66,7 +66,7 @@ function WithAuth({ children }) {
   
 
   return (
-    <div className="min-h-[100vh] bg-white">
+    <div className="min-h-[100vh] bg-black flex flex-col justify-end">
       {isAuth ? children : <div></div>}
     </div>
   );
