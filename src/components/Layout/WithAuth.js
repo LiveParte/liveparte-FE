@@ -15,7 +15,7 @@ function WithAuth({ children }) {
   const [isAuth,setIsAuth] =useState(false);
   // alert("hello")
   const isAuthenticated =userInfo?._id;
-   console.log(userInfo,isError,'useSelector')
+  //  console.log(userInfo,isError,'useSelector')
   // const isAuthenticated =false;
 
   // console.log(isAuthenticated,user,'isAuthenticated')
