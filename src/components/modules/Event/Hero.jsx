@@ -123,12 +123,12 @@ export default function Hero({
     }}
     >
       <div className="">
-        <div className="absolute left-0 right-0  ">
+        {/* <div className="absolute left-0 right-0  ">
           <IfHeaderIsAuth
             openModal={openModalLoginSignUp || openModal}
             className="absolute top-0 left-0 right-0"
           />
-        </div>
+        </div> */}
         <div className="relative">
           <div className=" min-h-[100dvh] md:min-h-screen relative flex flex-col justify-end  ">
             {/* <div className="h-[100vh]" /> */}

@@ -15,6 +15,7 @@ import { useGetAllEventQuery, useGetEventOnDemandQuery } from "@/store/Event/eve
 import moment from "moment";
 import { isArray } from '@/utils/helper';
 import { Suspense } from 'react';
+import IfHeaderIsAuth from '@/components/Common/Header/IfHeaderIsAuth';
 
 
 export default function Home() {
@@ -47,6 +48,10 @@ export default function Home() {
   return (
    <div className='min-h-[100vh] bg-black'>
      <NoAuth>
+     <div className="absolute left-0 right-0 z-50 top-0">
+          <IfHeaderIsAuth
+          />
+        </div>
       {/* <Suspense fallback={<div>loading</div>}> */}
       <Hero isOnDemand={false} HeroSectionEvent={HeroSectionEvent}  router={router} notEvent={true} />
 

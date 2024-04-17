@@ -28,9 +28,8 @@ export default function Home() {
 
   return (
     <NoAuth>
-       <div className="absolute left-0 right-0 z-90">
+       <div className="absolute left-0 right-0 z-50 top-0">
           <IfHeaderIsAuth
-           
           />
         </div>
       <Hero/>

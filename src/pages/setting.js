@@ -5,6 +5,7 @@ import Header from "@/components/modules/MyShow/Header";
 // import SettingForm from "@/components/modules/Setting/form";
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
+import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
 
 const SettingForm = dynamic(() => import("@/components/modules/Setting/form"), {
   ssr: false,
@@ -55,7 +56,7 @@ export default function Setting() {
   return (
     <WithAuth>
       <div className="bg-[#060809] min-h-[100vh]  flex flex-col  relative">
-        <AuthHeader showNav />
+        <IfHeaderIsAuth showNav />
         <Header
           Data={HeaderData}
           isActive={isActive}
