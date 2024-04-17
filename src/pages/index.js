@@ -3,6 +3,7 @@ import Footer from "@/components/Common/Footer";
 import { useRouter } from "next/router";
 import dynamic from 'next/dynamic';
 import Hero from "@/components/modules/LandingPage/Hero.jsx";
+import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
 // const Hero = dynamic(() => import('@/components/modules/LandingPage/Hero'), {
 //   ssr: false
 // });
@@ -27,6 +28,11 @@ export default function Home() {
 
   return (
     <NoAuth>
+       <div className="absolute left-0 right-0 z-90">
+          <IfHeaderIsAuth
+           
+          />
+        </div>
       <Hero/>
       <FavoriteShow/>
       <Features/>
