@@ -69,6 +69,11 @@
   font-family: "Inter", sans-serif;
 }
 
+html{
+  min-height: 100vh;
+  background-color: black !important;
+}
+
 body {
   /* font-family: 'CustomFont' !important; */
   font-family: "MatterSQ-Medium", sans-serif, cursive !important;

@@ -39,7 +39,7 @@ export default function MyShows() {
   const [isActive, setIsActive] = useState(HeaderData[0]?.name);
   return (
     <WithAuth>
-    <div className="bg-[#060809] min-h-[100vh]  relative">
+    <div className="bg-[#060809] min-h-[100vh]  relative pt-32">
      
 
       <Header
