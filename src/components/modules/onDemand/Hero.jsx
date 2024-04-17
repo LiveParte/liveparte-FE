@@ -166,14 +166,14 @@ export default function Hero({
         Your browser does not support the video tag.
       </video>
       <div className="">
-        {showHeader && (
+        {/* {showHeader && (
           <div className="absolute left-0 right-0  ">
             <IfHeaderIsAuth
               openModal={openModalLoginSignUp || openModal}
               className="absolute top-0 left-0 right-0"
             />
           </div>
-        )}
+        )} */}
         <div className="relative">
           <div className=" min-h-[100dvh] md:min-h-screen relative flex flex-col justify-end  ">
             {/* <div className="h-[100vh]" /> */}
@@ -273,6 +273,7 @@ export default function Hero({
                   <div ref={dropdownRef}>
                     <div className="mb-[100px] hidden md:flex gap-[16px] items-center relative">
                       {isOpen && <DropdownMenu />}
+                     {HeroSectionEvent?.ticket?.price &&
                       <ButtonComp
                         isDisabled={eventIsPurchase}
                         onClick={() => {
@@ -291,7 +292,7 @@ export default function Hero({
                                 isArray(HeroSectionEvent?.tickets)
                                   ? ""
                                   : ""
-                              } ₦${formatMoney(
+                              } ₦${formatMoneyormatMoney(
                                 HeroSectionEvent?.ticket?.price ||
                                   (isArray(HeroSectionEvent?.tickets) &&
                                     HeroSectionEvent?.tickets[0]?.price) ||
@@ -300,6 +301,7 @@ export default function Hero({
                               )}`
                         }
                       />
+}
                       <div className=" cursor-pointer" onClick={toggleMute}>
                         {/* <img
                           src="/webp/dots.png"

@@ -21,16 +21,16 @@ function WithAuth({ children }) {
   // console.log(isAuthenticated,user,'isAuthenticated')
 
   useEffect(() => {
-    setIsAuth(userInfo?._id)
+    setIsAuth()
   }, [userInfo?._id])
   
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      // router.push("/");
+    if (!userInfo?._id) {
+      router.push("/");
       
     }
-  }, [isAuthenticated]);
+  }, [userInfo?._id]);
 
   // useEffect(() => {
   //   if (!user?._id) {
