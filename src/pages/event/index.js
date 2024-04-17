@@ -48,10 +48,7 @@ export default function Home() {
   return (
    <div className='min-h-[100vh] bg-black'>
      <NoAuth>
-     <div className="absolute left-0 right-0 z-50 top-0">
-          <IfHeaderIsAuth
-          />
-        </div>
+     
       {/* <Suspense fallback={<div>loading</div>}> */}
       {HeroSectionEvent?._id &&<Hero isOnDemand={false} HeroSectionEvent={HeroSectionEvent}  router={router} notEvent={true} />}
 

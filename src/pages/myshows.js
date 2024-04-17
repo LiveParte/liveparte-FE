@@ -40,7 +40,7 @@ export default function MyShows() {
   return (
     <WithAuth>
     <div className="bg-[#060809] min-h-[100vh]  relative">
-      <IfHeaderIsAuth/>
+     
 
       <Header
         Data={HeaderData}
