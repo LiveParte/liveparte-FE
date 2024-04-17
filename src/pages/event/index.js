@@ -53,7 +53,7 @@ export default function Home() {
           />
         </div>
       {/* <Suspense fallback={<div>loading</div>}> */}
-      <Hero isOnDemand={false} HeroSectionEvent={HeroSectionEvent}  router={router} notEvent={true} />
+      {HeroSectionEvent?._id &&<Hero isOnDemand={false} HeroSectionEvent={HeroSectionEvent}  router={router} notEvent={true} />}
 
       {/* </Suspense> */}
       <Happening  events={HappeningNow} upComingEvent={filteredEvents}  OnDemandEvent={OnDemandEvent}/>
