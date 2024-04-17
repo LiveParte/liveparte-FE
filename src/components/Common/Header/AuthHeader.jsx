@@ -114,6 +114,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
             <Link
               href={eventLink}
               className="  cursor-pointer text-white no-underline"
+              as={eventLink}
             >
               Browse Events
             </Link>
@@ -122,6 +123,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           <Link
             href={myShowLink}
             className={`py-[25px]  cursor-pointer no-underline text-white mb-2 `}
+            as={myShowLink}
           >
             My Shows
           </Link>
@@ -143,6 +145,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
             <Link
               href="/setting"
               className="py-[25px]  cursor-pointer text-white no-underline"
+              as="/setting"
             >
               Settings
             </Link>
@@ -173,6 +176,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           <Link
             href={"/setting"}
             className="py-[12px] cursor-pointer no-underline text-white "
+            as={"/setting"}
           >
             Settings
           </Link>

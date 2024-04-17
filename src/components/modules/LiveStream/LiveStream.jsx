@@ -46,6 +46,7 @@ export default function LiveStream({
           <Link
             href={"/setting"}
             className="py-[12px] cursor-pointer no-underline text-white "
+            as={'/setting'}
           >
             Settings
           </Link>

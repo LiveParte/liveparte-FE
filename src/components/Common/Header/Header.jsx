@@ -38,8 +38,8 @@ export default function Header({ className, openModal }) {
           </div>
         </div>
         <div className="text-[15px] text-white font500 flex-1 flex flex-col">
-          <Link onClick={handleCheckIfITHome} href={eventLink} className="py-[25px]  cursor-pointer no-underline text-white">Browse Events</Link>
-          <Link onClick={handleCheckIfITHome} href={onDemandLink} className="py-[12px]  cursor-pointer no-underline text-white">On Demand</Link>
+          <Link onClick={handleCheckIfITHome} href={eventLink} as={eventLink} className="py-[25px]  cursor-pointer no-underline text-white">Browse Events</Link>
+          <Link onClick={handleCheckIfITHome} href={onDemandLink} as={onDemandLink} className="py-[12px]  cursor-pointer no-underline text-white">On Demand</Link>
         </div>
 
         {/* <ButtonComp
@@ -75,6 +75,9 @@ export default function Header({ className, openModal }) {
         {/* <LogoImage router={router}/> */}
 
           <div className="flex items-center gap-[24px]">
+            {/* <Link className={` p-0 m-0 font-medium  hidden lg:block  px-[16px] md:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${isEvent &&isSelected}  text-[13px]   !h-[32px]`} href={eventLink} as={eventLink}>
+          Browse Events
+            </Link> */}
             <ButtonComp
               btnText="Browse Events"
               className={` font-medium  hidden lg:block  px-[16px] md:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${isEvent &&isSelected}  text-[13px]   !h-[32px]`}

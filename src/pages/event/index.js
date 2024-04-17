@@ -14,7 +14,6 @@ import { useRouter } from "next/router";
 import { useGetAllEventQuery, useGetEventOnDemandQuery } from "@/store/Event/eventApi";
 import moment from "moment";
 import { isArray } from '@/utils/helper';
-import { Suspense } from 'react';
 import IfHeaderIsAuth from '@/components/Common/Header/IfHeaderIsAuth';
 
 
@@ -52,11 +51,9 @@ export default function Home() {
           <IfHeaderIsAuth
           />
         </div>
-      {/* <Suspense fallback={<div>loading</div>}> */}
-      <Hero isOnDemand={false} HeroSectionEvent={HeroSectionEvent}  router={router} notEvent={true} />
+     {HeroSectionEvent?._id && <Hero isOnDemand={false} HeroSectionEvent={HeroSectionEvent}  router={router} notEvent={true} />}
 
-      {/* </Suspense> */}
-      <Happening  events={HappeningNow} upComingEvent={filteredEvents}  OnDemandEvent={OnDemandEvent}/>
+      {/* <Happening  events={HappeningNow} upComingEvent={filteredEvents}  OnDemandEvent={OnDemandEvent}/> */}
       <Footer />
      
     </NoAuth>

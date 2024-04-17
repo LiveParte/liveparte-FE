@@ -26,4 +26,5 @@ module.exports = {
   plugins: [
     // require('flowbite/plugin'),
   ],
+  mode: 'jit',
 };

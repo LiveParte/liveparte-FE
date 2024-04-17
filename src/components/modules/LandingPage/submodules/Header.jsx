@@ -40,7 +40,8 @@ const isSelected=`border-[#262C32] border-[1px] backdrop-blur-[60px] !bg-[#BAD6F
         <div className="text-[15px] text-white font500 flex-1 flex flex-col">
           <Link
             onClick={handleCheckIfITHome}
-            href={"/event"}
+            href={eventLink}
+            as={eventLink}
             className="py-[12px]  cursor-pointer no-underline text-white"
           >
             Browse Events
@@ -48,6 +49,7 @@ const isSelected=`border-[#262C32] border-[1px] backdrop-blur-[60px] !bg-[#BAD6F
           <Link
             onClick={handleCheckIfITHome}
             href={"/"}
+            as={'/'}
             className="py-[12px]  cursor-pointer no-underline text-white"
           >
             On Demand
