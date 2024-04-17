@@ -11,10 +11,19 @@ const nextConfig = {
     // number of pages that should be kept simultaneously without being disposed
     pagesBufferLength: 1,
   },
+  // images: {
+  //   domains: ['res.cloudinary.com', 'url.com', 'imagedomain.com', 'imagedomain2.com'],
+  // },
   images: {
-    domains: ['res.cloudinary.com', 'url.com', 'imagedomain.com', 'imagedomain2.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
+        pathname: '**',
+      },
+    ],
   },
-  mode: 'jit',
+  // mode: 'jit',
 
 }
  

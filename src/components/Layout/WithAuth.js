@@ -4,9 +4,10 @@ import { isAuth, logout, selectCurrentUserData } from "@/store/User";
 import { useGetUserProfileQuery } from "@/store/User/userApi";
 import { decryptObject, storage, userDetailStorageName } from "@/utils/helper";
 import {  useSelector,useDispatch } from 'react-redux';
+import IfHeaderIsAuth from "../Common/Header/IfHeaderIsAuth";
 
 
-function WithAuth({ children }) {
+function WithAuth({ children,showHeader=true }) {
   const router = useRouter();
   const userInfo =useSelector(selectCurrentUserData);
 
@@ -15,13 +16,13 @@ function WithAuth({ children }) {
   const [isAuth,setIsAuth] =useState(false);
   // alert("hello")
   const isAuthenticated =userInfo?._id;
-   console.log(userInfo,isError,'useSelector')
+  //  console.log(userInfo,isError,'useSelector')
   // const isAuthenticated =false;
 
   // console.log(isAuthenticated,user,'isAuthenticated')
 
   useEffect(() => {
-    setIsAuth()
+    setIsAuth(true)
   }, [userInfo?._id])
   
 
@@ -67,6 +68,9 @@ function WithAuth({ children }) {
 
   return (
     <div className="min-h-[100vh] bg-black flex flex-col justify-end">
+      {showHeader&&<div className="absolute left-0 right-0 z-50 top-0">
+        <IfHeaderIsAuth />
+      </div>}
       {isAuth ? children : <div></div>}
     </div>
   );
