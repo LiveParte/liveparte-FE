@@ -6,7 +6,6 @@ import { useRouter } from "next/router";
 import { isArray } from "@/utils/helper";
 import { eventLink } from "@/utils/reusableComponent";
 import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
-// const OnDemandListLazyLoad = withLazyLoad(OnDemandList);
 const Hero = dynamic(() => import("@/components/modules/onDemand/Hero"), {
   ssr: false,
 });
