@@ -14,6 +14,7 @@ const nextConfig = {
   images: {
     domains: ['res.cloudinary.com', 'url.com', 'imagedomain.com', 'imagedomain2.com'],
   },
+  mode: 'jit',
 
 }
  
