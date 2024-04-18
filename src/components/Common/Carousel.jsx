@@ -21,6 +21,7 @@ export default function Carousel({
   return (
     <>
       <Swiper
+      loop
         modules={[Navigation,A11y]}
         navigation={{
           prevEl: rightBtnName,

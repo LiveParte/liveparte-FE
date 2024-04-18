@@ -38,7 +38,7 @@ export default function Hero({
 
   const eventIsPurchase = HeroSectionEvent?.pruchase?.id;
   const isLive = HeroSectionEvent?.isLiveStreamed?true:false;
-  console.log(HeroSectionEvent,eventIsPurchase, "HeroSectionEvent");
+  // console.log(HeroSectionEvent,eventIsPurchase, "HeroSectionEvent");
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -181,12 +181,12 @@ export default function Hero({
             <div
               className={`relative z-40  mt-[40vh] flex flex-col  md:justify-start items-center md:items-start  text-center  md:text-start`}
             >
-              <div className="hidden md:block">
+              {/* <div className="hidden md:block">
                 <Daviod />
               </div>
               <div className="block md:hidden">
                 <Daviod width="77" height="35" />
-              </div>
+              </div> */}
               <div className="mt-[16px] text-[36px] lg:text-[92px] md:text-left font-1 text-white font-bold uppercase lg:mb-[32px] leading-[40px] md:leading-[46px] lg:leading-[90px] lg:w-[80%] line-clamp-3">
                 {HeroSectionEvent?.address}
               </div>

@@ -1,25 +1,9 @@
 import React from "react";
-import { FloatingLabelInput } from "@/components/Ui/TextInput";
-import { useRegisterApiMutation } from "@/store/User/userApi";
-import { useForm, Controller } from "react-hook-form";
-import {
-  ForgetPasswordForm,
-  SignUpForm,
-} from "@/components/modules/Event/Data";
+import { useForm, } from "react-hook-form";
 import ButtonComp from "@/components/Ui/button";
-import { EmailSentIcon } from "../../../../../../../../public/svg";
-import BlurryImage from "@/components/Common/LazyLoader";
 import Image from "next/image";
 export default function IsSuccessPage({onNext}) {
-  const { control, handleSubmit, getValues } = useForm({
-    defaultValues: {
-      email: "",
-      username: "",
-      password: "",
-      phoneNumber: "",
-      fullName: "",
-    },
-  });
+ 
   return (
     <div className="text-white px-[5vw]">
         {/* <EmailSentIcon/> */}

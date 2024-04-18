@@ -137,13 +137,13 @@ export default function Hero({
               className={`relative z-40  mt-[40vh] flex flex-col  md:justify-start items-center md:items-start  text-center  md:text-start`}
             >
               <div className="hidden md:block">
-                <Daviod />
+                {/* <Daviod /> */}
               </div>
               <div className="block md:hidden">
-                <Daviod width="77" height="35" />
+                {/* <Daviod width="77" height="35" /> */}
               </div>
               <div className="mt-[16px] text-[36px] lg:text-[92px] md:text-left font-1 text-white font-bold uppercase lg:mb-[32px] leading-[40px] md:leading-[46px] lg:leading-[90px] lg:w-[80%] line-clamp-3">
-                {HeroSectionEvent?.address}
+                {HeroSectionEvent?.name}
               </div>
               {/*  */}
               {notEvent ? (

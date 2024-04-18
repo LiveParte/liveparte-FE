@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {  ErrorNotificationIcon, SuccessNotificationIcon } from "../../public/svg";
 import 'react-toastify/dist/ReactToastify.css';
+import { storage, userDetailStorageName } from "./helper";
 
 export function CountdownTimerII({ initialTime, onTimerEnd }) {
   const [time, setTime] = useState(240);
@@ -90,6 +91,8 @@ export const myShowLink=`/myshows`;
 export const eventLink=`/event`;
 export const singleEventLink=`/event/[id]`;
 export const onDemandLink=`/event/ondemand`;
+export const settingLink=`/setting`
+export const liveStreamLink=`/livestream`
 
 export const CopyEventLink =({link})=>{
   return  `https://staging.liveparte.com/event/${link}`
@@ -127,3 +130,6 @@ export const isJSON = (str) => {
     return false;
   }
 };
+
+const userData = storage.localStorage.get(userDetailStorageName);
+export const CheckUser =isJSON(userData)&&JSON?.parse(userData)

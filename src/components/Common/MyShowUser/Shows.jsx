@@ -32,10 +32,7 @@ export default function UserShowsCard({
 
   const videoRef = useRef(null);
   const noVideoRef = useRef(null);
-  const backUrl =
-    id == 1
-      ? `bg-[url('https://res.cloudinary.com/dammymoses/image/upload/v1710175667/LiveParte/a7_zeemus.png')]`
-      : `bg-[url('/webp/show2.png')]`;
+  
   // console.log(showImage, "showImage");
 
   const handleMouseEnter = () => {
@@ -56,7 +53,7 @@ export default function UserShowsCard({
 
   return (
     <div
-      className={` relative h-[35vh] md:h-[40vh] lg:h-[55vh] rounded-[8px] lg:rounded-[20px] ${backUrl} bg-cover bg-center bg-gradient-to-b from-black to-transparent  overflow-hidden group cursor-pointer duration-300 ease-in-out group-hover:opacity-100 `}
+      className={` relative h-[35vh] md:h-[40vh] lg:h-[55vh] rounded-[8px] lg:rounded-[20px] bg-cover bg-center bg-gradient-to-b from-black to-transparent  overflow-hidden group cursor-pointer duration-300 ease-in-out group-hover:opacity-100 `}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onTouchStart={handleMouseEnter}

@@ -88,7 +88,7 @@ export default function SettingForm({
       "username",
       data?.fullName ||data?.username
     );
-  }, [data?._id, data, userInfo]);
+  }, [data?._id, data, userInfo,setValue]);
 
   const confirmPassword = watch("confirmPassword");
 
@@ -100,11 +100,12 @@ export default function SettingForm({
     };
     const handleRegisterUser = await UpdateUser(payload);
     const response = handleRegisterUser?.data;
-    // setValue('profile_image',response?.updatedUser?.profile_image)
-    // console.log(response?.updatedUser      , "responseresponseresponse");
-    storage.localStorage.set(userDetailStorageName, JSON.stringify(response?.updatedUser));
-
-    const UserString = JSON.stringify(response?.user);
+    const UserString = JSON.stringify(response?.updatedUser);
+    setValue('profile_image',response?.updatedUser?.profile_image)
+    // console.log(response?.updatedUser, "responseresponseresponse");
+    // storage.localStorage.set(userDetailStorageName, JSON.stringify(response?.updatedUser));
+    response?.updatedUser?._id&& storage.localStorage.set(userDetailStorageName, UserString);
+   
 
     if (response?.statusCode && response?.statusCode !== 200) {
       CheckIfArray(response?.message)
@@ -188,7 +189,7 @@ export default function SettingForm({
   //   "userInfo"
   // );
   // console.log(CheckPhoneNumber(),'CheckPhoneNumber')
-
+  // console.log(imageUrl,userInfo?.profile_image,data?.profile_image,'data?.profile_image')
   const isChangedState =CheckPhoneNumber()||CheckUserName()||imageUrl;
 
   return (
@@ -198,7 +199,7 @@ export default function SettingForm({
           <div className="h-[40px] w-[40px]">
             {/* <NoProfile /> */}
             <div className="h-[40px] w-[40px]">
-              {imageUrl || userInfo?.profile_image ? (
+              {imageUrl || userInfo?.profile_image||data?.profile_image ? (
                 <Image
                   src={imageUrl || data?.profile_image||userInfo?.profile_image}
                   key={imageUrl || data?.profile_image}

@@ -1,4 +1,3 @@
-import AuthHeader from "@/components/Common/Header/AuthHeader";
 import dynamic from "next/dynamic";
 import Footer from "@/components/Common/Footer";
 import { useUserShowsQuery } from "@/store/Event/eventApi";
@@ -6,15 +5,11 @@ import { selectCurrentUserData } from "@/store/User";
 import React, { useEffect, useState } from "react";
 import {  useSelector } from 'react-redux';
 import WithAuth from "@/components/Layout/WithAuth";
-import { storage, userDetailStorageName } from "@/utils/helper";
-import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
-// import Header from "@/components/modules/MyShow/Header";
 const Shows =dynamic(()=>import('@/components/modules/MyShow/Shows'),{ssr:false})
 const Header =dynamic(()=>import('@/components/modules/MyShow/Header'),{ssr:false})
 export default function MyShows() {
   const userInfo =useSelector(selectCurrentUserData);
-  // let userInfo =storage["localStorage"]?.get(userDetailStorageName)
-  // console.log(user,'user')
+
   const {data:userShows,isLoading,refetch,isSuccess}=useUserShowsQuery(userInfo?._id,{
     skip:!userInfo?._id
   })
@@ -25,9 +20,7 @@ export default function MyShows() {
     {
       name: "On Demand",
     },
-    // {
-    //   name: "Past",
-    // },
+   
   ];
 
   useEffect(() => {

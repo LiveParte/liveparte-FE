@@ -27,9 +27,9 @@ export default function GiftingCoins({
         />
       </div>
 
-      {/* <div className="text-center text-[#00A699] text-[13px] underline mb-[10px] cursor-pointer" onClick={onNext}>
+      <div className="text-center md:hidden text-[#00A699] text-[13px] underline mb-[10px] cursor-pointer" onClick={onNext}>
         Purchase Parte Coins
-      </div> */}
+      </div>
     </div>
   );
 }

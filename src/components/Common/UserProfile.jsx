@@ -13,7 +13,7 @@ export default function UserProfile({ onClick }) {
   const [userProfilePic, setUserProfilePic] = useState();
   const { data, isLoading, isError } = useGetUserProfileQuery();
 
-  console.log(data?.profile_image, "datadata");
+  // console.log(data?.profile_image, "datadata");
 
   //
   const [userProfile, setUserProfile] = useState();

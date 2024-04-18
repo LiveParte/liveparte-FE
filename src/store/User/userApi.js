@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseQuery } from "../api";
+import { logout } from ".";
 
 export const userApi = createApi({
   reducerPath: "userApi",
@@ -69,6 +70,11 @@ export const userApi = createApi({
     //admin/admin-management
     //auth/change-password
   }),
+  onQueryError: async ({ error, dispatch }) => {
+    if (error.status === 401) {
+      await dispatch(logout());
+    }
+  },
 });
 
 export const {
