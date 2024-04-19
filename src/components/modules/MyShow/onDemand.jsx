@@ -1,17 +1,14 @@
-import Carousel from "@/components/Common/Carousel";
 import React from "react";
-import { dummyShowDataII } from "../Event/Data";
 import ButtonComp from "@/components/Ui/button";
 import { useRouter } from "next/router";
-import ShowsCard from "@/components/Common/MyShow/Shows";
-import { eventLink, liveStreamLink, onDemandLink } from "@/utils/reusableComponent";
+import {  liveStreamLink, onDemandLink } from "@/utils/reusableComponent";
 import UserShowsCard from "@/components/Common/MyShowUser/Shows";
 import { useDispatch } from "react-redux";
 import { setLiveStreamEventData } from "@/store/Event";
 import { MainContainer } from "@/utils/styleReuse";
 // import UserShowsCard from "@/components/UserShow";
 
-export default function Shows({
+export default function OnDemand({
   Data=[],
   isLoading,
   isActive,
@@ -19,8 +16,7 @@ export default function Shows({
 }) {
   const router = useRouter();
   const dispatch =useDispatch()
-  const container =
-    "px-[20px] md:px-[40px] lg:px-[120px] ";
+  const container =MainContainer;
   const isLength = Data?.length;
 
   const handleOnClick = (item) =>{
@@ -29,7 +25,7 @@ export default function Shows({
   }
   return (
     <>
-    { isActive=="Upcoming"&&
+    {
     <div className="pb-[50px] lg:pb-[10px]">
       <div className={MainContainer}>
         {isLength > 0 && (
@@ -54,13 +50,13 @@ export default function Shows({
         {!isLoading&&isLength === 0 && (
           <div className="pb-[100px] lg:pb-[247px] h-[60vh] flex flex-col justify-center items-center">
             <div className="text-[24px] text-center md:text-left font600 text-[#FFFFFF] mb-[36px]">
-              You don’t have any event ticket purchased
+            You don’t have any On Demand Show
             </div>
             <ButtonComp
-              btnText={`Browse Events`}
+              btnText={`Browse On Demand`}
               className={`text-[13px] text-[#000000] font500 h-[44px] rounded-[8px] px-[16px] py-[12px]`}
               onClick={()=>{
-                router.push(eventLink)
+                router.push(onDemandLink)
               }}
             />
           </div>
@@ -68,7 +64,7 @@ export default function Shows({
       </div>
     </div>}
 
-   
+    
     </>
    
   );

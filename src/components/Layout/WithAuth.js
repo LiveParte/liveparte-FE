@@ -20,11 +20,14 @@ function WithAuth({ children, showHeader = true }) {
   });
 
 
-  console.log(data,isLoading,isError)
+  // console.log(userInfo)
+
+  // console.log(data,isLoading,isError)
 
   useEffect(() => {
-    if(!isLoading &&data?._id){
-      // router.push('/');
+    if(!userInfo?._id){
+      router.push('/');
+      // alert('you are out')
       // dispatch(logout());
       
     }
@@ -35,7 +38,7 @@ function WithAuth({ children, showHeader = true }) {
     else{
       setIsAuth(true)
     }
-  }, [isAuthenticated, router]);
+  }, [isAuthenticated, router,userInfo?._id]);
 
 
   if (!isAuth) {

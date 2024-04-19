@@ -65,7 +65,7 @@ export default function CheckOut({
         <PaystackConsumer {...componentProps} >
           {({initializePayment}) =>
            <ButtonComp
-           isDisabled={eventIsPurchase}
+           isDisabled={eventIsPurchase||!Data?.name}
               btnText={eventIsPurchase?`Ticket already purchased`:`Proceed To Make Payment -  ₦${formatMoney(Data?.ticket?.price||"", false || "0")} `}
               className={`w-full text-[13px] font500] h-[44px] `}
               onClick={() => initializePayment(handleSuccess, handleClose)}

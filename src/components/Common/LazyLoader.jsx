@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Image from 'next/image';
 
-const BlurryImage = ({ src, alt, width, height, className, classNameMain }) => {
+const BlurryImage = ({ src, alt, width, height, className,  }) => {
   const [loaded, setLoaded] = useState(true);
 
   const handleLoad = () => {
@@ -10,7 +10,7 @@ const BlurryImage = ({ src, alt, width, height, className, classNameMain }) => {
 
   return (
     <div
-      className={`overflow-hidden ${classNameMain}`}
+      className={`overflow-hidden `}
       style={{ position: "relative", width: width || "100%", height: height || "100%" }}
     >
       <Image

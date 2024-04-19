@@ -4,6 +4,7 @@ import { MainContainer } from "@/utils/styleReuse";
 import { ArrowLeft, ArrowRight } from "../../../../../public/svg";
 import dynamic from "next/dynamic";
 import { useSwiper } from "swiper/react";
+import Image from "next/image";
 const Carousel = dynamic(() => import("@/components/Common/Carousel"), {
   ssr: false,
 });
@@ -17,14 +18,14 @@ export default function HappeningNow({ events = [] }) {
         <div className={`text-[20px] font500 text-white `}>Happening Now</div>
         <div className="flex items-center gap-[16px]">
           <div className="hidden md:flex items-center gap-[16px] ">
-            <div className="button-next relative">
-              <ArrowLeft />
-              <div className="bg-transparent absolute left-0 right-0 top-0 bottom-0 z-10"></div>
-            </div>
-            <div className="button-prev relative">
-              <ArrowRight />
-              <div className="bg-transparent absolute left-0 right-0 top-0 bottom-0 z-10"></div>
-            </div>
+            <button className="button-next relative">
+              <Image src={'/icons/arrowLeft.png'} alt="rightArrow" width={30} height={30}/>
+            {/* <div className="border py-[6px] px-[9px] bg-red-700"><i class="arrow right"></i></div>  <div className="bg-transparent absolute left-0 right-0 top-0 bottom-0 z-10"></div> */}
+            </button>
+            <button className="button-prev relative">
+            <Image src={'/icons/arrowRight.png'} alt="LeftArrow" width={30} height={30}/>
+
+            </button>
           </div>
         </div>
       </div>

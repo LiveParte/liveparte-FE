@@ -56,9 +56,10 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
       name: "SignUp",
       component: (
         <LoginSignUp
-          className={`tallT:min-h-[65vh]`}
+          className={``}
           pageName="signUp"
           closeModal={closeModal}
+          handleForgetPasswordToggle={() => openModal("ForgetPassword")}
         />
       ),
     },
