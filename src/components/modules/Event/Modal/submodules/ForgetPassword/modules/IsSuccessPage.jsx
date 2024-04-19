@@ -9,7 +9,7 @@ export default function IsSuccessPage({onNext}) {
         {/* <EmailSentIcon/> */}
         <Image
         src={`/svg/success.svg`}
-        classNameMain={'flex justify-center mb-[32px] max-h-[87] max-w-[97'}
+        // classNameMain={'flex justify-center mb-[32px] max-h-[87] max-w-[97'}
          width={97}
         height={87}
         alt="success"

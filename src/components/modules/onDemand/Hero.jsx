@@ -18,14 +18,14 @@ export default function Hero({
   notEvent = true,
   // router,
   openModal,
-  openModalLoginSignUp,
+  // openModalLoginSignUp,
   giftTicket,
   openModalShareEvent,
   HeroSectionEvent,
-  makePayment,
-  IsBought,
-  myShowLoader,
-  showHeader = true,
+  // makePayment,
+  // IsBought,
+  // myShowLoader,
+  // showHeader = true,
   showStatus = true,
   showTopGradient = false,
   isOnDemand = true,
@@ -273,14 +273,14 @@ export default function Hero({
                   <div ref={dropdownRef}>
                     <div className="mb-[100px] hidden md:flex gap-[16px] items-center relative">
                       {isOpen && <DropdownMenu />}
-                     {HeroSectionEvent?.ticket?.price &&
+                     {HeroSectionEvent?._id&&
                       <ButtonComp
                         isDisabled={eventIsPurchase}
                         onClick={() => {
                           if (eventIsPurchase) {
                             return;
                           }
-                          openModal(HeroSectionEvent);
+                          openModal&&openModal(HeroSectionEvent);
                           // eventIsPurchase ? null : openModal(HeroSectionEvent)
                         }}
                         className={`py-[12px] px-[39px] text-[13px] xl:text-[15px] font500`}
@@ -292,7 +292,7 @@ export default function Hero({
                                 isArray(HeroSectionEvent?.tickets)
                                   ? ""
                                   : ""
-                              } ₦${formatMoneyormatMoney(
+                              } ₦${formatMoney(
                                 HeroSectionEvent?.ticket?.price ||
                                   (isArray(HeroSectionEvent?.tickets) &&
                                     HeroSectionEvent?.tickets[0]?.price) ||

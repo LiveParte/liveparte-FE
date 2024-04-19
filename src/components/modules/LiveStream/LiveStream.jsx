@@ -15,6 +15,7 @@ import { eventApi } from "@/store/Event/eventApi";
 import { transactionApi } from "@/store/Transaction/transactionApi";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
+import { logout } from "@/store/User";
 // Render a YouTube video player
 export default function LiveStream({ isLive = false, liveStreamDetail }) {
   const router = useRouter();

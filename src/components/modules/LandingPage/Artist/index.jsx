@@ -8,7 +8,18 @@ export default function ArtistList() {
       <Marquee>
         {/* <div className="flex"></div> */}
         {ArtistData?.map((item, i) => (
-          <Image width={178} height={125} blurDataURL={item} placeholder="blur" key={i} alt={`artist ${i}`} src={item} className={`h-auto rounded-md md:h-[178px] mr-[16px] object-cover`} />
+          <div key={i} className="relative w-[139px] h-[158px] mr-[16px]">
+            <Image 
+            src={item}
+          alt="Picture of the author"
+          // width={500}
+          height={0}
+          width={0}
+          priority={false}
+          fill
+          sizes="(min-width: 808px) 50vw, 100vw"
+          />
+          </div>
         ))}
       </Marquee>
     </div>

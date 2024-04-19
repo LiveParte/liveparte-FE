@@ -1,5 +1,5 @@
 import React from "react";
-import { HeaderOnSelect, IsHover } from "@/utils/styleReuse";
+import { HeaderOnSelect, IsHover, MainContainer } from "@/utils/styleReuse";
 
 const Header = React.memo(
   ({
@@ -15,7 +15,7 @@ const Header = React.memo(
 
     return (
       <div
-        className={`px-[20px] md:px-[40px] lg:px-[120px] mb-[40px] xl:mb-[63px] ${containerStyle}`}
+        className={`px-[20px] md:px-[40px] lg:px-[120px] mb-[40px] xl:mb-[63px] ${MainContainer}`}
       >
         <main>
           <div className="font-1 text-[35px] font-bold text-[#FFFFFF] mb-[35px]">

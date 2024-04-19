@@ -30,7 +30,7 @@ export default function FavoriteShow() {
             src={`/webp/2.webp`}
             // width={'80%'}
             className={`w-[80%]`}
-            classNameMain={`flex justify-center`}
+            // classNameMain={`flex justify-center`}
             width={838}
             height={400}
             alt="scenes"

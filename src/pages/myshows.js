@@ -5,6 +5,8 @@ import { selectCurrentUserData } from "@/store/User";
 import React, { useEffect, useState } from "react";
 import {  useSelector } from 'react-redux';
 import WithAuth from "@/components/Layout/WithAuth";
+// import OnDemand from "@/components/modules/MyShow/onDemand";
+const OnDemand =dynamic(()=>import('@/components/modules/MyShow/onDemand'),{ssr:false})
 const Shows =dynamic(()=>import('@/components/modules/MyShow/Shows'),{ssr:false})
 const Header =dynamic(()=>import('@/components/modules/MyShow/Header'),{ssr:false})
 export default function MyShows() {
@@ -41,7 +43,8 @@ export default function MyShows() {
         setIsActive={setIsActive}
         title="My Shows"
       />
-      <Shows Data={userShows?.event} isLoading={isLoading} isActive={isActive} />
+     {isActive==="On Demand" && <OnDemand Data={[]} isLoading={isLoading} isActive={isActive} />}
+     {isActive==="Upcoming" &&<Shows Data={userShows?.event} isLoading={isLoading} isActive={isActive} />}
       <div className="absolute bottom-0 left-0 right-0">
         <Footer />
       </div>

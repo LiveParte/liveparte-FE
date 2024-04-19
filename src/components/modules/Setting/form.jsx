@@ -24,6 +24,7 @@ import {
   replaceDashWithSpace,
   SuccessNotification,
 } from "@/utils/reusableComponent";
+import { MainContainer } from "@/utils/styleReuse";
 
 export default function SettingForm({
   isActive,
@@ -86,6 +87,10 @@ export default function SettingForm({
     setValue("phone", data?.phone || userInfo?.phone);
     setValue(
       "username",
+      data?.fullName ||data?.username
+    );
+    setValue(
+      "fullName",
       data?.fullName ||data?.username
     );
   }, [data?._id, data, userInfo,setValue]);
@@ -166,11 +171,13 @@ export default function SettingForm({
 
 
   function CheckPhoneNumber(){
-    if(watch('phone') ===data?.phone){
+    if(watch('phone')===data?.phone){
       return false
     }
     return true
   }
+
+  // console.log(watch('fullName'),data?.fullName,watch('phone'),data?.phone,'fullNamefullName')
 
   function CheckUserName(){
     if(watch('fullName') ===data?.fullName){
@@ -193,7 +200,7 @@ export default function SettingForm({
   const isChangedState =CheckPhoneNumber()||CheckUserName()||imageUrl;
 
   return (
-    <div className="px-[20px] lg:px-[120px] md:w-[60vw] xl:w-[40vw]">
+    <div className={`md:w-[60vw] xl:w-[40vw] ${MainContainer}`}>
       {isActive == "Profile" && (
         <div className="mb-[29px] flex items-center gap-[12px] text-white ">
           <div className="h-[40px] w-[40px]">

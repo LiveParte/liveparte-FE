@@ -20,13 +20,13 @@ export default function Hero({
   notEvent = true,
   router,
   openModal,
-  openModalLoginSignUp,
+  // openModalLoginSignUp,
   giftTicket,
   openModalShareEvent,
   HeroSectionEvent,
-  makePayment,
-  IsBought,
-  myShowLoader,
+  // makePayment,
+  // IsBought,
+  // myShowLoader,
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -104,7 +104,6 @@ export default function Hero({
   const handleGetTicketLearnMore = ()=>{
     dispatch(setEventData({...{...HeroSectionEvent,ticket:isArray(HeroSectionEvent?.tickets)&&HeroSectionEvent?.tickets[0]}}));
 
-    // setMyObject({...HeroSectionEvent,ticket:isArray(HeroSectionEvent?.tickets)&&HeroSectionEvent?.tickets[0],food:'rice'});
     router.push({
       pathname: `${eventLink}/${HeroSectionEvent?._id}`,
     });
@@ -196,10 +195,8 @@ export default function Hero({
                     <div>
                       <ButtonComp
                         className={`py-[12px] px-[57px] text-[13px] md:text-[15px] font500 `}
-                        btnText={"Learn More"}
-                        onClick={() =>
-                          router.push(`${eventLink}/${HeroSectionEvent?._id}`)
-                        }
+                        btnText={isLive ? "Join The Event" : "Learn More"}
+                        onClick={ handleGetTicketLearnMore}
                       />
                     </div>
                   </div>
