@@ -17,6 +17,7 @@ export default function PurchasePaartyCoins({
         title={`Purchase Parte Coins`}
         onClose={onClose}
         onBack={onBack}
+      
       />
       <div className=" relative flex overflow-hidden  h-[35px] mb-[16px] rounded-[8px] px-[12px] border-[#343F4B] border-[1px] bg-[#27292E]">
         <Image src={`/svg/coin1.svg`} alt="coins" width={16} height={16} />

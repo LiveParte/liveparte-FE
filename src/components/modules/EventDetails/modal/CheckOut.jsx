@@ -23,6 +23,7 @@ export default function CheckOut({
 
   // console.log(Data,'Data')
   // Start the countdown timer with 354 seconds (5:54)
+  const eventIsPurchase = Data?.pruchase?.id?true:false;
 
   return (
     <div className="bg-[#1B1C20] pb-[56px] px-[16px] lg:px-[56px] pt-[16px] lg:pt-[24px]">
@@ -64,8 +65,8 @@ export default function CheckOut({
         <PaystackConsumer {...componentProps} >
           {({initializePayment}) =>
            <ButtonComp
-           isDisabled={IsBought}
-              btnText={IsBought?`Ticket already purchased`:`Proceed To Make Payment -  ₦${formatMoney(Data?.ticket?.price||"", false || "0")} `}
+           isDisabled={eventIsPurchase}
+              btnText={eventIsPurchase?`Ticket already purchased`:`Proceed To Make Payment -  ₦${formatMoney(Data?.ticket?.price||"", false || "0")} `}
               className={`w-full text-[13px] font500] h-[44px] `}
               onClick={() => initializePayment(handleSuccess, handleClose)}
             />

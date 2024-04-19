@@ -32,11 +32,11 @@ export default function Hero({
     }, 4000);
 
     return () => clearInterval(intervalId);
-  }, []);
+  }, [words,words?.length]);
 
   useEffect(() => {
     setTextChange(words[currentIndex]);
-  }, [currentIndex]);
+  }, [currentIndex,words]);
 
   return (
     <div className="relative min-h-[90vh]  md:min-h-[100vh]">
@@ -55,10 +55,10 @@ export default function Hero({
             {/* <div className="h-[45vh] md:h-[20vh]" /> */}
 
             <div
-              className={`relative z-40 mt-[20vh] flex flex-col  md:justify-start items-start md:items-start   md:text-start`}
+              className={`relative z-40  mt-[15vh] flex flex-col  md:justify-start items-start md:items-start   md:text-start`}
             >
               <div className="">
-                <div className="font-1 text-wrap flex-wrap text-[28px] sm:text-[35px]  md:text-[70px] lg:text-[100px] font-bold text-white uppercase mb-[15px] md:mb-[8px] lg:mb-[16px] md:text-start leading-none md:leading-[110px] flex   items-start ">
+                <div className="font-1 text-wrap flex-wrap text-[28px] sm:text-[35px]  md:text-[70px] lg:text-[80px] xl:text-[100px] font-bold text-white uppercase mb-[15px] md:mb-[8px] lg:mb-[16px] md:text-start leading-none md:leading-[110px] flex   items-start ">
                   Never miss the{" "}
                   <span key={textChange} className="invisible">
                     .

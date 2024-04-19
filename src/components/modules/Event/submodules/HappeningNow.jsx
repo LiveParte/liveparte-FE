@@ -16,7 +16,7 @@ export default function HappeningNow({ events = [] }) {
       >
         <div className={`text-[20px] font500 text-white `}>Happening Now</div>
         <div className="flex items-center gap-[16px]">
-          <div className="flex items-center gap-[16px]">
+          <div className="hidden md:flex items-center gap-[16px] ">
             <div className="button-next relative">
               <ArrowLeft />
               <div className="bg-transparent absolute left-0 right-0 top-0 bottom-0 z-10"></div>

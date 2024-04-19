@@ -94,8 +94,9 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
 
   const MenuDropdown = () => {
     return (
-      <div className="bg-[#1B1C20]   left-0 right-0 top-0 bottom-0 z-[99] px-[24px] py-[14px] overflow-hidden  pb-[20px] mb:pb-[0px]  justify-between lg:hidden  flex flex-col fixed overflow-y-scroll ">
-        <div className="flex justify-between items-center mb-[28px] ">
+      <div className="bg-[#1B1C20]   left-0 right-0 top-0 bottom-0 z-[999] px-[24px] py-[14px]   pb-[20px] mb:pb-[0px]  justify-between lg:hidden  flex flex-col fixed overflow-y-scroll ">
+       <div className="justify-between lg:hidden  flex flex-col relative">
+       <div className="flex justify-between items-center mb-[28px] ">
           <div>
             {" "}
             <LogoImage router={router} />
@@ -110,7 +111,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
         </div>
         {/*  */}
         <div className="text-[15px] text-white font500 flex-1  mb-[60px]">
-          <div className="py-[25px]">
+          <div className="py-[30px]">
             <Link
               href={eventLink}
               className="  cursor-pointer text-white no-underline"
@@ -121,11 +122,11 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           {/* <div className="py-[15px]  cursor-pointer ">On demand</div> */}
           <Link
             href={myShowLink}
-            className={`py-[25px]  cursor-pointer no-underline text-white mb-2 `}
+            className={`py-[30px]  cursor-pointer no-underline text-white mb-2 `}
           >
             My Shows
           </Link>
-          <div className="flex justify-between items-center py-[25px]">
+          <div className="flex justify-between items-center py-[30px]">
             <div className="text-[13px] flex items-center gap-[5px] ">
               <Image src={`/svg/coin1.svg`} width={24} height={24} alt="coin" />{" "}
               100 Coins
@@ -142,11 +143,11 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           <div className="text-[15px] text-white font500 flex-1  ">
             <Link
               href="/setting"
-              className="py-[25px]  cursor-pointer text-white no-underline"
+              className="py-[30px]  cursor-pointer text-white no-underline"
             >
               Settings
             </Link>
-            <div onClick={handleLogOut} className="py-[25px] cursor-pointer">
+            <div onClick={handleLogOut} className="py-[30px] cursor-pointer">
               Log out
             </div>
           </div>
@@ -162,6 +163,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
             className={`text-[13px] font500 mb-[28px]  w-full !bg-[#27292e] text-white`}
           /> */}
         </div>
+       </div>
       </div>
     );
   };
@@ -200,6 +202,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
   const blur = `backdrop-blur-[60px]`;
   return (
     <>
+        {dropDown && <MenuDropdown />}
       <MyModal
         isOpen={modalName ? true : false}
         bodyComponent={
@@ -208,7 +211,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
         containerStyle={`bg-[#1B1C20] border-[1px] border-[#343F4B] rounded-[16px]  !w-[586px]`}
         closeModal={handleCloseModal}
       />
-      {dropDown && <MenuDropdown />}
+  
 
       <div
         className={`py-[14px] lg:py-[16px] mb-[34px] lg:mb-[75px]  font400 ${MainContainer} ${className} `}
@@ -265,7 +268,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
                   />
                 </div>
               </div>
-              <div className="hidden md:block">
+              <div className="hidden lg:block">
                 <div className="relative">
                   {isOpen && <ProfileDropdown />}
                   <UserProfile onClick={() => setIsOpen(!isOpen)} />
@@ -282,7 +285,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
                 </div>
               </div>
             </div>
-            <div className="md:hidden">
+            <div className="lg:hidden">
               <ButtonComp
                 onClick={() => setDropDown(true)}
                 btnText="Menu"

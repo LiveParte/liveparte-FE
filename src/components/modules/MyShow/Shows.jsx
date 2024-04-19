@@ -4,8 +4,10 @@ import { dummyShowDataII } from "../Event/Data";
 import ButtonComp from "@/components/Ui/button";
 import { useRouter } from "next/router";
 import ShowsCard from "@/components/Common/MyShow/Shows";
-import { eventLink, onDemandLink } from "@/utils/reusableComponent";
+import { eventLink, liveStreamLink, onDemandLink } from "@/utils/reusableComponent";
 import UserShowsCard from "@/components/Common/MyShowUser/Shows";
+import { useDispatch } from "react-redux";
+import { setLiveStreamEventData } from "@/store/Event";
 // import UserShowsCard from "@/components/UserShow";
 
 export default function Shows({
@@ -15,12 +17,19 @@ export default function Shows({
   OnDemandData=[]
 }) {
   const router = useRouter();
+  const dispatch =useDispatch()
   const container =
     "px-[20px] md:px-[40px] lg:px-[120px] ";
   const isLength = Data?.length;
+
+  const handleOnClick = (item) =>{
+    dispatch(setLiveStreamEventData(item))
+    router.push(`${liveStreamLink}/${item?._id}`)
+  }
   return (
     <>
-    { isActive=="Upcoming"&&<div className="pb-[50px] lg:pb-[10px]">
+    { isActive=="Upcoming"&&
+    <div className="pb-[50px] lg:pb-[10px]">
       <div className={container}>
         {isLength > 0 && (
           <div className=" grid-cols-2  md:grid-cols-2  xl:grid-cols-4 gap-[20px] lg:gap-x-[40px] gap-y-[40px] lg:gap-y-[104px] pb-[100px] lg:pb-[247px]  grid">
@@ -34,11 +43,7 @@ export default function Shows({
                 isLive={false}
                 showVideo={false}
                 item={item}
-                onNext={(item)=>{
-                  router.push('/livestream')
-
-                  // console.log(item,'item')
-                }}  
+                onNext={(item)=>handleOnClick(item)}  
               />
             ))}
           </div>
@@ -61,6 +66,7 @@ export default function Shows({
         )}
       </div>
     </div>}
+
     { isActive=="On Demand"&&<div className="pb-[50px] lg:pb-[10px]">
       <div className={container}>
         {isLength > 0 && (
@@ -75,7 +81,7 @@ export default function Shows({
                 isLive={false}
                 item={item}
                 onNext={(item)=>{
-                  router.push('/livestream')
+                  router.push(`${liveStreamLink}/${item._id}`)
 
                   // console.log(item,'item')
                 }}  

@@ -1,5 +1,4 @@
 import { useEffect, useRef } from 'react';
-import Image from 'next/image';
 import dynamic from 'next/dynamic';
 
 const LazyComponent = dynamic(() => import('./LazyComponent'));
@@ -8,29 +7,31 @@ function MyComponent() {
   const ref = useRef();
 
   useEffect(() => {
+    const currentRef = ref.current; // Copy ref.current to a variable
+
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          observer.unobserve(ref.current);
-          ref.current.load();
+          observer.unobserve(currentRef); // Use the variable instead of ref.current
+          currentRef.load();
         }
       });
     });
 
-    if (ref.current) {
-      observer.observe(ref.current);
+    if (currentRef) {
+      observer.observe(currentRef); // Use the variable instead of ref.current
     }
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
+      if (currentRef) {
+        observer.unobserve(currentRef); // Use the variable instead of ref.current
       }
     };
-  }, [ref]);
+  }, [ref]); // Removed ref.current from the dependency array
 
   return (
     <div ref={ref}>
-      <div>Some content</div>
+      {/* <div>Some content</div> */}
       <LazyComponent />
     </div>
   );

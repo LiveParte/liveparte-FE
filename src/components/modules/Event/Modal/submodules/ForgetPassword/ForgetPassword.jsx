@@ -42,7 +42,7 @@ export default function ForgetPassword({
     if (router?.pathname === "/reset-password" && Path) {
       setSelectPage(Path);
     }
-  }, [Path]);
+  }, [Path,router?.pathname ]);
 
   const handleForgetPassword = async (data) => {
     // console.log(data);
