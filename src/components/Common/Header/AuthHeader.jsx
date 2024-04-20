@@ -246,7 +246,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
                 onClick={() => router.push(eventLink)}
               />
               <ButtonComp
-                btnText="On demand"
+                btnText="On Demand"
                 className={` font-medium  hidden lg:block   !h-[32px] text-[13px] px-[16px] md:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${
                   isOnDemand && isSelected
                 }`}

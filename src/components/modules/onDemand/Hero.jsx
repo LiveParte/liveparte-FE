@@ -1,6 +1,6 @@
 import Header from "@/components/Common/Header/Header";
 import React, { useEffect, useRef, useState } from "react";
-import { Daviod, MuteIcon, UnMuteIcon } from "../../../../public/svg";
+import {  MuteIcon, UnMuteIcon } from "../../../../public/svg";
 import { MainContainer } from "@/utils/styleReuse";
 import ButtonComp from "@/components/Ui/button";
 import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
