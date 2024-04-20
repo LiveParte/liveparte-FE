@@ -71,7 +71,6 @@ export const userApi = createApi({
     //auth/change-password
   }),
   onQueryError: async ({ error, dispatch }) => {
-    console.log('errorerrorerror')
     if (error.status === 401) {
       await dispatch(logout());
     }

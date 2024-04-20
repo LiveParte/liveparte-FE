@@ -107,13 +107,10 @@ export const SortOrder = (dataset = []) => {
 };
 
 export const NumberTable = (item, name) => {
-  // console.log(item,'result')
   const index = item?.findIndex((object) => {
-    // console.log(object._id, name,'result')
     return object?.id === name;
   });
 
-  // console.log(index,item,'result'); // 👉️ 1
   return index ? index + 1 : 1;
 };
 
@@ -173,14 +170,12 @@ export const encryptObject = (object) => {
 
 // Function to decrypt an object
 export const decryptObject = (encryptedJson) => {
-// console.log(encryptedJson,'encryptedJson')
 //   var data = [{id: 1}, {id: 2}]
 
 // //   // Encrypt
 //   var encryptedJson1 = CryptoJS.AES.encrypt(JSON.stringify(data), secretKey).toString();
   var bytes  = CryptoJS.AES.decrypt(encryptedJson, secretKey);
 var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-// console.log(decryptedData); 
 return decryptedData;
  
   if(encryptedJson){

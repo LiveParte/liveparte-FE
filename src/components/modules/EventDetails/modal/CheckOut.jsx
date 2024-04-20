@@ -21,7 +21,6 @@ export default function CheckOut({
     router.push("/event_time_out");
   };
 
-  // console.log(Data,'Data')
   // Start the countdown timer with 354 seconds (5:54)
   const eventIsPurchase = Data?.pruchase?.id?true:false;
 

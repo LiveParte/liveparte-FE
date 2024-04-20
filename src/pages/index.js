@@ -31,7 +31,6 @@ const FAQ = dynamic(() => import("@/components/modules/LandingPage/FAQ"), {
 export default function Home() {
   const router = useRouter();
   const { token } = router.query;
-  // console.log(router?.pathname,token)
 
   return (
     <NoAuth>

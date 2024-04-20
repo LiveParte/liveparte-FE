@@ -40,7 +40,6 @@ export function GetTransformedImageUrl(
   width = 300,
   height = 300
 ) {
-  // console.log(cloudinaryUrl,'cloudinaryUrl')
   const urlParts = cloudinaryUrl?.split("/");
   const imageName = urlParts[urlParts?.length - 1]; // Get the image name from the URL
 
@@ -48,7 +47,6 @@ export function GetTransformedImageUrl(
   const cloudName = urlParts[cloudNameIndex]; // Get the cloud name from the URL
 
   const transformedImageUrl = `https://res.cloudinary.com/dammymoses/image/upload/w_${width}/h_${height}/${cloudName}/LiveParte/${imageName}`;
-  // console.log(cloudinaryUrl, urlParts, transformedImageUrl, "cloudinaryUrl");
   return transformedImageUrl;
 }
 

@@ -12,7 +12,6 @@ import NoAuth from "@/components/Layout/NoAuth";
 import { isJSON } from '@/utils/reusableComponent';
 const userData = storage.localStorage.get(userDetailStorageName);
 const CheckUser =isJSON(userData)&&JSON.parse(userData)
-// console.log(CheckUser,'userData')
 export default function Home() {
   const router = useRouter();
 

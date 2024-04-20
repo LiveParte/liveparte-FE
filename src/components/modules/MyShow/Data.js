@@ -45,7 +45,6 @@ export const SecurityFormLabel =(confirmPassword)=>{
             label:'Confirm New password',
             type:'password',
             handlePasswordValidate:(value)=>value === confirmPassword || "The passwords do not match"
-            // handlePasswordValidate:(value)=>console.log(value,confirmPassword,value===confirmPassword,'confirmPassword')
         },
     ]
 }

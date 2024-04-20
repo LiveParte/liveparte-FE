@@ -58,7 +58,7 @@ export default function EventId() {
 
   // const handleUserShowFun = async() =>{
   //     const response = await handleUserShow(user?.id);
-  //     console.log(response)
+
   // }
 
   useEffect(() => {
@@ -71,7 +71,6 @@ export default function EventId() {
 
 
   
-  // console.log(user ,"userShows");
   const config = {
     reference: new Date().getTime().toString(),
     email: userDetail?.email || "user@example.com",
@@ -102,7 +101,6 @@ export default function EventId() {
   }
 
   function openModal() {
-    // console.log(userDetail, "userDetail");
     if (!userInfo?._id) {
       return openModalLoginSignUp();
     }
@@ -128,7 +126,6 @@ export default function EventId() {
 
   const handleSuccess = async (reference) => {
     // Implementation for whatever you want to do with reference and after success call.
-    // console.log(reference, "reference");
     const payload = {
       event_id: data?._id,
       ticket_id: data?.ticket?.id,
@@ -136,7 +133,6 @@ export default function EventId() {
       purchase_date: new Date(),
     };
     const response = await CreatePurchase(payload);
-    // console.log(response);
     if (response?.data?.createdPurchase?._id) {
       closeModal();
       router.push(myShowLink);
@@ -145,7 +141,6 @@ export default function EventId() {
   // you can call this function anything
   const handleClose = () => {
     // implementation for  whatever you want to do when the Paystack dialog closed.
-    // console.log("closed");
   };
 
   const componentProps = {

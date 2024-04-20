@@ -38,7 +38,6 @@ export default function Hero({
 
   const eventIsPurchase = HeroSectionEvent?.pruchase?.id;
   const isLive = HeroSectionEvent?.isLiveStreamed?true:false;
-  // console.log(HeroSectionEvent,eventIsPurchase, "HeroSectionEvent");
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -136,7 +135,6 @@ export default function Hero({
     openModal(HeroSectionEvent);
   };
 
-  // console.log(HeroSectionEvent,'HeroSectionEvent')
   //bg-[url('/webp/bg1.webp')]
   return (
     <div

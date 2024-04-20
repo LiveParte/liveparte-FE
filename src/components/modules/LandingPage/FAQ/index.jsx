@@ -5,7 +5,6 @@ export default function FAQ() {
   const divRef = useRef(null);
   // const divRef = useRef(null);
 
-  // console.log(isMultiline,'isMultiline')
   return (
     <div className="px-[20px] md:px-[72px] bg-[#060809]">
       <div className="md:text-center font-1 font-bold text-white text-[25px] md:text-[54px] mb-[40px] md:mb-[64px] leading-normal md:leading-[67px]">
@@ -17,7 +16,6 @@ export default function FAQ() {
           {FAQData?.map((item, i) => {
             const isMultiline = true;
 
-            // console.log(isMultiline, "isMultiline");
 
             return (
               <div
