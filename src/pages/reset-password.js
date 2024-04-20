@@ -35,7 +35,6 @@ const LazyComponentWithLazyLoad5 = withLazyLoad(ArtistList);
 export default function Home() {
   const router = useRouter();
   const { token } = router.query;
-  // console.log(router?.pathname,token)
 
   return (
     <NoAuth>

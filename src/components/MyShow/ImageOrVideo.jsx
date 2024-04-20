@@ -2,7 +2,6 @@ import Image from "next/image";
 import React from "react";
 
 export default function ImageOrVideo({ videoRef, image,isPlaying }) {
-  // console.log(isPlaying,'isPlaying')
   return (
     <>{!isPlaying?
       <Image

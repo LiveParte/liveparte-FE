@@ -11,7 +11,6 @@ export function FloatingLabelInput({
   disabled = false,
   onBlur,
 }) {
-  // console.log(errors, "errorserrors");
   const [readOnly, setReadOnly] = React.useState(true);
   const [showPasswords, setShowPasswords] = React.useState("");
   const textFormat = showPasswords || type;

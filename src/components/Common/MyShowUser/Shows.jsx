@@ -32,7 +32,6 @@ export default function UserShowsCard({
   const videoRef = useRef(null);
   const noVideoRef = useRef(null);
   
-  // console.log(showImage, "showImage");
 
   const handleMouseEnter = () => {
     setIsPlaying(true);

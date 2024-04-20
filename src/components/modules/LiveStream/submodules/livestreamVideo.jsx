@@ -23,7 +23,6 @@ export default function LiveStreamVideo({
   const appId = "Agora Project App ID";
   const user = useSelector(selectCurrentUserData);
 
-  // console.log(user, "user");
 
   const [micOn, setMic] = useState(true);
   const [cameraOn, setCamera] = useState(true);

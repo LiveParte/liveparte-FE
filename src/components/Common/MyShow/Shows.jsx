@@ -43,7 +43,6 @@ export default function ShowsCard({
     id == 1
       ? `bg-[url('https://res.cloudinary.com/dammymoses/image/upload/v1710175667/LiveParte/a7_zeemus.png')]`
       : `bg-[url('/webp/show2.png')]`;
-  // console.log(showImage, "showImage");
 
   const handleMouseEnter = () => {
     setIsPlaying(true);
@@ -61,7 +60,6 @@ export default function ShowsCard({
     }
   };
 
-  // console.log(item, "itemitem");
 
   return (
     <div

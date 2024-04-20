@@ -51,7 +51,7 @@ export default function Hero({
     };
   }, []);
 
-  // console.log(HeroSectionEvent,'HeroSectionEvent')
+  
   function replaceAmpersandWithAnd(str) {
     return str.replace(/&/g, 'and');
   }
@@ -111,8 +111,6 @@ export default function Hero({
 
   // Zustand store
 
-  // console.log(HeroSectionEvent,'HeroSectionEvent')
-  //bg-[url('/webp/bg1.webp')]
   return (
     <div
     className={`relative font400 hello bg-cover bg-center xl:bg-top ${MainContainer}`}

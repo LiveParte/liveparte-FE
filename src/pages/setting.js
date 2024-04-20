@@ -31,7 +31,6 @@ export default function Setting() {
   const CloudinaryUpload = (photo) => {
     setIsLoading(true);
     const data = new FormData();
-    // console.log(photo, "photophoto");
     data.append("file", photo);
     data.append("upload_preset", "wnvzkduq");
     data.append("cloud_name", "dnvwcmqhw");
@@ -41,11 +40,10 @@ export default function Setting() {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data.secure_url);
+        
         setImageUrl(data.secure_url);
       })
       .catch((err) => {
-        // console.log('An Error Occured While Uploading', err);
       })
       .finally(() => {
         setIsLoading(false);
