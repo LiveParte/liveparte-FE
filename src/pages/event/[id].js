@@ -219,16 +219,7 @@ export default function EventId() {
         notEvent={false}
         
       />
-      {/* <Dropdown  placement="top" label="Dropdown button" dismissOnClick={false}>
-      <DropdownItem>Dashboard</DropdownItem>
-      <DropdownItem>Settings</DropdownItem>
-      <DropdownItem>Earnings</DropdownItem>
-      <DropdownItem>Sign out</DropdownItem>
-    </Dropdown> */}
-      <EventDetails HeroSectionEvent={data || shows}  />
-
-      {/* <PaystackHookExample/> */}
-      {/* <Happening/> */}
+      <EventDetails HeroSectionEvent={{ ...data?.event,...data, ...shows }}  />
       <Footer />
     </NoAuth>
   );

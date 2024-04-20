@@ -23,13 +23,15 @@ export default function EmailSent({onNext}) {
   return (
     <div className="text-white px-[5vw]">
         {/* <EmailSentIcon/> */}
+        <div className="flex justify-center">
         <Image
         src={`/svg/mailsent.svg`}
-        classNameMain={'flex justify-center mb-[32px] max-h-[87] max-w-[97'}
+        // classNameMain={'flex justify-center mb-[32px] max-h-[87] max-w-[97'}
         width={97}
         height={87}
         alt="mailsent"
         />
+        </div>
       <div className="text-center mb-[38px]">
         <div className=" text-[18px] font-medium mb-[8px]">
         Mail Sent

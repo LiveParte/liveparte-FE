@@ -3,25 +3,27 @@ import React from "react";
 
 export default function ImageOrVideo({ videoRef, image, isPlaying, item }) {
   return (
-    <>
+    <div className="">
       <div className="flex-[1] flex justify-center items-center absolute left-0 right-0 top-[0px] bottom-0  bg-gradient-to-t from-[#00000079] z-50"></div>
-      {true ? (
+      {!isPlaying ? (
         <Image
           src={item?.thumbnail_url}
           blurDataURL={item?.thumbnail_url}
-          className={`  ${
+          className={`object-cover  ${
             !isPlaying ? "z-30" : "z-0"
           }`}
           // width={'100%'}
           // height={'100%'}
           alt="Your Image"
-          layout= "fill"
-          objectFit="cover"
+          // layout= "fill"
+          fill
+          // objectFit="cover"
           placeholder="blur"
           sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
           loading="lazy"
           width={0}
           height={0}
+          style={{width:'100%',height:'100%'}}
         />
       ) : (
         <video
@@ -40,6 +42,6 @@ export default function ImageOrVideo({ videoRef, image, isPlaying, item }) {
           Your browser does not support the video tag.
         </video>
       )}
-    </>
+    </div>
   );
 }

@@ -72,9 +72,14 @@ export default function LoginPage({
         isLoading={isLoading}
       />
 
-      <div className="text-center underline text-[13px] text-white cursor-pointer "
-      onClick={handleForgetPasswordToggle}
-      >I forgot my password</div>
+      <div className='flex justify-center'>
+      <button className="text-center underline text-[13px] text-white cursor-pointer "
+      onClick={(e)=>{
+        e.preventDefault();
+        handleForgetPasswordToggle&&handleForgetPasswordToggle();
+      }}
+      >I forgot my password</button>
+      </div>
     </div>
   </form>
   )

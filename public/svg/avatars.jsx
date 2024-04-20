@@ -328,10 +328,10 @@ export const Avatar4 = () => (
         y2="35.156"
         gradientUnits="userSpaceOnUse"
       >
-        <stop offset="0.12" stop-color="#2AE5C4" />
-        <stop offset="0.23" stop-color="#25DFC3" />
-        <stop offset="0.69" stop-color="#14CABE" />
-        <stop offset="1" stop-color="#0EC2BC" />
+        <stop offset="0.12" stopColor="#2AE5C4" />
+        <stop offset="0.23" stopColor="#25DFC3" />
+        <stop offset="0.69" stopColor="#14CABE" />
+        <stop offset="1" stopColor="#0EC2BC" />
       </linearGradient>
       <clipPath id="clip0_1009_12627">
         <rect width="45" height="45" rx="22.5" fill="white" />

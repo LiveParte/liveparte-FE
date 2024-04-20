@@ -3,6 +3,7 @@ import ShowsCard from '@/components/Common/MyShow/Shows'
 import { MainContainer } from '@/utils/styleReuse'
 import { useSwiper } from 'swiper/react';
 import { ArrowLeft, ArrowRight } from '../../../../../public/svg';
+import Image from 'next/image';
 
 export default function Upcoming({upComingEvent}) {
   const swiper = useSwiper();
@@ -18,16 +19,16 @@ export default function Upcoming({upComingEvent}) {
         Upcoming
       </div>
       <div className="hidden md:flex items-center gap-[16px]">
-      <div className="flex items-center gap-[16px]">
-        <div className="button-next1 relative">
-          <ArrowLeft/>
-          <div className="bg-transparent absolute left-0 right-0 top-0 bottom-0 z-10"></div>
-        </div>
-        <div className="button-prev1 relative" >
-        <ArrowRight/>
-          <div className="bg-transparent absolute left-0 right-0 top-0 bottom-0 z-10"></div>
-        </div>
-      </div>
+      <div className="hidden md:flex items-center gap-[16px] ">
+            <button className="button-next1 relative">
+              <Image src={'/icons/arrowLeft.png'} alt="rightArrow" width={30} height={30}/>
+            {/* <div className="border py-[6px] px-[9px] bg-red-700"><i class="arrow right"></i></div>  <div className="bg-transparent absolute left-0 right-0 top-0 bottom-0 z-10"></div> */}
+            </button>
+            <button className="button-prev1 relative">
+            <Image src={'/icons/arrowRight.png'} alt="LeftArrow" width={30} height={30}/>
+
+            </button>
+          </div>
       </div>
        
       </div>

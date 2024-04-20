@@ -58,7 +58,7 @@ export default function Hero({
               className={`relative z-40  mt-[15vh] flex flex-col  md:justify-start items-start md:items-start   md:text-start`}
             >
               <div className="">
-                <div className="font-1 text-wrap flex-wrap text-[28px] sm:text-[35px]  md:text-[70px] lg:text-[80px] xl:text-[100px] font-bold text-white uppercase mb-[15px] md:mb-[8px] lg:mb-[16px] md:text-start leading-none md:leading-[110px] flex   items-start ">
+                <div className="font-1 text-wrap flex-wrap text-[25px] sm:text-[35px]  md:text-[70px] lg:text-[80px] xl:text-[100px] font-bold text-white uppercase mb-[15px] md:mb-[8px] lg:mb-[16px] md:text-start leading-none md:leading-[110px] flex   items-start ">
                   Never miss the{" "}
                   <span key={textChange} className="invisible">
                     .
@@ -70,7 +70,7 @@ export default function Hero({
                     {/* <Animate textChange={textChange} /> */}
                   </div>
                 </div>
-                <div className="text-white w-[75vw] md:w-[65vw] lg:w-[45vw]  lg:tracking-normal  mb-[80px] md:mb-[60px] :-text-start md:text-start text-[13px] md:text-[20px] font400">
+                <div className="text-white w-[75vw] md:w-[65vw] lg:w-[45vw]  lg:tracking-normal  mb-[80px] md:mb-[60px] :-text-start md:text-start text-[12px] sm:text-[13px] md:text-[20px] font400">
                   Get direct access to live and on-demand concert, performances
                   by your award-winning artistes and comedians anywhere in the
                   world from the comfort of your devices

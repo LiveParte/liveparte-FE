@@ -19,13 +19,13 @@ import { userApi } from "@/store/User/userApi";
 import { eventApi } from "@/store/Event/eventApi";
 import { transactionApi } from "@/store/Transaction/transactionApi";
 import { HeaderOnSelect, LogoImage } from "@/utils/styleReuse";
-import { eventLink, myShowLink } from "@/utils/reusableComponent";
+import { eventLink, myShowLink, onDemandLink } from "@/utils/reusableComponent";
 // const UserProfile =dynamic(()=>import('./UserProfile'),{src:false})
 
 export default function AuthHeader({ className, openModal, showNav = false }) {
   const router = useRouter();
   const dispatch = useDispatch();
-  const MainContainer = `px-[20px] md:px-[40px] lg:px-[120px] relative`;
+  const MainContainer = `px-[20px] md:px-[40px] lg:px-[80px] xl:[120px] relative`;
   const [dropDown, setDropDown] = useState(false);
   const [modalName, setModalName] = useState();
   const [isOpen, setIsOpen] = useState(false);
@@ -33,6 +33,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
   const dropdownRef = useRef(null);
   const purchaseCoinRef = useRef(null);
   const isMyShow = router?.pathname == myShowLink;
+  const isOnDemand = router?.pathname == onDemandLink;
   const isEvent =
     router?.pathname === "/event" || router?.pathname == "/event/[id]";
   const isFocused = `hover:!bg-[#FFFFFF26] hover:rounded-[8px]  hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`;
@@ -95,7 +96,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
   const MenuDropdown = () => {
     return (
       <div className="bg-[#1B1C20]   left-0 right-0 top-0 bottom-0 z-[999] px-[24px] py-[14px]   pb-[20px] mb:pb-[0px]  justify-between lg:hidden  flex flex-col fixed overflow-y-scroll ">
-       <div className="justify-between lg:hidden  flex flex-col relative">
+       <div className="justify-between lg:hidden flex-1  flex flex-col relative">
        <div className="flex justify-between items-center mb-[28px] ">
           <div>
             {" "}
@@ -110,8 +111,8 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           </div>
         </div>
         {/*  */}
-        <div className="text-[15px] text-white font500 flex-1  mb-[60px]">
-          <div className="py-[30px]">
+        <div className="text-[15px] text-white font500 flex-grow-1  mb-[60px]">
+          <div className="pt-[30px]">
             <Link
               href={eventLink}
               className="  cursor-pointer text-white no-underline"
@@ -119,13 +120,24 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
               Browse Events
             </Link>
           </div>
+          <div className="pt-[30px]">
+          <Link
+            href={onDemandLink}
+            className={`py-[30px]  cursor-pointer no-underline text-white mb-2 `}
+          >
+            On Demand
+          </Link>
+          </div>
           {/* <div className="py-[15px]  cursor-pointer ">On demand</div> */}
+          <div className="pt-[30px]">
           <Link
             href={myShowLink}
             className={`py-[30px]  cursor-pointer no-underline text-white mb-2 `}
           >
             My Shows
           </Link>
+          </div>
+          
           <div className="flex justify-between items-center py-[30px]">
             <div className="text-[13px] flex items-center gap-[5px] ">
               <Image src={`/svg/coin1.svg`} width={24} height={24} alt="coin" />{" "}
@@ -233,11 +245,13 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
                 }`}
                 onClick={() => router.push(eventLink)}
               />
-              {/* <ButtonComp
+              <ButtonComp
                 btnText="On demand"
-                className="text-[15px] font-medium  hidden lg:block !py-[11px] px-[5px] xl:px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white "
-                onClick={() => router.push("/event")}
-              /> */}
+                className={` font-medium  hidden lg:block   !h-[32px] text-[13px] px-[16px] md:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${
+                  isOnDemand && isSelected
+                }`}
+                onClick={() => router.push(onDemandLink)}
+              />
               <ButtonComp
                 btnText="My Shows"
                 className={`  text-[13px]   !h-[32px] font-medium  hidden lg:block  px-[16px] md:px-[32px]   gap-[10px]    font500 text-white  ${isFocused} ${
