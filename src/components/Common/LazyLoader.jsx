@@ -1,9 +1,7 @@
 import React, { useState } from "react";
+import Image from 'next/image';
 
-
-
-
-const BlurryImage = ({ src, alt, width, height, className,classNameMain }) => {
+const BlurryImage = ({ src, alt, width, height, className,  }) => {
   const [loaded, setLoaded] = useState(true);
 
   const handleLoad = () => {
@@ -12,38 +10,25 @@ const BlurryImage = ({ src, alt, width, height, className,classNameMain }) => {
 
   return (
     <div
-    className={`overflow-hidden ${classNameMain}`}
-      style={{ position: "relative", width: width || "100%", height: height||"100%" }}
+      className={`overflow-hidden `}
+      style={{ position: "relative", width: width || "100%", height: height || "100%" }}
     >
-      <img
+      <Image
         src={src}
         alt={alt}
+        width={width}
+        height={height}
         onLoad={handleLoad}
-        className={`${className} `}
+        className={className}
         style={{
           filter: loaded ? "none" : "blur(10px)",
-          // width: "100%",
-          // height: "100%",
         }}
       />
       {!loaded && (
         <div
-        className="absolute top-0  left-0 right-0 w-[100%] h-[100%] backdrop:blur-[5px] flex justify-center items-center text-white font-bold "
-        //   style={{
-        //     position: "absolute",
-        //     top: 0,
-        //     left: 0,
-        //     width: "100%",
-        //     height: "100%",
-        //     backdropFilter: "blur(5px)",
-        //     display: "flex",
-        //     justifyContent: "center",
-        //     alignItems: "center",
-        //     color: "white",
-        //     fontWeight: "bold",
-        //   }}
+          className="absolute top-0 left-0 right-0 w-[100%] h-[100%] backdrop:blur-[5px] flex justify-center items-center text-white font-bold"
         >
-          Loading...
+          {/* Loading... */}
         </div>
       )}
     </div>

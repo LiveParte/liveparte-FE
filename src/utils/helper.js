@@ -193,7 +193,19 @@ return decryptedData;
 
 
 
+export const NoImageUser = [
+  <Avatar1 key="avatar1" />,
+  <Avatar2 key="avatar2" />,
+  <Avatar3 key="avatar3" />,
+  <Avatar4 key="avatar4" />,
+  <Avatar5 key="avatar5" />,
+  <Avatar6 key="avatar6" />,
+  <Avatar7 key="avatar7" />,
+  <Avatar8 key="avatar8" />,
+  <Avatar9 key="avatar9" />,
+  <Avatar10 key="avatar10" />,
+];
 
-export const NoImageUser =[
-  <Avatar1/>,<Avatar2/>,<Avatar3/>,<Avatar4/>,<Avatar5/>,<Avatar6/>,<Avatar7/>,<Avatar8/>,<Avatar9/>,<Avatar10/>
-]
+export function isArray(data) {
+  return Array.isArray(data);
+}

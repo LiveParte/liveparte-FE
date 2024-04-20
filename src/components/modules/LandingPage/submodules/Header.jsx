@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import ButtonComp from "@/components/Ui/button";
+import { eventLink } from "@/utils/reusableComponent";
 export default function Header({ className, openModal }) {
   const router = useRouter();
   const isHome = router?.pathname === "/";
@@ -42,14 +43,14 @@ const isSelected=`border-[#262C32] border-[1px] backdrop-blur-[60px] !bg-[#BAD6F
             href={"/event"}
             className="py-[12px]  cursor-pointer no-underline text-white"
           >
-            Browse events
+            Browse Events
           </Link>
           <Link
             onClick={handleCheckIfITHome}
             href={"/"}
             className="py-[12px]  cursor-pointer no-underline text-white"
           >
-            On demand
+            On Demand
           </Link>
         </div>
 
@@ -107,14 +108,14 @@ const isSelected=`border-[#262C32] border-[1px] backdrop-blur-[60px] !bg-[#BAD6F
 
           <div className="flex items-center gap-[24px]">
             <ButtonComp
-              btnText="Browse event"
+              btnText="Browse Events"
               className={`text-[13px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] bg-transparent rounded-[999px]  font500 text-white  focus:${isFocused}`}
-              onClick={()=>router.push("/event")}
+              onClick={()=>router.push(eventLink)}
             />
             <ButtonComp
-              btnText="On demand"
+              btnText="On Demand"
               className={`text-[13px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white ${isFocused} `}
-              onClick={()=>router.push("/event")}
+              onClick={()=>router.push(eventLink)}
             />
           </div>
           <div>

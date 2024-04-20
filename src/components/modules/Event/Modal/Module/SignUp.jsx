@@ -3,15 +3,17 @@ import { LoginForm, SignUpForm } from '../../Data'
 import ButtonComp from '@/components/Ui/button'
 import { GoogleIcon } from '../../../../../../public/svg'
 import { FloatingLabelInput } from '@/components/Ui/TextInput'
+import Link from 'next/link'
 
 export default function SignUpPage({
     Controller,control,handleSubmit,handleLogin,
     registerLoader,
     isEvent
 }) {
+  const termsUrl=`https://liveparte.notion.site/Terms-of-service-d531fa1d585346dba3205ae490f5fbb4`
   return (
     <form
-    className="px-[15px] lg:px-[50px] flex flex-col  lg:pb-[0px]"
+    className="px-[15px] lg:px-[30px] flex flex-col  lg:pb-[0px]"
     autoComplete="off"
   >
     <div className="w-full ">
@@ -33,7 +35,7 @@ export default function SignUpPage({
      
       <div className="flex items-center text-[13px] text-white  py-[28px] ">
         <div className="bg-[#343F4B]  h-[1px] flex-grow-1"></div>
-        <div className="px-[38px]"> OR</div>
+        <div className="px-[28px] tracking-[1.5px]"> Or</div>
 
         <div className="bg-[#343F4B]  h-[1px] flex-grow-1"></div>
       </div>
@@ -75,6 +77,7 @@ export default function SignUpPage({
         isLoading={registerLoader}
       />
     </div>
+    <div className='text-[#63768d] text-[13px] text-center px-[10px] mt-[19px] '>By continuing, you agree and accept the <Link target='_blank' href={termsUrl} className='underline text-white' >Terms of Service</Link> and <span className='underline text-white'>Privacy Policy</span> in the use of Liveparte</div>
   </form>
   )
 }

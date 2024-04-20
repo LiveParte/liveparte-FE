@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import {  ErrorNotificationIcon, SuccessNotificationIcon } from "../../public/svg";
 import 'react-toastify/dist/ReactToastify.css';
+import { storage, userDetailStorageName } from "./helper";
 
 export function CountdownTimerII({ initialTime, onTimerEnd }) {
   const [time, setTime] = useState(240);
@@ -84,3 +85,51 @@ export function replaceDashWithSpace(str) {
   return str?.replace(/999/g, ' ');
 
 }
+
+
+export const myShowLink=`/myshows`;
+export const eventLink=`/event`;
+export const singleEventLink=`/event/[id]`;
+export const onDemandLink=`/event/ondemand`;
+export const settingLink=`/setting`
+export const liveStreamLink=`/livestream`
+
+export const CopyEventLink =({link})=>{
+  return  `https://staging.liveparte.com/event/${link}`
+}
+
+
+export function GetEmailSearchUrl(email) {
+  const searchQuery = encodeURIComponent('partylive762');
+
+  // Check if the email domain matches Gmail
+  if (email.endsWith('@gmail.com')) {
+      return `https://mail.google.com/mail/u/0/#search/${searchQuery}`;
+  }
+
+  // Check if the email domain matches Yahoo Mail
+  if (email.endsWith('@yahoo.com')) {
+      return `https://mail.yahoo.com/search/?fr=uh3_mail_web_gs&type=10&searchTerm=${searchQuery}`;
+  }
+
+  // Check if the email domain matches Zoho Mail
+  if (email.endsWith('@zoho.com')) {
+      return `https://mail.zoho.com/${searchQuery}`;
+  }
+
+  // For other email providers, return a generic URL
+  // You might need to update this to match the search functionality of other email providers
+  return `https://www.example.com/search?email=${email}&q=${searchQuery}`;
+}
+
+export const isJSON = (str) => {
+  try {
+    JSON.parse(str);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
+const userData = storage.localStorage.get(userDetailStorageName);
+export const CheckUser =isJSON(userData)&&JSON?.parse(userData)

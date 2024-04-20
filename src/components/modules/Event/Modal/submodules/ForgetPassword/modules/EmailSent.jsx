@@ -8,7 +8,7 @@ import {
 } from "@/components/modules/Event/Data";
 import ButtonComp from "@/components/Ui/button";
 import { EmailSentIcon } from "../../../../../../../../public/svg";
-import BlurryImage from "@/components/Common/LazyLoader";
+import Image from "next/image";
 export default function EmailSent({onNext}) {
   const { control, handleSubmit, getValues } = useForm({
     defaultValues: {
@@ -23,10 +23,15 @@ export default function EmailSent({onNext}) {
   return (
     <div className="text-white px-[5vw]">
         {/* <EmailSentIcon/> */}
-        <BlurryImage
+        <div className="flex justify-center">
+        <Image
         src={`/svg/mailsent.svg`}
-        classNameMain={'flex justify-center mb-[32px]'}
+        // classNameMain={'flex justify-center mb-[32px] max-h-[87] max-w-[97'}
+        width={97}
+        height={87}
+        alt="mailsent"
         />
+        </div>
       <div className="text-center mb-[38px]">
         <div className=" text-[18px] font-medium mb-[8px]">
         Mail Sent

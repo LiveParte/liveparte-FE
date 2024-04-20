@@ -1,11 +1,12 @@
 import { REGEX_PATTERNS } from "@/utils/constants/errors";
 
-export const SettingFormLabel =()=>{
+export const SettingFormLabel =(CheckPhoneNumber,CheckUserName)=>{
     return [
         {
-            name:'fullName',
+            name:'username',
             label:'Name',
-            type:'text'
+            type:'text',
+            onBlur:CheckPhoneNumber
         },
         {
             name:'email',
@@ -19,7 +20,8 @@ export const SettingFormLabel =()=>{
             name:'phone',
             label:'Phone number',
             type:'number',
-            pattern:REGEX_PATTERNS?.NUMBER
+            pattern:REGEX_PATTERNS?.NUMBER,
+            onBlur:CheckUserName
         },
     ]
 };

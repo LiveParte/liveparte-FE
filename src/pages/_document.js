@@ -2,10 +2,12 @@ import { Html, Head, Main, NextScript } from "next/document";
 
 export default function Document() {
   return (
-    <Html lang="en">
-      <Head></Head>
+    <Html  lang="en" suppressHydrationWarning>
+      <Head>
 
-      <body>
+      </Head>
+
+      <body suppressHydrationWarning>
         <Main />
         <NextScript />
       </body>
