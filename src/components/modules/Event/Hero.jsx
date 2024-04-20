@@ -75,7 +75,7 @@ export default function Hero({
               target="_blank"
               className=" text-white no-underline  "
               href={`https://calendar.google.com/calendar/r/eventedit?text=${
-                HeroSectionEvent?.name
+                replaceAmpersandWithAnd(HeroSectionEvent?.name)
               }&dates=${HeroSectionEvent?.event_date}&details=<b>${replaceAmpersandWithAnd(HeroSectionEvent?.name)}</b><br/><br/><b>Location:</b>${replaceAmpersandWithAnd(HeroSectionEvent?.country)}
               <br/>
               <br/>
@@ -294,7 +294,7 @@ export default function Hero({
           </div>
         </div>
       </div>
-      <div className=" absolute bottom-0 left-0 right-0 h-[50vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-t from-black"></div>
+      <div className=" absolute -bottom-1 left-0 right-0 h-[50vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-t from-black"></div>
     </div>
   );
 }

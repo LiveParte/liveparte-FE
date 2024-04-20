@@ -70,7 +70,7 @@
 }
 
 html{
-  min-height: 100vh;
+  /* min-height: 100vh; */
   background-color: black !important;
 }
 
@@ -379,13 +379,16 @@ body {
 
 @media only screen and (max-width: 768px) {
   .takeScreen{
-    height: calc(100vh );
+    height:100dvh;
+  }
+  body{
+    min-height:100dvh;
   }
   
 }
 
 .arrow {
-  border: solid white;
+  border: solid black;
   border-width: 0 3px 3px 0;
   display: inline-block;
   padding: 3px;

@@ -14,7 +14,7 @@ export default function Index() {
 
   return (
     <WithAuth showHeader={false}>
-      <div className='bg-[#060809] h-[100dvh] md:h-[100vh] overflow-hidden'>
+      <div className='flex-1 flex flex-col  bg-[#060809] overflow-hidden '>
         <LiveStream isLive={liveStream?.isLiveStreamed}liveStreamDetail={liveStream}  />
       </div>
     </WithAuth>

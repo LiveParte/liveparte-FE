@@ -96,7 +96,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
   const MenuDropdown = () => {
     return (
       <div className="bg-[#1B1C20]   left-0 right-0 top-0 bottom-0 z-[999] px-[24px] py-[14px]   pb-[20px] mb:pb-[0px]  justify-between lg:hidden  flex flex-col fixed overflow-y-scroll ">
-       <div className="justify-between lg:hidden  flex flex-col relative">
+       <div className="justify-between lg:hidden flex-1  flex flex-col relative">
        <div className="flex justify-between items-center mb-[28px] ">
           <div>
             {" "}
@@ -111,7 +111,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           </div>
         </div>
         {/*  */}
-        <div className="text-[15px] text-white font500 flex-1  mb-[60px]">
+        <div className="text-[15px] text-white font500 flex-grow-1  mb-[60px]">
           <div className="pt-[30px]">
             <Link
               href={eventLink}
@@ -246,7 +246,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
                 onClick={() => router.push(eventLink)}
               />
               <ButtonComp
-                btnText="On demand"
+                btnText="On Demand"
                 className={` font-medium  hidden lg:block   !h-[32px] text-[13px] px-[16px] md:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${
                   isOnDemand && isSelected
                 }`}
