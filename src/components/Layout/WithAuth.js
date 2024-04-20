@@ -46,7 +46,7 @@ function WithAuth({ children, showHeader = true }) {
   }
   
   return (
-    <div className="min-h-[100vh] bg-black flex flex-col justify-end">
+    <div className="min-h-[100dvh] md:min-h-[100vh] bg-black flex flex-col justify-end ">
       {showHeader && <div className="absolute left-0 right-0 z-50 top-0">
         <IfHeaderIsAuth />
       </div>}

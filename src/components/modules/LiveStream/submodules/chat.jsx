@@ -57,7 +57,7 @@ export default function Chat({
     );
   };
   return (
-    <div className=" h-full flex flex-col">
+    <div className=" flex flex-col flex-1">
       <div className="flex justify-between items-center px-[15px] border-b-[1px] border-b-[#343F4B]  pb-[16px] mb-2">
       <div className="py-[7px]  lg:pt-[16px] px-[16px] ">
        <div className="lg:hidden text-[15px] text-white font-1 font-bold uppercase mb-[8px] leading-[20px]">
@@ -70,7 +70,7 @@ export default function Chat({
 
        <ButtonComp onClick={onLeave&&onLeave} className={`!h-[30px] text-[13px] !bg-[#BAD6F70F] text-white px-[24px] rounded-full font500 border-[1px] border-[#262C32] leading-none items-center py-[10px] block lg:hidden`} btnText={'Leave'}/>
       </div>
-      <div className=" h-full flex flex-col">
+      <div className=" h-full flex flex-col flex-1">
         <div className=" px-[16px] flex-1   flex  items-end">
          <div className="flex-1 lg:w-full overflow-y-scroll    font400  customScrollHorizontal">
          {/* <ChatList />
@@ -94,8 +94,8 @@ export default function Chat({
                 </div>
          </div>
         </div>
-        <div className="p-[16px] pt-[18px] border-t-[1px] border-t-[#343F4B]">
-          <div className="flex items-center gap-[10px] mb-[13px]">
+        <div className="px-[16px]  pt-[18px] border-t-[1px] border-t-[#343F4B]">
+          <div className="flex items-center gap-[10px] lg:mb-[13px]">
             <input className="h-[40px] lg:h-[35px] w-[23px] border-[1px] border-[#343F4B] rounded-[8px] bg-transparent flex-1 placeholder:text-[#495969] px-[17px] text-white outline-none"  placeholder="Comment here..."/>
             <div 
             onClick={()=>setPayFlow('giftCoins')}

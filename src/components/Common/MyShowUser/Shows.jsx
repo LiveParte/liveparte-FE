@@ -22,13 +22,12 @@ export default function UserShowsCard({
   isPlayIcon=true,
   showVideo = true,
 }) {
-  const backgroundImage = `https://res.cloudinary.com/dammymoses/image/upload/v1710175667/LiveParte/a7_zeemus.png`;
   const router = useRouter();
   const [isPlaying, setIsPlaying] = useState(false);
   const [posterImage, setPosterImage] = useState();
   useEffect(() => {
-    setPosterImage(showImage || backgroundImage);
-  }, [showImage, backgroundImage]);
+    setPosterImage(showImage );
+  }, [showImage, ]);
 
   const videoRef = useRef(null);
   const noVideoRef = useRef(null);
@@ -59,6 +58,7 @@ export default function UserShowsCard({
       onTouchStart={handleMouseEnter}
       onTouchEnd={handleMouseLeave}
     >
+      {/* <div className="bg-red-500  absolute left-0 right-0 top-0 bottom-0"></div> */}
       <ImageOrVideo
         image={showImage || backgroundImage}
         isPlaying={showVideo?isPlaying:false}
@@ -67,7 +67,7 @@ export default function UserShowsCard({
       />
 
       <div
-        className="flex items-center justify-center absolute inset-0 z-50"
+        className="flex items-center justify-center absolute inset-0 z-10"
         // onMouseLeave={handleMouseLeave}
       >
       {isPlayIcon &&  <div className=" hidden group-hover:block transition-all group-hover:duration-300 group-hover:ease-in-out">

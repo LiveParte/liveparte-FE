@@ -19,7 +19,7 @@ export default function ShowDetails({
   const dispatch = useDispatch();
 
   return (
-    <div className="h-full z-50 relative">
+    <div className="h-full z-30 relative">
       <div className=" flex flex-col h-full relative">
         <div className="flex-1">
           {showHeader && (
@@ -48,8 +48,6 @@ export default function ShowDetails({
               return onNext(item);
             }
             dispatch(setEventData({...{...item,ticket:isArray(item?.tickets)&&item?.tickets[0]}}));
-
-            // setMyObject(item);
             router.push({
               pathname: `event/${id}`,
             });

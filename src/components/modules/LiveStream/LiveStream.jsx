@@ -15,7 +15,6 @@ import { eventApi } from "@/store/Event/eventApi";
 import { transactionApi } from "@/store/Transaction/transactionApi";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
-import { logout } from "@/store/User";
 // Render a YouTube video player
 export default function LiveStream({ isLive = false, liveStreamDetail }) {
   const router = useRouter();
@@ -60,7 +59,7 @@ export default function LiveStream({ isLive = false, liveStreamDetail }) {
   const MainContainer = `lg:px-[20px] lg:px-[60px] lg:px-[120px] relative`;
   return (
     <AgoraRTCProvider client={agoraClient}>
-      <main className={`${MainContainer}`}>
+      <main className={`${MainContainer} flex flex-col   overflow-hidden flex-1`}>
         <div className=" items-center justify-between hidden lg:flex">
           <div className="pt-[32px] pb-[27px] hidden lg:block">
             <LogoImage router={router} />
@@ -68,8 +67,9 @@ export default function LiveStream({ isLive = false, liveStreamDetail }) {
           {isOpen && <ProfileDropdown />}
           <UserProfile onClick={() => setIsOpen(!isOpen)} />
         </div>
-        <div className="flex flex-col lg:flex-row gap-[16px] takeScreen">
-          <div className=" flex flex-col flex-1 bg-[#27292E] lg:pt-[32px] lg:px-[24px] lg:rounded-[16px]">
+        {/* \ */}
+        <div className="flex flex-col lg:flex-row lg:gap-[16px] flex-1 takeScreen">
+          <div className=" flex flex-col  flex-grow bg-[#27292E] lg:pt-[32px] lg:px-[24px] lg:rounded-[16px]">
             <div className="px-[5px]  items-center justify-between mb-[23px] hidden lg:flex">
               <div className="text-[23px] font-semibold font-1 text-[#FFFFFF] uppercase">
                 {liveStreamDetail?.name || `Timeless tour - Newyork`}
@@ -112,9 +112,9 @@ export default function LiveStream({ isLive = false, liveStreamDetail }) {
                 </div>
               </div>
               {isLive && (
-                <div className="absolute left-0 right-0 px-[18px] -bottom-[5px] py-[17px] flex justify-end text-white z-50 bg-gradient-to-t h-[100px] items-end from-black lg:rounded-[16px]">
+                <div className="absolute hidden left-0 right-0 px-[18px] -bottom-[5px] py-[17px] lg:flex justify-end text-white z-50 bg-gradient-to-t h-[100px] items-end from-black lg:rounded-[16px]">
                   <div>
-                    <div className="hidden lg:flex items-center gap-[16px]">
+                    <div className=" flex items-center gap-[16px]">
                       <Image
                         src={`/svg/reaction1.svg`}
                         width={32}
@@ -141,10 +141,11 @@ export default function LiveStream({ isLive = false, liveStreamDetail }) {
                 setActiveConnection={setActiveConnection}
                 activeConnection={activeConnection}
                 isLive={isLive}
+                liveStreamDetail={liveStreamDetail}
               />
             </div>
           </div>
-          <div className=" lg:w-[25%] lg:rounded-[26px] bg-[#222428]">
+          <div className=" lg:w-[25%]  flex-0 lg:flex-1  flex flex-col lg:rounded-[26px] bg-[#222428]">
             <Chat
               onLeave={() => {
                 setActiveConnection(false);
