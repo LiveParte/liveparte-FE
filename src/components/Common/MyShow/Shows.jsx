@@ -25,6 +25,7 @@ export default function ShowsCard({
   isPlayIcon = true,
   showVideo = true,
   onDemand=false
+  
 }) {
   const backgroundImage = `https://res.cloudinary.com/dammymoses/image/upload/v1710175667/LiveParte/a7_zeemus.png`;
   const router = useRouter();

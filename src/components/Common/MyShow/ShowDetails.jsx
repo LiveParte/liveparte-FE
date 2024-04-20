@@ -7,7 +7,7 @@ import { BsDot } from "react-icons/bs";
 
 export default function ShowDetails({ onNext, item, id }) {
   const router = useRouter();
-  // console.log(item, "item");
+  console.log(item, "ShowDetails");
 
   return (
     <div className=" z-50 relative">
@@ -37,13 +37,14 @@ export default function ShowDetails({ onNext, item, id }) {
           <div className="text-[#B4BECB] text-[14px] md:text-[15px] mb-[10px] md:mb-[24px]  font-medium font500 whitespace-nowrap overflow-hidden text-ellipsis  font400">
             {item?.address}
           </div>
-          <div className="font500 font-medium">
+        {             ( isArray(item?.tickets) && item?.tickets[0]?.price )  &&<div className="font500 font-medium">
             ₦{" "}
             {formatMoney(
               isArray(item?.tickets) && item?.tickets[0]?.price,
               false
             )}
           </div>
+}
         </div>
       </div>
     </div>
