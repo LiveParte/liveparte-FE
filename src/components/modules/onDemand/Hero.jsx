@@ -147,6 +147,7 @@ export default function Hero({
       )}
       <video
         // controls
+        src={HeroSectionEvent?.promotional_url}
         ref={videoRef}
         autoPlay
         loop
@@ -188,7 +189,7 @@ export default function Hero({
                 <Daviod width="77" height="35" />
               </div> */}
               <div className="mt-[16px] text-[36px] lg:text-[92px] md:text-left font-1 text-white font-bold uppercase lg:mb-[32px] leading-[40px] md:leading-[46px] lg:leading-[90px] lg:w-[80%] line-clamp-3">
-                {HeroSectionEvent?.address}
+                {HeroSectionEvent?.name}
               </div>
               {/*  */}
               {notEvent ? (
@@ -199,7 +200,7 @@ export default function Hero({
                       btnText={isLive ? "Join The Event" : "Learn More"}
                       onClick={() => {
                         router.push({
-                          pathname: `event/${HeroSectionEvent?._id}`,
+                          pathname: `${eventLink}/${HeroSectionEvent?._id}`,
                         });
                       }}
                     />
@@ -260,7 +261,7 @@ export default function Hero({
                     <div>
                       <ButtonComp
                         className={`py-[12px] px-[57px] text-[13px] md:text-[15px] font500 `}
-                        btnText={"Learn More"}
+                        btnText={isLive ? "Join The Event" : "Learn More"}
                         onClick={() =>
                           router.push(`${eventLink}/${HeroSectionEvent?._id}`)
                         }

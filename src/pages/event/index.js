@@ -5,7 +5,7 @@ import moment from "moment";
 import { isArray, storage, userDetailStorageName } from '@/utils/helper';
 
 // Dynamic imports
-const Hero = dynamic(() => import('@/components/modules/Event/Hero'), { ssr: false });
+const Hero = dynamic(() => import('@/components/modules/onDemand/Hero'), { ssr: false });
 const Happening = dynamic(() => import('@/components/modules/Event/Happening'), { ssr: false });
 const Footer = dynamic(() => import('@/components/Common/Footer'), { ssr: false });
 import NoAuth from "@/components/Layout/NoAuth";
