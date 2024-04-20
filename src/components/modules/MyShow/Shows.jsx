@@ -36,6 +36,7 @@ export default function Shows({
           <div className=" grid-cols-2  md:grid-cols-2  xl:grid-cols-4 gap-[20px] lg:gap-x-[40px] gap-y-[40px] lg:gap-y-[104px] pb-[100px] lg:pb-[247px]  grid">
             {!isLoading&&Data?.map((item, index) => (
                <ShowsCard
+               key={index}
                id={item?._id}
                name={item?.name}
                venue={item?.address}
