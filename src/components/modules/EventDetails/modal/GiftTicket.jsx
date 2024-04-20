@@ -40,14 +40,14 @@ export default function GiftTicket({ closeModal, Data }) {
           </div>
           <div>
             <div className="text-[#63768D] text-[13px] mb-[5px]">
-              Livestream ticket
+             {Data?.name}
             </div>
-            <div className="text-[14px] text-white font500 mb-[5px] lg:w-[70%]">
+            <div className="text-[14px] text-white font500 mb-[5px] lg:w-[100%]">
               {Data?.address}
             </div>
             <div className="text-[14px] text-white font500">
               {Data?.ticket?.code}{" "}
-              {formatMoney(Data?.ticket?.price, false || "0")}
+              ₦{formatMoney(Data?.ticket?.price, false || "0")}
             </div>
           </div>
         </div>

@@ -115,7 +115,7 @@ export default function Hero({
       <div
         className={` font400  bg-[url('/webp/1.webp')]  bg-cover  xl:bg-left ${MainContainer} `}
       >
-        <div className=" absolute  bottom-0 left-0 right-0 h-[60vh] md:h-[80vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-t from-black"></div>
+        <div className=" absolute - bottom-1 left-0 right-0 h-[60vh] md:h-[80vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-t from-black"></div>
       </div>
       {/* </AnimatePresence> */}
     </div>
