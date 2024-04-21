@@ -7,11 +7,11 @@ import { myShowLink } from "@/utils/reusableComponent";
 import { useRouter } from "next/router";
 import { isArray } from "@/utils/helper";
 
-export default function PayStack({ showDetails, onNext, children }) {
+export default function PayStack({ showDetails, onNext, children,isDisabled }) {
   const userData = useSelector(selectCurrentUserData) || {};
   const router =useRouter();
   const [CreatePurchase, { isLoading: cpLoader }] = useCreatePurchaseMutation();
-  const show={...showDetails,ticket:isArray(showDetails?.tickets)?[0]:showDetails?.ticket};
+  const show={...showDetails,ticket:isArray(showDetails?.tickets)?showDetails?.tickets[0]:showDetails?.ticket};
 //   console.log(show,showDetails,'hello')
   const config = {
     reference: new Date().getTime().toString(),
@@ -30,13 +30,14 @@ export default function PayStack({ showDetails, onNext, children }) {
     },
   };
 
+  // console.log(show,showDetails,'config')
   // you can call this function anything
   const handleSuccess = async (reference) => {
     // Implementation for whatever you want to do with reference and after success call.
-    console.log(reference);
+    // console.log(reference);
     const payload = {
       event_id: show?._id,
-      ticket_id: show?.ticket?.id,
+      ticket_id: show?.ticket?._id,
       user_id: userData?._id,
       purchase_date: new Date(),
     };
@@ -55,7 +56,7 @@ export default function PayStack({ showDetails, onNext, children }) {
 
   const componentProps = {
     ...config,
-    text: "Paystack Button Implementation",
+    text: "Event Payment",
     onSuccess: (reference) => handleSuccess(reference),
     onClose: handleClose,
   };
@@ -64,7 +65,7 @@ export default function PayStack({ showDetails, onNext, children }) {
     <PaystackConsumer {...componentProps}>
       {({ initializePayment }) => (
 
-        <button className="w-full" onClick={() => initializePayment(handleSuccess, handleClose)}>
+        <button className="w-full" disabled={isDisabled} onClick={() => initializePayment(handleSuccess, handleClose)}>
           {children}
         </button>
       )}

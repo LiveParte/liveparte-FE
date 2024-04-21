@@ -4,6 +4,7 @@ import ButtonComp from "@/components/Ui/button";
 import moment from "moment";
 import Image from "next/image";
 import React, { useEffect, useRef, useState } from "react";
+import { InfoIcon, MuteIcon, ThreeDot, UnMuteIcon } from "../../../../../public/svg";
 
 export default function IsNotLive({
   HeroSectionEvent,
@@ -13,7 +14,10 @@ export default function IsNotLive({
   showStatus,
   muted,
   giftTicket,
-  openModalShareEvent
+  openModalShareEvent,
+  toggleMute,
+  openModal,
+  handleJoinEvent
 }) {
   const dropdownRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -40,59 +44,42 @@ export default function IsNotLive({
       <div className="mb-[100px] hidden lg:flex gap-[16px] items-center ">
         <ButtonComp
           className={`py-[12px] px-[39px] text-[13px] xl:text-[15px] font500`}
-          btnText={isLive ? "Join The Event" : "Learn More"}
-          onClick={handleGetTicketLearnMore}
+          btnText={ "Join The Event"}
+          onClick={handleJoinEvent}
         />
-        <div className="relative ">
+         <div
+            className="cursor-pointer"
+            onClick={() => openModal && openModal(HeroSectionEvent)}
+          >
+            <InfoIcon />
+          </div>
+        <div className="relative  leading-none">
           {isOpen && (
             // <CustomDropDown setIsOpen={setIsOpen} ref={dropdownRef}>
              
               <DropdownMenu  giftTicket={giftTicket} openModalShareEvent={openModalShareEvent}/>
             // </CustomDropDown>
           )}
-          <button onClick={() => setIsOpen(!isOpen)}>
-            <Image
-              src="/webp/dots.png"
-              className="h-[44px] cursor-pointer"
-              width={44}
-              height={44}
-              alt="dots"
-            />
+          <button className='leading-none flex items-center' onClick={() => setIsOpen(!isOpen)}>
+           <ThreeDot/>
           </button>
         </div>
-        <div className="">
-          {!isLive ? (
-            <div className="text-[13px] xl:text-[16px]  text-[#B4BECB] z-10 relative font500">
-              {HeroSectionEvent?.event_date !== "Event Date"
-                ? moment(HeroSectionEvent?.event_date).format("MMMM DD, YYYY")
-                : `April 17, 2024`}{" "}
-              - Watch lives
-            </div>
-          ) : (
-            showStatus && (
-              <>
-                {isOnDemand ? (
-                  <div className="   flex gap-[8px] items-center   ">
-                    {/* <div className="h-[8px] w-[8px] rounded-full bg-[#c6616b]"></div> */}
-                    <div className="text-[11px] lg:text-[13px]  text-white   font500">
-                      On Demand
-                    </div>
-                  </div>
-                ) : (
-                  <div className="flex gap-[8px] items-center   ">
-                    <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div>
-                    <div className="text-[11px] lg:text-[13px]  text-white   font500">
+        
+        <div className="leading-none">
+        <>
+               
+                  <div className="flex gap-[8px] items-center    leading-none">
+                    <div className="h-[10px] w-[10px] rounded-full bg-[#FA4354] leading-none"></div>
+                    <div className="text-[11px] lg:text-[13px]  text-white   font500 leading-tight">
                       Happening Now
                     </div>
                   </div>
-                )}
+                
               </>
-            )
-          )}
         </div>
       </div>
       <div className="text-center mt-[20px] lg:mt-[40px] lg:hidden mb-[42px] font500">
-        <div className="mb-[24px]">
+        <div className="mb-[24px] hidden xl:block">
           {!isLive ? (
             <div className="text-[#B4BECB] text-[13px] md:text-[15px] z-10 relative  font500">
               {moment(HeroSectionEvent?.event_date).format("MMM DD, YYYY")} -
@@ -109,7 +96,14 @@ export default function IsNotLive({
             )
           )}
         </div>
-        <div className="relative ">
+        
+        <div className="flex gap-3 items-center">
+          <ButtonComp
+            className={`py-[12px] px-[57px] text-[13px] md:text-[15px] font500 `}
+            btnText={ "Join The Event"}
+            onClick={handleJoinEvent}
+          />
+          <div className="relative  leading-none">
           {isOpen && (
             // <CustomDropDown setIsOpen={setIsOpen} ref={dropdownRef}>
              
@@ -117,21 +111,9 @@ export default function IsNotLive({
             // </CustomDropDown>
           )}
           <button onClick={() => setIsOpen(!isOpen)}>
-            <Image
-              src="/webp/dots.png"
-              className="h-[44px] cursor-pointer"
-              width={44}
-              height={44}
-              alt="dots"
-            />
+            <ThreeDot/>
           </button>
         </div>
-        <div>
-          <ButtonComp
-            className={`py-[12px] px-[57px] text-[13px] md:text-[15px] font500 `}
-            btnText={isLive ? "Join The Event" : "Learn More"}
-            onClick={handleGetTicketLearnMore}
-          />
         </div>
       </div>
     </div>

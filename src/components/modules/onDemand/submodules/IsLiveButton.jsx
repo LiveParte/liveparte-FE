@@ -16,6 +16,7 @@ export default function IsLiveButton({
   isOpen,
   muted,
   isLive,
+  isOnDemand
 }) {
   return (
     <div className=" w-full relative ">
@@ -66,7 +67,7 @@ export default function IsLiveButton({
           </div>
 
           <div>
-            {!isLive ? (
+            {!isOnDemand ? (
               <div className="text-[13px] xl:text-[16px]  text-[#B4BECB] z-10 relative font500">
                 {moment(HeroSectionEvent?.event_date).format("MMM DD, YYYY")} -
                 Watch live

@@ -17,7 +17,7 @@ export default function UserProfile({ onClick }) {
   //
   const [userProfile, setUserProfile] = useState();
   const UserLiveParte = useSelector(selectCurrentUserData);
-  console.log(data,'UserLiveParte')
+  // console.log(data,'UserLiveParte')
   useEffect(() => {
     if(UserLiveParte?.profile_image){
       return setUserProfilePic(UserLiveParte?.profile_image);

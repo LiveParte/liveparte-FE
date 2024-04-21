@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import GiftingCoins from "./giftingCoins";
 import PurchasePaartyCoins from "./PurchasePaartyCoins";
-import { SendButton } from "../../../../../public/svg";
+import { CommentIcon, SendButton } from "../../../../../public/svg";
 export default function Chat({
   onLeave
 }) {
@@ -71,8 +71,13 @@ export default function Chat({
        <ButtonComp onClick={onLeave&&onLeave} className={`!h-[30px] text-[13px] !bg-[#BAD6F70F] text-white px-[24px] rounded-full font500 border-[1px] border-[#262C32] leading-none items-center py-[10px] block lg:hidden`} btnText={'Leave'}/>
       </div>
       <div className=" h-full flex flex-col flex-1">
-        <div className=" px-[16px] flex-1   flex  items-end">
-         <div className="flex-1 lg:w-full overflow-y-scroll    font400  customScrollHorizontal">
+        <div className=" px-[16px] flex-1 flex-col  flex  items-end relative">
+        <div className="flex-grow-1 flex flex-col justify-center items-center h-full w-full lg:mt-10">
+          <div className="mb-[17px]"><CommentIcon/></div>
+            <div className=" text-[13px] text-[#788AA1] px-[33px] text-center">There are no comments yet, be the first to comment</div>
+          </div>
+         <div className="flex-1 lg:w-full overflow-y-scroll    font400  customScrollHorizontal relative">
+        
          {/* <ChatList />
           <ChatList />
           <ChatList />
@@ -87,7 +92,7 @@ export default function Chat({
           <ChatList /> */}
          </div>
          <div>
-         <div className="lg:hidden  flex flex-col items-end gap-[16px] pb-[16px]">
+         <div className="lg:hidden  flex flex-col items-end gap-[16px] pb-[16px] absolute right-[16px] bottom-[16px]">
                   <Image src={`/svg/reaction1.svg`} width={32} height={32} alt="reaction1  " />
                   <Image src={`/svg/reaction2.svg`} width={32} height={32} alt="reaction2  " />
                   <Image src={`/svg/reaction3.svg`} width={32} height={32} alt="reaction3  " />

@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import Image from "next/image";
 import Chat from "./submodules/chat";
 import { useRouter } from "next/router";
-import { FullScreenIcon, LogoWhiteMobile } from "../../../../public/svg";
+import { FullScreenIcon, GiftIcon, LogoWhiteMobile, MicroPhoneIcon } from "../../../../public/svg";
 import AgoraRTC, { AgoraRTCProvider, useRTCClient } from "agora-rtc-react";
 import LiveStreamVideo from "./submodules/livestreamVideo";
 import { myShowLink } from "@/utils/reusableComponent";
@@ -16,7 +16,7 @@ import { transactionApi } from "@/store/Transaction/transactionApi";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
 // Render a YouTube video player
-export default function LiveStream({ isLive = false, liveStreamDetail }) {
+export default function LiveStream({ isLive = false, liveStreamDetail,handleCloseModal,handleOpenModal }) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const dispatch = useDispatch();
@@ -72,9 +72,27 @@ export default function LiveStream({ isLive = false, liveStreamDetail }) {
           <div className=" flex flex-col flex-[0.3] lg:flex-[0.6] xl:flex-[0.7] bg-[#27292E] lg:pt-[32px] lg:px-[24px] lg:rounded-[16px]">
             <div className="px-[5px]  items-center justify-between mb-[23px] hidden lg:flex">
               <div className="text-[23px] font-semibold font-1 text-[#FFFFFF] uppercase">
-                {liveStreamDetail?.name || `Timeless tour - Newyork`}
+                {liveStreamDetail?.name }
               </div>
-              <div className="">
+              <div className=" flex items-center gap-3">
+              <ButtonComp
+                  className={`!h-[33px]  text-white text-[13px] font500 px-[12px] py-[6px] rounded-[8px]  border-[0px] font500  !bg-[#323840] element`}
+                  btnText={<div className="flex items-center gap-2"><GiftIcon/>Gift Ticket</div>}
+                
+                  onClick={() => {
+                    handleOpenModal(`giftTicket`);
+                    // router.push(myShowLink);
+                  }}
+                />
+              <ButtonComp
+                  className={`!h-[33px]  text-white text-[13px] font500 px-[12px] py-[6px] rounded-[8px]  border-[0px] font500  !bg-[#323840] element`}
+                  btnText={<div className="flex items-center gap-2"><MicroPhoneIcon/>Share Event</div>}
+                
+                  onClick={() => {
+                    handleOpenModal(`shareEvent`);
+                    // router.push(myShowLink);
+                  }}
+                />
                 <ButtonComp
                   className={`!h-[33px] !bg-[#FA4354] text-white text-[13px] font500 px-[23px] py-[5px]`}
                   btnText={"Leave"}

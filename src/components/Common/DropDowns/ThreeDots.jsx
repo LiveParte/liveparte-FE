@@ -9,7 +9,7 @@ export function DropdownMenu({
     giftTicket
 }) {
     return (
-      <div className=" absolute dropdownIII transform translate-x-[-200px] -translate-y-[60px] z-30">
+      <div className=" absolute dropdownIII transform translate-x-[-250px] lg:translate-x-[-200px] -translate-y-[60px] z-30">
         <div className=" bg-[#1B1C20] border-[1px] text-left border-[#343F4B] text-[13px] md:text-[14px] text-white  rounded-[16px] md:w-[327px] w-[80vw]     px-[40px] py-[24px]">
           <div className="py-[12px] cursor-pointer " onClick={giftTicket}>
             Gift Ticket

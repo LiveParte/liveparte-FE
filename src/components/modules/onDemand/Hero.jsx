@@ -12,12 +12,13 @@ import {
   CopyEventLink,
   eventLink,
   GetTransformedImageUrl,
+  liveStreamLink,
   myShowLink,
 } from "@/utils/reusableComponent";
 import { useRouter } from "next/router";
 import { isArray } from "@/utils/helper";
 import { useDispatch, useSelector } from "react-redux";
-import { setEventData } from "@/store/Event";
+import { setEventData, setLiveStreamEventData } from "@/store/Event";
 import IsLiveButton from "./submodules/IsLiveButton";
 import IsNotLive from "./submodules/IsNotLive";
 import MyModal from "@/components/Ui/Modal";
@@ -39,7 +40,7 @@ export default function Hero({
   HeroSectionEvent,
   showStatus = true,
   showTopGradient = false,
-  isOnDemand = true,
+  isOnDemand = false,
 }) {
   const [CreatePurchase, { isLoading: cpLoader }] = useCreatePurchaseMutation();
 
@@ -47,15 +48,23 @@ export default function Hero({
   const dispatch = useDispatch();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [openCheckOut,setCheckOut] =useState(false);
+  const [openCheckOut, setCheckOut] = useState(false);
   const dropdownRef = useRef(null);
   const [muted, setMuted] = useState(true);
 
   const eventIsPurchase = HeroSectionEvent?.purchase?.id;
   const isLive = HeroSectionEvent?.isLiveStreamed ? true : false;
-  const EventStarted = HeroSectionEvent?.eventStarted &&checkShowDuration(HeroSectionEvent?.event_date,HeroSectionEvent?.event_length);
-  const userData =useSelector(selectCurrentUserData)||{}
-  const show={...HeroSectionEvent,ticket:isArray(HeroSectionEvent?.tickets)&&HeroSectionEvent?.tickets[0]}
+  const EventStarted =
+    HeroSectionEvent?.eventStarted &&
+    checkShowDuration(
+      HeroSectionEvent?.event_date,
+      HeroSectionEvent?.event_length
+    );
+  const userData = useSelector(selectCurrentUserData) || {};
+  const show = {
+    ...HeroSectionEvent,
+    ticket: isArray(HeroSectionEvent?.tickets) && HeroSectionEvent?.tickets[0],
+  };
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -72,7 +81,7 @@ export default function Hero({
     };
   }, []);
 
-  console.log(show,eventIsPurchase,EventStarted, "hello");
+  console.log(show, "hello");
 
   // function DropdownMenu() {
   //   return (
@@ -109,7 +118,7 @@ export default function Hero({
   //             <b>Venue:</b>${HeroSectionEvent?.address}
   //             <br/>
   //             <b>Date:</b>${HeroSectionEvent?.event_date}
-              
+
   //             <br/>
   //             <b>Time:</b>${moment(HeroSectionEvent?.event_date).format("h:mm")}
   //             &location=${CopyEventLink({
@@ -148,19 +157,28 @@ export default function Hero({
     });
   };
 
+  const handleJoinEvent = () => {
+    dispatch(
+      setLiveStreamEventData(HeroSectionEvent)
+    );
+
+    router.push({
+      pathname: `${liveStreamLink}/`,
+    });
+  };
+
   const handleNavigate = (event) => {
     event.preventDefault();
     openModal(HeroSectionEvent);
   };
-const handleSuccessPayment = () =>{
+  const handleSuccessPayment = () => {
+    router.push(myShowLink);
+  };
 
-    router.push(myShowLink)
-}
-
-const handleCloseModal = () => {
-  setCheckOut(null)
-  // implementation for  whatever you want to do when the Paystack dialog closed.
-};
+  const handleCloseModal = () => {
+    setCheckOut(null);
+    // implementation for  whatever you want to do when the Paystack dialog closed.
+  };
 
   const ModalList = [
     {
@@ -168,7 +186,6 @@ const handleCloseModal = () => {
       component: (
         <CheckOut
           Data={show}
-         
           closeModal={handleCloseModal}
           IsBought={false}
           // onNext={refetch}
@@ -177,9 +194,7 @@ const handleCloseModal = () => {
     },
     {
       name: "gift ticket",
-      component: (
-        <GiftTicket Data={show}  />
-      ),
+      component: <GiftTicket Data={show} />,
     },
     {
       name: "login/signup",
@@ -188,9 +203,13 @@ const handleCloseModal = () => {
           // closeModal={handleCloseModal}
           onNext={(userDetail) => {
             // dispatch(eventApi.endpoints.userShows.initiate(userDetail?._id, {forceRefetch: true}));
-            dispatch(eventApi.endpoints.getAllEvent.initiate(undefined, {forceRefetch: true}));
+            dispatch(
+              eventApi.endpoints.getAllEvent.initiate(undefined, {
+                forceRefetch: true,
+              })
+            );
             handleCloseModal();
-//getAllEvent
+            //getAllEvent
             // userShowRefetch();
             setIsOpen("checkout");
           }}
@@ -199,23 +218,21 @@ const handleCloseModal = () => {
     },
     {
       name: "share event",
-      component: (
-        <ShareEvent Data={show} closeModal={handleCloseModal} />
-      ),
+      component: <ShareEvent Data={show} closeModal={handleCloseModal} />,
     },
   ];
 
   const handleOpenGiftTicket = () => {
-    setCheckOut('gift ticket')
-  }
+    setCheckOut("gift ticket");
+  };
 
   const handleOpenGShareEvent = () => {
-    setCheckOut('share event')
-  }
-    //
- 
+    setCheckOut("share event");
+  };
+  //
+
   //bg-[url('/webp/bg1.webp')]
-  
+
   return (
     <div
       className={`relative font400   bg-cover bg-center  xl:bg-top ${MainContainer} h-[100dvh] md:h-[100vh]`}
@@ -223,15 +240,16 @@ const handleCloseModal = () => {
       {openCheckOut && (
         <MyModal
           bodyComponent={
-            ModalList?.find((item, index) => item?.name == openCheckOut)?.component
+            ModalList?.find((item, index) => item?.name == openCheckOut)
+              ?.component
           }
           containerStyle={`bg-[#1B1C20] border-[1px] border-[#343F4B] rounded-[16px]  !w-[486px]`}
           isOpen={openCheckOut ? true : false}
-          closeModal={()=>setCheckOut(null)}
+          closeModal={() => setCheckOut(null)}
           // openModal={()=>setCheckOut(true)}
         />
       )}
-      
+
       {showTopGradient && (
         <div className=" absolute top-0 left-0 right-0 h-[20vh]  z-50  bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>
       )}
@@ -276,34 +294,39 @@ const handleCloseModal = () => {
                 {HeroSectionEvent?.name}
               </div>
               {/*  */}
-              {true ? (
+              {EventStarted ? (
                 <IsNotLive
                   HeroSectionEvent={HeroSectionEvent}
                   handleGetTicketLearnMore={handleGetTicketLearnMore}
-                  isLive={isLive}
+                  isLive={EventStarted}
                   isOnDemand={isOnDemand}
                   showStatus={showStatus}
                   muted={muted}
                   giftTicket={handleOpenGiftTicket}
                   openModalShareEvent={handleOpenGShareEvent}
+                  toggleMute={toggleMute}
+                  openModal={openModal}
+                  handleJoinEvent={handleJoinEvent}
                 />
               ) : (
                 <IsLiveButton
                   HeroSectionEvent={HeroSectionEvent}
                   dropdownRef={dropdownRef}
                   eventIsPurchase={eventIsPurchase}
-                  openModal={()=>{
-                    if(!userData?._id){
-                      return   setCheckOut('login/signup')
+                  openModal={() => {
+                    if (!userData?._id) {
+                      return setCheckOut("login/signup");
                     }
                     // alert('Purchase');
-                    setCheckOut('checkout')
+                    setCheckOut("checkout");
                   }}
                   showStatus={showStatus}
                   toggleMute={toggleMute}
                   isOpen={isOpen}
                   muted={muted}
                   isLive={isLive}
+                  isOnDemand={isOnDemand}
+                  
                 />
               )}
             </div>

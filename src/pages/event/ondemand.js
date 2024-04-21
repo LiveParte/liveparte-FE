@@ -38,6 +38,7 @@ export default function OnDemandEvent() {
       <Hero
         HeroSectionEvent={HeroSectionEvent}
         router={router}
+        isOnDemand={true}
         notEvent={false}
         openModal={(item) => {
           router.push(`${eventLink}/${item?._id}`);
