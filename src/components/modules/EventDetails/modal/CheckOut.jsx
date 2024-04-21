@@ -6,6 +6,7 @@ import { CloseII } from "../../../../../public/svg";
 import { formatMoney } from "@/utils/formatMoney";
 import { PaystackConsumer } from "react-paystack";
 import Image from "next/image";
+import PayStack from "@/components/PayStack/payStack";
 
 export default function CheckOut({
   closeModal,
@@ -14,7 +15,8 @@ export default function CheckOut({
   componentProps,
   handleClose,
   handleSuccess,
-  IsBought
+  IsBought,
+  onNext
 }) {
   const router = useRouter();
   const handleAction = () => {
@@ -61,29 +63,15 @@ export default function CheckOut({
             </div>
           </div>
         </div>
-        <PaystackConsumer {...componentProps} >
-          {({initializePayment}) =>
-           <ButtonComp
+        <PayStack showDetails={Data} onNext={onNext}>
+        <ButtonComp
            isDisabled={eventIsPurchase||!Data?.name}
               btnText={eventIsPurchase?`Ticket already purchased`:`Proceed To Make Payment -  ₦${formatMoney(Data?.ticket?.price||"", false || "0")} `}
               className={`w-full text-[13px] font500] h-[44px] `}
-              onClick={() => initializePayment(handleSuccess, handleClose)}
+              // onClick={() => initializePayment(handleSuccess, handleClose)}
             />
-          //  <button onClick={() => initializePayment(handleSuccess, handleClose)}>Paystack Consumer Implementation</button>
-          }
-        </PaystackConsumer>
-        {/* <PaystackConsumer {...componentProps}>
-          {({ initializePayment }) => (
-            <button onClick={() => initializePayment(handleSuccess, handleClose)}>Paystack Consumer Implementation</button>
-            // <ButtonComp
-            //   btnText={`Proceed To Make Payment ${
-            //     Data?.ticket?.code
-            //   } ${formatMoney(Data?.ticket?.price, false || "0")} `}
-            //   className={`w-full text-[13px] font500] h-[44px] `}
-            //   onClick={() => initializePayment(handleSuccess, handleClose)}
-            // />
-          )}{" "}
-        </PaystackConsumer> */}
+        </PayStack>
+       
       </main>
     </div>
   );

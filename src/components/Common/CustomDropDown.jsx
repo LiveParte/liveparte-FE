@@ -4,7 +4,7 @@ export default function CustomDropDown({ dropdownRef, setIsOpen, className, chil
   
   useEffect(() => {
     function handleClickOutside(event) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      if (dropdownRef&&dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         // Clicked outside the dropdown, so close it
         setIsOpen(false);
       }

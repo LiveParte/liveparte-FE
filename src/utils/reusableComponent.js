@@ -185,4 +185,28 @@ export function convertAndAddOneHour(inputDateTime) {
 // Test the function
 const inputDateTime = "2024-07-05T19:00";
 const newDateTime = convertAndAddOneHour(inputDateTime);
-console.log(newDateTime);  // Output: "20240705T200000Z"
+// console.log(newDateTime);  // Output: "20240705T200000Z"
+
+
+export function checkShowDuration(targetDateTime, durationMins) {
+    // Current date and time
+    const currentDate = new Date();
+
+    // Convert targetDateTime string to Date object
+    const targetDate = new Date(targetDateTime);
+    
+    // Calculate target date and time after adding durationMins
+    const targetDatePlusDuration = new Date(targetDate.getTime() + (durationMins * 60 * 1000));
+
+    // Check conditions
+    if (currentDate >= targetDate && currentDate <= targetDatePlusDuration) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+
+export function replaceAmpersandWithAnd(str) {
+  return str.replace(/&/g, 'and');
+}
