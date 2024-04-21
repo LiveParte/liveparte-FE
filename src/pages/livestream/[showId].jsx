@@ -9,9 +9,6 @@ const LiveStream = dynamic(() => import('@/components/modules/LiveStream/LiveStr
 
 export default function Index() {
     const liveStream = useSelector(selectLiveStreamEvent);
-    // console.log(liveStream,'liveStream')
-
-
   return (
     <WithAuth showHeader={false}>
       <div className='flex-1 flex flex-col  bg-[#060809] overflow-hidden '>

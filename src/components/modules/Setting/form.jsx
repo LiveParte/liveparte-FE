@@ -79,7 +79,6 @@ export default function SettingForm({
     },
   });
 
-  // console.log(data,'datadata')
 
   useEffect(() => {
     setValue("email", data?.email || userInfo?.email);
@@ -107,7 +106,6 @@ export default function SettingForm({
     const response = handleRegisterUser?.data;
     const UserString = JSON.stringify(response?.updatedUser);
     setValue('profile_image',response?.updatedUser?.profile_image)
-    // console.log(response?.updatedUser, "responseresponseresponse");
     // storage.localStorage.set(userDetailStorageName, JSON.stringify(response?.updatedUser));
     response?.updatedUser?._id&& storage.localStorage.set(userDetailStorageName, UserString);
    
@@ -133,7 +131,6 @@ export default function SettingForm({
       ...data,
     };
 
-    // console.log(payload);
     if (payload?.newPassword !== payload?.confirmPassword) {
       return setError("confirmPassword", {
         type: "custom",
@@ -177,7 +174,6 @@ export default function SettingForm({
     return true
   }
 
-  // console.log(watch('fullName'),data?.fullName,watch('phone'),data?.phone,'fullNamefullName')
 
   function CheckUserName(){
     if(watch('fullName') ===data?.fullName){
@@ -189,14 +185,7 @@ export default function SettingForm({
     return true
   }
 
-  // console.log(
-  //   watch("username")===
-  //     userInfo?.fullName,
-  //   userInfo,
-  //   "userInfo"
-  // );
-  // console.log(CheckPhoneNumber(),'CheckPhoneNumber')
-  // console.log(imageUrl,userInfo?.profile_image,data?.profile_image,'data?.profile_image')
+  
   const isChangedState =CheckPhoneNumber()||CheckUserName()||imageUrl;
 
   return (
@@ -301,7 +290,6 @@ export default function SettingForm({
                 rules={{
                   required: `${item?.label} is required`,
                   pattern: item?.pattern,
-                  // validate:value=>console.log(value,confirmPassword)
                   // validate:value=>item?.handlePasswordValidate?item?.handlePasswordValidate(value):{}
                 }}
                 render={({

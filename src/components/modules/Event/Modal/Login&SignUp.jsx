@@ -41,7 +41,6 @@ export default function LoginSignUp({
   const router = useRouter();
   const dispatch = useDispatch();
   const { id } = router?.query;
-  // console.log(router, "routerrouter");
   const [toggle, setToggle] = useState("Login");
   const isActive = `text-white border-[1px] border-[#48515d]  rounded-[999px] bg-[#2e3239] px-[30px] lg:px-[20px] cursor-pointer `;
   const notActive = `text-[#495969] px-[30px] lg:px-[20px] cursor-pointer `;
@@ -54,7 +53,6 @@ export default function LoginSignUp({
   const [LoginUser, { isLoading: loginLoader, isError: loginIsError }] =
     useLoginApiMutation();
   const checkIfNonImageExist = storage.localStorage.get("noUserProfileImage");
-  // console.log(checkIfNonImageExist,'checkIfNonImageExist')
   const { control, handleSubmit, getValues, reset, setError } = useForm({
     defaultValues: {
       email: "",
@@ -83,7 +81,6 @@ export default function LoginSignUp({
     },
   });
 
-  // console.log(pageName, "pageName");
 
   useEffect(() => {
     if (pageName) {
@@ -109,8 +106,7 @@ export default function LoginSignUp({
     const response = handleRegisterUser?.data;
 
     const UserString = JSON.stringify(response?.user);
-    // console.log(handleRegisterUser, UserString, "handleRegisterUser");
-    // toast('Hello! RegisterUser')
+    
     if (response?.statusCode && response?.statusCode !== 200) {
       if (response?.message === "Email is already in use") {
         return setError2("email", {
@@ -176,7 +172,7 @@ export default function LoginSignUp({
       dispatch(setUserData(response?.user));
       // dispatch(baseApi.util.resetApiState());
 
-      // console.log()
+   
       if (router?.pathname === "/") {
         return router.push(eventLink);
       }
@@ -202,7 +198,6 @@ export default function LoginSignUp({
     const response = handleRegisterUser?.data;
     const UserString = JSON.stringify(response?.user);
 
-    // console.log(handleRegisterUser, UserString, "handleRegisterUser");
     // toast('Hello! RegisterUser')
 
     if (!checkIfNonImageExist?.id) {

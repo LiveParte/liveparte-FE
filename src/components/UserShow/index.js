@@ -14,7 +14,6 @@ export default function UserShowsCard({
   // alert(id)
   const backUrl =
     id == 1 ? `bg-[url('/webp/show.png')]` : `bg-[url('/webp/show2.png')]`;
-  // console.log(showImage,'showImage')
   return (
     <div
       className={`relative h-[35vh] md:h-[40vh] lg:h-[55vh] rounded-[8px] lg:rounded-[20px] ${backUrl} bg-cover bg-center1`}

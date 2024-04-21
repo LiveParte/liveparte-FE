@@ -24,7 +24,7 @@ export default function HeroTime({ notEvent = true,router,onClick }) {
           </div>
         </div>
       </div>
-      <div className=" absolute bottom-0 left-0 right-0 h-[100vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-t from-black"></div>
+      <div className=" absolute -bottom-1 left-0 right-0 h-[100vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-t from-black"></div>
     </div>
   );
 }

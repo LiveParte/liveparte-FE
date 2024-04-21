@@ -30,7 +30,6 @@ export default function MyShows() {
   }, [isSuccess,refetch])
   
 
-  // console.log(userShows?.event,user,'userShows')
   const [isActive, setIsActive] = useState(HeaderData[0]?.name);
   return (
     <WithAuth>

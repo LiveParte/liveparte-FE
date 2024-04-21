@@ -38,7 +38,6 @@ export default function Hero({
 
   const eventIsPurchase = HeroSectionEvent?.pruchase?.id;
   const isLive = HeroSectionEvent?.isLiveStreamed?true:false;
-  // console.log(HeroSectionEvent,eventIsPurchase, "HeroSectionEvent");
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -136,7 +135,6 @@ export default function Hero({
     openModal(HeroSectionEvent);
   };
 
-  // console.log(HeroSectionEvent,'HeroSectionEvent')
   //bg-[url('/webp/bg1.webp')]
   return (
     <div
@@ -383,7 +381,7 @@ export default function Hero({
           </div>
         </div>
       </div>
-      <div className=" absolute bottom-0 left-0 right-0 h-[50vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-t from-black"></div>
+      <div className=" absolute -bottom-1 left-0 right-0 h-[50vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-t from-black"></div>
     </div>
   );
 }
