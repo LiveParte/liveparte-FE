@@ -869,3 +869,39 @@ export const SendButton =()=>(
   />
 </svg>
 )
+
+
+export const InfoIcon=()=>(
+  <svg width="45" height="44" viewBox="0 0 45 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g filter="url(#filter0_iii_1419_6508)">
+<rect x="0.0783691" width="44" height="44" rx="8" fill="#BACFF7" fill-opacity="0.04"/>
+<circle opacity="0.12" cx="22.0785" cy="22" r="8.33333" fill="white"/>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M22.0785 14.1667C17.7522 14.1667 14.2451 17.6738 14.2451 22C14.2451 26.3263 17.7522 29.8334 22.0785 29.8334C26.4047 29.8334 29.9118 26.3263 29.9118 22C29.9118 17.6738 26.4047 14.1667 22.0785 14.1667ZM13.2451 22C13.2451 17.1215 17.1999 13.1667 22.0785 13.1667C26.957 13.1667 30.9118 17.1215 30.9118 22C30.9118 26.8785 26.957 30.8334 22.0785 30.8334C17.1999 30.8334 13.2451 26.8785 13.2451 22ZM22.0785 20.6667C22.3546 20.6667 22.5785 20.8905 22.5785 21.1667V25.3334C22.5785 25.6095 22.3546 25.8334 22.0785 25.8334C21.8023 25.8334 21.5785 25.6095 21.5785 25.3334V21.1667C21.5785 20.8905 21.8023 20.6667 22.0785 20.6667ZM22.0785 19.5C22.5387 19.5 22.9118 19.1269 22.9118 18.6667C22.9118 18.2064 22.5387 17.8334 22.0785 17.8334C21.6182 17.8334 21.2451 18.2064 21.2451 18.6667C21.2451 19.1269 21.6182 19.5 22.0785 19.5Z" fill="white"/>
+</g>
+<defs>
+<filter id="filter0_iii_1419_6508" x="0.0783691" y="0" width="44" height="68" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feMorphology radius="1" operator="erode" in="SourceAlpha" result="effect1_innerShadow_1419_6508"/>
+<feOffset/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.729412 0 0 0 0 0.811765 0 0 0 0 0.968627 0 0 0 0.12 0"/>
+<feBlend mode="normal" in2="shape" result="effect1_innerShadow_1419_6508"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="24"/>
+<feGaussianBlur stdDeviation="24"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.658824 0 0 0 0 0.847059 0 0 0 0 0.960784 0 0 0 0.06 0"/>
+<feBlend mode="normal" in2="effect1_innerShadow_1419_6508" result="effect2_innerShadow_1419_6508"/>
+<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+<feOffset dy="1"/>
+<feGaussianBlur stdDeviation="0.5"/>
+<feComposite in2="hardAlpha" operator="arithmetic" k2="-1" k3="1"/>
+<feColorMatrix type="matrix" values="0 0 0 0 0.847059 0 0 0 0 0.92549 0 0 0 0 0.972549 0 0 0 0.2 0"/>
+<feBlend mode="normal" in2="effect2_innerShadow_1419_6508" result="effect3_innerShadow_1419_6508"/>
+</filter>
+</defs>
+</svg>
+
+)

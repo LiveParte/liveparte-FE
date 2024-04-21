@@ -59,7 +59,7 @@ export default function LiveStream({ isLive = false, liveStreamDetail }) {
   const MainContainer = `lg:px-[20px] lg:px-[60px] lg:px-[120px] relative`;
   return (
     <AgoraRTCProvider client={agoraClient}>
-      <main className={`${MainContainer} flex flex-col   overflow-hidden flex-1`}>
+      <main className={`${MainContainer} flex flex-col   overflow-hidden flex-1 lg:pb-[26px]`}>
         <div className=" items-center justify-between hidden lg:flex">
           <div className="pt-[32px] pb-[27px] hidden lg:block">
             <LogoImage router={router} />
@@ -69,7 +69,7 @@ export default function LiveStream({ isLive = false, liveStreamDetail }) {
         </div>
         {/* \ */}
         <div className="flex flex-col lg:flex-row lg:gap-[16px] flex-1 takeScreen">
-          <div className=" flex flex-col  flex-grow bg-[#27292E] lg:pt-[32px] lg:px-[24px] lg:rounded-[16px]">
+          <div className=" flex flex-col flex-[0.3] lg:flex-[0.6] xl:flex-[0.7] bg-[#27292E] lg:pt-[32px] lg:px-[24px] lg:rounded-[16px]">
             <div className="px-[5px]  items-center justify-between mb-[23px] hidden lg:flex">
               <div className="text-[23px] font-semibold font-1 text-[#FFFFFF] uppercase">
                 {liveStreamDetail?.name || `Timeless tour - Newyork`}
@@ -145,7 +145,7 @@ export default function LiveStream({ isLive = false, liveStreamDetail }) {
               />
             </div>
           </div>
-          <div className=" lg:w-[25%]  flex-0 lg:flex-1  flex flex-col lg:rounded-[26px] bg-[#222428]">
+          <div className=" lg:w-[25%]  flex-[0.7] lg:flex-[0.4] xl:flex-[0.3]  flex flex-col lg:rounded-[26px] bg-[#222428]">
             <Chat
               onLeave={() => {
                 setActiveConnection(false);

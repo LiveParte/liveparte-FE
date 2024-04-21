@@ -20,7 +20,7 @@ function WithAuth({ children, showHeader = true }) {
   });
 
 
- 
+ console.log(userInfo,'userInfo')
 
   useEffect(() => {
     if(!userInfo?._id){

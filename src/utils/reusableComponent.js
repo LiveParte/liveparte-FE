@@ -131,3 +131,58 @@ export const isJSON = (str) => {
 
 const userData = storage.localStorage.get(userDetailStorageName);
 export const CheckUser =isJSON(userData)&&JSON?.parse(userData)
+
+
+export function convertDateTime(inputDateTime) {
+  // Extract date and time components
+  const [date, time] = inputDateTime.split('T');
+  
+  // Extract year, month, and day
+  const [year, month, day] = date.split('-');
+  
+  // Extract hour, minute, and second
+  const [hour, minute] = time.split(':');
+  
+  // Convert to desired format
+  const formattedDateTime = `${year}${month}${day}T${hour}${minute}00Z`;
+  
+  return formattedDateTime;
+}
+
+
+export function convertAndAddOneHour(inputDateTime) {
+  // Extract date and time components
+  const [date, time] = inputDateTime.split('T');
+  
+  // Extract year, month, and day
+  const [year, month, day] = date.split('-');
+  
+  // Extract hour and minute
+  const [hour, minute] = time.split(':');
+  
+  // Convert to UTC format
+  const utcDateTime = `${year}${month}${day}T${hour}${minute}00Z`;
+
+  // Convert UTC string to Date object
+  const utcDate = new Date(Date.UTC(year, month - 1, day, hour, minute));
+
+  // Add one hour
+  utcDate.setUTCHours(utcDate.getUTCHours() + 1);
+
+  // Format the new date and time
+  const newYear = utcDate.getUTCFullYear();
+  const newMonth = String(utcDate.getUTCMonth() + 1).padStart(2, '0');
+  const newDay = String(utcDate.getUTCDate()).padStart(2, '0');
+  const newHour = String(utcDate.getUTCHours()).padStart(2, '0');
+  const newMinute = String(utcDate.getUTCMinutes()).padStart(2, '0');
+  const newSecond = String(utcDate.getUTCSeconds()).padStart(2, '0');
+
+  const newDateTime = `${newYear}${newMonth}${newDay}T${newHour}${newMinute}${newSecond}Z`;
+
+  return newDateTime;
+}
+
+// Test the function
+const inputDateTime = "2024-07-05T19:00";
+const newDateTime = convertAndAddOneHour(inputDateTime);
+console.log(newDateTime);  // Output: "20240705T200000Z"

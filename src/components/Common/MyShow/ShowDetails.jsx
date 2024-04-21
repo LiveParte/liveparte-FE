@@ -9,7 +9,7 @@ export default function ShowDetails({ onNext, item, id }) {
   const router = useRouter();
 
   return (
-    <div className=" z-50 relative">
+    <div className=" z-30 relative">
       <div className=" flex flex-col  relative">
         <div
           onClick={() => {

@@ -30,7 +30,7 @@ export default function Home() {
   return (
     <div className='min-h-[100vh] bg-black'>
       <NoAuth>
-        {heroEvent && <Hero isOnDemand={false} HeroSectionEvent={heroEvent} router={router} notEvent={true} />}
+        {heroEvent && <Hero isOnDemand={false} HeroSectionEvent={heroEvent} router={router} notEvent={true}  />}
         <Happening events={happeningNowEvents} upComingEvent={filteredEvents} OnDemandEvent={onDemandEvents} />
         <Footer />
       </NoAuth>
