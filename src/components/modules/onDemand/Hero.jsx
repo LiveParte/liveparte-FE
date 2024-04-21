@@ -1,11 +1,11 @@
 import Header from "@/components/Common/Header/Header";
 import React, { useEffect, useRef, useState } from "react";
-import {  MuteIcon, UnMuteIcon } from "../../../../public/svg";
+import { MuteIcon, UnMuteIcon } from "../../../../public/svg";
 import { MainContainer } from "@/utils/styleReuse";
 import ButtonComp from "@/components/Ui/button";
 import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
 import moment from "moment";
-import { formatMoney } from "@/utils/formatMoney";
+import { usePaystackPayment } from "react-paystack";
 import {
   convertDateTime,
   CopyEventLink,
@@ -14,10 +14,14 @@ import {
 } from "@/utils/reusableComponent";
 import { useRouter } from "next/router";
 import { isArray } from "@/utils/helper";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setEventData } from "@/store/Event";
 import IsLiveButton from "./submodules/IsLiveButton";
 import IsNotLive from "./submodules/IsNotLive";
+import MyModal from "@/components/Ui/Modal";
+import CheckOut from "../EventDetails/modal/CheckOut";
+import { selectCurrentUserData } from "@/store/User";
+import { useCreatePurchaseMutation } from "@/store/Transaction/transactionApi";
 
 export default function Hero({
   notEvent = true,
@@ -27,24 +31,25 @@ export default function Hero({
   giftTicket,
   openModalShareEvent,
   HeroSectionEvent,
-  // makePayment,
-  // IsBought,
-  // myShowLoader,
-  // showHeader = true,
   showStatus = true,
   showTopGradient = false,
   isOnDemand = true,
 }) {
+  const [CreatePurchase, { isLoading: cpLoader }] = useCreatePurchaseMutation();
+
   const videoRef = useRef(null);
-  const dispatch =useDispatch()
+  const dispatch = useDispatch();
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [openCheckOut,setCheckOut] =useState(true);
   const dropdownRef = useRef(null);
   const [muted, setMuted] = useState(true);
 
   const eventIsPurchase = HeroSectionEvent?.pruchase?.id;
-  const isLive = HeroSectionEvent?.isLiveStreamed?true:false;
-
+  const isLive = HeroSectionEvent?.isLiveStreamed ? true : false;
+  const EventStarted = HeroSectionEvent?.eventStarted;
+  const userData =useSelector(selectCurrentUserData)||{}
+  const show={...HeroSectionEvent,ticket:isArray(HeroSectionEvent?.tickets)&&HeroSectionEvent?.tickets[0]}
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -61,7 +66,7 @@ export default function Hero({
     };
   }, []);
 
-  console.log((HeroSectionEvent?.event_date),'hello')
+  console.log(show, "hello");
 
   function DropdownMenu() {
     return (
@@ -82,9 +87,9 @@ export default function Hero({
               className=" text-white no-underline  "
               href={`https://calendar.google.com/calendar/r/eventedit?text=${
                 HeroSectionEvent?.name
-              }&dates=${convertDateTime(HeroSectionEvent?.event_date)}&details=<b>${
-                HeroSectionEvent?.name
-              }</b>
+              }&dates=${convertDateTime(
+                HeroSectionEvent?.event_date
+              )}&details=<b>${HeroSectionEvent?.name}</b>
               <br/>
               <br/>
               <b>Location:</b>${HeroSectionEvent?.country}
@@ -121,41 +126,102 @@ export default function Hero({
     }
   };
 
-  const handleGetTicketLearnMore = ()=>{
-    dispatch(setEventData({...{...HeroSectionEvent,ticket:isArray(HeroSectionEvent?.tickets)&&HeroSectionEvent?.tickets[0]}}));
+  const handleGetTicketLearnMore = () => {
+    dispatch(
+      setEventData({
+        ...{
+          ...HeroSectionEvent,
+          ticket:
+            isArray(HeroSectionEvent?.tickets) && HeroSectionEvent?.tickets[0],
+        },
+      })
+    );
 
     router.push({
       pathname: `${eventLink}/${HeroSectionEvent?._id}`,
     });
-  }
-  // useEffect(() => {
-  //   const video = videoRef.current;
-  //   const handleEnded = () => {
-  //     // Rewind to the beginning of the video
-  //     video.currentTime = 0;
-  //     // Play the video again
-  //     video.play();
-  //   };
-
-  //   // Listen for the ended event to trigger looping
-  //   video.addEventListener('ended', handleEnded);
-
-  //   // Clean up event listener on unmount
-  //   return () => {
-  //     video.removeEventListener('ended', handleEnded);
-  //   };
-  // }, []);
+  };
 
   const handleNavigate = (event) => {
     event.preventDefault();
     openModal(HeroSectionEvent);
   };
 
+  const config = {
+    reference: new Date().getTime().toString(),
+    email: userData?.email || "user@example.com",
+    amount: show?.ticket?.price * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
+    publicKey: "pk_test_9b34d7cad3b54108b6eb034c951d89366eadcc3d",
+    metadata: {
+      custom_fields: [
+        {
+          event_id: show?._id,
+          ticket_id: show?.ticket?._id,
+          purchase_date: new Date(),
+        },
+        // To pass extra metadata, add an object with the same fields as above
+      ],
+    },
+  };
+
+   // you can call this function anything
+   const handleClose = () => {
+    // implementation for  whatever you want to do when the Paystack dialog closed.
+  };
+  const handleSuccess = async (reference) => {
+    // Implementation for whatever you want to do with reference and after success call.
+    const payload = {
+      event_id: show?._id,
+      ticket_id: show?.ticket?.id,
+      user_id: userData?._id,
+      purchase_date: new Date(),
+    };
+    const response = await CreatePurchase(payload);
+    if (response?.data?.createdPurchase?._id) {
+      closeModal();
+      router.push(myShowLink);
+    }
+  };
+
+  
+  function closeModal() {
+    setCheckOut(false);
+  }
+
+
+  const componentProps = {
+    ...config,
+    text: "Paystack Button Implementation",
+    onSuccess: (reference) => handleSuccess(reference),
+    onClose: handleClose,
+  };
+ 
+
+  const initializePayment = usePaystackPayment(config);
+ 
+
+ 
+
   //bg-[url('/webp/bg1.webp')]
   return (
     <div
       className={`relative font400   bg-cover bg-center  xl:bg-top ${MainContainer} h-[100dvh] md:h-[100vh]`}
     >
+      <MyModal
+      bodyComponent={<CheckOut 
+        Data={show}
+        makePayment={() => initializePayment(handleSuccess, handleClose)}
+        componentProps={componentProps}
+        handleSuccess={handleSuccess}
+        handleClose={handleClose}
+        closeModal={closeModal}
+        IsBought={false}
+        />}
+      isOpen={openCheckOut}
+      closeModal={closeModal}
+      containerStyle={`bg-[#1B1C20] border-[1px] border-[#343F4B] rounded-[16px]  !w-[486px]`}
+
+      />
       {showTopGradient && (
         <div className=" absolute top-0 left-0 right-0 h-[20vh]  z-50  bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>
       )}
@@ -196,36 +262,30 @@ export default function Hero({
             <div
               className={`relative z-40  mt-[40vh] flex flex-col  md:justify-start items-center md:items-start  text-center  md:text-start`}
             >
-              {/* <div className="hidden md:block">
-                <Daviod />
-              </div>
-              <div className="block md:hidden">
-                <Daviod width="77" height="35" />
-              </div> */}
               <div className="mt-[16px] text-[36px] lg:text-[92px] md:text-left font-1 text-white font-bold uppercase lg:mb-[32px] leading-[40px] md:leading-[46px] lg:leading-[90px] lg:w-[80%] line-clamp-3">
                 {HeroSectionEvent?.name}
               </div>
               {/*  */}
-              {notEvent ? (
+              {false ? (
                 <IsNotLive
-                HeroSectionEvent={HeroSectionEvent}
-                handleGetTicketLearnMore={handleGetTicketLearnMore}
-                isLive={isLive}
-                isOnDemand={isOnDemand}
-                showStatus={showStatus}
-                muted={muted}
+                  HeroSectionEvent={HeroSectionEvent}
+                  handleGetTicketLearnMore={handleGetTicketLearnMore}
+                  isLive={isLive}
+                  isOnDemand={isOnDemand}
+                  showStatus={showStatus}
+                  muted={muted}
                 />
               ) : (
                 <IsLiveButton
-                HeroSectionEvent={HeroSectionEvent}
-                dropdownRef={dropdownRef}
-                eventIsPurchase={eventIsPurchase}
-                openModal={openModal}
-                showStatus={showStatus}
-                toggleMute={toggleMute}
-                isOpen={isOpen}
-                muted={muted}
-                isLive={isLive}
+                  HeroSectionEvent={HeroSectionEvent}
+                  dropdownRef={dropdownRef}
+                  eventIsPurchase={eventIsPurchase}
+                  openModal={openModal}
+                  showStatus={showStatus}
+                  toggleMute={toggleMute}
+                  isOpen={isOpen}
+                  muted={muted}
+                  isLive={isLive}
                 />
               )}
             </div>
