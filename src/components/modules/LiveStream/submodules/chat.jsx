@@ -5,7 +5,8 @@ import GiftingCoins from "./giftingCoins";
 import PurchasePaartyCoins from "./PurchasePaartyCoins";
 import { CommentIcon, SendButton } from "../../../../../public/svg";
 export default function Chat({
-  onLeave
+  onLeave,
+  liveStreamDetail
 }) {
     const [payFlow,setPayFlow]=useState();
     const paymentFlow = [
@@ -59,9 +60,9 @@ export default function Chat({
   return (
     <div className=" flex flex-col flex-1">
       <div className="flex justify-between items-center px-[15px] border-b-[1px] border-b-[#343F4B]  pb-[16px] mb-2">
-      <div className="py-[7px]  lg:pt-[16px] px-[16px] ">
-       <div className="lg:hidden text-[15px] text-white font-1 font-bold uppercase mb-[8px] leading-[20px]">
-        timeless tour - new york
+      <div className="py-[7px]  lg:pt-[16px] px-[16px] flex-1 ">
+       <div className="lg:hidden  line-clamp-1 text-[15px] text-white font-1 font-bold uppercase mb-[8px] leading-[20px]">
+        {liveStreamDetail?.name} lo
         </div>
       <div className=" font-1 text-[13px] lg:text-[22px] text-white uppercase font-bold  ">
         Chat
@@ -92,7 +93,7 @@ export default function Chat({
           <ChatList /> */}
          </div>
          <div>
-         <div className="lg:hidden  flex flex-col items-end gap-[16px] pb-[16px] absolute right-[16px] bottom-[16px]">
+         <div className="lg:hidden  flex flex-col items-end gap-[16px] pb-[16px] absolute right-[16px] bottom-[2px]">
                   <Image src={`/svg/reaction1.svg`} width={32} height={32} alt="reaction1  " />
                   <Image src={`/svg/reaction2.svg`} width={32} height={32} alt="reaction2  " />
                   <Image src={`/svg/reaction3.svg`} width={32} height={32} alt="reaction3  " />

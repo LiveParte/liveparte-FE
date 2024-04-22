@@ -48,7 +48,7 @@ export default function LiveStreamVideo({
 
   //bg-[url('/webp/livestream.webp')]
   return (
-    <div className="w-full h-[40vh] lg:h-[70vh]  bg-cover lg:rounded-[16px] overflow-hidden ">
+    <div className="w-full min-h-[30vh] lg:h-[70vh]  bg-cover lg:rounded-[16px] overflow-hidden ">
         {!isLive?
         <video
         controls
@@ -56,7 +56,7 @@ export default function LiveStreamVideo({
         autoPlay
         // loop
         // muted
-        className={`absolute left-0 right-0 top-0 rounded-[16px] bottom-0 object-cover h-full w-full z-20  `}
+        className={`absolute left-0 right-0 top-0 rounded-[16px] bottom-0 object-contain md:object-cover h-full w-full z-20  `}
         poster={liveStreamDetail?.thumbnail_url
 }
         // onMouseEnter={handleMouseEnter}

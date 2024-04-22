@@ -22,11 +22,14 @@ export default function CustomDropDown({ dropdownRef, setIsOpen, className, chil
   function handleCloseModal() {
     setModalName();
   }
+
+  // inset: -8px 16px 15px auto;
+  //   transform: translate3d(0px, 61.5px, 0px);
   
   return (
     <div
       ref={dropdownRef}
-      className={`absolute dropdownII transform translate-x-0 translate-y-[130px] z-50 ${className}`}
+      className={`absolute dropdownII transform translate-x-0 translate-y-[130px] z-30 ${className}`}
     >
       {children}
     </div>
