@@ -49,7 +49,7 @@ export default function OnDemand({
         {/* No SHow */}
         {!isLoading&&isLength === 0 && (
           <div className="pb-[100px] lg:pb-[247px] h-[60vh] flex flex-col justify-center items-center">
-            <div className="text-[24px] text-center md:text-left font600 text-[#FFFFFF] mb-[36px]">
+            <div className="text-[16px] md:text-[24px] text-center md:text-left font600 text-[#FFFFFF] mb-[36px]">
             You don’t have any On Demand Show
             </div>
             <ButtonComp

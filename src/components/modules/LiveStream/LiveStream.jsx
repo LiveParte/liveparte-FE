@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import Image from "next/image";
 import Chat from "./submodules/chat";
 import { useRouter } from "next/router";
-import { FullScreenIcon, LogoWhiteMobile } from "../../../../public/svg";
+import { FullScreenIcon, GiftIcon, LogoWhiteMobile, MicroPhoneIcon, ThreeDot, ThreeDotSmall } from "../../../../public/svg";
 import AgoraRTC, { AgoraRTCProvider, useRTCClient } from "agora-rtc-react";
 import LiveStreamVideo from "./submodules/livestreamVideo";
 import { myShowLink } from "@/utils/reusableComponent";
@@ -16,12 +16,14 @@ import { transactionApi } from "@/store/Transaction/transactionApi";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
 // Render a YouTube video player
-export default function LiveStream({ isLive = false, liveStreamDetail }) {
+export default function LiveStream({ isLive = false, liveStreamDetail,handleCloseModal,handleOpenModal }) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenII, setIsOpenII] = useState(false);
   const dispatch = useDispatch();
   const [activeConnection, setActiveConnection] = useState(true);
   const dropdownRef = useRef(null);
+  const ShareAndGiftDropdownRef = useRef(null);
   function handleLogOut() {
     dispatch(userApi.util.resetApiState());
     dispatch(eventApi.util.resetApiState());
@@ -34,6 +36,26 @@ export default function LiveStream({ isLive = false, liveStreamDetail }) {
       // window.location.reload();
       return router.push("/");
     }
+  }
+  function ShareAndGiftDropdown() {
+    return (
+      <CustomDropDown className={`dropdownIV`} dropdownRef={ShareAndGiftDropdownRef} setIsOpen={setIsOpenII}>
+        <div className=" w-[60vw] bg-[#1B1C20] border-[1px] text-left border-[#343F4B] font500 text-[13px] md:text-[14px] text-white  rounded-[16px] md:w-[230px]    px-[40px] py-[24px]">
+          <div
+           onClick={()=>handleOpenModal(`giftTicket`)}
+            className="py-[12px] cursor-pointer no-underline text-white "
+          >
+            Gift Ticket
+          </div>
+          <div 
+              onClick={()=>handleOpenModal(`shareEvent`)}
+          className="py-[12px] cursor-pointer">
+          Share Event
+          </div>
+          {/* <div className="py-[12px]">Add to Calendar</div> */}
+        </div>
+      </CustomDropDown>
+    );
   }
   function ProfileDropdown() {
     return (
@@ -59,7 +81,7 @@ export default function LiveStream({ isLive = false, liveStreamDetail }) {
   const MainContainer = `lg:px-[20px] lg:px-[60px] lg:px-[120px] relative`;
   return (
     <AgoraRTCProvider client={agoraClient}>
-      <main className={`${MainContainer} flex flex-col   overflow-hidden flex-1`}>
+      <main ref={dropdownRef} className={`${MainContainer} flex flex-col   overflow-hidden flex-1 lg:pb-[26px]`}>
         <div className=" items-center justify-between hidden lg:flex">
           <div className="pt-[32px] pb-[27px] hidden lg:block">
             <LogoImage router={router} />
@@ -69,12 +91,30 @@ export default function LiveStream({ isLive = false, liveStreamDetail }) {
         </div>
         {/* \ */}
         <div className="flex flex-col lg:flex-row lg:gap-[16px] flex-1 takeScreen">
-          <div className=" flex flex-col  flex-grow bg-[#27292E] lg:pt-[32px] lg:px-[24px] lg:rounded-[16px]">
+          <div className=" flex flex-col flex-[0.3] lg:flex-[0.6] xl:flex-[0.7] bg-[#27292E] lg:pt-[32px] lg:px-[24px] lg:rounded-[16px]">
             <div className="px-[5px]  items-center justify-between mb-[23px] hidden lg:flex">
               <div className="text-[23px] font-semibold font-1 text-[#FFFFFF] uppercase">
-                {liveStreamDetail?.name || `Timeless tour - Newyork`}
+                {liveStreamDetail?.name }
               </div>
-              <div className="">
+              <div className=" flex items-center gap-3">
+              <ButtonComp
+                  className={`!h-[33px]  text-white text-[13px] font500 px-[12px] py-[6px] rounded-[8px]  border-[0px] font500  !bg-[#323840] element`}
+                  btnText={<div className="flex items-center gap-2"><GiftIcon/>Gift Ticket</div>}
+                
+                  onClick={() => {
+                    handleOpenModal(`giftTicket`);
+                    // router.push(myShowLink);
+                  }}
+                />
+              <ButtonComp
+                  className={`!h-[33px]  text-white text-[13px] font500 px-[12px] py-[6px] rounded-[8px]  border-[0px] font500  !bg-[#323840] element`}
+                  btnText={<div className="flex items-center gap-2"><MicroPhoneIcon/>Share Event</div>}
+                
+                  onClick={() => {
+                    handleOpenModal(`shareEvent`);
+                    // router.push(myShowLink);
+                  }}
+                />
                 <ButtonComp
                   className={`!h-[33px] !bg-[#FA4354] text-white text-[13px] font500 px-[23px] py-[5px]`}
                   btnText={"Leave"}
@@ -90,7 +130,8 @@ export default function LiveStream({ isLive = false, liveStreamDetail }) {
               className="relative overflow-hidden flex-1 lg:mb-[24px]
           "
             >
-              <div className="absolute left-0 right-0 px-[16px] lg:px-[18px] top-0 py-[17px] flex justify-between text-white z-50 bg-gradient-to-b h-[100px] items-start from-black lg:rounded-[16px]">
+              <div className="absolute  left-0 right-0 px-[16px] lg:px-[18px] top-0 py-[17px] flex justify-between text-white z-30 bg-gradient-to-b h-[100px] items-start from-black lg:rounded-[16px]">
+                <div className="flex justify-between items-center w-full">
                 {isLive ? (
                   <div className="flex items-center gap-[8px]">
                     <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div>
@@ -106,9 +147,15 @@ export default function LiveStream({ isLive = false, liveStreamDetail }) {
                     </div>
                   </div>
                 )}
+                <div className="md:hidden border" onClick={() => setIsOpenII(!isOpenII)} >
+                {isOpenII && <ShareAndGiftDropdown />}
+                <ThreeDotSmall/>
+
+                </div>
                 <div className="text-[13px]  gap-[8px] items-center hidden lg:flex">
                   <FullScreenIcon />
                   Fullscreen
+                </div>
                 </div>
               </div>
               {isLive && (
@@ -145,8 +192,9 @@ export default function LiveStream({ isLive = false, liveStreamDetail }) {
               />
             </div>
           </div>
-          <div className=" lg:w-[25%]  flex-0 lg:flex-1  flex flex-col lg:rounded-[26px] bg-[#222428]">
+          <div className=" lg:w-[25%]  flex-[0.7] lg:flex-[0.4] xl:flex-[0.3]  flex flex-col lg:rounded-[26px] bg-[#222428]">
             <Chat
+            liveStreamDetail={liveStreamDetail}
               onLeave={() => {
                 setActiveConnection(false);
                 router.push(myShowLink);

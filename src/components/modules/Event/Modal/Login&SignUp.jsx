@@ -185,9 +185,9 @@ export default function LoginSignUp({
   }
 
   async function handleLogin(e) {
-    dispatch(userApi.util.resetApiState());
-    dispatch(eventApi.util.resetApiState());
-    dispatch(transactionApi.util.resetApiState());
+    // dispatch(userApi.util.resetApiState());
+    // dispatch(eventApi.util.resetApiState());
+    // dispatch(transactionApi.util.resetApiState());
     // e.preventDefault();
     const payload = {
       ...e,
@@ -242,7 +242,7 @@ export default function LoginSignUp({
       if (onNext) {
         return onNext(response?.user);
       }
-      closeModal();
+      closeModal&& closeModal();
     }
   }
 

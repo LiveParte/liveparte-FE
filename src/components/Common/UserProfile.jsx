@@ -13,11 +13,11 @@ export default function UserProfile({ onClick }) {
   const [userProfilePic, setUserProfilePic] = useState();
   const { data, isLoading, isError } = useGetUserProfileQuery();
 
-  // console.log(data?.profile_image, "datadata");
 
   //
   const [userProfile, setUserProfile] = useState();
   const UserLiveParte = useSelector(selectCurrentUserData);
+  // console.log(data,'UserLiveParte')
   useEffect(() => {
     if(UserLiveParte?.profile_image){
       return setUserProfilePic(UserLiveParte?.profile_image);
@@ -28,7 +28,6 @@ export default function UserProfile({ onClick }) {
   }, [checkIfNonImageExist?.nonProfileImage,UserLiveParte?.profile_image]);
 
 
-  // console.log(UserLiveParte,data, "UserLiveParte?.profile_image");
   return (
     <div className="cursor-pointer" onClick={onClick}>
       {data?.profile_image ? (

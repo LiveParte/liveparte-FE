@@ -42,7 +42,6 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
     setModalName();
   }
 
-  // console.log(isMyShow&&isSelected,router?.pathname,'router?.pathname')
 
   function handleLogOut() {
     dispatch(userApi.util.resetApiState());

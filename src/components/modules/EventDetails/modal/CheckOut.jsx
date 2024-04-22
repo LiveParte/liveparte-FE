@@ -6,6 +6,7 @@ import { CloseII } from "../../../../../public/svg";
 import { formatMoney } from "@/utils/formatMoney";
 import { PaystackConsumer } from "react-paystack";
 import Image from "next/image";
+import PayStack from "@/components/PayStack/payStack";
 
 export default function CheckOut({
   closeModal,
@@ -14,7 +15,8 @@ export default function CheckOut({
   componentProps,
   handleClose,
   handleSuccess,
-  IsBought
+  IsBought,
+  onNext
 }) {
   const router = useRouter();
   const handleAction = () => {
@@ -22,7 +24,7 @@ export default function CheckOut({
   };
 
   // Start the countdown timer with 354 seconds (5:54)
-  const eventIsPurchase = Data?.pruchase?.id?true:false;
+  const eventIsPurchase = Data?.pruchase?.id||Data?.purchase?.id?true:false;
 
   return (
     <div className="bg-[#1B1C20] pb-[56px] px-[16px] lg:px-[56px] pt-[16px] lg:pt-[24px]">
@@ -41,7 +43,7 @@ export default function CheckOut({
         <div className="flex items-center gap-[17px]  mb-[56px]">
           <div>
             <Image
-              src={Data?.thumbnail_url || "/webp/bg1.webp"}
+              src={Data?.thumbnail_url}
               className="w-[89px] h-[89px] object-cover rounded-[8px]"
               alt="web"
               width={89}
@@ -50,7 +52,7 @@ export default function CheckOut({
           </div>
           <div>
             <div className="text-[#63768D] text-[13px] mb-[5px]">
-              Livestream ticket
+             {Data?.name}
             </div>
             <div className="text-[14px] text-white font500 mb-[5px]">
               {Data?.address}
@@ -61,29 +63,15 @@ export default function CheckOut({
             </div>
           </div>
         </div>
-        <PaystackConsumer {...componentProps} >
-          {({initializePayment}) =>
-           <ButtonComp
+        <PayStack  isDisabled={eventIsPurchase||!Data?.name} showDetails={Data} onNext={onNext}>
+        <ButtonComp
            isDisabled={eventIsPurchase||!Data?.name}
               btnText={eventIsPurchase?`Ticket already purchased`:`Proceed To Make Payment -  ₦${formatMoney(Data?.ticket?.price||"", false || "0")} `}
               className={`w-full text-[13px] font500] h-[44px] `}
-              onClick={() => initializePayment(handleSuccess, handleClose)}
+              // onClick={() => initializePayment(handleSuccess, handleClose)}
             />
-          //  <button onClick={() => initializePayment(handleSuccess, handleClose)}>Paystack Consumer Implementation</button>
-          }
-        </PaystackConsumer>
-        {/* <PaystackConsumer {...componentProps}>
-          {({ initializePayment }) => (
-            <button onClick={() => initializePayment(handleSuccess, handleClose)}>Paystack Consumer Implementation</button>
-            // <ButtonComp
-            //   btnText={`Proceed To Make Payment ${
-            //     Data?.ticket?.code
-            //   } ${formatMoney(Data?.ticket?.price, false || "0")} `}
-            //   className={`w-full text-[13px] font500] h-[44px] `}
-            //   onClick={() => initializePayment(handleSuccess, handleClose)}
-            // />
-          )}{" "}
-        </PaystackConsumer> */}
+        </PayStack>
+       
       </main>
     </div>
   );

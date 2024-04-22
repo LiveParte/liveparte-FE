@@ -7,6 +7,8 @@ import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
 import moment from "moment";
 import { formatMoney } from "@/utils/formatMoney";
 import {
+  convertAndAddOneHour,
+  convertDateTime,
   CopyEventLink,
   eventLink,
   GetTransformedImageUrl,
@@ -76,7 +78,7 @@ export default function Hero({
               className=" text-white no-underline  "
               href={`https://calendar.google.com/calendar/r/eventedit?text=${
                 replaceAmpersandWithAnd(HeroSectionEvent?.name)
-              }&dates=${HeroSectionEvent?.event_date}&details=<b>${replaceAmpersandWithAnd(HeroSectionEvent?.name)}</b><br/><br/><b>Location:</b>${replaceAmpersandWithAnd(HeroSectionEvent?.country)}
+              }&dates=${convertDateTime(HeroSectionEvent?.event_date)}/${convertAndAddOneHour(HeroSectionEvent?.event_date)}&details=<b>${replaceAmpersandWithAnd(HeroSectionEvent?.name)}</b><br/><br/><b>Location:</b>${replaceAmpersandWithAnd(HeroSectionEvent?.country)}
               <br/>
               <br/>
               <b>Description:</b>${replaceAmpersandWithAnd(HeroSectionEvent?.description)}

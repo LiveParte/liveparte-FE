@@ -61,13 +61,7 @@ export default function EventId() {
 
   // }
 
-  useEffect(() => {
-    if(userInfo?._id&&isSuccess){
-      refetch();
-    }
-  }, [userInfo?._id,isSuccess,refetch])
   
-
 
 
   
@@ -155,12 +149,13 @@ export default function EventId() {
       component: (
         <CheckOut
           Data={{ ...data, ...shows }}
-          makePayment={() => initializePayment(handleSuccess, handleClose)}
+          // makePayment={() => initializePayment(handleSuccess, handleClose)}
           componentProps={componentProps}
           handleSuccess={handleSuccess}
           handleClose={handleClose}
           closeModal={closeModal}
           IsBought={false}
+          onNext={refetch}
         />
       ),
     },
