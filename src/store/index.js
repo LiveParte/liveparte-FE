@@ -25,11 +25,13 @@ export const store = configureStore({
 
 const storedUserData = storage.localStorage.get(userDetailStorageName);
 
+console.log(storedUserData,'storedUserData');
 
 if (storedUserData && isJSON(storedUserData)) {
   const userData = JSON.parse(storedUserData);
   store.dispatch(setUserData(userData));
 } else {
+  store.dispatch(setUserData({}));
   // console.error('Stored user data is not in JSON format or does not exist.');
 }
 // try {

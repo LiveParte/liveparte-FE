@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Link from 'next/link'
 import ButtonComp from "@/components/Ui/button";
-import  { HeaderOnSelect, MainContainer } from "@/utils/styleReuse";
+import  { HeaderOnSelect, LogoImage, MainContainer } from "@/utils/styleReuse";
 import { eventLink,  myShowLink, onDemandLink, singleEventLink } from "@/utils/reusableComponent";
 import LogoImage2 from "@/utils/LogoImage";
 export default function Header({ className, openModal }) {
@@ -71,7 +71,7 @@ export default function Header({ className, openModal }) {
         <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover  bg-[url('/webp/header.png')] z-30 opacity-25 pointer-events-none"></div>
         {/* <LogoWhite/> */}
         <div className="flex justify-between   cursor-pointer relative  z-90" style={{zIndex:90}}>
-          <LogoImage2/>
+        <LogoImage router={router} />
         {/* <LogoImage router={router}/> */}
 
           <div className="flex items-center gap-[24px]">

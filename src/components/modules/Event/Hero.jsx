@@ -7,6 +7,7 @@ import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
 import moment from "moment";
 import { formatMoney } from "@/utils/formatMoney";
 import {
+  checkShowDuration,
   convertAndAddOneHour,
   convertDateTime,
   CopyEventLink,
@@ -36,7 +37,12 @@ export default function Hero({
   const eventIsPurchase = HeroSectionEvent?.pruchase?.id?true:false;
   const isLive = HeroSectionEvent?.isLiveStreamed;
 
-
+  const EventStarted =
+  HeroSectionEvent?.eventStarted &&
+  checkShowDuration(
+    HeroSectionEvent?.event_date,
+    HeroSectionEvent?.event_length
+  );
   useEffect(() => {
     function handleClickOutside(event) {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -58,7 +64,7 @@ export default function Hero({
     return str.replace(/&/g, 'and');
   }
   
-  function DropdownMenu() {
+  function DropdownMenu({EventStarted=true}) {
     return (
       <div className=" absolute dropdownIII transform translate-x-0 -translate-y-[60px] z-50">
         <div className=" bg-[#1B1C20] border-[1px] text-left border-[#343F4B] text-[13px] md:text-[14px] text-white  rounded-[16px] md:w-[327px] w-[80vw]     px-[40px] py-[24px]">
@@ -72,7 +78,7 @@ export default function Hero({
             Share Event
           </div>
           {/* https://calendar.google.com/calendar/u/0/r/eventedit?text=test+add+calendar+event&location&details=test+add+calendar+event&dates=20210510/20210511 */}
-          <div className="py-[12px]">
+         {!EventStarted && <div className="py-[12px]">
             <a
               target="_blank"
               className=" text-white no-underline  "
@@ -97,7 +103,7 @@ export default function Hero({
             >
               Set Reminder
             </a>
-          </div>
+          </div>}
         </div>
       </div>
     );
@@ -141,11 +147,11 @@ export default function Hero({
               <div className="block md:hidden">
                 {/* <Daviod width="77" height="35" /> */}
               </div>
-              <div className="mt-[16px] text-[36px] lg:text-[92px] md:text-left font-1 text-white font-bold uppercase lg:mb-[32px] leading-[40px] md:leading-[46px] lg:leading-[90px] lg:w-[80%] line-clamp-3">
+              <div className="mt-[16px] text-[36px] lg:text-[92px] md:text-left font-1 text-white font-bold uppercase mb-[10px] lg:mb-[32px] leading-[40px] md:leading-[46px] lg:leading-[90px] lg:w-[80%] line-clamp-3">
                 {HeroSectionEvent?.name}
               </div>
               {/*  */}
-              {notEvent ? (
+              {EventStarted ? (
                 <div>
                   <div className="mb-[100px] hidden lg:flex gap-[16px] items-center ">
                     <ButtonComp
@@ -154,20 +160,20 @@ export default function Hero({
                       onClick={() => handleGetTicketLearnMore()}
                     />
                     <div>
-                      {!isLive ? (
+                      {EventStarted ? (
                         <div className="text-[13px] xl:text-[16px]  text-[#B4BECB] z-10 relative font500">
                           {HeroSectionEvent?.event_date !== "Event Date"
                             ? moment(HeroSectionEvent?.event_date).format(
                                 "MMMM DD, YYYY"
                               )
-                            : `April 17, 2024`}{" "}
+                            : ``}{" "}
                           - Watch lives
                         </div>
                       ) : (
                         <div className="   flex gap-[8px] items-center   ">
                           <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div>
                           <div className="text-[11px] lg:text-[13px]  text-white  ">
-                            Happening Now
+                            Happening Nows
                           </div>
                         </div>
                       )}
@@ -186,7 +192,7 @@ export default function Hero({
                         <div className="   flex gap-[8px] items-center   justify-center md:justify-start">
                           <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div>
                           <div className="text-[11px] lg:text-[13px]  text-white  ">
-                            Happening Now
+                            Happening Nows
                           </div>
                         </div>
                       )}
@@ -205,7 +211,7 @@ export default function Hero({
                 <div className=" w-full relative ">
                   <div ref={dropdownRef}>
                     <div className="mb-[100px] hidden md:flex gap-[16px] items-center relative">
-                      {isOpen && <DropdownMenu />}
+                      {isOpen && <DropdownMenu EventStarted={EventStarted}/>}
                       {HeroSectionEvent?.ticket?.price&& 
                       <ButtonComp
                         isDisabled={eventIsPurchase}
@@ -234,7 +240,7 @@ export default function Hero({
                       </div>
 
                       <div>
-                        {!isLive ? (
+                        {!EventStarted ? (
                           <div className="text-[13px] xl:text-[16px]  text-[#B4BECB] z-10 relative font500">
                             {moment(HeroSectionEvent?.event_date).format(
                               "MMM DD, YYYY"
@@ -251,8 +257,8 @@ export default function Hero({
                         )}
                       </div>
                     </div>
-                    <div className="text-center mt-[40px] md:hidden mb-[42px] relative">
-                      {isOpen && <DropdownMenu />}
+                    <div className="text-center mt-[10px] md:hidden mb-[42px] relative">
+                      {isOpen && <DropdownMenu  EventStarted={true}/>}
                       <div className="text-[#B4BECB] text-[13px] md:text-[15px] z-10 relative mb-[24px] font500">
                         {moment(HeroSectionEvent?.event_date).format(
                           "MMM DD, YYYY"

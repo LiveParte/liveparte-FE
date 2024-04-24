@@ -6,7 +6,7 @@ import { InfoIcon, MuteIcon, UnMuteIcon } from "../../../../../public/svg";
 import { formatMoney } from "@/utils/formatMoney";
 import moment from "moment";
 
-export default function IsLiveButton({
+export default function IsNoLiveButton({
   HeroSectionEvent,
   dropdownRef,
   openModal,
@@ -16,7 +16,8 @@ export default function IsLiveButton({
   isOpen,
   muted,
   isLive,
-  isOnDemand
+  isOnDemand,
+  handleGetTicket,
 }) {
   return (
     <div className=" w-full relative ">
@@ -30,7 +31,7 @@ export default function IsLiveButton({
                 if (eventIsPurchase) {
                   return;
                 }
-                openModal && openModal(HeroSectionEvent);
+                handleGetTicket && handleGetTicket();
                 // eventIsPurchase ? null : openModal(HeroSectionEvent)
               }}
               className={`py-[12px] px-[39px] text-[13px] xl:text-[15px] font500`}
@@ -84,7 +85,7 @@ export default function IsLiveButton({
             )}
           </div>
         </div>
-        <div className="text-center mt-[40px] md:hidden mb-[42px] relative">
+        <div className="text-center mt-[20px] md:hidden mb-[42px] relative">
           {isOpen && <DropdownMenu />}
           <div className="text-[#B4BECB] text-[13px] md:text-[15px] z-10 relative mb-[24px] font500">
             {moment(HeroSectionEvent?.event_date).format("MMM DD, YYYY")} -
@@ -129,5 +130,6 @@ export default function IsLiveButton({
         </div>
       </div>
     </div>
+    
   );
 }

@@ -198,6 +198,7 @@ export function checkShowDuration(targetDateTime, durationMins) {
     // Calculate target date and time after adding durationMins
     const targetDatePlusDuration = new Date(targetDate.getTime() + (durationMins * 60 * 1000));
 
+    console.log(targetDate,targetDatePlusDuration,'targetDatePlusDuration')
     // Check conditions
     if (currentDate >= targetDate && currentDate <= targetDatePlusDuration) {
         return true;

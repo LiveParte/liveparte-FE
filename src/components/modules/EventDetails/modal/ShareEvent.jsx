@@ -11,6 +11,7 @@ import { CloseII } from "../../../../../public/svg";
 import { formatMoney } from "@/utils/formatMoney";
 import CopyToClipboard from "react-copy-to-clipboard";
 import Image from "next/image";
+import moment from "moment";
 
 export default function ShareEvent({ closeModal, Data }) {
   const [copiedText, copy] = useCopyToClipboard();
@@ -76,12 +77,12 @@ export default function ShareEvent({ closeModal, Data }) {
           </div>
           <div>
             <div className="text-[14px] text-white font500 mb-[8px]">
-              Timeless tour - Newyork
+              {Data?.name}
             </div>
-            <div className="text-[#B4BECB] text-[15px] mb-[6px] flex items-center ">
-              Apr 24{" "}
+            <div className="text-[#B4BECB] text-[15px] mb-[6px] flex items-center  line-clamp-1">
+              {moment(Data?.event_date).format('MMMM DD')}
               <div className="rounded-full h-[4px] w-[4px] bg-[#D9D9D9] mx-[8px] hidden md:block"></div>{" "}
-              O2 Cinema Arena Concert
+              {Data?.address}
             </div>
             <div className="text-[14px] text-white font500">
               {Data?.ticket?.code}{" "}

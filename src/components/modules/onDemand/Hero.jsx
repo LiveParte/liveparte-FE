@@ -1,11 +1,5 @@
-import Header from "@/components/Common/Header/Header";
 import React, { useEffect, useRef, useState } from "react";
-import { MuteIcon, UnMuteIcon } from "../../../../public/svg";
 import { MainContainer } from "@/utils/styleReuse";
-import ButtonComp from "@/components/Ui/button";
-import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
-import moment from "moment";
-import { usePaystackPayment } from "react-paystack";
 import {
   checkShowDuration,
   convertDateTime,
@@ -19,8 +13,7 @@ import { useRouter } from "next/router";
 import { isArray } from "@/utils/helper";
 import { useDispatch, useSelector } from "react-redux";
 import { setEventData, setLiveStreamEventData } from "@/store/Event";
-import IsLiveButton from "./submodules/IsLiveButton";
-import IsNotLive from "./submodules/IsNotLive";
+
 import MyModal from "@/components/Ui/Modal";
 import CheckOut from "../EventDetails/modal/CheckOut";
 import { selectCurrentUserData } from "@/store/User";
@@ -29,6 +22,8 @@ import GiftTicket from "../EventDetails/modal/GiftTicket";
 import LoginSignUp from "../Event/Modal/Login&SignUp";
 import ShareEvent from "../EventDetails/modal/ShareEvent";
 import { eventApi } from "@/store/Event/eventApi";
+
+import EventButton from "./submodules/EventButton";
 
 export default function Hero({
   notEvent = true,
@@ -81,57 +76,7 @@ export default function Hero({
     };
   }, []);
 
-  console.log(show, "hello");
-
-  // function DropdownMenu() {
-  //   return (
-  //     <div className=" absolute dropdownIII transform translate-x-0 -translate-y-[60px] z-50">
-  //       <div className=" bg-[#1B1C20] border-[1px] text-left border-[#343F4B] text-[13px] md:text-[14px] text-white  rounded-[16px] md:w-[327px] w-[80vw]     px-[40px] py-[24px]">
-  //         <div className="py-[12px] cursor-pointer " onClick={giftTicket}>
-  //           Gift Ticket
-  //         </div>
-  //         <div
-  //           className="my-[12px] cursor-pointer"
-  //           onClick={openModalShareEvent}
-  //         >
-  //           Share Event
-  //         </div>
-  //         <div className="py-[12px]">
-  //           <a
-  //             target="_blank"
-  //             className=" text-white no-underline  "
-  //             href={`https://calendar.google.com/calendar/r/eventedit?text=${
-  //               HeroSectionEvent?.name
-  //             }&dates=${convertDateTime(
-  //               HeroSectionEvent?.event_date
-  //             )}&details=<b>${HeroSectionEvent?.name}</b>
-  //             <br/>
-  //             <br/>
-  //             <b>Location:</b>${HeroSectionEvent?.country}
-  //             <br/>
-  //             <br/>
-  //             <b>Description:</b>${HeroSectionEvent?.description}
-  //             <br/>
-  //             <br/>
-  //             <b>Event Details:</b>
-  //             <br/>
-  //             <b>Venue:</b>${HeroSectionEvent?.address}
-  //             <br/>
-  //             <b>Date:</b>${HeroSectionEvent?.event_date}
-
-  //             <br/>
-  //             <b>Time:</b>${moment(HeroSectionEvent?.event_date).format("h:mm")}
-  //             &location=${CopyEventLink({
-  //               link: HeroSectionEvent?._id,
-  //             })}&sf=true&output=xml`}
-  //           >
-  //             Set Reminder
-  //           </a>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // }
+  
 
   const toggleMute = () => {
     const video = videoRef.current;
@@ -223,15 +168,48 @@ export default function Hero({
   ];
 
   const handleOpenGiftTicket = () => {
+    if (!userData?._id) {
+      return setCheckOut("login/signup");
+    }
     setCheckOut("gift ticket");
   };
 
   const handleOpenGShareEvent = () => {
     setCheckOut("share event");
   };
-  //
+  const handleGetTicket = () => {
+    if (!userData?._id) {
+      return setCheckOut("login/signup");
+    }
+    setCheckOut("checkout");
+  };
+  
+  const  buttonAction = () => {
+    if(userData?._id) {
+      if(HeroSectionEvent?.purchase?.id &&HeroSectionEvent?.eventStarted){
+        return 'isPaidAndEventIsLive'
+      }
+      if(HeroSectionEvent?.purchase?.id &&!HeroSectionEvent?.eventStarted){
+        return 'isPaidAndEventNotLIve'
+      }
+      
+  }
+  if(!HeroSectionEvent?.eventStarted){
+    return 'notPaidButIsLive'
+  }
+  return 'notPaidButIsLive'
+}
 
-  //bg-[url('/webp/bg1.webp')]
+const TextType= ()=>{
+  if(isOnDemand){
+    return 'onDemand'
+  }
+  if(!isOnDemand &&HeroSectionEvent?.eventStarted){
+    return 'happeningNow'
+  }
+}
+console.log(HeroSectionEvent,'targetDatePlusDuration1')
+
 
   return (
     <div
@@ -275,17 +253,9 @@ export default function Hero({
         Your browser does not support the video tag.
       </video>
       <div className="">
-        {/* {showHeader && (
-          <div className="absolute left-0 right-0  ">
-            <IfHeaderIsAuth
-              openModal={openModalLoginSignUp || openModal}
-              className="absolute top-0 left-0 right-0"
-            />
-          </div>
-        )} */}
+       
         <div className="relative">
           <div className=" min-h-[100dvh] md:min-h-screen relative flex flex-col justify-end  ">
-            {/* <div className="h-[100vh]" /> */}
 
             <div
               className={`relative z-40  mt-[40vh] flex flex-col  md:justify-start items-center md:items-start  text-center  md:text-start`}
@@ -294,8 +264,13 @@ export default function Hero({
                 {HeroSectionEvent?.name}
               </div>
               {/*  */}
-              {EventStarted ? (
-                <IsNotLive
+              <EventButton
+              HeroSectionEvent={HeroSectionEvent}
+              buttonAction={buttonAction}
+              TextTypeAction={TextType}
+              />
+              {/* {EventStarted ? (
+                <IsLive
                   HeroSectionEvent={HeroSectionEvent}
                   handleGetTicketLearnMore={handleGetTicketLearnMore}
                   isLive={EventStarted}
@@ -309,17 +284,12 @@ export default function Hero({
                   handleJoinEvent={handleJoinEvent}
                 />
               ) : (
-                <IsLiveButton
+                <IsNoLiveButton
                   HeroSectionEvent={HeroSectionEvent}
                   dropdownRef={dropdownRef}
                   eventIsPurchase={eventIsPurchase}
-                  openModal={() => {
-                    if (!userData?._id) {
-                      return setCheckOut("login/signup");
-                    }
-                    // alert('Purchase');
-                    setCheckOut("checkout");
-                  }}
+                  handleGetTicket ={handleGetTicket}
+                  openModal={openModal }
                   showStatus={showStatus}
                   toggleMute={toggleMute}
                   isOpen={isOpen}
@@ -328,7 +298,7 @@ export default function Hero({
                   isOnDemand={isOnDemand}
                   
                 />
-              )}
+              )} */}
             </div>
           </div>
         </div>

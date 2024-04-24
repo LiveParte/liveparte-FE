@@ -1,7 +1,7 @@
 "use client"
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import { isAuth, logout, selectCurrentUserData } from "@/store/User";
+import { isAuth, logout, selectCurrentUserData, setUserData } from "@/store/User";
 import { useGetUserProfileQuery } from "@/store/User/userApi";
 import { decryptObject, storage, userDetailStorageName } from "@/utils/helper";
 import { useSelector, useDispatch } from 'react-redux';
@@ -25,6 +25,7 @@ function WithAuth({ children, showHeader = true }) {
   useEffect(() => {
     if(!userInfo?._id){
       router.push('/');
+      dispatch(setUserData({}));
       // alert('you are out')
       // dispatch(logout());
       
