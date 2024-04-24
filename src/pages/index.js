@@ -1,68 +1,48 @@
 import NoAuth from "@/components/Layout/NoAuth";
-import Happening from "@/components/modules/Event/Happening";
 import Footer from "@/components/Common/Footer";
 import { useRouter } from "next/router";
-import MyModal from "@/components/Ui/Modal";
-import { useState } from "react";
-import LoginSignUp from "@/components/modules/Event/Modal/Login&SignUp";
-import Hero from "@/components/modules/LandingPage/Hero";
-import FavoriteShow from "@/components/modules/LandingPage/FavoriteShows";
-import Features from "@/components/modules/LandingPage/Features";
-import ArtistList from "@/components/modules/LandingPage/Artist";
-import FAQ from "@/components/modules/LandingPage/FAQ";
-import ForgetPassword from "@/components/modules/Event/Modal/submodules/ForgetPassword/ForgetPassword";
-
+import dynamic from "next/dynamic";
+import Hero from "@/components/modules/LandingPage/Hero.jsx";
+import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
+// const Hero = dynamic(() => import('@/components/modules/LandingPage/Hero'), {
+//   ssr: false
+// });
+const FavoriteShow = dynamic(
+  () => import("@/components/modules/LandingPage/FavoriteShows"),
+  {
+    ssr: false,
+  }
+);
+const Features = dynamic(
+  () => import("@/components/modules/LandingPage/Features"),
+  {
+    ssr: false,
+  }
+);
+const ArtistList = dynamic(
+  () => import("@/components/modules/LandingPage/Artist"),
+  {
+    ssr: false,
+  }
+);
+const FAQ = dynamic(() => import("@/components/modules/LandingPage/FAQ"), {
+  ssr: false,
+});
 export default function Home() {
   const router = useRouter();
-  let [isOpen, setIsOpen] = useState(false);
-
-  function closeModal() {
-    setIsOpen();
-  }
-
-  function openModal(pageName) {
-    setIsOpen(pageName);
-  }
-
-  const modalPage =[
-    {
-      name:'Login',
-      component:<LoginSignUp 
-      handleForgetPasswordToggle={()=>openModal('ForgetPassword')}
-      // className={`min-h-[75vh] tallT:min-h-[65vh]`} 
-      closeModal={closeModal} />,
-      height:''
-    },
-    {
-      name:'SignUp',
-      component:<LoginSignUp className={`xl:min-h-[75vh] tallT:min-h-[65vh]`} pageName="signUp" closeModal={closeModal} />,
-      height:''
-    },
-    {
-      name:`ForgetPassword`,
-      component:<ForgetPassword closeModal={closeModal} openModal={openModal}/>
-    }
-  ]
+  const { token } = router.query;
 
   return (
     <NoAuth>
-      {isOpen &&<MyModal
-        bodyComponent={modalPage?.find((item)=>item?.name===isOpen)?.component}
-        containerStyle={`!bg-[#1B1C20]  border-[1px] border-[#343F4B] rounded-[16px]  ${modalPage?.find((item)=>item?.name===isOpen)?.height}  !w-[586px] `}
-        isOpen={isOpen?true:false}
-        closeModal={()=>isOpen==="ForgetPassword"?openModal("ForgetPassword"):closeModal()}
-        // closeModal={isOpen==="ForgetPassword"?openModal:closeModal}
+      <Hero />
+      <FavoriteShow />
+      <Features />
+      <ArtistList />
+      <FAQ />
 
-        openModal={openModal}
-      />}
-      <Hero openModal={openModal} router={router} notEvent={true} />
-      <FavoriteShow/>
-      <Features/>
-      <ArtistList/>
-      <FAQ/>
-     <div className="mb-[70px] md:mb-0">
-     <Footer />
-     </div>
+      <div className="mb-[70px] md:mb-0">
+        <Footer />
+      </div>
     </NoAuth>
   );
 }

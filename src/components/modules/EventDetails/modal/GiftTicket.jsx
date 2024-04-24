@@ -7,6 +7,7 @@ import { CountdownTimerII } from "@/utils/reusableComponent";
 import { useRouter } from "next/router";
 import { CloseII } from "../../../../../public/svg";
 import { formatMoney } from "@/utils/formatMoney";
+import Image from "next/image";
 
 export default function GiftTicket({ closeModal, Data }) {
   const router = useRouter();
@@ -14,7 +15,7 @@ export default function GiftTicket({ closeModal, Data }) {
     router.push("/event_time_out");
   };
   return (
-    <div className="bg-[#1B1C20] pb-[56px] px-[16px] lg:px-[56px] pt-[16px] lg:pt-[24px] overflow-y-scroll customScrollHorizontal max-h-[80vh]">
+    <div className="bg-[#1B1C20] pb-[56px] px-[16px] lg:px-[56px] pt-[16px] lg:pt-[24px] overflow-y-scroll customScrollHorizontal max-h-[90vh]">
       <nav className="flex justify-between items-center mb-[32px]">
         <div className="text-[18px]  text-white">Gift Ticket</div>
         <div className="text-[#63768D] text-[18px] flex items-center gap-[12px]">
@@ -29,21 +30,24 @@ export default function GiftTicket({ closeModal, Data }) {
       <main>
         <div className="flex items-center gap-[17px]  mb-[54px]">
           <div>
-            <img
+            <Image
               src={Data?.thumbnail_url || "/webp/bg1.webp"}
               className="w-[89px] h-[89px] object-cover rounded-[8px]"
+              width={89}
+              height={89}
+              alt="show-image"
             />
           </div>
           <div>
             <div className="text-[#63768D] text-[13px] mb-[5px]">
-              Livestream ticket
+             {Data?.name}
             </div>
-            <div className="text-[14px] text-white font500 mb-[5px] lg:w-[70%]">
+            <div className="text-[14px] text-white font500 mb-[5px] lg:w-[100%]">
               {Data?.address}
             </div>
             <div className="text-[14px] text-white font500">
               {Data?.ticket?.code}{" "}
-              {formatMoney(Data?.ticket?.price, false || "0")}
+              ₦{formatMoney(Data?.ticket?.price, false || "0")}
             </div>
           </div>
         </div>

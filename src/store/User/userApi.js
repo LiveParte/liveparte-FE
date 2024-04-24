@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { baseQuery } from "../api";
+import { logout } from ".";
 
 export const userApi = createApi({
   reducerPath: "userApi",
@@ -46,13 +47,34 @@ export const userApi = createApi({
         method: "POST",
         body: payload,
       }),
-      invalidatesTags: ["user"],
+      // invalidatesTags: ["user"],
+    }),
+    restPassword: builder.mutation({
+      query: (payload) => ({
+        url: "/auth/reset-password",
+        method: "POST",
+        body: payload,
+      }),
+      // invalidatesTags: ["user"],
+    }),
+    forgetPassword: builder.mutation({
+      query: (payload) => ({
+        url: "auth/forgot-password",
+        method: "POST",
+        body: payload,
+      }),
+      // invalidatesTags: ["user"],
     }),
     //users/35
     //company/manager/:userId/update
     //admin/admin-management
     //auth/change-password
   }),
+  onQueryError: async ({ error, dispatch }) => {
+    if (error.status === 401) {
+      await dispatch(logout());
+    }
+  },
 });
 
 export const {
@@ -60,5 +82,8 @@ export const {
   useUpdateProfileMutation,
   useRegisterApiMutation,
   useGetUserProfileQuery,
-  useChangePasswordMutation
+  useChangePasswordMutation,
+  useForgetPasswordMutation,
+  useRestPasswordMutation
+
 } = userApi;

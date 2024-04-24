@@ -5,6 +5,7 @@ import React from "react";
 import { CloseII } from "../../../../../public/svg";
 import { formatMoney } from "@/utils/formatMoney";
 import { PaystackConsumer } from "react-paystack";
+import Image from "next/image";
 
 export default function CheckOut({
   closeModal,
@@ -20,8 +21,8 @@ export default function CheckOut({
     router.push("/event_time_out");
   };
 
-  // console.log(Data,'Data')
   // Start the countdown timer with 354 seconds (5:54)
+  const eventIsPurchase = Data?.pruchase?.id?true:false;
 
   return (
     <div className="bg-[#1B1C20] pb-[56px] px-[16px] lg:px-[56px] pt-[16px] lg:pt-[24px]">
@@ -39,10 +40,12 @@ export default function CheckOut({
       <main>
         <div className="flex items-center gap-[17px]  mb-[56px]">
           <div>
-            <img
+            <Image
               src={Data?.thumbnail_url || "/webp/bg1.webp"}
               className="w-[89px] h-[89px] object-cover rounded-[8px]"
               alt="web"
+              width={89}
+              height={89}
             />
           </div>
           <div>
@@ -61,10 +64,8 @@ export default function CheckOut({
         <PaystackConsumer {...componentProps} >
           {({initializePayment}) =>
            <ButtonComp
-           isDisabled={IsBought}
-              btnText={IsBought?`Ticket already purchased`:`Proceed To Make Payment - ${
-                Data?.ticket?.code
-              } ${formatMoney(Data?.ticket?.price, false || "0")} `}
+           isDisabled={eventIsPurchase||!Data?.name}
+              btnText={eventIsPurchase?`Ticket already purchased`:`Proceed To Make Payment -  ₦${formatMoney(Data?.ticket?.price||"", false || "0")} `}
               className={`w-full text-[13px] font500] h-[44px] `}
               onClick={() => initializePayment(handleSuccess, handleClose)}
             />

@@ -5,6 +5,7 @@ import Header from "@/components/modules/MyShow/Header";
 // import SettingForm from "@/components/modules/Setting/form";
 import React, { useState } from "react";
 import dynamic from "next/dynamic";
+import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
 
 const SettingForm = dynamic(() => import("@/components/modules/Setting/form"), {
   ssr: false,
@@ -30,31 +31,30 @@ export default function Setting() {
   const CloudinaryUpload = (photo) => {
     setIsLoading(true);
     const data = new FormData();
-    // console.log(photo, "photophoto");
     data.append("file", photo);
-    data.append("upload_preset", "ohxuujig");
-    data.append("cloud_name", "dammymoses");
-    fetch("https://api.cloudinary.com/v1_1/dammymoses/image/upload", {
+    data.append("upload_preset", "wnvzkduq");
+    data.append("cloud_name", "dnvwcmqhw");
+    fetch("https://api.cloudinary.com/v1_1/dnvwcmqhw/image/upload", {
       method: "post",
       body: data,
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data.secure_url);
+        
         setImageUrl(data.secure_url);
       })
       .catch((err) => {
-        // console.log('An Error Occured While Uploading', err);
       })
       .finally(() => {
         setIsLoading(false);
+       
       });
   };
 
   return (
     <WithAuth>
       <div className="bg-[#060809] min-h-[100vh]  flex flex-col  relative">
-        <AuthHeader showNav />
+        <IfHeaderIsAuth showNav />
         <Header
           Data={HeaderData}
           isActive={isActive}
@@ -71,6 +71,7 @@ export default function Setting() {
             imageUrl={imageUrl}
             CloudinaryUpload={CloudinaryUpload}
             isActive={isActive}
+            setImageUrl={setImageUrl}
           />
         </div>
         <div className="absolute left-0 right-0 bottom-0">

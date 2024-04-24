@@ -133,11 +133,11 @@ export const SignUpForm =()=>{
             label:'Password',
             type:'password'
         },
-        {
-            name:'confirmPassword',
-            label:'Confirm Password',
-            type:'password'
-        },
+        // {
+        //     name:'confirmPassword',
+        //     label:'Confirm Password',
+        //     type:'password'
+        // },
     ]
 }
 

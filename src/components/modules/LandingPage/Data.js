@@ -14,7 +14,7 @@ export const FeatureData = [
     color:'text-[#FA4354]'
   },
   {
-    name: "Watch On demand",
+    name: "Watch On Demand",
     dec: `Replay and watch missed concerts as many times as possible on demand.`,
     icon: <Feature2con />,
     color:'text-[#00A699]'

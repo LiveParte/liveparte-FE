@@ -16,14 +16,17 @@ import { selectCurrentUserData } from "@/store/User";
 export default function LiveStreamVideo({
   activeConnection,
   setActiveConnection,
+  isLive,
+  liveStreamDetail
 }) {
+  
   const appId = "Agora Project App ID";
   const user = useSelector(selectCurrentUserData);
 
-  // console.log(user, "user");
 
   const [micOn, setMic] = useState(true);
   const [cameraOn, setCamera] = useState(true);
+  
 
   useJoin(
     {
@@ -46,8 +49,26 @@ export default function LiveStreamVideo({
   //bg-[url('/webp/livestream.webp')]
   return (
     <div className="w-full h-[40vh] lg:h-[70vh]  bg-cover lg:rounded-[16px] overflow-hidden ">
+        {!isLive?
+        <video
+        controls
+        // ref={videoRef}
+        autoPlay
+        // loop
+        // muted
+        className={`absolute left-0 right-0 top-0 rounded-[16px] bottom-0 object-cover h-full w-full z-20  `}
+        poster={liveStreamDetail?.thumbnail_url
+}
+        // onMouseEnter={handleMouseEnter}
+        // onMouseLeave={handleMouseLeave}
+      >
+        <source
+          src={liveStreamDetail?.promotional_url||'https://res.cloudinary.com/dnvwcmqhw/video/upload/v1713115469/Event%20Images/videos/1109352_1080p_Entertainment_Nightclub_1280x720_odt4dn.mp4'}
+          type="video/mp4"
+        />
+        Your browser does not support the video tag.
+      </video>:
       <div id="remoteVideoGrid">
-        {/* {console.log(remoteUsers, "remoteUsers")} */}
         {remoteUsers.map((user) => (
           <div
             key={user.uid}
@@ -56,7 +77,7 @@ export default function LiveStreamVideo({
             <RemoteUser user={user} />
           </div>
         ))}
-      </div>
+      </div> }
     </div>
   );
 }

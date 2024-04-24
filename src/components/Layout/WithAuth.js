@@ -1,60 +1,54 @@
-import React, { useEffect } from "react";
+"use client"
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { isAuth, logout, selectCurrentUserData } from "@/store/User";
 import { useGetUserProfileQuery } from "@/store/User/userApi";
 import { decryptObject, storage, userDetailStorageName } from "@/utils/helper";
-import {  useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import IfHeaderIsAuth from "../Common/Header/IfHeaderIsAuth";
 
-
-function WithAuth({ children }) {
+function WithAuth({ children, showHeader = true }) {
   const router = useRouter();
-  const dispatch = useDispatch()
-  let userInfo =storage["localStorage"]?.get(userDetailStorageName)
-  const {isLoading,isError} =useGetUserProfileQuery();
-  // alert("hello")
-  const user =useSelector(selectCurrentUserData);
-  const isAuthenticated =userInfo?._id;
-  //  console.log(userInfo,'useSelector')
-  // const isAuthenticated =false;
+  const userInfo = useSelector(selectCurrentUserData);
+  const [isAuth, setIsAuth] = useState(false);
+  const isAuthenticated = userInfo?._id;
+  const dispatch = useDispatch();
 
-  // console.log(isAuthenticated,user,'isAuthenticated')
+
+  const { data, isLoading, isError } = useGetUserProfileQuery(undefined,{
+    skip: !userInfo?._id,
+  });
+
+
+ 
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      router.push("/");
+    if(!userInfo?._id){
+      router.push('/');
+      // alert('you are out')
+      // dispatch(logout());
       
     }
-  }, [isAuthenticated]);
-
-  // useEffect(() => {
-  //   if (!user?._id) {
-  //     router.push("/");
-  //     // dispatch(logout())
-  //   }
-  // }, [user,userInfo]);
-
-  useEffect(() => {
-    if(!isLoading){
-    if (!userInfo?._id) {
-      router.push("/");
-      dispatch(logout())
-      // dispatch(logout())
+    // if(userInfo)
+    if (!isAuthenticated) {
+      router.push('/');
     }
-  }
-  }, [userInfo?.id]);
-
-  useEffect(() => {
-    if(!isLoading){
-    if (isError) {
-      // router.push("/");
-      // dispatch(logout())
+    else{
+      setIsAuth(true)
     }
-  }
-  }, [isError,isLoading]);
+  }, [isAuthenticated, router,userInfo?._id]);
 
+
+  if (!isAuth) {
+    return <div>...</div>;
+  }
+  
   return (
-    <div className="min-h-[100vh] bg-white">
-      {true ? children : <div></div>}
+    <div className="min-h-[100dvh] md:min-h-[100vh] bg-black flex flex-col justify-end ">
+      {showHeader && <div className="absolute left-0 right-0 z-50 top-0">
+        <IfHeaderIsAuth />
+      </div>}
+      {children}
     </div>
   );
 }

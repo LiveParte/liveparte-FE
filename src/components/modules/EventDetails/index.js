@@ -20,11 +20,11 @@ export default function EventDetails({ HeroSectionEvent }) {
               </div>
               <div>
                 <div className="text-[#63768D] text-[15px]">
-                  {moment(HeroSectionEvent?.createdAt).format("dddd") ||
+                  {moment(HeroSectionEvent?.event_date).format("dddd") ||
                     `Wednesday`}
                 </div>
                 <div className="text-[#FFFFFF] text-[15px] font500">
-                  {moment(HeroSectionEvent?.createdAt).format("MMM Do, YYYY")}
+                  {moment(HeroSectionEvent?.event_date).format("MMM Do, YYYY")}
                 </div>
               </div>
             </div>

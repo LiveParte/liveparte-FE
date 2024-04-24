@@ -1,10 +1,18 @@
 import store from "@/store";
 import Head from "next/head";
 import "@/styles/globals.css";
+<<<<<<< HEAD
+=======
+import "bootstrap/dist/css/bootstrap.min.css";
+>>>>>>> 011e8bf0d1163fd228357c2f326b6a0a7cad9e5a
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
-import { ObjectProvider } from "@/Context/ObjectProvider";
+import NextNProgress from 'nextjs-progressbar';
+
+// Import Swiper styles
+import "swiper/css";
+import "swiper/css/pagination";
 
 export default function App({ Component, pageProps }) {
   return (
@@ -13,13 +21,16 @@ export default function App({ Component, pageProps }) {
 
       <Head>
         <title>Live Parte</title>
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
+        />
       </Head>
-      <ObjectProvider>
         <Provider store={store}>
           <ToastContainer
             className={`z-[9999]`}
             position="bottom-center"
-            autoClose={500}
+            autoClose={5000}
             hideProgressBar={false}
             newestOnTop={false}
             closeOnClick
@@ -27,12 +38,12 @@ export default function App({ Component, pageProps }) {
             pauseOnFocusLoss
             draggable
             pauseOnHover
-            
+
             // style={{}}
           />
+          <NextNProgress />
           <Component {...pageProps} />
         </Provider>
-      </ObjectProvider>
     </>
   );
 }
