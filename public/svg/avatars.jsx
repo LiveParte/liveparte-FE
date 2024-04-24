@@ -11,14 +11,14 @@ export const Avatar1 = () => (
       <path
         d="M27.5698 36.6491C37.3373 36.6491 41 30.3654 41 30.3654"
         stroke="#36393F"
-        stroke-width="2.53953"
+        strokeWidth="2.53953"
         stroke-miterlimit="10"
         stroke-linecap="round"
       />
       <path
         d="M6 19.7841C6 19.7841 7.22093 33.2143 18.2093 35.2492"
         stroke="#36393F"
-        stroke-width="2.53953"
+        strokeWidth="2.53953"
         stroke-miterlimit="10"
         stroke-linecap="round"
       />
@@ -501,21 +501,21 @@ export const Avatar6 = () => (
       <path
         d="M17.0938 23.0578H23.4705"
         stroke="black"
-        stroke-width="1.5"
+        strokeWidth="1.5"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
       <path
         d="M16.957 20.3148H17.437"
         stroke="black"
-        stroke-width="1.5"
+        strokeWidth="1.5"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
       <path
         d="M22.3738 20.3148H22.8537"
         stroke="black"
-        stroke-width="1.5"
+        strokeWidth="1.5"
         stroke-linecap="round"
         stroke-linejoin="round"
       />
