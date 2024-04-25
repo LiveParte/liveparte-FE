@@ -19,7 +19,7 @@ export default function LogoImage2({  }) {
     <>
       <Image
         onClick={handleRoute}
-        src="/svg/logo.svg"
+        src="/svg/logoBeta.svg"
         width={130}
         height={23}
         alt="Picture of the author"
@@ -27,7 +27,7 @@ export default function LogoImage2({  }) {
       />
       <Image
         onClick={handleRoute}
-        src="/svg/logo.svg"
+        src="/svg/logoBeta.svg"
         width={130}
         height={19}
         alt="Picture of the author"

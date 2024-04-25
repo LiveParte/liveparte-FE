@@ -9,15 +9,18 @@ const Hero = dynamic(() => import('@/components/modules/onDemand/Hero'), { ssr: 
 const Happening = dynamic(() => import('@/components/modules/Event/Happening'), { ssr: false });
 const Footer = dynamic(() => import('@/components/Common/Footer'), { ssr: false });
 import NoAuth from "@/components/Layout/NoAuth";
-import { isJSON } from '@/utils/reusableComponent';
+import { eventLink, isJSON, singleEventLink } from '@/utils/reusableComponent';
+import { useEffect } from 'react';
+import { selectCurrentUserData } from '@/store/User';
+import { useSelector } from 'react-redux';
 const userData = storage.localStorage.get(userDetailStorageName);
 const CheckUser =isJSON(userData)&&JSON.parse(userData)
 export default function Home() {
   const router = useRouter();
-
+  const user = useSelector(selectCurrentUserData) || {};
   // Queries
-  const { data, isLoading, isError } = useGetAllEventQuery();
-  const { data: onDemandEvent, isLoading: onDemandEventLoader } = useGetEventOnDemandQuery();
+  const { data, isLoading, isError,refetch:getAllEventRefetch } = useGetAllEventQuery();
+  const { data: onDemandEvent, isLoading: onDemandEventLoader,refetch:onDemandRefresh } = useGetEventOnDemandQuery();
 
   // Data processing
   const happeningNowEvents = data?.event?.filter(item => item?.eventStarted === true);
@@ -26,6 +29,15 @@ export default function Home() {
   const filteredEvents = isArray(data?.event)
     ? data?.event.filter(event => moment(event.event_date) > moment())
     : [];
+    
+
+    useEffect(() => {
+      if(user?._id){
+        getAllEventRefetch();
+        onDemandRefresh();
+      }
+    }, [user?._id])
+    
 
   return (
     <div className='min-h-[100vh] bg-black'>

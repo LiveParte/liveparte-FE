@@ -236,7 +236,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           <LogoImage router={router} />
 
           {showNav && (
-            <div className="flex items-center  lg:gap-[18px] xl:gap-[24px] !hover:scale-100">
+            <div className="flex items-center justify-between  xl:gap-[24px] !hover:scale-100">
               <ButtonComp
                 btnText="Browse Events"
                 className={` font-medium  hidden lg:block   !h-[32px] text-[13px] px-[16px] md:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${
@@ -263,22 +263,30 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           <div>
             <div className="flex items-center  gap-[18px]">
               <div className=" gap-[16px] items-center text-white font500 hidden lg:flex">
+                <div className=" flex flex-col">
+                <div className="text-[10px] text-[#b4becb] mb-[3px]">Coin Balance</div>
                 <div className="text-[13px] flex items-center gap-[5px]">
                   <Image
-                    src={`/svg/coins.svg`}
-                    width={24}
-                    height={24}
+                    src={`/svg/coin1.svg`}
+                    width={16}
+                    height={16}
                     alt="coins"
                   />{" "}
                   100 Coins
                 </div>
+                </div>
+            
                 <div ref={purchaseCoinRef} className="relative">
                   {isOpenPC && <PurchasePaartyCoinsDropdown />}
-                  <ButtonComp
+                  <div className="">
+                 
+                    <ButtonComp
                     btnText={`Add Coins`}
                     className={`!h-[32px] py-[6px] px-[17px] !bg-[#BACFF70A] rounded-[999px]  text-[10px] shadow-4`}
                     onClick={() => setIsOpenPC(!isOpenPC)}
                   />
+                  </div>
+                  
                 </div>
               </div>
               <div className="hidden lg:block">

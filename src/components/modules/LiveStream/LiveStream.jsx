@@ -15,6 +15,7 @@ import { eventApi } from "@/store/Event/eventApi";
 import { transactionApi } from "@/store/Transaction/transactionApi";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
+import { logout } from "@/store/User";
 // Render a YouTube video player
 export default function LiveStream({ isLive = false, liveStreamDetail,handleCloseModal,handleOpenModal }) {
   const router = useRouter();
@@ -40,16 +41,16 @@ export default function LiveStream({ isLive = false, liveStreamDetail,handleClos
   function ShareAndGiftDropdown() {
     return (
       <CustomDropDown className={`dropdownIV`} dropdownRef={ShareAndGiftDropdownRef} setIsOpen={setIsOpenII}>
-        <div className=" w-[60vw] bg-[#1B1C20] border-[1px] text-left border-[#343F4B] font500 text-[13px] md:text-[14px] text-white  rounded-[16px] md:w-[230px]    px-[40px] py-[24px]">
+        <div className=" w-[60vw] bg-[#1B1C20] border-[1px] text-left border-[#343F4B] font500 text-[13px] md:text-[14px] text-white  rounded-[16px] md:w-[218px]    px-[24px] py-[15px]">
           <div
            onClick={()=>handleOpenModal(`giftTicket`)}
-            className="py-[12px] cursor-pointer no-underline text-white "
+            className="py-[6px] mb-[13px] cursor-pointer no-underline text-white "
           >
             Gift Ticket
           </div>
           <div 
               onClick={()=>handleOpenModal(`shareEvent`)}
-          className="py-[12px] cursor-pointer">
+          className="py-[6px] cursor-pointer">
           Share Event
           </div>
           {/* <div className="py-[12px]">Add to Calendar</div> */}
@@ -91,7 +92,7 @@ export default function LiveStream({ isLive = false, liveStreamDetail,handleClos
         </div>
         {/* \ */}
         <div className="flex flex-col lg:flex-row lg:gap-[16px] flex-1 takeScreen">
-          <div className=" flex flex-col flex-[0.3] lg:flex-[0.6] xl:flex-[0.7] bg-[#27292E] lg:pt-[32px] lg:px-[24px] lg:rounded-[16px]">
+          <div className=" flex flex-col flex-[0.3] lg:flex-[0.6] xl:flex-[0.7] bg-[#27292E] lg:pt-[18px] lg:px-[23px] lg:rounded-[16px]">
             <div className="px-[5px]  items-center justify-between mb-[23px] hidden lg:flex">
               <div className="text-[23px] font-semibold font-1 text-[#FFFFFF] uppercase">
                 {liveStreamDetail?.name }
@@ -147,9 +148,16 @@ export default function LiveStream({ isLive = false, liveStreamDetail,handleClos
                     </div>
                   </div>
                 )}
-                <div className="md:hidden border" onClick={() => setIsOpenII(!isOpenII)} >
+                <div className="md:hidden " onClick={() => setIsOpenII(!isOpenII)} >
                 {isOpenII && <ShareAndGiftDropdown />}
                 <ThreeDotSmall/>
+                {/* <div className="h-[28px] w-[28px] rounded-sm"></div> */}
+                {/* <Image
+                alt="dropdown"
+                src={`/Image/mobileThreeDot.png`}
+                width={28}
+                height={28}
+                /> */}
 
                 </div>
                 <div className="text-[13px]  gap-[8px] items-center hidden lg:flex">

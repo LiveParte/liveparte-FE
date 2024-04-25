@@ -62,7 +62,7 @@ export default function Chat({
       <div className="flex justify-between items-center px-[15px] border-b-[1px] border-b-[#343F4B]  pb-[16px] mb-2">
       <div className="py-[7px]  lg:pt-[16px] px-[16px] flex-1 ">
        <div className="lg:hidden  line-clamp-1 text-[15px] text-white font-1 font-bold uppercase mb-[8px] leading-[20px]">
-        {liveStreamDetail?.name} lo
+        {liveStreamDetail?.name}
         </div>
       <div className=" font-1 text-[13px] lg:text-[22px] text-white uppercase font-bold  ">
         Chat
@@ -102,7 +102,7 @@ export default function Chat({
         </div>
         <div className="px-[16px]  pt-[18px] border-t-[1px] border-t-[#343F4B]">
           <div className="flex items-center gap-[10px] lg:mb-[13px]">
-            <input className="h-[40px] lg:h-[35px] w-[23px] border-[1px] border-[#343F4B] rounded-[8px] bg-transparent flex-1 placeholder:text-[#495969] px-[17px] text-white outline-none"  placeholder="Comment here..."/>
+            <input className="h-[40px] lg:h-[35px] w-[23px] border-[1px] border-[#343F4B] rounded-[8px] bg-transparent flex-1 placeholder:text-[#495969] placeholder:text-[13px] px-[17px] text-white outline-none "  placeholder="Comment here..."/>
             <div 
             onClick={()=>setPayFlow('giftCoins')}
              className="lg:hidden text-white flex flex-col  items-center">

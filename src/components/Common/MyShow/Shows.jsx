@@ -60,6 +60,8 @@ export default function ShowsCard({
     }
   };
 
+  // console.log(item?._id)
+
 
   return (
     <div

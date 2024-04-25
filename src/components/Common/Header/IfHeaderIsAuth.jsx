@@ -19,6 +19,8 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
     setUserDetail(user?._id);
   }, [user?._id]);
 
+
+  // console.log(userDetail,user,'user')
   useEffect(() => {
     if (router?.pathname === "/reset-password") {
       openModal("ForgetPassword");

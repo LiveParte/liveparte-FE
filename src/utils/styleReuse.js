@@ -12,20 +12,20 @@ export const LogoImage = ({ }) =>
 return <>
     <Image
       onClick={() => router.push("/")}
-      src="/svg/logo.svg"
-      width={130}
+      src="/svg/logoBeta.svg"
+      width={194}
       height={23}
       alt="Picture of the author"
       className="hidden md:block cursor-pointer"
     />
     <Image
       onClick={() => router.push("/")}
-      src="/svg/logo.svg"
-      width={130}
+      src="/svg/logoBeta.svg"
+      width={155}
       height={19}
       alt="Picture of the author"
       className="md:hidden cursor-pointer"
-      style={{ width: "30vw" }}
+      style={{ width: "40vw" }}
       // fill
     />
   </>

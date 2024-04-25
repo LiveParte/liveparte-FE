@@ -156,7 +156,7 @@ export default function LoginSignUp({
         id: response?.user?._id,
         nonProfileImage: randomBetweenOneAndTen(),
       });
-      SuccessNotification({ message: `User Register Successfully in` });
+      SuccessNotification({ message: `Your registration was successful` });
       // toast.success(`User Register Successfully in`);
       reset2();
       setToggle("Login");
@@ -200,6 +200,7 @@ export default function LoginSignUp({
 
     // toast('Hello! RegisterUser')
 
+    console.log(handleRegisterUser,'handleRegisterUser')
     if (!checkIfNonImageExist?.id) {
       storage.localStorage.set("noUserProfileImage", {
         id: response?.user?._id,
@@ -216,12 +217,23 @@ export default function LoginSignUp({
 
     if (handleRegisterUser?.error?.message === "Unauthorized") {
       // toast.error("Invalid credentials");
-      ErrorNotification({ message: "Invalid credentials" });
+      ErrorNotification({ message: "Your login details don't match" });
     }
 
     if (response?.user?.createdAt) {
-      SuccessNotification({ message: "User Successfully Logged in" });
+      SuccessNotification({ message: "You're in!" });
       dispatch(setUserData(response?.user));
+      // dispatch(
+      //   eventApi.endpoints.getAllEvent.initiate(undefined, {
+      //     forceRefetch: true,
+      //   })
+      // );
+      // dispatch(
+      //   eventApi.endpoints.getEventOnDemand.initiate(undefined, {
+      //     forceRefetch: true,
+      //   })
+      // );
+      
       // dispatch(eventApi.utils.invalidateTags('singleEvent'))
       // dispatch(eventApi.util.invalidateTags(['singleEvent']));
 

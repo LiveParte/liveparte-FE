@@ -4,7 +4,7 @@ import Image from "next/image";
 
 export default function FavoriteShow() {
   return (
-    <div className=" md:pt-[56px] bg-[#060809]  pb-[80px] lg:pb-[112px]">
+    <div className="pt-[20px] md:pt-[56px] bg-[#060809]  pb-[80px] lg:pb-[112px]">
         <div className="flex justify-start mb-1 lg:hidden">
         <BannerSmall1/>
         </div>
