@@ -15,19 +15,23 @@ function WithAuth({ children, showHeader = true }) {
   const dispatch = useDispatch();
 
 
-  const { data, isLoading, isError } = useGetUserProfileQuery(undefined,{
+  const { data, isLoading, isError,error } = useGetUserProfileQuery(undefined,{
     skip: !userInfo?._id,
   });
 
 
 //  console.log(userInfo,'userInfo')
 
+
+
   useEffect(() => {
     if(!userInfo?._id){
       router.push('/');
       // alert('you are out')
       // dispatch(logout());
-      
+    }
+    if(error?.message==="Unauthorized"){
+      dispatch(setUserData({}))
     }
     // if(userInfo)
     if (!isAuthenticated) {
@@ -36,7 +40,7 @@ function WithAuth({ children, showHeader = true }) {
     else{
       setIsAuth(true)
     }
-  }, [isAuthenticated, router,userInfo?._id]);
+  }, [isAuthenticated, router,userInfo?._id,error,error?.message]);
 
 
   if (!isAuth) {

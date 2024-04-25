@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import useIntersectionObserver from '.';
 
-const withLazyLoad = (WrappedComponent, threshold = 0.5) => {
+const withLazyLoad = (WrappedComponent, threshold = 0) => {
   const Wrapped = (props) => {
     const [isInView, ref] = useIntersectionObserver(threshold);
     const [hasLoaded, setHasLoaded] = useState(false);
+
+    console.log(isInView, hasLoaded, 'isInView');
 
     useEffect(() => {
       if (isInView && !hasLoaded) {
@@ -12,10 +14,14 @@ const withLazyLoad = (WrappedComponent, threshold = 0.5) => {
       }
     }, [isInView, hasLoaded]);
 
+    if (!hasLoaded) {
+      return <div ref={ref}>Loading...</div>; // Placeholder or loader while loading
+    }
+
     return (
-      <span ref={ref}>
-        {hasLoaded ? <WrappedComponent {...props} /> : <div className='bg-[#060809] h-[100vh]'></div>}
-      </span>
+      <div ref={ref}>
+        {hasLoaded && <WrappedComponent {...props} />}
+      </div>
     );
   };
 

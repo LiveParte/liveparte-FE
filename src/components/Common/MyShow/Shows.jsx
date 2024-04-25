@@ -7,10 +7,10 @@ import { eventLink, singleEventLink } from "@/utils/reusableComponent";
 import { isArray } from "@/utils/helper";
 import { useDispatch } from "react-redux";
 import { setEventData } from "@/store/Event";
-// import ShowDetails from "./ShowDetails";
+import ShowDetails from "./ShowDetails";
 // import ImageOrVideo from "";
 const ImageOrVideo = dynamic(() => import("./ImageOrVideo"), { ssr: false });
-const ShowDetails = dynamic(() => import("./ShowDetails"), { ssr: false });
+// const ShowDetails = dynamic(() => import("./ShowDetails"));
 
 export default function ShowsCard({
   name,
