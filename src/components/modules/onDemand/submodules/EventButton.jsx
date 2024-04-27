@@ -144,7 +144,7 @@ export default function EventButton({
 
   function CallToActionIcon() {
     return (
-      <div className="flex gap-4 items-center h-[44px]">
+      <div className="flex gap-x-2 md:gap-x-4 items-center h-[44px]">
         {!isSingleEvent && (
           <div className="cursor-pointer" onClick={handleJoinEvent}>
             <InfoIcon />
@@ -198,7 +198,7 @@ export default function EventButton({
           <div>
             <ButtonComp
               isDisabled={true}
-              className={`py-[12px] px-[39px] text-[13px] xl:text-[15px] font500`}
+              className={`py-[12px] px-[15px] md:px-[39px] text-[13px] xl:text-[15px] font500`}
               btnText={`Ticket already purchased`}
             />
           </div>
@@ -280,7 +280,7 @@ export default function EventButton({
           />
         )}
         <div
-          className="hidden mb-[80px] md:flex  h-[44px] items-center gap-4  "
+          className="hidden mb-[80px] md:flex  h-[44px] items-center gap-x-2 md:gap-x-4"
           ref={dropdownRef}
         >
           {ButtonActions(buttonAction())}
@@ -290,7 +290,7 @@ export default function EventButton({
 
         <div className="flex   flex-col mb-[5vh] items-center md:hidden">
           <div className="">{TextType(TextTypeAction())}</div>
-          <div className="flex justify-center flex-wrap items-center gap-x-4  gap-y-2 mt-4">
+          <div className="flex justify-center flex-wrap items-center gap-x-2 md:gap-x-4  gap-y-2 mt-4">
             {ButtonActions(buttonAction())}
             <CallToActionIcon />
           </div>
