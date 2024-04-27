@@ -4,6 +4,10 @@ import React from "react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import { eventLink } from "@/utils/reusableComponent";
+import withLazyLoad from "@/components/Common/LazyLoading/lazyLoading";
+
+const ShowCardLazy =withLazyLoad(ShowsCard)
+
 const Hero = dynamic(() => import('./Hero'), {
   ssr: false
 });
@@ -15,7 +19,7 @@ export default function OnDemandList({ OnDemandEvent = [],HeroSectionEvent }) {
     <div className={` pt-[32px] mb-[100px] bg-black`}>
       <div className={`grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-x-[24px] gap-y-[40px] md:gap-y-[104px] ${container}`}>
         {OnDemandEvent?.slice(0,8)?.map((item, i) => (
-          <ShowsCard onDemand={true} key={i} item={item} />
+          <ShowCardLazy onDemand={true} key={i} item={item} />
         ))}
       </div>
      
@@ -28,7 +32,7 @@ export default function OnDemandList({ OnDemandEvent = [],HeroSectionEvent }) {
       </div>
       <div className={`grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-x-[24px] gap-y-[40px] md:gap-y-[104px] ${container}`}>
         {OnDemandEvent?.slice(8,OnDemandEvent?.length)?.map((item, i) => (
-          <ShowsCard key={i} onDemand={true} item={item} />
+          <ShowCardLazy key={i} onDemand={true} item={item} />
         ))}
       </div>
     </div>

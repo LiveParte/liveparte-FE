@@ -4,13 +4,14 @@ import ButtonComp from '@/components/Ui/button'
 import { GoogleIcon } from '../../../../../../public/svg'
 import { FloatingLabelInput } from '@/components/Ui/TextInput'
 import Link from 'next/link'
+import { termsUrl } from '@/utils/reusableComponent'
 
 export default function SignUpPage({
     Controller,control,handleSubmit,handleLogin,
     registerLoader,
     isEvent
 }) {
-  const termsUrl=`https://liveparte.notion.site/Terms-of-service-d531fa1d585346dba3205ae490f5fbb4`
+  // const termsUrl=`https://liveparte.notion.site/Terms-of-service-d531fa1d585346dba3205ae490f5fbb4`
   return (
     <form
     className="px-[15px] lg:px-[30px] flex flex-col  lg:pb-[0px]"

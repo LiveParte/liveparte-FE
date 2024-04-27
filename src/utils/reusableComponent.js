@@ -50,8 +50,12 @@ export function GetTransformedImageUrl(
   return transformedImageUrl;
 }
 
-export function randomBetweenOneAndTen() {
-  return Math.floor(Math.random() * 9) + 1;
+export   const termsUrl=`https://liveparte.notion.site/Terms-of-service-d531fa1d585346dba3205ae490f5fbb4`
+
+
+export function randomBetweenOneAndTen(ArrayLength=9) {
+  return Math.floor(Math.random() * (ArrayLength-1)); // Generate a random number between 0 and 9
+
 }
 
 export function SuccessNotification({ message }) {
@@ -198,6 +202,7 @@ export function checkShowDuration(targetDateTime, durationMins) {
     // Calculate target date and time after adding durationMins
     const targetDatePlusDuration = new Date(targetDate.getTime() + (durationMins * 60 * 1000));
 
+    // console.log(targetDate,targetDatePlusDuration,'targetDatePlusDuration')
     // Check conditions
     if (currentDate >= targetDate && currentDate <= targetDatePlusDuration) {
         return true;
@@ -205,6 +210,14 @@ export function checkShowDuration(targetDateTime, durationMins) {
         return false;
     }
 }
+
+export function checkShowDurationAfter(targetDateTime, durationMins) {
+  const currentDate = new Date(); // Current date and time
+  const targetDate = new Date(targetDateTime); // Convert targetDateTime string to Date object
+  const targetDatePlusDuration = new Date(targetDate.getTime() + (durationMins * 60 * 1000)); // Calculate target date and time after adding durationMins
+  return currentDate <= targetDatePlusDuration; //
+}
+
 
 
 export function replaceAmpersandWithAnd(str) {

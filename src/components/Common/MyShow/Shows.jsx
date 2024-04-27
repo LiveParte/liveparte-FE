@@ -7,10 +7,10 @@ import { eventLink, singleEventLink } from "@/utils/reusableComponent";
 import { isArray } from "@/utils/helper";
 import { useDispatch } from "react-redux";
 import { setEventData } from "@/store/Event";
-// import ShowDetails from "./ShowDetails";
+import ShowDetails from "./ShowDetails";
 // import ImageOrVideo from "";
 const ImageOrVideo = dynamic(() => import("./ImageOrVideo"), { ssr: false });
-const ShowDetails = dynamic(() => import("./ShowDetails"), { ssr: false });
+// const ShowDetails = dynamic(() => import("./ShowDetails"));
 
 export default function ShowsCard({
   name,
@@ -60,6 +60,8 @@ export default function ShowsCard({
     }
   };
 
+  // console.log(item?._id)
+
 
   return (
     <div
@@ -79,7 +81,7 @@ export default function ShowsCard({
       }}
     >
       <div
-        className={` relative h-[25vh] md:h-[27vh] lg:h-[45vh] xl:h-[27vh] rounded-[8px] lg:rounded-[20px] ${backUrl} bg-cover bg-center bg-gradient-to-b from-black to-transparent  overflow-hidden group cursor-pointer duration-300 ease-in-out group-hover:opacity-100 relative mb-[16px]`}
+        className={` relative min-h-[200px] h-[25vh] md:h-[27vh] lg:h-[45vh] xl:h-[27vh] rounded-[8px] lg:rounded-[20px] ${backUrl} bg-cover bg-center bg-gradient-to-b from-black to-transparent  overflow-hidden group cursor-pointer duration-300 ease-in-out group-hover:opacity-100 relative mb-[16px]`}
       >
         <div>
           <ImageOrVideo

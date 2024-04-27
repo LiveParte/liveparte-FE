@@ -10,7 +10,7 @@ import { isJSON } from "@/utils/reusableComponent";
 export const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
-    event:eventSlice.reducer,
+    event: eventSlice.reducer,
     [userApi.reducerPath]: userApi.reducer,
     [eventApi.reducerPath]: eventApi.reducer,
     [transactionApi.reducerPath]: transactionApi.reducer,
@@ -19,21 +19,23 @@ export const store = configureStore({
     getDefaultMiddleware().concat(
       userApi.middleware,
       eventApi.middleware,
-      transactionApi?.middleware || [], // Add a default empty array if middleware is undefined
+      transactionApi?.middleware || [] // Add a default empty array if middleware is undefined
     ),
 });
 
 const storedUserData = storage.localStorage.get(userDetailStorageName);
 
+// console.log(storedUserData,'storedUserData');
 
 if (storedUserData && isJSON(storedUserData)) {
   const userData = JSON.parse(storedUserData);
   store.dispatch(setUserData(userData));
 } else {
+  store.dispatch(setUserData({}));
   // console.error('Stored user data is not in JSON format or does not exist.');
 }
 // try {
-  
+
 // } catch (error) {
 //   // console.error(error.message);
 // }

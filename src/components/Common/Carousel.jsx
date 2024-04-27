@@ -21,6 +21,7 @@ export default function Carousel({
   return (
     <>
       <Swiper
+      autoHeight={true}
       loop
         modules={[Navigation,A11y]}
         navigation={{
