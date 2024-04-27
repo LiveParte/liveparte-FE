@@ -95,13 +95,13 @@ export default function ShareEvent({ closeModal, Data }) {
           <input
             className="flex-1 flex-grow-1 bg-transparent px-[16px] outline-none text-[#63768D] text-[13px] w-full"
             ref={inputRef}
-            value={CopyEventLink({ link: showId })}
+            value={CopyEventLink({ link: Data?._id|| showId })}
             disabled
           />
 
           <div className="mr-[2px]">
             <CopyToClipboard
-              text={CopyEventLink({ link: showId })}
+              text={CopyEventLink({ link: Data?._id||showId })}
               onCopy={handleCopy}
             >
               <ButtonComp

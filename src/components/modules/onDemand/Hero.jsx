@@ -36,19 +36,16 @@ export default function Hero({
   showStatus = true,
   showTopGradient = false,
   isOnDemand = false,
+  isLoading = false,
+  isSingleEvent=false
 }) {
   const [CreatePurchase, { isLoading: cpLoader }] = useCreatePurchaseMutation();
 
   const videoRef = useRef(null);
-  const dispatch = useDispatch();
-  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [openCheckOut, setCheckOut] = useState(false);
   const dropdownRef = useRef(null);
   const [muted, setMuted] = useState(true);
 
-  const eventIsPurchase = HeroSectionEvent?.purchase?.id;
-  const isLive = HeroSectionEvent?.isLiveStreamed ? true : false;
   const EventStarted =
     HeroSectionEvent?.eventStarted &&
     checkShowDuration(
@@ -76,158 +73,54 @@ export default function Hero({
     };
   }, []);
 
-  
-
   const toggleMute = () => {
     const video = videoRef.current;
+    // console.log(video.muted,'video')
     if (video) {
       video.muted = !video.muted;
       setMuted(video.muted);
     }
   };
 
-  const handleGetTicketLearnMore = () => {
-    dispatch(
-      setEventData({
-        ...{
-          ...HeroSectionEvent,
-          ticket:
-            isArray(HeroSectionEvent?.tickets) && HeroSectionEvent?.tickets[0],
-        },
-      })
-    );
+  const HappeningNow =
+    HeroSectionEvent?.purchase?.id &&
+    HeroSectionEvent?.eventStarted &&
+    EventStarted;
 
-    router.push({
-      pathname: `${eventLink}/${HeroSectionEvent?._id}`,
-    });
-  };
-
-  const handleJoinEvent = () => {
-    dispatch(
-      setLiveStreamEventData(HeroSectionEvent)
-    );
-
-    router.push({
-      pathname: `${liveStreamLink}/`,
-    });
-  };
-
-  const handleNavigate = (event) => {
-    event.preventDefault();
-    openModal(HeroSectionEvent);
-  };
-  const handleSuccessPayment = () => {
-    router.push(myShowLink);
-  };
-
-  const handleCloseModal = () => {
-    setCheckOut(null);
-    // implementation for  whatever you want to do when the Paystack dialog closed.
-  };
-
-  const ModalList = [
-    {
-      name: "checkout",
-      component: (
-        <CheckOut
-          Data={show}
-          closeModal={handleCloseModal}
-          IsBought={false}
-          // onNext={refetch}
-        />
-      ),
-    },
-    {
-      name: "gift ticket",
-      component: <GiftTicket Data={show} />,
-    },
-    {
-      name: "login/signup",
-      component: (
-        <LoginSignUp
-          // closeModal={handleCloseModal}
-          onNext={(userDetail) => {
-            // dispatch(eventApi.endpoints.userShows.initiate(userDetail?._id, {forceRefetch: true}));
-            dispatch(
-              eventApi.endpoints.getAllEvent.initiate(undefined, {
-                forceRefetch: true,
-              })
-            );
-            handleCloseModal();
-            //getAllEvent
-            // userShowRefetch();
-            setIsOpen("checkout");
-          }}
-        />
-      ),
-    },
-    {
-      name: "share event",
-      component: <ShareEvent Data={show} closeModal={handleCloseModal} />,
-    },
-  ];
-
-  const handleOpenGiftTicket = () => {
-    if (!userData?._id) {
-      return setCheckOut("login/signup");
-    }
-    setCheckOut("gift ticket");
-  };
-
-  const handleOpenGShareEvent = () => {
-    setCheckOut("share event");
-  };
-  const handleGetTicket = () => {
-    if (!userData?._id) {
-      return setCheckOut("login/signup");
-    }
-    setCheckOut("checkout");
-  };
-  
-  const  buttonAction = () => {
-    if(userData?._id) {
-      if(HeroSectionEvent?.purchase?.id &&HeroSectionEvent?.eventStarted){
-        return 'isPaidAndEventIsLive'
+  const buttonAction = () => {
+    if (userData?._id) {
+      if (HappeningNow) {
+        return "isPaidAndEventIsLive";
       }
-      if(HeroSectionEvent?.purchase?.id &&!HeroSectionEvent?.eventStarted){
-        return 'isPaidAndEventNotLIve'
+      if (
+        HeroSectionEvent?.purchase?.id &&
+        // !HeroSectionEvent?.eventStarted &&
+        !EventStarted
+      ) {
+        return "isPaidAndEventNotLIve";
       }
-      
-  }
-  if(!HeroSectionEvent?.eventStarted){
-    return 'notPaidButIsLive'
-  }
-  return 'notPaidButIsLive'
-}
+    }
+    if (!HeroSectionEvent?.eventStarted && !EventStarted) {
+      return "notPaidButIsLive";
+    }
+    return "notPaidButIsLive";
+  };
 
-const TextType= ()=>{
-  if(isOnDemand){
-    return 'onDemand'
-  }
-  if(!isOnDemand &&HeroSectionEvent?.eventStarted){
-    return 'happeningNow'
-  }
-}
-console.log(HeroSectionEvent,'targetDatePlusDuration1')
-
+  const TextType = () => {
+    if (isOnDemand) {
+      return "onDemand";
+    }
+    if (!isOnDemand && HeroSectionEvent?.eventStarted && EventStarted) {
+      return "happeningNow";
+    }
+    return "justDate";
+  };
+  // console.log(HeroSectionEvent,'targetDatePlusDuration1')
 
   return (
     <div
       className={`relative font400   bg-cover bg-center  xl:bg-top ${MainContainer} h-[100dvh] md:h-[100vh]`}
     >
-      {openCheckOut && (
-        <MyModal
-          bodyComponent={
-            ModalList?.find((item, index) => item?.name == openCheckOut)
-              ?.component
-          }
-          containerStyle={`bg-[#1B1C20] border-[1px] border-[#343F4B] rounded-[16px]  !w-[486px]`}
-          isOpen={openCheckOut ? true : false}
-          closeModal={() => setCheckOut(null)}
-          // openModal={()=>setCheckOut(true)}
-        />
-      )}
-
       {showTopGradient && (
         <div className=" absolute top-0 left-0 right-0 h-[20vh]  z-50  bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>
       )}
@@ -235,7 +128,7 @@ console.log(HeroSectionEvent,'targetDatePlusDuration1')
         // controls
         src={HeroSectionEvent?.promotional_url}
         ref={videoRef}
-        autoPlay
+        autoPlay={isSingleEvent?false:true}
         loop
         muted
         className="absolute left-0 right-0 top-0 bottom-0  h-[90vh] md:h-[100vh] w-[100vw] object-cover"
@@ -253,52 +146,27 @@ console.log(HeroSectionEvent,'targetDatePlusDuration1')
         Your browser does not support the video tag.
       </video>
       <div className="">
-       
         <div className="relative">
           <div className=" min-h-[100dvh] md:min-h-screen relative flex flex-col justify-end  ">
-
             <div
               className={`relative z-40  mt-[40vh] flex flex-col  md:justify-start items-center md:items-start  text-center  md:text-start`}
             >
-              <div className="mt-[16px] text-[36px] lg:text-[92px] md:text-left font-1 text-white font-bold uppercase lg:mb-[32px] leading-[40px] md:leading-[46px] lg:leading-[90px] lg:w-[80%] line-clamp-3">
+              <div className="mt-[16px] text-[36px] lg:text-[92px] md:text-left font-1 text-white font-bold uppercase mb-[20px] lg:mb-[32px] leading-[40px] md:leading-[46px] lg:leading-[90px] lg:w-[80%] line-clamp-3">
                 {HeroSectionEvent?.name}
               </div>
               {/*  */}
               <EventButton
-              HeroSectionEvent={HeroSectionEvent}
-              buttonAction={buttonAction}
-              TextTypeAction={TextType}
+                HeroSectionEvent={HeroSectionEvent}
+                buttonAction={buttonAction}
+                TextTypeAction={TextType}
+                isDisabled={isLoading}
+                HappeningNow={HappeningNow}
+                toggleMute={toggleMute}
+                show={show}
+                muted={muted}
+                isSingleEvent={isSingleEvent}
               />
-              {/* {EventStarted ? (
-                <IsLive
-                  HeroSectionEvent={HeroSectionEvent}
-                  handleGetTicketLearnMore={handleGetTicketLearnMore}
-                  isLive={EventStarted}
-                  isOnDemand={isOnDemand}
-                  showStatus={showStatus}
-                  muted={muted}
-                  giftTicket={handleOpenGiftTicket}
-                  openModalShareEvent={handleOpenGShareEvent}
-                  toggleMute={toggleMute}
-                  openModal={openModal}
-                  handleJoinEvent={handleJoinEvent}
-                />
-              ) : (
-                <IsNoLiveButton
-                  HeroSectionEvent={HeroSectionEvent}
-                  dropdownRef={dropdownRef}
-                  eventIsPurchase={eventIsPurchase}
-                  handleGetTicket ={handleGetTicket}
-                  openModal={openModal }
-                  showStatus={showStatus}
-                  toggleMute={toggleMute}
-                  isOpen={isOpen}
-                  muted={muted}
-                  isLive={isLive}
-                  isOnDemand={isOnDemand}
-                  
-                />
-              )} */}
+              
             </div>
           </div>
         </div>

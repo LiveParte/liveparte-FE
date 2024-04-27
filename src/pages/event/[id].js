@@ -10,7 +10,7 @@ import GiftTicket from "@/components/modules/EventDetails/modal/GiftTicket";
 import LoginSignUp from "@/components/modules/Event/Modal/Login&SignUp";
 import React, { useEffect, useState } from "react";
 import ShareEvent from "@/components/modules/EventDetails/modal/ShareEvent";
-const Hero = dynamic(() => import('@/components/modules/Event/Hero'), {
+const Hero = dynamic(() => import('@/components/modules/onDemand/Hero'), {
   ssr: false
 });
 import {
@@ -207,6 +207,7 @@ export default function EventId() {
         giftTicket={openModalGiftTicket}
         openModalShareEvent={openModalShareEvent}
         notEvent={false}
+        isSingleEvent={true}
         
       />
       <EventDetails HeroSectionEvent={{ ...data?.event,...data, ...shows }}  />

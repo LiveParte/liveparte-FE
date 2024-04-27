@@ -1,4 +1,4 @@
-import { convertAndAddOneHour, CopyEventLink, replaceAmpersandWithAnd } from '@/utils/reusableComponent';
+import { convertAndAddOneHour, convertDateTime, CopyEventLink, replaceAmpersandWithAnd } from '@/utils/reusableComponent';
 import moment from 'moment';
 import React from 'react'
   
@@ -6,7 +6,10 @@ import React from 'react'
 
 export function DropdownMenu({
     openModalShareEvent,
-    giftTicket
+    giftTicket,
+    HeroSectionEvent,
+    isSingleEvent,
+    HappeningNow
 }) {
     return (
       <div className=" absolute dropdownIII transform translate-x-[-250px] lg:translate-x-[-200px] -translate-y-[60px] z-30">
@@ -21,7 +24,7 @@ export function DropdownMenu({
             Share Event
           </div>
           {/* https://calendar.google.com/calendar/u/0/r/eventedit?text=test+add+calendar+event&location&details=test+add+calendar+event&dates=20210510/20210511 */}
-          {/* <div className="py-[12px]">
+       {!HappeningNow &&   <div className="py-[12px]">
             <a
               target="_blank"
               className=" text-white no-underline  "
@@ -46,7 +49,7 @@ export function DropdownMenu({
             >
               Set Reminder
             </a>
-          </div> */}
+          </div>}
         </div>
       </div>
     );
