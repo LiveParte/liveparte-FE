@@ -11,8 +11,8 @@ export default function Upcoming({upComingEvent}) {
 
     const container = "pl-[20px] pr-[20px] lg:px-[60px]";
   return (
-    <div className={`bg-[#060809]  py-[30px] pb-[42px] lg:pb-[77px]`}>
-        <div className={`flex justify-between items-center ${MainContainer}  mb-[40px]`}>
+    <div className={`bg-[#060809]  py-[30px] pb-[42px] lg:pb-[77px] relative`}>
+        <div className={`flex justify-between items-center ${MainContainer}  mb-[40px] `}>
       <div
         className={`text-[20px] font500 text-white `}
       >

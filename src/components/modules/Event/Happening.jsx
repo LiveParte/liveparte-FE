@@ -17,7 +17,7 @@ export default function Happening({ events = [], upComingEvent = [] }) {
   // const container = "pl-[20px] pr-[20px] lg:px-[60px]";
   return (
     <div className="bg-[#060809]  relative pt-[0px] md:pt-[100px] pb-[50px] md:pb-[100px]">
-      <div className=" absolute top-0 left-0 right-0 h-[20vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>
+      <div className=" absolute top-0 left-0 right-0 h-[10vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>
 
       {/* <LazyLoadComponent> */}
       {events?.length > 0 && <HappeningNow events={events} />}

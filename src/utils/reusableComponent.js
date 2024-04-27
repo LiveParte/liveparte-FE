@@ -71,7 +71,8 @@ export function SuccessNotification({ message }) {
 export function ErrorNotification({ message }) {
   toast?.error(message, {
    icon: <ErrorNotificationIcon />,
-   style: { background: "#FED9DD", color: "#060809" },
+   style: { background: "#FED9DD", color: "#060809",fontSize:13, },
+   className:'font400'
  });
  
 }
