@@ -17,11 +17,15 @@ export default function App({ Component, pageProps }) {
       {/* <Head><title>This is the title</title></Head> */}
 
       <Head>
-        <title>Live Parte</title>
+        <title>Liveparte - Watch Live Concerts and Performances</title>
+        <link rel="icon" href="/logo.svg" sizes="any" />
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
         />
+        <meta property="og:description" content="Get direct access to live and on-demand concert, performances by your award-winning artistes and comedians anywhere in the world from the comfort of your devices." />
+
+
       </Head>
         <Provider store={store}>
           <ToastContainer
