@@ -28,7 +28,7 @@ import { useSelector } from "react-redux";
 import { selectCurrentUserData } from "@/store/User";
 import { storage, userDetailStorageName } from "@/utils/helper";
 import { myShowLink } from "@/utils/reusableComponent";
-import { selectEvent } from "@/store/Event";
+import { selectEvent, selectLiveStreamEvent } from "@/store/Event";
 
 export default function EventId() {
   const dispatch = useDispatch()
@@ -37,7 +37,7 @@ export default function EventId() {
 
   const [userDetail, setUserDetail] = useState(false);
   const userInfo = useSelector(selectCurrentUserData) || {};
-  const shows = useSelector(selectEvent) || {};
+  const shows = useSelector(selectLiveStreamEvent) || {};
 
 
   // let userInfo =storage["localStorage"]?.get(userDetailStorageName)
@@ -48,7 +48,6 @@ export default function EventId() {
   const router = useRouter();
   const { id } = router.query;
   let [isOpen, setIsOpen] = useState();
-  const [selectedDate, setSelectedDate] = useState(new Date());
   const [CreatePurchase, { isLoading: cpLoader }] = useCreatePurchaseMutation();
   const { data, isLoading,refetch ,isSuccess} = useGetEventDetailViaIdQuery(id, {
     skip: !id,
@@ -64,31 +63,8 @@ export default function EventId() {
   
 
 
+
   
-  const config = {
-    reference: new Date().getTime().toString(),
-    email: userDetail?.email || "user@example.com",
-    amount: data?.ticket?.price * 100, //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
-    publicKey: "pk_test_9b34d7cad3b54108b6eb034c951d89366eadcc3d",
-    metadata: {
-      custom_fields: [
-        {
-          event_id: data?._id,
-          ticket_id: data?.ticket?._id,
-          purchase_date: new Date(),
-        },
-        // To pass extra metadata, add an object with the same fields as above
-      ],
-    },
-  };
-
-  const initializePayment = usePaystackPayment(config);
- 
-
- 
-  // useEffect(() => {
-  //   setEvent(myObject);
-  // }, [myObject?._id]);
 
   function closeModal() {
     setIsOpen(null);
@@ -118,90 +94,12 @@ export default function EventId() {
     setIsOpen("share event");
   }
 
-  const handleSuccess = async (reference) => {
-    // Implementation for whatever you want to do with reference and after success call.
-    const payload = {
-      event_id: data?._id,
-      ticket_id: data?.ticket?.id,
-      user_id: userInfo?._id,
-      purchase_date: new Date(),
-    };
-    const response = await CreatePurchase(payload);
-    if (response?.data?.createdPurchase?._id) {
-      closeModal();
-      router.push(myShowLink);
-    }
-  };
-  // you can call this function anything
-  const handleClose = () => {
-    // implementation for  whatever you want to do when the Paystack dialog closed.
-  };
-
-  const componentProps = {
-    ...config,
-    text: "Paystack Button Implementation",
-    onSuccess: (reference) => handleSuccess(reference),
-    onClose: handleClose,
-  };
-  const ModalList = [
-    {
-      name: "checkout",
-      component: (
-        <CheckOut
-          Data={{ ...data, ...shows }}
-          // makePayment={() => initializePayment(handleSuccess, handleClose)}
-          componentProps={componentProps}
-          handleSuccess={handleSuccess}
-          handleClose={handleClose}
-          closeModal={closeModal}
-          IsBought={false}
-          onNext={refetch}
-        />
-      ),
-    },
-    {
-      name: "gift ticket",
-      component: (
-        <GiftTicket Data={{ ...data, ...shows }} closeModal={closeModal} />
-      ),
-    },
-    {
-      name: "login/signup",
-      component: (
-        <LoginSignUp
-          closeModal={closeModal}
-          onNext={(userDetail) => {
-            dispatch(eventApi.endpoints.userShows.initiate(userDetail?._id, {forceRefetch: true}));
-
-            // userShowRefetch();
-            setIsOpen("checkout");
-          }}
-        />
-      ),
-    },
-    {
-      name: "share event",
-      component: (
-        <ShareEvent Data={{ ...data, ...shows }} closeModal={closeModal} />
-      ),
-    },
-  ];
-
+ 
   return (
     <NoAuth>
-      {isOpen && (
-        <MyModal
-          bodyComponent={
-            ModalList?.find((item, index) => item?.name == isOpen)?.component
-          }
-          containerStyle={`bg-[#1B1C20] border-[1px] border-[#343F4B] rounded-[16px]  !w-[486px]`}
-          isOpen={isOpen ? true : false}
-          closeModal={closeModal}
-          openModal={openModal}
-        />
-      )}
+     
       <Hero
-        HeroSectionEvent={{ ...data?.event,...data, ...shows }}
+        HeroSectionEvent={{ ...data, ...shows }}
         openModalLoginSignUp={openModalLoginSignUp}
         openModal={openModal}
         giftTicket={openModalGiftTicket}
@@ -210,7 +108,7 @@ export default function EventId() {
         isSingleEvent={true}
         
       />
-      <EventDetails HeroSectionEvent={{ ...data?.event,...data, ...shows }}  />
+     {data?._id && <EventDetails HeroSectionEvent={{ ...data?.event,...data, ...shows }}  />}
       <Footer />
     </NoAuth>
   );

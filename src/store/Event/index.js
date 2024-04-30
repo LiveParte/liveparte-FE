@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   event: {}, // for user object
-  liveStream:{},
+  liveStream: {},
   error: null,
   success: false,
   loading: false,
@@ -27,7 +27,7 @@ export const eventSlice = createSlice({
 });
 
 export const { reducer, actions } = eventSlice;
-export const { setEventData,setLiveStreamEventData } = actions;
+export const { setEventData, setLiveStreamEventData } = actions;
 export const eventState = reducer;
 export const selectEvent = (state) => state.event?.event;
 export const selectLiveStreamEvent = (state) => state.event?.liveStream;

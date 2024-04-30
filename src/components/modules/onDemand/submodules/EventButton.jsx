@@ -114,13 +114,16 @@ export default function EventButton({
   };
 
   const handleJoinEvent = () => {
+    console.log(HeroSectionEvent,'HeroSectionEvent')
+    dispatch(setLiveStreamEventData(HeroSectionEvent));
     if (buttonAction() === "isPaidAndEventIsLive") {
-      dispatch(setLiveStreamEventData(HeroSectionEvent));
+      // dispatch(setLiveStreamEventData(HeroSectionEvent));
 
       router.push({
         pathname: `${liveStreamLink}/${HeroSectionEvent?._id}`,
       });
     }
+
     return router.push({
       pathname: `${eventLink}/${HeroSectionEvent?._id}`,
     });

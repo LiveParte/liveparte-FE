@@ -7,10 +7,14 @@ import { myShowLink } from "@/utils/reusableComponent";
 import { useRouter } from "next/router";
 import { isArray } from "@/utils/helper";
 
-export default function PayStack({ showDetails, onNext, children,isDisabled }) {
+//customFunction: this is to make a call from the out, if this is available it wont read the next link
+
+export default function PayStack({ showDetails, onNext, children,isDisabled,customFunction,proceed=true }) {
   const userData = useSelector(selectCurrentUserData) || {};
   const router =useRouter();
   const [CreatePurchase, { isLoading: cpLoader }] = useCreatePurchaseMutation();
+
+  console.log(showDetails,'showDetails')
   const show={...showDetails,ticket:isArray(showDetails?.tickets)?showDetails?.tickets[0]:showDetails?.ticket};
 //   console.log(show,showDetails,'hello')
   const config = {
@@ -33,6 +37,9 @@ export default function PayStack({ showDetails, onNext, children,isDisabled }) {
   // console.log(show,showDetails,'config')
   // you can call this function anything
   const handleSuccess = async (reference) => {
+    if(customFunction){
+      return customFunction()
+    }
     // Implementation for whatever you want to do with reference and after success call.
     // console.log(reference);
     const payload = {
@@ -65,9 +72,9 @@ export default function PayStack({ showDetails, onNext, children,isDisabled }) {
     <PaystackConsumer {...componentProps}>
       {({ initializePayment }) => (
 
-        <button className="w-full" disabled={isDisabled} onClick={() => initializePayment(handleSuccess, handleClose)}>
+        <div className="w-full cursor-pointer" disabled={isDisabled} onClick={() =>proceed? initializePayment(handleSuccess, handleClose):{}}>
           {children}
-        </button>
+        </div>
       )}
     </PaystackConsumer>
   );
