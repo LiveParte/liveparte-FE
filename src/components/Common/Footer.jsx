@@ -1,4 +1,4 @@
-import { termsUrl } from "@/utils/reusableComponent";
+import { PolicyUrl, termsUrl } from "@/utils/reusableComponent";
 import Link from "next/link";
 import React from "react";
 
@@ -9,7 +9,7 @@ export default function Footer() {
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-[9px] md:gap-[23px]">
           <Link className=" text-[#495969] no-underline hover:text-white" href={termsUrl} target="_blank">Terms</Link>
-          <div>Privacy</div>
+          <Link className=" text-[#495969] no-underline hover:text-white" href={PolicyUrl} target="_blank">Privacy</Link>
           <div className="hidden md:block">Contact Us</div>
         </div>
         <div>© 2024, Liveparte</div>

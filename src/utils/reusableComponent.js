@@ -51,7 +51,7 @@ export function GetTransformedImageUrl(
 }
 
 export   const termsUrl=`https://liveparte.notion.site/Terms-of-service-d531fa1d585346dba3205ae490f5fbb4`
-
+export const PolicyUrl='https://liveparte.notion.site/Privacy-Policy-8829d4f389254c95af56fd67b9271a6e?pvs=4'
 
 export function randomBetweenOneAndTen(ArrayLength=9) {
   return Math.floor(Math.random() * (ArrayLength-1)); // Generate a random number between 0 and 9

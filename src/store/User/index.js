@@ -11,6 +11,7 @@ const initialState = {
   error: null,
   success: false,
   loading: false,
+  location:{}
   //
 };
 
@@ -39,6 +40,12 @@ export const authSlice = createSlice({
       state.userInfo =  payload;
       state.loading = true;
       state.isLoggedIn = payload?._id ? true : false;
+      
+      state;
+    },
+    setLocation: (state, { payload }) => {
+      state.location = payload;
+     
       state;
     },
     logout: (state) => {
@@ -53,9 +60,10 @@ export const authSlice = createSlice({
 });
 
 export const { reducer, actions } = authSlice;
-export const { logout, setPharamData, setUserData } = actions;
+export const { logout, setPharamData, setUserData,setLocation } = actions;
 export const authState = reducer;
 export const selectCurrentPharamaserveData = (state) => state.auth.pharamData;
+export const selectLocation = (state) => state.auth.location;
 export const selectCurrentUserData = (state) => state.auth.userInfo;
 export const selectAllCurrentUserData = (state) => state.auth.userAllDetails;
 export const Check = (state) => state.auth;

@@ -44,15 +44,9 @@ export default function Hero({
       <div
         className={`absolute left-0 right-0 top-0 bottom-0 ${MainContainer}`}
       >
-        {/* <div className="absolute left-0 right-0 z-50">
-          <IfHeaderIsAuth
-            openModal={openModal}
-            openModalLoginSignUp={openModalLoginSignUp}
-          />
-        </div> */}
+       
         <div className="relative">
           <div className="  min-h-[100dvh] md:min-h-screen relative flex flex-col justify-end md:justify-end  ">
-            {/* <div className="h-[45vh] md:h-[20vh]" /> */}
 
             <div
               className={`relative z-40  mt-[15vh] flex flex-col  md:justify-start items-start md:items-start   md:text-start`}
@@ -106,7 +100,7 @@ export default function Hero({
         poster="/webp/1.webp"
       >
         <source
-          src={`https://res.cloudinary.com/dammymoses/video/upload/v1708675597/LiveParte/Screen_Recording_2024-02-18_at_19.05.07_wa31aj.mov`}
+          src={`/video/homeVideo.mov`}
           type="video/mp4"
         />
         Your browser does not support the video tag.

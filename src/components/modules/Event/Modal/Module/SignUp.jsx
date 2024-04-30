@@ -4,7 +4,7 @@ import ButtonComp from '@/components/Ui/button'
 import { GoogleIcon } from '../../../../../../public/svg'
 import { FloatingLabelInput } from '@/components/Ui/TextInput'
 import Link from 'next/link'
-import { termsUrl } from '@/utils/reusableComponent'
+import { PolicyUrl, termsUrl } from '@/utils/reusableComponent'
 
 export default function SignUpPage({
     Controller,control,handleSubmit,handleLogin,
@@ -78,7 +78,7 @@ export default function SignUpPage({
         isLoading={registerLoader}
       />
     </div>
-    <div className='text-[#63768d] text-[13px] text-center px-[10px] mt-[19px] '>By continuing, you agree and accept the <Link target='_blank' href={termsUrl} className='underline text-white' >Terms of Service</Link> and <span className='underline text-white'>Privacy Policy</span> in the use of Liveparte</div>
+    <div className='text-[#63768d] text-[13px] text-center px-[10px] mt-[19px] '>By continuing, you agree and accept the <Link target='_blank' href={termsUrl} className='underline text-white' >Terms of Service</Link> and <Link target='_blank' href={PolicyUrl} className='underline text-white'>Privacy Policy</Link> in the use of Liveparte</div>
   </form>
   )
 }

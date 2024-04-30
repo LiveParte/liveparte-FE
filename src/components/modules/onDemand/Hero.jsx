@@ -55,7 +55,7 @@ export default function Hero({
   const userData = useSelector(selectCurrentUserData) || {};
   const show = {
     ...HeroSectionEvent,
-    ticket: isArray(HeroSectionEvent?.tickets) && HeroSectionEvent?.tickets[0],
+    ticket: isArray(HeroSectionEvent?.tickets) ? HeroSectionEvent?.tickets[0]:HeroSectionEvent?.ticket,
   };
   useEffect(() => {
     function handleClickOutside(event) {

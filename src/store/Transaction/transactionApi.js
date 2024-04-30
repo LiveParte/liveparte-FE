@@ -21,6 +21,14 @@ export const transactionApi = createApi({
       }),
       invalidatesTags:['coupon']
     }),
+    giftTicket: builder.mutation({
+      query: (payload) => ({
+        url: "/purchase/gift",
+        method: "POST",
+        body: payload,
+      }),
+      invalidatesTags:['coupon']
+    }),
    
     //globalservice/all-enums
     //admin/funding-history
@@ -34,6 +42,7 @@ export const transactionApi = createApi({
 export const {
  
  useCreatePurchaseMutation,
+ useGiftTicketMutation
 
  
 } = transactionApi;
