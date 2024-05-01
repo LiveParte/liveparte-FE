@@ -7,7 +7,9 @@ import {
 import { createSlice, current } from "@reduxjs/toolkit";
 
 const initialState = {
-  userInfo: {}, // for user object
+  userInfo: {
+    _id:false
+  }, // for user object
   error: null,
   success: false,
   loading: false,

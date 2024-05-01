@@ -3,7 +3,7 @@ import React from "react";
 import { GiftTicketForm } from "../Data";
 import { FloatingLabelInput } from "@/components/Ui/TextInput";
 import { FloatingLabelTextArea } from "@/components/Ui/TextArea";
-import { CountdownTimerII } from "@/utils/reusableComponent";
+import { CountdownTimerII, ErrorNotification, SuccessNotification } from "@/utils/reusableComponent";
 import { useRouter } from "next/router";
 import { CloseII } from "../../../../../public/svg";
 import { formatMoney } from "@/utils/formatMoney";
@@ -11,34 +11,55 @@ import Image from "next/image";
 import PayStack from "@/components/PayStack/payStack";
 import { useGiftTicketMutation } from "@/store/Transaction/transactionApi";
 import { Controller, useForm } from "react-hook-form";
+import { isArray } from "@/utils/helper";
 
 export default function GiftTicket({ closeModal, Data, show }) {
   const [giftTicket, { isLoading }] = useGiftTicketMutation();
-  const { control, handleSubmit, formState:{isValid},getValues} = useForm({
+  const {
+    control,
+    handleSubmit,
+    formState: { isValid },
+    getValues,
+  } = useForm({
     defaultValues: {
       recipient_email: "",
       recipient_name: "",
-      
     },
   });
   const router = useRouter();
   const handleAction = () => {
     router.push("/event_time_out");
   };
-  const handleValidation = () => {}
+  const handleValidation = () => {};
+
+  console.log(Data, "Data");
 
   const handleGiftTicket = async (data) => {
-    const payload={
-      "event_id": Data?._id,
-      "ticket_id": Data?.ticket?.id,
-      "message": getValues()?.message,
-      "recipient_email": getValues()?.recipient_email,
-      "recipient_name":getValues()?.recipient_name
-    }
-    console.log(data,'data')
+    const payload = {
+      event_id: Data?._id,
+      ticket_id: Data?.ticket?._id|| Data?.ticket?.id,
+      message: getValues()?.message,
+      recipient_email: getValues()?.recipient_email,
+      recipient_name: getValues()?.recipient_name,
+    };
+    // console.log(data, "data");
     const response = await giftTicket(payload);
-
-    console.log(response,'handleGiftTicket')
+    console.log(response, "handleGiftTicket");
+    if (response?.data?.error) {
+     return ErrorNotification({
+        message: isArray(response.data?.message)
+          ? response.data?.message[0]
+          : response.data?.message,
+      });
+    }
+    if(response?.data?.message==="Ticket has been succesfully gifted") {
+      closeModal()
+      return SuccessNotification({
+        message:response?.data?.message
+      });
+    }
+   
+    console.log(response, "handleGiftTicket");
   };
 
   // console.log(Data, show, "showsshowsshowsshowsshows1");
@@ -92,28 +113,38 @@ export default function GiftTicket({ closeModal, Data, show }) {
               }}
               render={({ field: { onChange, value }, formState: { errors } }) =>
                 item?.type === "textarea" ? (
-                  <FloatingLabelTextArea label={item?.label}
-                  type={item?.type}
-                  name={item?.name}
-                  value={value}
-                  onChange={onChange}
-                  error={errors[item?.name]?.message}
-                  errors={errors}/>
+                  <FloatingLabelTextArea
+                    label={item?.label}
+                    type={item?.type}
+                    name={item?.name}
+                    value={value}
+                    onChange={onChange}
+                    error={errors[item?.name]?.message}
+                    errors={errors}
+                  />
                 ) : (
-                  <FloatingLabelInput label={item?.label}
-                  type={item?.type}
-                  name={item?.name}
-                  value={value}
-                  onChange={onChange}
-                  error={errors[item?.name]?.message}
-                  errors={errors} />
+                  <FloatingLabelInput
+                    label={item?.label}
+                    type={item?.type}
+                    name={item?.name}
+                    value={value}
+                    onChange={onChange}
+                    error={errors[item?.name]?.message}
+                    errors={errors}
+                  />
                 )
               }
             />
           ))}
         </form>
-        <PayStack  showDetails={Data} proceed={isValid} customFunction={handleGiftTicket}>
+        <PayStack
+          showDetails={Data}
+          proceed={isLoading?false:isValid}
+          customFunction={handleGiftTicket}
+        >
           <ButtonComp
+          isDisabled={isLoading}
+          isLoading={isLoading}
             btnText={`Proceed To Make Payment ${
               Data?.ticket?.code || ""
             } ${formatMoney(Data?.ticket?.price || "0", false || "0")} `}

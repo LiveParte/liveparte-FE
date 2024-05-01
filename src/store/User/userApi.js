@@ -9,10 +9,9 @@ export const userApi = createApi({
 
   endpoints: (builder) => ({
     getUserProfile: builder.query({
-      query: (body) => ({
+      query: () => ({
         url: "/auth/profile",
         method: "GET",
-        body,
       }),
       providesTags: ["user"],
     }),
@@ -65,16 +64,22 @@ export const userApi = createApi({
       }),
       // invalidatesTags: ["user"],
     }),
+    updateUserLocation: builder.mutation({
+      query: (payload) => ({
+        url: `auth/register-user-location/${payload?.id}`,
+        method: "PATCH",
+        body: payload,
+      }),
+      invalidatesTags: ["user"],
+    }),
+    //auth/register-user-location/{id}
     //users/35
     //company/manager/:userId/update
     //admin/admin-management
     //auth/change-password
   }),
-  onQueryError: async ({ error, dispatch }) => {
-    if (error.status === 401) {
-      await dispatch(logout());
-    }
-  },
+ 
+
 });
 
 export const {
@@ -84,6 +89,7 @@ export const {
   useGetUserProfileQuery,
   useChangePasswordMutation,
   useForgetPasswordMutation,
-  useRestPasswordMutation
+  useRestPasswordMutation,
+  useUpdateUserLocationMutation
 
 } = userApi;

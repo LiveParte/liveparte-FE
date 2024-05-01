@@ -39,7 +39,9 @@ if (storedUserData && isJSON(storedUserData)) {
   const userData = JSON.parse(storedUserData);
   store.dispatch(setUserData(userData));
 } else {
-  store.dispatch(setUserData({}));
+  store.dispatch(setUserData({
+    _id:false
+  }));
   // console.error('Stored user data is not in JSON format or does not exist.');
 }
 

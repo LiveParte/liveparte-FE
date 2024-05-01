@@ -62,7 +62,7 @@ export default function Home() {
     checkShowDurationAfter(event?.event_date, event?.event_length)
   );
 
-  console.log(filteredEventsHero, "filteredHeroShows");
+  // console.log(filteredEventsHero, "filteredHeroShows");
 
   const filteredUpcoming = isArray(data?.event)
     ? data?.event.filter((event) => moment(event.event_date) > moment())
