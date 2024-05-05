@@ -37,7 +37,7 @@ export default function EventId() {
 
   const [userDetail, setUserDetail] = useState(false);
   const userInfo = useSelector(selectCurrentUserData) || {};
-  const shows = useSelector(selectLiveStreamEvent) || {};
+  const shows = useSelector(selectEvent) || {};
 
 
   // let userInfo =storage["localStorage"]?.get(userDetailStorageName)
@@ -62,7 +62,7 @@ export default function EventId() {
 
   
 
-
+// console.log(shows,'showsshowsshows')
 
   
 
@@ -99,7 +99,7 @@ export default function EventId() {
     <NoAuth>
      
       <Hero
-        HeroSectionEvent={{ ...data, ...shows }}
+        HeroSectionEvent={{ ...shows,...data,  }}
         openModalLoginSignUp={openModalLoginSignUp}
         openModal={openModal}
         giftTicket={openModalGiftTicket}

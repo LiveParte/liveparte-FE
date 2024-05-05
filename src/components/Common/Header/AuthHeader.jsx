@@ -9,8 +9,8 @@ import MyModal from "../../Ui/Modal";
 import LoginSignUp from "../../modules/Event/Modal/Login&SignUp";
 import CustomDropDown from "../CustomDropDown";
 import { storage } from "@/utils/helper";
-import { useDispatch } from "react-redux";
-import { logout, setUserData } from "@/store/User";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, selectCurrentUserData, setUserData } from "@/store/User";
 // import dynamic from "next/dynamic";
 // import { Avatar1 } from "../../../public/svg/avatars";
 import UserProfile from "../UserProfile";
@@ -27,6 +27,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
   const dispatch = useDispatch();
   const MainContainer = `px-[20px] md:px-[40px] lg:px-[80px] xl:[120px] relative`;
   const [dropDown, setDropDown] = useState(false);
+  const userInfo =useSelector(selectCurrentUserData)
   const [modalName, setModalName] = useState();
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenPC, setIsOpenPC] = useState(false);
@@ -140,7 +141,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           <div className="flex justify-between items-center py-[30px]">
             <div className="text-[13px] flex items-center gap-[5px] ">
               <Image src={`/svg/coin1.svg`} width={24} height={24} alt="coin" />{" "}
-              100 Coins
+              {userin} Coins
             </div>
             <ButtonComp
               onClick={() => setModalName(`purchaseCoin`)}
@@ -272,7 +273,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
                     height={16}
                     alt="coins"
                   />{" "}
-                  100 Coins
+                  {userInfo?.totalCoin} {userInfo?.totalCoin>1?'Coins':'Coin'}
                 </div>
                 </div>
             
