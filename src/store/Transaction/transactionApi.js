@@ -29,6 +29,13 @@ export const transactionApi = createApi({
       }),
       invalidatesTags:['coupon']
     }),
+    getAllCoins: builder.query({
+      query: () => ({
+        url: "/coins?skip=0&limit=10",
+        method: "GET",
+      }),
+      providesTags: ["user"],
+    }),
    
     //globalservice/all-enums
     //admin/funding-history
@@ -42,7 +49,8 @@ export const transactionApi = createApi({
 export const {
  
  useCreatePurchaseMutation,
- useGiftTicketMutation
+ useGiftTicketMutation,
+ useGetAllCoinsQuery
 
  
 } = transactionApi;

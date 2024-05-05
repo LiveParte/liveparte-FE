@@ -74,6 +74,7 @@ export default function ShowsCard({
         if (onNext) {
           return onNext(item);
         }
+        // console.log({...item,ticket:isArray(item?.tickets)&&item?.tickets[0]},'showsshowsshows1');
         dispatch(setEventData({...item,ticket:isArray(item?.tickets)&&item?.tickets[0]}));
         router.push({
           pathname: `${eventLink}/${item?._id}`,

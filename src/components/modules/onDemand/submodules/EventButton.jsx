@@ -74,13 +74,13 @@ export default function EventButton({
     },
     {
       name: "gift ticket",
-      component: <GiftTicket Data={show} />,
+      component: <GiftTicket Data={show} closeModal={handleCloseModal}/>,
     },
     {
       name: "login/signup",
       component: (
         <LoginSignUp
-          // closeModal={handleCloseModal}
+          closeModal={handleCloseModal}
           onNext={(userDetail) => {
             handleCloseModal();
             //getAllEvent

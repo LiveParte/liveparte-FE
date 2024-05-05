@@ -89,14 +89,7 @@ export default function LoginSignUp({
   }, [pageName]);
 
   async function handleRegister(e) {
-    // if (e?.password !== e?.confirmPassword) {
-    //   return setError("confirmPassword", {
-    //     type: "custom",
-    //     message:
-    //       "The password and confirm password do not match. Please make sure they are the same.",
-    //   });
-    // }
-    // e.preventDefault();
+    
     const payload = {
       ...e,
       username: e.fullName,
@@ -105,7 +98,7 @@ export default function LoginSignUp({
     const handleRegisterUser = await RegisterUser(payload);
     const response = handleRegisterUser?.data;
 
-    const UserString = JSON.stringify(response?.user);
+    const UserString = JSON?.stringify(response?.user);
     
     if (response?.statusCode && response?.statusCode !== 200) {
       if (response?.message === "Email is already in use") {
@@ -150,7 +143,7 @@ export default function LoginSignUp({
     }
     if (response?.user?.createdAt) {
       // const userData = JSON.parse(response?.user);
-      const UserString = JSON.stringify(response?.user);
+    
 
       storage.localStorage.set("noUserProfileImage", {
         id: response?.user?._id,
@@ -200,7 +193,7 @@ export default function LoginSignUp({
 
     // toast('Hello! RegisterUser')
 
-    console.log(handleRegisterUser,'handleRegisterUser')
+    // console.log(handleRegisterUser,'handleRegisterUser')
     if (!checkIfNonImageExist?.id) {
       storage.localStorage.set("noUserProfileImage", {
         id: response?.user?._id,
@@ -214,40 +207,28 @@ export default function LoginSignUp({
         });
       }
     }
+    // Toddo:
 
     if (handleRegisterUser?.error?.message === "Unauthorized") {
       // toast.error("Invalid credentials");
       ErrorNotification({ message: "Your login details don't match" });
     }
 
-    if (response?.user?.createdAt) {
-      SuccessNotification({ message: "You're in!" });
+    if (response?.user?._id) {
+      storage.localStorage.set(userDetailStorageName, UserString);
+      // storage.localStorage.
+      storage.localStorage.set('check','saveme')
       dispatch(setUserData(response?.user));
-      // dispatch(
-      //   eventApi.endpoints.getAllEvent.initiate(undefined, {
-      //     forceRefetch: true,
-      //   })
-      // );
-      // dispatch(
-      //   eventApi.endpoints.getEventOnDemand.initiate(undefined, {
-      //     forceRefetch: true,
-      //   })
-      // );
+      console.log(response?.user,'response?.user')
+      SuccessNotification({ message: "You're in!" });
       
-      // dispatch(eventApi.utils.invalidateTags('singleEvent'))
-      // dispatch(eventApi.util.invalidateTags(['singleEvent']));
-
-      // toast.success(`User Successfully Logged in`);
+      
       storage.localStorage.set(
         accessTokenStorageName,
         encryptText(response?.accessToken)
       );
 
-      storage.localStorage.set(userDetailStorageName, UserString);
-      // if(router?.pathname===singleEventLink){
-      //   dispatch(eventApi.endpoints.getEventDetailViaId.initiate(id))
-
-      // }
+    
       if (router?.pathname === "/") {
         return router.push(eventLink);
       }

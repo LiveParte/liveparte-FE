@@ -7,11 +7,14 @@ import {
 import { createSlice, current } from "@reduxjs/toolkit";
 
 const initialState = {
-  userInfo: {}, // for user object
+  userInfo: {
+    _id:false
+  }, // for user object
   error: null,
   success: false,
   loading: false,
-  location:{}
+  location:{},
+  coins:[],
   //
 };
 
@@ -48,6 +51,11 @@ export const authSlice = createSlice({
      
       state;
     },
+    setCoins: (state, { payload }) => {
+      state.coins = payload;
+     
+      state;
+    },
     logout: (state) => {
       state.userData = null;
       (state.userInfo = {}),
@@ -60,10 +68,11 @@ export const authSlice = createSlice({
 });
 
 export const { reducer, actions } = authSlice;
-export const { logout, setPharamData, setUserData,setLocation } = actions;
+export const { logout, setPharamData, setUserData,setLocation,setCoins } = actions;
 export const authState = reducer;
 export const selectCurrentPharamaserveData = (state) => state.auth.pharamData;
 export const selectLocation = (state) => state.auth.location;
+export const selectCoins = (state) => state.auth.coins;
 export const selectCurrentUserData = (state) => state.auth.userInfo;
 export const selectAllCurrentUserData = (state) => state.auth.userAllDetails;
 export const Check = (state) => state.auth;

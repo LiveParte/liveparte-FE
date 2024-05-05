@@ -69,9 +69,9 @@ export default function SettingForm({
       username: "",
       email: "",
       phone: "",
-      country: "Nigeria",
-      state: "Lagos",
-      address: "No 4. olawunmi street, Lagos, Nigeria",
+      country: "",
+      state: "",
+      address: "",
       id: "",
       currentPassword: "",
       newPassword: "",
@@ -84,6 +84,9 @@ export default function SettingForm({
     setValue("email", data?.email || userInfo?.email);
     setValue("id", data?._id) || userInfo?._id;
     setValue("phone", data?.phone || userInfo?.phone);
+    setValue("address", userInfo?.address);
+    setValue("country", userInfo?.country);
+    setValue("state", userInfo?.state);
     setValue(
       "username",
       data?.fullName ||data?.username

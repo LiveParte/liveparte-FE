@@ -14,7 +14,7 @@ export default function PayStack({ showDetails, onNext, children,isDisabled,cust
   const router =useRouter();
   const [CreatePurchase, { isLoading: cpLoader }] = useCreatePurchaseMutation();
 
-  console.log(showDetails,'showDetails')
+  // console.log(showDetails,'showDetails')
   const show={...showDetails,ticket:isArray(showDetails?.tickets)?showDetails?.tickets[0]:showDetails?.ticket};
 //   console.log(show,showDetails,'hello')
   const config = {

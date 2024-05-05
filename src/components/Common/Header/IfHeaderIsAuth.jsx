@@ -1,20 +1,37 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "./Header";
 import AuthHeader from "./AuthHeader";
-import { selectCurrentUserData } from "@/store/User";
+import {  selectCurrentUserData, setCoins } from "@/store/User";
 import LoginSignUp from "@/components/modules/Event/Modal/Login&SignUp";
 import ForgetPassword from "@/components/modules/Event/Modal/submodules/ForgetPassword/ForgetPassword";
 import MyModal from "@/components/Ui/Modal";
 import { useRouter } from "next/router";
+import { useGetAllCoinsQuery } from "@/store/Transaction/transactionApi";
 
 export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
   const [userDetail, setUserDetail] = useState(false);
+  const dispatch = useDispatch()
+  const {data,isLoading:isLoadingCoins}=useGetAllCoinsQuery()
   const router = useRouter();
   const user = useSelector(selectCurrentUserData) || {};
   let [isOpen, setIsOpen] = useState();
   const { token } = router.query;
+
+  // console.log(data?.coins,'data')
  
+
+  //chexk the list of coins and save it will be taking this out when uche fix the profile issue :TODO
+
+  useEffect(() => {
+    if(data?.coins?.length>0){
+      dispatch(setCoins(data?.coins))
+    }
+   
+  }, [isLoadingCoins])
+  
+
+
   useEffect(() => {
     setUserDetail(user?._id);
   }, [user?._id]);
