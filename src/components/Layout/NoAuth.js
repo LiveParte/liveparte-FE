@@ -49,7 +49,7 @@ function NoAuth({ children }) {
       });
   };
 
-  console.log(userInfo,'countryInfo')
+  // console.log(userInfo,'countryInfo')
   // console.log(status,userInfo,'status')
 
   useEffect(() => {

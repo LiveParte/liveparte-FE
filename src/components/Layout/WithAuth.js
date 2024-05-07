@@ -55,7 +55,7 @@ function WithAuth({ children, showHeader = true }) {
 //  console.log(userInfo,'userInfo')
 
 
-console.log(userInfo,'countryInfo')
+// console.log(userInfo,'countryInfo')
   useEffect(() => {
     if(!isLoading){
     if(!state || !country || !address || !country_code ||!countryInfo?.code ||!countryInfo?.name){
