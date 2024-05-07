@@ -13,6 +13,7 @@ export default function Chat({
         {
             name:'giftCoins',
             component:<GiftingCoins 
+            eventId={liveStreamDetail}
             onNext={()=>setPayFlow('purchasePartyCoins')}
             onClose={()=>setPayFlow()}
             />
