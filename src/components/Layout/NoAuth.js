@@ -13,7 +13,7 @@ function NoAuth({ children }) {
   const userInfo = useSelector(selectCurrentUserData);
   const dispatch = useDispatch();
 
-  const {address,country,state,country_code}=userInfo;
+  const {address,country,state,country_code,countryInfo}=userInfo;
 
   const { data, isLoading, isError, status, error,isSuccess } = useGetUserProfileQuery(
     userInfo?._id,
@@ -26,6 +26,8 @@ function NoAuth({ children }) {
       "country":data?.country_name,
       "state": data?.region,
       "country_code": data?.country_code,
+      "currency_code": data?.currency,
+      "currency_name": data?.currency_name,
       "address": data?.ip,
       id:userInfo?._id
     }
@@ -47,12 +49,13 @@ function NoAuth({ children }) {
       });
   };
 
-  // console.log(isJSON(storage.cookieStorage.get('userLo'))&&JSON.parse())
-  console.log(status,userInfo,'status')
+  console.log(userInfo,'countryInfo')
+  // console.log(status,userInfo,'status')
 
   useEffect(() => {
-    if(!state || !country || !address || !country_code){
-      getLocationDetails();
+    if(!isLoading){
+    if(!state || !country || !address || !country_code ||!countryInfo?.code ||!countryInfo?.name){
+      // getLocationDetails();
     }
   
     if (!userInfo?._id) {
@@ -62,6 +65,7 @@ function NoAuth({ children }) {
     if (error?.message === "Unauthorized") {
       dispatch(setUserData({}));
     }
+  }
   }, [ error?.message,userInfo?._id]);
 
   // console.log(error?.message,'status')

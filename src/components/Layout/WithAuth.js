@@ -17,13 +17,15 @@ function WithAuth({ children, showHeader = true }) {
   const isAuthenticated = userInfo?._id;
   const dispatch = useDispatch();
   // 
-  const {address,country,state,country_code}=userInfo;
+  const {address,country,state,country_code,countryInfo}=userInfo;
 
   const handleUpdateUserLocation=async(data)=>{
     const payload={
       "country":data?.country_name,
       "state": data?.region,
       "country_code": data?.country_code,
+      "currency_code": data?.currency,
+      "currency_name": data?.currency_name,
       "address": data?.ip,
       id:userInfo?._id
     }
@@ -53,12 +55,13 @@ function WithAuth({ children, showHeader = true }) {
 //  console.log(userInfo,'userInfo')
 
 
-
+console.log(userInfo,'countryInfo')
   useEffect(() => {
-    if(!state || !country || !address || !country_code){
+    if(!isLoading){
+    if(!state || !country || !address || !country_code ||!countryInfo?.code ||!countryInfo?.name){
       getLocationDetails();
     }
-  
+    // getLocationDetails();
     
     if(!userInfo?._id){
       router.push('/');
@@ -77,6 +80,7 @@ function WithAuth({ children, showHeader = true }) {
     else{
       setIsAuth(true)
     }
+  }
   }, [isAuthenticated, router,userInfo?._id,error,error?.message,isLoading]);
 
 
