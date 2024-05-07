@@ -58,10 +58,10 @@ export default function Hero({
                     .
                   </span>
                   <div className="text-[#FFC41B]">
-                    {textChange}
+                    {/* {textChange} */}
                     {/* <span className="inline-block animate-bounce">Okay</span> */}
 
-                    {/* <Animate textChange={textChange} /> */}
+                    <Animate textChange={textChange} />
                   </div>
                 </div>
                 <div className="text-white w-[75vw] md:w-[65vw] lg:w-[45vw]  lg:tracking-normal  mb-[80px] md:mb-[60px] :-text-start md:text-start text-[12px] sm:text-[13px] md:text-[20px] font400">
