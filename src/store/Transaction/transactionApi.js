@@ -36,7 +36,26 @@ export const transactionApi = createApi({
       }),
       providesTags: ["user"],
     }),
-   
+    purchaseCoins: builder.mutation({
+      query: (payload) => ({
+        url: `coins/${payload?.userId}/payment-successful`,
+        method: "POST",
+        body: {
+          amountPaid:payload?.amountPaid
+        },
+      }),
+      // invalidatesTags:['coupon']
+    }),
+    giftCoins: builder.mutation({
+      query: (payload) => ({
+        url: `coins/${payload?.userId}/gift/${payload?.eventId}`,
+        method: "POST",
+        body: {
+          coins:payload?.coins
+        },
+      }),
+      // invalidatesTags:['coupon']
+    }),
     //globalservice/all-enums
     //admin/funding-history
     //admin/promo-beneficiary
@@ -50,7 +69,9 @@ export const {
  
  useCreatePurchaseMutation,
  useGiftTicketMutation,
- useGetAllCoinsQuery
+ useGetAllCoinsQuery,
+ usePurchaseCoinsMutation,
+ useGiftCoinsMutation
 
  
 } = transactionApi;

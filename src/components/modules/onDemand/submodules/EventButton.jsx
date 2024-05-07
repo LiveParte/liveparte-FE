@@ -291,7 +291,7 @@ export default function EventButton({
           {TextType(TextTypeAction())}
         </div>
 
-        <div className="flex   flex-col mb-[5vh] items-center md:hidden">
+        <div className="flex   flex-col mb-[5vh] items-center md:hidden" ref={dropdownRef}>
           <div className="">{TextType(TextTypeAction())}</div>
           <div className="flex justify-center flex-wrap items-center gap-x-2 md:gap-x-4  gap-y-2 mt-4">
             {ButtonActions(buttonAction())}

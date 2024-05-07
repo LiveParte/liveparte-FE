@@ -141,7 +141,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           <div className="flex justify-between items-center py-[30px]">
             <div className="text-[13px] flex items-center gap-[5px] ">
               <Image src={`/svg/coin1.svg`} width={24} height={24} alt="coin" />{" "}
-              {userin} Coins
+              {userInfo?.totalCoin} {userInfo?.totalCoin>1?'Coins':'Coin'}
             </div>
             <ButtonComp
               onClick={() => setModalName(`purchaseCoin`)}
