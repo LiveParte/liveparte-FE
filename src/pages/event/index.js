@@ -30,6 +30,7 @@ import {
 import { useEffect } from "react";
 import { selectCurrentUserData } from "@/store/User";
 import { useSelector } from "react-redux";
+import ButtonComp from "@/components/Ui/button";
 const userData = storage.localStorage.get(userDetailStorageName);
 const CheckUser = isJSON(userData) && JSON.parse(userData);
 export default function Home() {
@@ -68,20 +69,24 @@ export default function Home() {
     ? data?.event.filter((event) => moment(event.event_date) > moment())
     : [];
 
-  useEffect(() => {
-    if (user?._id) {
-      getAllEventRefetch();
-      onDemandRefresh();
-    }
-  }, [user?._id]);
+
+//why i wrote  this code 
+  // useEffect(() => {
+  //   if (user?._id) {
+  //     getAllEventRefetch();
+  //     onDemandRefresh();
+  //   }
+  // }, [user?._id]);
 
   //randomBetweenOneAndTen(filteredEventsHero?.length)
   const heroEvent = isArray(filteredEventsHero )
     ? filteredEventsHero[randomBetweenOneAndTen(filteredEventsHero?.length)]
     : {};
 
+  // console.log(filteredEventsHero?.length,'ArrayLengh')
   return (
     <div className="min-h-[100vh] bg-black">
+      {/* <ButtonComp> */}
       <NoAuth>
         {heroEvent ? (
           <Hero

@@ -94,7 +94,6 @@ export default function Hero({
       }
       if (
         HeroSectionEvent?.purchase?.id &&
-        // !HeroSectionEvent?.eventStarted &&
         !EventStarted
       ) {
         return "isPaidAndEventNotLIve";
@@ -115,7 +114,7 @@ export default function Hero({
     }
     return "justDate";
   };
-  // console.log(HeroSectionEvent,'targetDatePlusDuration1')
+  console.log(HeroSectionEvent,EventStarted,'targetDatePlusDuration1')
 
   return (
     <div

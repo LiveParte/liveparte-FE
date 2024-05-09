@@ -38,6 +38,8 @@ export default function SettingForm({
   const userInfo = useSelector(selectCurrentUserData);
   // let userInfo =storage["localStorage"]?.get(userDetailStorageName)
 
+  // console.log(userInfo,'userProfile')
+
   useEffect(() => {
     setUserProfile(
       NoImageUser[checkIfNonImageExist?.nonProfileImage] || Avatar3
@@ -85,7 +87,7 @@ export default function SettingForm({
     setValue("id", data?._id) || userInfo?._id;
     setValue("phone", data?.phone || userInfo?.phone);
     setValue("address", userInfo?.address);
-    setValue("country", userInfo?.country);
+    setValue("country", userInfo?.countryInfo?.name||'Nigeria');
     setValue("state", userInfo?.state);
     setValue(
       "username",
