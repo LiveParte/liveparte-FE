@@ -1,4 +1,4 @@
-import store from "@/store";
+import store, { persistor } from "@/store";
 import Head from "next/head";
 import "@/styles/globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import NextNProgress from 'nextjs-progressbar';
+import { PersistGate } from 'redux-persist/integration/react';
 
 // Import Swiper styles
 import "swiper/css";
@@ -27,6 +28,7 @@ export default function App({ Component, pageProps }) {
 
       </Head>
         <Provider store={store}>
+       
           <ToastContainer
             className={`z-[9999]`}
             position="bottom-center"
@@ -42,7 +44,10 @@ export default function App({ Component, pageProps }) {
             // style={{}}
           />
           <NextNProgress />
+          {/* <PersistGate loading={null} persistor={persistor}> */}
+
           <Component {...pageProps} />
+          {/* </PersistGate> */}
         </Provider>
     </>
   );

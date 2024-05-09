@@ -26,7 +26,8 @@ export default function OnDemandEvent() {
     ? onDemandEvent?.event
     : [];
   const HeroSectionEvent =
-    isArray(onDemandEvent?.event) && onDemandEvent?.event[randomBetweenOneAndTen(onDemandEvent.length)];
+    isArray(onDemandEvent?.event) &&
+    onDemandEvent?.event[randomBetweenOneAndTen(onDemandEvent.length)];
   const HeroSectionEvent2 =
     isArray(onDemandEvent?.event) && onDemandEvent?.event[3];
   const router = useRouter();

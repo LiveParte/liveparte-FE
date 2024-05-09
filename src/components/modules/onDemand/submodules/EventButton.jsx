@@ -269,7 +269,7 @@ export default function EventButton({
 
   return (
     HeroSectionEvent?._id && (
-      <>
+      <div ref={dropdownRef}>
         {openModal && (
           <MyModal
             bodyComponent={
@@ -284,21 +284,24 @@ export default function EventButton({
         )}
         <div
           className="hidden mb-[80px] md:flex  h-[44px] items-center gap-x-2 md:gap-x-4"
-          ref={dropdownRef}
+          // ref={dropdownRef}
         >
           {ButtonActions(buttonAction())}
+          {/* <CallToActionIcon /> */}
           <CallToActionIcon />
           {TextType(TextTypeAction())}
         </div>
 
-        <div className="flex   flex-col mb-[5vh] items-center md:hidden" ref={dropdownRef}>
+        <div className="flex   flex-col mb-[5vh] items-center md:hidden"
+        // ref={dropdownRef} 
+        >
           <div className="">{TextType(TextTypeAction())}</div>
           <div className="flex justify-center flex-wrap items-center gap-x-2 md:gap-x-4  gap-y-2 mt-4">
             {ButtonActions(buttonAction())}
             <CallToActionIcon />
           </div>
         </div>
-      </>
+      </div>
     )
   );
 }

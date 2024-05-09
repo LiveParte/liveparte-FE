@@ -4,12 +4,13 @@ import Image from "next/image";
 import { CloseIcon } from "../../../../../public/svg";
 import LiveStreamHeader from "./LiveStreamHeader";
 import { useGiftCoinsMutation } from "@/store/Transaction/transactionApi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { selectCurrentUserData } from "@/store/User";
 import { SuccessNotification } from "@/utils/reusableComponent";
 import { REGEX_PATTERNS } from "@/utils/constants/errors";
 import { Controller, useForm } from "react-hook-form";
 import { useRouter } from "next/router";
+import { userApi } from "@/store/User/userApi";
 export default function GiftingCoins({ onNext, onClose, eventId }) {
   const  router = useRouter();
   const {showId} =router?.query
@@ -21,7 +22,7 @@ export default function GiftingCoins({ onNext, onClose, eventId }) {
 
   const userInfo = useSelector(selectCurrentUserData);
   const [giftCoins, { isLoading }] = useGiftCoinsMutation();
-
+  const dispatch =useDispatch();
   console.log(eventId?._id,userInfo?._id, "eventId");
 
   async function handleGiftCoins(data) {
@@ -34,8 +35,9 @@ export default function GiftingCoins({ onNext, onClose, eventId }) {
     // console.log(payload)
 
     const response = await giftCoins(payload);
-    if (response?.data?.message === "Coin payment marked as successful") {
+    if (response?.data?.message === "Coins gifted successfully") {
       onClose();
+      dispatch(userApi.util.invalidateTags(["user"]));
       return SuccessNotification({ message: response.data.message });
     }
   }

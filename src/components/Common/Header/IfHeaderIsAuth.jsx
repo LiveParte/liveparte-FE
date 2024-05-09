@@ -2,40 +2,88 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "./Header";
 import AuthHeader from "./AuthHeader";
-import {  selectCurrentUserData, setCoins } from "@/store/User";
+import { selectCurrentUserData, setCoins, setUserData } from "@/store/User";
 import LoginSignUp from "@/components/modules/Event/Modal/Login&SignUp";
 import ForgetPassword from "@/components/modules/Event/Modal/submodules/ForgetPassword/ForgetPassword";
 import MyModal from "@/components/Ui/Modal";
 import { useRouter } from "next/router";
 import { useGetAllCoinsQuery } from "@/store/Transaction/transactionApi";
+import { useGetUserProfileQuery, userApi, useUpdateUserLocationMutation } from "@/store/User/userApi";
+import { useGetUserLocationQuery } from "@/store/others/othersApi";
+import { storage, userDetailStorageName } from "@/utils/helper";
 
 export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
   const [userDetail, setUserDetail] = useState(false);
-  const dispatch = useDispatch()
-  const {data,isLoading:isLoadingCoins}=useGetAllCoinsQuery()
+  const dispatch = useDispatch();
+  const userInfo = useSelector(selectCurrentUserData) || {};
+  const { data:userProfileData, isLoading:userProfileLoader,refetch } = useGetUserProfileQuery(undefined,{
+    skip: !userInfo?._id,
+  });
+  const {address,state,countryInfo}=userProfileData||userInfo;
+  const { data, isLoading: isLoadingCoins } = useGetAllCoinsQuery();
+  const [updateUserLocation,{isSuccess:updateUserLocationIsSuccess}]=useUpdateUserLocationMutation();
+  const check =!address||!state||!countryInfo?.name;
+  const {data:extraDetails,isLoading,isSuccess}=useGetUserLocationQuery({
+    skip:true
+  });
+
   const router = useRouter();
-  const user = useSelector(selectCurrentUserData) || {};
   let [isOpen, setIsOpen] = useState();
   const { token } = router.query;
 
-  // console.log(data?.coins,'data')
+
+  // console.log(address,state,countryInfo,userProfileData,'Hellocheck')
+   useEffect(() => {
+    
+      if(check&&isSuccess){
+      userInfo?._id&&handleUpdateUserLocation(extraDetails)
+      }
+    
+   }, [check, userInfo?._id])
+   
+
+  // console.log(userProfileData,check,isSuccess,userInfo,'userProfileData')
+
+  const handleUpdateUserLocation=async(data)=>{
+    const payload={
+      "country":data?.country_name,
+      "state": data?.region,
+      "country_code": data?.country_code,
+      "currency_code": data?.currency,
+      "currency_name": data?.currency_name,
+      "address": data?.ip,
+      id:userInfo?._id
+    }
+    const response = await updateUserLocation(payload);
+    const UserString = JSON.stringify(response?.data?.updatedUser);
+    if(response?.data?.message==="User has been successfully updated"){
+     
+      if(!address||!state||!countryInfo?.name){
+        UserString&&storage.localStorage.set(userDetailStorageName, UserString);
+      dispatch(setUserData(response?.data?.updatedUser));
+     
+      }
+    }
+    
+
+    // console.log(response,response?.data?.message,'response')
+  }
+
+
+
  
 
-  //chexk the list of coins and save it will be taking this out when uche fix the profile issue :TODO
 
   useEffect(() => {
-    if(data?.coins?.length>0){
-      dispatch(setCoins(data?.coins))
-    }
-   
-  }, [isLoadingCoins])
   
-
+    if (data?.coins?.length > 0) {
+      dispatch(setCoins(data?.coins));
+    }
+  }, [isLoadingCoins]);
 
   useEffect(() => {
-    setUserDetail(user?._id);
-  }, [user?._id]);
-
+    setUserDetail(userInfo?._id);
+  }, [userInfo?._id]);
 
   // console.log(userDetail,user,'user')
   useEffect(() => {
@@ -95,18 +143,7 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
 
   return (
     <div className="relative">
-   {/* {isRoute && 
-   <div className="absolute right-3 z-[999px] top-3">
-    <div
-          className="inline-block h-10 w-10 animate-spin rounded-full border-3 border-solid border-[#fff] border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-          role="status"
-        >
-          <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-            Loading...
-          </span>
-        </div>
-    </div>
-} */}
+     
       {isOpen && (
         <MyModal
           bodyComponent={
@@ -123,7 +160,7 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
         />
       )}
       {userDetail ? (
-        <AuthHeader showNav={true} />
+        <AuthHeader  userInfo={userProfileData||userInfo} showNav={true} />
       ) : (
         <Header
           openModal={openModal || openModalLoginSignUp}

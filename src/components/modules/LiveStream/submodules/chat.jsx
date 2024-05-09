@@ -4,10 +4,14 @@ import Image from "next/image";
 import GiftingCoins from "./giftingCoins";
 import PurchasePaartyCoins from "./PurchasePaartyCoins";
 import { CommentIcon, SendButton } from "../../../../../public/svg";
+import { formatMoney } from "@/utils/formatMoney";
 export default function Chat({
   onLeave,
-  liveStreamDetail
+  liveStreamDetail,
+  userProfileData
 }) {
+
+  console.log(userProfileData,'userProfileData')
     const [payFlow,setPayFlow]=useState();
     const paymentFlow = [
         {
@@ -108,7 +112,7 @@ export default function Chat({
             onClick={()=>setPayFlow('giftCoins')}
              className="lg:hidden text-white flex flex-col  items-center">
             <Image src={`/svg/coins.svg`} width={24} height={24} className="mb-[2px]" alt="coins" />
-              <div className="text-[10px]">500</div>
+              <div className="text-[10px]">{formatMoney(userProfileData?.totalCoin||'0',false)}</div>
             </div>
             <button
               className={`!h-[35px] rounded-[8px] !bg-[#FA4354] !w-[43px] hidden lg:flex justify-center items-center`}
@@ -120,16 +124,16 @@ export default function Chat({
           <GiftCoin />
           <div className="relative text-white">
            
-            <div className=" p-[4px] pr-[10px] rounded-[96px] hidden lg:flex gap-[9px] text-white text-[10px] font500 items-center  shadow-1 shadow-2 shadow-3 bg-[#BACFF70A] cursor-pointer relative w-fit" onClick={()=>setPayFlow('giftCoins')}>
+            <div className=" p-[4px] pr-[10px] rounded-[96px] hidden lg:flex gap-[9px] text-white text-[10px] md:text-[11px] font500 items-center  shadow-1 shadow-2 shadow-3 bg-[#BACFF70A] cursor-pointer relative w-fit" onClick={()=>setPayFlow('giftCoins')}>
               <Image src={`/svg/coins.svg`} width={24} height={24} alt="coins" />
-              <div>0 Coin</div>
+              <div>{userProfileData?.totalCoin} {userProfileData?.totalCoin>1?'Coins':'Coin'}</div>
               <div className=" py-[4px] px-[9px] rounded-[96px] hidden lg:flex gap-[9px] text-white text-[10px] font500 items-center  shadow-1 shadow-2 shadow-3 bg-[#BACFF70A] cursor-pointer relative w-fit" onClick={()=>setPayFlow('giftCoins')}>
-              <div> Send</div>
+              <div className=''> Send</div>
             </div>
             </div>
           </div>
           <div className="relative text-white">
-            <div className=" px-[17px] h-[32px]  rounded-[96px] hidden lg:flex gap-[9px] text-white text-[10px] font500 items-center  shadow-1 shadow-2 shadow-3 bg-[#BACFF70A] cursor-pointer relative w-fit" onClick={()=>setPayFlow('purchasePartyCoins')}>
+            <div className=" px-[17px] h-[32px]  rounded-[96px] hidden lg:flex gap-[9px] text-white text-[10px] lg:text-[11px] font500 items-center  shadow-1 shadow-2 shadow-3 bg-[#BACFF70A] cursor-pointer relative w-fit" onClick={()=>setPayFlow('purchasePartyCoins')}>
               <div>Add Coins</div>
             </div>
           </div>

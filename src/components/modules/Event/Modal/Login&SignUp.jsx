@@ -3,7 +3,6 @@ import { useRouter } from "next/router";
 import { CloseModal, NoProfile } from "../../../../../public/svg";
 import {
   useLoginApiMutation,
-  userApi,
   useRegisterApiMutation,
 } from "@/store/User/userApi";
 import { useForm, Controller } from "react-hook-form";
@@ -55,9 +54,9 @@ export default function LoginSignUp({
   const checkIfNonImageExist = storage.localStorage.get("noUserProfileImage");
   const { control, handleSubmit, getValues, reset, setError } = useForm({
     defaultValues: {
-      email: "",
+      email: "bola@gmail.com",
       username: "",
-      password: "",
+      password: "Password@3",
       phoneNumber: "",
       fullName: "",
       confirmPassword: "",
@@ -217,9 +216,9 @@ export default function LoginSignUp({
     if (response?.user?._id) {
       storage.localStorage.set(userDetailStorageName, UserString);
       // storage.localStorage.
-      storage.localStorage.set('check','saveme')
+      // storage.localStorage.set('check','saveme')
       dispatch(setUserData(response?.user));
-      console.log(response?.user,'response?.user')
+      // console.log(response?.user,'response?.user')
       SuccessNotification({ message: "You're in!" });
       
       
@@ -230,7 +229,7 @@ export default function LoginSignUp({
 
     
       if (router?.pathname === "/") {
-        return router.push(eventLink);
+        // return router.push(eventLink);
       }
       if (onNext) {
         return onNext(response?.user);

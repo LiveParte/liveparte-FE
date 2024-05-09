@@ -70,6 +70,7 @@ export default function LoginPage({
         className={`w-full text-[13px] font500   mb-[30px]`}
         onClick={handleSubmit(handleLogin)}
         isLoading={isLoading}
+        isDisabled={isLoading}
       />
 
       <div className='flex justify-center'>

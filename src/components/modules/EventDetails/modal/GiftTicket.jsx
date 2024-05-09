@@ -32,7 +32,7 @@ export default function GiftTicket({ closeModal, Data, show }) {
   };
   const handleValidation = () => {};
 
-  console.log(Data, "Data");
+  // console.log(Data, "Data");
 
   const handleGiftTicket = async (data) => {
     const payload = {
@@ -44,7 +44,7 @@ export default function GiftTicket({ closeModal, Data, show }) {
     };
     // console.log(data, "data");
     const response = await giftTicket(payload);
-    console.log(response, "handleGiftTicket");
+    // console.log(response, "handleGiftTicket");
     if (response?.data?.error) {
      return ErrorNotification({
         message: isArray(response.data?.message)
@@ -59,13 +59,13 @@ export default function GiftTicket({ closeModal, Data, show }) {
       });
     }
    
-    console.log(response, "handleGiftTicket");
+    // console.log(response, "handleGiftTicket");
   };
 
   // console.log(Data, show, "showsshowsshowsshowsshows1");
   return (
-    <div className="bg-[#1B1C20] pb-[56px] px-[16px] lg:px-[56px] pt-[16px] lg:pt-[24px] overflow-y-scroll customScrollHorizontal max-h-[90vh]">
-      <nav className="flex justify-between items-center mb-[32px]">
+    <div className="bg-[#1B1C20] pb-[35px] px-[16px] lg:px-[56px] pt-[16px] lg:pt-[24px] overflow-y-scroll customScrollHorizontal max-h-[90vh]">
+      <nav className="flex justify-between items-center mb-[22px]">
         <div className="text-[18px]  text-white">Gift Ticket</div>
         <div className="text-[#63768D] text-[18px] flex items-center gap-[12px]">
           <CountdownTimerII initialTime={5} onTimerEnd={handleAction} />
@@ -148,7 +148,7 @@ export default function GiftTicket({ closeModal, Data, show }) {
             btnText={`Proceed To Make Payment ${
               Data?.ticket?.code || ""
             } ${formatMoney(Data?.ticket?.price || "0", false || "0")} `}
-            className={`w-full text-[13px] font500] h-[44px] mt-[54px]`}
+            className={`w-full text-[13px] font500] h-[44px] mt-[20px]`}
             onClick={handleSubmit(handleValidation)}
           />
         </PayStack>

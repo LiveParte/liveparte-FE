@@ -52,7 +52,7 @@ export function GetTransformedImageUrl(
 
 export   const termsUrl=`https://liveparte.notion.site/Terms-of-service-d531fa1d585346dba3205ae490f5fbb4`
 export const PolicyUrl='https://liveparte.notion.site/Privacy-Policy-8829d4f389254c95af56fd67b9271a6e?pvs=4'
-
+export const ContactUs =`mailto:support@liveparte.com`
 export function randomBetweenOneAndTen(ArrayLength=9) {
   return Math.floor(Math.random() * (ArrayLength-1)); // Generate a random number between 0 and 9
 
@@ -149,14 +149,17 @@ export function convertDateTime(inputDateTime) {
   const [hour, minute] = time.split(':');
   
   // Convert to desired format
-  const formattedDateTime = `${year}${month}${day}T${hour}${minute}00Z`;
+  const formattedDateTime = `${year}${month}${day}T${hour}${minute}`;
   
   return formattedDateTime;
 }
 
 
+
+
 export function convertAndAddOneHour(inputDateTime) {
   // Extract date and time components
+  //lagos(West Africa)is WAT
   const [date, time] = inputDateTime.split('T');
   
   // Extract year, month, and day
@@ -166,13 +169,13 @@ export function convertAndAddOneHour(inputDateTime) {
   const [hour, minute] = time.split(':');
   
   // Convert to UTC format
-  const utcDateTime = `${year}${month}${day}T${hour}${minute}00Z`;
+  const utcDateTime = `${year}${month}${day}T${hour}${minute}`;
 
   // Convert UTC string to Date object
   const utcDate = new Date(Date.UTC(year, month - 1, day, hour, minute));
 
   // Add one hour
-  utcDate.setUTCHours(utcDate.getUTCHours() + 1);
+  utcDate.setUTCHours(utcDate.getUTCHours() + 2);
 
   // Format the new date and time
   const newYear = utcDate.getUTCFullYear();

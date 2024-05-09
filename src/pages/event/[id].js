@@ -48,21 +48,13 @@ export default function EventId() {
   const router = useRouter();
   const { id } = router.query;
   let [isOpen, setIsOpen] = useState();
-  const [CreatePurchase, { isLoading: cpLoader }] = useCreatePurchaseMutation();
   const { data, isLoading,refetch ,isSuccess} = useGetEventDetailViaIdQuery(id, {
     skip: !id,
   });
  
-  // const [handleUserShow,{isLoading:userShowLoader}] =useLazyUserShowsQuery();
+//  const event =userInfo?._id?data?.event:event
 
-  // const handleUserShowFun = async() =>{
-  //     const response = await handleUserShow(user?.id);
-
-  // }
-
-  
-
-// console.log(shows,'showsshowsshows')
+console.log(data,'datadatadata')
 
   
 
@@ -94,12 +86,13 @@ export default function EventId() {
     setIsOpen("share event");
   }
 
+  console.log(data,'datadata')
  
   return (
     <NoAuth>
      
       <Hero
-        HeroSectionEvent={{ ...shows,...data,  }}
+        HeroSectionEvent={{ ...data,...data?.event, ...shows   }}
         openModalLoginSignUp={openModalLoginSignUp}
         openModal={openModal}
         giftTicket={openModalGiftTicket}
@@ -108,7 +101,7 @@ export default function EventId() {
         isSingleEvent={true}
         
       />
-     {data?._id && <EventDetails HeroSectionEvent={{ ...data?.event,...data, ...shows }}  />}
+     {data?._id && <EventDetails HeroSectionEvent={{ ...data,...data?.event, ...shows }}  />}
       <Footer />
     </NoAuth>
   );

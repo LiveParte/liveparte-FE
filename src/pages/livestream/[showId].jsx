@@ -9,6 +9,8 @@ import ShareEvent from "@/components/modules/EventDetails/modal/ShareEvent";
 import MyModal from "@/components/Ui/Modal";
 import { useGetEventDetailViaIdQuery } from "@/store/Event/eventApi";
 import { useRouter } from "next/router";
+import { useGetUserProfileQuery } from "@/store/User/userApi";
+import { selectCurrentUserData } from "@/store/User";
 
 const LiveStream = dynamic(
   () => import("@/components/modules/LiveStream/LiveStream"),
@@ -18,8 +20,12 @@ const LiveStream = dynamic(
 export default function Index() {
   const  router = useRouter();
   const {showId} =router?.query
+  const userInfo = useSelector(selectCurrentUserData) || {};
   const { data, isLoading,refetch ,isSuccess} = useGetEventDetailViaIdQuery(showId, {
     skip: !showId,
+  });
+  const { data:userProfileData, isLoading:userProfileLoader } = useGetUserProfileQuery(undefined,{
+    skip: !userInfo?._id,
   });
   const NestedLiveStreamData = useSelector(selectLiveStreamEvent)||data;
   const liveStream =data||NestedLiveStreamData
@@ -68,6 +74,7 @@ export default function Index() {
           liveStreamDetail={liveStream}
           handleOpenModal={handleOpenModal}
           handleCloseModal={handleCloseModal}
+          userProfileData={userProfileData||userInfo}
         />
       </div>
     </WithAuth>

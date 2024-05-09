@@ -91,7 +91,7 @@ export default function ShowsCard({
             videoRef={showVideo ? videoRef : noVideoRef}
             item={item}
           />
-          <div className="flex-1 absolute left-0 top-0 z-50">
+          <div className="flex-1 absolute left-0 top-0 z-20">
             {showHeader && (
               <span className="flex-1">
                 {isLive||onDemand ? (
@@ -112,7 +112,7 @@ export default function ShowsCard({
             )}
           </div>
           <div
-            className="flex items-center justify-center absolute inset-0 z-50"
+            className="flex items-center justify-center absolute inset-0 z-20"
             // onMouseLeave={handleMouseLeave}
           >
             {isPlayIcon && (

@@ -1,4 +1,4 @@
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import { userApi } from "./User/userApi";
 import { authSlice, setLocation, setUserData } from "./User";
 import { eventApi } from "./Event/eventApi";
@@ -6,40 +6,25 @@ import { transactionApi } from "./Transaction/transactionApi";
 import { storage, userDetailStorageName } from "@/utils/helper";
 import { eventSlice } from "./Event";
 import { isJSON } from "@/utils/reusableComponent";
-import { otherApi } from "./others/othersApi";
-
-
-const rootReducer = combineReducers({
-  auth: authSlice.reducer,
-  event: eventSlice.reducer,
-  [userApi.reducerPath]: userApi.reducer,
-  [eventApi.reducerPath]: eventApi.reducer,
-  [transactionApi.reducerPath]: transactionApi.reducer,
-  [otherApi.reducerPath]: otherApi.reducer
-});
-
-const storedUserData = storage.localStorage.get(userDetailStorageName);
-
 
 export const store = configureStore({
-  reducer:rootReducer,
-  preloadedState:{
-    auth:{
-      userInfo:isJSON(storedUserData)?JSON.parse(storedUserData):{},
-      // coins:console.log('hello, world2')
-    }
+  reducer: {
+    auth: authSlice.reducer,
+    event: eventSlice.reducer,
+    [userApi.reducerPath]: userApi.reducer,
+    [eventApi.reducerPath]: eventApi.reducer,
+    [transactionApi.reducerPath]: transactionApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
       userApi.middleware,
       eventApi.middleware,
-      otherApi.middleware,
       transactionApi?.middleware || [] // Add a default empty array if middleware is undefined
     ),
 });
 
 // const storedUserData = storage.localStorage.get(userDetailStorageName);
-const isLoc=storage.cookieStorage.get('userLo');
+// const isLoc=storage.cookieStorage.get('userLo');
 
 // // console.log(storedUserData,'storedUserData');
 
