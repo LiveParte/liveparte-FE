@@ -54,9 +54,9 @@ export default function LoginSignUp({
   const checkIfNonImageExist = storage.localStorage.get("noUserProfileImage");
   const { control, handleSubmit, getValues, reset, setError } = useForm({
     defaultValues: {
-      email: "bola@gmail.com",
+      email: "",
       username: "",
-      password: "Password@3",
+      password: "",
       phoneNumber: "",
       fullName: "",
       confirmPassword: "",
