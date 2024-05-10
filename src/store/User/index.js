@@ -35,7 +35,7 @@ const initialState = {
       state.loading = true;
     },
     setUserData: (state, { payload }) => {
-      console.log(payload,'payload')
+      // console.log(payload,'payload')
       state.userData = payload;
       state.userInfo =  payload;
       state.loading = true;
