@@ -5,8 +5,8 @@
   "scripts": {
     "build": "next build",
     "lint": "next lint",
-    "dev": "next dev -p 8080",
-    "start": "next start -p 8080"
+    "dev": "next dev",
+    "start": "next start "
   },
   "dependencies": {
     "@headlessui/react": "^1.7.18",
