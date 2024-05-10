@@ -88,10 +88,13 @@ export default function LoginSignUp({
   }, [pageName]);
 
   async function handleRegister(e) {
-    
+    // "email": "string",
+    // "username": "string",
+    // "fullName": "string",
+    // "password": "string"
     const payload = {
       ...e,
-      username: e.fullName,
+      username: e.email,
       fullName: e?.fullName,
     };
     const handleRegisterUser = await RegisterUser(payload);
@@ -160,7 +163,7 @@ export default function LoginSignUp({
 
       // store.dispatch(setUserData(userData));
 
-      storage.localStorage.set(userDetailStorageName, UserString);
+      // storage.localStorage.set(userDetailStorageName, UserString);
       dispatch(setUserData(response?.user));
       // dispatch(baseApi.util.resetApiState());
 
@@ -177,10 +180,6 @@ export default function LoginSignUp({
   }
 
   async function handleLogin(e) {
-    // dispatch(userApi.util.resetApiState());
-    // dispatch(eventApi.util.resetApiState());
-    // dispatch(transactionApi.util.resetApiState());
-    // e.preventDefault();
     const payload = {
       ...e,
       usernameOrEmail: e.email,
@@ -214,7 +213,7 @@ export default function LoginSignUp({
     }
 
     if (response?.user?._id) {
-      storage.localStorage.set(userDetailStorageName, UserString);
+      // storage.localStorage.set(userDetailStorageName, UserString);
       // storage.localStorage.
       // storage.localStorage.set('check','saveme')
       dispatch(setUserData(response?.user));
@@ -229,7 +228,7 @@ export default function LoginSignUp({
 
     
       if (router?.pathname === "/") {
-        // return router.push(eventLink);
+        return router.push(eventLink);
       }
       if (onNext) {
         return onNext(response?.user);

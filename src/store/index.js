@@ -1,75 +1,48 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { userApi } from "./User/userApi";
-import { authSlice, setLocation, setUserData } from "./User";
+import authSlice from "./User";
 import { eventApi } from "./Event/eventApi";
 import { transactionApi } from "./Transaction/transactionApi";
-import { storage, userDetailStorageName } from "@/utils/helper";
+// import { storage, userDetailStorageName } from "@/utils/helper";
 import { eventSlice } from "./Event";
-import { isJSON } from "@/utils/reusableComponent";
 import { otherApi } from "./others/othersApi";
+import storage from "redux-persist/lib/storage";
+import { persistReducer, persistStore } from "redux-persist";
 
 
 const rootReducer = combineReducers({
-  auth: authSlice.reducer,
-  event: eventSlice.reducer,
+  auth: authSlice,
+  event: eventSlice,
   [userApi.reducerPath]: userApi.reducer,
   [eventApi.reducerPath]: eventApi.reducer,
   [transactionApi.reducerPath]: transactionApi.reducer,
   [otherApi.reducerPath]: otherApi.reducer
 });
 
-const storedUserData = storage.localStorage.get(userDetailStorageName);
+// const storedUserData = storage.localStorage.get(userDetailStorageName);
+
+const persistConfig = {
+key:'root',
+storage,
+// whitelist: ['userApi','authSlice'],
+}
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 
 export const store = configureStore({
-  reducer:rootReducer,
-  preloadedState:{
-    auth:{
-      userInfo:isJSON(storedUserData)?JSON.parse(storedUserData):{},
-      // coins:console.log('hello, world2')
-    }
-  },
+  reducer:persistedReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(
+    getDefaultMiddleware({
+      serializableCheck:false
+    }).concat(
       userApi.middleware,
       eventApi.middleware,
       otherApi.middleware,
-      transactionApi?.middleware || [] // Add a default empty array if middleware is undefined
+      transactionApi?.middleware 
     ),
 });
 
-// const storedUserData = storage.localStorage.get(userDetailStorageName);
-const isLoc=storage.cookieStorage.get('userLo');
-
-// // console.log(storedUserData,'storedUserData');
-
-// if (storedUserData && isJSON(storedUserData)) {
-//   const userData = JSON.parse(storedUserData);
-//   store.dispatch(setUserData(userData));
-// } else {
-//   store.dispatch(setUserData({}));
-//   // console.error('Stored user data is not in JSON format or does not exist.');
-// }
-// if (storedUserData && isJSON(storedUserData)) {
-//   const userData = JSON.parse(storedUserData);
-//   store.dispatch(setUserData(userData));
-// } else {
-//   store.dispatch(setUserData({
-//     _id:false
-//   }));
-//   // console.error('Stored user data is not in JSON format or does not exist.');
-// }
-
-// if(isLoc &&isJSON(JSON.stringify(isLoc))){
-//   store.dispatch(setLocation(JSON.stringify(isLoc)));
-// }
 
 
-// storage.cookieStorage.set('userLo',JSON.stringify(response?.data))
-// try {
-
-// } catch (error) {
-//   // console.error(error.message);
-// }
-
-export default store;
+export const persistor = persistStore(store);

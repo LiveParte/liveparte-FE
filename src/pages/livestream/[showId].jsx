@@ -25,7 +25,7 @@ export default function Index() {
     skip: !showId,
   });
   const { data:userProfileData, isLoading:userProfileLoader } = useGetUserProfileQuery(undefined,{
-    skip: !userInfo?._id,
+    skip:!userInfo?._id,
   });
   const NestedLiveStreamData = useSelector(selectLiveStreamEvent)||data;
   const liveStream =data||NestedLiveStreamData

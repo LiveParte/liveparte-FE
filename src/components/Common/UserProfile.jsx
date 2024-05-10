@@ -11,7 +11,7 @@ export default function UserProfile({ onClick }) {
   const checkIfNonImageExist = storage.localStorage.get("noUserProfileImage");
   // const UserLiveParte = storage.localStorage.get("UserLiveParte");
   const [userProfilePic, setUserProfilePic] = useState();
-  const { data, isLoading, isError } = useGetUserProfileQuery();
+  // const { data, isLoading, isError } = useGetUserProfileQuery();
 
 
   //
@@ -30,9 +30,9 @@ export default function UserProfile({ onClick }) {
 
   return (
     <div className="cursor-pointer" onClick={onClick}>
-      {data?.profile_image ? (
+      {UserLiveParte?.profile_image ? (
         <Image
-          src={data?.profile_image || userProfilePic}
+          src={UserLiveParte?.profile_image || userProfilePic}
           width={40}
           height={40}
           className="object-cover rounded-full h-[40px] w-[40px]"

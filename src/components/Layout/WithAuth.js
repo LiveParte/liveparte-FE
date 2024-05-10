@@ -21,7 +21,7 @@ function WithAuth({ children, showHeader = true }) {
 
 
   const { data, isLoading, isError,error, isSuccess } = useGetUserProfileQuery(undefined,{
-    skip: !userInfo?._id,
+    skip: true,
   });
 
  
@@ -38,12 +38,12 @@ function WithAuth({ children, showHeader = true }) {
     
     if(!userInfo?._id){
       router.push('/');
-      dispatch(setUserData({}));
+      // dispatch(setUserData({}));
       // alert('you are out')
       // dispatch(logout());
     }
     if(error?.message==="Unauthorized"){
-      dispatch(setUserData({}))
+      // dispatch(setUserData({}))
       dispatch(logout());
     }
     // if(userInfo)

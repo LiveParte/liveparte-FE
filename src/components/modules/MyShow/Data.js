@@ -3,7 +3,7 @@ import { REGEX_PATTERNS } from "@/utils/constants/errors";
 export const SettingFormLabel =(CheckPhoneNumber,CheckUserName)=>{
     return [
         {
-            name:'username',
+            name:'fullName',
             label:'Name',
             type:'text',
             onBlur:CheckPhoneNumber

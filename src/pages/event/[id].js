@@ -54,7 +54,7 @@ export default function EventId() {
  
 //  const event =userInfo?._id?data?.event:event
 
-console.log(data,'datadatadata')
+// console.log(data,'datadatadata')
 
   
 
@@ -86,7 +86,7 @@ console.log(data,'datadatadata')
     setIsOpen("share event");
   }
 
-  console.log(data,'datadata')
+  // console.log(data,'datadata')
  
   return (
     <NoAuth>

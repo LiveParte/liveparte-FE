@@ -3,24 +3,26 @@ import Image from "next/image";
 import ButtonComp from "@/components/Ui/button";
 import LiveStreamHeader from "./LiveStreamHeader";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCoins, selectCurrentUserData } from "@/store/User";
+import { selectCoins, selectCurrentUserData, setUserData } from "@/store/User";
 import { isArray } from "@/utils/helper";
 import { formatMoney } from "@/utils/formatMoney";
 import PayStack from "@/components/PayStack/payStack";
 import { usePurchaseCoinsMutation } from "@/store/Transaction/transactionApi";
 import { SuccessNotification } from "@/utils/reusableComponent";
-import { userApi } from "@/store/User/userApi";
+import { useLazyGetUserProfileQuery, userApi } from "@/store/User/userApi";
 export default function PurchasePaartyCoins({
   onClose,
   onBack,
   containerStyle,
   path,
 }) {
+  const [checkProfile,{isLoading:cpLoading}]=useLazyGetUserProfileQuery()
   const [purchaseCoins, { isLoading }] = usePurchaseCoinsMutation();
   const [coinsNeeded, setCoinsNeeded] = useState(0);
   const [selectedCoins, setSelectedCoins] = useState();
   const dispatch = useDispatch();
-  const userInfo = useSelector(selectCurrentUserData);
+  const userInfo = useSelector(selectCurrentUserData)||{};
+  console.log(userInfo,'userInfo')
   const coinsList = useSelector(selectCoins);
   const FindTheCountyCoins =
     isArray(coinsList) &&
@@ -47,7 +49,10 @@ export default function PurchasePaartyCoins({
     const responses = await purchaseCoins(payload);
     // console.log(responses,'responses')
     if (responses?.data?.message === "Coin payment marked as successful") {
+        const responseII=await checkProfile();
+        // console.log(responseII?.data,'responseII')
       setCoinsNeeded(0);
+      dispatch(setUserData(responseII?.data))
       dispatch(userApi.util.invalidateTags(["user"]));
       onClose();
       return SuccessNotification({ message: responses.data.message });
@@ -57,7 +62,7 @@ export default function PurchasePaartyCoins({
   // console.log(coinsNeeded?.length,totalCost,'Makes a purchase')
   return (
     <div
-      className={`px-[16px] pt-[16px] bg-[#060809]     md:min-w-[360px] ${containerStyle}`}
+      className={`px-[16px] pt-[16px] bg-[#060809]    lg:min-w-[290px]  xl:min-w-[360px] ${containerStyle}`}
     >
       <LiveStreamHeader
         path={path}

@@ -8,27 +8,23 @@ import { createSlice, current } from "@reduxjs/toolkit";
 
 const initialState = {
   userInfo: {
-    _id:false
+    _id:false,
+    countryInfo:{
+    name:null
+    }
   }, // for user object
   error: null,
   success: false,
   loading: false,
   location:{},
   coins:[],
+ 
   //
 };
 
-const authMiddleware = (store) => (next) => (action) => {
-  if (authActions.login.match(action)) {
-    // Note: localStorage expects a string
-    localStorage.setItem("isAuthenticated", "true");
-  } else if (authActions.logout.match(action)) {
-    localStorage.setItem("isAuthenticated", "false");
-  }
-  return next(action);
-};
 
-export const authSlice = createSlice({
+
+ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
@@ -39,6 +35,7 @@ export const authSlice = createSlice({
       state.loading = true;
     },
     setUserData: (state, { payload }) => {
+      console.log(payload,'payload')
       state.userData = payload;
       state.userInfo =  payload;
       state.loading = true;
@@ -58,7 +55,7 @@ export const authSlice = createSlice({
     },
     logout: (state) => {
       state.userData = null;
-      (state.userInfo = {}),
+      state.userInfo = {};
         storage["localStorage"].remove(userDetailStorageName);
       storage["localStorage"].remove(accessTokenStorageName);
 
@@ -67,9 +64,10 @@ export const authSlice = createSlice({
   },
 });
 
-export const { reducer, actions } = authSlice;
-export const { logout, setPharamData, setUserData,setLocation,setCoins } = actions;
-export const authState = reducer;
+// export const { reducer, actions } = authSlice;
+export const { logout, setPharamData, setUserData,setLocation,setCoins } = authSlice?.actions;
+export default  authSlice.reducer
+// export const authState = reducer;
 export const selectCurrentPharamaserveData = (state) => state.auth.pharamData;
 export const selectLocation = (state) => state.auth.location;
 export const selectCoins = (state) => state.auth.coins;

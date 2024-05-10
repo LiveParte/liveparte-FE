@@ -5,14 +5,15 @@ import { CloseIcon } from "../../../../../public/svg";
 import LiveStreamHeader from "./LiveStreamHeader";
 import { useGiftCoinsMutation } from "@/store/Transaction/transactionApi";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCurrentUserData } from "@/store/User";
+import { selectCurrentUserData, setUserData } from "@/store/User";
 import { SuccessNotification } from "@/utils/reusableComponent";
 import { REGEX_PATTERNS } from "@/utils/constants/errors";
 import { Controller, useForm } from "react-hook-form";
 import { useRouter } from "next/router";
-import { userApi } from "@/store/User/userApi";
+import { useLazyGetUserProfileQuery, userApi } from "@/store/User/userApi";
 export default function GiftingCoins({ onNext, onClose, eventId }) {
   const  router = useRouter();
+  const [checkProfile,{isLoading:cpLoading}]=useLazyGetUserProfileQuery()
   const {showId} =router?.query
   const { control, handleSubmit,formState:{errors} } = useForm({
     defaultValues: {
@@ -36,6 +37,10 @@ export default function GiftingCoins({ onNext, onClose, eventId }) {
 
     const response = await giftCoins(payload);
     if (response?.data?.message === "Coins gifted successfully") {
+      const responseII=await checkProfile();
+      console.log(responseII?.data,'responseII')
+    // setCoinsNeeded(0);
+    dispatch(setUserData(responseII?.data))
       onClose();
       dispatch(userApi.util.invalidateTags(["user"]));
       return SuccessNotification({ message: response.data.message });

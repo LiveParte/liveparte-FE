@@ -28,6 +28,15 @@ export default function Setting() {
   const [isLoading, setIsLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
 
+  const scrollToBottom = () => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth'
+      });
+    }
+  };
+
   const CloudinaryUpload = (photo) => {
     setIsLoading(true);
     const data = new FormData();
@@ -42,6 +51,7 @@ export default function Setting() {
       .then((data) => {
         
         setImageUrl(data.secure_url);
+        scrollToBottom();
       })
       .catch((err) => {
       })
