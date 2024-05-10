@@ -24,7 +24,7 @@ export default function GiftingCoins({ onNext, onClose, eventId }) {
   const userInfo = useSelector(selectCurrentUserData);
   const [giftCoins, { isLoading }] = useGiftCoinsMutation();
   const dispatch =useDispatch();
-  console.log(eventId?._id,userInfo?._id, "eventId");
+  // console.log(eventId?._id,userInfo?._id, "eventId");
 
   async function handleGiftCoins(data) {
     const payload = {

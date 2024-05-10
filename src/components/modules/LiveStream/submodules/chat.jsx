@@ -11,7 +11,7 @@ import {
 } from "../../../../../public/svg";
 import { formatMoney } from "@/utils/formatMoney";
 export default function Chat({ onLeave, liveStreamDetail, userProfileData }) {
-  console.log(userProfileData, "userProfileData");
+  // console.log(userProfileData, "userProfileData");
   const [payFlow, setPayFlow] = useState();
   const paymentFlow = [
     {

@@ -114,7 +114,7 @@ export default function EventButton({
   };
 
   const handleJoinEvent = () => {
-    console.log(HeroSectionEvent,'HeroSectionEvent')
+    // console.log(HeroSectionEvent,'HeroSectionEvent')
     dispatch(setLiveStreamEventData(HeroSectionEvent));
     if (buttonAction() === "isPaidAndEventIsLive") {
       // dispatch(setLiveStreamEventData(HeroSectionEvent));
