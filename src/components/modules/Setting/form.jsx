@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { FloatingLabelInput } from "@/components/Ui/TextInput";
 import ButtonComp from "@/components/Ui/button";
 import { SecurityFormLabel, SettingFormLabel } from "../MyShow/Data";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import {
   useChangePasswordMutation,
@@ -18,7 +18,7 @@ import {
   userDetailStorageName,
 } from "@/utils/helper";
 import { Avatar3 } from "../../../../public/svg/avatars";
-import { selectCurrentUserData } from "@/store/User";
+import { selectCurrentUserData, setUserData } from "@/store/User";
 import {
   ErrorNotification,
   replaceDashWithSpace,
@@ -36,6 +36,7 @@ export default function SettingForm({
   const checkIfNonImageExist = storage.localStorage.get("noUserProfileImage");
   const [userProfile, setUserProfile] = useState();
   const userInfo = useSelector(selectCurrentUserData);
+  const dispatch =useDispatch()
   // let userInfo =storage["localStorage"]?.get(userDetailStorageName)
 
   // console.log(userInfo,'userProfile')
@@ -110,6 +111,7 @@ export default function SettingForm({
     const handleRegisterUser = await UpdateUser(payload);
     const response = handleRegisterUser?.data;
     const UserString = JSON.stringify(response?.updatedUser);
+    dispatch(setUserData(response?.updatedUser))
     setValue('profile_image',response?.updatedUser?.profile_image)
     // storage.localStorage.set(userDetailStorageName, JSON.stringify(response?.updatedUser));
     response?.updatedUser?._id&& storage.localStorage.set(userDetailStorageName, UserString);

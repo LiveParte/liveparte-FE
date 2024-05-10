@@ -38,7 +38,7 @@ export default function GiftingCoins({ onNext, onClose, eventId }) {
     const response = await giftCoins(payload);
     if (response?.data?.message === "Coins gifted successfully") {
       const responseII=await checkProfile();
-      console.log(responseII?.data,'responseII')
+      // console.log(responseII?.data,'responseII')
     // setCoinsNeeded(0);
     dispatch(setUserData(responseII?.data))
       onClose();
