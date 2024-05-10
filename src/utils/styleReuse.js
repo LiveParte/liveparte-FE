@@ -18,7 +18,7 @@ export const LogoImage = ({}) => {
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <g clip-path="url(#clip0_1419_6525)">
+          <g clipPath="url(#clip0_1419_6525)">
             <path
               d="M54.9719 18.0726H47.0726V4.12183H49.5305V15.8133H54.9719V18.0708V18.0726Z"
               fill="white"

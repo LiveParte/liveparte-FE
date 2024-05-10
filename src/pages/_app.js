@@ -1,4 +1,3 @@
-import store, { persistor } from "@/store";
 import Head from "next/head";
 import "@/styles/globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -11,6 +10,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
+import { persistor, store } from "@/store";
 
 export default function App({ Component, pageProps }) {
   return (
@@ -28,7 +28,7 @@ export default function App({ Component, pageProps }) {
 
       </Head>
         <Provider store={store}>
-       
+        <PersistGate loading={null} persistor={persistor}>
           <ToastContainer
             className={`z-[9999]`}
             position="bottom-center"
@@ -44,10 +44,10 @@ export default function App({ Component, pageProps }) {
             // style={{}}
           />
           <NextNProgress />
-          {/* <PersistGate loading={null} persistor={persistor}> */}
+         
 
           <Component {...pageProps} />
-          {/* </PersistGate> */}
+          </PersistGate>
         </Provider>
     </>
   );

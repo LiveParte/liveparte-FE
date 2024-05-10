@@ -68,7 +68,7 @@ export default function SettingForm({
 
   const { control, handleSubmit, setValue, watch, setError, reset } = useForm({
     defaultValues: {
-      username: "",
+      fullName: "",
       email: "",
       phone: "",
       country: "",
@@ -89,13 +89,13 @@ export default function SettingForm({
     setValue("address", userInfo?.address);
     setValue("country", userInfo?.countryInfo?.name||'Nigeria');
     setValue("state", userInfo?.state);
-    setValue(
-      "username",
-      data?.fullName ||data?.username
-    );
+    // setValue(
+    //   "username",
+    //   data?.fullName ||data?.username
+    // );
     setValue(
       "fullName",
-      data?.fullName ||data?.username
+      data?.fullName 
     );
   }, [data?._id, data, userInfo,setValue]);
 
@@ -104,7 +104,7 @@ export default function SettingForm({
   async function handleUpdateUser(data) {
     const payload = {
       ...data,
-      fullName:data?.username,
+      fullName:data?.fullName,
       profile_image: imageUrl,
     };
     const handleRegisterUser = await UpdateUser(payload);
@@ -184,9 +184,9 @@ export default function SettingForm({
     if(watch('fullName') ===data?.fullName){
       return false
     }
-    if(watch('username') ===data?.username){
-      return false
-    }
+    // if(watch('username') ===data?.username){
+    //   return false
+    // }
     return true
   }
 
@@ -275,7 +275,7 @@ export default function SettingForm({
                 btnText={"Save Changes"}
                 className={`w-full text-[13px] font500`}
                 onClick={handleSubmit(handleUpdateUser)}
-                isLoading={isImageUrlLoading || updateUserLoader}
+                isLoading={ updateUserLoader}
                 isDisabled={
                   isImageUrlLoading ||
                   isLoading ||
@@ -319,7 +319,7 @@ export default function SettingForm({
                 btnText={"Save Changes"}
                 className={`w-full text-[13px] font500`}
                 onClick={handleSubmit(handleUpdatePassword)}
-                isLoading={isImageUrlLoading || updatePasswordLoader}
+                isLoading={updatePasswordLoader}
                 // isDisabled={}
               />
             </div>

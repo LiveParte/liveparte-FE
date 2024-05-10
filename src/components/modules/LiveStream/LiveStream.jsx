@@ -92,7 +92,7 @@ export default function LiveStream({ isLive = false, liveStreamDetail,userProfil
         </div>
         {/* \ */}
         <div className="flex flex-col lg:flex-row lg:gap-[16px] flex-1 takeScreen">
-          <div className=" flex flex-col flex-[0.3] lg:flex-[0.7] xl:flex-[0.7] bg-[#27292E] lg:pt-[18px] lg:px-[23px] lg:rounded-[16px]">
+          <div className=" flex flex-col flex-[0.3] lg:flex-[0.6] xl:flex-[0.7] bg-[#27292E] lg:pt-[18px] lg:px-[23px] lg:rounded-[16px]">
             <div className="px-[5px]  items-center justify-between mb-[16px] hidden lg:flex">
               <div className="text-[23px] font-semibold font-1 text-[#FFFFFF] uppercase">
                 {liveStreamDetail?.name }
@@ -200,7 +200,7 @@ export default function LiveStream({ isLive = false, liveStreamDetail,userProfil
               />
             </div>
           </div>
-          <div className="   flex-[0.7] lg:flex-[0.3] xl:flex-[0.3]  flex flex-col lg:rounded-[26px] bg-[#222428]">
+          <div className="   flex-[0.7] lg:flex-[0.4] xl:flex-[0.3]  flex flex-col lg:rounded-[26px] bg-[#222428]">
             <Chat
             liveStreamDetail={liveStreamDetail}
             userProfileData={userProfileData}

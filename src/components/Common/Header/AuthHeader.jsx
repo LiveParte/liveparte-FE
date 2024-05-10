@@ -9,7 +9,7 @@ import MyModal from "../../Ui/Modal";
 import LoginSignUp from "../../modules/Event/Modal/Login&SignUp";
 import CustomDropDown from "../CustomDropDown";
 import { useDispatch } from "react-redux";
-import { logout } from "@/store/User";
+import { logout, setUserData } from "@/store/User";
 import dynamic from "next/dynamic";
 import UserProfile from "../UserProfile";
 import { userApi } from "@/store/User/userApi";
@@ -18,6 +18,7 @@ import { transactionApi } from "@/store/Transaction/transactionApi";
 import { HeaderOnSelect, LogoImage } from "@/utils/styleReuse";
 import { eventLink, myShowLink, onDemandLink } from "@/utils/reusableComponent";
 import { formatMoney } from "@/utils/formatMoney";
+import { accessTokenStorageName, userDetailStorageName } from "@/utils/helper";
 
 const MenuDropdown = dynamic(() => import("./submodules/NavDropDown"), {
   ssr: false,
@@ -51,20 +52,21 @@ export default function AuthHeader({
   }
 
   function handleLogOut() {
-    dispatch(userApi.util.resetApiState());
-    dispatch(eventApi.util.resetApiState());
-    dispatch(transactionApi.util.resetApiState());
-    dispatch(logout());
-    // localStorage.removeItem(userDetailStorageName);
-    // localStorage.removeItem(accessTokenStorageName);
+    // dispatch(userApi.util.resetApiState());
+    // dispatch(eventApi.util.resetApiState());
+    // dispatch(transactionApi.util.resetApiState());
+    // dispatch(logout());
+    dispatch(setUserData({}))
+    localStorage.removeItem(userDetailStorageName);
+    localStorage.removeItem(accessTokenStorageName);
 
     if (router?.pathname === myShowLink || router?.pathname === "/setting") {
-      dispatch(userApi.util.invalidateTags());
-      dispatch(eventApi.util.invalidateTags());
-      dispatch(transactionApi.util.invalidateTags());
-      dispatch(
-        userApi.endpoints.getUserProfile.initiate({ forceRefetch: true })
-      );
+      // dispatch(userApi.util.invalidateTags());
+      // dispatch(eventApi.util.invalidateTags());
+      // dispatch(transactionApi.util.invalidateTags());
+      // dispatch(
+      //   userApi.endpoints.getUserProfile.initiate({ forceRefetch: true })
+      // );
 
       // window.location.reload();
       return router.push("/");

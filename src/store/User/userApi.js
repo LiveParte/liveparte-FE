@@ -90,6 +90,7 @@ export const {
   useChangePasswordMutation,
   useForgetPasswordMutation,
   useRestPasswordMutation,
-  useUpdateUserLocationMutation
+  useUpdateUserLocationMutation,
+  useLazyGetUserProfileQuery
 
 } = userApi;

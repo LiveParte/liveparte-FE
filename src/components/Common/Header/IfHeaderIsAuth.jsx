@@ -7,8 +7,8 @@ import LoginSignUp from "@/components/modules/Event/Modal/Login&SignUp";
 import ForgetPassword from "@/components/modules/Event/Modal/submodules/ForgetPassword/ForgetPassword";
 import MyModal from "@/components/Ui/Modal";
 import { useRouter } from "next/router";
-import { useGetAllCoinsQuery } from "@/store/Transaction/transactionApi";
-import { useGetUserProfileQuery, userApi, useUpdateUserLocationMutation } from "@/store/User/userApi";
+// import { useGetAllCoinsQuery } from "@/store/Transaction/transactionApi";
+import {  useGetUserProfileQuery, useLazyGetUserProfileQuery, useUpdateUserLocationMutation } from "@/store/User/userApi";
 import { useGetUserLocationQuery } from "@/store/others/othersApi";
 import { storage, userDetailStorageName } from "@/utils/helper";
 
@@ -16,15 +16,18 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
   const [userDetail, setUserDetail] = useState(false);
   const dispatch = useDispatch();
   const userInfo = useSelector(selectCurrentUserData) || {};
-  const { data:userProfileData, isLoading:userProfileLoader,refetch } = useGetUserProfileQuery(undefined,{
-    skip: !userInfo?._id,
-  });
-  const {address,state,countryInfo}=userProfileData||userInfo;
-  const { data, isLoading: isLoadingCoins } = useGetAllCoinsQuery();
+ 
+  const {address,state,countryInfo}=userInfo||{};
+  const name = countryInfo ? countryInfo.name : null;
+  const [checkProfile,{isLoading:cpLoading}]=useLazyGetUserProfileQuery()
+  // const { data, isLoading: isLoadingCoins } = useGetAllCoinsQuery();
   const [updateUserLocation,{isSuccess:updateUserLocationIsSuccess}]=useUpdateUserLocationMutation();
-  const check =!address||!state||!countryInfo?.name;
+  const check =!address||!state||!name;
   const {data:extraDetails,isLoading,isSuccess}=useGetUserLocationQuery({
     skip:true
+  });
+  const { data:userProfileData, isLoading:userProfileLoader,refetch,isFetching, } = useGetUserProfileQuery(undefined,{
+    skip: !check
   });
 
   const router = useRouter();
@@ -32,11 +35,12 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
   const { token } = router.query;
 
 
-  // console.log(address,state,countryInfo,userProfileData,'Hellocheck')
+  // console.log(check,userProfileData,isFetching,'Hellocheck')
    useEffect(() => {
     
       if(check&&isSuccess){
       userInfo?._id&&handleUpdateUserLocation(extraDetails)
+      // userInfo?._id&&dispatch(setUserData(userProfileData));
       }
     
    }, [check, userInfo?._id])
@@ -57,12 +61,12 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
     const response = await updateUserLocation(payload);
     const UserString = JSON.stringify(response?.data?.updatedUser);
     if(response?.data?.message==="User has been successfully updated"){
+      const responseII=await checkProfile();
+      dispatch(setUserData(responseII?.data))
+      // if(check){
+      // dispatch(setUserData({...response?.data?.updatedUser,work:'yes'}));
      
-      if(!address||!state||!countryInfo?.name){
-        UserString&&storage.localStorage.set(userDetailStorageName, UserString);
-      dispatch(setUserData(response?.data?.updatedUser));
-     
-      }
+      // }
     }
     
 
@@ -71,15 +75,6 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
 
 
 
- 
-
-
-  useEffect(() => {
-  
-    if (data?.coins?.length > 0) {
-      dispatch(setCoins(data?.coins));
-    }
-  }, [isLoadingCoins]);
 
   useEffect(() => {
     setUserDetail(userInfo?._id);
