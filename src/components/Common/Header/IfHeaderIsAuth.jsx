@@ -17,25 +17,28 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
   const dispatch = useDispatch();
   const userInfo = useSelector(selectCurrentUserData) || {};
  
-  const {address,state,countryInfo}=userInfo||{};
+  const {address,state,countryInfo,coin}=userInfo||{};
   const name = countryInfo ? countryInfo.name : null;
+  const coinsPrice =coin?coin?.price:null;
   const [checkProfile,{isLoading:cpLoading}]=useLazyGetUserProfileQuery()
   // const { data, isLoading: isLoadingCoins } = useGetAllCoinsQuery();
   const [updateUserLocation,{isSuccess:updateUserLocationIsSuccess}]=useUpdateUserLocationMutation();
-  const check =!address||!state||!name;
+  const check =!address||!state||!name||!coinsPrice;
   const {data:extraDetails,isLoading,isSuccess}=useGetUserLocationQuery({
-    skip:true
+    skip:!check
   });
   const { data:userProfileData, isLoading:userProfileLoader,refetch,isFetching, } = useGetUserProfileQuery(undefined,{
-    skip: !check
+    skip: !check || !userInfo?.id
   });
+
+  
 
   const router = useRouter();
   let [isOpen, setIsOpen] = useState();
   const { token } = router.query;
 
 
-  // console.log(check,userProfileData,isFetching,'Hellocheck')
+  console.log(check,'Hellocheck')
    useEffect(() => {
     
       if(check&&isSuccess){

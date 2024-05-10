@@ -19,6 +19,7 @@ import { HeaderOnSelect, LogoImage } from "@/utils/styleReuse";
 import { eventLink, myShowLink, onDemandLink } from "@/utils/reusableComponent";
 import { formatMoney } from "@/utils/formatMoney";
 import { accessTokenStorageName, userDetailStorageName } from "@/utils/helper";
+import { LiveParteCoins } from "../../../../public/svg";
 
 const MenuDropdown = dynamic(() => import("./submodules/NavDropDown"), {
   ssr: false,
@@ -197,12 +198,8 @@ export default function AuthHeader({
                     Coin Balance
                   </div>
                   <div className="text-[13px] flex items-center gap-[5px]">
-                    <Image
-                      src={`/svg/coin1.svg`}
-                      width={16}
-                      height={16}
-                      alt="coins"
-                    />{" "}
+                    <LiveParteCoins/>
+                    
                     {formatMoney(userInfo?.totalCoin || "0", false)}
                     {userInfo?.totalCoin > 1 ? "Coins" : "Coin"}
                   </div>
