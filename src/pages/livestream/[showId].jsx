@@ -34,7 +34,6 @@ export default function Index() {
     setIsOpen(null)
   }
 
-  // console.log(data,'data')
   const handleOpenModal = (modalName)=>{
     setIsOpen(modalName)
   }
