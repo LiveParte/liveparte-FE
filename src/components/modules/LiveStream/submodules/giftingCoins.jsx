@@ -1,7 +1,7 @@
 import ButtonComp from "@/components/Ui/button";
 import React from "react";
 import Image from "next/image";
-import { CloseIcon } from "../../../../../public/svg";
+import { CloseIcon, LiveParteCoins, LiveParteCoinsII } from "../../../../../public/svg";
 import LiveStreamHeader from "./LiveStreamHeader";
 import { useGiftCoinsMutation } from "@/store/Transaction/transactionApi";
 import { useDispatch, useSelector } from "react-redux";
@@ -53,13 +53,17 @@ export default function GiftingCoins({ onNext, onClose, eventId }) {
 
       <div className="mb-[16px]">
       <div className="border-[#343F4B] border-[1px] bg-[#27292E]  flex items-center px-[12px] rounded-[8px] py-[7px] gap-[5px]  !h-[35px]">
-        <Image
+        {/* <Image
           src={`/svg/coins.svg`}
           width={16}
           height={16}
           alt="coins"
           className="w-[16px] g-[16px]"
-        />
+        /> */}
+
+<LiveParteCoins size={16} />
+   
+
         <Controller
           // key={index}
           control={control}

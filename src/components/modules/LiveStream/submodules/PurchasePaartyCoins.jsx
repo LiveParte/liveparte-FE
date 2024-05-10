@@ -10,6 +10,7 @@ import PayStack from "@/components/PayStack/payStack";
 import { usePurchaseCoinsMutation } from "@/store/Transaction/transactionApi";
 import { SuccessNotification } from "@/utils/reusableComponent";
 import { useLazyGetUserProfileQuery, userApi } from "@/store/User/userApi";
+import { LiveParteCoins } from "../../../../../public/svg";
 export default function PurchasePaartyCoins({
   onClose,
   onBack,
@@ -82,12 +83,9 @@ export default function PurchasePaartyCoins({
                   " border-[#FA4354]  border-[1px]border-[#FA4354]  border-[1px]"
                 } `}
               >
-                <Image
-                  src={`/svg/coin1.svg`}
-                  alt="coins"
-                  width={16}
-                  height={16}
-                />
+                <div className="w-[16px] h-[16px]">
+                <LiveParteCoins/>
+                </div>
                 <div className="text-[13px]">{item}</div>
               </div>
             )

@@ -3,6 +3,7 @@ import { LogoImage } from "@/utils/styleReuse";
 // import { cookies } from "next/headers";
 import Link from "next/link";
 import React from "react";
+import { LiveParteCoins } from "../../../../../public/svg";
 
 const { default: ButtonComp } = require("@/components/Ui/button");
 const { eventLink, onDemandLink, myShowLink } = require("@/utils/reusableComponent");
@@ -57,11 +58,7 @@ export default function MenuDropdown ({ handleLogOut,setDropDown ,setModalName,u
 
                     <div className="flex justify-between items-center py-[30px]">
                         <div className="text-[13px] flex items-center gap-[5px] ">
-                            <Image
-                                src={`/svg/coin1.svg`}
-                                width={24}
-                                height={24}
-                                alt="coin"
+                            <LiveParteCoins
                             />{" "}
                             {formatMoney(userInfo?.totalCoin||'0',false)}{" "}
                             {userInfo?.totalCoin > 1 ? "Coins" : "Coin"}
