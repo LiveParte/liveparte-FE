@@ -108,7 +108,7 @@ export default function GiftTicket({ closeModal, Data, show }) {
               control={control}
               name={item?.name}
               rules={{
-                required: `${item?.label} is required`,
+                required:item?.required&& `${item?.label} is required`,
                 pattern: item?.pattern,
               }}
               render={({ field: { onChange, value }, formState: { errors } }) =>

@@ -37,7 +37,7 @@ export default function Setting() {
     }
   };
 
-  const CloudinaryUpload = (photo) => {
+  const CloudinaryUpload = (photo,onChange) => {
     setIsLoading(true);
     const data = new FormData();
     data.append("file", photo);
@@ -51,7 +51,8 @@ export default function Setting() {
       .then((data) => {
         
         setImageUrl(data.secure_url);
-        scrollToBottom();
+        onChange()
+        // scrollToBottom();
       })
       .catch((err) => {
       })

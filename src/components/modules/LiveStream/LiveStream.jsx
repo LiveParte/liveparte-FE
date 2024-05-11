@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { FullScreenIcon, GiftIcon, LogoWhiteMobile, MicroPhoneIcon, ThreeDot, ThreeDotSmall } from "../../../../public/svg";
 import AgoraRTC, { AgoraRTCProvider, useRTCClient } from "agora-rtc-react";
 import LiveStreamVideo from "./submodules/livestreamVideo";
-import { myShowLink } from "@/utils/reusableComponent";
+import { handleCloseModalAll, handleOpenModalAll, myShowLink } from "@/utils/reusableComponent";
 import { LogoImage } from "@/utils/styleReuse";
 import UserProfile from "@/components/Common/UserProfile";
 import CustomDropDown from "@/components/Common/CustomDropDown";
@@ -16,8 +16,11 @@ import { transactionApi } from "@/store/Transaction/transactionApi";
 import { useDispatch } from "react-redux";
 import Link from "next/link";
 import { logout } from "@/store/User";
+import MyModal from "@/components/Ui/Modal";
+import FullScreen from "./modules/FullScreen";
 // Render a YouTube video player
 export default function LiveStream({ isLive = false, liveStreamDetail,userProfileData,handleOpenModal }) {
+  const [fullScreenModal,setFullScreenModal]=useState(false)
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenII, setIsOpenII] = useState(false);
@@ -160,7 +163,7 @@ export default function LiveStream({ isLive = false, liveStreamDetail,userProfil
                 /> */}
 
                 </div>
-                <div className="text-[13px]  gap-[8px] items-center hidden lg:flex">
+                <div className="text-[13px]  gap-[8px] items-center hidden lg:flex cursor-pointer" onClick={()=>handleOpenModalAll(setFullScreenModal)}>
                   <FullScreenIcon />
                   Fullscreen
                 </div>
@@ -211,6 +214,18 @@ export default function LiveStream({ isLive = false, liveStreamDetail,userProfil
             />
           </div>
         </div>
+        <MyModal
+        isOpen={fullScreenModal}
+        closeModal={()=>handleCloseModalAll(setFullScreenModal)}
+        bodyComponent={<FullScreen
+        onBack={()=>handleCloseModalAll(setFullScreenModal)}
+        setActiveConnection={setActiveConnection}
+        activeConnection={activeConnection}
+        isLive={false}
+        liveStreamDetail={liveStreamDetail}
+        />}
+        containerStyle={`bg-white !w-[100vw] !h-[100vh]`}
+        />
       </main>
     </AgoraRTCProvider>
   );

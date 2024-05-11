@@ -37,6 +37,22 @@ export default function SettingForm({
   const [userProfile, setUserProfile] = useState();
   const userInfo = useSelector(selectCurrentUserData);
   const dispatch =useDispatch()
+
+  const { control, handleSubmit, setValue, watch, setError, reset,getValues } = useForm({
+    defaultValues: {
+      fullName: "",
+      email: "",
+      phone: "",
+      country: "",
+      state: "",
+      address: "",
+      id: "",
+      currentPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    },
+  });
+
   // let userInfo =storage["localStorage"]?.get(userDetailStorageName)
 
   // console.log(userInfo,'userProfile')
@@ -55,7 +71,7 @@ export default function SettingForm({
 
   const handleChange = (event) => {
     const fileUploaded = event.target.files[0];
-    CloudinaryUpload(fileUploaded);
+    CloudinaryUpload(fileUploaded,handleUpdateUser(getValues()));
     // handleFile(fileUploaded);
   };
 
@@ -67,20 +83,6 @@ export default function SettingForm({
   const [UpdateUser, { isLoading: updateUserLoader }] =
     useUpdateProfileMutation();
 
-  const { control, handleSubmit, setValue, watch, setError, reset } = useForm({
-    defaultValues: {
-      fullName: "",
-      email: "",
-      phone: "",
-      country: "",
-      state: "",
-      address: "",
-      id: "",
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
-    },
-  });
 
 
   useEffect(() => {

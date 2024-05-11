@@ -227,3 +227,14 @@ export function checkShowDurationAfter(targetDateTime, durationMins) {
 export function replaceAmpersandWithAnd(str) {
   return str.replace(/&/g, 'and');
 }
+
+
+export function handleCloseModalAll (functionModal){
+  return functionModal &&functionModal(false)
+
+}
+
+export function handleOpenModalAll (functionModal){
+  return functionModal &&functionModal(true)
+
+}

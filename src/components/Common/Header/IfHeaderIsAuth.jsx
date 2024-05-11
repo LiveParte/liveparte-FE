@@ -38,7 +38,7 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
   const { token } = router.query;
 
 
-  console.log(check,'Hellocheck')
+  // console.log(check,'Hellocheck')
    useEffect(() => {
     
       if(check&&isSuccess){
