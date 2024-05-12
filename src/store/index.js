@@ -42,7 +42,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
 key:'root',
 storage,
-// whitelist: ['userApi','authSlice'],
+blacklist: ['userApi','eventApi','otherApi','transactionApi'],
 }
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

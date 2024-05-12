@@ -10,12 +10,13 @@ import { useRouter } from "next/router";
 // import { useGetAllCoinsQuery } from "@/store/Transaction/transactionApi";
 import {  useGetUserProfileQuery, useLazyGetUserProfileQuery, useUpdateUserLocationMutation } from "@/store/User/userApi";
 import { useGetUserLocationQuery } from "@/store/others/othersApi";
-import { storage, userDetailStorageName } from "@/utils/helper";
+import { accessTokenStorageName, storage, userDetailStorageName } from "@/utils/helper";
 
 export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
   const [userDetail, setUserDetail] = useState(false);
   const dispatch = useDispatch();
   const userInfo = useSelector(selectCurrentUserData) || {};
+  const isTokenAvailable =localStorage.getItem(accessTokenStorageName)
  
   const {address,state,countryInfo,coin}=userInfo||{};
   const name = countryInfo ? countryInfo.name : null;
@@ -37,6 +38,12 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
   let [isOpen, setIsOpen] = useState();
   const { token } = router.query;
 
+  useEffect(() => {
+    if(!isTokenAvailable){
+      dispatch(setUserData({}))
+    }
+  }, [isTokenAvailable])
+  
 
   // console.log(check,'Hellocheck')
    useEffect(() => {
@@ -47,6 +54,16 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
       }
     
    }, [check, userInfo?._id])
+
+  //  async function handleUpdateUserCheck(){
+  //   const response = await checkProfile();
+  //   console.log(response?.data?.statusCode==401,response?.data?._id,'handleUpdateUserCheck')
+  //  }
+
+  //  useEffect(() => {
+  //   handleUpdateUserCheck() 
+  //  }, [])
+   
    
 
   // console.log(userProfileData,check,isSuccess,userInfo,'userProfileData')

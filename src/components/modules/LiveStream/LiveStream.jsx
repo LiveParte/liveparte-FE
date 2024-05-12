@@ -224,7 +224,8 @@ export default function LiveStream({ isLive = false, liveStreamDetail,userProfil
         isLive={false}
         liveStreamDetail={liveStreamDetail}
         />}
-        containerStyle={`bg-white !w-[100vw] !h-[100vh]`}
+        containerStyle={`bg-white !w-[100vw] !h-[100vh] max-h-[100vh]`}
+        mainContainer={`p-0`}
         />
       </main>
     </AgoraRTCProvider>

@@ -13,6 +13,7 @@ import {
   useRemoteUsers,
 } from "agora-rtc-react";
 import { selectCurrentUserData } from "@/store/User";
+import Video from "./Video";
 export default function LiveStreamVideo({
   activeConnection,
   setActiveConnection,
@@ -50,20 +51,9 @@ export default function LiveStreamVideo({
   return (
     <div className="w-full min-h-[30vh] lg:h-[70vh]  bg-cover lg:rounded-[16px] overflow-hidden ">
       {!isLive ? (
-        <video
-          controls
-          // ref={videoRef}
-          autoPlay
-          // loop
-          // muted
-          className={`absolute left-0 right-0 top-0 rounded-[16px] bottom-0 object-contain md:object-cover h-full w-full z-20  `}
-          poster={liveStreamDetail?.promotional_url||liveStreamDetail?.streaming_url}
-          // onMouseEnter={handleMouseEnter}
-          // onMouseLeave={handleMouseLeave}
-        >
-          <source src={liveStreamDetail?.promotional_url||liveStreamDetail?.streaming_url} type="video/mp4" />
-          Your browser does not support the video tag.
-        </video>
+        <Video
+        liveStreamDetail={liveStreamDetail}
+        />
       ) : (
         <div id="remoteVideoGrid">
           {remoteUsers.map((user) => (

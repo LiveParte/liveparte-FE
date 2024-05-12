@@ -18,7 +18,7 @@ export default function PurchasePaartyCoins({
   path,
 }) {
   const [checkProfile,{isLoading:cpLoading}]=useLazyGetUserProfileQuery()
-  const [purchaseCoins, { isLoading }] = usePurchaseCoinsMutation();
+  const [purchaseCoins, { isLoading}] = usePurchaseCoinsMutation();
   const [coinsNeeded, setCoinsNeeded] = useState(0);
   const [selectedCoins, setSelectedCoins] = useState();
   const dispatch = useDispatch();
@@ -63,7 +63,7 @@ export default function PurchasePaartyCoins({
   // console.log(coinsNeeded?.length,totalCost,'Makes a purchase')
   return (
     <div
-      className={`px-[16px] pt-[16px] bg-[#060809]    lg:min-w-[290px]  xl:min-w-[360px] ${containerStyle}`}
+      className={`px-[16px] pt-[16px] bg-[#060809]    lg:min-w-[230px]  xl:min-w-[360px] ${containerStyle}`}
     >
       <LiveStreamHeader
         path={path}
@@ -106,6 +106,7 @@ export default function PurchasePaartyCoins({
               totalCost ? totalCost : ""
             }`}
             className={`h-[39px] text-[#060809] w-full text-[13px] py-[5px]`}
+            isLoading={isLoading}
           />
           {/* Purchase Coins ₦5,000 */}
         </PayStack>
