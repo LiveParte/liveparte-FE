@@ -6,6 +6,7 @@ import { useCreatePurchaseMutation } from "@/store/Transaction/transactionApi";
 import { myShowLink } from "@/utils/reusableComponent";
 import { useRouter } from "next/router";
 import { isArray } from "@/utils/helper";
+import { useGetUserProfileQuery } from "@/store/User/userApi";
 
 //customFunction: this is to make a call from the out, if this is available it wont read the next link
 
@@ -13,7 +14,9 @@ export default function PayStack({ showDetails, onNext, children,isDisabled,cust
   const userData = useSelector(selectCurrentUserData) || {};
   const router =useRouter();
   const [CreatePurchase, { isLoading: cpLoader }] = useCreatePurchaseMutation();
-
+  const { data:userProfileData, isLoading:userProfileLoader,isSuccess } = useGetUserProfileQuery(undefined,{
+    skip:!userData?._id,
+  });
   // console.log(amount,'amount')
   const show={...showDetails,ticket:isArray(showDetails?.tickets)?showDetails?.tickets[0]:showDetails?.ticket};
 //   console.log(show,showDetails,'hello')
@@ -68,11 +71,18 @@ export default function PayStack({ showDetails, onNext, children,isDisabled,cust
     onClose: handleClose,
   };
 
+  const handelCheckIfUserTokenIsValid = ()=>{
+    if(proceed && isSuccess){
+      return true;
+    }
+    return false;
+  }
+
   return (
     <PaystackConsumer {...componentProps}>
       {({ initializePayment }) => (
 
-        <div className="w-full cursor-pointer" disabled={isDisabled} onClick={() =>proceed? initializePayment(handleSuccess, handleClose):{}}>
+        <div className="w-full cursor-pointer" disabled={isDisabled} onClick={() =>handelCheckIfUserTokenIsValid()? initializePayment(handleSuccess, handleClose):{}}>
           {children}
         </div>
       )}

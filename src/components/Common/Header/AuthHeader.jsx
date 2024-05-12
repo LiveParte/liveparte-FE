@@ -200,7 +200,7 @@ export default function AuthHeader({
                   <div className="text-[13px] flex items-center gap-[5px]">
                     <LiveParteCoins/>
                     
-                    {formatMoney(userInfo?.totalCoin || "0", false)}
+                    {formatMoney(userInfo?.totalCoin || "0", false)}{" "}
                     {userInfo?.totalCoin > 1 ? "Coins" : "Coin"}
                   </div>
                 </div>

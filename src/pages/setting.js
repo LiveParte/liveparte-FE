@@ -25,7 +25,7 @@ export default function Setting() {
   ];
 
   const [isActive, setIsActive] = useState(HeaderData[0]?.name);
-  const [isLoading, setIsLoading] = useState(false);
+ 
   const [imageUrl, setImageUrl] = useState(null);
 
   const scrollToBottom = () => {
@@ -37,29 +37,7 @@ export default function Setting() {
     }
   };
 
-  const CloudinaryUpload = (photo) => {
-    setIsLoading(true);
-    const data = new FormData();
-    data.append("file", photo);
-    data.append("upload_preset", "wnvzkduq");
-    data.append("cloud_name", "dnvwcmqhw");
-    fetch("https://api.cloudinary.com/v1_1/dnvwcmqhw/image/upload", {
-      method: "post",
-      body: data,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        
-        setImageUrl(data.secure_url);
-        scrollToBottom();
-      })
-      .catch((err) => {
-      })
-      .finally(() => {
-        setIsLoading(false);
-       
-      });
-  };
+ 
 
   return (
     <WithAuth>
@@ -77,9 +55,9 @@ export default function Setting() {
           className={`${isActive === "Profile" ? "mb-[150px]" : "mb-[150px]"}`}
         >
           <SettingForm
-            isImageUrlLoading={isLoading}
+            // isImageUrlLoading={isLoading}
             imageUrl={imageUrl}
-            CloudinaryUpload={CloudinaryUpload}
+            // CloudinaryUpload={CloudinaryUpload}
             isActive={isActive}
             setImageUrl={setImageUrl}
           />

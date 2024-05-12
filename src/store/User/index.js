@@ -58,7 +58,7 @@ const initialState = {
       state.userInfo = {};
         storage["localStorage"].remove(userDetailStorageName);
       storage["localStorage"].remove(accessTokenStorageName);
-
+      alert('hello world')
       state.isLoggedIn = false;
     },
   },

@@ -72,11 +72,20 @@ export const userApi = createApi({
       }),
       invalidatesTags: ["user"],
     }),
+    signInWithGoogle: builder.mutation({
+      query: (payload) => ({
+        url: `auth/oauth/google/login`,
+        method: "POST",
+        body: payload,
+      }),
+      // invalidatesTags: ["user"],
+    }),
     //auth/register-user-location/{id}
     //users/35
     //company/manager/:userId/update
     //admin/admin-management
     //auth/change-password
+    //auth/oauth/google/login
   }),
  
 
@@ -91,6 +100,7 @@ export const {
   useForgetPasswordMutation,
   useRestPasswordMutation,
   useUpdateUserLocationMutation,
-  useLazyGetUserProfileQuery
+  useLazyGetUserProfileQuery,
+  useSignInWithGoogleMutation
 
 } = userApi;

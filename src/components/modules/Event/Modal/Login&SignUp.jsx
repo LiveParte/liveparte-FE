@@ -4,6 +4,7 @@ import { CloseModal, NoProfile } from "../../../../../public/svg";
 import {
   useLoginApiMutation,
   useRegisterApiMutation,
+  useSignInWithGoogleMutation,
 } from "@/store/User/userApi";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -51,6 +52,7 @@ export default function LoginSignUp({
 
   const [LoginUser, { isLoading: loginLoader, isError: loginIsError }] =
     useLoginApiMutation();
+  const [GoogleSignIn, { isLoading }] = useSignInWithGoogleMutation();
   const checkIfNonImageExist = storage.localStorage.get("noUserProfileImage");
   const { control, handleSubmit, getValues, reset, setError } = useForm({
     defaultValues: {
@@ -80,7 +82,6 @@ export default function LoginSignUp({
     },
   });
 
-
   useEffect(() => {
     if (pageName) {
       setToggle(pageName);
@@ -101,7 +102,7 @@ export default function LoginSignUp({
     const response = handleRegisterUser?.data;
 
     const UserString = JSON?.stringify(response?.user);
-    
+
     if (response?.statusCode && response?.statusCode !== 200) {
       if (response?.message === "Email is already in use") {
         return setError2("email", {
@@ -145,7 +146,6 @@ export default function LoginSignUp({
     }
     if (response?.user?.createdAt) {
       // const userData = JSON.parse(response?.user);
-    
 
       storage.localStorage.set("noUserProfileImage", {
         id: response?.user?._id,
@@ -167,7 +167,6 @@ export default function LoginSignUp({
       dispatch(setUserData(response?.user));
       // dispatch(baseApi.util.resetApiState());
 
-   
       if (router?.pathname === "/") {
         return router.push(eventLink);
       }
@@ -219,22 +218,25 @@ export default function LoginSignUp({
       dispatch(setUserData(response?.user));
       // console.log(response?.user,'response?.user')
       SuccessNotification({ message: "You're in!" });
-      
-      
+
       storage.localStorage.set(
         accessTokenStorageName,
         encryptText(response?.accessToken)
       );
 
-    
       if (router?.pathname === "/") {
         return router.push(eventLink);
       }
       if (onNext) {
         return onNext(response?.user);
       }
-      closeModal&& closeModal();
+      closeModal && closeModal();
     }
+  }
+
+  async function handleSignWithGoogle(){
+    const response =await GoogleSignIn()
+    console.log(response,'response')
   }
 
   return (
@@ -280,6 +282,7 @@ export default function LoginSignUp({
             isLoading={loginLoader}
             openModal={openModal}
             isEvent={isEvent}
+            GoogleSignIn={handleSignWithGoogle}
           />
         )}
 

@@ -28,7 +28,7 @@ import { MainContainer } from "@/utils/styleReuse";
 
 export default function SettingForm({
   isActive,
-  CloudinaryUpload,
+  // CloudinaryUpload,
   imageUrl,
   isImageUrlLoading,
   setImageUrl
@@ -37,37 +37,8 @@ export default function SettingForm({
   const [userProfile, setUserProfile] = useState();
   const userInfo = useSelector(selectCurrentUserData);
   const dispatch =useDispatch()
-  // let userInfo =storage["localStorage"]?.get(userDetailStorageName)
-
-  // console.log(userInfo,'userProfile')
-
-  useEffect(() => {
-    setUserProfile(
-      NoImageUser[checkIfNonImageExist?.nonProfileImage] || Avatar3
-    );
-  }, [checkIfNonImageExist?.nonProfileImage]);
-  //upload Image
-  const hiddenFileInput = useRef(null);
-
-  const handleClick = (event) => {
-    hiddenFileInput.current.click();
-  };
-
-  const handleChange = (event) => {
-    const fileUploaded = event.target.files[0];
-    CloudinaryUpload(fileUploaded);
-    // handleFile(fileUploaded);
-  };
-
-  //
-  const { data, isLoading, isError } = useGetUserProfileQuery();
-  const [UpdatePassword, { isLoading: updatePasswordLoader }] =
-    useChangePasswordMutation();
-
-  const [UpdateUser, { isLoading: updateUserLoader }] =
-    useUpdateProfileMutation();
-
-  const { control, handleSubmit, setValue, watch, setError, reset } = useForm({
+  const [isLoading, setIsLoading] = useState(false);
+  const { control, handleSubmit, setValue, watch, setError, reset,getValues } = useForm({
     defaultValues: {
       fullName: "",
       email: "",
@@ -81,6 +52,70 @@ export default function SettingForm({
       confirmPassword: "",
     },
   });
+
+  // let userInfo =storage["localStorage"]?.get(userDetailStorageName)
+
+  // console.log(userInfo,'userProfile')
+
+  useEffect(() => {
+    setUserProfile(
+      NoImageUser[checkIfNonImageExist?.nonProfileImage] || Avatar3
+    );
+  }, [checkIfNonImageExist?.nonProfileImage]);
+  //upload Image
+  
+  const hiddenFileInput = useRef(null);
+
+  const handleClick = (event) => {
+    hiddenFileInput.current.click();
+  };
+
+
+  const CloudinaryUpload = (photo) => {
+    setIsLoading(true);
+   
+    const data = new FormData();
+    data.append("file", photo);
+    data.append("upload_preset", "wnvzkduq");
+    data.append("cloud_name", "dnvwcmqhw");
+    fetch("https://api.cloudinary.com/v1_1/dnvwcmqhw/image/upload", {
+      method: "post",
+      body: data,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data,'response1')
+        setImageUrl(data?.secure_url);
+        handleUpdateUser({
+          ...getValues(),
+          profile_image: data.secure_url,
+        })
+        // onChange()
+        // scrollToBottom();
+      })
+      .catch((err) => {
+      })
+      .finally(() => {
+        setIsLoading(false);
+       
+      });
+  };
+
+  const handleChange = (event) => {
+    const fileUploaded = event.target.files[0];
+   
+    CloudinaryUpload(fileUploaded);
+    // handleFile(fileUploaded);
+  };
+
+  //
+  const { data, isLoading:profileLoader, isError } = useGetUserProfileQuery();
+  const [UpdatePassword, { isLoading: updatePasswordLoader }] =
+    useChangePasswordMutation();
+
+  const [UpdateUser, { isLoading: updateUserLoader }] =
+    useUpdateProfileMutation();
+
 
 
   useEffect(() => {
@@ -104,13 +139,15 @@ export default function SettingForm({
 
   async function handleUpdateUser(data) {
     const payload = {
-      ...data,
       fullName:data?.fullName,
       profile_image: imageUrl,
+      ...data,
+     
     };
     const handleRegisterUser = await UpdateUser(payload);
     const response = handleRegisterUser?.data;
     const UserString = JSON.stringify(response?.updatedUser);
+    // console.log(response,imageUrl,'response')
     dispatch(setUserData(response?.updatedUser))
     setValue('profile_image',response?.updatedUser?.profile_image)
     // storage.localStorage.set(userDetailStorageName, JSON.stringify(response?.updatedUser));
@@ -280,7 +317,7 @@ export default function SettingForm({
                 isLoading={ updateUserLoader}
                 isDisabled={
                   isImageUrlLoading ||
-                  isLoading ||
+                  profileLoader ||
                   !isChangedState
                 }
               />
