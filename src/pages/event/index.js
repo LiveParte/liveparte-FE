@@ -71,12 +71,12 @@ export default function Home() {
 
 
 //why i wrote  this code 
-  useEffect(() => {
-    if (user?._id) {
-      getAllEventRefetch();
-      onDemandRefresh();
-    }
-  }, [user?._id]);
+  // useEffect(() => {
+  //   if (user?._id) {
+  //     getAllEventRefetch();
+  //     onDemandRefresh();
+  //   }
+  // }, [user?._id]);
 
   //randomBetweenOneAndTen(filteredEventsHero?.length)
   const heroEvent = isArray(filteredEventsHero )

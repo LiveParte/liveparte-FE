@@ -10,6 +10,8 @@ import { baseQuery } from "../api";
 export const eventApi = createApi({
   reducerPath: "eventApi",
   baseQuery: baseQuery,
+  refetchOnReconnect:true,
+  refetchOnFocus:true,
   tagTypes:['event','singleEvent'],
   endpoints: (builder) => ({
    

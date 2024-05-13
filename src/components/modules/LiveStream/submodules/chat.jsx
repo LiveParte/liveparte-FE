@@ -30,6 +30,7 @@ export default function Chat({ onLeave, liveStreamDetail, userProfileData }) {
         <PurchasePaartyCoins
           onBack={() => setPayFlow("giftCoins")}
           onClose={() => setPayFlow()}
+          containerStyle={`!w-full`}
         />
       ),
     },
@@ -60,7 +61,7 @@ export default function Chat({ onLeave, liveStreamDetail, userProfileData }) {
 
   const GiftCoin = () => {
     return (
-      <div className=" absolute dropdownIII transform translate-x-0 -translate-y-[60px]  lg:-translate-y-[40px] z-50 bg-black w-full  rounded-[16px] overflow-hidden">
+      <div className=" absolute dropdownIII transform translate-x-1 -translate-y-[60px] w-full  lg:-translate-y-[40px] z-50 bg-black   rounded-[16px] overflow-hidden">
         {paymentFlow?.find((item) => item?.name === payFlow)?.component}
       </div>
     );
@@ -159,7 +160,7 @@ export default function Chat({ onLeave, liveStreamDetail, userProfileData }) {
             </button>
           </div>
           <div className="flex justify-between items-center mb-[16px] relative">
-            <GiftCoin />
+            {payFlow&&<GiftCoin />}
             <div className="relative text-white">
               <div
                 className=" p-[4px] pr-[10px] rounded-[96px] hidden lg:flex gap-[9px] text-white text-[10px] md:text-[11px] font500 items-center  shadow-1 shadow-2 shadow-3 bg-[#BACFF70A] cursor-pointer relative w-fit"

@@ -10,6 +10,7 @@ import {
 // Create our baseQuery instance
 export const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
+  
   prepareHeaders: (headers, { getState }) => {
     const token = decryptText(storage.localStorage.get(accessTokenStorageName));
 
