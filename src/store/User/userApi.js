@@ -6,7 +6,8 @@ export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: baseQuery,
   tagTypes: ["user"],
-
+  refetchOnReconnect:true,
+  // refetchOnFocus:true,
   endpoints: (builder) => ({
     getUserProfile: builder.query({
       query: () => ({

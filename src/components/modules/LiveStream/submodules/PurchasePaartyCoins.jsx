@@ -63,7 +63,7 @@ export default function PurchasePaartyCoins({
   // console.log(coinsNeeded?.length,totalCost,'Makes a purchase')
   return (
     <div
-      className={`px-[16px] pt-[16px] bg-[#060809]    lg:min-w-[230px]  xl:min-w-[360px] ${containerStyle}`}
+      className={`px-[16px] pt-[16px] bg-[#060809]    w-max ${containerStyle}`}
     >
       <LiveStreamHeader
         path={path}
@@ -84,7 +84,12 @@ export default function PurchasePaartyCoins({
                 } `}
               >
                 <div className="w-[16px] h-[16px]">
-                <LiveParteCoins/>
+                <Image
+                  src={`/svg/Liveparte coin.svg`}
+                  width={24}
+                  height={24}
+                  alt="coins"
+                />
                 </div>
                 <div className="text-[13px]">{item}</div>
               </div>

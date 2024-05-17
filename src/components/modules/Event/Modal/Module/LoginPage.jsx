@@ -1,8 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { LoginForm } from "../../Data";
 import ButtonComp from "@/components/Ui/button";
 import { GoogleIcon } from "../../../../../../public/svg";
 import { FloatingLabelInput } from "@/components/Ui/TextInput";
+import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
+import { signIn } from "next-auth/react";
+import axios from "axios";
 
 export default function LoginPage({
   Controller,
@@ -14,7 +17,56 @@ export default function LoginPage({
   openModal,
   isEvent,
   GoogleSignIn,
+  // googleLogin
 }) {
+
+  const [ user, setUser ] = useState([]);
+
+  useEffect(() => {
+    if (user?.access_token) {
+        fetch(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+            headers: {
+                'Authorization': `Bearer ${user.access_token}`,
+                'Accept': 'application/json'
+            }
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then((data) => {
+          const payload = {
+          
+            email: data?.email,
+            password:`${data?.given_name}${data?.id}@`
+          };
+          GoogleSignIn(payload)
+          setUser()
+            console.log(data);
+            // setProfile(data);
+        })
+        .catch((error) => {
+          setUser()
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+    }
+}, [user]);
+
+  const googleLogin = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      setUser(tokenResponse);
+        console.log(tokenResponse,'tokenResponse')
+      // You can now use the tokenResponse to authenticate the user in your app
+    },
+    onError: () => {
+      console.error('Google login failed');
+      // Handle login errors here
+    },
+    // flow: 'auth-code', // Use 'auth-code' for the authorization code flow
+  });
+  
   return (
     <form
       className="px-[15px] lg:px-[30px] flex flex-col  lg:pb-[0px]"
@@ -25,7 +77,9 @@ export default function LoginPage({
           <ButtonComp
             onClick={(e) => {
               e.preventDefault();
-              GoogleSignIn();
+              // signIn('google')
+              googleLogin();
+              // GoogleSignIn();
             }}
             className={`w-full text-[#060809] text-[13px] font500`}
             btnText={

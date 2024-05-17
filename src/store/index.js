@@ -9,6 +9,7 @@ import { otherApi } from "./others/othersApi";
 // import storage from "redux-persist/lib/storage";
 import { persistReducer, persistStore } from "redux-persist";
 import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
+import { setupListeners } from "@reduxjs/toolkit/query";
 
 const createNoopStorage = () => {
   return {
@@ -61,6 +62,7 @@ export const store = configureStore({
     ),
 });
 
-
+setupListeners(store.dispatch);
 
 export const persistor = persistStore(store);
+// export type AppDispatch = typeof store.dispatch;

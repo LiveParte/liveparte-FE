@@ -10,7 +10,9 @@ import { baseQuery } from "../api";
 export const eventApi = createApi({
   reducerPath: "eventApi",
   baseQuery: baseQuery,
-  tagTypes:['event','singleEvent'],
+  refetchOnReconnect:true,
+  refetchOnFocus:true,
+  tagTypes:['event','singleEvent','ondemand','eventStream'],
   endpoints: (builder) => ({
    
     getAllEvent: builder.query({
@@ -19,6 +21,7 @@ export const eventApi = createApi({
         method: "GET",
         // body,
       }),
+      providesTags:['event']
       
     }),
     getEventStream: builder.query({
@@ -27,6 +30,7 @@ export const eventApi = createApi({
         method: "GET",
         // body,
       }),
+      providesTags:['eventStream']
       
     }),
     getEventOnDemand: builder.query({
@@ -35,6 +39,7 @@ export const eventApi = createApi({
         method: "GET",
         // body,
       }),
+      providesTags:['ondemand']
       
     }),
     getEventViaId: builder.query({

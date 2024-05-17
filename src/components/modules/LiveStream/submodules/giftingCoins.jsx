@@ -61,13 +61,7 @@ export default function GiftingCoins({ onNext, onClose, eventId }) {
 
       <div className="mb-[16px]">
         <div className="border-[#343F4B] border-[1px] bg-[#27292E]  flex items-center px-[12px] rounded-[8px] py-[7px] gap-[5px]  !h-[35px]">
-          {/* <Image
-          src={`/svg/coins.svg`}
-          width={16}
-          height={16}
-          alt="coins"
-          className="w-[16px] g-[16px]"
-        /> */}
+          
 
           <LiveParteCoins size={16} />
 
@@ -109,7 +103,7 @@ export default function GiftingCoins({ onNext, onClose, eventId }) {
       </div>
 
       <div
-        className="text-center md:hidden text-[#00A699] text-[13px] underline mb-[10px] cursor-pointer"
+        className="text-center lg:hidden text-[#00A699] text-[13px] underline mb-[10px] cursor-pointer"
         onClick={onNext}
       >
         Purchase Parte Coins

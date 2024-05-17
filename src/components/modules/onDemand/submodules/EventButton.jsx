@@ -60,6 +60,8 @@ export default function EventButton({
     // implementation for  whatever you want to do when the Paystack dialog closed.
   };
 
+  console.log(buttonAction(),'buttonAction()')
+
   const ModalList = [
     {
       name: "checkout",

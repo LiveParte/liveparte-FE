@@ -11,6 +11,7 @@ import { useGetEventDetailViaIdQuery } from "@/store/Event/eventApi";
 import { useRouter } from "next/router";
 import { useGetUserProfileQuery } from "@/store/User/userApi";
 import { selectCurrentUserData } from "@/store/User";
+import { isFutureDate } from "@/utils/reusableComponent";
 
 const LiveStream = dynamic(
   () => import("@/components/modules/LiveStream/LiveStream"),
@@ -32,7 +33,10 @@ export default function Index() {
   let [isOpen, setIsOpen] = useState();
   const handleCloseModal = ()=>{
     setIsOpen(null)
+    
   }
+
+  console.log(liveStream,data,'liveStream')
 
   const handleOpenModal = (modalName)=>{
     setIsOpen(modalName)
@@ -69,7 +73,7 @@ export default function Index() {
       )}
       <div className="flex-1 flex flex-col  bg-[#060809] overflow-hidden ">
         <LiveStream
-          isLive={liveStream?.isLiveStreamed}
+          isLive={isFutureDate(liveStream?.event_date)}
           liveStreamDetail={liveStream}
           handleOpenModal={handleOpenModal}
           handleCloseModal={handleCloseModal}

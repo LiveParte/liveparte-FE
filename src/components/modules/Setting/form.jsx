@@ -309,7 +309,7 @@ export default function SettingForm({
                 />
               </div>
             ))}
-            <div className="mt-[40px] lg:mt-[32px]">
+            <div className="mt-[20px] lg:mt-[10px]">
               <ButtonComp
                 btnText={"Save Changes"}
                 className={`w-full text-[13px] font500`}
@@ -353,7 +353,7 @@ export default function SettingForm({
                 )}
               />
             ))}
-            <div className="mt-[40px] lg:mt-[32px]">
+            <div className="mt-[20px] lg:mt-[10px]">
               <ButtonComp
                 btnText={"Save Changes"}
                 className={`w-full text-[13px] font500`}

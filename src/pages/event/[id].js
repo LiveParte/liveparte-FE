@@ -86,13 +86,15 @@ export default function EventId() {
     setIsOpen("share event");
   }
 
-  // console.log(data,'datadata')
+  const eventsData={ ...data,...data?.event, ...shows   }
+
+  console.log(eventsData,'datadata')
  
   return (
     <NoAuth>
      
       <Hero
-        HeroSectionEvent={{ ...data,...data?.event, ...shows   }}
+        HeroSectionEvent={eventsData}
         openModalLoginSignUp={openModalLoginSignUp}
         openModal={openModal}
         giftTicket={openModalGiftTicket}
@@ -101,7 +103,7 @@ export default function EventId() {
         isSingleEvent={true}
         
       />
-     {data?._id && <EventDetails HeroSectionEvent={{ ...data,...data?.event, ...shows }}  />}
+     {eventsData?._id||eventsData?.event?._id ? <EventDetails HeroSectionEvent={eventsData}  />:null}
       <Footer />
     </NoAuth>
   );

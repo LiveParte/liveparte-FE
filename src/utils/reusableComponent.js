@@ -238,3 +238,21 @@ export function handleOpenModalAll (functionModal){
   return functionModal &&functionModal(true)
 
 }
+
+
+export function isFutureDate(dateStr) {
+
+  try {
+    // Parse the date string into a Date object
+    const dateObj = new Date(dateStr);
+
+    // Get the current time
+    const now = new Date();
+
+    // Check if the date is in the future (greater than current time)
+    return dateObj > now;
+  } catch (error) {
+    console.error(`Invalid date format: ${dateStr}`, error);
+    return false; // Handle invalid date format gracefully
+  }
+}
