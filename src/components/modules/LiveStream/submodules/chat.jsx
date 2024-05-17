@@ -167,7 +167,12 @@ export default function Chat({ onLeave, liveStreamDetail, userProfileData }) {
                 onClick={() => setPayFlow("giftCoins")}
               >
                
-                 <LiveParteCoins/>
+               <Image
+                  src={`/svg/Liveparte coin.svg`}
+                  width={24}
+                  height={24}
+                  alt="coins"
+                />
                 <div>
                   {formatMoney(userProfileData?.totalCoin || "0", false)}{" "}
                   {userProfileData?.totalCoin > 1 ? "Coins" : "Coin"}

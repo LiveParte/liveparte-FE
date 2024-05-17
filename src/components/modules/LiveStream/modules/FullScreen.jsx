@@ -10,7 +10,7 @@ export default function FullScreen({
     liveStreamDetail
 }) {
   return (
-    <div className='bg-black h-full relative'>
+    <div className='bg-black h-full relative w-full'>
         <div className='absolute right-5 top-5 cursor-pointer z-40' onClick={onBack}>
             <CloseIcon/>
         </div>

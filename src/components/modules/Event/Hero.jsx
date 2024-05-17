@@ -94,7 +94,7 @@ export default function Hero({
               <br/>
               <b>Venue:</b>${replaceAmpersandWithAnd(HeroSectionEvent?.address)}
               <br/>
-              <b>Date:</b>${moment(HeroSectionEvent?.event_date).format("MMM Do YY")}
+              <b>Date:</b>${moment(HeroSectionEvent?.event_date).format("MMM Do YYYY")}
               <br/>
               <b>Time:</b>${moment(HeroSectionEvent?.event_date).format("h:mm")}
               &location=${CopyEventLink({

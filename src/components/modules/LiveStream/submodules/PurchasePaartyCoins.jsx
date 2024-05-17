@@ -84,7 +84,12 @@ export default function PurchasePaartyCoins({
                 } `}
               >
                 <div className="w-[16px] h-[16px]">
-                <LiveParteCoins/>
+                <Image
+                  src={`/svg/Liveparte coin.svg`}
+                  width={24}
+                  height={24}
+                  alt="coins"
+                />
                 </div>
                 <div className="text-[13px]">{item}</div>
               </div>

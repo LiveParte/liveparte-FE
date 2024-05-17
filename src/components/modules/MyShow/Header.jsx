@@ -15,7 +15,7 @@ const Header = React.memo(
 
     return (
       <div
-        className={`px-[20px] md:px-[40px] lg:px-[120px] mb-[40px] xl:mb-[63px] ${MainContainer}`}
+        className={`px-[20px] md:px-[40px] lg:px-[120px] mb-[40px] xl:mb-[43px] ${MainContainer}`}
       >
         <main>
           <div className="font-1 text-[35px] font-bold text-[#FFFFFF] mb-[35px]">

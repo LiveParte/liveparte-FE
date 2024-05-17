@@ -48,7 +48,7 @@ export default function Setting() {
           isActive={isActive}
           setIsActive={setIsActive}
           title="Settings"
-          containerStyle={`!mb-[40px]`}
+          MainContainer={`!mb-[10px]`}
         />
         {/* <Form/> */}
         <div

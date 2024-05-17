@@ -40,7 +40,7 @@ export default function Video({ liveStreamDetail }) {
     }
   };
   return (
-    <div>
+    <div className="border-9">
       <video
         ref={videoRef}
         controls={false}
@@ -50,7 +50,7 @@ export default function Video({ liveStreamDetail }) {
         autoPlay
         // loop
         // muted
-        className={`absolute left-0 right-0 top-0  bottom-0 object-contain md:object-cover h-full w-full z-20  `}
+        className={`absolute left-0 right-0 top-0  bottom-0 object-contain md:object-contain h-full w-full z-20  `}
         poster={
           liveStreamDetail?.promotional_url || liveStreamDetail?.streaming_url
         }

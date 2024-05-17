@@ -89,12 +89,12 @@ export default function Hero({
 
   const buttonAction = () => {
     if (userData?._id) {
-      if (HappeningNow) {
+      if (HappeningNow||HeroSectionEvent?.purchase?.id &&isOnDemand) {
         return "isPaidAndEventIsLive";
       }
       if (
         HeroSectionEvent?.purchase?.id &&
-        !EventStarted
+        !EventStarted 
       ) {
         return "isPaidAndEventNotLIve";
       }

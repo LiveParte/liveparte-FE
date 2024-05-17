@@ -30,6 +30,8 @@ import {
 } from "@/utils/reusableComponent";
 import { eventApi } from "@/store/Event/eventApi";
 import { transactionApi } from "@/store/Transaction/transactionApi";
+import { useGoogleLogin } from "@react-oauth/google";
+
 export default function LoginSignUp({
   closeModal,
   pageName = "",
@@ -38,6 +40,7 @@ export default function LoginSignUp({
   onNext,
   openModal,
 }) {
+  
   const router = useRouter();
   const dispatch = useDispatch();
   const { id } = router?.query;
@@ -190,7 +193,7 @@ export default function LoginSignUp({
 
     // toast('Hello! RegisterUser')
 
-    // console.log(handleRegisterUser,'handleRegisterUser')
+    // console.log(handleRegisterUser?.data,'handleRegisterUser')
     if (!checkIfNonImageExist?.id) {
       storage.localStorage.set("noUserProfileImage", {
         id: response?.user?._id,
@@ -206,7 +209,7 @@ export default function LoginSignUp({
     }
     // Toddo:
 
-    if (handleRegisterUser?.error?.message === "Unauthorized") {
+    if (handleRegisterUser?.data?.statusCode === 401) {
       // toast.error("Invalid credentials");
       ErrorNotification({ message: "Your login details don't match" });
     }
@@ -238,6 +241,7 @@ export default function LoginSignUp({
     const response =await GoogleSignIn()
     console.log(response,'response')
   }
+
 
   return (
     <div className="flex flex-col flex-grow-1 overflow-y-scroll customScrollHorizontal relative">
@@ -282,7 +286,8 @@ export default function LoginSignUp({
             isLoading={loginLoader}
             openModal={openModal}
             isEvent={isEvent}
-            GoogleSignIn={handleSignWithGoogle}
+            GoogleSignIn={handleLogin}
+            // loginWithGoogle={googleLogin}
           />
         )}
 
@@ -294,6 +299,7 @@ export default function LoginSignUp({
             control={control2}
             registerLoader={registerLoader}
             isEvent={isEvent}
+            GoogleSignUp={handleRegister}
           />
         )}
       </div>

@@ -25,6 +25,7 @@ export default function CheckOut({
 
   // Start the countdown timer with 354 seconds (5:54)
   const eventIsPurchase = Data?.pruchase?.id||Data?.purchase?.id?true:false;
+  console.log(Data,'config')
 
   return (
     <div className="bg-[#1B1C20] pb-[56px] px-[16px] lg:px-[56px] pt-[16px] lg:pt-[24px]">

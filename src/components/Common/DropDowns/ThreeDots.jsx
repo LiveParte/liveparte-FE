@@ -51,7 +51,7 @@ export function DropdownMenu({
               <br/>
               <b>Venue:</b>${replaceAmpersandWithAnd(HeroSectionEvent?.address)}
               <br/>
-              <b>Date:</b>${moment(HeroSectionEvent?.event_date).format("MMM Do YY")}
+              <b>Date:</b>${moment(HeroSectionEvent?.event_date).format("MMM Do YYYY")}
               <br/>
             
               &location=${CopyEventLink({

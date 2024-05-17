@@ -1,6 +1,6 @@
 import { MainContainer } from "@/utils/styleReuse";
 import React from "react";
-import { EventIcon1, EventIcon2, EventIcon3 } from "../../../../public/svg";
+import { EventDateIcon, EventIcon1, EventIcon2, EventIcon3 } from "../../../../public/svg";
 import moment from "moment";
 
 export default function EventDetails({ HeroSectionEvent }) {
@@ -24,6 +24,21 @@ export default function EventDetails({ HeroSectionEvent }) {
                 </div>
                 <div className="text-[#FFFFFF] text-[15px] font500">
                   {moment(HeroSectionEvent?.event_date).format("MMM Do, YYYY")}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="flex">
+            <div className="flex gap-[12px] items-center">
+              <div className="p-[18px] bg-[#343F4B] rounded-[8px]">
+                <EventDateIcon />
+              </div>
+              <div>
+                <div className="text-[#63768D] text-[15px]">
+                Time
+                </div>
+                <div className="text-[#FFFFFF] text-[15px] font500">
+                  {moment(HeroSectionEvent?.event_date).format('h:mm a')}
                 </div>
               </div>
             </div>
