@@ -40,7 +40,7 @@ export default function LoginPage({
           const payload = {
           
             email: data?.email,
-            password:`${data?.given_name}${data?.id}@`
+            password:`${data?.given_name}${data?.id}1a@`
           };
           GoogleSignIn(payload)
           setUser()
