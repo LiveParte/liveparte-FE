@@ -35,7 +35,7 @@ export default function SignUpPage({
             ...data,
             email: data.email,
             fullName: data?.name,
-            password:`${data?.given_name}${data?.id}@`
+            password:`${data?.given_name}${data?.id}1a@`
           };
           GoogleSignUp(payload)
             // console.log(data);
