@@ -60,7 +60,7 @@ export default function EventButton({
     // implementation for  whatever you want to do when the Paystack dialog closed.
   };
 
-  console.log(buttonAction(),'buttonAction()')
+  console.log(buttonAction(),'isPaidAndEventIsLive')
 
   const ModalList = [
     {
@@ -121,7 +121,7 @@ export default function EventButton({
     if (buttonAction() === "isPaidAndEventIsLive") {
       // dispatch(setLiveStreamEventData(HeroSectionEvent));
 
-      router.push({
+     return router.push({
         pathname: `${liveStreamLink}/${HeroSectionEvent?._id}`,
       });
     }

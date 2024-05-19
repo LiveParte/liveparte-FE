@@ -52,12 +52,12 @@ export default function App({ Component, pageProps }) {
 
             // style={{}}
           />
-              <SessionProvider session={pageProps.session}>
+              {/* <SessionProvider session={pageProps.session}> */}
 
           <NextNProgress />
         
           <Component {...pageProps} />
-          </SessionProvider>
+          {/* </SessionProvider> */}
           </GoogleOAuthProvider>
         </PersistGate>
       </Provider>

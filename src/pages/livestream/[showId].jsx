@@ -73,7 +73,7 @@ export default function Index() {
       )}
       <div className="flex-1 flex flex-col  bg-[#060809] overflow-hidden ">
         <LiveStream
-          isLive={isFutureDate(liveStream?.event_date)}
+          isLive={isFutureDate(liveStream?.event_date)&&liveStream?.rewatchAvailable}
           liveStreamDetail={liveStream}
           handleOpenModal={handleOpenModal}
           handleCloseModal={handleCloseModal}
