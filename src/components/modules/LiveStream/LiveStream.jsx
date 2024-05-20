@@ -35,6 +35,7 @@ export default function LiveStream({
   liveStreamDetail,
   userProfileData,
   handleOpenModal,
+  isLoading
 }) {
   const [fullScreenModal, setFullScreenModal] = useState(false);
   const router = useRouter();
@@ -105,7 +106,7 @@ export default function LiveStream({
   const agoraClient = useRTCClient(
     AgoraRTC.createClient({ codec: "vp8", mode: "rtc" })
   ); // Initialize Agora Client
-  const MainContainer = `lg:px-[20px] lg:px-[60px] lg:px-[120px] relative`;
+  const MainContainer = `lg:px-[20px] lg:px-[20px] xl:px-[40px] relative`;
   return (
     <AgoraRTCProvider client={agoraClient}>
       <main
@@ -123,7 +124,7 @@ export default function LiveStream({
         <div className="flex flex-col lg:flex-row lg:gap-[16px] flex-1 takeScreen">
           <div className=" flex flex-col flex-[0.3] lg:flex-[0.6] xl:flex-[0.7] bg-[#27292E] lg:pt-[18px] lg:px-[23px] lg:rounded-[16px]">
             <div className="px-[5px]  items-center justify-between mb-[16px] hidden lg:flex">
-              <div className="text-[23px] font-semibold font-1 text-[#FFFFFF] uppercase">
+              <div className="text-[23px] font-semibold font-1 text-[#FFFFFF] uppercase line-clamp-1 w-[139px] lg:w-[185px] xl:w-auto">
                 {liveStreamDetail?.name}
               </div>
               <div className=" flex items-center gap-3">
@@ -169,6 +170,7 @@ export default function LiveStream({
           "
             >
               <div className="absolute  left-0 right-0 px-[16px] lg:px-[18px] top-0 py-[17px] flex justify-between text-white z-30 bg-gradient-to-b h-[100px] items-start from-black lg:rounded-[16px]">
+                {!isLoading &&
                 <div className="flex justify-between items-center w-full">
                   {isLive ? (
                     <div className="flex items-center gap-[8px]">
@@ -206,7 +208,7 @@ export default function LiveStream({
                     <FullScreenIcon />
                     Fullscreen
                   </div>
-                </div>
+                </div>}
               </div>
               {isLive && (
                 <div className="absolute hidden left-0 right-0 px-[18px] -bottom-[5px] py-[17px] lg:flex justify-end text-white z-50 bg-gradient-to-t h-[100px] items-end from-black lg:rounded-[16px]">
@@ -239,6 +241,7 @@ export default function LiveStream({
                 activeConnection={activeConnection}
                 isLive={isLive}
                 liveStreamDetail={liveStreamDetail}
+                isLoading={isLoading}
               />
             </div>
           </div>
@@ -261,7 +264,7 @@ export default function LiveStream({
               onBack={() => handleCloseModalAll(setFullScreenModal)}
               setActiveConnection={setActiveConnection}
               activeConnection={activeConnection}
-              isLive={false}
+              isLive={isLive}
               liveStreamDetail={liveStreamDetail}
             />
           }

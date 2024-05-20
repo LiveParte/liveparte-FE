@@ -8,7 +8,6 @@ import {
   useJoin,
   useLocalCameraTrack,
   useLocalMicrophoneTrack,
-  useNetworkQuality,
   usePublish,
   useRemoteAudioTracks,
   useRemoteUsers,
@@ -20,11 +19,9 @@ export default function LiveStreamVideo({
   setActiveConnection,
   isLive,
   liveStreamDetail,
-  isLoading
 }) {
   const appId = "Agora Project App ID";
   const user = useSelector(selectCurrentUserData);
-  const networkQuality = useNetworkQuality();
 
   const [micOn, setMic] = useState(true);
   const [cameraOn, setCamera] = useState(true);
@@ -49,9 +46,9 @@ export default function LiveStreamVideo({
   // play the remote user audio tracks
   audioTracks.forEach((track) => track.play());
 
-  // //bg-[url('/webp/livestream.webp')]
+  //bg-[url('/webp/livestream.webp')]
   console.log(remoteUsers,'liveStreamDetail')
-  return (!isLoading&&
+  return (
     <div className="w-full min-h-[30vh] lg:h-[70vh]  bg-cover lg:rounded-[16px] overflow-hidden ">
       {!isLive ? (
         <Video
@@ -64,7 +61,6 @@ export default function LiveStreamVideo({
               key={user.uid}
               className=" relative w-full overflow-hidden aspect-square h-full max-w-full"
             >
-              {console.log(user,'useruseruser')}
               <RemoteUser user={user} />
             </div>
           ))}
