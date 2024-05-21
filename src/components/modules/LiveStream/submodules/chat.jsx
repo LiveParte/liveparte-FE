@@ -18,6 +18,7 @@ export default function Chat({ onLeave, liveStreamDetail, userProfileData }) {
       name: "giftCoins",
       component: (
         <GiftingCoins
+          usersCoinsBalance={userProfileData?.totalCoin}
           eventId={liveStreamDetail}
           onNext={() => setPayFlow("purchasePartyCoins")}
           onClose={() => setPayFlow()}

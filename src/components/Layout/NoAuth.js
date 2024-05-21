@@ -9,34 +9,33 @@ function NoAuth({ children }) {
   const router = useRouter();
   // const [updateUserLocation]=useUpdateUserLocationMutation();
   // const userInfo = useSelector(selectCurrentUserData);
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
 
-  // const { data, isLoading, isError, status, error,isSuccess } = useGetUserProfileQuery(
-  //   userInfo?._id,
-  //   {
-  //     skip: !userInfo?._id?true:false
-  //   }
-  // );
+  const { data, isLoading, isError,error, isSuccess,status} = useGetUserProfileQuery(undefined,{
+    skip: true,
+    // selectFromResult: (result) => ({
+    //   ...result,
+    //   statusCode: result.meta?.statusCode,
+    // }),
+  });
 
-  // // console.log(userInfo,'countryInfo')
-  // // console.log(status,userInfo,'status')
+ 
 
-  // useEffect(() => {
-  //   if(!isLoading){
-   
-  
-  //   if (!userInfo?._id) {
+  // console.log(userInfo,'countryInfo')
+  useEffect(() => {
+    if(!isLoading){
     
-  //     dispatch(logout());
-  //   }
-  //   if (error?.message === "Unauthorized") {
-  //     dispatch(setUserData({}));
-  //   }
-  // }
-  // }, [ error?.message,userInfo?._id]);
+   
+    if(error?.message==="Unauthorized"){
+      // dispatch(setUserData({}))
+      dispatch(logout());
+    }
+    
+   
+  }
+  }, [ router,error?.message,isLoading]);
 
-  // console.log(error?.message,'status')
   return (
     <div className="min-h-[100vh] bg-[#000000] flex flex-col justify-end relative">
       <div className="absolute left-0 right-0 z-50 top-0">

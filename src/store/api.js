@@ -24,8 +24,9 @@ export const baseQuery = fetchBaseQuery({
       storage["localStorage"].remove(accessTokenStorageName);
       // storage["localStorage"].remove("user_type");
       storage["localStorage"].remove(userDetailStorageName);
-      throw new Error("Unauthorized");
+      // throw new Error("Unauthorized");
     }
+    // console.log(status,'handleRegisterUser')
     return status;
     // return status >= 200 && status < 300;
   },

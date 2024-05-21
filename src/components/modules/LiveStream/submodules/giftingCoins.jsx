@@ -15,7 +15,7 @@ import { REGEX_PATTERNS } from "@/utils/constants/errors";
 import { Controller, useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useLazyGetUserProfileQuery, userApi } from "@/store/User/userApi";
-export default function GiftingCoins({ onNext, onClose, eventId }) {
+export default function GiftingCoins({ onNext, onClose, eventId,usersCoinsBalance }) {
   const router = useRouter();
   const [checkProfile, { isLoading: cpLoading }] = useLazyGetUserProfileQuery();
   const { showId } = router?.query;
@@ -41,7 +41,11 @@ export default function GiftingCoins({ onNext, onClose, eventId }) {
       coins: data?.coins,
     };
 
-    // console.log(payload)
+    // if(usersCoinsBalance<data?.coins){
+    //   return 
+    // }
+
+   
 
     const response = await giftCoins(payload);
     if (response?.data?.message === "Coins gifted successfully") {
@@ -72,6 +76,7 @@ export default function GiftingCoins({ onNext, onClose, eventId }) {
             rules={{
               required: `coins is required`,
               pattern: REGEX_PATTERNS?.NUMBER,
+              validate:(value)=>value>usersCoinsBalance?'Insufficient Coins':true
             }}
             render={({ field: { onChange, value }, formState: { errors } }) => (
               <>

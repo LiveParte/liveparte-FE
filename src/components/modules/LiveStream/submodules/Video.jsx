@@ -64,12 +64,12 @@ export default function Video({ liveStreamDetail }) {
         autoPlay
         className="absolute left-0 right-0 top-0 bottom-0 object-contain md:object-contain h-full w-full z-20"
         poster={
-          liveStreamDetail?.promotional_url || liveStreamDetail?.streaming_url
+          liveStreamDetail?.thumbnail_url
         }
       >
         <source
           src={
-            liveStreamDetail?.promotional_url || liveStreamDetail?.streaming_url
+            liveStreamDetail?.streaming_url||liveStreamDetail?.promotional_url
           }
           type="video/mp4"
         />
