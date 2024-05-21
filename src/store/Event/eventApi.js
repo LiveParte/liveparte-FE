@@ -67,6 +67,13 @@ export const eventApi = createApi({
       }),
       
     }),
+    loginApi: builder.mutation({
+      query: (payload) => ({
+        url: "/auth/login",
+        method: "POST",
+        body: payload,
+      }),
+    }),
    
     //globalservice/all-enums
     //admin/funding-history
@@ -84,6 +91,7 @@ useGetEventStreamQuery,
 useGetEventViaIdQuery,
 useGetEventDetailViaIdQuery,
 useUserShowsQuery,
-useLazyUserShowsQuery
+useLazyUserShowsQuery,
+useLoginApiMutation
  
 } = eventApi;

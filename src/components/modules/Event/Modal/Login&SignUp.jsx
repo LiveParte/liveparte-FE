@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { CloseModal, NoProfile } from "../../../../../public/svg";
 import {
-  useLoginApiMutation,
+  // useLoginApiMutation,
   useRegisterApiMutation,
   useSignInWithGoogleMutation,
 } from "@/store/User/userApi";
@@ -25,12 +25,10 @@ import {
   SuccessNotification,
   eventLink,
   randomBetweenOneAndTen,
-  replaceSpaceWithDash,
   singleEventLink,
 } from "@/utils/reusableComponent";
-import { eventApi } from "@/store/Event/eventApi";
-import { transactionApi } from "@/store/Transaction/transactionApi";
-import { useGoogleLogin } from "@react-oauth/google";
+import { useLoginApiMutation } from "@/store/Event/eventApi";
+
 
 export default function LoginSignUp({
   closeModal,
@@ -193,7 +191,7 @@ export default function LoginSignUp({
 
     // toast('Hello! RegisterUser')
 
-    // console.log(handleRegisterUser?.data,'handleRegisterUser')
+    console.log(handleRegisterUser,'handleRegisterUser')
     if (!checkIfNonImageExist?.id) {
       storage.localStorage.set("noUserProfileImage", {
         id: response?.user?._id,
