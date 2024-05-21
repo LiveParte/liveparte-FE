@@ -20,14 +20,18 @@ function WithAuth({ children, showHeader = true }) {
   const {address,state,countryInfo}=userInfo||{};
 
 
-  const { data, isLoading, isError,error, isSuccess } = useGetUserProfileQuery(undefined,{
+  const { data, isLoading, isError,error, isSuccess,status} = useGetUserProfileQuery(undefined,{
     skip: true,
+    // selectFromResult: (result) => ({
+    //   ...result,
+    //   statusCode: result.meta?.statusCode,
+    // }),
   });
 
  
 
 
-//  console.log(userInfo,'UserString')
+ console.log(status,'UserString')
 
 
 // console.log(userInfo,'countryInfo')

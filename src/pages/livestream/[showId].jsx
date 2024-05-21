@@ -29,14 +29,14 @@ export default function Index() {
     skip:!userInfo?._id,
   });
   const NestedLiveStreamData = useSelector(selectLiveStreamEvent)||data;
-  const liveStream =data||NestedLiveStreamData
+  const liveStream ={...NestedLiveStreamData}
   let [isOpen, setIsOpen] = useState();
   const handleCloseModal = ()=>{
     setIsOpen(null)
     
   }
 
-  console.log(liveStream,data,'liveStream')
+  console.log(liveStream,data,NestedLiveStreamData,'NestedLiveStreamData')
 
   const handleOpenModal = (modalName)=>{
     setIsOpen(modalName)
@@ -58,6 +58,8 @@ export default function Index() {
     },
   ];
 
+  console.log(isFutureDate(liveStream?.event_date),liveStream?.event_date,'isFutureDate(liveStream?.event_date)')
+
   return (
     <WithAuth showHeader={false}>
        {isOpen && (
@@ -78,6 +80,7 @@ export default function Index() {
           handleOpenModal={handleOpenModal}
           handleCloseModal={handleCloseModal}
           userProfileData={userProfileData||userInfo}
+          isLoading={isLoading}
         />
       </div>
     </WithAuth>

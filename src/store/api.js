@@ -20,7 +20,7 @@ export const baseQuery = fetchBaseQuery({
     return headers;
   },
   validateStatus: (status) => {
-    if (status.status === 420) {
+    if (status.status === 401) {
       storage["localStorage"].remove(accessTokenStorageName);
       // storage["localStorage"].remove("user_type");
       storage["localStorage"].remove(userDetailStorageName);
