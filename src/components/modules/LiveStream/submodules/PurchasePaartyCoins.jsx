@@ -48,7 +48,7 @@ export default function PurchasePaartyCoins({
 
     const responses = await purchaseCoins(payload);
     // console.log(responses,'responses')
-    if (responses?.data?.message === "Coin payment marked as successful") {
+    if (responses?.data?.message === "You successfully purchased Liveparte coins") {
         const responseII=await checkProfile();
         // console.log(responseII?.data,'responseII')
       setCoinsNeeded(0);

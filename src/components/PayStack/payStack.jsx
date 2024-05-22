@@ -1,4 +1,4 @@
-import { selectCurrentUserData } from "@/store/User";
+import { logout, selectCurrentUserData } from "@/store/User";
 import React from "react";
 import { PaystackConsumer } from "react-paystack";
 import { useDispatch, useSelector } from "react-redux";
@@ -6,7 +6,7 @@ import { useCreatePurchaseMutation } from "@/store/Transaction/transactionApi";
 import { myShowLink } from "@/utils/reusableComponent";
 import { useRouter } from "next/router";
 import { isArray } from "@/utils/helper";
-import { useGetUserProfileQuery } from "@/store/User/userApi";
+import { useGetUserProfileQuery, useLazyGetUserProfileQuery } from "@/store/User/userApi";
 import { eventApi } from "@/store/Event/eventApi";
 
 //customFunction: this is to make a call from the out, if this is available it wont read the next link
@@ -17,6 +17,8 @@ export default function PayStack({ showDetails, onNext, children,isDisabled,cust
   const router =useRouter();
   const {id} =router.query;
   const [CreatePurchase, { isLoading: cpLoader }] = useCreatePurchaseMutation();
+  const [checkProfile, { isLoading: cpLoading }] = useLazyGetUserProfileQuery();
+
   const { data:userProfileData, isLoading:userProfileLoader,isSuccess } = useGetUserProfileQuery(undefined,{
     skip:!userData?._id,
   });
@@ -55,6 +57,7 @@ export default function PayStack({ showDetails, onNext, children,isDisabled,cust
       purchase_date: new Date(),
     };
     const response = await CreatePurchase(payload);
+    console.log(response,'CreatePurchase')
     if (response?.data?.createdPurchase?._id) {
       dispatch(eventApi.util.invalidateTags(["ondemand","event",'eventStream']));
       onNext && onNext();
@@ -76,10 +79,13 @@ export default function PayStack({ showDetails, onNext, children,isDisabled,cust
     onClose: handleClose,
   };
 
-  const handelCheckIfUserTokenIsValid = ()=>{
+  const handelCheckIfUserTokenIsValid =async ()=>{
     if(proceed && isSuccess){
+      const response = await checkProfile();
+      console.log(response?.data,'responseresponse')
       return true;
     }
+    dispatch(logout())
     return false;
   }
 

@@ -18,7 +18,7 @@ import {
   handleOpenModalAll,
   myShowLink,
 } from "@/utils/reusableComponent";
-import { LogoImage } from "@/utils/styleReuse";
+import { LogoImage, MainContainer } from "@/utils/styleReuse";
 import UserProfile from "@/components/Common/UserProfile";
 import CustomDropDown from "@/components/Common/CustomDropDown";
 import { userApi } from "@/store/User/userApi";
@@ -84,7 +84,7 @@ export default function LiveStream({
     );
   }
 
-  console.log(liveStreamDetail, "liveStreamDetail");
+  // console.log(liveStreamDetail, "liveStreamDetail");
   function ProfileDropdown() {
     return (
       <CustomDropDown dropdownRef={dropdownRef} setIsOpen={setIsOpen}>
@@ -106,7 +106,7 @@ export default function LiveStream({
   const agoraClient = useRTCClient(
     AgoraRTC.createClient({ codec: "vp8", mode: "rtc" })
   ); // Initialize Agora Client
-  const MainContainer = `lg:px-[20px] lg:px-[20px] xl:px-[40px] relative`;
+  // const MainContainer = `lg:px-[20px] lg:px-[20px] xl:px-[40px] relative`;
   return (
     <AgoraRTCProvider client={agoraClient}>
       <main
@@ -124,7 +124,7 @@ export default function LiveStream({
         <div className="flex flex-col lg:flex-row lg:gap-[16px] flex-1 takeScreen">
           <div className=" flex flex-col flex-[0.3] lg:flex-[0.6] xl:flex-[0.7] bg-[#27292E] lg:pt-[18px] lg:px-[23px] lg:rounded-[16px]">
             <div className="px-[5px]  items-center justify-between mb-[16px] hidden lg:flex">
-              <div className="text-[23px] font-semibold font-1 text-[#FFFFFF] uppercase line-clamp-1 w-[139px] lg:w-[185px] xl:w-auto">
+              <div className="text-[23px] font-semibold font-1 text-[#FFFFFF] uppercase line-clamp-1 w-[139px] lg:max-w-[10vw] xl:w-auto">
                 {liveStreamDetail?.name}
               </div>
               <div className=" flex items-center gap-3">
@@ -165,9 +165,7 @@ export default function LiveStream({
               </div>
             </div>
 
-            <div
-              className="relative overflow-hidden flex-1 lg:mb-[24px]
-          "
+            <div className="relative overflow-hidden flex-1 lg:mb-[24px]"
             >
               <div className="absolute  left-0 right-0 px-[16px] lg:px-[18px] top-0 py-[17px] flex justify-between text-white z-30 bg-gradient-to-b h-[100px] items-start from-black lg:rounded-[16px]">
                 {!isLoading &&
@@ -245,7 +243,7 @@ export default function LiveStream({
               />
             </div>
           </div>
-          <div className="   flex-[0.7] lg:flex-[0.4] xl:flex-[0.3]  flex flex-col lg:rounded-[26px] bg-[#222428]">
+          <div className=" flex-[0.7] lg:flex-[0.38] xl:flex-[0.3]  flex flex-col lg:rounded-[26px] bg-[#222428]">
             <Chat
               liveStreamDetail={liveStreamDetail}
               userProfileData={userProfileData}

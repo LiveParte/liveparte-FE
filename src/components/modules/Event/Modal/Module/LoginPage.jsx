@@ -44,7 +44,7 @@ export default function LoginPage({
           };
           GoogleSignIn(payload)
           setUser()
-            console.log(data);
+            // console.log(data);
             // setProfile(data);
         })
         .catch((error) => {
@@ -57,7 +57,7 @@ export default function LoginPage({
   const googleLogin = useGoogleLogin({
     onSuccess: (tokenResponse) => {
       setUser(tokenResponse);
-        console.log(tokenResponse,'tokenResponse')
+        // console.log(tokenResponse,'tokenResponse')
       // You can now use the tokenResponse to authenticate the user in your app
     },
     onError: () => {

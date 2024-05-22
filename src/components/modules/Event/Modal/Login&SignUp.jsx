@@ -191,7 +191,7 @@ export default function LoginSignUp({
 
     // toast('Hello! RegisterUser')
 
-    console.log(handleRegisterUser,'handleRegisterUser')
+    // console.log(handleRegisterUser,'handleRegisterUser')
     if (!checkIfNonImageExist?.id) {
       storage.localStorage.set("noUserProfileImage", {
         id: response?.user?._id,
@@ -237,7 +237,7 @@ export default function LoginSignUp({
 
   async function handleSignWithGoogle(){
     const response =await GoogleSignIn()
-    console.log(response,'response')
+    // console.log(response,'response')
   }
 
 

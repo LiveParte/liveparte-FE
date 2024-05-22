@@ -36,7 +36,7 @@ export default function Index() {
     
   }
 
-  console.log(liveStream,data,NestedLiveStreamData,'NestedLiveStreamData')
+  // console.log(liveStream,data,NestedLiveStreamData,'NestedLiveStreamData')
 
   const handleOpenModal = (modalName)=>{
     setIsOpen(modalName)
@@ -58,7 +58,7 @@ export default function Index() {
     },
   ];
 
-  console.log(isFutureDate(liveStream?.event_date),liveStream?.event_date,'isFutureDate(liveStream?.event_date)')
+  // console.log(isFutureDate(liveStream?.event_date),liveStream?.event_date,'isFutureDate(liveStream?.event_date)')
 
   return (
     <WithAuth showHeader={false}>
