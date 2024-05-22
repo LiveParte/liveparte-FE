@@ -53,11 +53,11 @@ export default function SignUpPage({
   const googleLogin = useGoogleLogin({
     onSuccess: (tokenResponse) => {
       setUser(tokenResponse);
-        console.log(tokenResponse,'tokenResponse')
+        // console.log(tokenResponse,'tokenResponse')
       // You can now use the tokenResponse to authenticate the user in your app
     },
     onError: () => {
-      console.error('Google login failed');
+      // console.error('Google login failed');
       // Handle login errors here
     },
     // flow: 'auth-code', // Use 'auth-code' for the authorization code flow

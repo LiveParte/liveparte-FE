@@ -50,7 +50,7 @@ export default function LiveStreamVideo({
   audioTracks.forEach((track) => track.play());
 
   // //bg-[url('/webp/livestream.webp')]
-  console.log(remoteUsers,'liveStreamDetail')
+  // console.log(remoteUsers,'liveStreamDetail')
   return (!isLoading&&
     <div className="w-full min-h-[30vh] lg:h-[70vh]  bg-cover lg:rounded-[16px] overflow-hidden ">
       {!isLive ? (

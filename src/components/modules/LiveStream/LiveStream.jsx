@@ -84,7 +84,7 @@ export default function LiveStream({
     );
   }
 
-  console.log(liveStreamDetail, "liveStreamDetail");
+  // console.log(liveStreamDetail, "liveStreamDetail");
   function ProfileDropdown() {
     return (
       <CustomDropDown dropdownRef={dropdownRef} setIsOpen={setIsOpen}>

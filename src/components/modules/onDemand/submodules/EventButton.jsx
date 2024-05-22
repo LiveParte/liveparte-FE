@@ -60,7 +60,7 @@ export default function EventButton({
     // implementation for  whatever you want to do when the Paystack dialog closed.
   };
 
-  console.log(buttonAction(),'isPaidAndEventIsLive')
+  // console.log(buttonAction(),'isPaidAndEventIsLive')
 
   const ModalList = [
     {

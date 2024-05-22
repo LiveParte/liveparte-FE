@@ -88,7 +88,7 @@ export default function EventId() {
 
   const eventsData={ ...data,...data?.event, ...shows   }
 
-  console.log(eventsData,'datadata')
+  // console.log(eventsData,'datadata')
  
   return (
     <NoAuth>
