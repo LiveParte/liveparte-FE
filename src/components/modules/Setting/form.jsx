@@ -72,8 +72,10 @@ export default function SettingForm({
 
 
   const CloudinaryUpload = (photo) => {
+    if(!getValues()?.phone){
+      return setError('phone', { type: 'custom', message: 'Phone number is required' });
+    }
     setIsLoading(true);
-   
     const data = new FormData();
     data.append("file", photo);
     data.append("upload_preset", "wnvzkduq");
@@ -85,6 +87,7 @@ export default function SettingForm({
       .then((res) => res.json())
       .then((data) => {
         // console.log(data,'response1')
+       
         setImageUrl(data?.secure_url);
         handleUpdateUser({
           ...getValues(),
@@ -94,6 +97,7 @@ export default function SettingForm({
         // scrollToBottom();
       })
       .catch((err) => {
+        setIsLoading(false);
       })
       .finally(() => {
         setIsLoading(false);
@@ -315,7 +319,7 @@ export default function SettingForm({
                 className={`w-full text-[13px] font500`}
                 onClick={handleSubmit(handleUpdateUser)}
                 isLoading={ updateUserLoader}
-                isDisabled={
+                isDisabled={isLoading||
                   isImageUrlLoading ||
                   profileLoader ||
                   !isChangedState
