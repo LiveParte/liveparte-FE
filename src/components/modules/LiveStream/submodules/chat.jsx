@@ -128,7 +128,7 @@ import DropdownButton from "@/components/Ui/DropDown";
       name: "giftCoins",
       component: (
         <GiftingCoins
-          usersCoinsBalance={userProfileData?.totalCoin}
+          usersCoinsBalance={userCoinsBalance}
           eventId={liveStreamDetail}
           onNext={() => setPayFlow("purchasePartyCoins")}
           onClose={() => setPayFlow(null)}

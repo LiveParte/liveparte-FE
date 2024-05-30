@@ -18,6 +18,7 @@ export default function GiftTicket({ closeModal, Data, show }) {
   const {
     control,
     handleSubmit,
+    watch,
     formState: { isValid },
     getValues,
   } = useForm({
@@ -38,8 +39,8 @@ export default function GiftTicket({ closeModal, Data, show }) {
     const payload = {
       event_id: Data?._id,
       ticket_id: Data?.ticket?._id|| Data?.ticket?.id,
-      message: getValues()?.message,
-      recipient_email: getValues()?.recipient_email,
+      message:getValues()?.message,
+      recipient_email:getValues()?.recipient_email,
       recipient_name: getValues()?.recipient_name,
     };
     // console.log(data, "data");
@@ -137,13 +138,14 @@ export default function GiftTicket({ closeModal, Data, show }) {
             />
           ))}
         </form>
+        {/* {console.log(Data,'DataDataData')} */}
         <PayStack
           showDetails={Data}
           proceed={isLoading?false:isValid}
           customFunction={handleGiftTicket}
         >
           <ButtonComp
-          isDisabled={isLoading}
+          isDisabled={isLoading||!isValid}
           isLoading={isLoading}
             btnText={`Proceed To Make Payment ${
               Data?.ticket?.code || ""

@@ -1,7 +1,17 @@
 import React, { memo, useState } from "react";
-import { IsDesktopMobileChat, IsDesktopMobileChatChangeName } from "../../style";
+import {
+  IsDesktopMobileChat,
+  IsDesktopMobileChatChangeName,
+} from "../../style";
 import Chat from "../chat";
-import { VideoMuteIcon, VideoNextBy10secIcon, VideoPauseIcon, VideoPlayIcon, VideoPrevBy10secIcon, VideoUnMuteIcon } from "../../../../../../public/svg";
+import {
+  VideoMuteIcon,
+  VideoNextBy10secIcon,
+  VideoPauseIcon,
+  VideoPlayIcon,
+  VideoPrevBy10secIcon,
+  VideoUnMuteIcon,
+} from "../../../../../../public/svg";
 import Image from "next/image";
 import { formatMoney } from "@/utils/formatMoney";
 import DropDown from "@/components/Ui/DropDown";
@@ -10,7 +20,7 @@ import { useSelector } from "react-redux";
 import { selectCoins } from "@/store/User";
 import PurchasePaartyCoins from "../PurchasePaartyCoins";
 
- function ChatOnCameraAndVideoControl({
+function ChatOnCameraAndVideoControl({
   liveStreamDetail,
   userProfileData,
   calculateProgressPercentage,
@@ -30,10 +40,10 @@ import PurchasePaartyCoins from "../PurchasePaartyCoins";
   // userCoinsBalance=0
 }) {
   const userCoinsBalance = useSelector(selectCoins);
-  const [isOpenGiftCoins,setIsOpenGiftCoins]=useState(false);
-  const [isOpenBuyCoins,setIsOpenBuyCoins]=useState(false);
+  const [isOpenGiftCoins, setIsOpenGiftCoins] = useState(false);
+  const [isOpenBuyCoins, setIsOpenBuyCoins] = useState(false);
 
-  console.log(userCoinsBalance,'userCoinsBalance')
+  console.log(userCoinsBalance, "userCoinsBalance");
 
   //  bg-gradient-to-l from-[#0000000f] to-[#0000000a]
 
@@ -64,46 +74,45 @@ import PurchasePaartyCoins from "../PurchasePaartyCoins";
   );
 
   return (
-    <div className={`${IsDesktopMobileChat} left-0 bg-red-600   flex   lg:mb-0 bg-gradient-to-l from-[#0000000f] to-[#0000000a] `}>
+    <div
+      className={`${IsDesktopMobileChat} left-0 bg-red-600   flex   lg:mb-0 bg-gradient-to-l from-[#0000000f] to-[#0000000a] `}
+    >
       <div className="flex justify-center items-center pt-[61px] pb-[28px] absolute left-0 right-0 bottom-0 gap-[48px] linear-gradient">
         <DropDown
-        className={`!left-0 `}
-         modalState={isOpenGiftCoins}
-        onNext={setIsOpenGiftCoins}
-         position={'top'}
-        label={<SendCoinsComp   />}
->
-<GiftingCoins
-          usersCoinsBalance={userCoinsBalance}
-          eventId={liveStreamDetail}
-          containerStyle={`!w-[300px] rounded-[8px]`}
-        />
-</DropDown>
-        <DropDown
-        
-         onNext={setIsOpenBuyCoins}
-         modalState={isOpenBuyCoins}
-        label={
-          <div className="relative hidden lg:flex text-white element rounded-[96px]">
-            <div
-              className="px-[17px] h-[40px] rounded-[96px] flex gap-[9px] text-white text-[13px] lg:text-[13px] font500 items-center bg-[#BACFF70A] cursor-pointer relative w-fit"
-              // onClick={() => setPayFlow("purchasePartyCoins")}
-            >
-              <div>Add Coins</div>
-            </div>
-          </div>
-        }
+          className={`!left-0 `}
+          modalState={isOpenGiftCoins}
+          onNext={setIsOpenGiftCoins}
+          position={"top"}
+          label={<SendCoinsComp />}
         >
-           <PurchasePaartyCoins
-           
-          // onBack={() => setPayFlow("giftCoins")}
-          // onClose={() => setPayFlow(null)}
-          containerStyle={`!w-full rounded-[8px]`}
-        />
+          <GiftingCoins
+            usersCoinsBalance={userCoinsBalance}
+            eventId={liveStreamDetail}
+            containerStyle={`!w-[300px] rounded-[8px]`}
+          />
         </DropDown>
-      
+        <DropDown
+          onNext={setIsOpenBuyCoins}
+          modalState={isOpenBuyCoins}
+          label={
+            <div className="relative hidden lg:flex text-white element rounded-[96px]">
+              <div
+                className="px-[17px] h-[40px] rounded-[96px] flex gap-[9px] text-white text-[13px] lg:text-[13px] font500 items-center bg-[#BACFF70A] cursor-pointer relative w-fit"
+                // onClick={() => setPayFlow("purchasePartyCoins")}
+              >
+                <div>Add Coins</div>
+              </div>
+            </div>
+          }
+        >
+          <PurchasePaartyCoins
+            // onBack={() => setPayFlow("giftCoins")}
+            // onClose={() => setPayFlow(null)}
+            containerStyle={`!w-full rounded-[8px]`}
+          />
+        </DropDown>
       </div>
-     {/* <div className="flex   align-bottom flex-1 justify-end overflow-hidden">
+      {/* <div className="flex   align-bottom flex-1 justify-end overflow-hidden">
         <div className="flex-1 items-end justify-end flex ">
         {isLive&&<div className="z-50  pb-5 text-white w-full  pt-8 bg-gradient-to-t from-black  pl-[80px] pr-[45px]">
         <div
@@ -169,9 +178,8 @@ import PurchasePaartyCoins from "../PurchasePaartyCoins";
         />
       </div>
     </div> */}
-   </div>
+    </div>
   );
 }
-
 
 export default memo(ChatOnCameraAndVideoControl);

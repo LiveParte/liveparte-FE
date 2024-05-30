@@ -3,11 +3,17 @@ import React from "react";
 // import { Daviod } from "../../../../public/svg";
 import { MainContainer } from "@/utils/styleReuse";
 import ButtonComp from "@/components/Ui/button";
+import { useSelector } from "react-redux";
+import { selectEvent } from "@/store/User";
 
 export default function HeroTime({ notEvent = true,router,onClick }) {
+  const eventSelected =useSelector(selectEvent);
+  console.log(eventSelected,'eventSelected')
   return (
     <div
       className={`relative font400  bg-[url('/webp/bg1.png')] bg-cover bg-center  xl:bg-left ${MainContainer} grayscale flex-1`}
+      style={{backgroundImage: `url('${eventSelected?.thumbnail_url}')`,
+      backgroundAttachment: "fixed", }}
     >
       <div className="h-full">
         
