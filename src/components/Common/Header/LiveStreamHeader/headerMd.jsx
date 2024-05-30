@@ -25,7 +25,7 @@ export default function HeaderMd({
      <UserProfile onClick={() => setIsOpen(!isOpen)} />
    </div>
     <div className="md:hidden">
-      <div className="absolute  left-0 right-0 px-[16px] lg:px-[18px] top-0 py-[17px] flex justify-between text-white z-30 bg-gradient-to-b h-[100px] items-start from-black lg:rounded-[16px]">
+      <div className="absolute  left-0 right-0 px-[16px] lg:px-[18px] top-0 py-[17px] bg-black flex justify-between text-white z-30 bg-gradient-to-b h-[100px] items-start from-black lg:rounded-[16px]">
         {!isLoading && (
           <div className="flex justify-between items-center w-full">
             {isLive ? (
