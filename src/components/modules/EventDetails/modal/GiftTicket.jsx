@@ -31,7 +31,9 @@ export default function GiftTicket({ closeModal, Data, show }) {
   const handleAction = () => {
     router.push("/event_time_out");
   };
-  const handleValidation = () => {};
+  const handleValidation = (data) => {
+    handleGiftTicket(data);
+  };
 
   // console.log(Data, "Data");
 
@@ -96,8 +98,10 @@ export default function GiftTicket({ closeModal, Data, show }) {
               {Data?.address}
             </div>
             <div className="text-[14px] text-white font500">
-              {Data?.ticket?.code} ₦
-              {formatMoney(Data?.ticket?.price, false || "0")}
+              {/* {Data?.ticket?.code} ₦ */}
+              {Data?.ticket?.price === 0
+                ? "Ticket is Free"
+              :formatMoney(Data?.ticket?.price, false || "0")}
             </div>
           </div>
         </div>
@@ -138,7 +142,19 @@ export default function GiftTicket({ closeModal, Data, show }) {
             />
           ))}
         </form>
-        {/* {console.log(Data,'DataDataData')} */}
+        {console.log(Data?.ticket?.price,'DataDataData')}
+        {Data?.ticket?.price==0?
+        <ButtonComp
+        isDisabled={isLoading||!isValid}
+        isLoading={isLoading}
+          btnText={`Proceed To Make Payment
+           ${Data?.ticket?.price === 0?'':
+            Data?.ticket?.code || ""
+          } ${Data?.ticket?.price === 0?'':formatMoney(Data?.ticket?.price || "0", false || "0")} `}
+          className={`w-full text-[13px] font500] h-[44px] mt-[20px]`}
+          onClick={handleSubmit(handleValidation)}
+        />
+       : 
         <PayStack
           showDetails={Data}
           proceed={isLoading?false:isValid}
@@ -147,13 +163,13 @@ export default function GiftTicket({ closeModal, Data, show }) {
           <ButtonComp
           isDisabled={isLoading||!isValid}
           isLoading={isLoading}
-            btnText={`Proceed To Make Payment ${
+            btnText={`Proceed To Make Payment ${Data?.ticket?.price === 0?'':
               Data?.ticket?.code || ""
             } ${formatMoney(Data?.ticket?.price || "0", false || "0")} `}
             className={`w-full text-[13px] font500] h-[44px] mt-[20px]`}
             onClick={handleSubmit(handleValidation)}
           />
-        </PayStack>
+        </PayStack>}
       </main>
     </div>
   );
