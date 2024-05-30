@@ -50,7 +50,7 @@ export default function SignUpPage({
             console.error('There has been a problem with your fetch operation:', error);
         });
     }
-}, [user]);
+}, [user,]);
 
   const googleLogin = useGoogleLogin({
     onSuccess: (tokenResponse) => {
