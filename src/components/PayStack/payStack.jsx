@@ -24,12 +24,14 @@ export default function PayStack({ showDetails, onNext, children,isDisabled,cust
   });
   // console.log(amount,'amount')
   const show={...showDetails,ticket:isArray(showDetails?.tickets)?showDetails?.tickets[0]:showDetails?.ticket};
-  // console.log(show,showDetails,'hello')
+  // console.log(userData,'DataDataData')
   const config = {
     reference: new Date().getTime().toString(),
     email: userData?.email,
     amount:Number(amount * 100|| show?.ticket?.price * 100), //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
-    publicKey: "pk_test_9b34d7cad3b54108b6eb034c951d89366eadcc3d",
+    publicKey: "pk_live_f9e91d7c1463cb421aaab647c6b1a5a8a8fe568e",
+    // publicKey: "pk_test_9b34d7cad3b54108b6eb034c951d89366eadcc3d",
+  
     metadata: {
       custom_fields: [
         {
@@ -57,7 +59,7 @@ export default function PayStack({ showDetails, onNext, children,isDisabled,cust
       purchase_date: new Date(),
     };
     const response = await CreatePurchase(payload);
-    console.log(response,'CreatePurchase')
+    // console.log(response,'CreatePurchase')
     if (response?.data?.createdPurchase?._id) {
       dispatch(eventApi.util.invalidateTags(["ondemand","event",'eventStream']));
       onNext && onNext();
