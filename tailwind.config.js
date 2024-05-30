@@ -11,6 +11,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'gradient-to-bottom': 'linear-gradient(180deg, #000000 0%, rgba(0, 0, 0, 0) 99.19%)',
+        'gradient-to-top': 'linear-gradient(0deg, #000000 0%, rgba(0, 0, 0, 0) 99.19%)',
+      },
       screens: {
         tall: { raw: "(max-height: 600px)" },
         tallM: { raw: "(max-height: 650px)" },

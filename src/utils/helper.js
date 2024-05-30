@@ -4,10 +4,13 @@ import { useDispatch } from 'react-redux';
 import { Avatar1, Avatar10, Avatar2, Avatar3, Avatar4, Avatar5, Avatar6, Avatar7, Avatar8, Avatar9 } from "../../public/svg/avatars";
 
 const secretKey = 'hahahahah';
-
+// GOOGLE_CLIENT_ID= <YOUR GOOGLE CLIENT ID>
+// GOOGLE_CLIENT_SECRET=<YOUR GOOGLE CLIENT SECRET></YOUR>
 export const useAppDispatch = () => useDispatch();
 export const accessTokenStorageName =`accessTokenLiveParte`;
 export const userDetailStorageName=`UserLiveParte`;
+export const client_id=`845158309668-olf8vmklh4baunlh2m7jb3fnidupl1u2.apps.googleusercontent.com`;
+export const client_secret=`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`
 export const storage = {
   localStorage: {
     set: (key, value) => {
@@ -203,4 +206,29 @@ export const NoImageUser = [
 
 export function isArray(data) {
   return Array.isArray(data);
+}
+
+
+export function separateEventsByDate(events) {
+  if(Array.isArray(events)) {
+  const today = new Date();
+  const todayDate = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+
+  const oldEvents = [];
+  const newEvents = [];
+
+  events.forEach(event => {
+      const eventDate = new Date(event.event_date);
+      const eventDateOnly = new Date(eventDate.getFullYear(), eventDate.getMonth(), eventDate.getDate());
+
+      if (eventDateOnly < todayDate) {
+          oldEvents.push(event);
+      } else {
+          newEvents.push(event);
+      }
+  });
+  
+
+  return { oldEvents, newEvents };
+}
 }

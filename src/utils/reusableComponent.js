@@ -50,8 +50,12 @@ export function GetTransformedImageUrl(
   return transformedImageUrl;
 }
 
-export function randomBetweenOneAndTen() {
-  return Math.floor(Math.random() * 9) + 1;
+export   const termsUrl=`https://liveparte.notion.site/Terms-of-service-d531fa1d585346dba3205ae490f5fbb4`
+export const PolicyUrl='https://liveparte.notion.site/Privacy-Policy-8829d4f389254c95af56fd67b9271a6e?pvs=4'
+export const ContactUs =`mailto:support@liveparte.com`
+export function randomBetweenOneAndTen(ArrayLength=9) {
+  return Math.floor(Math.random() * (ArrayLength-1)); // Generate a random number between 0 and 9
+
 }
 
 export function SuccessNotification({ message }) {
@@ -67,7 +71,8 @@ export function SuccessNotification({ message }) {
 export function ErrorNotification({ message }) {
   toast?.error(message, {
    icon: <ErrorNotificationIcon />,
-   style: { background: "#FED9DD", color: "#060809" },
+   style: { background: "#FED9DD", color: "#060809",fontSize:13, },
+   className:'font400'
  });
  
 }
@@ -131,3 +136,123 @@ export const isJSON = (str) => {
 
 const userData = storage.localStorage.get(userDetailStorageName);
 export const CheckUser =isJSON(userData)&&JSON?.parse(userData)
+
+
+export function convertDateTime(inputDateTime) {
+  // Extract date and time components
+  const [date, time] = inputDateTime.split('T');
+  
+  // Extract year, month, and day
+  const [year, month, day] = date.split('-');
+  
+  // Extract hour, minute, and second
+  const [hour, minute] = time.split(':');
+  
+  // Convert to desired format
+  const formattedDateTime = `${year}${month}${day}T${hour}${minute}`;
+  
+  return formattedDateTime;
+}
+
+
+
+
+export function convertAndAddOneHour(inputDateTime) {
+  // Extract date and time components
+  //lagos(West Africa)is WAT
+  const [date, time] = inputDateTime.split('T');
+  
+  // Extract year, month, and day
+  const [year, month, day] = date.split('-');
+  
+  // Extract hour and minute
+  const [hour, minute] = time.split(':');
+  
+  // Convert to UTC format
+  const utcDateTime = `${year}${month}${day}T${hour}${minute}`;
+
+  // Convert UTC string to Date object
+  const utcDate = new Date(Date.UTC(year, month - 1, day, hour, minute));
+
+  // Add one hour
+  utcDate.setUTCHours(utcDate.getUTCHours() + 2);
+
+  // Format the new date and time
+  const newYear = utcDate.getUTCFullYear();
+  const newMonth = String(utcDate.getUTCMonth() + 1).padStart(2, '0');
+  const newDay = String(utcDate.getUTCDate()).padStart(2, '0');
+  const newHour = String(utcDate.getUTCHours()).padStart(2, '0');
+  const newMinute = String(utcDate.getUTCMinutes()).padStart(2, '0');
+  const newSecond = String(utcDate.getUTCSeconds()).padStart(2, '0');
+
+  const newDateTime = `${newYear}${newMonth}${newDay}T${newHour}${newMinute}${newSecond}Z`;
+
+  return newDateTime;
+}
+
+// Test the function
+const inputDateTime = "2024-07-05T19:00";
+const newDateTime = convertAndAddOneHour(inputDateTime);
+// console.log(newDateTime);  // Output: "20240705T200000Z"
+
+
+export function checkShowDuration(targetDateTime, durationMins) {
+    // Current date and time
+    const currentDate = new Date();
+
+    // Convert targetDateTime string to Date object
+    const targetDate = new Date(targetDateTime);
+    
+    // Calculate target date and time after adding durationMins
+    const targetDatePlusDuration = new Date(targetDate.getTime() + (durationMins * 60 * 1000));
+
+    // console.log(targetDate,targetDatePlusDuration,'targetDatePlusDuration')
+    // Check conditions
+    if (currentDate >= targetDate && currentDate <= targetDatePlusDuration) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+export function checkShowDurationAfter(targetDateTime, durationMins) {
+  const currentDate = new Date(); // Current date and time
+  const targetDate = new Date(targetDateTime); // Convert targetDateTime string to Date object
+  const targetDatePlusDuration = new Date(targetDate.getTime() + (durationMins * 60 * 1000)); // Calculate target date and time after adding durationMins
+  return currentDate <= targetDatePlusDuration; //
+}
+
+
+
+export function replaceAmpersandWithAnd(str) {
+  return str.replace(/&/g, 'and');
+}
+
+
+export function handleCloseModalAll (functionModal){
+  return functionModal &&functionModal(false)
+
+}
+
+export function handleOpenModalAll (functionModal){
+  return functionModal &&functionModal(true)
+
+}
+
+
+export function isFutureDate(dateStr) {
+
+  try {
+    // Parse the date string into a Date object
+    const dateObj = new Date(dateStr);
+
+    // Get the current time
+    const now = new Date();
+
+    // Check if the date is in the future (greater than current time)
+    return dateObj > now;
+  } catch (error) {
+    console.error(`Invalid date format: ${dateStr}`, error);
+    return false; // Handle invalid date format gracefully
+  }
+}

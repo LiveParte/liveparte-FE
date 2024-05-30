@@ -15,7 +15,7 @@ const Header = React.memo(
 
     return (
       <div
-        className={`px-[20px] md:px-[40px] lg:px-[120px] mb-[40px] xl:mb-[63px] ${MainContainer}`}
+        className={`px-[20px] md:px-[40px] lg:px-[120px] mb-[40px] xl:mb-[43px] ${MainContainer}`}
       >
         <main>
           <div className="font-1 text-[35px] font-bold text-[#FFFFFF] mb-[35px]">
@@ -41,7 +41,7 @@ const Header = React.memo(
               <div
                 key={i}
                 onClick={() => setIsActive && setIsActive(item?.name)}
-                className={`lg:px-[32px] px-[18px] py-[11px] rounded-[8px]  customScrollVertical ${
+                className={`lg:px-[32px] px-[18px]  !h-[38px] flex justify-center items-center rounded-[8px]  customScrollVertical ${
                   isActive === item?.name
                     ? `${HeaderOnSelect}`
                     : ""

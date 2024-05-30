@@ -4,7 +4,7 @@ import React from "react";
 export default function ImageOrVideo({ videoRef, image, isPlaying, item }) {
   return (
     <div className="">
-      <div className="flex-[1] flex justify-center items-center absolute left-0 right-0 top-[0px] bottom-0  bg-gradient-to-t from-[#00000079] z-50"></div>
+      <div className="flex-[1] flex justify-center items-center absolute left-0 right-0 top-[0px] bottom-0  bg-gradient-to-t from-[#00000079] z-10"></div>
       {!isPlaying ? (
         <Image
           src={item?.thumbnail_url}

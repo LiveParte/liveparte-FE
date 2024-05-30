@@ -1,18 +1,18 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { baseQuery } from "../api";
+import {  baseQueryWithRetry } from "../api";
 import { logout } from ".";
 
 export const userApi = createApi({
   reducerPath: "userApi",
-  baseQuery: baseQuery,
+  baseQuery: baseQueryWithRetry,
   tagTypes: ["user"],
-
+  refetchOnReconnect:true,
+  // refetchOnFocus:true,
   endpoints: (builder) => ({
     getUserProfile: builder.query({
-      query: (body) => ({
+      query: () => ({
         url: "/auth/profile",
         method: "GET",
-        body,
       }),
       providesTags: ["user"],
     }),
@@ -36,7 +36,7 @@ export const userApi = createApi({
     }),
     loginApi: builder.mutation({
       query: (payload) => ({
-        url: "auth/login",
+        url: "/auth/login",
         method: "POST",
         body: payload,
       }),
@@ -65,16 +65,31 @@ export const userApi = createApi({
       }),
       // invalidatesTags: ["user"],
     }),
+    updateUserLocation: builder.mutation({
+      query: (payload) => ({
+        url: `auth/register-user-location/${payload?.id}`,
+        method: "PATCH",
+        body: payload,
+      }),
+      invalidatesTags: ["user"],
+    }),
+    signInWithGoogle: builder.mutation({
+      query: (payload) => ({
+        url: `auth/oauth/google/login`,
+        method: "POST",
+        body: payload,
+      }),
+      // invalidatesTags: ["user"],
+    }),
+    //auth/register-user-location/{id}
     //users/35
     //company/manager/:userId/update
     //admin/admin-management
     //auth/change-password
+    //auth/oauth/google/login
   }),
-  onQueryError: async ({ error, dispatch }) => {
-    if (error.status === 401) {
-      await dispatch(logout());
-    }
-  },
+ 
+
 });
 
 export const {
@@ -84,6 +99,9 @@ export const {
   useGetUserProfileQuery,
   useChangePasswordMutation,
   useForgetPasswordMutation,
-  useRestPasswordMutation
+  useRestPasswordMutation,
+  useUpdateUserLocationMutation,
+  useLazyGetUserProfileQuery,
+  useSignInWithGoogleMutation
 
 } = userApi;

@@ -1,24 +1,108 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Header from "./Header";
 import AuthHeader from "./AuthHeader";
-import { selectCurrentUserData } from "@/store/User";
+import { selectCoins, selectCurrentUserData, setCoins, setUserData } from "@/store/User";
 import LoginSignUp from "@/components/modules/Event/Modal/Login&SignUp";
 import ForgetPassword from "@/components/modules/Event/Modal/submodules/ForgetPassword/ForgetPassword";
 import MyModal from "@/components/Ui/Modal";
 import { useRouter } from "next/router";
+// import { useGetAllCoinsQuery } from "@/store/Transaction/transactionApi";
+import {  useGetUserProfileQuery, useLazyGetUserProfileQuery, useUpdateProfileMutation, useUpdateUserLocationMutation } from "@/store/User/userApi";
+import { useGetUserLocationQuery } from "@/store/others/othersApi";
+import { accessTokenStorageName, storage, userDetailStorageName } from "@/utils/helper";
+import { useGetAllEventQuery } from "@/store/Event/eventApi";
 
 export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
   const [userDetail, setUserDetail] = useState(false);
+  const dispatch = useDispatch();
+  const userInfo = useSelector(selectCurrentUserData) || {};
+  const userCoinsBalance  = useSelector(selectCoins);
+  const isTokenAvailable =localStorage.getItem(accessTokenStorageName);
+  // console.log(userCoinsBalance,'userCoinsBalance')
+ 
+  const {address,state,countryInfo,coin}=userInfo||{};
+  const name = countryInfo ? countryInfo.name : null;
+  const coinsPrice =coin?coin?.price:null;
+  const [checkProfile,{isLoading:cpLoading}]=useLazyGetUserProfileQuery()
+  // const { data, isLoading: isLoadingCoins } = useGetAllCoinsQuery();
+  const [updateUserLocation,{isSuccess:updateUserLocationIsSuccess}]=useUpdateUserLocationMutation();
+  const check =!address||!state||!name||!coinsPrice;
+  const {data:extraDetails,isLoading,isSuccess}=useGetUserLocationQuery({
+    skip:!check
+  });
+  const { data:userProfileData, isLoading:userProfileLoader,refetch,isFetching, } = useGetUserProfileQuery(undefined,{
+    skip: !check || !userInfo?.id
+  });
+
+  //this code is to make a p
+  const [updateUserDetails,{isSuccess:updateUserDetailsIsSuccess}] =useUpdateProfileMutation();
+  async function handleCheckIfTwoAccounts(){
+    const payload={
+      "fullName": userInfo.fullName,
+      "phone": userInfo?.phone,
+      "country": userInfo?.country,
+      "state": userInfo?.state,
+      "address": userInfo?.address,
+      "profile_image": userInfo?.profile_image,
+      id: userInfo?._id
+    }
+    const checkTwoAccounts= await updateUserDetails(payload);
+      console.log(checkTwoAccounts,'checkTwoAccounts')
+  }
+
+  useEffect(() => {
+   if(userInfo.fullName&&userInfo.phone&&userInfo.country&&userInfo.state&&userInfo.address && !updateUserDetailsIsSuccess){
+    handleCheckIfTwoAccounts();
+   }
+  }, [userInfo])
+
+  useEffect(() => {
+    
+    if(check&&isSuccess){
+    userInfo?._id&&handleUpdateUserLocation(extraDetails)
+    // userInfo?._id&&dispatch(setUserData(userProfileData));
+    }
+  
+ }, [check, userInfo?._id])
+
+  // console.log(userInfo,extraDetails,check,'userInfouserInfo')
+
   const router = useRouter();
-  const user = useSelector(selectCurrentUserData) || {};
   let [isOpen, setIsOpen] = useState();
   const { token } = router.query;
- 
-  useEffect(() => {
-    setUserDetail(user?._id);
-  }, [user?._id]);
 
+ 
+
+  const handleUpdateUserLocation=async(data)=>{
+    const payload={
+      "country":data?.country_name,
+      "state": data?.region,
+      "country_code": data?.country_code,
+      "currency_code": data?.currency,
+      "currency_name": data?.currency_name,
+      "address": data?.ip,
+      id:userInfo?._id
+    }
+    const response = await updateUserLocation(payload);
+    const UserString = JSON.stringify(response?.data?.updatedUser);
+    if(response?.data?.message==="User has been successfully updated"){
+      const responseII=await checkProfile();
+      dispatch(setUserData(responseII?.data))
+      
+    }
+    
+
+  }
+
+
+
+
+  useEffect(() => {
+    setUserDetail(userInfo?._id);
+  }, [userInfo?._id]);
+
+  // console.log(userDetail,user,'user')
   useEffect(() => {
     if (router?.pathname === "/reset-password") {
       openModal("ForgetPassword");
@@ -76,18 +160,7 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
 
   return (
     <div className="relative">
-   {/* {isRoute && 
-   <div className="absolute right-3 z-[999px] top-3">
-    <div
-          className="inline-block h-10 w-10 animate-spin rounded-full border-3 border-solid border-[#fff] border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"
-          role="status"
-        >
-          <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">
-            Loading...
-          </span>
-        </div>
-    </div>
-} */}
+     
       {isOpen && (
         <MyModal
           bodyComponent={
@@ -104,7 +177,7 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
         />
       )}
       {userDetail ? (
-        <AuthHeader showNav={true} />
+        <AuthHeader  userInfo={userProfileData||userInfo} showNav={true} userCoinsBalance={userCoinsBalance}/>
       ) : (
         <Header
           openModal={openModal || openModalLoginSignUp}

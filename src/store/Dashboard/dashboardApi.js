@@ -1,9 +1,9 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { baseQuery } from "../api";
+import { baseQueryWithRetry } from "../api";
 
 export const dashboardApi = createApi({
   reducerPath: "dashboardApi",
-  baseQuery: baseQuery,
+  baseQuery: baseQueryWithRetry,
   endpoints: (builder) => ({
     getDashBoardMetrics: builder.query({
       query: (body) => ({

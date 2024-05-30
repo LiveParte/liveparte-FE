@@ -44,15 +44,9 @@ export default function Hero({
       <div
         className={`absolute left-0 right-0 top-0 bottom-0 ${MainContainer}`}
       >
-        {/* <div className="absolute left-0 right-0 z-50">
-          <IfHeaderIsAuth
-            openModal={openModal}
-            openModalLoginSignUp={openModalLoginSignUp}
-          />
-        </div> */}
+       
         <div className="relative">
           <div className="  min-h-[100dvh] md:min-h-screen relative flex flex-col justify-end md:justify-end  ">
-            {/* <div className="h-[45vh] md:h-[20vh]" /> */}
 
             <div
               className={`relative z-40  mt-[15vh] flex flex-col  md:justify-start items-start md:items-start   md:text-start`}
@@ -64,10 +58,10 @@ export default function Hero({
                     .
                   </span>
                   <div className="text-[#FFC41B]">
-                    {textChange}
+                    {/* {textChange} */}
                     {/* <span className="inline-block animate-bounce">Okay</span> */}
 
-                    {/* <Animate textChange={textChange} /> */}
+                    <Animate textChange={textChange} />
                   </div>
                 </div>
                 <div className="text-white w-[75vw] md:w-[65vw] lg:w-[45vw]  lg:tracking-normal  mb-[80px] md:mb-[60px] :-text-start md:text-start text-[12px] sm:text-[13px] md:text-[20px] font400">
@@ -106,7 +100,7 @@ export default function Hero({
         poster="/webp/1.webp"
       >
         <source
-          src={`https://res.cloudinary.com/dammymoses/video/upload/v1708675597/LiveParte/Screen_Recording_2024-02-18_at_19.05.07_wa31aj.mov`}
+          src={`/video/homeVideo.mov`}
           type="video/mp4"
         />
         Your browser does not support the video tag.
@@ -115,7 +109,7 @@ export default function Hero({
       <div
         className={` font400  bg-[url('/webp/1.webp')]  bg-cover  xl:bg-left ${MainContainer} `}
       >
-        <div className=" absolute - bottom-1 left-0 right-0 h-[60vh] md:h-[80vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-t from-black"></div>
+        <div className=" absolute - bottom-[-2px] left-0 right-0 h-[60vh] md:h-[80vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-t from-black"></div>
       </div>
       {/* </AnimatePresence> */}
     </div>

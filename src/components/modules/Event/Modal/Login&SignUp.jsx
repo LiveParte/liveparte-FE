@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { CloseModal, NoProfile } from "../../../../../public/svg";
 import {
-  useLoginApiMutation,
   userApi,
+  // useLoginApiMutation,
   useRegisterApiMutation,
+  useSignInWithGoogleMutation,
 } from "@/store/User/userApi";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -17,7 +18,7 @@ import {
   userDetailStorageName,
 } from "@/utils/helper";
 import { useDispatch } from "react-redux";
-import { setUserData } from "@/store/User";
+import { setCoins, setUserData } from "@/store/User";
 import LoginPage from "./Module/LoginPage";
 import SignUpPage from "./Module/SignUp";
 import {
@@ -25,11 +26,11 @@ import {
   SuccessNotification,
   eventLink,
   randomBetweenOneAndTen,
-  replaceSpaceWithDash,
   singleEventLink,
 } from "@/utils/reusableComponent";
-import { eventApi } from "@/store/Event/eventApi";
-import { transactionApi } from "@/store/Transaction/transactionApi";
+import { useLoginApiMutation } from "@/store/Event/eventApi";
+
+
 export default function LoginSignUp({
   closeModal,
   pageName = "",
@@ -38,6 +39,7 @@ export default function LoginSignUp({
   onNext,
   openModal,
 }) {
+  
   const router = useRouter();
   const dispatch = useDispatch();
   const { id } = router?.query;
@@ -52,15 +54,16 @@ export default function LoginSignUp({
 
   const [LoginUser, { isLoading: loginLoader, isError: loginIsError }] =
     useLoginApiMutation();
+  const [GoogleSignIn, { isLoading }] = useSignInWithGoogleMutation();
   const checkIfNonImageExist = storage.localStorage.get("noUserProfileImage");
   const { control, handleSubmit, getValues, reset, setError } = useForm({
     defaultValues: {
-      email: "",
-      username: "",
-      password: "",
-      phoneNumber: "",
-      fullName: "",
-      confirmPassword: "",
+      // email: "",
+      // username: "",
+      // password: "",
+      // phoneNumber: "",
+      // fullName: "",
+      // confirmPassword: "",
     },
   });
 
@@ -81,7 +84,6 @@ export default function LoginSignUp({
     },
   });
 
-
   useEffect(() => {
     if (pageName) {
       setToggle(pageName);
@@ -89,24 +91,20 @@ export default function LoginSignUp({
   }, [pageName]);
 
   async function handleRegister(e) {
-    // if (e?.password !== e?.confirmPassword) {
-    //   return setError("confirmPassword", {
-    //     type: "custom",
-    //     message:
-    //       "The password and confirm password do not match. Please make sure they are the same.",
-    //   });
-    // }
-    // e.preventDefault();
+    // "email": "string",
+    // "username": "string",
+    // "fullName": "string",
+    // "password": "string"
     const payload = {
       ...e,
-      username: e.fullName,
+      username: e.email,
       fullName: e?.fullName,
     };
     const handleRegisterUser = await RegisterUser(payload);
     const response = handleRegisterUser?.data;
 
-    const UserString = JSON.stringify(response?.user);
-    
+    const UserString = JSON?.stringify(response?.user);
+
     if (response?.statusCode && response?.statusCode !== 200) {
       if (response?.message === "Email is already in use") {
         return setError2("email", {
@@ -150,13 +148,12 @@ export default function LoginSignUp({
     }
     if (response?.user?.createdAt) {
       // const userData = JSON.parse(response?.user);
-      const UserString = JSON.stringify(response?.user);
 
       storage.localStorage.set("noUserProfileImage", {
         id: response?.user?._id,
         nonProfileImage: randomBetweenOneAndTen(),
       });
-      SuccessNotification({ message: `User Register Successfully in` });
+      SuccessNotification({ message: `Your registration was successful` });
       // toast.success(`User Register Successfully in`);
       reset2();
       setToggle("Login");
@@ -166,13 +163,10 @@ export default function LoginSignUp({
         encryptText(response?.accessToken)
       );
 
-      // store.dispatch(setUserData(userData));
-
-      storage.localStorage.set(userDetailStorageName, UserString);
       dispatch(setUserData(response?.user));
+      // dispatch(userApi.util.invalidateTags(["user"]));
       // dispatch(baseApi.util.resetApiState());
 
-   
       if (router?.pathname === "/") {
         return router.push(eventLink);
       }
@@ -185,21 +179,17 @@ export default function LoginSignUp({
   }
 
   async function handleLogin(e) {
-    dispatch(userApi.util.resetApiState());
-    dispatch(eventApi.util.resetApiState());
-    dispatch(transactionApi.util.resetApiState());
-    // e.preventDefault();
     const payload = {
-      ...e,
+      // 
       usernameOrEmail: e.email,
+      "isGoogle": false,
+      password:e?.password,
+      ...e,
     };
 
     const handleRegisterUser = await LoginUser(payload);
     const response = handleRegisterUser?.data;
     const UserString = JSON.stringify(response?.user);
-
-    // toast('Hello! RegisterUser')
-
     if (!checkIfNonImageExist?.id) {
       storage.localStorage.set("noUserProfileImage", {
         id: response?.user?._id,
@@ -213,38 +203,40 @@ export default function LoginSignUp({
         });
       }
     }
+    // Toddo:
 
-    if (handleRegisterUser?.error?.message === "Unauthorized") {
+    // console.log(handleRegisterUser,'handleRegisterUser')
+
+    if (handleRegisterUser?.error?.data?.statusCode) {
       // toast.error("Invalid credentials");
-      ErrorNotification({ message: "Invalid credentials" });
+      return ErrorNotification({ message: handleRegisterUser?.error?.data?.message });
     }
-
-    if (response?.user?.createdAt) {
-      SuccessNotification({ message: "User Successfully Logged in" });
+    if (response?.user?._id) {
       dispatch(setUserData(response?.user));
-      // dispatch(eventApi.utils.invalidateTags('singleEvent'))
-      // dispatch(eventApi.util.invalidateTags(['singleEvent']));
-
-      // toast.success(`User Successfully Logged in`);
+      dispatch(setCoins(response?.user?.totalCoin));
+      console.log(response?.user,'response?.user')
+      SuccessNotification({ message: "You're in!" });
+      // dispatch(userApi.util.invalidateTags(["user"]));
       storage.localStorage.set(
         accessTokenStorageName,
         encryptText(response?.accessToken)
       );
 
-      storage.localStorage.set(userDetailStorageName, UserString);
-      // if(router?.pathname===singleEventLink){
-      //   dispatch(eventApi.endpoints.getEventDetailViaId.initiate(id))
-
-      // }
       if (router?.pathname === "/") {
         return router.push(eventLink);
       }
       if (onNext) {
         return onNext(response?.user);
       }
-      closeModal();
+      closeModal && closeModal();
     }
   }
+
+  async function handleSignWithGoogle(){
+    const response =await GoogleSignIn()
+    // console.log(response,'response')
+  }
+
 
   return (
     <div className="flex flex-col flex-grow-1 overflow-y-scroll customScrollHorizontal relative">
@@ -289,6 +281,8 @@ export default function LoginSignUp({
             isLoading={loginLoader}
             openModal={openModal}
             isEvent={isEvent}
+            GoogleSignIn={handleLogin}
+            // loginWithGoogle={googleLogin}
           />
         )}
 
@@ -300,6 +294,7 @@ export default function LoginSignUp({
             control={control2}
             registerLoader={registerLoader}
             isEvent={isEvent}
+            GoogleSignUp={handleRegister}
           />
         )}
       </div>

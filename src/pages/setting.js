@@ -25,31 +25,19 @@ export default function Setting() {
   ];
 
   const [isActive, setIsActive] = useState(HeaderData[0]?.name);
-  const [isLoading, setIsLoading] = useState(false);
+ 
   const [imageUrl, setImageUrl] = useState(null);
 
-  const CloudinaryUpload = (photo) => {
-    setIsLoading(true);
-    const data = new FormData();
-    data.append("file", photo);
-    data.append("upload_preset", "wnvzkduq");
-    data.append("cloud_name", "dnvwcmqhw");
-    fetch("https://api.cloudinary.com/v1_1/dnvwcmqhw/image/upload", {
-      method: "post",
-      body: data,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        
-        setImageUrl(data.secure_url);
-      })
-      .catch((err) => {
-      })
-      .finally(() => {
-        setIsLoading(false);
-       
+  const scrollToBottom = () => {
+    if (typeof window !== 'undefined') {
+      window.scrollTo({
+        top: document.body.scrollHeight,
+        behavior: 'smooth'
       });
+    }
   };
+
+ 
 
   return (
     <WithAuth>
@@ -60,16 +48,16 @@ export default function Setting() {
           isActive={isActive}
           setIsActive={setIsActive}
           title="Settings"
-          containerStyle={`!mb-[40px]`}
+          MainContainer={`!mb-[10px]`}
         />
         {/* <Form/> */}
         <div
           className={`${isActive === "Profile" ? "mb-[150px]" : "mb-[150px]"}`}
         >
           <SettingForm
-            isImageUrlLoading={isLoading}
+            // isImageUrlLoading={isLoading}
             imageUrl={imageUrl}
-            CloudinaryUpload={CloudinaryUpload}
+            // CloudinaryUpload={CloudinaryUpload}
             isActive={isActive}
             setImageUrl={setImageUrl}
           />

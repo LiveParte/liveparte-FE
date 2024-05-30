@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import Image from "next/image";
 import ButtonComp from "../../Ui/button";
 import { useRouter } from "next/router";
@@ -8,25 +8,36 @@ import PurchasePaartyCoins from "../../modules/LiveStream/submodules/PurchasePaa
 import MyModal from "../../Ui/Modal";
 import LoginSignUp from "../../modules/Event/Modal/Login&SignUp";
 import CustomDropDown from "../CustomDropDown";
-import { storage } from "@/utils/helper";
 import { useDispatch } from "react-redux";
 import { logout, setUserData } from "@/store/User";
-// import dynamic from "next/dynamic";
-// import { Avatar1 } from "../../../public/svg/avatars";
+import dynamic from "next/dynamic";
 import UserProfile from "../UserProfile";
-import { baseQuery } from "@/store/api";
 import { userApi } from "@/store/User/userApi";
 import { eventApi } from "@/store/Event/eventApi";
 import { transactionApi } from "@/store/Transaction/transactionApi";
 import { HeaderOnSelect, LogoImage } from "@/utils/styleReuse";
 import { eventLink, myShowLink, onDemandLink } from "@/utils/reusableComponent";
-// const UserProfile =dynamic(()=>import('./UserProfile'),{src:false})
+import { formatMoney } from "@/utils/formatMoney";
+import { accessTokenStorageName, userDetailStorageName } from "@/utils/helper";
+import { LiveParteCoins } from "../../../../public/svg";
 
-export default function AuthHeader({ className, openModal, showNav = false }) {
+const MenuDropdown = dynamic(() => import("./submodules/NavDropDown"), {
+  ssr: false,
+});
+
+export default function AuthHeader({
+  className,
+  openModal,
+  showNav = false,
+  userInfo,
+  userCoinsBalance
+}) {
   const router = useRouter();
   const dispatch = useDispatch();
+  // const coins = 
   const MainContainer = `px-[20px] md:px-[40px] lg:px-[80px] xl:[120px] relative`;
   const [dropDown, setDropDown] = useState(false);
+  // const userInfo = useSelector(selectCurrentUserData);
   const [modalName, setModalName] = useState();
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenPC, setIsOpenPC] = useState(false);
@@ -38,29 +49,19 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
     router?.pathname === "/event" || router?.pathname == "/event/[id]";
   const isFocused = `hover:!bg-[#FFFFFF26] hover:rounded-[8px]  hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`;
   const isSelected = HeaderOnSelect;
+
   function handleCloseModal() {
     setModalName();
   }
 
-  // console.log(isMyShow&&isSelected,router?.pathname,'router?.pathname')
-
   function handleLogOut() {
     dispatch(userApi.util.resetApiState());
-    dispatch(eventApi.util.resetApiState());
-    dispatch(transactionApi.util.resetApiState());
-    dispatch(logout());
-    // localStorage.removeItem(userDetailStorageName);
-    // localStorage.removeItem(accessTokenStorageName);
+    dispatch(setUserData({}))
+    localStorage.removeItem(userDetailStorageName);
+    localStorage.removeItem(accessTokenStorageName);
 
     if (router?.pathname === myShowLink || router?.pathname === "/setting") {
-      dispatch(userApi.util.invalidateTags());
-      dispatch(eventApi.util.invalidateTags());
-      dispatch(transactionApi.util.invalidateTags());
-      dispatch(
-        userApi.endpoints.getUserProfile.initiate({ forceRefetch: true })
-      );
-
-      // window.location.reload();
+     
       return router.push("/");
     }
   }
@@ -93,93 +94,6 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
     },
   ];
 
-  const MenuDropdown = () => {
-    return (
-      <div className="bg-[#1B1C20]   left-0 right-0 top-0 bottom-0 z-[999] px-[24px] py-[14px]   pb-[20px] mb:pb-[0px]  justify-between lg:hidden  flex flex-col fixed overflow-y-scroll ">
-       <div className="justify-between lg:hidden flex-1  flex flex-col relative">
-       <div className="flex justify-between items-center mb-[28px] ">
-          <div>
-            {" "}
-            <LogoImage router={router} />
-          </div>
-          <div>
-            <ButtonComp
-              btnText={`Close`}
-              className={`px-[24px] !h-[30px]  text-[13px] font500 md:h-fit border-[#262C32] rounded-[999px] border-[1px] !bg-[#25272d] !text-white`}
-              onClick={() => setDropDown(false)}
-            />
-          </div>
-        </div>
-        {/*  */}
-        <div className="text-[15px] text-white font500 flex-grow-1  mb-[60px]">
-          <div className="pt-[30px]">
-            <Link
-              href={eventLink}
-              className="  cursor-pointer text-white no-underline"
-            >
-              Browse Events
-            </Link>
-          </div>
-          <div className="pt-[30px]">
-          <Link
-            href={onDemandLink}
-            className={`py-[30px]  cursor-pointer no-underline text-white mb-2 `}
-          >
-            On Demand
-          </Link>
-          </div>
-          {/* <div className="py-[15px]  cursor-pointer ">On demand</div> */}
-          <div className="pt-[30px]">
-          <Link
-            href={myShowLink}
-            className={`py-[30px]  cursor-pointer no-underline text-white mb-2 `}
-          >
-            My Shows
-          </Link>
-          </div>
-          
-          <div className="flex justify-between items-center py-[30px]">
-            <div className="text-[13px] flex items-center gap-[5px] ">
-              <Image src={`/svg/coin1.svg`} width={24} height={24} alt="coin" />{" "}
-              100 Coins
-            </div>
-            <ButtonComp
-              onClick={() => setModalName(`purchaseCoin`)}
-              btnText={`Add Coins`}
-              className={`h-[30px] !bg-[#BACFF70A] shadow-1 shadow-2 shadow-3 text-[13px] rounded-[999px] border-[#BACFF70A] border-[0.5px]`}
-            />
-          </div>
-        </div>
-
-        <div>
-          <div className="text-[15px] text-white font500 flex-1  ">
-            <Link
-              href="/setting"
-              className="py-[30px]  cursor-pointer text-white no-underline"
-            >
-              Settings
-            </Link>
-            <div onClick={handleLogOut} className="py-[30px] cursor-pointer">
-              Log out
-            </div>
-          </div>
-          {/* 
-          <ButtonComp
-            onClick={() => setModalName("Signup")}
-            btnText={`Sign Up`}
-            className={`text-[13px] font500 mb-[16px]  w-full`}
-          />
-          <ButtonComp
-            onClick={() => setModalName(`Login/Signup`)}
-            btnText={`Login`}
-            className={`text-[13px] font500 mb-[28px]  w-full !bg-[#27292e] text-white`}
-          /> */}
-        </div>
-       </div>
-      </div>
-    );
-  };
-
   function ProfileDropdown() {
     return (
       <CustomDropDown dropdownRef={dropdownRef} setIsOpen={setIsOpen}>
@@ -205,31 +119,40 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
         <PurchasePaartyCoins
           path={2}
           onClose={() => setIsOpenPC(false)}
-          containerStyle={`bg-[#1B1C20] !rounded-[16px]`}
+          containerStyle={`bg-[#060809] !rounded-[16px]`}
         />
       </CustomDropDown>
     );
   }
-  // border-[#262C32] border-[1px]
+
+  // console.log(userCoinsBalance,'userCoinsBalance')
+
   const blur = `backdrop-blur-[60px]`;
   return (
     <>
-        {dropDown && <MenuDropdown />}
-      <MyModal
-        isOpen={modalName ? true : false}
-        bodyComponent={
-          modalComponent?.find((item) => item?.name === modalName)?.component
-        }
-        containerStyle={`bg-[#1B1C20] border-[1px] border-[#343F4B] rounded-[16px]  !w-[586px]`}
-        closeModal={handleCloseModal}
-      />
-  
+      {dropDown && (
+        <MenuDropdown
+          handleLogOut={handleLogOut}
+          setDropDown={setDropDown}
+          setModalName={setModalName}
+          userInfo={userInfo}
+        />
+      )}
+      {modalName && (
+        <MyModal
+          isOpen={modalName ? true : false}
+          bodyComponent={
+            modalComponent?.find((item) => item?.name === modalName)?.component
+          }
+          containerStyle={`bg-[#1B1C20] border-[1px] border-[#343F4B] rounded-[16px]  !w-[586px]`}
+          closeModal={handleCloseModal}
+        />
+      )}
 
       <div
-        className={`py-[14px] lg:py-[16px] mb-[34px] lg:mb-[75px]  font400 ${MainContainer} ${className} `}
+        className={`py-[14px] lg:py-[16px] mb-[34px] lg:mb-[55px]  font400 ${MainContainer} ${className} `}
       >
         <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover opacity-30  bg-[url('/webp/header.png')] z-80 text-black"></div>
-        {/* <LogoWhite/> */}
         <div
           className="flex items-center justify-between z-50 relative cursor-pointer"
           style={{ zIndex: 90 }}
@@ -237,7 +160,7 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           <LogoImage router={router} />
 
           {showNav && (
-            <div className="flex items-center  lg:gap-[18px] xl:gap-[24px] !hover:scale-100">
+            <div className="flex items-center justify-between  xl:gap-[24px] !hover:scale-100">
               <ButtonComp
                 btnText="Browse Events"
                 className={` font-medium  hidden lg:block   !h-[32px] text-[13px] px-[16px] md:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${
@@ -264,38 +187,33 @@ export default function AuthHeader({ className, openModal, showNav = false }) {
           <div>
             <div className="flex items-center  gap-[18px]">
               <div className=" gap-[16px] items-center text-white font500 hidden lg:flex">
-                <div className="text-[13px] flex items-center gap-[5px]">
-                  <Image
-                    src={`/svg/coins.svg`}
-                    width={24}
-                    height={24}
-                    alt="coins"
-                  />{" "}
-                  100 Coins
+                <div className=" flex flex-col">
+                  <div className="text-[10px] text-[#b4becb] mb-[3px]">
+                    Coin Balance
+                  </div>
+                  <div className="text-[13px] flex items-center gap-[5px]">
+                    <LiveParteCoins/>
+                      
+                    {formatMoney(userCoinsBalance|| "0", false)}{" "}
+                    {userCoinsBalance > 1 ? "Coins" : "Coin"}
+                  </div>
                 </div>
+
                 <div ref={purchaseCoinRef} className="relative">
                   {isOpenPC && <PurchasePaartyCoinsDropdown />}
-                  <ButtonComp
-                    btnText={`Add Coins`}
-                    className={`!h-[32px] py-[6px] px-[17px] !bg-[#BACFF70A] rounded-[999px]  text-[10px] shadow-4`}
-                    onClick={() => setIsOpenPC(!isOpenPC)}
-                  />
+                  <div className="">
+                    <ButtonComp
+                      btnText={`Add Coins`}
+                      className={`!h-[32px] py-[6px] px-[17px] !bg-[#BACFF70A] rounded-[999px]  text-[10px] shadow-4`}
+                      onClick={() => setIsOpenPC(!isOpenPC)}
+                    />
+                  </div>
                 </div>
               </div>
               <div className="hidden lg:block">
                 <div className="relative">
                   {isOpen && <ProfileDropdown />}
                   <UserProfile onClick={() => setIsOpen(!isOpen)} />
-                  {/* <Avatar1/> */}
-                  {/* <Image
-                    src={`/webp/profile.png`}
-                    width={40}
-                    height={40}
-                    onClick={() => setIsOpen(!isOpen)}
-                    alt="profile"
-                    // placeholder="blur"
-                    // blurDataURL=""
-                  /> */}
                 </div>
               </div>
             </div>

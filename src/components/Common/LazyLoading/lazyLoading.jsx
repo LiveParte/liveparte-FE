@@ -1,33 +1,19 @@
-import React, { useEffect, useState } from 'react';
-import useIntersectionObserver from '.';
+// lazyLoading.jsx
 
-const withLazyLoad = (WrappedComponent, threshold = 0.5) => {
-  const Wrapped = (props) => {
-    const [isInView, ref] = useIntersectionObserver(threshold);
-    const [hasLoaded, setHasLoaded] = useState(false);
+import { useRef } from "react";
+import { useInView } from "framer-motion";
 
-    useEffect(() => {
-      if (isInView && !hasLoaded) {
-        setHasLoaded(true);
-      }
-    }, [isInView, hasLoaded]);
+function withLazyLoad(WrappedComponent) {
+  return function LazyLoadedComponent(props) {
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true });
 
     return (
-      <span ref={ref}>
-        {hasLoaded ? <WrappedComponent {...props} /> : <div className='bg-[#060809] h-[100vh]'></div>}
-      </span>
+      <div ref={ref}>
+        <WrappedComponent {...props} isInView={isInView} />
+      </div>
     );
   };
-
-  // Set displayName for better debugging
-  Wrapped.displayName = `withLazyLoad(${getDisplayName(WrappedComponent)})`;
-
-  return Wrapped;
-};
-
-// Helper function to get component name
-const getDisplayName = (WrappedComponent) => {
-  return WrappedComponent.displayName || WrappedComponent.name || 'Component';
-};
+}
 
 export default withLazyLoad;

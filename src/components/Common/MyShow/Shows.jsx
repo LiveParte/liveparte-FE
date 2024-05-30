@@ -5,12 +5,13 @@ import moment from "moment";
 import { useRouter } from "next/router";
 import { eventLink, singleEventLink } from "@/utils/reusableComponent";
 import { isArray } from "@/utils/helper";
-import { useDispatch } from "react-redux";
-import { setEventData } from "@/store/Event";
-// import ShowDetails from "./ShowDetails";
+import { useDispatch, useSelector } from "react-redux";
+// import { selectEvent, setEventData } from "@/store/Event";
+import ShowDetails from "./ShowDetails";
+import { selectEvent, setSingleEvent } from "@/store/User";
 // import ImageOrVideo from "";
 const ImageOrVideo = dynamic(() => import("./ImageOrVideo"), { ssr: false });
-const ShowDetails = dynamic(() => import("./ShowDetails"), { ssr: false });
+// const ShowDetails = dynamic(() => import("./ShowDetails"));
 
 export default function ShowsCard({
   name,
@@ -30,6 +31,7 @@ export default function ShowsCard({
   const backgroundImage = `https://res.cloudinary.com/dammymoses/image/upload/v1710175667/LiveParte/a7_zeemus.png`;
   const router = useRouter();
   const dispatch = useDispatch();
+  const shows = useSelector(selectEvent) || {};
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [posterImage, setPosterImage] = useState();
@@ -60,6 +62,8 @@ export default function ShowsCard({
     }
   };
 
+  console.log(shows,'showsshowsshows')
+
 
   return (
     <div
@@ -72,14 +76,16 @@ export default function ShowsCard({
         if (onNext) {
           return onNext(item);
         }
-        dispatch(setEventData({...item,ticket:isArray(item?.tickets)&&item?.tickets[0]}));
+        // alert('Hello')
+        // console.log({...item,ticket:isArray(item?.tickets)&&item?.tickets[0]},'showsshowsshows1');
+        dispatch(setSingleEvent({...item,ticket:isArray(item?.tickets)&&item?.tickets[0]}));
         router.push({
           pathname: `${eventLink}/${item?._id}`,
         });
       }}
     >
       <div
-        className={` relative h-[25vh] md:h-[27vh] lg:h-[45vh] xl:h-[27vh] rounded-[8px] lg:rounded-[20px] ${backUrl} bg-cover bg-center bg-gradient-to-b from-black to-transparent  overflow-hidden group cursor-pointer duration-300 ease-in-out group-hover:opacity-100 relative mb-[16px]`}
+        className={` relative min-h-[200px] h-[25vh] md:h-[27vh] lg:h-[45vh] xl:h-[27vh] rounded-[8px] lg:rounded-[20px] ${backUrl} bg-cover bg-center bg-gradient-to-b from-black to-transparent  overflow-hidden group cursor-pointer duration-300 ease-in-out group-hover:opacity-100 relative mb-[16px]`}
       >
         <div>
           <ImageOrVideo
@@ -88,7 +94,7 @@ export default function ShowsCard({
             videoRef={showVideo ? videoRef : noVideoRef}
             item={item}
           />
-          <div className="flex-1 absolute left-0 top-0 z-50">
+          <div className="flex-1 absolute left-0 top-0 z-20">
             {showHeader && (
               <span className="flex-1">
                 {isLive||onDemand ? (
@@ -109,7 +115,7 @@ export default function ShowsCard({
             )}
           </div>
           <div
-            className="flex items-center justify-center absolute inset-0 z-50"
+            className="flex items-center justify-center absolute inset-0 z-20"
             // onMouseLeave={handleMouseLeave}
           >
             {isPlayIcon && (

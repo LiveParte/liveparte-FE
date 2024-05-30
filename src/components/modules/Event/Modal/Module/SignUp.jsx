@@ -1,16 +1,69 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { LoginForm, SignUpForm } from '../../Data'
 import ButtonComp from '@/components/Ui/button'
 import { GoogleIcon } from '../../../../../../public/svg'
 import { FloatingLabelInput } from '@/components/Ui/TextInput'
 import Link from 'next/link'
+import { PolicyUrl, termsUrl } from '@/utils/reusableComponent'
+import { useGoogleLogin } from '@react-oauth/google'
 
 export default function SignUpPage({
     Controller,control,handleSubmit,handleLogin,
     registerLoader,
-    isEvent
+    isEvent,
+    GoogleSignUp
 }) {
-  const termsUrl=`https://liveparte.notion.site/Terms-of-service-d531fa1d585346dba3205ae490f5fbb4`
+
+  const [ user, setUser ] = useState([]);
+
+  // using the details google give to register and signUp Users
+  useEffect(() => {
+    if (user?.access_token) {
+        fetch(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+            headers: {
+                'Authorization': `Bearer ${user.access_token}`,
+                'Accept': 'application/json'
+            }
+        })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then((data) => {
+          const payload = {
+            // ...data,
+            email: data.email,
+            fullName: data?.name,
+            password:`${data?.given_name}${data?.id}1La@`,
+            "isGoogle": true
+          };
+          GoogleSignUp(payload)
+            // console.log(data);
+            setUser()
+
+            // setProfile(data);
+        })
+        .catch((error) => {
+          setUser()
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+    }
+}, [user,]);
+
+  const googleLogin = useGoogleLogin({
+    onSuccess: (tokenResponse) => {
+      setUser(tokenResponse);
+        // console.log(tokenResponse,'tokenResponse')
+      // You can now use the tokenResponse to authenticate the user in your app
+    },
+    onError: () => {
+      // console.error('Google login failed');
+      // Handle login errors here
+    },
+    // flow: 'auth-code', // Use 'auth-code' for the authorization code flow
+  });
   return (
     <form
     className="px-[15px] lg:px-[30px] flex flex-col  lg:pb-[0px]"
@@ -21,6 +74,7 @@ export default function SignUpPage({
         <ButtonComp
         onClick={(e)=>{
           e.preventDefault();
+          googleLogin();
         }}
           className={`w-full text-[#060809] text-[13px] font500`}
           btnText={
@@ -64,6 +118,7 @@ export default function SignUpPage({
             onChange={onChange}
             error={errors[item?.name]?.message}
             errors={errors}
+            offAutoComplete={true}
           />
         )}
       />
@@ -77,7 +132,7 @@ export default function SignUpPage({
         isLoading={registerLoader}
       />
     </div>
-    <div className='text-[#63768d] text-[13px] text-center px-[10px] mt-[19px] '>By continuing, you agree and accept the <Link target='_blank' href={termsUrl} className='underline text-white' >Terms of Service</Link> and <span className='underline text-white'>Privacy Policy</span> in the use of Liveparte</div>
+    <div className='text-[#63768d] text-[13px] text-center px-[10px] mt-[19px] '>By continuing, you agree and accept the <Link target='_blank' href={termsUrl} className='underline text-white' >Terms of Service</Link> and <Link target='_blank' href={PolicyUrl} className='underline text-white'>Privacy Policy</Link> in the use of Liveparte</div>
   </form>
   )
 }

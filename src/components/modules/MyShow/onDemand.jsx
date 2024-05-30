@@ -6,6 +6,7 @@ import UserShowsCard from "@/components/Common/MyShowUser/Shows";
 import { useDispatch } from "react-redux";
 import { setLiveStreamEventData } from "@/store/Event";
 import { MainContainer } from "@/utils/styleReuse";
+import ShowsCard from "@/components/Common/MyShow/Shows";
 // import UserShowsCard from "@/components/UserShow";
 
 export default function OnDemand({
@@ -31,17 +32,19 @@ export default function OnDemand({
         {isLength > 0 && (
           <div className=" grid-cols-2  md:grid-cols-2  xl:grid-cols-4 gap-[20px] lg:gap-x-[40px] gap-y-[40px] lg:gap-y-[104px] pb-[100px] lg:pb-[247px]  grid">
             {!isLoading&&Data?.map((item, index) => (
-              <UserShowsCard
-                key={index}
-                id={item?.id}
-                name={item?.name}
-                venue={item?.venue||item?.address}
-                showImage={item?.thumbnail_url.toString()}
-                isLive={false}
-                showVideo={false}
-                item={item}
-                onNext={(item)=>handleOnClick(item)}  
-              />
+             <ShowsCard
+             key={index}
+             id={item?._id}
+             name={item?.name}
+             venue={item?.address}
+             showImage={item?.thumbnail_url?.toString()}
+             isLive={false}
+             eventDate={item?.event_date}
+             item={item}
+             showHeader={false}
+             showVideo={false}
+             onNext={(item)=>handleOnClick(item)}
+           />
             ))}
           </div>
         )}
@@ -49,7 +52,7 @@ export default function OnDemand({
         {/* No SHow */}
         {!isLoading&&isLength === 0 && (
           <div className="pb-[100px] lg:pb-[247px] h-[60vh] flex flex-col justify-center items-center">
-            <div className="text-[24px] text-center md:text-left font600 text-[#FFFFFF] mb-[36px]">
+            <div className="text-[16px] md:text-[24px] text-center md:text-left font600 text-[#FFFFFF] mb-[36px]">
             You don’t have any On Demand Show
             </div>
             <ButtonComp

@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseQuery } from "../api";
+import { baseQueryWithRetry } from "../api";
 
 
 // const useQuestionMarkOrAnd= (itemA='',itemB='',itemC='')=>{
@@ -9,8 +9,10 @@ import { baseQuery } from "../api";
 
 export const eventApi = createApi({
   reducerPath: "eventApi",
-  baseQuery: baseQuery,
-  tagTypes:['event','singleEvent'],
+  baseQuery: baseQueryWithRetry,
+  refetchOnReconnect:true,
+  refetchOnFocus:true,
+  tagTypes:['event','singleEvent','ondemand','eventStream'],
   endpoints: (builder) => ({
    
     getAllEvent: builder.query({
@@ -19,6 +21,7 @@ export const eventApi = createApi({
         method: "GET",
         // body,
       }),
+      providesTags:['event']
       
     }),
     getEventStream: builder.query({
@@ -27,6 +30,7 @@ export const eventApi = createApi({
         method: "GET",
         // body,
       }),
+      providesTags:['eventStream']
       
     }),
     getEventOnDemand: builder.query({
@@ -35,6 +39,7 @@ export const eventApi = createApi({
         method: "GET",
         // body,
       }),
+      providesTags:['ondemand']
       
     }),
     getEventViaId: builder.query({
@@ -62,6 +67,13 @@ export const eventApi = createApi({
       }),
       
     }),
+    loginApi: builder.mutation({
+      query: (payload) => ({
+        url: "/auth/login",
+        method: "POST",
+        body: payload,
+      }),
+    }),
    
     //globalservice/all-enums
     //admin/funding-history
@@ -79,6 +91,7 @@ useGetEventStreamQuery,
 useGetEventViaIdQuery,
 useGetEventDetailViaIdQuery,
 useUserShowsQuery,
-useLazyUserShowsQuery
+useLazyUserShowsQuery,
+useLoginApiMutation
  
 } = eventApi;

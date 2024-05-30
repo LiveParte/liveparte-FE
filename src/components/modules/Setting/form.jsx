@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { FloatingLabelInput } from "@/components/Ui/TextInput";
 import ButtonComp from "@/components/Ui/button";
 import { SecurityFormLabel, SettingFormLabel } from "../MyShow/Data";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import {
   useChangePasswordMutation,
@@ -18,7 +18,7 @@ import {
   userDetailStorageName,
 } from "@/utils/helper";
 import { Avatar3 } from "../../../../public/svg/avatars";
-import { selectCurrentUserData } from "@/store/User";
+import { selectCurrentUserData, setUserData } from "@/store/User";
 import {
   ErrorNotification,
   replaceDashWithSpace,
@@ -28,7 +28,7 @@ import { MainContainer } from "@/utils/styleReuse";
 
 export default function SettingForm({
   isActive,
-  CloudinaryUpload,
+  // CloudinaryUpload,
   imageUrl,
   isImageUrlLoading,
   setImageUrl
@@ -36,42 +36,16 @@ export default function SettingForm({
   const checkIfNonImageExist = storage.localStorage.get("noUserProfileImage");
   const [userProfile, setUserProfile] = useState();
   const userInfo = useSelector(selectCurrentUserData);
-  // let userInfo =storage["localStorage"]?.get(userDetailStorageName)
-
-  useEffect(() => {
-    setUserProfile(
-      NoImageUser[checkIfNonImageExist?.nonProfileImage] || Avatar3
-    );
-  }, [checkIfNonImageExist?.nonProfileImage]);
-  //upload Image
-  const hiddenFileInput = useRef(null);
-
-  const handleClick = (event) => {
-    hiddenFileInput.current.click();
-  };
-
-  const handleChange = (event) => {
-    const fileUploaded = event.target.files[0];
-    CloudinaryUpload(fileUploaded);
-    // handleFile(fileUploaded);
-  };
-
-  //
-  const { data, isLoading, isError } = useGetUserProfileQuery();
-  const [UpdatePassword, { isLoading: updatePasswordLoader }] =
-    useChangePasswordMutation();
-
-  const [UpdateUser, { isLoading: updateUserLoader }] =
-    useUpdateProfileMutation();
-
-  const { control, handleSubmit, setValue, watch, setError, reset } = useForm({
+  const dispatch =useDispatch()
+  const [isLoading, setIsLoading] = useState(false);
+  const { control, handleSubmit, setValue, watch, setError, reset,getValues } = useForm({
     defaultValues: {
-      username: "",
+      fullName: "",
       email: "",
       phone: "",
-      country: "Nigeria",
-      state: "Lagos",
-      address: "No 4. olawunmi street, Lagos, Nigeria",
+      country: "",
+      state: "",
+      address: "",
       id: "",
       currentPassword: "",
       newPassword: "",
@@ -79,18 +53,91 @@ export default function SettingForm({
     },
   });
 
+  // let userInfo =storage["localStorage"]?.get(userDetailStorageName)
+
+  // console.log(userInfo,'userProfile')
+
+  useEffect(() => {
+    setUserProfile(
+      NoImageUser[checkIfNonImageExist?.nonProfileImage] || Avatar3
+    );
+  }, [checkIfNonImageExist?.nonProfileImage]);
+  //upload Image
+  
+  const hiddenFileInput = useRef(null);
+
+  const handleClick = (event) => {
+    hiddenFileInput.current.click();
+  };
+
+
+  const CloudinaryUpload = (photo) => {
+    if(!getValues()?.phone){
+      return setError('phone', { type: 'custom', message: 'Phone number is required' });
+    }
+    setIsLoading(true);
+    const data = new FormData();
+    data.append("file", photo);
+    data.append("upload_preset", "wnvzkduq");
+    data.append("cloud_name", "dnvwcmqhw");
+    fetch("https://api.cloudinary.com/v1_1/dnvwcmqhw/image/upload", {
+      method: "post",
+      body: data,
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data,'response1')
+       
+        setImageUrl(data?.secure_url);
+        handleUpdateUser({
+          ...getValues(),
+          profile_image: data.secure_url,
+        })
+        // onChange()
+        // scrollToBottom();
+      })
+      .catch((err) => {
+        setIsLoading(false);
+      })
+      .finally(() => {
+        setIsLoading(false);
+       
+      });
+  };
+
+  const handleChange = (event) => {
+    const fileUploaded = event.target.files[0];
+   
+    CloudinaryUpload(fileUploaded);
+    // handleFile(fileUploaded);
+  };
+
+  //
+  const { data, isLoading:profileLoader, isError } = useGetUserProfileQuery(undefined,{
+    skip:!userInfo?._id
+  });
+  const [UpdatePassword, { isLoading: updatePasswordLoader }] =
+    useChangePasswordMutation();
+
+  const [UpdateUser, { isLoading: updateUserLoader }] =
+    useUpdateProfileMutation();
+
+
 
   useEffect(() => {
     setValue("email", data?.email || userInfo?.email);
     setValue("id", data?._id) || userInfo?._id;
     setValue("phone", data?.phone || userInfo?.phone);
-    setValue(
-      "username",
-      data?.fullName ||data?.username
-    );
+    setValue("address", userInfo?.address);
+    setValue("country", userInfo?.countryInfo?.name||'Nigeria');
+    setValue("state", userInfo?.state);
+    // setValue(
+    //   "username",
+    //   data?.fullName ||data?.username
+    // );
     setValue(
       "fullName",
-      data?.fullName ||data?.username
+      data?.fullName 
     );
   }, [data?._id, data, userInfo,setValue]);
 
@@ -98,13 +145,16 @@ export default function SettingForm({
 
   async function handleUpdateUser(data) {
     const payload = {
-      ...data,
-      fullName:data?.username,
+      fullName:data?.fullName,
       profile_image: imageUrl,
+      ...data,
+     
     };
     const handleRegisterUser = await UpdateUser(payload);
     const response = handleRegisterUser?.data;
     const UserString = JSON.stringify(response?.updatedUser);
+    // console.log(response,imageUrl,'response')
+    dispatch(setUserData(response?.updatedUser))
     setValue('profile_image',response?.updatedUser?.profile_image)
     // storage.localStorage.set(userDetailStorageName, JSON.stringify(response?.updatedUser));
     response?.updatedUser?._id&& storage.localStorage.set(userDetailStorageName, UserString);
@@ -179,9 +229,9 @@ export default function SettingForm({
     if(watch('fullName') ===data?.fullName){
       return false
     }
-    if(watch('username') ===data?.username){
-      return false
-    }
+    // if(watch('username') ===data?.username){
+    //   return false
+    // }
     return true
   }
 
@@ -265,15 +315,15 @@ export default function SettingForm({
                 />
               </div>
             ))}
-            <div className="mt-[40px] lg:mt-[32px]">
+            <div className="mt-[20px] lg:mt-[10px]">
               <ButtonComp
                 btnText={"Save Changes"}
                 className={`w-full text-[13px] font500`}
                 onClick={handleSubmit(handleUpdateUser)}
-                isLoading={isImageUrlLoading || updateUserLoader}
-                isDisabled={
+                isLoading={ updateUserLoader}
+                isDisabled={isLoading||
                   isImageUrlLoading ||
-                  isLoading ||
+                  profileLoader ||
                   !isChangedState
                 }
               />
@@ -309,12 +359,12 @@ export default function SettingForm({
                 )}
               />
             ))}
-            <div className="mt-[40px] lg:mt-[32px]">
+            <div className="mt-[20px] lg:mt-[10px]">
               <ButtonComp
                 btnText={"Save Changes"}
                 className={`w-full text-[13px] font500`}
                 onClick={handleSubmit(handleUpdatePassword)}
-                isLoading={isImageUrlLoading || updatePasswordLoader}
+                isLoading={updatePasswordLoader}
                 // isDisabled={}
               />
             </div>

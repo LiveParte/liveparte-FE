@@ -8,35 +8,56 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 300 */
 @font-face {
-  font-family: "CustomFont";
+  font-family: "CustomFontLight";
   src: url("/fonts/Matter/WEB/Matter-Light.woff") format("woff");
 }
 
+/* 400 */
 @font-face {
-  font-family: "CustomFontBold";
-  src: url("/fonts/Matter/WEB/Matter-SemiBold.woff") format("woff");
+  font-family: "CustomFontRegular";
+  src: url("/fonts/Matter/WEB/Matter-Regular.woff") format("woff");
 }
 
+/* 500 */
 @font-face {
   font-family: "CustomFontMedium";
   src: url("/fonts/Matter/WEB/Matter-Medium.woff") format("woff");
 }
+/* 600 */
+@font-face {
+  font-family: "CustomFontSemiBold";
+  src: url("/fonts/Matter/WEB/Matter-SemiBold.woff") format("woff");
+}
 
-.font400 {
+/* 700 */
+@font-face {
+  font-family: "CustomFontBold";
+  src: url("/fonts/Matter/WEB/Matter-Bold.woff") format("woff");
+}
+
+.font300 {
   /* font-family: 'CustomFont' !important; */
-  font-family: "CustomFont" !important;
+  font-family: "CustomFontLight" !important;
+
   /* font-weight: 100 !important; */
 }
 
+.font400 {
+  font-family: "CustomFontRegular" !important;
+}
 .font500 {
   font-family: "CustomFontMedium" !important;
 }
 
 .font600 {
-  font-family: "CustomFontBold" !important;
+  font-family: "CustomFontSemiBold" !important;
 }
 
+.font700 {
+  font-family: "CustomFontBold" !important;
+}
 .gradient {
   /* background: linear-gradient(to right, #000000 0%, #000000 100%); */
   /* You can adjust the direction ('to right', 'to left', 'to top', 'to bottom', etc.) and percentages as needed */
@@ -69,7 +90,7 @@
   font-family: "Inter", sans-serif;
 }
 
-html{
+html {
   /* min-height: 100vh; */
   background-color: black !important;
 }
@@ -154,6 +175,11 @@ body {
 .dropdownII {
   inset: -1px 1px 5px auto;
   transform: translate3d(0px, 60.5px, 0px);
+}
+
+.dropdownIV {
+  inset: -8px 16px 15px auto;
+  transform: translate3d(0px, 61.5px, 0px);
 }
 
 .shadow-1 {
@@ -372,19 +398,17 @@ body {
   content: "next";
 }
 
-
-.takeScreen{
+.takeScreen {
   height: calc(100vh - 100px);
 }
 
 @media only screen and (max-width: 768px) {
-  .takeScreen{
-    height:100dvh;
+  .takeScreen {
+    height: 100dvh;
   }
-  body{
-    min-height:100dvh;
+  body {
+    min-height: 100dvh;
   }
-  
 }
 
 .arrow {
@@ -402,4 +426,51 @@ body {
 .left {
   transform: rotate(135deg);
   -webkit-transform: rotate(135deg);
+}
+
+.box-shadow {
+  inset: 0 0 10px rgba(0, 0, 0, 0.5);
+  inset: 0 0 20px rgba(0, 0, 0, 0.3);
+  inset: 0 0 30px rgba(0, 0, 0, 0.2);
+}
+
+.element {
+  box-shadow: 0px 0px 0px 1px #bacff71f inset,
+    /* Inner shadow 1 */ 0px 24px 48px 0px #a8d8f50f inset,
+    /* Inner shadow 2 */ 0px 1px 1px 0px #d8ecf833 inset; /* Inner shadow 3 */
+}
+
+.elementI {
+  box-shadow: 0px 0px 0px 1px #bacff71f inset,
+    /* Inner shadow 1 */ 0px 24px 48px 0px #a8d8f50f inset,
+    /* Inner shadow 2 */ 0px 1px 1px 0px #d8ecf833 inset; /* Inner shadow 3 */
+}
+
+/* Change Autocomplete styles in Chrome*/
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  /* border: none !important;
+  -webkit-text-fill-color: none !important;
+  -webkit-box-shadow: 0 0 0px 1000px transparent inset; */
+  /* transition: background-color 5000s ease-in-out 0s; */
+  /* color: white !important; */
+  /* transition: background-color 5000s ease-in-out 0s; */
+  -webkit-box-shadow: 0 0 0 1000px #222428 inset !important;
+  -webkit-text-fill-color: white;
+}
+
+.agroa-video video {
+  object-fit: contain !important;
+}
+
+.linear-gradient{
+  background:linear-gradient(0deg, black 46%, rgba(0, 0, 0, 0) 97.19%);
+
 }

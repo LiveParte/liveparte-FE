@@ -5,7 +5,8 @@ export default function MyModal({
   bodyComponent,
   isOpen,
   closeModal={},
-  containerStyle
+  containerStyle,
+  mainContainer=''
 }) {
   
 
@@ -27,7 +28,7 @@ export default function MyModal({
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full bg-[#0000001c] backdrop-blur-[10px] items-center justify-center p-4 text-center h-full">
+            <div className={`flex min-h-full bg-[#0000001c] backdrop-blur-[10px] items-center justify-center  text-center h-full ${mainContainer?mainContainer:'p-4'}`}>
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"

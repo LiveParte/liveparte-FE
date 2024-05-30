@@ -4,7 +4,7 @@ export default function CustomDropDown({ dropdownRef, setIsOpen, className, chil
   
   useEffect(() => {
     function handleClickOutside(event) {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+      if (dropdownRef&&dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         // Clicked outside the dropdown, so close it
         setIsOpen(false);
       }
@@ -22,6 +22,9 @@ export default function CustomDropDown({ dropdownRef, setIsOpen, className, chil
   function handleCloseModal() {
     setModalName();
   }
+
+  // inset: -8px 16px 15px auto;
+  //   transform: translate3d(0px, 61.5px, 0px);
   
   return (
     <div

@@ -3,15 +3,24 @@ import ShowsCard from "@/components/Common/MyShow/Shows";
 import { MainContainer } from "@/utils/styleReuse";
 import { ArrowLeft, ArrowRight } from "../../../../../public/svg";
 import dynamic from "next/dynamic";
-import { useSwiper } from "swiper/react";
+// import withLazyLoad from "@/components/Common/LazyLoading/lazyLoading";
+
+
 import Image from "next/image";
+import withLazyLoad from "@/components/Common/LazyLoading/lazyLoading";
+// import withLazyLoad from "@/components/Common/LazyLoading/lazyLoading";
 const Carousel = dynamic(() => import("@/components/Common/Carousel"), {
   ssr: false,
 });
+const SingleShowCard = withLazyLoad(ShowsCard);
+
+
+
 export default function HappeningNow({ events = [] }) {
+  
   const container = "pl-[20px] pr-[20px] lg:px-[60px]";
   return (
-    <div className={` py-[30px] pb-[42px] lg:pb-[77px]`}>
+    <div className={` py-[30px] pb-[42px] lg:pb-[77px] relative`}>
       <div
         className={`flex justify-between items-center ${MainContainer}  mb-[40px]`}
       >
@@ -36,7 +45,7 @@ export default function HappeningNow({ events = [] }) {
           leftBtnName=".button-prev"
           rightBtnName=".button-next"
           renderItem={(item) => (
-            <ShowsCard
+            <SingleShowCard
               id={item?._id}
               name={item?.name}
               venue={item?.address}

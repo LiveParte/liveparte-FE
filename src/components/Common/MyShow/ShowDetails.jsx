@@ -7,9 +7,10 @@ import { BsDot } from "react-icons/bs";
 
 export default function ShowDetails({ onNext, item, id }) {
   const router = useRouter();
+  const ItemIsArray=Array.isArray(item?.tickets)?item?.tickets[0]:[]
 
   return (
-    <div className=" z-50 relative">
+    <div className=" z-30 relative">
       <div className=" flex flex-col  relative">
         <div
           onClick={() => {
@@ -36,13 +37,13 @@ export default function ShowDetails({ onNext, item, id }) {
           <div className="text-[#B4BECB] text-[14px] md:text-[15px] mb-[10px] md:mb-[24px]  font-medium font500 whitespace-nowrap overflow-hidden text-ellipsis  font400">
             {item?.address}
           </div>
-        {             ( isArray(item?.tickets) && item?.tickets[0]?.price )  &&<div className="font500 font-medium">
-            ₦{" "}
-            {formatMoney(
-              isArray(item?.tickets) && item?.tickets[0]?.price,
+        { ( isArray(item?.tickets) &&ItemIsArray?.price )  ?<div className="font500 font-medium">
+            ₦ {formatMoney(
+              isArray(item?.tickets) && ItemIsArray?.price,
               false
             )}
-          </div>
+            
+          </div>:ItemIsArray?.price===0?'Free':null
 }
         </div>
       </div>
