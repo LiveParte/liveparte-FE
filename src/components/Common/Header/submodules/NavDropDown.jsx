@@ -9,7 +9,7 @@ const { default: ButtonComp } = require("@/components/Ui/button");
 const { eventLink, onDemandLink, myShowLink } = require("@/utils/reusableComponent");
 const { default: Image } = require("next/image");
 
-export default function MenuDropdown ({ handleLogOut,setDropDown ,setModalName,userInfo}) {
+export default function MenuDropdown ({ handleLogOut,setDropDown ,setModalName,userInfo,coinsBalance}) {
     // cookies();
     // console.log(userInfo,'userInfo');
     
@@ -58,10 +58,16 @@ export default function MenuDropdown ({ handleLogOut,setDropDown ,setModalName,u
 
                     <div className="flex justify-between items-center py-[30px]">
                         <div className="text-[13px] flex items-center gap-[5px] ">
-                            <LiveParteCoins
-                            />{" "}
-                            {formatMoney(userInfo?.totalCoin||'0',false)}{" "}
-                            {userInfo?.totalCoin > 1 ? "Coins" : "Coin"}
+                        <Image
+          src={`/svg/Liveparte coin.svg`}
+          width={24}
+          height={24}
+          alt="coins"
+        />
+                            {/* <LiveParteCoins
+                            />{" "} */}
+                            {formatMoney(coinsBalance||'0',false)}{" "}
+                            {coinsBalance > 1 ? "Coins" : "Coin"}
                         </div>
                         <ButtonComp
                             onClick={() => setModalName(`purchaseCoin`)}

@@ -166,7 +166,7 @@ export default function GiftTicket({ closeModal, Data, show }) {
             />
           ))}
         </form>
-        {console.log(Data?.ticket?.price,'DataDataData')}
+        {/* {console.log(Data?.ticket?.price,'DataDataData')} */}
         {Data?.ticket?.price==0?
         <ButtonComp
         isDisabled={isLoading||!isValidateMain}
