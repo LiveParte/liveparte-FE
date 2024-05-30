@@ -5,7 +5,7 @@ import { GiftIcon, MicroPhoneIcon } from "../../../../../public/svg";
 import { myShowLink } from "@/utils/reusableComponent";
 import { useRouter } from "next/router";
 
-export default function liveStreamHeaderComp({
+export default function LiveStreamHeaderComp({
   handleOpenModal,
   setActiveConnection,
   liveStreamDetail

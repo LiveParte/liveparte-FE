@@ -17,7 +17,9 @@ import { selectCoins } from "@/store/User";
 import DropdownButton from "@/components/Ui/DropDown";
 
  function Chat({ onLeave, liveStreamDetail, userProfileData }) {
+
   const userCoinsBalance = useSelector(selectCoins);
+  // alert(userCoinsBalance,'userCoinsBalance')
   const chatBoxRef = useRef(null);
   const [isAtBottom, setIsAtBottom] = useState(true);
   const [textMessages, setTextMessages] = useState("");
@@ -91,7 +93,7 @@ import DropdownButton from "@/components/Ui/DropDown";
   const messageRef = useRef(null);
 
   useEffect(() => {
-    if (userProfileData?.totalCoin === 0) {
+    if (userCoinsBalance === 0) {
       const showMessage = () => {
         if (messageRef.current) {
           messageRef.current.style.display = 'block';
@@ -112,7 +114,7 @@ import DropdownButton from "@/components/Ui/DropDown";
       // Cleanup interval on component unmount
       return () => clearInterval(intervalId);
     }
-  }, [userProfileData?.totalCoin]);
+  }, [userCoinsBalance]);
 
   useEffect(() => {
     if (chatBoxRef.current) {
@@ -276,7 +278,7 @@ import DropdownButton from "@/components/Ui/DropDown";
             alt="coins"
           />
           <div className="text-[10px]">
-            {formatMoney(userProfileData?.totalCoin || "0", false)}
+            {formatMoney(userCoinsBalance || "0", false)}
           </div>
         </div>
       </div>
@@ -371,7 +373,7 @@ import DropdownButton from "@/components/Ui/DropDown";
       </div>
       <div className=" px-[16px]  mb-3 md:mb-0 border-t-[#343F4B] border-t-[1px] lg:border-0 pt-[10px]">
       <div className="relative w-full">
-      {payFlow && <GiftCoin />}
+      {payFlow && <GiftCoin   />}
       </div>
         <TextInputComp />
         <div className="hidden lg:flex justify-between items-center relative">

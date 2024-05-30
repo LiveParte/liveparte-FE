@@ -72,16 +72,13 @@ import PurchasePaartyCoins from "../PurchasePaartyCoins";
         onNext={setIsOpenGiftCoins}
          position={'top'}
         label={<SendCoinsComp   />}
-        children={
-          <GiftingCoins
+>
+<GiftingCoins
           usersCoinsBalance={userCoinsBalance}
           eventId={liveStreamDetail}
-          // onNext={() => setPayFlow("purchasePartyCoins")}
-          // onClose={() => setPayFlow(null)}
           containerStyle={`!w-[300px] rounded-[8px]`}
         />
-        }
-        />
+</DropDown>
         <DropDown
         
          onNext={setIsOpenBuyCoins}
@@ -96,14 +93,14 @@ import PurchasePaartyCoins from "../PurchasePaartyCoins";
             </div>
           </div>
         }
-        children={
-          <PurchasePaartyCoins
+        >
+           <PurchasePaartyCoins
+           
           // onBack={() => setPayFlow("giftCoins")}
           // onClose={() => setPayFlow(null)}
           containerStyle={`!w-full rounded-[8px]`}
         />
-        }
-        />
+        </DropDown>
       
       </div>
      {/* <div className="flex   align-bottom flex-1 justify-end overflow-hidden">
