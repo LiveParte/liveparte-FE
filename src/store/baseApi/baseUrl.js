@@ -9,7 +9,7 @@ export const baseUrlProd =`https://backend.liveparte.com/v1/api/`;
 //  // publicKey: "pk_test_9b34d7cad3b54108b6eb034c951d89366eadcc3d",
 //backend.liveparte.com
 //staging-be.liveparte.com
-//http://44.208.167.228:3002
+
 //http://54.163.212.107:3001/api/v1 
 //https://staging-be.liveparte.com/v1/api/
 //https://backend.liveparte.com/v1/
