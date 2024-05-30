@@ -40,7 +40,7 @@ export function FloatingLabelInput({
             type={showPasswords || type || "text"}
             role="presentation"
             // autoComplete={type === "password" ? "new-password" : "off"}
-             autocomplete={offAutoComplete&&"tynew-password"}
+             autocomplete={offAutoComplete&&"new-password"}
             // ontouchstart="this.removeAttribute('readonly');"
             // onfocus="this.removeAttribute('readonly');"
             name={name}
