@@ -1,11 +1,11 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { BASE_URL } from "../../api/baseUrl";
-import { baseQuery } from "../api";
+import { baseQueryWithRetry } from "../api";
 
 export const adminApi = createApi({
   reducerPath: "adminApi",
   // baseQuery: fetchBaseQuery({ baseUrl: BASE_URL }),
-  baseQuery: baseQuery,
+  baseQuery: baseQueryWithRetry,
   endpoints: (builder) => ({
     getAdmin: builder.query({
       query: (body) => ({

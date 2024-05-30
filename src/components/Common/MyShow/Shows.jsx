@@ -5,9 +5,10 @@ import moment from "moment";
 import { useRouter } from "next/router";
 import { eventLink, singleEventLink } from "@/utils/reusableComponent";
 import { isArray } from "@/utils/helper";
-import { useDispatch } from "react-redux";
-import { setEventData } from "@/store/Event";
+import { useDispatch, useSelector } from "react-redux";
+// import { selectEvent, setEventData } from "@/store/Event";
 import ShowDetails from "./ShowDetails";
+import { selectEvent, setSingleEvent } from "@/store/User";
 // import ImageOrVideo from "";
 const ImageOrVideo = dynamic(() => import("./ImageOrVideo"), { ssr: false });
 // const ShowDetails = dynamic(() => import("./ShowDetails"));
@@ -30,6 +31,7 @@ export default function ShowsCard({
   const backgroundImage = `https://res.cloudinary.com/dammymoses/image/upload/v1710175667/LiveParte/a7_zeemus.png`;
   const router = useRouter();
   const dispatch = useDispatch();
+  const shows = useSelector(selectEvent) || {};
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [posterImage, setPosterImage] = useState();
@@ -60,7 +62,7 @@ export default function ShowsCard({
     }
   };
 
-  // console.log(item?._id)
+  console.log(shows,'showsshowsshows')
 
 
   return (
@@ -74,8 +76,9 @@ export default function ShowsCard({
         if (onNext) {
           return onNext(item);
         }
+        // alert('Hello')
         // console.log({...item,ticket:isArray(item?.tickets)&&item?.tickets[0]},'showsshowsshows1');
-        dispatch(setEventData({...item,ticket:isArray(item?.tickets)&&item?.tickets[0]}));
+        dispatch(setSingleEvent({...item,ticket:isArray(item?.tickets)&&item?.tickets[0]}));
         router.push({
           pathname: `${eventLink}/${item?._id}`,
         });

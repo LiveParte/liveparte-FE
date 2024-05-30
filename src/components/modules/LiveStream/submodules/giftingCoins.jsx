@@ -9,19 +9,21 @@ import {
 import LiveStreamHeader from "./LiveStreamHeader";
 import { useGiftCoinsMutation } from "@/store/Transaction/transactionApi";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCurrentUserData, setUserData } from "@/store/User";
+import { selectCoins, selectCurrentUserData, setCoins, setUserData } from "@/store/User";
 import { SuccessNotification } from "@/utils/reusableComponent";
 import { REGEX_PATTERNS } from "@/utils/constants/errors";
 import { Controller, useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { useLazyGetUserProfileQuery, userApi } from "@/store/User/userApi";
-export default function GiftingCoins({ onNext, onClose, eventId,usersCoinsBalance }) {
+export default function GiftingCoins({ onNext, onClose, eventId,usersCoinsBalance,containerStyle }) {
   const router = useRouter();
   const [checkProfile, { isLoading: cpLoading }] = useLazyGetUserProfileQuery();
   const { showId } = router?.query;
   const {
     control,
     handleSubmit,
+    reset,
+    watch,
     formState: { errors },
   } = useForm({
     defaultValues: {
@@ -30,6 +32,7 @@ export default function GiftingCoins({ onNext, onClose, eventId,usersCoinsBalanc
   });
 
   const userInfo = useSelector(selectCurrentUserData);
+  const userCoinsBalance = useSelector(selectCoins);
   const [giftCoins, { isLoading }] = useGiftCoinsMutation();
   const dispatch = useDispatch();
   // console.log(eventId?._id,userInfo?._id, "eventId");
@@ -45,22 +48,23 @@ export default function GiftingCoins({ onNext, onClose, eventId,usersCoinsBalanc
     //   return 
     // }
 
+    // alert(userCoinsBalance)
+
+    // console.log(userInfo,userCoinsBalance,'userInfo')
    
 
     const response = await giftCoins(payload);
     if (response?.data?.message === "Coins gifted successfully") {
-      const responseII = await checkProfile();
-      // console.log(responseII?.data,'responseII')
-      // setCoinsNeeded(0);
-      dispatch(setUserData(responseII?.data));
-      onClose();
+      dispatch(setCoins(userCoinsBalance-data?.coins))
+      
       dispatch(userApi.util.invalidateTags(["user"]));
+      reset()
       return SuccessNotification({ message: response.data.message });
     }
   }
 
   return (
-    <div className="px-[34px] py-[16px] bg-[#060809] w-full">
+    <div className={`px-[34px] py-[16px] bg-[#060809] w-[280px] ${containerStyle}`}>
       <LiveStreamHeader title={`Gift Parte Coins`} onClose={onClose} />
 
       <div className="mb-[16px]">
@@ -103,7 +107,7 @@ export default function GiftingCoins({ onNext, onClose, eventId,usersCoinsBalanc
           className={`h-[30px] text-[#060809] w-full text-[13px] py-[5px]`}
           onClick={handleSubmit(handleGiftCoins)}
           isLoading={isLoading}
-          isDisabled={isLoading}
+          isDisabled={!watch('coins')||isLoading}
         />
       </div>
 

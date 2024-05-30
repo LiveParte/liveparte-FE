@@ -113,7 +113,9 @@ export default function SettingForm({
   };
 
   //
-  const { data, isLoading:profileLoader, isError } = useGetUserProfileQuery();
+  const { data, isLoading:profileLoader, isError } = useGetUserProfileQuery(undefined,{
+    skip:!userInfo?._id
+  });
   const [UpdatePassword, { isLoading: updatePasswordLoader }] =
     useChangePasswordMutation();
 

@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseQuery } from "../api";
+import { baseQueryWithRetry } from "../api";
 
 
 const useQuestionMarkOrAnd= (itemA='',itemB='',itemC='')=>{
@@ -9,7 +9,7 @@ const useQuestionMarkOrAnd= (itemA='',itemB='',itemC='')=>{
 
 export const transactionApi = createApi({
   reducerPath: "transactionApi",
-  baseQuery: baseQuery,
+  baseQuery: baseQueryWithRetry,
   tagTypes:['coupon'],
   endpoints: (builder) => ({
    

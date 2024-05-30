@@ -21,7 +21,7 @@ export default function Header({ className, openModal }) {
 
   const MenuDropdown = () => {
     return (
-      <div className="bg-[#1B1C20]  left-0 right-0 top-0 bottom-0 z-[99] px-[24px] py-[14px] lg:py-[30px] overflow-hidden  flex flex-col fixed ">
+      <div className="bg-[#1B1C20]  left-0 right-0 top-0 bottom-0 z-[99] px-[24px] py-[14px] lg:py-[30px] overflow-hidden  flex flex-col fixed  lg:hidden">
         <div className="flex justify-between items-center mb-[28px] ">
           <div className="text-white">
             {" "}

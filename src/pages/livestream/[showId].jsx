@@ -14,7 +14,7 @@ import { selectCurrentUserData } from "@/store/User";
 import { isFutureDate } from "@/utils/reusableComponent";
 
 const LiveStream = dynamic(
-  () => import("@/components/modules/LiveStream/LiveStream"),
+  () => import("@/components/modules/LiveStream/LiveStreamMain"),
   { ssr: false }
 );
 
@@ -29,14 +29,14 @@ export default function Index() {
     skip:!userInfo?._id,
   });
   const NestedLiveStreamData = useSelector(selectLiveStreamEvent)||data;
-  const liveStream ={...NestedLiveStreamData}
+  const liveStream ={...NestedLiveStreamData,...NestedLiveStreamData?.event}
   let [isOpen, setIsOpen] = useState();
   const handleCloseModal = ()=>{
     setIsOpen(null)
     
   }
 
-  // console.log(liveStream,data,NestedLiveStreamData,'NestedLiveStreamData')
+  // console.log(liveStream,'NestedLiveStreamData')
 
   const handleOpenModal = (modalName)=>{
     setIsOpen(modalName)
@@ -73,9 +73,10 @@ export default function Index() {
           // openModal={openModal}
         />
       )}
-      <div className="flex-1 flex flex-col  bg-[#060809] overflow-hidden ">
+      {/* ||isFutureDate(liveStream?.event_date) */}
+      <div className="flex-1 flex flex-col  bg-[#060809] overflow-hidden  h-[100dvh] lg:h-[100vh]">
         <LiveStream
-          isLive={isFutureDate(liveStream?.event_date)}
+          isLive={liveStream?.isLiveStreamed}
           liveStreamDetail={liveStream}
           handleOpenModal={handleOpenModal}
           handleCloseModal={handleCloseModal}

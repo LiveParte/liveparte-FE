@@ -1,5 +1,5 @@
 import { createApi } from "@reduxjs/toolkit/query/react";
-import { baseQuery } from "../api";
+import { baseQueryWithRetry } from "../api";
 
 
 // const useQuestionMarkOrAnd= (itemA='',itemB='',itemC='')=>{
@@ -9,7 +9,7 @@ import { baseQuery } from "../api";
 
 export const eventApi = createApi({
   reducerPath: "eventApi",
-  baseQuery: baseQuery,
+  baseQuery: baseQueryWithRetry,
   refetchOnReconnect:true,
   refetchOnFocus:true,
   tagTypes:['event','singleEvent','ondemand','eventStream'],

@@ -216,19 +216,10 @@ export default function EventButton({
               onClick={() => {
                 handleGetTicket && handleGetTicket();
               }}
-              className={`py-[12px] px-[15px] md:px-[39px] text-[13px] xl:text-[15px] font500`}
-              btnText={`Get Ticket - ${
-                HeroSectionEvent?.ticket?.code ||
-                isArray(HeroSectionEvent?.tickets)
-                  ? ""
-                  : ""
-              } ₦${formatMoney(
-                HeroSectionEvent?.ticket?.price ||
-                  (isArray(HeroSectionEvent?.tickets) &&
-                    HeroSectionEvent?.tickets[0]?.price) ||
-                  " ",
-                true
-              )}`}
+              className={`py-[12px] px-[16px] md:px-[39px] text-[13px] xl:text-[13px] font500`}
+              btnText={`Get Free Ticket 
+             
+              `}
             />
           </div>
         );
@@ -237,6 +228,19 @@ export default function EventButton({
         break;
     }
   }
+
+  // - ${
+  //   HeroSectionEvent?.ticket?.code ||
+  //   isArray(HeroSectionEvent?.tickets)
+  //     ? ""
+  //     : ""
+  // } ₦${formatMoney(
+  //   HeroSectionEvent?.ticket?.price ||
+  //     (isArray(HeroSectionEvent?.tickets) &&
+  //       HeroSectionEvent?.tickets[0]?.price) ||
+  //     " ",
+  //   true
+  // )}
 
   function TextType(textType) {
     switch (textType) {

@@ -18,7 +18,7 @@ import {
   handleOpenModalAll,
   myShowLink,
 } from "@/utils/reusableComponent";
-import { LogoImage, MainContainer } from "@/utils/styleReuse";
+import { LogoImage, MainContainer, MainContainerLivestream } from "@/utils/styleReuse";
 import UserProfile from "@/components/Common/UserProfile";
 import CustomDropDown from "@/components/Common/CustomDropDown";
 import { userApi } from "@/store/User/userApi";
@@ -84,7 +84,6 @@ export default function LiveStream({
     );
   }
 
-  // console.log(liveStreamDetail, "liveStreamDetail");
   function ProfileDropdown() {
     return (
       <CustomDropDown dropdownRef={dropdownRef} setIsOpen={setIsOpen}>
@@ -103,15 +102,11 @@ export default function LiveStream({
       </CustomDropDown>
     );
   }
-  const agoraClient = useRTCClient(
-    AgoraRTC.createClient({ codec: "vp8", mode: "rtc" })
-  ); // Initialize Agora Client
-  // const MainContainer = `lg:px-[20px] lg:px-[20px] xl:px-[40px] relative`;
+  
   return (
-    <AgoraRTCProvider client={agoraClient}>
       <main
         ref={dropdownRef}
-        className={`${MainContainer} flex flex-col   overflow-hidden flex-1 lg:pb-[26px]`}
+        className={`${MainContainerLivestream} flex flex-col   overflow-hidden flex-1 lg:pb-[26px]`}
       >
         <div className=" items-center justify-between hidden lg:flex">
           <div className="pt-[32px] pb-[27px] hidden lg:block">
@@ -122,7 +117,7 @@ export default function LiveStream({
         </div>
         {/* \ */}
         <div className="flex flex-col lg:flex-row lg:gap-[16px] flex-1 takeScreen">
-          <div className=" flex flex-col flex-[0.3] lg:flex-[0.6] xl:flex-[0.7] bg-[#27292E] lg:pt-[18px] lg:px-[23px] lg:rounded-[16px]">
+          <div className=" flex flex-col flex-[0.45] lg:flex-[0.6] xl:flex-[0.7] bg-[#27292E] lg:pt-[18px] lg:px-[23px] lg:rounded-[16px]">
             <div className="px-[5px]  items-center justify-between mb-[16px] hidden lg:flex">
               <div className="text-[23px] font-semibold font-1 text-[#FFFFFF] uppercase line-clamp-1 w-[139px] lg:max-w-[10vw] xl:w-auto">
                 {liveStreamDetail?.name}
@@ -191,13 +186,7 @@ export default function LiveStream({
                   >
                     {isOpenII && <ShareAndGiftDropdown />}
                     <ThreeDotSmall />
-                    {/* <div className="h-[28px] w-[28px] rounded-sm"></div> */}
-                    {/* <Image
-                alt="dropdown"
-                src={`/Image/mobileThreeDot.png`}
-                width={28}
-                height={28}
-                /> */}
+                   
                   </div>
                   <div
                     className="text-[13px]  gap-[8px] items-center hidden lg:flex cursor-pointer"
@@ -243,7 +232,7 @@ export default function LiveStream({
               />
             </div>
           </div>
-          <div className=" flex-[0.7] lg:flex-[0.38] xl:flex-[0.3]  flex flex-col lg:rounded-[26px] bg-[#222428]">
+          <div className=" flex-[0.55] lg:flex-[0.38] xl:flex-[0.3]  flex flex-col lg:rounded-[26px] bg-[#222428]">
             <Chat
               liveStreamDetail={liveStreamDetail}
               userProfileData={userProfileData}
@@ -270,6 +259,6 @@ export default function LiveStream({
           mainContainer={`p-0`}
         />
       </main>
-    </AgoraRTCProvider>
+   
   );
 }

@@ -19,54 +19,61 @@ export default function LoginPage({
   GoogleSignIn,
   // googleLogin
 }) {
-
-  const [ user, setUser ] = useState([]);
+  const [user, setUser] = useState([]);
 
   useEffect(() => {
     if (user?.access_token) {
-        fetch(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
-            headers: {
-                'Authorization': `Bearer ${user.access_token}`,
-                'Accept': 'application/json'
-            }
-        })
+      fetch(
+        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
+        {
+          headers: {
+            Authorization: `Bearer ${user.access_token}`,
+            Accept: "application/json",
+          },
+        }
+      )
         .then((response) => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok ' + response.statusText);
-            }
-            return response.json();
+          if (!response.ok) {
+            throw new Error(
+              "Network response was not ok " + response.statusText
+            );
+          }
+          return response.json();
         })
         .then((data) => {
           const payload = {
-          
             email: data?.email,
-            password:`${data?.given_name}${data?.id}1a@`
+            password: `${data?.given_name}${data?.id}1La@`,
+            "isGoogle": true
           };
-          GoogleSignIn(payload)
-          setUser()
-            // console.log(data);
-            // setProfile(data);
+          GoogleSignIn(payload);
+          setUser();
+          // console.log(data);
+          // setProfile(data);
         })
         .catch((error) => {
-          setUser()
-            console.error('There has been a problem with your fetch operation:', error);
+          setUser();
+          console.error(
+            "There has been a problem with your fetch operation:",
+            error
+          );
         });
     }
-}, [user]);
+  }, [user]);
 
   const googleLogin = useGoogleLogin({
     onSuccess: (tokenResponse) => {
       setUser(tokenResponse);
-        // console.log(tokenResponse,'tokenResponse')
+      // console.log(tokenResponse,'tokenResponse')
       // You can now use the tokenResponse to authenticate the user in your app
     },
     onError: () => {
-      console.error('Google login failed');
+      console.error("Google login failed");
       // Handle login errors here
     },
     // flow: 'auth-code', // Use 'auth-code' for the authorization code flow
   });
-  
+
   return (
     <form
       className="px-[15px] lg:px-[30px] flex flex-col  lg:pb-[0px]"

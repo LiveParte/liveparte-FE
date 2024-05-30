@@ -1,10 +1,10 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { baseQuery } from "../api";
+import {  baseQueryWithRetry } from "../api";
 import { logout } from ".";
 
 export const userApi = createApi({
   reducerPath: "userApi",
-  baseQuery: baseQuery,
+  baseQuery: baseQueryWithRetry,
   tagTypes: ["user"],
   refetchOnReconnect:true,
   // refetchOnFocus:true,
