@@ -30,9 +30,11 @@ export default function AuthHeader({
   openModal,
   showNav = false,
   userInfo,
+  userCoinsBalance
 }) {
   const router = useRouter();
   const dispatch = useDispatch();
+  // const coins = 
   const MainContainer = `px-[20px] md:px-[40px] lg:px-[80px] xl:[120px] relative`;
   const [dropDown, setDropDown] = useState(false);
   // const userInfo = useSelector(selectCurrentUserData);
@@ -53,23 +55,13 @@ export default function AuthHeader({
   }
 
   function handleLogOut() {
-    // dispatch(userApi.util.resetApiState());
-    // dispatch(eventApi.util.resetApiState());
-    // dispatch(transactionApi.util.resetApiState());
-    // dispatch(logout());
+    dispatch(userApi.util.resetApiState());
     dispatch(setUserData({}))
     localStorage.removeItem(userDetailStorageName);
     localStorage.removeItem(accessTokenStorageName);
 
     if (router?.pathname === myShowLink || router?.pathname === "/setting") {
-      // dispatch(userApi.util.invalidateTags());
-      // dispatch(eventApi.util.invalidateTags());
-      // dispatch(transactionApi.util.invalidateTags());
-      // dispatch(
-      //   userApi.endpoints.getUserProfile.initiate({ forceRefetch: true })
-      // );
-
-      // window.location.reload();
+     
       return router.push("/");
     }
   }
@@ -132,6 +124,8 @@ export default function AuthHeader({
       </CustomDropDown>
     );
   }
+
+  // console.log(userCoinsBalance,'userCoinsBalance')
 
   const blur = `backdrop-blur-[60px]`;
   return (
@@ -199,9 +193,9 @@ export default function AuthHeader({
                   </div>
                   <div className="text-[13px] flex items-center gap-[5px]">
                     <LiveParteCoins/>
-                    
-                    {formatMoney(userInfo?.totalCoin || "0", false)}{" "}
-                    {userInfo?.totalCoin > 1 ? "Coins" : "Coin"}
+                      
+                    {formatMoney(userCoinsBalance|| "0", false)}{" "}
+                    {userCoinsBalance > 1 ? "Coins" : "Coin"}
                   </div>
                 </div>
 

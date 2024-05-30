@@ -7,34 +7,18 @@ import { useGetUserProfileQuery, useUpdateUserLocationMutation } from "@/store/U
 
 function NoAuth({ children }) {
   const router = useRouter();
-  // const [updateUserLocation]=useUpdateUserLocationMutation();
-  // const userInfo = useSelector(selectCurrentUserData);
-  const dispatch = useDispatch();
 
 
-  const { data, isLoading, isError,error, isSuccess,status} = useGetUserProfileQuery(undefined,{
-    skip: true,
-    // selectFromResult: (result) => ({
-    //   ...result,
-    //   statusCode: result.meta?.statusCode,
-    // }),
+
+  const { data, isLoading, isError,error, isSuccess,status,refetch} = useGetUserProfileQuery(undefined,{
+   
   });
 
- 
+  // useEffect(() => {
+  //   refetch()
+  // }, [])
+  
 
-  // console.log(userInfo,'countryInfo')
-  useEffect(() => {
-    if(!isLoading){
-    
-   
-    if(error?.message==="Unauthorized"){
-      // dispatch(setUserData({}))
-      dispatch(logout());
-    }
-    
-   
-  }
-  }, [ router,error?.message,isLoading]);
 
   return (
     <div className="min-h-[100vh] bg-[#000000] flex flex-col justify-end relative">

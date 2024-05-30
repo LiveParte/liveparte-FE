@@ -1,26 +1,22 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import Image from "next/image";
 import ButtonComp from "@/components/Ui/button";
 import LiveStreamHeader from "./LiveStreamHeader";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCoins, selectCurrentUserData, setUserData } from "@/store/User";
+import { selectCoins, selectCurrentUserData, setCoins } from "@/store/User";
 import { isArray } from "@/utils/helper";
 import { formatMoney } from "@/utils/formatMoney";
 import PayStack from "@/components/PayStack/payStack";
 import { usePurchaseCoinsMutation } from "@/store/Transaction/transactionApi";
 import { SuccessNotification } from "@/utils/reusableComponent";
-import { useLazyGetUserProfileQuery, userApi } from "@/store/User/userApi";
-import { LiveParteCoins } from "../../../../../public/svg";
 export default function PurchasePaartyCoins({
   onClose,
   onBack,
   containerStyle,
   path,
 }) {
-  const [checkProfile,{isLoading:cpLoading}]=useLazyGetUserProfileQuery()
   const [purchaseCoins, { isLoading}] = usePurchaseCoinsMutation();
   const [coinsNeeded, setCoinsNeeded] = useState(0);
-  const [selectedCoins, setSelectedCoins] = useState();
   const dispatch = useDispatch();
   const userInfo = useSelector(selectCurrentUserData)||{};
   const coinsList = useSelector(selectCoins);
@@ -47,22 +43,46 @@ export default function PurchasePaartyCoins({
     };
 
     const responses = await purchaseCoins(payload);
-    // console.log(responses,'responses')
     if (responses?.data?.message === "You successfully purchased Liveparte coins") {
-        const responseII=await checkProfile();
-        // console.log(responseII?.data,'responseII')
-      setCoinsNeeded(0);
-      dispatch(setUserData(responseII?.data))
-      dispatch(userApi.util.invalidateTags(["user"]));
-      onClose();
+      dispatch(setCoins(coinsList+coinsNeeded))
+      onClose&&onClose();
       return SuccessNotification({ message: responses.data.message });
     }
   }
 
-  // console.log(coinsNeeded?.length,totalCost,'Makes a purchase')
+  const coinSelectionItems = useMemo(() => {
+    return [10, 30, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500].map(
+      (item, index) => (
+        <div
+          key={index}
+          onClick={() => {
+            // console.log('coinSelectionItems', item);
+            setCoinsNeeded(item);
+          
+          }}
+          className={`flex justify-center items-center gap-[2px] bg-[#343F4B] px-[14px] py-[11px] text-white rounded-[4px] cursor-pointer ${
+            coinsNeeded === item && "border-[#FA4354]  border-[1px]border-[#FA4354]  border-[1px]"
+          } `}
+        >
+          <div className="w-[16px] h-[16px]">
+            <Image
+              src={`/svg/Liveparte coin.svg`}
+              width={24}
+              height={24}
+              alt="coins"
+            />
+          </div>
+          <div className="text-[13px]">{item}</div>
+        </div>
+      )
+    );
+  }, [coinsNeeded]); 
+
+  // console.log(coinsPrice,coinsAmount,coinsNeeded,'coinsNeeded')
+
   return (
     <div
-      className={`px-[16px] pt-[16px] bg-[#060809]    w-max ${containerStyle}`}
+      className={`px-[16px] pt-[16px] bg-[#060809] w-[200px] lg:w-max   max-w-max ${containerStyle}`}
     >
       <LiveStreamHeader
         path={path}
@@ -70,32 +90,9 @@ export default function PurchasePaartyCoins({
         onClose={onClose}
         onBack={onBack}
       />
-      <div className="relative">
-        <div className="grid grid-cols-3 md:grid-cols-4 gap-[8px] mb-[32px]">
-          {[10, 30, 50, 100, 150, 200, 250, 300, 350, 400, 450, 500]?.map(
-            (item, index) => (
-              <div
-                key={index}
-                onClick={() => setCoinsNeeded(item)}
-                className={`flex justify-center items-center gap-[2px] bg-[#343F4B] px-[14px] py-[11px] text-white rounded-[4px] cursor-pointer ${
-                  coinsNeeded === item &&
-                  " border-[#FA4354]  border-[1px]border-[#FA4354]  border-[1px]"
-                } `}
-              >
-                <div className="w-[16px] h-[16px]">
-                <Image
-                  src={`/svg/Liveparte coin.svg`}
-                  width={24}
-                  height={24}
-                  alt="coins"
-                />
-                </div>
-                <div className="text-[13px]">{item}</div>
-              </div>
-            )
-          )}
-        </div>
-      </div>
+    <div className="grid grid-cols-4 gap-[8px] mb-4">
+    {coinSelectionItems}
+    </div>
       {/* */}
       <div className="pb-[26px]">
         <PayStack
@@ -111,6 +108,7 @@ export default function PurchasePaartyCoins({
             }`}
             className={`h-[39px] text-[#060809] w-full text-[13px] py-[5px]`}
             isLoading={isLoading}
+            isDisabled={!coinsNeeded}
           />
           {/* Purchase Coins ₦5,000 */}
         </PayStack>

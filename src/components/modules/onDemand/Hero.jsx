@@ -2,44 +2,21 @@ import React, { useEffect, useRef, useState } from "react";
 import { MainContainer } from "@/utils/styleReuse";
 import {
   checkShowDuration,
-  convertDateTime,
-  CopyEventLink,
-  eventLink,
-  GetTransformedImageUrl,
-  liveStreamLink,
-  myShowLink,
 } from "@/utils/reusableComponent";
-import { useRouter } from "next/router";
 import { isArray } from "@/utils/helper";
-import { useDispatch, useSelector } from "react-redux";
-import { setEventData, setLiveStreamEventData } from "@/store/Event";
-
-import MyModal from "@/components/Ui/Modal";
-import CheckOut from "../EventDetails/modal/CheckOut";
+import {  useSelector } from "react-redux";
 import { selectCurrentUserData } from "@/store/User";
 import { useCreatePurchaseMutation } from "@/store/Transaction/transactionApi";
-import GiftTicket from "../EventDetails/modal/GiftTicket";
-import LoginSignUp from "../Event/Modal/Login&SignUp";
-import ShareEvent from "../EventDetails/modal/ShareEvent";
-import { eventApi } from "@/store/Event/eventApi";
 
 import EventButton from "./submodules/EventButton";
 
 export default function Hero({
-  notEvent = true,
-  // router,
-  openModal,
-  // openModalLoginSignUp,
-  giftTicket,
-  openModalShareEvent,
   HeroSectionEvent,
-  showStatus = true,
   showTopGradient = false,
   isOnDemand = false,
   isLoading = false,
   isSingleEvent=false
 }) {
-  const [CreatePurchase, { isLoading: cpLoader }] = useCreatePurchaseMutation();
 
   const videoRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);

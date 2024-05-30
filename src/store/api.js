@@ -6,9 +6,10 @@ import {
   storage,
   userDetailStorageName,
 } from "../utils/helper";
+import { logout } from "./User";
 
 // Create our baseQuery instance
-export const baseQuery = fetchBaseQuery({
+ const baseQuery = fetchBaseQuery({
   baseUrl: BASE_URL,
   
   prepareHeaders: (headers, { getState }) => {
@@ -19,17 +20,20 @@ export const baseQuery = fetchBaseQuery({
     }
     return headers;
   },
-  validateStatus: (status) => {
-    if (status.status === 401) {
-      storage["localStorage"].remove(accessTokenStorageName);
-      // storage["localStorage"].remove("user_type");
-      storage["localStorage"].remove(userDetailStorageName);
-      // throw new Error("Unauthorized");
-    }
-    // console.log(status,'handleRegisterUser')
-    return status;
-    // return status >= 200 && status < 300;
-  },
+
 });
 
-export const baseQueryWithRetry = retry(baseQuery, { maxRetries: 1 });
+const baseQueryWithReauth = async (args, api, extraOptions) => {
+  let result = await baseQuery(args, api, extraOptions);
+ 
+  if (result.error && result.error.status === 401) {
+    api.dispatch(logout());
+    storage["localStorage"].remove(accessTokenStorageName);
+    storage["localStorage"].remove(userDetailStorageName);
+  
+  }
+
+  return result;
+};
+
+export const baseQueryWithRetry = retry(baseQueryWithReauth, { maxRetries: 0 });

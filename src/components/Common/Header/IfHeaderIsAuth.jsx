@@ -2,21 +2,24 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Header from "./Header";
 import AuthHeader from "./AuthHeader";
-import { selectCurrentUserData, setCoins, setUserData } from "@/store/User";
+import { selectCoins, selectCurrentUserData, setCoins, setUserData } from "@/store/User";
 import LoginSignUp from "@/components/modules/Event/Modal/Login&SignUp";
 import ForgetPassword from "@/components/modules/Event/Modal/submodules/ForgetPassword/ForgetPassword";
 import MyModal from "@/components/Ui/Modal";
 import { useRouter } from "next/router";
 // import { useGetAllCoinsQuery } from "@/store/Transaction/transactionApi";
-import {  useGetUserProfileQuery, useLazyGetUserProfileQuery, useUpdateUserLocationMutation } from "@/store/User/userApi";
+import {  useGetUserProfileQuery, useLazyGetUserProfileQuery, useUpdateProfileMutation, useUpdateUserLocationMutation } from "@/store/User/userApi";
 import { useGetUserLocationQuery } from "@/store/others/othersApi";
 import { accessTokenStorageName, storage, userDetailStorageName } from "@/utils/helper";
+import { useGetAllEventQuery } from "@/store/Event/eventApi";
 
 export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
   const [userDetail, setUserDetail] = useState(false);
   const dispatch = useDispatch();
   const userInfo = useSelector(selectCurrentUserData) || {};
-  const isTokenAvailable =localStorage.getItem(accessTokenStorageName)
+  const userCoinsBalance  = useSelector(selectCoins);
+  const isTokenAvailable =localStorage.getItem(accessTokenStorageName);
+  // console.log(userCoinsBalance,'userCoinsBalance')
  
   const {address,state,countryInfo,coin}=userInfo||{};
   const name = countryInfo ? countryInfo.name : null;
@@ -32,41 +35,44 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
     skip: !check || !userInfo?.id
   });
 
+  //this code is to make a p
+  const [updateUserDetails,{isSuccess:updateUserDetailsIsSuccess}] =useUpdateProfileMutation();
+  async function handleCheckIfTwoAccounts(){
+    const payload={
+      "fullName": userInfo.fullName,
+      "phone": userInfo?.phone,
+      "country": userInfo?.country,
+      "state": userInfo?.state,
+      "address": userInfo?.address,
+      "profile_image": userInfo?.profile_image,
+      id: userInfo?._id
+    }
+    const checkTwoAccounts= await updateUserDetails(payload);
+      console.log(checkTwoAccounts,'checkTwoAccounts')
+  }
+
+  useEffect(() => {
+   if(userInfo.fullName&&userInfo.phone&&userInfo.country&&userInfo.state&&userInfo.address && !updateUserDetailsIsSuccess){
+    handleCheckIfTwoAccounts();
+   }
+  }, [userInfo])
+
+  useEffect(() => {
+    
+    if(check&&isSuccess){
+    userInfo?._id&&handleUpdateUserLocation(extraDetails)
+    // userInfo?._id&&dispatch(setUserData(userProfileData));
+    }
   
+ }, [check, userInfo?._id])
+
+  // console.log(userInfo,extraDetails,check,'userInfouserInfo')
 
   const router = useRouter();
   let [isOpen, setIsOpen] = useState();
   const { token } = router.query;
 
-  useEffect(() => {
-    if(!isTokenAvailable){
-      dispatch(setUserData({}))
-    }
-  }, [isTokenAvailable])
-  
-
-  // console.log(check,'Hellocheck')
-   useEffect(() => {
-    
-      if(check&&isSuccess){
-      userInfo?._id&&handleUpdateUserLocation(extraDetails)
-      // userInfo?._id&&dispatch(setUserData(userProfileData));
-      }
-    
-   }, [check, userInfo?._id])
-
-  //  async function handleUpdateUserCheck(){
-  //   const response = await checkProfile();
-  //   console.log(response?.data?.statusCode==401,response?.data?._id,'handleUpdateUserCheck')
-  //  }
-
-  //  useEffect(() => {
-  //   handleUpdateUserCheck() 
-  //  }, [])
-   
-   
-
-  // console.log(userProfileData,check,isSuccess,userInfo,'userProfileData')
+ 
 
   const handleUpdateUserLocation=async(data)=>{
     const payload={
@@ -83,14 +89,10 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
     if(response?.data?.message==="User has been successfully updated"){
       const responseII=await checkProfile();
       dispatch(setUserData(responseII?.data))
-      // if(check){
-      // dispatch(setUserData({...response?.data?.updatedUser,work:'yes'}));
-     
-      // }
+      
     }
     
 
-    // console.log(response,response?.data?.message,'response')
   }
 
 
@@ -175,7 +177,7 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
         />
       )}
       {userDetail ? (
-        <AuthHeader  userInfo={userProfileData||userInfo} showNav={true} />
+        <AuthHeader  userInfo={userProfileData||userInfo} showNav={true} userCoinsBalance={userCoinsBalance}/>
       ) : (
         <Header
           openModal={openModal || openModalLoginSignUp}

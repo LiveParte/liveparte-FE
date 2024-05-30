@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { CloseModal, NoProfile } from "../../../../../public/svg";
 import {
+  userApi,
   // useLoginApiMutation,
   useRegisterApiMutation,
   useSignInWithGoogleMutation,
@@ -17,7 +18,7 @@ import {
   userDetailStorageName,
 } from "@/utils/helper";
 import { useDispatch } from "react-redux";
-import { setUserData } from "@/store/User";
+import { setCoins, setUserData } from "@/store/User";
 import LoginPage from "./Module/LoginPage";
 import SignUpPage from "./Module/SignUp";
 import {
@@ -57,12 +58,12 @@ export default function LoginSignUp({
   const checkIfNonImageExist = storage.localStorage.get("noUserProfileImage");
   const { control, handleSubmit, getValues, reset, setError } = useForm({
     defaultValues: {
-      email: "",
-      username: "",
-      password: "",
-      phoneNumber: "",
-      fullName: "",
-      confirmPassword: "",
+      // email: "",
+      // username: "",
+      // password: "",
+      // phoneNumber: "",
+      // fullName: "",
+      // confirmPassword: "",
     },
   });
 
@@ -162,10 +163,8 @@ export default function LoginSignUp({
         encryptText(response?.accessToken)
       );
 
-      // store.dispatch(setUserData(userData));
-
-      // storage.localStorage.set(userDetailStorageName, UserString);
       dispatch(setUserData(response?.user));
+      // dispatch(userApi.util.invalidateTags(["user"]));
       // dispatch(baseApi.util.resetApiState());
 
       if (router?.pathname === "/") {
@@ -181,17 +180,16 @@ export default function LoginSignUp({
 
   async function handleLogin(e) {
     const payload = {
-      ...e,
+      // 
       usernameOrEmail: e.email,
+      "isGoogle": false,
+      password:e?.password,
+      ...e,
     };
 
     const handleRegisterUser = await LoginUser(payload);
     const response = handleRegisterUser?.data;
     const UserString = JSON.stringify(response?.user);
-
-    // toast('Hello! RegisterUser')
-
-    // console.log(handleRegisterUser,'handleRegisterUser')
     if (!checkIfNonImageExist?.id) {
       storage.localStorage.set("noUserProfileImage", {
         id: response?.user?._id,
@@ -207,19 +205,18 @@ export default function LoginSignUp({
     }
     // Toddo:
 
-    if (handleRegisterUser?.data?.statusCode === 401) {
+    // console.log(handleRegisterUser,'handleRegisterUser')
+
+    if (handleRegisterUser?.error?.data?.statusCode) {
       // toast.error("Invalid credentials");
-      ErrorNotification({ message: "Your login details don't match" });
+      return ErrorNotification({ message: handleRegisterUser?.error?.data?.message });
     }
-
     if (response?.user?._id) {
-      // storage.localStorage.set(userDetailStorageName, UserString);
-      // storage.localStorage.
-      // storage.localStorage.set('check','saveme')
       dispatch(setUserData(response?.user));
-      // console.log(response?.user,'response?.user')
+      dispatch(setCoins(response?.user?.totalCoin));
+      console.log(response?.user,'response?.user')
       SuccessNotification({ message: "You're in!" });
-
+      // dispatch(userApi.util.invalidateTags(["user"]));
       storage.localStorage.set(
         accessTokenStorageName,
         encryptText(response?.accessToken)

@@ -25,10 +25,10 @@ import { usePaystackPayment } from "react-paystack";
 // import { PaystackConsumer } from 'react-paystack';
 import { useCreatePurchaseMutation } from "@/store/Transaction/transactionApi";
 import { useSelector } from "react-redux";
-import { selectCurrentUserData } from "@/store/User";
+import { selectCurrentUserData, selectEvent } from "@/store/User";
 import { storage, userDetailStorageName } from "@/utils/helper";
 import { myShowLink } from "@/utils/reusableComponent";
-import { selectEvent, selectLiveStreamEvent } from "@/store/Event";
+// import { selectEvent, selectLiveStreamEvent } from "@/store/Event";
 
 export default function EventId() {
   const dispatch = useDispatch()

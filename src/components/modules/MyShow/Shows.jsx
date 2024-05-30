@@ -4,7 +4,7 @@ import { dummyShowDataII } from "../Event/Data";
 import ButtonComp from "@/components/Ui/button";
 import { useRouter } from "next/router";
 import ShowsCard from "@/components/Common/MyShow/Shows";
-import { eventLink, liveStreamLink, onDemandLink } from "@/utils/reusableComponent";
+import { ErrorNotification, eventLink, liveStreamLink, onDemandLink } from "@/utils/reusableComponent";
 import UserShowsCard from "@/components/Common/MyShowUser/Shows";
 import { useDispatch } from "react-redux";
 import { setLiveStreamEventData } from "@/store/Event";
@@ -25,7 +25,16 @@ export default function Shows({
 
   const handleOnClick = (item) =>{
     dispatch(setLiveStreamEventData(item))
-    router.push(`${liveStreamLink}/${item?._id}`)
+    if(item?.eventStarted){
+      return router.push(`${liveStreamLink}/${item?._id}`)
+    }
+    else{
+      // return ErrorNotification({ message: 'Event not live yet'});
+      return router.push(`${liveStreamLink}/${item?._id}`)
+
+    }
+    // console.log(item,'setLiveStreamEventData')
+    // 
   }
   return (
     <>
@@ -48,17 +57,7 @@ export default function Shows({
                showVideo={false}
                onNext={(item)=>handleOnClick(item)}
              />
-              // <UserShowsCard
-              //   key={index}
-              //   id={item?.id}
-              //   name={item?.name}
-              //   venue={item?.venue||item?.address}
-              //   showImage={item?.thumbnail_url.toString()}
-              //   isLive={false}
-              //   showVideo={false}
-              //   item={item}
-              //   onNext={(item)=>handleOnClick(item)}  
-              // />
+             
             ))}
           </div>
         )}

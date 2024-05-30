@@ -25,15 +25,6 @@ export default function ShareEvent({ closeModal, Data }) {
     // router.push('/event_time_out')
   };
 
-  // async function copyTextToClipboard(text) {
-  //   if ('clipboard' in navigator) {
-  //      await navigator.clipboard.writeText(text);
-
-  //   } else {
-  //     return document.execCommand('copy', true, text);
-  //   }
-
-  // }
 
   const handleCopy = (text, result) => {
     if (result) {
@@ -65,7 +56,7 @@ export default function ShareEvent({ closeModal, Data }) {
       <main>
         <div className="flex items-center gap-[17px]  mb-[54px]">
           <div>
-            <Image
+         {Data?.thumbnail_url&&   <Image
               src={Data?.thumbnail_url}
               className="w-[89px] h-[89px] object-cover rounded-[8px]"
               width={89}
@@ -73,7 +64,7 @@ export default function ShareEvent({ closeModal, Data }) {
               placeholder="blur"
               blurDataURL={Data?.thumbnail_url}
               alt="show-image"
-            />
+            />}
           </div>
           <div>
             <div className="text-[14px] text-white font500 mb-[8px]">

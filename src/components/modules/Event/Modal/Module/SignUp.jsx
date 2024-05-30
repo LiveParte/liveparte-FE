@@ -16,6 +16,7 @@ export default function SignUpPage({
 
   const [ user, setUser ] = useState([]);
 
+  // using the details google give to register and signUp Users
   useEffect(() => {
     if (user?.access_token) {
         fetch(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
@@ -32,10 +33,11 @@ export default function SignUpPage({
         })
         .then((data) => {
           const payload = {
-            ...data,
+            // ...data,
             email: data.email,
             fullName: data?.name,
-            password:`${data?.given_name}${data?.id}1a@`
+            password:`${data?.given_name}${data?.id}1La@`,
+            "isGoogle": true
           };
           GoogleSignUp(payload)
             // console.log(data);
@@ -116,6 +118,7 @@ export default function SignUpPage({
             onChange={onChange}
             error={errors[item?.name]?.message}
             errors={errors}
+            offAutoComplete={true}
           />
         )}
       />

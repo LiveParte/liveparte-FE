@@ -10,6 +10,7 @@ export function FloatingLabelInput({
   name,
   disabled = false,
   onBlur,
+  offAutoComplete=false
 }) {
   const [readOnly, setReadOnly] = React.useState(true);
   const [showPasswords, setShowPasswords] = React.useState("");
@@ -38,8 +39,8 @@ export function FloatingLabelInput({
             placeholder=" "
             type={showPasswords || type || "text"}
             role="presentation"
-            autoComplete={type === "password" ? "new-password" : "off"}
-            //  autocomplete="new-password"
+            // autoComplete={type === "password" ? "new-password" : "off"}
+             autocomplete={offAutoComplete&&"tynew-password"}
             // ontouchstart="this.removeAttribute('readonly');"
             // onfocus="this.removeAttribute('readonly');"
             name={name}
@@ -61,7 +62,7 @@ export function FloatingLabelInput({
           />
           <label
             // for="floating_filled"
-            className="absolute z-0  text-[13px] peer-focus:text-[14px] text-[#63768D] dark:text-[#63768D] duration-300 transform -translate-y-[8px] scale-75 peer-focus:top-[20px] top-[12px]  origin-[0] start-[16px] peer-focus:text-[#63768D] peer-focus:dark:text-[#63768D] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-[3px] peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto cursor-not-allowed font400"
+            className="absolute z-30  text-[13px] peer-focus:text-[14px] !text-[#63768D] dark:text-[#63768D] duration-300 transform -translate-y-[8px] scale-75 peer-focus:top-[20px] top-[12px]  origin-[0] start-[16px] peer-focus:text-[#63768D] peer-focus:dark:text-[#63768D] peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-[3px] peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto cursor-not-allowed font400"
           >
             {label}
           </label>

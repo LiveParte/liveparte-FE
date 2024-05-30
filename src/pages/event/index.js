@@ -66,9 +66,10 @@ export default function Home() {
   // console.log(filteredEventsHero, "filteredHeroShows");
 
   const filteredUpcoming = isArray(data?.event)
-    ? data?.event.filter((event) => moment(event.event_date) > moment())
+    ? data?.event.filter((event) => event?.isLiveStreamed )
     : [];
 
+    //moment(event.event_date) > moment()
 
 //why i wrote  this code 
   // useEffect(() => {
