@@ -101,19 +101,21 @@ export default function LoginSignUp({
       fullName: e?.fullName,
     };
     const handleRegisterUser = await RegisterUser(payload);
-    const response = handleRegisterUser?.data;
+    const response = handleRegisterUser;
 
     const UserString = JSON?.stringify(response?.user);
 
-    if (response?.statusCode && response?.statusCode !== 200) {
-      if (response?.message === "Email is already in use") {
+    console.log(response?.error,'response')
+
+    if (response?.error?.data?.statusCode && response?.error?.data?.statusCode !== 200) {
+      if (response?.error?.data?.message === "Email is already in use") {
         return setError2("email", {
           type: "custom",
           message: "Email is already in use",
         });
       }
 
-      if (response?.message === "Username is already in use") {
+      if (response?.error?.data?.message === "Username is already in use") {
         return setError2("fullName", {
           type: "custom",
           message: " Username is already in use",
@@ -121,8 +123,8 @@ export default function LoginSignUp({
       }
 
       // response?.message[0],'hehehehe')
-      if (
-        response?.message[0] ==
+      if (Array.isArray(response?.error?.data?.message)&&
+      response?.error?.data?.message[0] ==
         "Password should have 1 upper case, lowcase letter along with a number and special character."
       ) {
         return setError2("password", {
@@ -132,7 +134,8 @@ export default function LoginSignUp({
         });
       }
       if (
-        response?.message[0] ==
+        Array.isArray(response?.error?.data?.message)&&
+        response?.error?.data?.message[0] ==
         "Username must be alphanumeric and without special characters"
       ) {
         return setError2("fullName", {
