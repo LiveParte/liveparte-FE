@@ -199,7 +199,7 @@ const newDateTime = convertAndAddOneHour(inputDateTime);
 
 export function checkShowDuration(targetDateTime, durationMins) {
     // Current date and time
-    console.log(durationMins,'durationMins')
+    // console.log(durationMins,'durationMins')
     const currentDate = new Date();
 
     // Convert targetDateTime string to Date object

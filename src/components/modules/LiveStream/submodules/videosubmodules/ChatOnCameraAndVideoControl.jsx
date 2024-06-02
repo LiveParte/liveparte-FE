@@ -43,7 +43,7 @@ function ChatOnCameraAndVideoControl({
   const [isOpenGiftCoins, setIsOpenGiftCoins] = useState(false);
   const [isOpenBuyCoins, setIsOpenBuyCoins] = useState(false);
 
-  console.log(isOpenGiftCoins,isOpenBuyCoins, "userCoinsBalance");
+  // console.log(isOpenGiftCoins,isOpenBuyCoins, "userCoinsBalance");
 
   //  bg-gradient-to-l from-[#0000000f] to-[#0000000a]
 
