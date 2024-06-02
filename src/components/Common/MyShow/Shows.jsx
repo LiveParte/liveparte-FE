@@ -62,7 +62,7 @@ export default function ShowsCard({
     }
   };
 
-  console.log(shows,'showsshowsshows')
+  // console.log(shows,'showsshowsshows')
 
 
   return (

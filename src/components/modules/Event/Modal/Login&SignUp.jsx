@@ -28,7 +28,7 @@ import {
   randomBetweenOneAndTen,
   singleEventLink,
 } from "@/utils/reusableComponent";
-import { useLoginApiMutation } from "@/store/Event/eventApi";
+import { eventApi, useLoginApiMutation } from "@/store/Event/eventApi";
 
 
 export default function LoginSignUp({
@@ -179,6 +179,7 @@ export default function LoginSignUp({
       closeModal();
       // router.push("/my_shows");
     }
+    dispatch(eventApi.util.invalidateTags(['event','ondemand']));
   }
 
   async function handleLogin(e) {
@@ -215,11 +216,13 @@ export default function LoginSignUp({
       return ErrorNotification({ message: handleRegisterUser?.error?.data?.message });
     }
     if (response?.user?._id) {
+    
+      // dispatch(userApi.util.invalidateTags(["user"]));
       dispatch(setUserData(response?.user));
       dispatch(setCoins(response?.user?.totalCoin));
       console.log(response?.user,'response?.user')
       SuccessNotification({ message: "You're in!" });
-      // dispatch(userApi.util.invalidateTags(["user"]));
+      
       storage.localStorage.set(
         accessTokenStorageName,
         encryptText(response?.accessToken)
@@ -233,6 +236,7 @@ export default function LoginSignUp({
       }
       closeModal && closeModal();
     }
+    dispatch(eventApi.util.invalidateTags(['event','ondemand']));
   }
 
   async function handleSignWithGoogle(){

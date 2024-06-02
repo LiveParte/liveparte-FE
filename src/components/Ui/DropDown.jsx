@@ -114,7 +114,7 @@ const DropdownButton = ({ label, options, position, children,onNext,modalState,c
         </button>
       </div>
 
-      {(isOpen||modalState) && (
+      {modalState&&isOpen && (
         <div className={`absolute z-40 ${getDropdownPositionStyles(adjustedPosition)} w-max ${className}`}>
           <div className="py-1 inline-block" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
             <div className="">

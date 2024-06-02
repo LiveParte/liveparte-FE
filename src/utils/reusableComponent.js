@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 import {  ErrorNotificationIcon, SuccessNotificationIcon } from "../../public/svg";
 import 'react-toastify/dist/ReactToastify.css';
 import { storage, userDetailStorageName } from "./helper";
+import { eventCopyLink } from "@/store/baseApi/baseUrl";
 
 export function CountdownTimerII({ initialTime, onTimerEnd }) {
   const [time, setTime] = useState(240);
@@ -98,7 +99,7 @@ export const settingLink=`/setting`
 export const liveStreamLink=`/livestream`
 
 export const CopyEventLink =({link})=>{
-  return  `https://staging.liveparte.com/event/${link}`
+  return  `${eventCopyLink}${link}`
 }
 
 
@@ -198,6 +199,7 @@ const newDateTime = convertAndAddOneHour(inputDateTime);
 
 export function checkShowDuration(targetDateTime, durationMins) {
     // Current date and time
+    console.log(durationMins,'durationMins')
     const currentDate = new Date();
 
     // Convert targetDateTime string to Date object
@@ -254,5 +256,19 @@ export function isFutureDate(dateStr) {
   } catch (error) {
     console.error(`Invalid date format: ${dateStr}`, error);
     return false; // Handle invalid date format gracefully
+  }
+}
+
+
+export function checkDateStatus(dateString) {
+  const inputDate = new Date(dateString);
+  const currentDate = new Date();
+
+  if (inputDate < currentDate) {
+      return "Past";
+  } else if (inputDate > currentDate) {
+      return "Future";
+  } else {
+      return "Present";
   }
 }

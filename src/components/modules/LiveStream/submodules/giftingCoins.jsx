@@ -44,21 +44,14 @@ export default function GiftingCoins({ onNext, onClose, eventId,usersCoinsBalanc
       coins: data?.coins,
     };
 
-    // if(usersCoinsBalance<data?.coins){
-    //   return 
-    // }
-
-    // alert(userCoinsBalance)
-
-    // console.log(userInfo,userCoinsBalance,'userInfo')
    
-
     const response = await giftCoins(payload);
     if (response?.data?.message === "Coins gifted successfully") {
       dispatch(setCoins(userCoinsBalance-data?.coins))
       
       dispatch(userApi.util.invalidateTags(["user"]));
       reset()
+      onClose();
       return SuccessNotification({ message: response.data.message });
     }
   }
