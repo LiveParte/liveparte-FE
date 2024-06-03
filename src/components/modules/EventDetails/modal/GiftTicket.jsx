@@ -27,6 +27,30 @@ export default function GiftTicket({ closeModal, Data, show }) {
       recipient_name: "",
     },
   });
+
+//   {
+//     name:'recipient_name',
+//     label:'Name of who you want to gift',
+//     required: true
+//     // type:''
+// },
+// {
+//     name:'recipient_email',
+//     label:'Email Address',
+//     pattern:REGEX_PATTERNS?.EMAIL,
+//     required: true
+//     // type:''
+// },
+
+// {
+//     name:'message',
+//     label:'Type your message here (Optional)',
+//     type:'textarea',
+//     required: false
+// },
+// ]
+
+  const isValidateMain=watch('recipient_name')&&watch('recipient_email');
   const router = useRouter();
   const handleAction = () => {
     router.push("/event_time_out");
@@ -142,10 +166,10 @@ export default function GiftTicket({ closeModal, Data, show }) {
             />
           ))}
         </form>
-        {console.log(Data?.ticket?.price,'DataDataData')}
+        {/* {console.log(Data?.ticket?.price,'DataDataData')} */}
         {Data?.ticket?.price==0?
         <ButtonComp
-        isDisabled={isLoading||!isValid}
+        isDisabled={isLoading||!isValidateMain}
         isLoading={isLoading}
           btnText={`Proceed To Make Payment
            ${Data?.ticket?.price === 0?'':

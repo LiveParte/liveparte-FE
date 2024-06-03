@@ -8,8 +8,8 @@ import PurchasePaartyCoins from "../../modules/LiveStream/submodules/PurchasePaa
 import MyModal from "../../Ui/Modal";
 import LoginSignUp from "../../modules/Event/Modal/Login&SignUp";
 import CustomDropDown from "../CustomDropDown";
-import { useDispatch } from "react-redux";
-import { logout, setUserData } from "@/store/User";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, selectCoins, setUserData } from "@/store/User";
 import dynamic from "next/dynamic";
 import UserProfile from "../UserProfile";
 import { userApi } from "@/store/User/userApi";
@@ -37,7 +37,7 @@ export default function AuthHeader({
   // const coins = 
   const MainContainer = `px-[20px] md:px-[40px] lg:px-[80px] xl:[120px] relative`;
   const [dropDown, setDropDown] = useState(false);
-  // const userInfo = useSelector(selectCurrentUserData);
+  const coinsBalance = useSelector(selectCoins);
   const [modalName, setModalName] = useState();
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenPC, setIsOpenPC] = useState(false);
@@ -86,9 +86,10 @@ export default function AuthHeader({
       component: (
         <PurchasePaartyCoins
           path={2}
-          containerStyle={`bg-[#1B1C20]`}
+          containerStyle={`bg-[#1B1C20] w-full`}
           closeModal={handleCloseModal}
           onClose={handleCloseModal}
+          
         />
       ),
     },
@@ -136,6 +137,7 @@ export default function AuthHeader({
           setDropDown={setDropDown}
           setModalName={setModalName}
           userInfo={userInfo}
+          coinsBalance={coinsBalance}
         />
       )}
       {modalName && (
@@ -144,7 +146,7 @@ export default function AuthHeader({
           bodyComponent={
             modalComponent?.find((item) => item?.name === modalName)?.component
           }
-          containerStyle={`bg-[#1B1C20] border-[1px] border-[#343F4B] rounded-[16px]  !w-[586px]`}
+          containerStyle={`bg-[#1B1C20] border-[1px] border-[#343F4B] rounded-[16px]  `}
           closeModal={handleCloseModal}
         />
       )}

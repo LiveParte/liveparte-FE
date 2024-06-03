@@ -43,7 +43,7 @@ function ChatOnCameraAndVideoControl({
   const [isOpenGiftCoins, setIsOpenGiftCoins] = useState(false);
   const [isOpenBuyCoins, setIsOpenBuyCoins] = useState(false);
 
-  console.log(userCoinsBalance, "userCoinsBalance");
+  // console.log(isOpenGiftCoins,isOpenBuyCoins, "userCoinsBalance");
 
   //  bg-gradient-to-l from-[#0000000f] to-[#0000000a]
 
@@ -86,6 +86,7 @@ function ChatOnCameraAndVideoControl({
           label={<SendCoinsComp />}
         >
           <GiftingCoins
+            onClose={()=>setIsOpenGiftCoins(false)}
             usersCoinsBalance={userCoinsBalance}
             eventId={liveStreamDetail}
             containerStyle={`!w-[300px] rounded-[8px]`}
@@ -106,6 +107,7 @@ function ChatOnCameraAndVideoControl({
           }
         >
           <PurchasePaartyCoins
+          onClose={()=>setIsOpenBuyCoins(false)}
             // onBack={() => setPayFlow("giftCoins")}
             // onClose={() => setPayFlow(null)}
             containerStyle={`!w-full rounded-[8px]`}

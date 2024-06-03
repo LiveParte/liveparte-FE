@@ -16,7 +16,7 @@ const SingleShowCard = withLazyLoad(ShowsCard);
 
 
 
-export default function HappeningNow({ events = [] }) {
+export default function HappeningNow({ events = [],title }) {
   
   const container = "pl-[20px] pr-[20px] lg:px-[60px]";
   return (
@@ -24,7 +24,7 @@ export default function HappeningNow({ events = [] }) {
       <div
         className={`flex justify-between items-center ${MainContainer}  mb-[40px]`}
       >
-        <div className={`text-[20px] font500 text-white `}>Happening Now</div>
+        <div className={`text-[20px] font500 text-white `}>{title||`Happening Now`}</div>
         <div className="flex items-center gap-[16px]">
           <div className="hidden md:flex items-center gap-[16px] ">
             <button className="button-next relative">
@@ -53,6 +53,7 @@ export default function HappeningNow({ events = [] }) {
               isLive={true}
               eventDate={item?.event_date}
               item={item}
+              showVideo={false}
             />
           )}
         />

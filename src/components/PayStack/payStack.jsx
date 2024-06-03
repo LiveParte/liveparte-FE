@@ -8,6 +8,7 @@ import { useRouter } from "next/router";
 import { isArray } from "@/utils/helper";
 import { useGetUserProfileQuery, useLazyGetUserProfileQuery } from "@/store/User/userApi";
 import { eventApi } from "@/store/Event/eventApi";
+import { payStack } from "@/store/baseApi/baseUrl";
 
 //customFunction: this is to make a call from the out, if this is available it wont read the next link
 
@@ -29,7 +30,7 @@ export default function PayStack({ showDetails, onNext, children,isDisabled,cust
     reference: new Date().getTime().toString(),
     email: userData?.email,
     amount:Number(amount * 100|| show?.ticket?.price * 100), //Amount is in the country's lowest currency. E.g Kobo, so 20000 kobo = N200
-    publicKey: "pk_live_f9e91d7c1463cb421aaab647c6b1a5a8a8fe568e",
+    publicKey: payStack,
     // publicKey: "pk_test_9b34d7cad3b54108b6eb034c951d89366eadcc3d",
   
     metadata: {

@@ -10,6 +10,6 @@ deploy_to_ec2:
     - chmod 600 larparte-keypair.pem
 
     # SSH into the EC2 instance and run the script
-    - ssh -o StrictHostKeyChecking=no -i larparte-keypair.pem ubuntu@$SERVER_IP "cd /home/ubuntu/liveparte-FE && chmod +x deploy-prod.sh && ./deploy-prod.sh"
+    - ssh -o StrictHostKeyChecking=no -i larparte-keypair.pem ubuntu@$SERVER_IP "cd /home/ubuntu/liveparte-FE && chmod +x deploy.sh && ./deploy.sh"
   only:
-    - main
+    - staging

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { MainContainer } from "@/utils/styleReuse";
 import {
+  checkDateStatus,
   checkShowDuration,
 } from "@/utils/reusableComponent";
 import { isArray } from "@/utils/helper";
@@ -59,16 +60,25 @@ export default function Hero({
     }
   };
 
+  const eventIsPast=checkDateStatus(HeroSectionEvent?.event_date)==="Past"&&!HeroSectionEvent?.streaming_url
+
   const HappeningNow =
     HeroSectionEvent?.purchase?.id &&
     HeroSectionEvent?.eventStarted &&
     EventStarted;
 
+    // console.log(HeroSectionEvent,HappeningNow,'HeroSectionEvent111');
+
   const buttonAction = () => {
+    const ticket =Array.isArray(HeroSectionEvent?.tickets)&&HeroSectionEvent?.tickets[0];
+    if(eventIsPast){
+      return "pastShow";
+    }
     if (userData?._id) {
       if (HappeningNow||HeroSectionEvent?.purchase?.id &&isOnDemand) {
         return "isPaidAndEventIsLive";
       }
+      
       if (
         HeroSectionEvent?.purchase?.id &&
         !EventStarted 
@@ -76,13 +86,30 @@ export default function Hero({
         return "isPaidAndEventNotLIve";
       }
     }
+
+    //remove later  event_date
+
+   
+    // 
+
+    if (ticket?.price===0 && !EventStarted) {
+      return "FreeTicket";
+    }
     if (!HeroSectionEvent?.eventStarted && !EventStarted) {
       return "notPaidButIsLive";
     }
+   
+    //
     return "notPaidButIsLive";
   };
 
+  // console.log(checkDateStatus(HeroSectionEvent?.event_date),'checkDateStatus')
+
   const TextType = () => {
+    // pastEvent
+    if (eventIsPast) {
+      return "pastEvent";
+    }
     if (isOnDemand) {
       return "onDemand";
     }
@@ -141,6 +168,7 @@ export default function Hero({
                 show={show}
                 muted={muted}
                 isSingleEvent={isSingleEvent}
+                isOnDemand={isOnDemand}
               />
               
             </div>

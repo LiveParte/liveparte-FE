@@ -69,7 +69,7 @@ export default function SignUpPage({
     className="px-[15px] lg:px-[30px] flex flex-col  lg:pb-[0px]"
     autoComplete="off"
   >
-    <div className="w-full ">
+    {/* <div className="w-full ">
       <div className="">
         <ButtonComp
         onClick={(e)=>{
@@ -93,8 +93,8 @@ export default function SignUpPage({
 
         <div className="bg-[#343F4B]  h-[1px] flex-grow-1"></div>
       </div>
-    </div>
-    <div className='flex flex-col gap-[20px]'>
+    </div> */}
+    <div className='flex flex-col gap-[20px] mt-3'>
 
     {SignUpForm()?.map((item, index) => (
       <Controller

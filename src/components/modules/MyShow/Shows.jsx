@@ -25,12 +25,13 @@ export default function Shows({
 
   const handleOnClick = (item) =>{
     dispatch(setLiveStreamEventData(item))
+    // alert(item?.eventStarted)
     if(item?.eventStarted){
       return router.push(`${liveStreamLink}/${item?._id}`)
     }
     else{
-      // return ErrorNotification({ message: 'Event not live yet'});
-      return router.push(`${liveStreamLink}/${item?._id}`)
+      return ErrorNotification({ message: 'Event not live yet'});
+      // return router.push(`${liveStreamLink}/${item?._id}`)
 
     }
     // console.log(item,'setLiveStreamEventData')
