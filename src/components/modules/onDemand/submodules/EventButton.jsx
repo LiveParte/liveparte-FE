@@ -48,6 +48,7 @@ export default function EventButton({
   HappeningNow,
   show,
   isSingleEvent = false,
+  isOnDemand
 }) {
   const router = useRouter();
   const dropdownRef = useRef(null);
@@ -150,12 +151,12 @@ export default function EventButton({
   function CallToActionIcon() {
     return (
       <div className="flex gap-x-2 md:gap-x-4 items-center h-[44px]">
-        {!isSingleEvent && (
+        {(!isSingleEvent )&& (
           <div className="cursor-pointer" onClick={handleJoinEvent}>
             <InfoIcon />
           </div>
         )}
-        {(buttonAction() === "isPaidAndEventIsLive" || isSingleEvent) && (
+        {TextTypeAction()==="pastEvent"?null:(buttonAction() === "isPaidAndEventIsLive" || isSingleEvent) && (
           <div className="relative  leading-none">
             {isOpen && (
               <DropdownMenu
@@ -175,7 +176,7 @@ export default function EventButton({
             </button>
           </div>
         )}
-        {isSingleEvent||buttonAction() !== "isPaidAndEventIsLive" && (
+        {!isOnDemand||isSingleEvent||buttonAction() !== "isPaidAndEventIsLive" && (
           <div className=" cursor-pointer" onClick={toggleMute}>
             {!muted ? <UnMuteIcon /> : <MuteIcon />}
           </div>
@@ -186,6 +187,16 @@ export default function EventButton({
 
   function ButtonActions(buttonType) {
     switch (buttonType) {
+      case "pastShow":
+        return (
+          <div>
+            <ButtonComp
+              isDisabled={true}
+              className={`py-[12px] px-[15px] md:px-[39px] text-[13px] xl:text-[15px] font500`}
+              btnText={`The event has ended`}
+            />
+          </div>
+        );
       case "isPaidAndEventIsLive":
         return (
           <div>
@@ -197,6 +208,7 @@ export default function EventButton({
             />
           </div>
         );
+        // pastShow
 
       case "isPaidAndEventNotLIve":
         return (
@@ -208,7 +220,7 @@ export default function EventButton({
             />
           </div>
         );
-      case "notPaidButIsLive":
+        case "FreeTicket":
         return (
           <div>
             <ButtonComp
@@ -218,6 +230,22 @@ export default function EventButton({
               }}
               className={`py-[12px] px-[16px] md:px-[39px] text-[13px] xl:text-[13px] font500`}
               btnText={`Get Free Ticket 
+             
+              `}
+            />
+          </div>
+        );
+      
+      case "notPaidButIsLive":
+        return (
+          <div>
+            <ButtonComp
+              isDisabled={eventIsPurchase}
+              onClick={() => {
+                handleGetTicket && handleGetTicket();
+              }}
+              className={`py-[12px] px-[16px] md:px-[39px] text-[13px] xl:text-[13px] font500`}
+              btnText={`Get Ticket 
              
               `}
             />
@@ -268,6 +296,14 @@ export default function EventButton({
             Watch live
           </div>
         );
+        case "pastEvent":
+          return (
+            <div className="   flex gap-[8px] items-center justify-center md:justify-start">
+              <div className="text-[11px] lg:text-[13px]  text-white   font500">
+                Past Event
+              </div>
+            </div>
+          );
       default:
         break;
     }

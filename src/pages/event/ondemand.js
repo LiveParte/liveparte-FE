@@ -5,7 +5,7 @@ import { useGetEventOnDemandQuery } from "@/store/Event/eventApi";
 import { useRouter } from "next/router";
 import { isArray } from "@/utils/helper";
 import { eventLink, randomBetweenOneAndTen } from "@/utils/reusableComponent";
-import IfHeaderIsAuth from "@/components/Common/Header/IfHeaderIsAuth";
+import EventEmptyState from "@/components/Common/EventEmptyState";
 // const OnDemandListLazyLoad = withLazyLoad(OnDemandList);
 const Hero = dynamic(() => import("@/components/modules/onDemand/Hero"), {
   ssr: false,
@@ -33,25 +33,29 @@ export default function OnDemandEvent() {
   const router = useRouter();
 
   return (
-    <div className="bg-black m-h-[100vh]">
+    <div className="bg-black m-h-[100vh] ">
       <NoAuth>
-        <div className="absolute left-0 right-0 z-50 top-0">
-          <IfHeaderIsAuth />
-        </div>
-        <Hero
-          HeroSectionEvent={HeroSectionEvent}
-          router={router}
-          isOnDemand={true}
-          notEvent={false}
-          isSingleEvent={false}
-          openModal={(item) => {
-            router.push(`${eventLink}/${item?._id}`);
-          }}
-        />
-        <OnDemandListLazyLoad
-          OnDemandEvent={OnDemandEvent}
-          HeroSectionEvent={HeroSectionEvent2}
-        />
+        {HeroSectionEvent?.name ? (
+          <Hero
+            HeroSectionEvent={HeroSectionEvent}
+            router={router}
+            isOnDemand={true}
+            notEvent={false}
+            isSingleEvent={false}
+            openModal={(item) => {
+              router.push(`${eventLink}/${item?._id}`);
+            }}
+          />
+        ) : (
+          <EventEmptyState />
+        )}
+
+        {OnDemandEvent?.length > 0 && (
+          <OnDemandListLazyLoad
+            OnDemandEvent={OnDemandEvent}
+            HeroSectionEvent={HeroSectionEvent2}
+          />
+        )}
         <Footer />
       </NoAuth>
     </div>

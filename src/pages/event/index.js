@@ -56,11 +56,11 @@ export default function Home() {
   const onDemandEvents = onDemandEvent?.event;
   const filteredEvents = Array.isArray(data?.event)
     ? data?.event.filter((event) =>
-        checkShowDuration(event?.event_date, event?.event_length)
+        checkShowDuration(event?.event_date,event?.name==="Artiste radar live"?0:  event?.event_length)
       )
     : [];
   const filteredEventsHero = data?.event?.filter((event) =>
-    checkShowDurationAfter(event?.event_date, event?.event_length)
+    checkShowDurationAfter(event?.event_date, event?.name==="Artiste radar live"?300000: event?.event_length)
   );
 
   // console.log(filteredEventsHero, "filteredHeroShows");
@@ -84,7 +84,7 @@ export default function Home() {
     ? filteredEventsHero[randomBetweenOneAndTen(filteredEventsHero?.length)]
     : {};
 
-  // console.log(filteredEventsHero?.length,'ArrayLengh')
+  // console.log(heroEvent,'ArrayLengh')
   return (
     <div className="min-h-[100vh] bg-black">
       {/* <ButtonComp> */}
@@ -104,6 +104,7 @@ export default function Home() {
           events={filteredEvents}
           upComingEvent={filteredUpcoming}
           OnDemandEvent={onDemandEvents}
+          
         />
         <Footer />
       </NoAuth>
