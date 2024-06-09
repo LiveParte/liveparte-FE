@@ -83,11 +83,8 @@ export default function LiveStream({
       </CustomDropDown>
     );
   }
-  // const agoraClient = useRTCClient(
-  //   AgoraRTC.createClient({ codec: "vp8", mode: "rtc" })
-  // );
+ 
   return (
-    // <AgoraRTCProvider client={agoraClient}>
     <main
       ref={dropdownRef}
       className={` flex flex-col   overflow-hidden flex-1 `}
@@ -139,6 +136,5 @@ export default function LiveStream({
         </div>
       </div>
     </main>
-    // </AgoraRTCProvider>
   );
 }

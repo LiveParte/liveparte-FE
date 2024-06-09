@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import { HostLeftIcon } from "../../../../../public/svg";
 
 export default function Video({ liveStreamDetail,videoRef,
   updateTime,
@@ -38,6 +39,11 @@ export default function Video({ liveStreamDetail,videoRef,
 
   return (
     <div  className="border-9">
+      <div className=' left-0 right-0 top-10 border bottom-0 bg-black flex flex-col justify-center items-center z-40'>
+        
+   
+
+      </div>
       <video
         ref={videoRef}
         controls={false}

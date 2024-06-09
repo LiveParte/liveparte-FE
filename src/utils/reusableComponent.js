@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import {  ErrorNotificationIcon, SuccessNotificationIcon } from "../../public/svg";
+import {  ErrorNotificationIcon, SuccessNotificationIcon, WarningIcon } from "../../public/svg";
 import 'react-toastify/dist/ReactToastify.css';
 import { storage, userDetailStorageName } from "./helper";
 import { eventCopyLink } from "@/store/baseApi/baseUrl";
 
-export function CountdownTimerII({ initialTime, onTimerEnd }) {
+export function CountdownTimerII({ initialTime, onTimerEnd,onNext }) {
   const [time, setTime] = useState(240);
 
   useEffect(() => {
@@ -25,12 +25,84 @@ export function CountdownTimerII({ initialTime, onTimerEnd }) {
     // Clear the interval when the component unmounts
     return () => clearInterval(timer);
   }, [initialTime, onTimerEnd]);
+  // if(onNext){
+  //  return  onNext&&onNext(time)
+  // }
 
   return (
     <span>
       {`${Math.floor(time / 60)}`.padStart(2, "0")}:
       {`${time % 60}`.padStart(2, "0")}
     </span>
+  );
+}
+
+// import React, { useState, useEffect } from 'react';
+
+export function CountdownTimerIII({ targetDate, onTimerEnd={} }) {
+  const calculateTimeLeft = () => {
+    const difference = +new Date(targetDate) - +new Date();
+    let timeLeft = {};
+
+    if (difference > 0) {
+      timeLeft = {
+        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+        minutes: Math.floor((difference / 1000 / 60) % 60),
+        seconds: Math.floor((difference / 1000) % 60),
+      };
+    } else {
+      if (onTimerEnd && typeof onTimerEnd === 'function') {
+        onTimerEnd();
+      }
+      timeLeft = { days: 0, hours: 0, minutes: 0, seconds: 0 };
+    }
+
+    return timeLeft;
+  };
+
+  const [timeLeft, setTimeLeft] = useState(calculateTimeLeft());
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [targetDate, onTimerEnd]);
+
+  const formatTime = (value) => String(value).padStart(2, '0');
+
+  return (
+    <div className="flex justify-center text-[64px] text-[#FFFFFF] font-1">
+      <div className="flex flex-col justify-center items-center relative">
+        {formatTime(timeLeft.days)}
+        <div className="text-[#63768D] text-[13px] font400 absolute -bottom-[10px]">
+          Days
+        </div>
+      </div>
+      :
+      <div className="flex flex-col justify-center items-center relative">
+        {formatTime(timeLeft.hours)}
+        <div className="text-[#63768D] text-[13px] font400 absolute -bottom-[10px]">
+          Hours
+        </div>
+      </div>
+      :
+      <div className="flex flex-col justify-center items-center relative">
+        {formatTime(timeLeft.minutes)}
+        <div className="text-[#63768D] text-[13px] font400 absolute -bottom-[10px]">
+          Minutes
+        </div>
+      </div>
+      :
+      <div className="flex flex-col justify-center items-center relative">
+        {formatTime(timeLeft.seconds)}
+        <div className="text-[#63768D] text-[13px] font400 absolute -bottom-[10px]">
+          Seconds
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -62,8 +134,9 @@ export function randomBetweenOneAndTen(ArrayLength=9) {
 export function SuccessNotification({ message }) {
    toast?.success(message, {
     icon: <SuccessNotificationIcon />,
+    hideProgressBar: true,
     style: { background: "#CCEDEB", color: "#060809",fontSize:13,height:30 },
-    className:'font400'
+    className:'font400  min-w-max'
   });
   
 }
@@ -77,6 +150,24 @@ export function ErrorNotification({ message }) {
  });
  
 }
+
+export function WarningNotification({ message ,closeToast}) {
+  toast?.error(message, {
+   icon: <WarningIcon />,
+   hideProgressBar: true,
+   autoClose: false,
+   closeOnClick: true,
+   draggable: true,
+   pauseOnHover: true,
+   pauseOnFocusLoss: true,
+   style: { background: "#FFF3D1", color: "#060809",fontSize:13, },
+   className:'font400 w-max'
+ });
+ 
+}
+
+
+// WarningIcon
 
 
 export function replaceSpaceWithDash(str) {

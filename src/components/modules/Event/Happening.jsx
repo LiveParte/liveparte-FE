@@ -7,23 +7,24 @@ const UpcomingComp = dynamic(() => import("./submodules/Upcoming"), {
   ssr: false,
 });
 
-
 export default function Happening({ events = [], upComingEvent = [] }) {
-  return ((events?.length>0||upComingEvent?.length>0)&&
-    <div className="bg-[#060809]  relative pt-[0px] md:pt-[100px] pb-[50px] md:pb-[100px]">
-      <div className=" absolute top-0 left-0 right-0 h-[10vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>
+  return (
+    (events?.length > 0 || upComingEvent?.length > 0) && (
+      <div className="bg-[#060809]  relative pt-[0px] md:pt-[100px] pb-[50px] md:pb-[100px]">
+        <div className=" absolute top-0 left-0 right-0 h-[10vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>
 
-      {/* <LazyLoadComponent> */}
-      {events?.length > 0 && <HappeningNow events={events} />}
-      {/* </LazyLoadComponent> */}
+        {/* <LazyLoadComponent> */}
+        {events?.length > 0 && <HappeningNow events={events} />}
+        {/* </LazyLoadComponent> */}
 
-      {upComingEvent?.length > 0 && (
-        <UpcomingComp upComingEvent={upComingEvent} />
-      )}
+        {upComingEvent?.length > 0 && (
+          <UpcomingComp upComingEvent={upComingEvent} />
+        )}
 
-{/* {events?.length > 0 && <HappeningNow events={events}  title={`Past`}/>} */}
+        {/* {events?.length > 0 && <HappeningNow events={events}  title={`Past`}/>} */}
 
-      {/* <div className="h-[40vh]"></div> */}
-    </div>
+        {/* <div className="h-[40vh]"></div> */}
+      </div>
+    )
   );
 }

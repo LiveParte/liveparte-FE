@@ -13,7 +13,7 @@ import { useGetUserLocationQuery } from "@/store/others/othersApi";
 import { accessTokenStorageName, storage, userDetailStorageName } from "@/utils/helper";
 import { useGetAllEventQuery } from "@/store/Event/eventApi";
 
-export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
+export default function IfHeaderIsAuth({ openModalLoginSignUp,showNav=true }) {
   const [userDetail, setUserDetail] = useState(false);
   const dispatch = useDispatch();
   const userInfo = useSelector(selectCurrentUserData) || {};
@@ -177,7 +177,7 @@ export default function IfHeaderIsAuth({ openModalLoginSignUp }) {
         />
       )}
       {userDetail ? (
-        <AuthHeader  userInfo={userProfileData||userInfo} showNav={true} userCoinsBalance={userCoinsBalance}/>
+        <AuthHeader  userInfo={userProfileData||userInfo} showNav={showNav} userCoinsBalance={userCoinsBalance}/>
       ) : (
         <Header
           openModal={openModal || openModalLoginSignUp}
