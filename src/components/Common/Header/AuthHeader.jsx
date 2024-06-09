@@ -186,7 +186,7 @@ export default function AuthHeader({
               />
             </div>
           )}
-          <div>
+         {showNav&& <div>
             <div className="flex items-center  gap-[18px]">
               <div className=" gap-[16px] items-center text-white font500 hidden lg:flex">
                 <div className=" flex flex-col">
@@ -226,7 +226,7 @@ export default function AuthHeader({
                 className="text-[13px] font-medium !h-[30px]  lg:hidden  !px-[24px] gap-[10px] !bg-[#BAD6F70F] leading-none rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px] md:h-fit "
               />
             </div>
-          </div>
+          </div>}
         </div>
       </div>
     </>

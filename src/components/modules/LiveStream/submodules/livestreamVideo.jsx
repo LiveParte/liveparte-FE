@@ -5,7 +5,8 @@ import Video from "./Video";
 import Chat from "./chat";
 import { IsDesktopMobileChat } from "../style";
 import ChatOnCameraAndVideoControl from "./videosubmodules/ChatOnCameraAndVideoControl";
-import { FullScreenIcon } from "../../../../../public/svg";
+import { FullScreenIcon, HostLeftIcon } from "../../../../../public/svg";
+import { checkShowDurationAfter } from "@/utils/reusableComponent";
 
 const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
   ssr: false,
@@ -37,7 +38,6 @@ export default function LiveStreamVideo({
     }
   };
 
- 
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = Math.floor(timeInSeconds % 60);
@@ -75,7 +75,9 @@ export default function LiveStreamVideo({
       } else if (divRef.current.mozRequestFullScreen) {
         divRef.current.mozRequestFullScreen().then(() => setIsFullScreen(true));
       } else if (divRef.current.webkitRequestFullscreen) {
-        divRef.current.webkitRequestFullscreen().then(() => setIsFullScreen(true));
+        divRef.current
+          .webkitRequestFullscreen()
+          .then(() => setIsFullScreen(true));
       } else if (divRef.current.msRequestFullscreen) {
         divRef.current.msRequestFullscreen().then(() => setIsFullScreen(true));
       }
@@ -102,7 +104,7 @@ export default function LiveStreamVideo({
     if (videoRef.current) {
       videoRef.current.currentTime = timeToSeek;
       currentTimeRef.current = timeToSeek;
-      // forceUpdate(n => n + 1); 
+      // forceUpdate(n => n + 1);
       // Force update to trigger re-render for display update
     }
   };
@@ -123,76 +125,89 @@ export default function LiveStreamVideo({
   };
 
   const fastForward = () => {
-    videoRef.current.currentTime = Math.min(videoRef.current.currentTime + 10, durationRef.current);
+    videoRef.current.currentTime = Math.min(
+      videoRef.current.currentTime + 10,
+      durationRef.current
+    );
     currentTimeRef.current = videoRef.current.currentTime;
     // forceUpdate(n => n + 1);
   };
 
   const rewind = () => {
-    videoRef.current.currentTime = Math.max(videoRef.current.currentTime - 10, 0);
+    videoRef.current.currentTime = Math.max(
+      videoRef.current.currentTime - 10,
+      0
+    );
     currentTimeRef.current = videoRef.current.currentTime;
     // forceUpdate(n => n + 1);
   };
+
+  // console.log(liveStreamDetail,checkShowDurationAfter(liveStreamDetail?.event_date,liveStreamDetail?.event_length) ,'liveStreamDetail')
+
   // console.log(isLive,'')
   return (
     !isLoading && (
-      <div ref={divRef} className={`w-full h-full flex-1 bg-cover lg:rounded-[16px] overflow-hidden  ${isFullScreen?'rotate-180':''} `}>
+      <div
+        ref={divRef}
+        className={`w-full h-full flex-1 bg-cover lg:rounded-[16px] overflow-hidden  ${
+          isFullScreen ? "rotate-180" : ""
+        } `}
+      >
         <div className=" ">
           <ChatOnCameraAndVideoControl
             liveStreamDetail={liveStreamDetail}
             userProfileData={userProfileData}
             calculateProgressPercentage={calculateProgressPercentage}
-           currentTimeRef={currentTimeRef}
-           durationRef={durationRef}
-           fastForward={fastForward}
-           formatTime={formatTime}
-           handleMouseDown={handleMouseDown}
-           handleMouseMove={handleMouseMove}
-           handleMouseUp={handleMouseUp}
-           isMuted={isMuted}
-           isPlaying={isPlaying}
-           rewind={rewind}
-           toggleMute={toggleMute}
-           togglePlayPause={togglePlayPause}
-
+            currentTimeRef={currentTimeRef}
+            durationRef={durationRef}
+            fastForward={fastForward}
+            formatTime={formatTime}
+            handleMouseDown={handleMouseDown}
+            handleMouseMove={handleMouseMove}
+            handleMouseUp={handleMouseUp}
+            isMuted={isMuted}
+            isPlaying={isPlaying}
+            rewind={rewind}
+            toggleMute={toggleMute}
+            togglePlayPause={togglePlayPause}
             isLive={!isLive}
           />
         </div>
 
         {!isLive ? (
           <Video
-          videoRef={videoRef}
-          updateTime={updateTime}
-          updateDuration={updateDuration}
-          liveStreamDetail={liveStreamDetail}
-          divRef={divRef}
-          calculateProgressPercentage={calculateProgressPercentage}
-          currentTimeRef={currentTimeRef}
-          durationRef={durationRef}
-          fastForward={fastForward}
-          formatTime={formatTime}
-          handleMouseDown={handleMouseDown}
-          handleMouseMove={handleMouseMove}
-          handleMouseUp={handleMouseUp}
-          isMuted={isMuted}
-          isPlaying={isPlaying}
-          rewind={rewind}
-          toggleMute={toggleMute}
-          togglePlayPause={togglePlayPause}
+            videoRef={videoRef}
+            updateTime={updateTime}
+            updateDuration={updateDuration}
+            liveStreamDetail={liveStreamDetail}
+            divRef={divRef}
+            calculateProgressPercentage={calculateProgressPercentage}
+            currentTimeRef={currentTimeRef}
+            durationRef={durationRef}
+            fastForward={fastForward}
+            formatTime={formatTime}
+            handleMouseDown={handleMouseDown}
+            handleMouseMove={handleMouseMove}
+            handleMouseUp={handleMouseUp}
+            isMuted={isMuted}
+            isPlaying={isPlaying}
+            rewind={rewind}
+            toggleMute={toggleMute}
+            togglePlayPause={togglePlayPause}
           />
-         
         ) : (
           <div id="" className="h-full w-full relative agroa-video">
-            <JoinAudience eventId={liveStreamDetail?._id} />
+          
+            <JoinAudience liveStreamDetail={liveStreamDetail} eventId={liveStreamDetail?._id} />
           </div>
         )}
         <div
-            className="absolute   z-50 flex lg:hidden gap-2 text-[12px] left-5 bottom-5 items-center text-white"
-                    onClick={() => handleFullScreenToggle()}
-                  >
-                    <FullScreenIcon />
-                    {isFullScreen ? 'Exit Fullscreen' : 'Fullscreen'}
-                  </div>
+          className="absolute   z-50 flex lg:hidden gap-2 text-[12px] left-5 bottom-5 items-center text-white"
+          onClick={() => handleFullScreenToggle()}
+        >
+          <FullScreenIcon />
+          {isFullScreen ? "Exit Fullscreen" : "Fullscreen"}
+        </div>
         {/* <button onClick={handleFullScreen} className="absolute left-0 bottom-0 border z-50">FullScreen</button> */}
       </div>
     )

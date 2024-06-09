@@ -21,7 +21,7 @@ export default function HappeningNow({ events = [],title }) {
   const container = "pl-[20px] pr-[20px] lg:px-[60px]";
   return (
     <div className={` py-[30px] pb-[42px] lg:pb-[77px] relative`}>
-      <div
+    {title&&  <div
         className={`flex justify-between items-center ${MainContainer}  mb-[40px]`}
       >
         <div className={`text-[20px] font500 text-white `}>{title||`Happening Now`}</div>
@@ -37,7 +37,7 @@ export default function HappeningNow({ events = [],title }) {
             </button>
           </div>
         </div>
-      </div>
+      </div>}
 
       <div className={container}>
         <Carousel

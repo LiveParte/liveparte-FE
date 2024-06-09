@@ -4,38 +4,28 @@ import dynamic from 'next/dynamic'
 // import DropDown from '@/components/Ui/DropDown'
 import MyModal from "@/components/Ui/Modal";
 import EventDetails from "@/components/modules/EventDetails";
-import CheckOut from "@/components/modules/EventDetails/modal/CheckOut";
-import GiftTicket from "@/components/modules/EventDetails/modal/GiftTicket";
-// import Hero from "@/components/modules/Event/Hero";
-import LoginSignUp from "@/components/modules/Event/Modal/Login&SignUp";
-import React, { useEffect, useState } from "react";
-import ShareEvent from "@/components/modules/EventDetails/modal/ShareEvent";
+import React, {  useState } from "react";
 const Hero = dynamic(() => import('@/components/modules/onDemand/Hero'), {
   ssr: false
 });
 import {
-  eventApi,
   useGetEventDetailViaIdQuery,
  
 } from "@/store/Event/eventApi";
 import { useDispatch, useStore } from "react-redux";
 
 import { useRouter } from "next/router";
-import { usePaystackPayment } from "react-paystack";
-// import { PaystackConsumer } from 'react-paystack';
-import { useCreatePurchaseMutation } from "@/store/Transaction/transactionApi";
 import { useSelector } from "react-redux";
 import { selectCurrentUserData, selectEvent } from "@/store/User";
-import { storage, userDetailStorageName } from "@/utils/helper";
-import { myShowLink } from "@/utils/reusableComponent";
-// import { selectEvent, selectLiveStreamEvent } from "@/store/Event";
+import { CloseIcon } from "../../../public/svg";
+import CountDown from "@/components/Common/Coundown";
 
 export default function EventId() {
   const dispatch = useDispatch()
   
   // const { event, setEvent } = useStore();
 
-  const [userDetail, setUserDetail] = useState(false);
+  const [userDetail, setUserDetail] = useState(true);
   const userInfo = useSelector(selectCurrentUserData) || {};
   const shows = useSelector(selectEvent) || {};
 
@@ -52,15 +42,7 @@ export default function EventId() {
     skip: !id,
   });
  
-//  const event =userInfo?._id?data?.event:event
 
-// console.log(data,'datadatadata')
-
-  
-
-  function closeModal() {
-    setIsOpen(null);
-  }
 
   function openModal() {
     if (!userInfo?._id) {
@@ -92,6 +74,13 @@ export default function EventId() {
  
   return (
     <NoAuth>
+      {/* <MyModal
+      isOpen={userDetail}
+      containerStyle={`!w-[543px]`}
+      closeModal={()=>setUserDetail(false)}
+      bodyComponent={<CountDown/>
+     }
+      /> */}
      
       <Hero
         HeroSectionEvent={eventsData}

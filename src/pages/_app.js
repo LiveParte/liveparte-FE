@@ -6,7 +6,7 @@ import { Provider } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import NextNProgress from "nextjs-progressbar";
 import { PersistGate } from "redux-persist/integration/react";
-import { SessionProvider } from 'next-auth/react';
+import { SessionProvider } from "next-auth/react";
 
 // Import Swiper styles
 import "swiper/css";
@@ -36,28 +36,27 @@ export default function App({ Component, pageProps }) {
       </Head>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-        <GoogleOAuthProvider clientId="845158309668-olf8vmklh4baunlh2m7jb3fnidupl1u2.apps.googleusercontent.com">
+          <GoogleOAuthProvider clientId="845158309668-olf8vmklh4baunlh2m7jb3fnidupl1u2.apps.googleusercontent.com">
+            <ToastContainer
+              className={`z-[9999]`}
+              position="bottom-center"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
 
-          <ToastContainer
-            className={`z-[9999]`}
-            position="bottom-center"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
+              // style={{}}
+            />
+            {/* <SessionProvider session={pageProps.session}> */}
 
-            // style={{}}
-          />
-              {/* <SessionProvider session={pageProps.session}> */}
+            <NextNProgress />
 
-          <NextNProgress />
-        
-          <Component {...pageProps} />
-          {/* </SessionProvider> */}
+            <Component {...pageProps} />
+            {/* </SessionProvider> */}
           </GoogleOAuthProvider>
         </PersistGate>
       </Provider>

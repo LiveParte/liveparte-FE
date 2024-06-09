@@ -75,9 +75,9 @@ function ChatOnCameraAndVideoControl({
 
   return (
     <div
-      className={`${IsDesktopMobileChat} left-0 bg-red-600   flex   lg:mb-0 bg-gradient-to-l from-[#0000000f] to-[#0000000a] `}
+      className={`${IsDesktopMobileChat} left-0 bg-red-600   flex   lg:mb-0  `}
     >
-      <div className="flex justify-center items-center pt-[61px] pb-[28px] absolute left-0 right-0 bottom-0 gap-[48px] linear-gradient">
+      {/* <div className="flex justify-center items-center pt-[61px] pb-[28px] absolute left-0 right-0 bottom-0 gap-[48px] linear-gradient">
         <DropDown
           className={`!left-0 `}
           modalState={isOpenGiftCoins}
@@ -113,10 +113,10 @@ function ChatOnCameraAndVideoControl({
             containerStyle={`!w-full rounded-[8px]`}
           />
         </DropDown>
-      </div>
-      {/* <div className="flex   align-bottom flex-1 justify-end overflow-hidden">
+      </div> */}
+      <div className="flex   align-bottom flex-1 justify-end overflow-hidden">
         <div className="flex-1 items-end justify-end flex ">
-        {isLive&&<div className="z-50  pb-5 text-white w-full  pt-8 bg-gradient-to-t from-black  pl-[80px] pr-[45px]">
+        {isLive&&<div className="z-50  pb-5 text-white w-full  pt-8   pl-[80px] pr-[45px]">
         <div
           className=" flex items-center gap-[16px] cursor-pointer"
           onMouseDown={handleMouseDown}
@@ -169,7 +169,7 @@ function ChatOnCameraAndVideoControl({
         </div>
       </div>}
         </div>
-      <div className={` `}>
+      <div className={`   lg:mr-[80px]`}>
         <Chat
           liveStreamDetail={liveStreamDetail}
           userProfileData={userProfileData}
@@ -179,7 +179,7 @@ function ChatOnCameraAndVideoControl({
           }}
         />
       </div>
-    </div> */}
+    </div>
     </div>
   );
 }

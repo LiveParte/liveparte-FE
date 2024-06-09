@@ -1,5 +1,5 @@
 import Carousel from "@/components/Common/Carousel";
-import React from "react";
+import React, { useState } from "react";
 import { dummyShowDataII } from "../Event/Data";
 import ButtonComp from "@/components/Ui/button";
 import { useRouter } from "next/router";
@@ -9,6 +9,8 @@ import UserShowsCard from "@/components/Common/MyShowUser/Shows";
 import { useDispatch } from "react-redux";
 import { setLiveStreamEventData } from "@/store/Event";
 import { MainContainer } from "@/utils/styleReuse";
+import MyModal from "@/components/Ui/Modal";
+import CountDown from "@/components/Common/Coundown";
 // import UserShowsCard from "@/components/UserShow";
 
 export default function Shows({
@@ -18,7 +20,10 @@ export default function Shows({
   OnDemandData=[]
 }) {
   const router = useRouter();
-  const dispatch =useDispatch()
+  const dispatch =useDispatch();
+  const [isOpen,setIsOpen]=useState(false);
+  const [eventDate,setEventDate]=useState()
+
   const container =
     "px-[20px] md:px-[40px] lg:px-[120px] ";
   const isLength = Data?.length;
@@ -30,7 +35,9 @@ export default function Shows({
       return router.push(`${liveStreamLink}/${item?._id}`)
     }
     else{
-      return ErrorNotification({ message: 'Event not live yet'});
+      setEventDate(item?.event_date)
+        setIsOpen(true);
+      // return ErrorNotification({ message: 'Event not live yet'});
       // return router.push(`${liveStreamLink}/${item?._id}`)
 
     }
@@ -40,7 +47,15 @@ export default function Shows({
   return (
     <>
     { isActive=="Upcoming"&&
+    
     <div className="pb-[50px] lg:pb-[10px]">
+      {isOpen &&  <MyModal
+      isOpen={isOpen}
+      containerStyle={`!w-[543px]`}
+      closeModal={()=>setIsOpen(false)}
+      bodyComponent={<CountDown date={eventDate}/>
+     }
+      />}
       <div className={MainContainer}>
         {isLength > 0 && (
           <div className=" grid-cols-2  md:grid-cols-2  xl:grid-cols-4 gap-[20px] lg:gap-x-[40px] gap-y-[40px] lg:gap-y-[104px] pb-[100px] lg:pb-[247px]  grid">
