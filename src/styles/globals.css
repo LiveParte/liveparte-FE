@@ -471,6 +471,7 @@ select:-webkit-autofill:focus {
 }
 
 .linear-gradient{
-  background:linear-gradient(0deg, black 46%, rgba(0, 0, 0, 0) 97.19%);
+  /* background:linear-gradient(0deg, black 46%, rgba(0, 0, 0, 0) 97.19%); */
+  background: linear-gradient(0deg, black 2%, rgba(0, 0, 0, 0) 23.19%);
 
 }

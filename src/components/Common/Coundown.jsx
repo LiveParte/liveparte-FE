@@ -27,7 +27,7 @@ export default function CountDown({date}) {
           />
         </svg>
       </div>
-      <div className="font-bold text-[24px] mb-[23px] uppercase">
+      <div className=" text-[24px] mb-[23px] uppercase font-1 font-bold">
         Not started yet
       </div>
       <div className="text-[13px] text-[#63768D] font400 mb-[68px] leading-[17px]">

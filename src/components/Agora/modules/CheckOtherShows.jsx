@@ -41,7 +41,7 @@ export default function CheckOtherShows() {
       <div
         className={`bg-[#060809] min-h-[100vh]  relative pt-16 pb-[77px] ${MainContainer}`}
       >
-        <div className=" text-white flex flex-col  items-center mb-[56px]">
+        <div className=" text-white flex flex-col  items-center mb-[64px]">
           <div className="font-bold font-1 text-3xl uppercase relative text-center mb-[24px]">
             Event has ended
           </div>

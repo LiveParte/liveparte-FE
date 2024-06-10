@@ -14,6 +14,7 @@ export const TextInputComp = ({
   messageRef,
   setPayFlow,
   userCoinsBalance,
+  handleSendChat
 }) => {
   return (
     <div className="flex items-center flex-1 gap-[16px]">
