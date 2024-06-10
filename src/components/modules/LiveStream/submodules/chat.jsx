@@ -213,7 +213,7 @@ function Chat({ onLeave, liveStreamDetail, userProfileData }) {
       </div>
 
       <div
-        className={`flex flex-col pb-[21px]  rounded-t-[8px] overflow-hidden  customScrollHorizontal ${
+        className={`flex flex-col pb-[21px]  rounded-[8px] overflow-hidden  customScrollHorizontal ${
           showComment && "backdrop-blur-[8px] overflow-y-auto lg:overflow-auto bg-black/30"
         }   flex-1 h-[60vh] `}
       >
@@ -259,6 +259,7 @@ function Chat({ onLeave, liveStreamDetail, userProfileData }) {
           setPayFlow={setPayFlow}
           textMessages={textMessages}
           userCoinsBalance={userCoinsBalance}
+          handleSendChat={handleSendChat}
         />
         <div className="hidden lg:flex justify-between items-center relative">
           <SendCoinsComp

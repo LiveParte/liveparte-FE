@@ -30,7 +30,6 @@ import {
 } from "@/utils/reusableComponent";
 import { eventApi, useLoginApiMutation } from "@/store/Event/eventApi";
 
-
 export default function LoginSignUp({
   closeModal,
   pageName = "",
@@ -39,7 +38,6 @@ export default function LoginSignUp({
   onNext,
   openModal,
 }) {
-  
   const router = useRouter();
   const dispatch = useDispatch();
   const { id } = router?.query;
@@ -105,9 +103,12 @@ export default function LoginSignUp({
 
     const UserString = JSON?.stringify(response?.user);
 
-    console.log(response?.error,'response')
+    // console.log(response,'UserStringUserString')
 
-    if (response?.error?.data?.statusCode && response?.error?.data?.statusCode !== 200) {
+    if (
+      response?.error?.data?.statusCode &&
+      response?.error?.data?.statusCode !== 200
+    ) {
       if (response?.error?.data?.message === "Email is already in use") {
         return setError2("email", {
           type: "custom",
@@ -116,16 +117,17 @@ export default function LoginSignUp({
       }
 
       if (response?.error?.data?.message === "Username is already in use") {
-        return setError2("fullName", {
+        return setError2("email", {
           type: "custom",
-          message: " Username is already in use",
+          message: "Email is already in use",
         });
       }
 
       // response?.message[0],'hehehehe')
-      if (Array.isArray(response?.error?.data?.message)&&
-      response?.error?.data?.message[0] ==
-        "Password should have 1 upper case, lowcase letter along with a number and special character."
+      if (
+        Array.isArray(response?.error?.data?.message) &&
+        response?.error?.data?.message[0] ==
+          "Password should have 1 upper case, lowcase letter along with a number and special character."
       ) {
         return setError2("password", {
           type: "custom",
@@ -134,9 +136,9 @@ export default function LoginSignUp({
         });
       }
       if (
-        Array.isArray(response?.error?.data?.message)&&
+        Array.isArray(response?.error?.data?.message) &&
         response?.error?.data?.message[0] ==
-        "Username must be alphanumeric and without special characters"
+          "Username must be alphanumeric and without special characters"
       ) {
         return setError2("fullName", {
           type: "custom",
@@ -149,11 +151,11 @@ export default function LoginSignUp({
         ? ErrorNotification(response?.message[0])
         : ErrorNotification(response?.message);
     }
-    if (response?.user?.createdAt) {
+    if (response?.data?.user?._id) {
       // const userData = JSON.parse(response?.user);
 
       storage.localStorage.set("noUserProfileImage", {
-        id: response?.user?._id,
+        id: response?.data?.user?._id,
         nonProfileImage: randomBetweenOneAndTen(),
       });
       SuccessNotification({ message: `Your registration was successful` });
@@ -163,10 +165,10 @@ export default function LoginSignUp({
       // storage.localStorage.set('accessTokenLiveParte1',response?.accessToken);
       storage.localStorage.set(
         accessTokenStorageName,
-        encryptText(response?.accessToken)
+        encryptText(response?.data?.accessToken)
       );
-
-      dispatch(setUserData(response?.user));
+      dispatch(setCoins(response?.data?.user?.totalCoin));
+      dispatch(setUserData(response?.data?.user));
       // dispatch(userApi.util.invalidateTags(["user"]));
       // dispatch(baseApi.util.resetApiState());
 
@@ -179,15 +181,15 @@ export default function LoginSignUp({
       closeModal();
       // router.push("/my_shows");
     }
-    dispatch(eventApi.util.invalidateTags(['event','ondemand']));
+    dispatch(eventApi.util.invalidateTags(["event", "ondemand"]));
   }
 
   async function handleLogin(e) {
     const payload = {
-      // 
+      //
       usernameOrEmail: e.email,
-      "isGoogle": false,
-      password:e?.password,
+      isGoogle: false,
+      password: e?.password,
       ...e,
     };
 
@@ -213,16 +215,17 @@ export default function LoginSignUp({
 
     if (handleRegisterUser?.error?.data?.statusCode) {
       // toast.error("Invalid credentials");
-      return ErrorNotification({ message: handleRegisterUser?.error?.data?.message });
+      return ErrorNotification({
+        message: handleRegisterUser?.error?.data?.message,
+      });
     }
     if (response?.user?._id) {
-    
       // dispatch(userApi.util.invalidateTags(["user"]));
       dispatch(setUserData(response?.user));
       dispatch(setCoins(response?.user?.totalCoin));
-      console.log(response?.user,'response?.user')
+      console.log(response?.user, "response?.user");
       SuccessNotification({ message: "You're in!" });
-      
+
       storage.localStorage.set(
         accessTokenStorageName,
         encryptText(response?.accessToken)
@@ -236,14 +239,13 @@ export default function LoginSignUp({
       }
       closeModal && closeModal();
     }
-    dispatch(eventApi.util.invalidateTags(['event','ondemand']));
+    dispatch(eventApi.util.invalidateTags(["event", "ondemand"]));
   }
 
-  async function handleSignWithGoogle(){
-    const response =await GoogleSignIn()
+  async function handleSignWithGoogle() {
+    const response = await GoogleSignIn();
     // console.log(response,'response')
   }
-
 
   return (
     <div className="flex flex-col flex-grow-1 overflow-y-scroll customScrollHorizontal relative">

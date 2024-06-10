@@ -74,7 +74,7 @@ export function CountdownTimerIII({ targetDate, onTimerEnd={} }) {
   const formatTime = (value) => String(value).padStart(2, '0');
 
   return (
-    <div className="flex justify-center text-[64px] text-[#FFFFFF] font-1">
+    <div className="flex justify-center text-[64px] text-[#FFFFFF] font-1 font-bold">
       <div className="flex flex-col justify-center items-center relative">
         {formatTime(timeLeft.days)}
         <div className="text-[#63768D] text-[13px] font400 absolute -bottom-[10px]">
@@ -157,6 +157,7 @@ export function WarningNotification({ message ,closeToast}) {
    hideProgressBar: true,
    autoClose: false,
    closeOnClick: true,
+   closeButton:false,
    draggable: true,
    pauseOnHover: true,
    pauseOnFocusLoss: true,

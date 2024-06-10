@@ -114,7 +114,7 @@ function ChatOnCameraAndVideoControl({
           />
         </DropDown>
       </div> */}
-      <div className="flex   align-bottom flex-1 justify-end overflow-hidden">
+      <div className="flex   align-bottom flex-1 justify-end overflow-hidden linear-gradient">
         <div className="flex-1 items-end justify-end flex ">
         {isLive&&<div className="z-50  pb-5 text-white w-full  pt-8   pl-[80px] pr-[45px]">
         <div
@@ -125,14 +125,14 @@ function ChatOnCameraAndVideoControl({
           onMouseLeave={handleMouseUp} 
           // Ensures dragging stops when the mouse leaves the progress bar
         >
-          <div className="flex-1 bg-[#CCEDEB] h-[2px] rounded-[30px] relative">
+          <div className="flex-1 bg-[#CCEDEB] h-[5px] rounded-[30px] relative">
             <div
-              className=" h-[2px] rounded-[30px] flex items-center"
+              className=" h-[5px] rounded-[30px] flex items-center"
               style={{ width: `${calculateProgressPercentage()}%` }}
             >
               <div className="flex-1 bg-[#00A699] h-[2px]"></div>
-              <div className="h-[6px] w-[6px] rounded-full flex justify-center items-center bg-white">
-                <div className="h-[4px] w-[4px] bg-[#02A59A] rounded-full"></div>
+              <div className="h-[12px] w-[12px] rounded-full flex justify-center items-center bg-white">
+                <div className="h-[8px] w-[8px] bg-[#02A59A] rounded-full"></div>
               </div>
             </div>
           </div>
