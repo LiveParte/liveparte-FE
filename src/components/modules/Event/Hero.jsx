@@ -10,6 +10,7 @@ import {
   checkShowDuration,
   convertAndAddOneHour,
   convertDateTime,
+  convertToUTC,
   CopyEventLink,
   eventLink,
   GetTransformedImageUrl,
@@ -84,7 +85,7 @@ export default function Hero({
               className=" text-white no-underline  "
               href={`https://calendar.google.com/calendar/r/eventedit?text=${
                 replaceAmpersandWithAnd(HeroSectionEvent?.name)
-              }&dates=${convertDateTime(HeroSectionEvent?.event_date)}/${convertAndAddOneHour(HeroSectionEvent?.event_date)}&details=<b>${replaceAmpersandWithAnd(HeroSectionEvent?.name)}</b><br/><br/><b>Location:</b>${replaceAmpersandWithAnd(HeroSectionEvent?.country)}
+              }&dates=${convertToUTC(HeroSectionEvent?.event_date)}/${convertAndAddOneHour(HeroSectionEvent?.event_date)}&details=<b>${replaceAmpersandWithAnd(HeroSectionEvent?.name)}</b><br/><br/><b>Location:</b>${replaceAmpersandWithAnd(HeroSectionEvent?.country)}
               <br/>
               <br/>
               <b>Description:</b>${replaceAmpersandWithAnd(HeroSectionEvent?.description)}

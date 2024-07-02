@@ -1,17 +1,14 @@
 import Footer from "@/components/Common/Footer";
 import NoAuth from "@/components/Layout/NoAuth";
-import dynamic from 'next/dynamic'
+import dynamic from "next/dynamic";
 // import DropDown from '@/components/Ui/DropDown'
 import MyModal from "@/components/Ui/Modal";
 import EventDetails from "@/components/modules/EventDetails";
-import React, {  useState } from "react";
-const Hero = dynamic(() => import('@/components/modules/onDemand/Hero'), {
-  ssr: false
+import React, { useState } from "react";
+const Hero = dynamic(() => import("@/components/modules/onDemand/Hero"), {
+  ssr: false,
 });
-import {
-  useGetEventDetailViaIdQuery,
- 
-} from "@/store/Event/eventApi";
+import { useGetEventDetailViaIdQuery } from "@/store/Event/eventApi";
 import { useDispatch, useStore } from "react-redux";
 
 import { useRouter } from "next/router";
@@ -21,14 +18,13 @@ import { CloseIcon } from "../../../public/svg";
 import CountDown from "@/components/Common/Coundown";
 
 export default function EventId() {
-  const dispatch = useDispatch()
-  
+  const dispatch = useDispatch();
+
   // const { event, setEvent } = useStore();
 
   const [userDetail, setUserDetail] = useState(true);
   const userInfo = useSelector(selectCurrentUserData) || {};
   const shows = useSelector(selectEvent) || {};
-
 
   // let userInfo =storage["localStorage"]?.get(userDetailStorageName)
 
@@ -38,11 +34,12 @@ export default function EventId() {
   const router = useRouter();
   const { id } = router.query;
   let [isOpen, setIsOpen] = useState();
-  const { data, isLoading,refetch ,isSuccess} = useGetEventDetailViaIdQuery(id, {
-    skip: !id,
-  });
- 
-
+  const { data, isLoading, refetch, isSuccess } = useGetEventDetailViaIdQuery(
+    id,
+    {
+      skip: !id,
+    }
+  );
 
   function openModal() {
     if (!userInfo?._id) {
@@ -63,25 +60,15 @@ export default function EventId() {
   }
 
   function openModalShareEvent() {
-
-   
     setIsOpen("share event");
   }
 
-  const eventsData={ ...data,...data?.event, ...shows   }
+  const eventsData = { ...data, ...data?.event, ...shows };
 
-  // console.log(eventsData,'datadata')
- 
+  console.log(router,'routerrouter')
+
   return (
     <NoAuth>
-      {/* <MyModal
-      isOpen={userDetail}
-      containerStyle={`!w-[543px]`}
-      closeModal={()=>setUserDetail(false)}
-      bodyComponent={<CountDown/>
-     }
-      /> */}
-     
       <Hero
         HeroSectionEvent={eventsData}
         openModalLoginSignUp={openModalLoginSignUp}
@@ -90,9 +77,10 @@ export default function EventId() {
         openModalShareEvent={openModalShareEvent}
         notEvent={false}
         isSingleEvent={true}
-        
       />
-     {eventsData?._id||eventsData?.event?._id ? <EventDetails HeroSectionEvent={eventsData}  />:null}
+      {eventsData?._id || eventsData?.event?._id ? (
+        <EventDetails HeroSectionEvent={eventsData} />
+      ) : null}
       <Footer />
     </NoAuth>
   );

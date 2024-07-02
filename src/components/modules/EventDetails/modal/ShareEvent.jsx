@@ -25,7 +25,6 @@ export default function ShareEvent({ closeModal, Data }) {
     // router.push('/event_time_out')
   };
 
-
   const handleCopy = (text, result) => {
     if (result) {
       setCopied(true);
@@ -56,33 +55,32 @@ export default function ShareEvent({ closeModal, Data }) {
       <main>
         <div className="flex items-center gap-[17px]  mb-[54px]">
           <div>
-         {Data?.thumbnail_url&&  
-         <div className="h-[89px] w-[89px]">
- <Image
-              src={Data?.thumbnail_url}
-              className="w-[89px] h-[89px] object-cover rounded-[8px]"
-              width={89}
-              height={89}
-              placeholder="blur"
-              blurDataURL={Data?.thumbnail_url}
-              alt="show-image"
-              
-            />
-         </div>
-        }
+            {Data?.thumbnail_url && (
+              <div className="h-[89px] w-[89px]">
+                <Image
+                  src={Data?.thumbnail_url}
+                  className="w-[89px] h-[89px] object-cover rounded-[8px]"
+                  width={89}
+                  height={89}
+                  placeholder="blur"
+                  blurDataURL={Data?.thumbnail_url}
+                  alt="show-image"
+                />
+              </div>
+            )}
           </div>
           <div>
             <div className="text-[14px] text-white font500 mb-[8px] line-clamp-1">
               {Data?.name}
             </div>
             <div className="text-[#B4BECB] text-[13px] lg:text-[15px] mb-[6px] lg:flex items-center  line-clamp-1  gap-2">
-              {moment(Data?.event_date).format('MMMM DD')}
-              <div className="rounded-full h-[4px] w-[4px] bg-[#D9D9D9] mx-[8px] hidden md:block"></div>
-              {" "}{Data?.address}
+              {moment(Data?.event_date).format("MMMM DD")}
+              <div className="rounded-full h-[4px] w-[4px] bg-[#D9D9D9] mx-[8px] hidden md:block"></div>{" "}
+              {Data?.address}
             </div>
             <div className="text-[14px] text-white font500 line-clamp-1">
               {Data?.ticket?.code}{" "}
-              {formatMoney(Data?.ticket?.price, false || "0")}{" "} 
+              {formatMoney(Data?.ticket?.price, false || "0")}{" "}
             </div>
           </div>
         </div>
@@ -91,13 +89,13 @@ export default function ShareEvent({ closeModal, Data }) {
           <input
             className="flex-1 flex-grow-1 bg-transparent px-[16px] outline-none text-[#63768D] text-[13px] w-full"
             ref={inputRef}
-            value={CopyEventLink({ link: Data?._id|| showId })}
+            value={CopyEventLink({ link: Data?._id || showId })}
             disabled
           />
 
           <div className="mr-[2px]">
             <CopyToClipboard
-              text={CopyEventLink({ link: Data?._id||showId })}
+              text={CopyEventLink({ link: Data?._id || showId })}
               onCopy={handleCopy}
             >
               <ButtonComp

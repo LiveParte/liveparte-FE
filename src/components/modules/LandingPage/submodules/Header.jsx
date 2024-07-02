@@ -134,7 +134,7 @@ const isSelected=`border-[#262C32] border-[1px] backdrop-blur-[60px] !bg-[#BAD6F
             <ButtonComp
               onClick={() => setDropDown(true)}
               btnText="Menu"
-              className="text-[13px] font-medium  lg:hidden !py-[8px] !px-[24px] gap-[10px] !bg-[#BAD6F70F] rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px] h-fit "
+              className="text-[13px] font-medium  lg:hidden !py-[8px] !px-[24px] gap-[10px] !bg-[#BAD6F70F] rounded-[999px]  border-[1px] font500 text-white backdrop-blur-[60px] h-fit  border-white"
             />
           </div>
         </div>
