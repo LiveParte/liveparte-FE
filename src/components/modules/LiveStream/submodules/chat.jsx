@@ -157,7 +157,7 @@ function Chat({ onLeave, liveStreamDetail, userProfileData }) {
 
   const GiftCoin = () => {
     return (
-      <div className="absolute dropdownIII transform translate-x-1 -translate-y-[20px] w-full lg:w-max  lg:-translate-y-[40px] z-50 bg-black rounded-[16px] overflow-hidden">
+      <div className="absolute dropdownIII transform translate-x-1 -translate-y-[20px] w-full mr-2  lg:-translate-y-[40px] z-50 bg-black rounded-[16px] widthFillSpace overflow-hidden">
         {paymentFlow?.find((item) => item?.name === payFlow)?.component}
       </div>
     );
@@ -239,7 +239,7 @@ function Chat({ onLeave, liveStreamDetail, userProfileData }) {
         )}
       </div>
       <div className=" px-[4px] lg:px-0  mb-3 md:mb-0 border-t-[#343F4B] border-t-[1px] lg:border-0 pt-[10px]">
-        <div className="relative w-full">{payFlow && <GiftCoin />}</div>
+      <div className="relative w-full lg:hidden">{payFlow && <GiftCoin />}</div>
         {!showComment && (
           <div className="text-[11px] text-[#FFFFFF]  font500 text-end py-[7px]  px-[16px]">
             <div
@@ -262,6 +262,8 @@ function Chat({ onLeave, liveStreamDetail, userProfileData }) {
           handleSendChat={handleSendChat}
         />
         <div className="hidden lg:flex justify-between items-center relative">
+        {/* <div className="relative w-full"></div> */}
+        {payFlow && <GiftCoin />}
           <SendCoinsComp
             setPayFlow={setPayFlow}
             userCoinsBalance={userCoinsBalance}

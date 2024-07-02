@@ -191,7 +191,7 @@ export default function GiftTicket({ closeModal, Data, show }) {
               Data?.ticket?.code || ""
             } ${formatMoney(Data?.ticket?.price || "0", false || "0")} `}
             className={`w-full text-[13px] font500] h-[44px] mt-[20px]`}
-            onClick={handleSubmit(handleValidation)}
+            // onClick={handleSubmit(handleValidation)}
           />
         </PayStack>}
       </main>

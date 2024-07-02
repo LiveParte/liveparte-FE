@@ -64,7 +64,13 @@ export default function GiftingCoins({ onNext, onClose, eventId,usersCoinsBalanc
         <div className="border-[#343F4B] border-[1px] bg-[#27292E]  flex items-center px-[12px] rounded-[8px] py-[7px] gap-[5px]  !h-[35px]">
           
 
-          <LiveParteCoins size={16} />
+          {/* <LiveParteCoins size={16} /> */}
+          <Image
+              src={`/svg/Liveparte coin.svg`}
+              width={16}
+              height={16}
+              alt="coins"
+            />
 
           <Controller
             // key={index}

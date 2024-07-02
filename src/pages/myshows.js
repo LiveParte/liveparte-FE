@@ -8,6 +8,7 @@ import WithAuth from "@/components/Layout/WithAuth";
 import { separateEventsByDate } from "@/utils/helper";
 import MyModal from "@/components/Ui/Modal";
 import CountDown from "@/components/Common/Coundown";
+import { useRouter } from "next/router";
 // import OnDemand from "@/components/modules/MyShow/onDemand";
 const OnDemand = dynamic(() => import("@/components/modules/MyShow/onDemand"), {
   ssr: false,
@@ -20,7 +21,9 @@ const Header = dynamic(() => import("@/components/modules/MyShow/Header"), {
 });
 export default function MyShows() {
   const userInfo = useSelector(selectCurrentUserData);
-
+  const router = useRouter();
+  const {show} =router?.query
+  // console.log(router,show,'MyShows')
   const {
     data: userShows,
     isLoading,
@@ -32,9 +35,11 @@ export default function MyShows() {
   const HeaderData = [
     {
       name: "Upcoming",
+      link:'upcoming',
     },
     {
       name: "On Demand",
+      link:'onDemand',
     },
   ];
 
@@ -45,6 +50,17 @@ export default function MyShows() {
   // console.log(userShows, separateEventsByDate(userShows?.event),'userShows')
 
   const [isActive, setIsActive] = useState(HeaderData[0]?.name);
+
+  useEffect(() => {
+    if(show==="onDemand"){
+      setIsActive(HeaderData[1]?.name)
+    }
+    if(show==="upcoming"){
+      setIsActive(HeaderData[0]?.name)
+    }
+   
+  }, [show])
+  
   return (
     <WithAuth>
      

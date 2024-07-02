@@ -99,7 +99,8 @@ export default function ShowsCard({
               <span className="flex-1">
                 {isLive||onDemand ? (
                   <div className="mt-[8px] lg:mt-[12px] ml-[8px] lg:ml-[14px] rounded-[9px] flex gap-[8px] items-center px-[5px] lg:px-[10px] py-[6px] bg-[#06080933] backdrop-blur-[60px] w-fit ">
-                    <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div>
+                    
+                      <div className={`h-[8px] w-[8px] rounded-full  ${onDemand ?'bg-[#FFC41B]':'bg-[#FA4354]'}`}></div>
                     <div className="text-[11px] lg:text-[13px]  text-white  " style={{letterSpacing:'0.5px'}}>
                       {onDemand?'On Demand':'Happening Now'}
                     </div>

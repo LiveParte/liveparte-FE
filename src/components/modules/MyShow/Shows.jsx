@@ -53,7 +53,7 @@ export default function Shows({
       isOpen={isOpen}
       containerStyle={`!w-[543px]`}
       closeModal={()=>setIsOpen(false)}
-      bodyComponent={<CountDown date={eventDate}/>
+      bodyComponent={<CountDown date={eventDate} onBack={()=>setIsOpen(false)}/>
      }
       />}
       <div className={MainContainer}>

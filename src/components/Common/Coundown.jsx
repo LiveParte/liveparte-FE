@@ -1,10 +1,10 @@
 import { CountdownTimerII, CountdownTimerIII } from "@/utils/reusableComponent";
 import React from "react";
 
-export default function CountDown({date}) {
+export default function CountDown({date,onBack}) {
   return (
     <div className="bg-[#1B1C20] py-[43px] rounded-[16px] text-center text-white relative">
-      <div className="absolute right-4 top-4 ">
+      <div onClick={onBack} className="absolute right-4 top-4  cursor-pointer">
         <svg
           width="27"
           height="27"
