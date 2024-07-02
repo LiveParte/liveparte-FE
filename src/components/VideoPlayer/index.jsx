@@ -2,7 +2,7 @@ import React from 'react';
 import VideoJS from './VideoJS';
 
 export const VideoPlayer = ({src,videoRef}) => {
-  const playerRef = videoRef|| React.useRef(null);
+  const playerRef = React.useRef(null);
 
   const videoJsOptions = {
     autoplay: true,

@@ -3,10 +3,10 @@ import NoAuth from "@/components/Layout/NoAuth";
 import PrivacyTermsLayout from "@/components/Layout/Privacy&TermsLayout";
 import Image from "next/image";
 import React, { useState } from "react";
-import { TableBodyData, TableHeader } from "./_Data";
+import { TableBodyData, TableHeader } from "../../components/modules/Privacy/_data/Data";
 
 export default function privacy() {
-  const [selectTab, setSelectTab] = useState("privacy");
+  // const [selectTab, setSelectTab] = useState("privacy");
   return (
     <PrivacyTermsLayout>
       <div className="w-full">
