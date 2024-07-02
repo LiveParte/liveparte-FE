@@ -3,6 +3,7 @@ import NoAuth from "@/components/Layout/NoAuth";
 import PrivacyTermsLayout from "@/components/Layout/Privacy&TermsLayout";
 import Image from "next/image";
 import React, { useState } from "react";
+import { TableBodyData, TableHeader } from "./_Data";
 
 export default function privacy() {
   const [selectTab, setSelectTab] = useState("privacy");
@@ -429,6 +430,188 @@ export default function privacy() {
           </div>
 
           {/*  */}
+          <div className="mt-[40px]">
+            <div className="text-[25px] font-1 font-medium text-white mb-[20px]">
+              Your California Privacy Rights.
+            </div>
+            <div className="mb-[10px]">
+              California Consumer Privacy Act. If you are a California resident,
+              you have specific privacy rights governed by the California
+              Consumer Privacy Act (CCPA). These rights include:
+            </div>
+            <div className="mb-4">
+              {/* <div className="font500 text-[18px] mb-2">
+                a. Sharing Attendee Information with Event Producers
+              </div> */}
+              <div className="mb-2">
+                Disclosure. You have the right to request a report showing the
+                personal information collected, shared, and sold about you in
+                the past 12 months.
+              </div>
+              <ul className="list-disc px-4 m-0">
+                <li className="mb-3">
+                  Opt-Out. You have the right to opt-out to the sale of your
+                  personal information to third parties.
+                </li>
+                <li className="mb-3">
+                  Deletion. You have the right to request that we delete any
+                  personal information collected from you.
+                </li>
+                <li className="mb-3">
+                  Non-Discrimination. We shall not discriminate against you
+                  based on your exercise of any of the above rights.
+                </li>
+              </ul>
+              <div className="mb-2">
+                You may submit a request to enact any of the above rights by
+                clicking here to submit a request. You may also submit your
+                request by mailing a letter to the address at the bottom of this
+                policy. Please be sure to include your full name, email address,
+                and which type of request you are making in your letter.{" "}
+              </div>
+              <div className="mb-2">
+                To verify your identity, we may collect information such as your
+                full name and email address. This information will be compared
+                to our existing records to verify the identity of the individual
+                submitting the request. We may also require you to confirm your
+                request via an automated email message before responding to your
+                CCPA rights request. Depending on the sensitivity of the
+                information requested and the type of request, we may require
+                additional information to verify your identity before
+                responding. We will respond to your request within 45 days if
+                possible and required under the law.
+              </div>
+
+              <div className="font500 text-[18px] mb-2">
+                Personal Information Collected on California Residents:
+              </div>
+              <ul className="list-disc px-4 m-3">
+                <li className="mb-3">Names and Aliases</li>
+                <li className="mb-3">Physical Address</li>
+                <li className="mb-3">Phone Number</li>
+                <li className="mb-3">E-Mail Address</li>
+                <li className="mb-3">IP Address</li>
+                <li className="mb-3">Unique Identifiers</li>
+                <li className="mb-3">Interactions with Customer Service</li>
+                <li className="mb-3">
+                  Information about transactions made on our services
+                </li>
+                <li className="mb-3">Fan Preferences and Attributes</li>
+                <li className="mb-3">
+                  Cookies/Web Beacons - We use tracking tools like browser
+                  cookies and web beacons.
+                </li>
+                <li className="mb-3">Device Attributes</li>
+                {/* <li className="mb-3"></li> */}
+              </ul>
+
+              <div>
+                Personal Information Disclosed for a Business Purpose or Sold
+                About California Residents:
+              </div>
+
+             <div className="overflow-x-scroll block w-full">
+             <table>
+                <tr className="border">
+                  {TableHeader?.map((item, i) => (
+                    <th
+                      key={i}
+                      className="border w-[200px] pl-3 py-2 text-start "
+                    >
+                      {item}
+                    </th>
+                  ))}
+                </tr>
+                {TableBodyData?.map((item, i) => (
+                  <tr key={i}>
+                    {item?.map((itemI, i) => (
+                      <td  key={i} className="border pl-3 py-2 text-start">
+                        {itemI}
+                      </td>
+                    ))}
+                  </tr>
+                ))}
+              </table>
+             </div>
+
+              <div className="mb-4"></div>
+
+              <div className="mb-3">
+                Event Producers are independent controllers of your information.
+                However, they are prohibited by this Policy and our Terms of
+                Service from using Attendee contact information for any purpose
+                beyond those set forth above without the Attendee’s consent.
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <div className="font500 text-[18px] mb-2">
+                b. Sharing with Third Party Service Providers and Vendors
+              </div>
+              <div className="mb-2">
+                We engage third parties so that they can assist us in servicing
+                you with things such as customer service, payment processing,
+                email, information technology services, and information storage
+                services, with the understanding that such third parties will
+                use any personal information that is shared for their limited
+                purposes as a service provider and in accordance with our
+                Privacy Policy.
+              </div>
+            </div>
+            <div className="mb-4">
+              <div className="font500 text-[18px] mb-2">
+                c. Corporate Reorganizations
+              </div>
+              <div className="mb-2">
+                If we are involved in a merger, acquisition, a sale of all or a
+                substantial portion of our assets, or other similar sale
+                transaction, your information will be transferred as part of
+                that transaction. We will notify you by email and/or a prominent
+                notice on our website of any such transfer and any choices you
+                may have regarding your information.{" "}
+              </div>
+            </div>
+
+            <div className="mb-4">
+              <div className="font500 text-[18px] mb-2">
+                d. Legal Process and Protection from Harm
+              </div>
+              <div className="mb-2">
+                Lastly, if legally required to do so, or if we have a good faith
+                belief that such disclosure is reasonably necessary, we may
+                disclose your personal information to courts of law, law
+                enforcement authorities and other relevant third parties, (i) to
+                conduct an investigation, (ii) to respond to a third party or
+                law enforcement subpoena or court order, or (iii) to bring legal
+                action, prevent harm to others or pursue other relief, in each
+                aforementioned case when you or a third party are or may be:
+              </div>
+              <ul className="list-disc px-4 m-0">
+                <li className="mb-3">
+                  violating our terms and conditions of use;
+                </li>
+                <li className="mb-3">
+                  causing injury or other harm to, or otherwise violating the
+                  property or other legal rights, of us, other users, or third
+                  parties; or
+                </li>
+                <li className="mb-3">
+                  violating federal, state, local, or other applicable law.{" "}
+                </li>
+              </ul>
+            </div>
+
+            <div className="mb-4">
+              <div className="font500 text-[18px] mb-2">
+                e. Non-Personal Information
+              </div>
+              <div className="mb-2">
+                We may share aggregate, anonymized, or deidentified information
+                about Users with other entities for marketing, advertising,
+                research or similar purposes.
+              </div>
+            </div>
+          </div>
 
           <div className="mt-[40px]">
             <div className="text-[25px] font-1 font-medium text-white mb-[20px]">

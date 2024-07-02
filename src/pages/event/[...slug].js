@@ -36,7 +36,9 @@ export default function EventId() {
   //   setUserDetail(user);
   // }, [user?._id, user]);
   const router = useRouter();
-  const { id } = router.query;
+//   const { id } = router.query;
+  const id =router.query?.slug[1]
+  const eventName =router.query?.slug[0]
   let [isOpen, setIsOpen] = useState();
   const { data, isLoading,refetch ,isSuccess} = useGetEventDetailViaIdQuery(id, {
     skip: !id,
@@ -70,7 +72,7 @@ export default function EventId() {
 
   const eventsData={ ...data,...data?.event, ...shows   }
 
-  // console.log(eventsData,'datadata')
+  console.log(router.query,id,'routerrouter')
  
   return (
     <NoAuth>

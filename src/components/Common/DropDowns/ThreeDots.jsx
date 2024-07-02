@@ -1,6 +1,7 @@
 import {
   convertAndAddOneHour,
   convertDateTime,
+  convertToUTC,
   CopyEventLink,
   replaceAmpersandWithAnd,
 } from "@/utils/reusableComponent";
@@ -31,7 +32,7 @@ export function DropdownMenu({
               className=" text-white no-underline  "
               href={`https://calendar.google.com/calendar/r/eventedit?text=${replaceAmpersandWithAnd(
                 HeroSectionEvent?.name
-              )}&dates=${convertDateTime(
+              )}&dates=${convertToUTC(
                 HeroSectionEvent?.event_date
               )}/${convertAndAddOneHour(
                 HeroSectionEvent?.event_date

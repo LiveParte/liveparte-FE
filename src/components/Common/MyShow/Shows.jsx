@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { Play } from "../../../../public/svg";
 import moment from "moment";
 import { useRouter } from "next/router";
-import { eventLink, singleEventLink } from "@/utils/reusableComponent";
+import { eventLink, replaceDashWithSpace, replaceSpaceWithDashFunc, singleEventLink } from "@/utils/reusableComponent";
 import { isArray } from "@/utils/helper";
 import { useDispatch, useSelector } from "react-redux";
 // import { selectEvent, setEventData } from "@/store/Event";
@@ -80,7 +80,7 @@ export default function ShowsCard({
         // console.log({...item,ticket:isArray(item?.tickets)&&item?.tickets[0]},'showsshowsshows1');
         dispatch(setSingleEvent({...item,ticket:isArray(item?.tickets)&&item?.tickets[0]}));
         router.push({
-          pathname: `${eventLink}/${item?._id}`,
+          pathname: `${eventLink}/${replaceSpaceWithDashFunc(item?.name)}/${item?._id}`,
         });
       }}
     >

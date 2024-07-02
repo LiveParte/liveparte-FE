@@ -1,7 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
 import { HostLeftIcon } from "../../../../../public/svg";
+import { VideoPlayer } from "@/components/VideoPlayer";
 
-export default function Video({ liveStreamDetail,videoRef,
+export default function Video({
+  liveStreamDetail,
+  videoRef,
   updateTime,
   updateDuration,
   divRef,
@@ -18,47 +21,50 @@ export default function Video({ liveStreamDetail,videoRef,
   togglePlayPause,
   rewind,
   toggleMute,
-  fastForward
- }) {
-
-
-
-
-
-    useEffect(() => {
+  fastForward,
+}) {
+  useEffect(() => {
     const video = videoRef.current;
     if (video) {
-      video.addEventListener('timeupdate', updateTime);
-      video.addEventListener('loadedmetadata', updateDuration);
+      video.addEventListener("timeupdate", updateTime);
+      video.addEventListener("loadedmetadata", updateDuration);
       return () => {
-        video.removeEventListener('timeupdate', updateTime);
-        video.removeEventListener('loadedmetadata', updateDuration);
+        video.removeEventListener("timeupdate", updateTime);
+        video.removeEventListener("loadedmetadata", updateDuration);
       };
     }
   }, []);
 
   return (
-    <div  className="border-9">
-      <div className=' left-0 right-0 top-10 border bottom-0 bg-black flex flex-col justify-center items-center z-40'>
-        
-   
-
-      </div>
-      <video
+    <div className="border-9">
+      <div className=" left-0 right-0 top-10 border bottom-0 bg-black flex flex-col justify-center items-center z-40"></div>
+      <VideoPlayer 
+      videoRef={videoRef}
+       src={
+        `https://res.cloudinary.com/dnvwcmqhw/video/upload/v1713949269/onDemandVideo/Screen_Recording_2024-04-22_at_14.37.28_nezabk.mp4` ||
+        liveStreamDetail?.streaming_url ||
+        liveStreamDetail?.promotional_url
+      }
+      />
+      {/* <video
         ref={videoRef}
         controls={false}
         autoPlay={true}
         className="absolute left-0 right-0 top-0 bottom-0 object-contain md:object-cover h-full w-full z-10"
         poster={liveStreamDetail?.thumbnail_url}
-        controlsList="nodownload" 
+        controlsList="nodownload"
         preload="none"
       >
         <source
-          src={`https://res.cloudinary.com/dnvwcmqhw/video/upload/v1713949269/onDemandVideo/Screen_Recording_2024-04-22_at_14.37.28_nezabk.mp4` || liveStreamDetail?.streaming_url || liveStreamDetail?.promotional_url}
+          src={
+            `https://res.cloudinary.com/dnvwcmqhw/video/upload/v1713949269/onDemandVideo/Screen_Recording_2024-04-22_at_14.37.28_nezabk.mp4` ||
+            liveStreamDetail?.streaming_url ||
+            liveStreamDetail?.promotional_url
+          }
           type="video/mp4"
         />
         Your browser does not support the video tag.
-      </video>
+      </video> */}
       {/* <div className="z-50 absolute bottom-5 text-white left-0 right-0">
         <div className="px-[16px] flex items-center gap-[16px] cursor-pointer">
           <div

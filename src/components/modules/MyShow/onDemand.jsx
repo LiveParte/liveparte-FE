@@ -1,7 +1,7 @@
 import React from "react";
 import ButtonComp from "@/components/Ui/button";
 import { useRouter } from "next/router";
-import { liveStreamLink, onDemandLink } from "@/utils/reusableComponent";
+import { liveStreamLink, onDemandLink, replaceSpaceWithDashFunc } from "@/utils/reusableComponent";
 import { useDispatch } from "react-redux";
 import { setLiveStreamEventData } from "@/store/Event";
 import { MainContainer } from "@/utils/styleReuse";
@@ -22,7 +22,7 @@ export default function OnDemand({
     // console.log(item,'handleOnClick')
     if (item?.streaming_url) {
       dispatch(setLiveStreamEventData(item));
-      router.push(`${liveStreamLink}/${item?._id}`);
+      router.push(`${liveStreamLink}/${replaceSpaceWithDashFunc(item?.name)}/${item?._id}`);
     }
   };
   return (

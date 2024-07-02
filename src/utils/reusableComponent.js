@@ -171,6 +171,10 @@ export function WarningNotification({ message ,closeToast}) {
 // WarningIcon
 
 
+export function replaceSpaceWithDashFunc(str) {
+  return str.replace(/\s+/g, '_');
+
+}
 export function replaceSpaceWithDash(str) {
   return str.replace(/\s+/g, '999');
 
@@ -248,7 +252,34 @@ export function convertDateTime(inputDateTime) {
 }
 
 
-
+export function convertToUTC(inputDateTime) {
+  // function convertWATToUTC(inputDateTime) {
+    // Extract date and time components
+    const [date, time] = inputDateTime.split('T');
+    
+    // Extract year, month, and day
+    const [year, month, day] = date.split('-');
+    
+    // Extract hour and minute
+    const [hour, minute] = time.split(':');
+    
+    // Convert to UTC format considering WAT is UTC+1
+    const watDate = new Date(Date.UTC(year, month - 1, day, hour - 1, minute));
+  
+    // Format the new date and time
+    const newYear = watDate.getUTCFullYear();
+    const newMonth = String(watDate.getUTCMonth() + 1).padStart(2, '0');
+    const newDay = String(watDate.getUTCDate()).padStart(2, '0');
+    const newHour = String(watDate.getUTCHours()).padStart(2, '0');
+    const newMinute = String(watDate.getUTCMinutes()).padStart(2, '0');
+    const newSecond = String(watDate.getUTCSeconds()).padStart(2, '0');
+    
+    const newDateTime = `${newYear}${newMonth}${newDay}T${newHour}${newMinute}${newSecond}Z`;
+    
+    return newDateTime;
+  // }
+  
+}
 
 export function convertAndAddOneHour(inputDateTime) {
   // Extract date and time components
