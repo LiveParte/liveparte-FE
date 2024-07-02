@@ -19,6 +19,7 @@ import { useSelector } from "react-redux";
 import { selectCurrentUserData, selectEvent } from "@/store/User";
 import { CloseIcon } from "../../../public/svg";
 import CountDown from "@/components/Common/Coundown";
+import { isArray } from "@/utils/helper";
 
 export default function EventId() {
   const dispatch = useDispatch()
@@ -37,8 +38,8 @@ export default function EventId() {
   // }, [user?._id, user]);
   const router = useRouter();
 //   const { id } = router.query;
-  const id =router.query?.slug[1]
-  const eventName =router.query?.slug[0]
+  const id =isArray(router.query?.slug)&&router.query?.slug[1]
+  // const eventName =router.query?.slug[0]
   let [isOpen, setIsOpen] = useState();
   const { data, isLoading,refetch ,isSuccess} = useGetEventDetailViaIdQuery(id, {
     skip: !id,

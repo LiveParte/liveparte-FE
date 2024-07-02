@@ -106,7 +106,7 @@ export default function Header({ className, openModal }) {
             <ButtonComp
               onClick={() => setDropDown(true)}
               btnText="Menu"
-              className="text-[13px] font-medium  lg:hidden !h-[30px] !px-[24px] gap-[10px] !bg-[#BAD6F70F] rounded-[999px] border-[#262C32] border-[1px] font500 text-white backdrop-blur-[60px] md:h-fit "
+              className="text-[13px] font-medium  lg:hidden !h-[30px] !px-[24px] gap-[10px] !bg-[#BAD6F70F] rounded-[999px] border-[white] border-[1px] font500 text-white backdrop-blur-[60px] md:h-fit "
             />
           </div>
         </div>

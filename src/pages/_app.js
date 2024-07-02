@@ -1,5 +1,5 @@
 import Head from "next/head";
-import "@/styles/globals.css";
+import "../styles/globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
 import { Provider } from "react-redux";
@@ -11,9 +11,10 @@ import { SessionProvider } from "next-auth/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-import { persistor, store } from "@/store";
+// import { persistor, store } from "@/store";
 import { getServerSession } from "next-auth";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { persistor,store } from "../store";
 
 export default function App({ Component, pageProps }) {
   // const session = getServerSession();

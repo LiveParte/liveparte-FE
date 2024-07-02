@@ -12,6 +12,7 @@ import { useRouter } from "next/router";
 import { useGetUserProfileQuery } from "@/store/User/userApi";
 import { selectCurrentUserData } from "@/store/User";
 import { isFutureDate } from "@/utils/reusableComponent";
+import { isArray } from "@/utils/helper";
 
 const LiveStream = dynamic(
   () => import("@/components/modules/LiveStream/LiveStreamMain"),
@@ -21,7 +22,7 @@ const LiveStream = dynamic(
 export default function Index() {
   const  router = useRouter();
   // const {showId} =router?.query;
-  const showId =router.query?.slug[1]
+  const showId =isArray(router.query?.slug)&& router.query?.slug[1];
   const userInfo = useSelector(selectCurrentUserData) || {};
   const { data, isLoading,refetch ,isSuccess} = useGetEventDetailViaIdQuery(showId, {
     skip: !showId,
