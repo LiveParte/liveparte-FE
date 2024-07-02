@@ -3,21 +3,7 @@ import Footer from "@/components/Common/Footer";
 import { useRouter } from "next/router";
 import dynamic from 'next/dynamic';
 
-// const Hero = dynamic(() => import('@/components/modules/LandingPage/Hero'), {
-//   ssr: false
-// });
-// const FavoriteShow = dynamic(() => import('@/components/modules/LandingPage/FavoriteShows'), {
-//   ssr: false
-// });
-// const Features = dynamic(() => import('@/components/modules/LandingPage/Features'), {
-//   ssr: false
-// });
-// const ArtistList = dynamic(() => import('@/components/modules/LandingPage/Artist'), {
-//   ssr: false
-// });
-// const FAQ = dynamic(() => import('@/components/modules/LandingPage/FAQ'), {
-//   ssr: false
-// });
+
 import Hero  from "@/components/modules/LandingPage/Hero";
 import FavoriteShow from "@/components/modules/LandingPage/FavoriteShows";
 import Features from "@/components/modules/LandingPage/Features";

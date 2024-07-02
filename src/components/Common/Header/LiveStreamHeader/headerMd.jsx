@@ -39,7 +39,7 @@ export default function HeaderMd({
               <div className="flex items-center gap-[8px]">
                 <div className="h-[8px] w-[8px] rounded-full bg-black"></div>
                 <div className="font500 text-[13px] tracking-[0.48px] leading-none ">
-                  on Demand
+                  On Demand
                 </div>
               </div>
             )}

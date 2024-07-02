@@ -130,6 +130,5 @@ export default function IsNoLiveButton({
         </div>
       </div>
     </div>
-    
   );
 }

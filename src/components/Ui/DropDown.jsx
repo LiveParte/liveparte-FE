@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, memo } from 'react';
 
-const DropdownButton = ({ label, options, position, children,onNext,modalState,className }) => {
+const DropdownButton = ({ label, options, position='top', children,onNext,modalState,className }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [adjustedPosition, setAdjustedPosition] = useState(position);
   const dropdownRef = useRef(null);

@@ -54,7 +54,8 @@ export default function LiveStreamHeaderComp({
               onClick={() => {
                 // leaveChannel()
                 setActiveConnection(false);
-                router.push(myShowLink);
+                router.back()
+                // router.push(myShowLink);
               }}
             />
           </div>
