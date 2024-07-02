@@ -5,7 +5,7 @@ import Image from "next/image";
 import React, { useState } from "react";
 
 export default function privacy() {
-  const [selectTab, setSelectTab] = useState("privacy");
+  // const [selectTab, setSelectTab] = useState("privacy");
   return (
     <PrivacyTermsLayout>
       <div className="w-full">
