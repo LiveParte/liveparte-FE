@@ -18,24 +18,31 @@ export default function LiveStreamHeaderIndexComp({
   ShareAndGiftDropdown,
   handleOpenModalAll,
   setFullScreenModal,
-  liveStreamDetail
-  
+  liveStreamDetail,
 }) {
   return (
-    <div className={`${MainContainer}  absolute left-0 right-0 lg:top-6 bg-black`}>
+    <div
+      className={`${MainContainer}  absolute left-0 right-0 lg:top-6 bg-black`}
+    >
       <div className="hidden lg:block">
-        <LiveStreamHeader liveStreamDetail={liveStreamDetail} handleOpenModal={handleOpenModal} setActiveConnection={setActiveConnection}  />
+        <LiveStreamHeader
+          liveStreamDetail={liveStreamDetail}
+          handleOpenModal={handleOpenModal}
+          setActiveConnection={setActiveConnection}
+        />
       </div>
       <div className="block lg:hidden">
-        <HeaderMd ProfileDropdown={ProfileDropdown} setIsOpen={setIsOpen} isOpen={isOpen}
-         isLoading = {isLoading}
-         isLive ={isLive}
-         setIsOpenII={setIsOpenII}
-         isOpenII={isOpenII}
-         ShareAndGiftDropdown={ShareAndGiftDropdown}
-         handleOpenModalAll={ShareAndGiftDropdown}
-         setFullScreenModal={ShareAndGiftDropdown}
-        
+        <HeaderMd
+          ProfileDropdown={ProfileDropdown}
+          setIsOpen={setIsOpen}
+          isOpen={isOpen}
+          isLoading={isLoading}
+          isLive={isLive}
+          setIsOpenII={setIsOpenII}
+          isOpenII={isOpenII}
+          ShareAndGiftDropdown={ShareAndGiftDropdown}
+          handleOpenModalAll={ShareAndGiftDropdown}
+          setFullScreenModal={ShareAndGiftDropdown}
         />
       </div>
     </div>

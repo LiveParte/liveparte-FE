@@ -30,11 +30,11 @@ export default function AuthHeader({
   openModal,
   showNav = false,
   userInfo,
-  userCoinsBalance
+  userCoinsBalance,
 }) {
   const router = useRouter();
   const dispatch = useDispatch();
-  // const coins = 
+  // const coins =
   const MainContainer = `px-[20px] md:px-[40px] lg:px-[80px] xl:[120px] relative`;
   const [dropDown, setDropDown] = useState(false);
   const coinsBalance = useSelector(selectCoins);
@@ -56,12 +56,11 @@ export default function AuthHeader({
 
   function handleLogOut() {
     dispatch(userApi.util.resetApiState());
-    dispatch(setUserData({}))
+    dispatch(setUserData({}));
     localStorage.removeItem(userDetailStorageName);
     localStorage.removeItem(accessTokenStorageName);
 
     if (router?.pathname === myShowLink || router?.pathname === "/setting") {
-     
       return router.push("/");
     }
   }
@@ -89,7 +88,6 @@ export default function AuthHeader({
           containerStyle={`bg-[#1B1C20] w-full`}
           closeModal={handleCloseModal}
           onClose={handleCloseModal}
-          
         />
       ),
     },
@@ -126,6 +124,8 @@ export default function AuthHeader({
     );
   }
 
+  // console.log( router.pathname===onDemandLink,'onDemandLink')
+
   // console.log(userCoinsBalance,'userCoinsBalance')
 
   const blur = `backdrop-blur-[60px]`;
@@ -138,6 +138,7 @@ export default function AuthHeader({
           setModalName={setModalName}
           userInfo={userInfo}
           coinsBalance={coinsBalance}
+          handleCloseModal={handleCloseModal}
         />
       )}
       {modalName && (
@@ -175,7 +176,12 @@ export default function AuthHeader({
                 className={` font-medium  hidden lg:block   !h-[32px] text-[13px] px-[16px] md:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${
                   isOnDemand && isSelected
                 }`}
-                onClick={() => router.push(onDemandLink)}
+                onClick={() => {
+
+                  // console.log( router.pathname,onDemandLink,'onDemandLink')
+                  router.pathname ===onDemandLink &&handleCloseModal()
+                  router.push(onDemandLink)
+                }}
               />
               <ButtonComp
                 btnText="My Shows"
@@ -186,47 +192,48 @@ export default function AuthHeader({
               />
             </div>
           )}
-         {showNav&& <div>
-            <div className="flex items-center  gap-[18px]">
-              <div className=" gap-[16px] items-center text-white font500 hidden lg:flex">
-                <div className=" flex flex-col">
-                  <div className="text-[10px] text-[#b4becb] mb-[3px]">
-                    Coin Balance
+          {showNav && (
+            <div>
+              <div className="flex items-center  gap-[18px]">
+                <div className=" gap-[16px] items-center text-white font500 hidden lg:flex">
+                  <div className=" flex flex-col">
+                    <div className="text-[10px] text-[#b4becb] mb-[3px]">
+                      Coin Balance
+                    </div>
+                    <div className="text-[13px] flex items-center gap-[5px]">
+                      <LiveParteCoins />
+                      {formatMoney(userCoinsBalance || "0", false)}{" "}
+                      {userCoinsBalance > 1 ? "Coins" : "Coin"}
+                    </div>
                   </div>
-                  <div className="text-[13px] flex items-center gap-[5px]">
-                    <LiveParteCoins/>
-                      
-                    {formatMoney(userCoinsBalance|| "0", false)}{" "}
-                    {userCoinsBalance > 1 ? "Coins" : "Coin"}
-                  </div>
-                </div>
 
-                <div ref={purchaseCoinRef} className="relative">
-                  {isOpenPC && <PurchasePaartyCoinsDropdown />}
-                  <div className="">
-                    <ButtonComp
-                      btnText={`Add Coins`}
-                      className={`!h-[32px] py-[6px] px-[17px] !bg-[#BACFF70A] rounded-[999px]  text-[10px] shadow-4`}
-                      onClick={() => setIsOpenPC(!isOpenPC)}
-                    />
+                  <div ref={purchaseCoinRef} className="relative">
+                    {isOpenPC && <PurchasePaartyCoinsDropdown />}
+                    <div className="">
+                      <ButtonComp
+                        btnText={`Add Coins`}
+                        className={`!h-[32px] py-[6px] px-[17px] !bg-[#BACFF70A] rounded-[999px]  text-[10px] shadow-4`}
+                        onClick={() => setIsOpenPC(!isOpenPC)}
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="hidden lg:block">
+                  <div className="relative">
+                    {isOpen && <ProfileDropdown />}
+                    <UserProfile onClick={() => setIsOpen(!isOpen)} />
                   </div>
                 </div>
               </div>
-              <div className="hidden lg:block">
-                <div className="relative">
-                  {isOpen && <ProfileDropdown />}
-                  <UserProfile onClick={() => setIsOpen(!isOpen)} />
-                </div>
+              <div className="lg:hidden">
+                <ButtonComp
+                  onClick={() => setDropDown(true)}
+                  btnText="Menu"
+                  className="text-[13px] font-medium !h-[30px]  lg:hidden  !px-[24px] gap-[10px] !bg-[#BAD6F70F] leading-none rounded-[999px] border-[white] border-[1px] font500 text-white backdrop-blur-[60px] md:h-fit "
+                />
               </div>
             </div>
-            <div className="lg:hidden">
-              <ButtonComp
-                onClick={() => setDropDown(true)}
-                btnText="Menu"
-                className="text-[13px] font-medium !h-[30px]  lg:hidden  !px-[24px] gap-[10px] !bg-[#BAD6F70F] leading-none rounded-[999px] border-[white] border-[1px] font500 text-white backdrop-blur-[60px] md:h-fit "
-              />
-            </div>
-          </div>}
+          )}
         </div>
       </div>
     </>

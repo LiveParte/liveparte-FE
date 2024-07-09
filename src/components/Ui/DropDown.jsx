@@ -1,6 +1,14 @@
-import { useState, useEffect, useRef, memo } from 'react';
+import { useState, useEffect, useRef, memo } from "react";
 
-const DropdownButton = ({ label, options, position='top', children,onNext,modalState,className }) => {
+const DropdownButton = ({
+  label,
+  options,
+  position = "top",
+  children,
+  onNext,
+  modalState,
+  className,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [adjustedPosition, setAdjustedPosition] = useState(position);
   const dropdownRef = useRef(null);
@@ -15,78 +23,78 @@ const DropdownButton = ({ label, options, position='top', children,onNext,modalS
     const viewportWidth = window.innerWidth;
 
     switch (position) {
-      case 'top':
+      case "top":
         if (buttonRect.top >= dropdownRect.height) {
-          return 'top';
+          return "top";
         }
         break;
-      case 'bottom':
+      case "bottom":
         if (viewportHeight - buttonRect.bottom >= dropdownRect.height) {
-          return 'bottom';
+          return "bottom";
         }
         break;
-      case 'left':
+      case "left":
         if (buttonRect.left >= dropdownRect.width) {
-          return 'left';
+          return "left";
         }
         break;
-      case 'right':
+      case "right":
         if (viewportWidth - buttonRect.right >= dropdownRect.width) {
-          return 'right';
+          return "right";
         }
         break;
     }
 
     if (viewportHeight - buttonRect.bottom >= dropdownRect.height) {
-      return 'bottom';
+      return "bottom";
     }
 
     if (buttonRect.top >= dropdownRect.height) {
-      return 'top';
+      return "top";
     }
 
     if (buttonRect.left >= dropdownRect.width) {
-      return 'left';
+      return "left";
     }
 
     if (viewportWidth - buttonRect.right >= dropdownRect.width) {
-      return 'right';
+      return "right";
     }
 
-    return 'bottom';
+    return "bottom";
   };
 
   const getDropdownPositionStyles = (position) => {
     switch (position) {
-      case 'top':
-        return 'bottom-full mb-2  right-0 transform ';
-      case 'bottom':
-        return 'top-full mt-2 left-1/2 transform -translate-x-1/2';
-      case 'left':
-        return 'right-full mr-2 top-1/2 transform -translate-y-1/2';
-      case 'right':
-        return 'left-full ml-2 top-1/2 transform -translate-y-1/2';
+      case "top":
+        return "bottom-full mb-2  right-0 transform ";
+      case "bottom":
+        return "top-full mt-2 left-1/2 transform -translate-x-1/2";
+      case "left":
+        return "right-full mr-2 top-1/2 transform -translate-y-1/2";
+      case "right":
+        return "left-full ml-2 top-1/2 transform -translate-y-1/2";
       default:
-        return 'top-full mt-2 left-1/2 transform -translate-x-1/2';
+        return "top-full mt-2 left-1/2 transform -translate-x-1/2";
     }
   };
 
   const handleClickOutside = (event) => {
     if (
-      dropdownRef.current && 
+      dropdownRef.current &&
       !dropdownRef.current.contains(event.target) &&
       buttonRef.current &&
       !buttonRef.current.contains(event.target)
     ) {
       setIsOpen(false);
-      onNext&& onNext(false)
+      onNext && onNext(false);
     }
   };
 
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -99,14 +107,13 @@ const DropdownButton = ({ label, options, position='top', children,onNext,modalS
 
   return (
     <div className="relative text-left flex" ref={dropdownRef}>
-      <div className='flex'>
+      <div className="flex">
         <button
           type="button"
           className=""
           onClick={() => {
-             onNext&&onNext(!isOpen)
+            onNext && onNext(!isOpen);
             setIsOpen(!isOpen);
-           
           }}
           ref={buttonRef}
         >
@@ -114,12 +121,19 @@ const DropdownButton = ({ label, options, position='top', children,onNext,modalS
         </button>
       </div>
 
-      {modalState&&isOpen && (
-        <div className={`absolute z-40 ${getDropdownPositionStyles(adjustedPosition)} w-max ${className}`}>
-          <div className="py-1 inline-block" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-            <div className="">
-              {children}
-            </div>
+      {modalState && isOpen && (
+        <div
+          className={`absolute z-40 ${getDropdownPositionStyles(
+            adjustedPosition
+          )} w-max ${className}`}
+        >
+          <div
+            className="py-1 inline-block"
+            role="menu"
+            aria-orientation="vertical"
+            aria-labelledby="options-menu"
+          >
+            <div className="">{children}</div>
           </div>
         </div>
       )}

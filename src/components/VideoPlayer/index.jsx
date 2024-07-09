@@ -1,54 +1,46 @@
-import React from 'react';
-import VideoJS from './VideoJS';
+import React, { useEffect, useRef } from "react";
+import videojs from "video.js";
+import "video.js/dist/video-js.css";
 
-export const VideoPlayer = ({src,videoRef}) => {
-  const playerRef = React.useRef(null);
+const VideoJS = ({ options, onReady }) => {
+  const videoRef = useRef(null);
+  const playerRef = useRef(null);
 
-  const videoJsOptions = {
-    autoplay: true,
-    controls: false,
-    responsive: false,
-    fluid: true,
-    muted: true, // Mute the video to allow autoplay
-    sources: [{
-      src: src||'https://res.cloudinary.com/dnvwcmqhw/video/upload/v1713949269/onDemandVideo/Screen_Recording_2024-04-22_at_14.37.28_nezabk.mp4',
-      type: 'video/mp4'
-    }]
-  };
+  useEffect(() => {
+    if (videoRef.current && !playerRef.current) {
+      const videoElement = document.createElement("video");
 
-  const handlePlayerReady = (player) => {
-    playerRef.current = player;
+      videoElement.className = "video-js vjs-big-play-centered";
+      videoRef.current.appendChild(videoElement);
 
-    player.on('waiting', () => {
-      videojs.log('player is waiting');
-    });
+      const player = (playerRef.current = videojs(videoElement, options, () => {
+        onReady && onReady(player);
+      }));
 
-    player.on('dispose', () => {
-      videojs.log('player will dispose');
-    });
-  };
+      return () => {
+        if (playerRef.current) {
+          playerRef.current.dispose();
+          playerRef.current = null;
+        }
+      };
+    } else {
+      const player = playerRef.current;
 
-  const handlePlayPause = () => {
-    if (playerRef.current) {
-      if (playerRef.current.paused()) {
-        playerRef.current.play();
-      } else {
-        playerRef.current.pause();
+      if (player) {
+        player.autoplay(options.autoplay || false);
+        player.src(options.sources || []);
+
+        // Handle additional updates to player options if needed
+        // Example: player.loop(options.loop);
       }
     }
-  };
+  }, [options, onReady]);
 
   return (
-    <>
-      <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
-      <div className="mt-4 flex justify-center">
-        <button
-          onClick={handlePlayPause}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        >
-          Play/Pause
-        </button>
-      </div>
-    </>
+    <div className="h-full w-full" data-vjs-player>
+      <div className="h-full w-full" ref={videoRef} />
+    </div>
   );
 };
+
+export default VideoJS;

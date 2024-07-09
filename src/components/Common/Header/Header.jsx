@@ -15,8 +15,9 @@ export default function Header({ className, openModal }) {
   const isOnDemand =router?.pathname===onDemandLink
   const isFocused =`hover:!bg-[#FFFFFF26] hover:rounded-[8px]  hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`
   const isSelected =HeaderOnSelect
-  const handleCheckIfITHome = () =>{
-    isHome&&setDropDown(false)
+  const handleCheckIfITHome = (link) =>{
+    router?.pathname === link &&setDropDown(false);
+    // isHome&&setDropDown(false)
   }
 
   const MenuDropdown = () => {
@@ -38,8 +39,10 @@ export default function Header({ className, openModal }) {
           </div>
         </div>
         <div className="text-[15px] text-white font500 flex-1 flex flex-col">
-          <Link onClick={handleCheckIfITHome} href={eventLink} className="py-[25px]  cursor-pointer no-underline text-white">Browse Events</Link>
-          <Link onClick={handleCheckIfITHome} href={onDemandLink} className="py-[12px]  cursor-pointer no-underline text-white">On Demand</Link>
+          <Link onClick={()=>handleCheckIfITHome(eventLink)} href={eventLink}
+          
+          className="py-[25px]  cursor-pointer no-underline text-white">Browse Events</Link>
+          <Link onClick={()=>handleCheckIfITHome(onDemandLink)}href={onDemandLink} className="py-[12px]  cursor-pointer no-underline text-white">On Demand</Link>
         </div>
 
         {/* <ButtonComp

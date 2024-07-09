@@ -30,7 +30,7 @@ const Header = React.memo(
                 key={i}
                 onClick={() => {
                   setIsActive && setIsActive(item?.name)
-                  router.push(`myshows?show=${item.link}}`)
+                  router.push(`myshows?show=${item.link}`)
                 }}
                 className={`text-[14px] font500 cursor-pointer px-[15px] md:px-[25px] customScrollVertical  flex justify-center items-center leading-none  text-nowrap lg:px-[32px] h-[36px] ${
                   isActive === item?.name

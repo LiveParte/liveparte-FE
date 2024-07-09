@@ -20,6 +20,7 @@ const initialState = {
   coins: 0,
   event: {},
   lastEventAttended: {},
+  locked: false,
 };
 
 export const authSlice = createSlice({
@@ -50,6 +51,7 @@ export const authSlice = createSlice({
       state.lastEventAttended = payload;
       state;
     },
+    
     logout: (state) => {
       state.userData = null;
       state.userInfo = {};
@@ -59,6 +61,12 @@ export const authSlice = createSlice({
       storage["localStorage"].remove(userDetailStorageName);
       storage["localStorage"].remove(accessTokenStorageName);
       state.isLoggedIn = false;
+    },
+    lockOrientation(state) {
+      state.locked = true;
+    },
+    unlockOrientation(state) {
+      state.locked = false;
     },
   },
 });
@@ -71,8 +79,12 @@ export const {
   setCoins,
   setSingleEvent,
   setLastEventAttended,
+  lockOrientation,
+  unlockOrientation
 } = authSlice?.actions;
 export default authSlice.reducer;
+export const selectOrientationLocked = (state) => state.auth.locked;
+
 // export const authState = reducer;
 // export const selectCurrentPharamaserveData = (state) => state.auth.pharamData;
 export const selectLocation = (state) => state.auth.location;

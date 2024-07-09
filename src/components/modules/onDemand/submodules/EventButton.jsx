@@ -8,6 +8,7 @@ import {
   checkShowDuration,
   eventLink,
   liveStreamLink,
+  replaceSpaceWithDashFunc,
 } from "@/utils/reusableComponent";
 import {
   InfoIcon,
@@ -123,12 +124,12 @@ export default function EventButton({
       // dispatch(setLiveStreamEventData(HeroSectionEvent));
 
      return router.push({
-        pathname: `${liveStreamLink}/${HeroSectionEvent?._id}`,
+        pathname: `${liveStreamLink}/${replaceSpaceWithDashFunc(HeroSectionEvent?.name)}/${HeroSectionEvent?._id}`,
       });
     }
 
     return router.push({
-      pathname: `${eventLink}/${HeroSectionEvent?._id}`,
+      pathname: `${eventLink}/${replaceSpaceWithDashFunc(HeroSectionEvent?.name)}/${HeroSectionEvent?._id}`,
     });
   };
 
