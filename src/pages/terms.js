@@ -771,7 +771,7 @@ export default function privacy() {
                 the home page of the Site.
               </li>
               <li className="mb-3">
-                "Frame" or "mirror" any part of the Site.
+               {` "Frame" or "mirror" any part of the Site.`}
               </li>
               <li className="mb-3">
                 Modify, adapt, sub-license, translate, sell, reverse engineer,
@@ -1180,7 +1180,7 @@ export default function privacy() {
 
 <div>
   <span className="font-semibold text-[16px]">Governing Law; Interpretation and Enforcement.</span>
- The arbitration agreement in the Terms is governed by the Arbitration And Mediation Act (2023) (“AMA"), including its procedural provisions, in all respects. This means that the AMA governs, among other things, the interpretation and enforcement of this arbitration agreement and all of its provisions, including, without limitation, the class action waiver. State arbitration laws do not govern in any respect. Further, you and we each agree that the Terms evidence a transaction involving interstate commerce and will be governed by and construed in accordance with federal law to the fullest extent possible.
+ The arbitration agreement in the Terms is governed by the Arbitration And Mediation Act (2023) ({`“AMA"`}), including its procedural provisions, in all respects. This means that the AMA governs, among other things, the interpretation and enforcement of this arbitration agreement and all of its provisions, including, without limitation, the class action waiver. State arbitration laws do not govern in any respect. Further, you and we each agree that the Terms evidence a transaction involving interstate commerce and will be governed by and construed in accordance with federal law to the fullest extent possible.
 </div>
 
 <div className="mt-8">
