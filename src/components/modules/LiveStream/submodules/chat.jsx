@@ -200,7 +200,7 @@ function Chat({ onLeave, liveStreamDetail, userProfileData }) {
       </div>
       <div className=" justify-between items-center   py-[7px]  flex lg:hidden border-b-[1px] border-b-[#262C32] px-[16px]">
         <div className="text-white font700">
-          <div className="text-[15px] uppercase line-clamp-1">
+          <div className="text-[15px] uppercase line-clamp-1 font-1 font-bold mb-[8px]">
             {liveStreamDetail?.name}
           </div>
           <h2 className="text-[13px]  ">Chat</h2>
@@ -213,60 +213,60 @@ function Chat({ onLeave, liveStreamDetail, userProfileData }) {
         />
       </div>
 
-     <div className="flex flex-col justify-end  flex-1">
-     <div className="h-[40dvh] lg:h-[58vh]">
-      {/*  */}
-      <ChatBody
-      chatBoxRef={chatBoxRef}
-      setShowComment={setShowComment}
-      showComment={showComment}
-      data={chatMessages}
-      />
-      </div>
-      <div className=" px-[4px] lg:px-0  mb-3 md:mb-0 border-t-[#343F4B] border-t-[1px] lg:border-0 pt-[10px]">
-        <div className="relative w-full lg:hidden">
-          {payFlow && <GiftCoin />}
-        </div>
-        {!showComment && (
-          <div className="text-[11px] text-[#FFFFFF]  font500 text-end py-[7px]  px-[16px]">
-            <div
-              className="cursor-pointer inline"
-              onClick={() => {
-                handleChatToTheBottom();
-                setShowComment(true);
-              }}
-            >
-              Show comments
-            </div>
-          </div>
-        )}
-        <TextInputComp
-          handleOnChange={handleOnChange}
-          messageRef={messageRef}
-          options={options}
-          setPayFlow={setPayFlow}
-          textMessages={textMessages}
-          userCoinsBalance={userCoinsBalance}
-          handleSendChat={handleSendChat}
-        />
-        <div className="hidden lg:flex justify-between items-center relative ">
-          {/* <div className="relative w-full"></div> */}
-          {payFlow && <GiftCoin />}
-          <SendCoinsComp
-            setPayFlow={setPayFlow}
-            userCoinsBalance={userCoinsBalance}
+      <div className="flex flex-col justify-end  flex-1">
+        <div className="h-[40dvh] lg:h-[58vh]">
+          {/*  */}
+          <ChatBody
+            chatBoxRef={chatBoxRef}
+            setShowComment={setShowComment}
+            showComment={showComment}
+            data={chatMessages}
           />
-          <div className="relative hidden lg:flex text-white element rounded-[96px]">
-            <div
-              className="px-[17px] h-[32px] rounded-[96px] flex gap-[9px] text-white text-[10px] lg:text-[11px] font500 items-center bg-[#BACFF70A] cursor-pointer relative w-fit"
-              onClick={() => setPayFlow("purchasePartyCoins")}
-            >
-              <div>Add Coins</div>
+        </div>
+        <div className=" px-[4px] lg:px-0  mb-3 md:mb-0 border-t-[#343F4B] border-t-[1px] lg:border-0 pt-[10px]">
+          <div className="relative w-full lg:hidden">
+            {payFlow && <GiftCoin />}
+          </div>
+          {!showComment && (
+            <div className="text-[11px] text-[#FFFFFF]  font500 text-end py-[7px]  px-[16px]">
+              <div
+                className="cursor-pointer inline"
+                onClick={() => {
+                  handleChatToTheBottom();
+                  setShowComment(true);
+                }}
+              >
+                Show comments
+              </div>
+            </div>
+          )}
+          <TextInputComp
+            handleOnChange={handleOnChange}
+            messageRef={messageRef}
+            options={options}
+            setPayFlow={setPayFlow}
+            textMessages={textMessages}
+            userCoinsBalance={userCoinsBalance}
+            handleSendChat={handleSendChat}
+          />
+          <div className="hidden lg:flex justify-between items-center relative ">
+            {/* <div className="relative w-full"></div> */}
+            {payFlow && <GiftCoin />}
+            <SendCoinsComp
+              setPayFlow={setPayFlow}
+              userCoinsBalance={userCoinsBalance}
+            />
+            <div className="relative hidden lg:flex text-white element rounded-[96px]">
+              <div
+                className="px-[17px] h-[32px] rounded-[96px] flex gap-[9px] text-white text-[10px] lg:text-[11px] font500 items-center bg-[#BACFF70A] cursor-pointer relative w-fit"
+                onClick={() => setPayFlow("purchasePartyCoins")}
+              >
+                <div>Add Coins</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-     </div>
     </div>
   );
 }

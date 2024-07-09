@@ -87,6 +87,7 @@ export default function LiveStreamVideo({
   const MuteState = isMutedRef?.current;
 
   const togglePlayPause = () => {
+    if( playerRef.current){
     if (playerRef.current?.paused()) {
       playerRef.current.play();
       isPlayingRef.current = true;
@@ -95,6 +96,7 @@ export default function LiveStreamVideo({
       isPlayingRef.current = false;
     }
     forceUpdate();
+  }
   };
 
   const handleRewind = () => {
