@@ -1,43 +1,43 @@
-import React from 'react';
-import videojs from 'video.js';
-import 'video.js/dist/video-js.css';
+import React, { useEffect, useRef } from "react";
+import videojs from "video.js";
+import "video.js/dist/video-js.css";
 
-export const VideoJS = (props) => {
-  const videoRef = React.useRef(null);
-  const playerRef = React.useRef(null);
-  const {options, onReady} = props;
+const VideoJS = ({ options, onReady }) => {
+  const videoRef = useRef(null);
+  const playerRef = useRef(null);
 
-  React.useEffect(() => {
-    if (!playerRef.current) {
-      const videoElement = document.createElement("video-js");
+  useEffect(() => {
+    if (videoRef.current && !playerRef.current) {
+      const videoElement = document.createElement("video");
 
-      videoElement.classList.add('vjs-big-play-centered');
+      videoElement.className = "video-js vjs-big-play-centered";
       videoRef.current.appendChild(videoElement);
 
-      const player = playerRef.current = videojs(videoElement, options, () => {
-        videojs.log('player is ready');
+      const player = (playerRef.current = videojs(videoElement, options, () => {
         onReady && onReady(player);
-      });
+      }));
+
+      return () => {
+        if (playerRef.current) {
+          playerRef.current.dispose();
+          playerRef.current = null;
+        }
+      };
     } else {
       const player = playerRef.current;
-      player.autoplay(options.autoplay);
-      player.src(options.sources);
-    }
-  }, [options, videoRef]);
 
-  React.useEffect(() => {
-    const player = playerRef.current;
+      if (player) {
+        player.autoplay(options.autoplay || false);
+        player.src(options.sources || []);
 
-    return () => {
-      if (player && !player.isDisposed()) {
-        player.dispose();
-        playerRef.current = null;
+        // Handle additional updates to player options if needed
+        // Example: player.loop(options.loop);
       }
-    };
-  }, [playerRef]);
+    }
+  }, [options, onReady]);
 
   return (
-    <div data-vjs-player className=''>
+    <div data-vjs-player>
       <div ref={videoRef} />
     </div>
   );

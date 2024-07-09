@@ -1,5 +1,4 @@
-// import LiveStream from '@/components/modules/LiveStream/LiveStream'
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import dynamic from "next/dynamic";
 import WithAuth from "@/components/Layout/WithAuth";
 import { useSelector } from "react-redux";
@@ -20,38 +19,36 @@ const LiveStream = dynamic(
 );
 
 export default function Index() {
-  const  router = useRouter();
-  // const {showId} =router?.query;
-  const showId =isArray(router.query?.slug)&& router.query?.slug[1];
+  const router = useRouter();
+  const showId = isArray(router.query?.slug) && router.query?.slug[1];
   const userInfo = useSelector(selectCurrentUserData) || {};
-  const { data, isLoading,refetch ,isSuccess} = useGetEventDetailViaIdQuery(showId, {
+  const { data, isLoading, refetch, isSuccess } = useGetEventDetailViaIdQuery(showId, {
     skip: !showId,
   });
-  const { data:userProfileData, isLoading:userProfileLoader } = useGetUserProfileQuery(undefined,{
-    skip:!userInfo?._id,
+  const { data: userProfileData, isLoading: userProfileLoader } = useGetUserProfileQuery(undefined, {
+    skip: !userInfo?._id,
   });
-  const NestedLiveStreamData = useSelector(selectLiveStreamEvent)||data;
-  const liveStream ={...NestedLiveStreamData,...NestedLiveStreamData?.event}
-  let [isOpen, setIsOpen] = useState();
-  const handleCloseModal = ()=>{
-    setIsOpen(null)
-    
-  }
+  const NestedLiveStreamData = useSelector(selectLiveStreamEvent) || data;
+  const liveStream = { ...NestedLiveStreamData, ...NestedLiveStreamData?.event };
+  const modalRef = useRef(null);
 
-  console.log(router.query,'NestedLiveStreamData')
+  const handleCloseModal = () => {
+    modalRef.current = null;
+    forceUpdate();
+  };
 
-  const handleOpenModal = (modalName)=>{
-    setIsOpen(modalName)
-  }
+  const handleOpenModal = (modalName) => {
+    modalRef.current = modalName;
+    forceUpdate();
+  };
+
   const ModalList = [
-   
     {
       name: "giftTicket",
       component: (
         <GiftTicket Data={liveStream} closeModal={handleCloseModal} />
       ),
     },
-  
     {
       name: "shareEvent",
       component: (
@@ -60,29 +57,27 @@ export default function Index() {
     },
   ];
 
-  // console.log(isFutureDate(liveStream?.event_date),liveStream?.event_date,'isFutureDate(liveStream?.event_date)')
+  const forceUpdate = React.useReducer(() => ({}), {})[1]; // Force update for re-render
 
   return (
     <WithAuth showHeader={false}>
-       {isOpen && (
+      {modalRef.current && (
         <MyModal
           bodyComponent={
-            ModalList?.find((item, index) => item?.name == isOpen)?.component
+            ModalList?.find((item, index) => item?.name === modalRef.current)?.component
           }
           containerStyle={`bg-[#1B1C20] border-[1px] border-[#343F4B] rounded-[16px]  !w-[486px]`}
-          isOpen={isOpen ? true : false}
+          isOpen={!!modalRef.current}
           closeModal={handleCloseModal}
-          // openModal={openModal}
         />
       )}
-      {/* ||isFutureDate(liveStream?.event_date) */}
-      <div className="flex-1 flex flex-col  bg-[#060809] overflow-hidden  h-[100dvh] lg:h-[100vh]">
+      <div className="flex-1 flex flex-col bg-[#060809] overflow-hidden h-[100dvh] lg:h-[100vh]">
         <LiveStream
           isLive={liveStream?.isLiveStreamed}
           liveStreamDetail={liveStream}
           handleOpenModal={handleOpenModal}
           handleCloseModal={handleCloseModal}
-          userProfileData={userProfileData||userInfo}
+          userProfileData={userProfileData || userInfo}
           isLoading={isLoading}
         />
       </div>

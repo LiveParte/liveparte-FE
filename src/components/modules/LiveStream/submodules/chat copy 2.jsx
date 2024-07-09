@@ -175,7 +175,7 @@ function Chat({ onLeave, liveStreamDetail, userProfileData }) {
   ];
 
   return (
-    <div className="flex flex-col  lg:px-[0px]   h-full lg:h-full  w-full lg:w-[356px] relative  rounded-sm flex-1">
+    <div className="flex flex-col  lg:px-[0px]   h-full lg:h-full  w-full lg:w-[356px] relative  rounded-sm">
       <div>
         {/* <div className="lg:hidden flex flex-col items-end gap-[16px] pb-[16px] absolute right-[16px] bottom-16">
           <Image
@@ -213,8 +213,7 @@ function Chat({ onLeave, liveStreamDetail, userProfileData }) {
         />
       </div>
 
-     <div className="flex flex-col justify-end  flex-1">
-     <div className="h-[40dvh] lg:h-[58vh]">
+      <div className="h-[60vh]">
       {/*  */}
       <ChatBody
       chatBoxRef={chatBoxRef}
@@ -266,7 +265,6 @@ function Chat({ onLeave, liveStreamDetail, userProfileData }) {
           </div>
         </div>
       </div>
-     </div>
     </div>
   );
 }

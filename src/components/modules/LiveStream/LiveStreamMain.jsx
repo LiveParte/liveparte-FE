@@ -1,17 +1,19 @@
-import React, { useRef, useState } from "react";
+import React, { memo, useRef, useState } from "react";
 import LiveStreamVideo from "./submodules/livestreamVideo";
 import Chat from "./submodules/chat";
 import { useRouter } from "next/router";
 import { handleCloseModalAll, myShowLink } from "@/utils/reusableComponent";
-import { useDispatch } from "react-redux";
-import { logout } from "@/store/User";
+import { useDispatch, useSelector } from "react-redux";
+import { logout, selectOrientationLocked } from "@/store/User";
 import LiveStreamHeaderIndexComp from "@/components/Common/Header/LiveStreamHeader";
 import CustomDropDown from "@/components/Common/CustomDropDown";
 import Link from "next/link";
 import { IsDesktopMobileChat, IsMobileChat, IsMobileLiveStream } from "./style";
+import ScreenOrientationLayout from "@/components/Layout/ScreenRotateLayout/screenLayout";
+// import { isMobile } from 'react-device-detect';
 // import LiveStreamHeader from './submodules/LiveStreamHeader';
 
-export default function LiveStream({
+ function LiveStream({
   liveStreamDetail,
   isLive = false,
   userProfileData,
@@ -21,6 +23,8 @@ export default function LiveStream({
   const [fullScreenModal, setFullScreenModal] = useState(false);
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const orientationLocked = useSelector(selectOrientationLocked);
+
   const [isOpenII, setIsOpenII] = useState(false);
   const dispatch = useDispatch();
   const [activeConnection, setActiveConnection] = useState(true);
@@ -41,12 +45,7 @@ export default function LiveStream({
   }
   function ShareAndGiftDropdown() {
     return (
-      <CustomDropDown
-        className={`dropdownIV`}
-        dropdownRef={ShareAndGiftDropdownRef}
-        setIsOpen={setIsOpenII}
-      >
-        <div className=" w-[60vw] bg-[#1B1C20] border-[1px] text-left border-[#343F4B] font500 text-[13px] md:text-[14px] text-white  rounded-[16px] md:w-[218px]    px-[24px] py-[15px]">
+      <div className=" w-[218px] lg bg-[#1B1C20] border-[1px] text-left border-[#343F4B] font500 text-[13px] md:text-[14px] text-white  rounded-[16px] md:w-[218px]    px-[24px] py-[15px]">
           <div
             onClick={() => handleOpenModal(`giftTicket`)}
             className="py-[6px] mb-[13px] cursor-pointer no-underline text-white "
@@ -61,7 +60,6 @@ export default function LiveStream({
           </div>
           {/* <div className="py-[12px]">Add to Calendar</div> */}
         </div>
-      </CustomDropDown>
     );
   }
 
@@ -83,7 +81,47 @@ export default function LiveStream({
       </CustomDropDown>
     );
   }
- 
+
+  // console.log(isMobile,'isMobile')
+
+  function Test({ lockOrientation, unlockOrientation, orientation }) {
+    // alert(orientation,'orientation')
+    return (
+      <div className="relative  flex-1 flex flex-col h-full w-full ">
+        <div className=" absolute z-30 top-0 left-0 right-0 lg:h-[40vh] md:h-[20vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>
+
+        <div
+          className={`${IsMobileLiveStream} ${!orientation && "h-[95vh] "} `}
+        >
+          <LiveStreamVideo
+            setActiveConnection={setActiveConnection}
+            activeConnection={activeConnection}
+            isLive={isLive}
+            liveStreamDetail={liveStreamDetail}
+            isLoading={isLoading}
+            userProfileData={userProfileData}
+            lockOrientation={lockOrientation}
+            unlockOrientation={unlockOrientation}
+            orientationLocked={orientation}
+          />
+        </div>
+
+        {orientation && (
+          <div className={` ${IsMobileChat} `}>
+            <Chat
+              liveStreamDetail={liveStreamDetail}
+              userProfileData={userProfileData}
+              onLeave={() => {
+                // setActiveConnection(false);
+                router.back();
+              }}
+            />
+          </div>
+        )}
+      </div>
+    );
+  }
+
   return (
     <main
       ref={dropdownRef}
@@ -108,33 +146,13 @@ export default function LiveStream({
               liveStreamDetail={liveStreamDetail}
             />
           </div>
-          <div className="relative  flex-1 flex flex-col">
-            <div className=" absolute z-30 top-0 left-0 right-0 lg:h-[40vh] md:h-[20vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>
-
-            <div className={IsMobileLiveStream}>
-              <LiveStreamVideo
-                setActiveConnection={setActiveConnection}
-                activeConnection={activeConnection}
-                isLive={isLive}
-                liveStreamDetail={liveStreamDetail}
-                isLoading={isLoading}
-                userProfileData={userProfileData}
-              />
-            </div>
-
-            <div className={`${IsMobileChat}`}>
-              <Chat
-                liveStreamDetail={liveStreamDetail}
-                userProfileData={userProfileData}
-                onLeave={() => {
-                  // setActiveConnection(false);
-                  router.push(myShowLink);
-                }}
-              />
-            </div>
-          </div>
+          <ScreenOrientationLayout>
+            <Test />
+          </ScreenOrientationLayout>
         </div>
       </div>
     </main>
   );
 }
+
+export default  memo(LiveStream) 

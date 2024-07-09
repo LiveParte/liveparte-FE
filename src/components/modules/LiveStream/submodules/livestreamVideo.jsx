@@ -1,12 +1,17 @@
-// components/LiveStreamVideo.js
-import React, { useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
-import Video from "./Video";
 import Chat from "./chat";
 import { IsDesktopMobileChat } from "../style";
 import ChatOnCameraAndVideoControl from "./videosubmodules/ChatOnCameraAndVideoControl";
 import { FullScreenIcon, HostLeftIcon } from "../../../../../public/svg";
 import { checkShowDurationAfter } from "@/utils/reusableComponent";
+import { useDispatch } from "react-redux";
+import { lockOrientation, unlockOrientation } from "@/store/User";
+import MobilePlayer from "./MobilePlayer";
+import FullScreenChatAction from "./FullScreenChatAction";
+import Video from "./Video";
+import Header from "./LandScapeComp/header";
+import { isMobile } from 'react-device-detect';
 
 const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
   ssr: false,
@@ -19,196 +24,201 @@ export default function LiveStreamVideo({
   liveStreamDetail,
   isLoading,
   userProfileData = {},
+  lockOrientation,
+  unlockOrientation,
+  orientationLocked,
 }) {
-  const divRef = useRef(null);
-  const videoRef = useRef(null);
-  const [isFullScreen, setIsFullScreen] = useState(false);
-
+  const playerRef = useRef(null);
+  const durationRef = useRef(null);
   const currentTimeRef = useRef(0);
-  const durationRef = useRef(0);
-  const isDraggingRef = useRef(false);
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [isMuted, setIsMuted] = useState(false);
-  const [, forceUpdate] = useState(0); // Used to force re-render for display updates
+  const isPlayingRef = useRef(false);
+  const isMutedRef = useRef(false);
+  const [, forceUpdate] = React.useReducer((x) => x + 1, 0);
+  const checkIfOrientedAndMobile = isMobile && !orientationLocked;
 
-  const updateTime = () => {
-    if (!isDraggingRef.current) {
-      currentTimeRef.current = videoRef.current.currentTime;
-      // forceUpdate(n => n + 1); // Force update to trigger re-render for display update
-    }
-  };
+  const handlePlayerReady = useCallback((player) => {
+    playerRef.current = player;
 
-  const formatTime = (timeInSeconds) => {
-    const minutes = Math.floor(timeInSeconds / 60);
-    const seconds = Math.floor(timeInSeconds % 60);
-    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-  };
+    // Set the duration once the player is ready
+    player.on("loadedmetadata", () => {
+      durationRef.current = player.duration();
+      forceUpdate();
 
-  const updateDuration = () => {
-    durationRef.current = videoRef.current.duration;
-    // forceUpdate(n => n + 1); // Force update to trigger re-render for display update
-  };
-
-  const calculateProgressPercentage = () => {
-    return (currentTimeRef.current / durationRef.current) * 100;
-  };
-
-  const handleMouseDown = (e) => {
-    isDraggingRef.current = true;
-    // updateCurrentTime(e);
-  };
-
-  const handleMouseMove = (e) => {
-    if (isDraggingRef.current) {
-      // updateCurrentTime(e);
-    }
-  };
-
-  const handleMouseUp = () => {
-    isDraggingRef.current = false;
-  };
-
-  const handleFullScreenToggle = () => {
-    if (!isFullScreen) {
-      if (divRef.current.requestFullscreen) {
-        divRef.current.requestFullscreen().then(() => setIsFullScreen(true));
-      } else if (divRef.current.mozRequestFullScreen) {
-        divRef.current.mozRequestFullScreen().then(() => setIsFullScreen(true));
-      } else if (divRef.current.webkitRequestFullscreen) {
-        divRef.current
-          .webkitRequestFullscreen()
-          .then(() => setIsFullScreen(true));
-      } else if (divRef.current.msRequestFullscreen) {
-        divRef.current.msRequestFullscreen().then(() => setIsFullScreen(true));
+      // Set the video to start from the saved time
+      const savedTime = localStorage.getItem('video-current-time');
+      if (savedTime) {
+        player.currentTime(parseFloat(savedTime));
       }
-    } else {
-      if (document.exitFullscreen) {
-        document.exitFullscreen().then(() => setIsFullScreen(false));
-      } else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen().then(() => setIsFullScreen(false));
-      } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen().then(() => setIsFullScreen(false));
-      } else if (document.msExitFullscreen) {
-        document.msExitFullscreen().then(() => setIsFullScreen(false));
+    });
+
+    // Update current time as the video plays
+    player.on("timeupdate", () => {
+      if (playerRef.current) {
+        currentTimeRef.current = player.currentTime();
+        forceUpdate();
       }
-    }
-  };
+    });
 
-  const updateCurrentTime = (e) => {
-    const progressBar = e.currentTarget;
-    const clickPositionX = e.clientX - progressBar.getBoundingClientRect().left;
-    const progressBarWidth = progressBar.offsetWidth;
-    const percentageClicked = (clickPositionX / progressBarWidth) * 100;
-    const timeToSeek = (percentageClicked / 100) * durationRef.current;
+    // Save the current time periodically
+    const saveCurrentTime = () => {
+      if (playerRef.current) {
+        localStorage.setItem('video-current-time', playerRef.current.currentTime().toString());
+      }
+    };
+    player.on('timeupdate', saveCurrentTime);
 
-    if (videoRef.current) {
-      videoRef.current.currentTime = timeToSeek;
-      currentTimeRef.current = timeToSeek;
-      // forceUpdate(n => n + 1);
-      // Force update to trigger re-render for display update
-    }
-  };
+    // You can handle other player events here, for example:
+    player.on("waiting", () => {
+      videojs.log("player is waiting");
+    });
+
+    player.on("dispose", () => {
+      videojs.log("player will dispose");
+    });
+
+    // Set initial play/pause state
+    isPlayingRef.current = !player.paused();
+    isMutedRef.current = player.muted();
+
+    forceUpdate();
+  }, []);
+
+  const PlayState = isPlayingRef?.current;
+  const MuteState = isMutedRef?.current;
 
   const togglePlayPause = () => {
-    if (videoRef.current.paused) {
-      videoRef.current.play();
-      setIsPlaying(true);
+    if (playerRef.current?.paused()) {
+      playerRef.current.play();
+      isPlayingRef.current = true;
     } else {
-      videoRef.current.pause();
-      setIsPlaying(false);
+      playerRef.current.pause();
+      isPlayingRef.current = false;
+    }
+    forceUpdate();
+  };
+
+  const handleRewind = () => {
+    const newTime = Math.max(currentTimeRef.current - 10, 0);
+    if (playerRef.current) {
+      playerRef.current.currentTime(newTime);
     }
   };
 
-  const toggleMute = () => {
-    videoRef.current.muted = !videoRef.current.muted;
-    setIsMuted(videoRef.current.muted);
+  useEffect(() => {
+    // Save the current time when the component unmounts
+    return () => {
+      if (playerRef.current) {
+        playerRef.current&& localStorage.setItem('video-current-time', playerRef.current?.currentTime()?.toString());
+      }
+    };
+  }, []);
+
+  const toggleMuteUnmute = () => {
+    if (playerRef.current?.muted()) {
+      playerRef.current.muted(false);
+      isMutedRef.current = false;
+    } else {
+      playerRef.current.muted(true);
+      isMutedRef.current = true;
+    }
+    forceUpdate();
   };
 
-  const fastForward = () => {
-    videoRef.current.currentTime = Math.min(
-      videoRef.current.currentTime + 10,
-      durationRef.current
+  const handleForward = () => {
+    const newTime = Math.min(
+      currentTimeRef.current + 10,
+      durationRef.current || 0
     );
-    currentTimeRef.current = videoRef.current.currentTime;
-    // forceUpdate(n => n + 1);
+    if (playerRef.current) {
+      playerRef.current.currentTime(newTime);
+    }
   };
 
-  const rewind = () => {
-    videoRef.current.currentTime = Math.max(
-      videoRef.current.currentTime - 10,
-      0
-    );
-    currentTimeRef.current = videoRef.current.currentTime;
-    // forceUpdate(n => n + 1);
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60)
+      .toString()
+      .padStart(2, "0");
+    return `${minutes}:${seconds}`;
   };
 
-  // console.log(liveStreamDetail,checkShowDurationAfter(liveStreamDetail?.event_date,liveStreamDetail?.event_length) ,'liveStreamDetail')
+  const progress = durationRef.current
+    ? (currentTimeRef.current / durationRef.current) * 100
+    : 0;
+  const currentTime = formatTime(currentTimeRef.current);
+  const duration=durationRef.current !== null && formatTime(durationRef.current);
 
-  // console.log(isLive,'')
   return (
     !isLoading && (
       <div
-        ref={divRef}
-        className={`w-full h-full flex-1 bg-cover lg:rounded-[16px] overflow-hidden  ${
-          isFullScreen ? "rotate-180" : ""
-        } `}
+        className={`w-full h-full flex-1 bg-cover lg:rounded-[16px] overflow-hidden`}
       >
-        <div className=" ">
+        <div>
           <ChatOnCameraAndVideoControl
             liveStreamDetail={liveStreamDetail}
             userProfileData={userProfileData}
-            calculateProgressPercentage={calculateProgressPercentage}
-            currentTimeRef={currentTimeRef}
-            durationRef={durationRef}
-            fastForward={fastForward}
-            formatTime={formatTime}
-            handleMouseDown={handleMouseDown}
-            handleMouseMove={handleMouseMove}
-            handleMouseUp={handleMouseUp}
-            isMuted={isMuted}
-            isPlaying={isPlaying}
-            rewind={rewind}
-            toggleMute={toggleMute}
+            calculateProgressPercentage={progress}
+            isMuted={MuteState}
+            toggleMute={toggleMuteUnmute}
             togglePlayPause={togglePlayPause}
             isLive={!isLive}
+            isPlaying={PlayState}
+            rewind={handleRewind}
+            fastForward={handleForward}
+            currentTime={currentTime}
+            duration={duration}
           />
         </div>
 
         {!isLive ? (
           <Video
-            videoRef={videoRef}
-            updateTime={updateTime}
-            updateDuration={updateDuration}
-            liveStreamDetail={liveStreamDetail}
-            divRef={divRef}
-            calculateProgressPercentage={calculateProgressPercentage}
-            currentTimeRef={currentTimeRef}
-            durationRef={durationRef}
-            fastForward={fastForward}
-            formatTime={formatTime}
-            handleMouseDown={handleMouseDown}
-            handleMouseMove={handleMouseMove}
-            handleMouseUp={handleMouseUp}
-            isMuted={isMuted}
-            isPlaying={isPlaying}
-            rewind={rewind}
-            toggleMute={toggleMute}
+            handlePlayerReady={handlePlayerReady}
+            currentTimeRef={currentTime}
+            isPlaying={PlayState}
+            rewind={handleRewind}
             togglePlayPause={togglePlayPause}
+           
           />
         ) : (
-          <div id="" className="h-full w-full relative agroa-video">
-          
-            <JoinAudience liveStreamDetail={liveStreamDetail} eventId={liveStreamDetail?._id} />
+          <div className="h-full w-full relative agroa-video">
+            <JoinAudience
+              liveStreamDetail={liveStreamDetail}
+              eventId={liveStreamDetail?._id}
+            />
           </div>
         )}
-        <div
-          className="absolute   z-50 flex lg:hidden gap-2 text-[12px] left-5 bottom-5 items-center text-white"
-          onClick={() => handleFullScreenToggle()}
-        >
-          <FullScreenIcon />
-          {isFullScreen ? "Exit Fullscreen" : "Fullscreen"}
+
+        {checkIfOrientedAndMobile && <Header />}
+        <div>
+          <MobilePlayer
+            orientationLocked={!orientationLocked}
+            toggleMute={toggleMuteUnmute}
+            togglePlayPause={togglePlayPause}
+            isPlaying={PlayState}
+            rewind={handleRewind}
+            calculateProgressPercentage={progress}
+            fastForward={handleForward}
+            currentTime={currentTime}
+          />
+
+          {orientationLocked && (
+            <button
+              className="absolute z-10 flex lg:hidden gap-2 text-[12px] left-5 bottom-5 items-center text-white"
+              onClick={() =>
+                orientationLocked ? lockOrientation() : unlockOrientation()
+              }
+            >
+              <FullScreenIcon />
+              {!orientationLocked ? "Exit Fullscreen" : "Fullscreen"}
+            </button>
+          )}
+          {checkIfOrientedAndMobile && (
+            <FullScreenChatAction
+              orientationLocked={!orientationLocked}
+              unlockOrientation={unlockOrientation}
+            />
+          )}
         </div>
-        {/* <button onClick={handleFullScreen} className="absolute left-0 bottom-0 border z-50">FullScreen</button> */}
       </div>
     )
   );

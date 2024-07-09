@@ -60,6 +60,8 @@ export default function MyShows() {
     }
    
   }, [show])
+
+  // alert(show)
   
   return (
     <WithAuth>
