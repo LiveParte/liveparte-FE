@@ -27,6 +27,7 @@ export default function LiveStreamVideo({
   lockOrientation,
   unlockOrientation,
   orientationLocked,
+  ShareAndGiftDropdown
 }) {
   const playerRef = useRef(null);
   const durationRef = useRef(null);
@@ -77,13 +78,13 @@ export default function LiveStreamVideo({
     });
 
     // Set initial play/pause state
-    isPlayingRef.current = !player.paused();
+    isPlayingRef.current = player.paused();
     isMutedRef.current = player.muted();
 
     forceUpdate();
   }, []);
 
-  const PlayState = isPlayingRef?.current;
+  const PlayState = !isPlayingRef?.current;
   const MuteState = isMutedRef?.current;
 
   const togglePlayPause = () => {
@@ -109,8 +110,11 @@ export default function LiveStreamVideo({
   useEffect(() => {
     // Save the current time when the component unmounts
     return () => {
-      if (playerRef.current) {
-        playerRef.current&& localStorage.setItem('video-current-time', playerRef.current?.currentTime()?.toString());
+      if (playerRef.current && typeof playerRef.current.currentTime === 'function') {
+        const currentTime =  playerRef.current.currentTime&&playerRef.current?.currentTime();
+        if (currentTime !== undefined) {
+          localStorage.setItem('video-current-time', currentTime.toString());
+        }
       }
     };
   }, []);
@@ -155,6 +159,7 @@ export default function LiveStreamVideo({
       <div
         className={`w-full h-full flex-1 bg-cover lg:rounded-[16px] overflow-hidden`}
       >
+        <div className="absolute z-30 bottom-0 left-0 right-0 lg:h-[40vh] md:h-[20vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>
         <div>
           <ChatOnCameraAndVideoControl
             liveStreamDetail={liveStreamDetail}
@@ -190,7 +195,7 @@ export default function LiveStreamVideo({
           </div>
         )}
 
-        {checkIfOrientedAndMobile && <Header />}
+        {checkIfOrientedAndMobile && <Header ShareAndGiftDropdown={ShareAndGiftDropdown} />}
         <div>
           <MobilePlayer
             orientationLocked={!orientationLocked}
@@ -203,8 +208,10 @@ export default function LiveStreamVideo({
             currentTime={currentTime}
           />
 
+
           {orientationLocked && (
-            <button
+            <div className="">
+   <button
               className="absolute z-10 flex lg:hidden gap-2 text-[12px] left-5 bottom-5 items-center text-white"
               onClick={() =>
                 orientationLocked ? lockOrientation() : unlockOrientation()
@@ -213,6 +220,9 @@ export default function LiveStreamVideo({
               <FullScreenIcon />
               {!orientationLocked ? "Exit Fullscreen" : "Fullscreen"}
             </button>
+            </div>
+            //  absolute z-30 top-0 left-0 right-0 lg:h-[40vh] md:h-[20vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black
+         
           )}
           {checkIfOrientedAndMobile && (
             <FullScreenChatAction

@@ -1,24 +1,30 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
-import Link from 'next/link'
+import Link from "next/link";
 import ButtonComp from "@/components/Ui/button";
-import  { HeaderOnSelect, LogoImage, MainContainer } from "@/utils/styleReuse";
-import { eventLink,  myShowLink, onDemandLink, singleEventLink } from "@/utils/reusableComponent";
+import { HeaderOnSelect, LogoImage, MainContainer } from "@/utils/styleReuse";
+import {
+  eventLink,
+  myShowLink,
+  onDemandLink,
+  singleEventLink,
+} from "@/utils/reusableComponent";
 import LogoImage2 from "@/utils/LogoImage";
 export default function Header({ className, openModal }) {
   const router = useRouter();
-  const isHome =router?.pathname==="/";
-  const isEvents =router?.pathname===eventLink;
+  const isHome = router?.pathname === "/";
+  const isEvents = router?.pathname === eventLink;
   // const MainContainer = `px-[20px] md:px-[40px] lg:px-[120px] relative`;
   const [dropDown, setDropDown] = useState(false);
-  const isEvent =router?.pathname===eventLink || router?.pathname==singleEventLink
-  const isOnDemand =router?.pathname===onDemandLink
-  const isFocused =`hover:!bg-[#FFFFFF26] hover:rounded-[8px]  hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`
-  const isSelected =HeaderOnSelect
-  const handleCheckIfITHome = (link) =>{
-    router?.pathname === link &&setDropDown(false);
+  const isEvent =
+    router?.pathname === eventLink || router?.pathname == singleEventLink;
+  const isOnDemand = router?.pathname === onDemandLink;
+  const isFocused = `hover:!bg-[#FFFFFF26] hover:rounded-[8px]  hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`;
+  const isSelected = HeaderOnSelect;
+  const handleCheckIfITHome = (link) => {
+    router?.pathname === link && setDropDown(false);
     // isHome&&setDropDown(false)
-  }
+  };
 
   const MenuDropdown = () => {
     return (
@@ -26,7 +32,7 @@ export default function Header({ className, openModal }) {
         <div className="flex justify-between items-center mb-[28px] ">
           <div className="text-white">
             {" "}
-            <LogoImage2 router={router}/>
+            <LogoImage router={router} />
             {/* <MyPage router={router}/> */}
             {/* Logo */}
           </div>
@@ -39,10 +45,20 @@ export default function Header({ className, openModal }) {
           </div>
         </div>
         <div className="text-[15px] text-white font500 flex-1 flex flex-col">
-          <Link onClick={()=>handleCheckIfITHome(eventLink)} href={eventLink}
-          
-          className="py-[25px]  cursor-pointer no-underline text-white">Browse Events</Link>
-          <Link onClick={()=>handleCheckIfITHome(onDemandLink)}href={onDemandLink} className="py-[12px]  cursor-pointer no-underline text-white">On Demand</Link>
+          <Link
+            onClick={() => handleCheckIfITHome(eventLink)}
+            href={eventLink}
+            className="py-[25px]  cursor-pointer no-underline text-white"
+          >
+            Browse Events
+          </Link>
+          <Link
+            onClick={() => handleCheckIfITHome(onDemandLink)}
+            href={onDemandLink}
+            className="py-[12px]  cursor-pointer no-underline text-white"
+          >
+            On Demand
+          </Link>
         </div>
 
         {/* <ButtonComp
@@ -50,61 +66,67 @@ export default function Header({ className, openModal }) {
           btnText={`Log In/Sign Up`}
           className={`text-[13px] font500  `}
         /> */}
-         <ButtonComp
-            onClick={() => openModal("SignUp")}
-            btnText={`Sign Up`}
-            className={`text-[13px] font500 mb-[16px]  w-full`}
-          />
-          <ButtonComp
-            onClick={() => openModal(`Login`)}
-            btnText={`Login`}
-            className={`text-[13px] font500 mb-[0px]  w-full !bg-[#27292e] text-white`}
-          />
+        <ButtonComp
+          onClick={() => openModal("SignUp")}
+          btnText={`Sign Up`}
+          className={`text-[13px] font500 mb-[16px]  w-full`}
+        />
+        <ButtonComp
+          onClick={() => openModal(`Login`)}
+          btnText={`Login`}
+          className={`text-[13px] font500 mb-[0px]  w-full !bg-[#27292e] text-white`}
+        />
       </div>
     );
   };
   return (
     <>
       {dropDown && <MenuDropdown />}
-     
 
       <div
         className={`pt-[14px]  lg:pt-[16px] pb-[16px]  font400 ${className} ${MainContainer} relative z-50`}
       >
         <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover  bg-[url('/webp/header.png')] z-30 opacity-25 pointer-events-none"></div>
         {/* <LogoWhite/> */}
-        <div className="flex justify-between   cursor-pointer relative  z-90" style={{zIndex:90}}>
-        <LogoImage router={router} />
-        {/* <LogoImage router={router}/> */}
+        <div
+          className="flex justify-between   cursor-pointer relative  z-90 items-center"
+          style={{ zIndex: 90 }}
+        >
+          <LogoImage router={router} />
+          {/* <LogoImage router={router}/> */}
 
           <div className="flex items-center gap-[24px]">
             <ButtonComp
               btnText="Browse Events"
-              className={` font-medium  hidden lg:block  px-[16px] md:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${isEvent &&isSelected}  text-[13px]   !h-[32px]`}
+              className={` font-medium  hidden lg:block  px-[16px] md:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${
+                isEvent && isSelected
+              }  text-[13px]   !h-[32px]`}
               onClick={() => {
-                router.push(eventLink)
+                router.push(eventLink);
               }}
             />
             <ButtonComp
               btnText="On Demand"
-              className={` font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-transparent    font500 text-white ${isFocused}   text-[13px] ${isOnDemand &&isSelected}  !h-[32px]`}
+              className={` font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-transparent    font500 text-white ${isFocused}   text-[13px] ${
+                isOnDemand && isSelected
+              }  !h-[32px]`}
               onClick={() => {
-                router.push(onDemandLink)
+                router.push(onDemandLink);
               }}
             />
           </div>
           <div>
             <div className="hidden lg:flex  gap-x-[40px] items-center">
-            <ButtonComp
-              onClick={()=>openModal('Login')}
-              btnText="Log In"
-              className="text-[13px] font-medium font500 bg-transparent px-0 text-white font500"
-            />
-            <ButtonComp
-                onClick={()=>openModal('SignUp')}
-              btnText="Sign Up"
-              className="text-[13px] font-medium font500 px-[40px] py-[12px]"
-            />
+              <ButtonComp
+                onClick={() => openModal("Login")}
+                btnText="Log In"
+                className="text-[13px] font-medium font500 bg-transparent px-0 text-white font500"
+              />
+              <ButtonComp
+                onClick={() => openModal("SignUp")}
+                btnText="Sign Up"
+                className="text-[13px] font-medium font500 px-[40px] py-[12px]"
+              />
             </div>
             <ButtonComp
               onClick={() => setDropDown(true)}

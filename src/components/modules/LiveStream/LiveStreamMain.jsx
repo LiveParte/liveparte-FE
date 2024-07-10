@@ -10,7 +10,7 @@ import CustomDropDown from "@/components/Common/CustomDropDown";
 import Link from "next/link";
 import { IsDesktopMobileChat, IsMobileChat, IsMobileLiveStream } from "./style";
 import ScreenOrientationLayout from "@/components/Layout/ScreenRotateLayout/screenLayout";
-// import { isMobile } from 'react-device-detect';
+import { isMobile } from 'react-device-detect';
 // import LiveStreamHeader from './submodules/LiveStreamHeader';
 
  function LiveStream({
@@ -103,6 +103,7 @@ import ScreenOrientationLayout from "@/components/Layout/ScreenRotateLayout/scre
             lockOrientation={lockOrientation}
             unlockOrientation={unlockOrientation}
             orientationLocked={orientation}
+            ShareAndGiftDropdown={ShareAndGiftDropdown}
           />
         </div>
 
