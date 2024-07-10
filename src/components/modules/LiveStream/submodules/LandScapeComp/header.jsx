@@ -8,9 +8,9 @@ import {
 import DropDown from "@/components/Ui/DropDown";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 
-export default function Header() {
+export default function Header({ ShareAndGiftDropdown, unlockOrientation }) {
   return (
-    <div className="absolute top-2 left-0 right-0 z-30  py-[21px] px-[56px] md:hidden">
+    <div className="absolute top-0 left-0 right-0 z-30  py-[21px] px-[56px] md:hidden  bg-gradient-to-b from-black h-[30vh]">
       <div className="flex justify-between items-center ">
         <div className="absolute  left-0 right-0 px-[16px] lg:px-[18px] top-0 py-[17px] flex justify-between text-white z-30 bg-gradient-to-b h-[50px] items-start from-black lg:rounded-[16px]"></div>
         <div className="flex items-center gap-[20px]">
@@ -32,24 +32,29 @@ export default function Header() {
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="flex gap-[8px] items-center leading-none">
+          <div
+            className="flex gap-[8px] items-center leading-none z-30"
+            onClick={unlockOrientation}
+          >
             <ExitFullScreenIcon />
             <div className="text-[10px] font500 text-white leading-none">
               Normal view
             </div>
           </div>
-          <DropdownButton
-            id="dropdown-basic-button"
-            title={
-              <div className="#333D474D">
-                <ThreeDotSmall />
-              </div>
-            }
-          >
-            <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-            <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-            <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-          </DropdownButton>
+          <div className="z-50">
+            <DropdownButton
+              id="dropdown-basic-button"
+              title={
+                <div className="#333D474D">
+                  <ThreeDotSmall />
+                </div>
+              }
+            >
+              <Dropdown.Item href="#/action-1">
+                {ShareAndGiftDropdown()}
+              </Dropdown.Item>
+            </DropdownButton>
+          </div>
         </div>
       </div>
     </div>

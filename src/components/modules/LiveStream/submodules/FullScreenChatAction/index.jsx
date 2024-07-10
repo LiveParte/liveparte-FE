@@ -78,7 +78,9 @@ export default function FullScreenChatAction({
   ]);
   const [hideChat, setHideChat] = useState(false);
   return (
-    <div className="lg:hidden left-0 right-0 bottom-[10px] px-[56px] z-50 text-white absolute  ">
+    <div className="lg:hidden left-0 right-0 bottom-[0px] pb-[10px] px-[56px] z-50 text-white absolute    bg-gradient-to-t from-black  ">
+              {/* <div className="absolute z-30 bottom-0 left-0 right-0 lg:h-[40vh] md:h-[20vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div> */}
+
       <div className="  grid grid-cols-3 relative">
         <div className="flex w-full  flex-1 items-center gap-[30px] ">
           <SendCoinsComp

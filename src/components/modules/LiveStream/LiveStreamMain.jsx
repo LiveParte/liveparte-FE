@@ -10,10 +10,10 @@ import CustomDropDown from "@/components/Common/CustomDropDown";
 import Link from "next/link";
 import { IsDesktopMobileChat, IsMobileChat, IsMobileLiveStream } from "./style";
 import ScreenOrientationLayout from "@/components/Layout/ScreenRotateLayout/screenLayout";
-// import { isMobile } from 'react-device-detect';
+import { isMobile } from "react-device-detect";
 // import LiveStreamHeader from './submodules/LiveStreamHeader';
 
- function LiveStream({
+function LiveStream({
   liveStreamDetail,
   isLive = false,
   userProfileData,
@@ -46,20 +46,20 @@ import ScreenOrientationLayout from "@/components/Layout/ScreenRotateLayout/scre
   function ShareAndGiftDropdown() {
     return (
       <div className=" w-[218px] lg bg-[#1B1C20] border-[1px] text-left border-[#343F4B] font500 text-[13px] md:text-[14px] text-white  rounded-[16px] md:w-[218px]    px-[24px] py-[15px]">
-          <div
-            onClick={() => handleOpenModal(`giftTicket`)}
-            className="py-[6px] mb-[13px] cursor-pointer no-underline text-white "
-          >
-            Gift Ticket
-          </div>
-          <div
-            onClick={() => handleOpenModal(`shareEvent`)}
-            className="py-[6px] cursor-pointer"
-          >
-            Share Event
-          </div>
-          {/* <div className="py-[12px]">Add to Calendar</div> */}
+        <div
+          onClick={() => handleOpenModal(`giftTicket`)}
+          className="py-[6px] mb-[13px] cursor-pointer no-underline text-white "
+        >
+          Gift Ticket
         </div>
+        <div
+          onClick={() => handleOpenModal(`shareEvent`)}
+          className="py-[6px] cursor-pointer"
+        >
+          Share Event
+        </div>
+        {/* <div className="py-[12px]">Add to Calendar</div> */}
+      </div>
     );
   }
 
@@ -103,6 +103,7 @@ import ScreenOrientationLayout from "@/components/Layout/ScreenRotateLayout/scre
             lockOrientation={lockOrientation}
             unlockOrientation={unlockOrientation}
             orientationLocked={orientation}
+            ShareAndGiftDropdown={ShareAndGiftDropdown}
           />
         </div>
 
@@ -155,4 +156,4 @@ import ScreenOrientationLayout from "@/components/Layout/ScreenRotateLayout/scre
   );
 }
 
-export default  memo(LiveStream) 
+export default memo(LiveStream);
