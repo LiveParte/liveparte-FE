@@ -8,7 +8,7 @@ import {
 import DropDown from "@/components/Ui/DropDown";
 import { Dropdown, DropdownButton } from "react-bootstrap";
 
-export default function Header({ShareAndGiftDropdown}) {
+export default function Header({ ShareAndGiftDropdown, unlockOrientation }) {
   return (
     <div className="absolute top-0 left-0 right-0 z-30  py-[21px] px-[56px] md:hidden  bg-gradient-to-b from-black h-[30vh]">
       <div className="flex justify-between items-center ">
@@ -32,24 +32,28 @@ export default function Header({ShareAndGiftDropdown}) {
         </div>
 
         <div className="flex items-center gap-3">
-          <div className="flex gap-[8px] items-center leading-none">
+          <div
+            className="flex gap-[8px] items-center leading-none z-30"
+            onClick={unlockOrientation}
+          >
             <ExitFullScreenIcon />
             <div className="text-[10px] font500 text-white leading-none">
               Normal view
             </div>
           </div>
           <div className="z-50">
-          <DropdownButton
-            id="dropdown-basic-button"
-            title={
-              <div className="#333D474D">
-                <ThreeDotSmall />
-              </div>
-            }
-          >
-            <Dropdown.Item href="#/action-1">{ShareAndGiftDropdown()}</Dropdown.Item>
-           
-          </DropdownButton>
+            <DropdownButton
+              id="dropdown-basic-button"
+              title={
+                <div className="#333D474D">
+                  <ThreeDotSmall />
+                </div>
+              }
+            >
+              <Dropdown.Item href="#/action-1">
+                {ShareAndGiftDropdown()}
+              </Dropdown.Item>
+            </DropdownButton>
           </div>
         </div>
       </div>

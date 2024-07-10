@@ -159,7 +159,7 @@ export default function LiveStreamVideo({
       <div
         className={`w-full h-full flex-1 bg-cover lg:rounded-[16px] overflow-hidden`}
       >
-        <div className="absolute z-30 bottom-0 left-0 right-0 lg:h-[40vh] md:h-[20vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>
+       {isMobile && <div className="absolute z-30 bottom-0 left-0 right-0 lg:h-[40vh] md:h-[20vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>}
         <div>
           <ChatOnCameraAndVideoControl
             liveStreamDetail={liveStreamDetail}
@@ -195,9 +195,9 @@ export default function LiveStreamVideo({
           </div>
         )}
 
-        {checkIfOrientedAndMobile && <Header ShareAndGiftDropdown={ShareAndGiftDropdown} />}
+        {checkIfOrientedAndMobile && <Header unlockOrientation={unlockOrientation} ShareAndGiftDropdown={ShareAndGiftDropdown} />}
         <div>
-          <MobilePlayer
+          {!isLive&&<MobilePlayer
             orientationLocked={!orientationLocked}
             toggleMute={toggleMuteUnmute}
             togglePlayPause={togglePlayPause}
@@ -206,7 +206,7 @@ export default function LiveStreamVideo({
             calculateProgressPercentage={progress}
             fastForward={handleForward}
             currentTime={currentTime}
-          />
+          />}
 
 
           {orientationLocked && (
