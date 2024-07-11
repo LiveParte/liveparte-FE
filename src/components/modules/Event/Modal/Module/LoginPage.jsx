@@ -44,7 +44,7 @@ export default function LoginPage({
           const payload = {
             email: data?.email,
             password: `${data?.given_name}${data?.id}1La@`,
-            "isGoogle": true
+            isGoogle: true,
           };
           GoogleSignIn(payload);
           setUser();

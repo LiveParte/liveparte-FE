@@ -1,5 +1,5 @@
 
-export const IsMobileLiveStream=`  relative lg:static flex flex-col bg-[#27292E] pt-[0px] lg:pt-[0px] lg:px-[0px] lg:rounded-[16px] lg:h-[100vh] h-[40dvh]`;
+export const IsMobileLiveStream=`  relative lg:static flex flex-col bg-[#27292E] pt-[0px] lg:pt-[0px] lg:px-[0px] lg:rounded-[16px] lg:h-[100vh] h-[0dvh]`;
 export const IsDesktopLiveStream=`hidden  lg:flex flex-col lg:rounded-[26px] bg-[#222428]`
 
 

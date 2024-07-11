@@ -10,7 +10,7 @@ import { storage, userDetailStorageName } from "@/utils/helper";
 import { useSelector, useDispatch } from "react-redux";
 import IfHeaderIsAuth from "../Common/Header/IfHeaderIsAuth";
 
-function WithAuth({ children, showHeader = true,showNav=true }) {
+function WithAuth({ children, showHeader = true, showNav = true }) {
   const router = useRouter();
   const [updateUserLocation] = useUpdateUserLocationMutation();
 

@@ -54,7 +54,7 @@ export default function MobilePlayer({
       onTouchStart={() => setIsVisible(true)}
       // onTouchEnd={() => setIsHoveredOrTouched(false)}
       onClick={() => setIsVisible(true)}
-      className={` lg:hidden absolute top-0 left-0 right-0 bottom-0 z-10 group pb-[10px] ${
+      className={` lg:hidden absolute top-0 left-0 right-0 bottom-0 z-50 group pb-[5px] ${
         orientationLocked && "pb-[60px]"
       }`}
     >
