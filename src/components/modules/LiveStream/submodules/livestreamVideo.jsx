@@ -11,7 +11,7 @@ import MobilePlayer from "./MobilePlayer";
 import FullScreenChatAction from "./FullScreenChatAction";
 import Video from "./Video";
 import Header from "./LandScapeComp/header";
-import { isMobile } from 'react-device-detect';
+import { isMobile } from "react-device-detect";
 
 const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
   ssr: false,
@@ -27,8 +27,9 @@ export default function LiveStreamVideo({
   lockOrientation,
   unlockOrientation,
   orientationLocked,
-  ShareAndGiftDropdown
+  ShareAndGiftDropdown,
 }) {
+  const dispatch = useDispatch();
   const playerRef = useRef(null);
   const durationRef = useRef(null);
   const currentTimeRef = useRef(0);
@@ -46,7 +47,7 @@ export default function LiveStreamVideo({
       forceUpdate();
 
       // Set the video to start from the saved time
-      const savedTime = localStorage.getItem('video-current-time');
+      const savedTime = localStorage.getItem("video-current-time");
       if (savedTime) {
         player.currentTime(parseFloat(savedTime));
       }
@@ -63,10 +64,13 @@ export default function LiveStreamVideo({
     // Save the current time periodically
     const saveCurrentTime = () => {
       if (playerRef.current) {
-        localStorage.setItem('video-current-time', playerRef.current.currentTime().toString());
+        localStorage.setItem(
+          "video-current-time",
+          playerRef.current.currentTime().toString()
+        );
       }
     };
-    player.on('timeupdate', saveCurrentTime);
+    player.on("timeupdate", saveCurrentTime);
 
     // You can handle other player events here, for example:
     player.on("waiting", () => {
@@ -88,16 +92,16 @@ export default function LiveStreamVideo({
   const MuteState = isMutedRef?.current;
 
   const togglePlayPause = () => {
-    if( playerRef.current){
-    if (playerRef.current?.paused()) {
-      playerRef.current.play();
-      isPlayingRef.current = true;
-    } else {
-      playerRef.current.pause();
-      isPlayingRef.current = false;
+    if (playerRef.current) {
+      if (playerRef.current?.paused()) {
+        playerRef.current.play();
+        isPlayingRef.current = true;
+      } else {
+        playerRef.current.pause();
+        isPlayingRef.current = false;
+      }
+      forceUpdate();
     }
-    forceUpdate();
-  }
   };
 
   const handleRewind = () => {
@@ -110,10 +114,14 @@ export default function LiveStreamVideo({
   useEffect(() => {
     // Save the current time when the component unmounts
     return () => {
-      if (playerRef.current && typeof playerRef.current.currentTime === 'function') {
-        const currentTime =  playerRef.current.currentTime&&playerRef.current?.currentTime();
+      if (
+        playerRef.current &&
+        typeof playerRef.current.currentTime === "function"
+      ) {
+        const currentTime =
+          playerRef.current.currentTime && playerRef.current?.currentTime();
         if (currentTime !== undefined) {
-          localStorage.setItem('video-current-time', currentTime.toString());
+          localStorage.setItem("video-current-time", currentTime.toString());
         }
       }
     };
@@ -152,14 +160,17 @@ export default function LiveStreamVideo({
     ? (currentTimeRef.current / durationRef.current) * 100
     : 0;
   const currentTime = formatTime(currentTimeRef.current);
-  const duration=durationRef.current !== null && formatTime(durationRef.current);
+  const duration =
+    durationRef.current !== null && formatTime(durationRef.current);
 
   return (
     !isLoading && (
       <div
         className={`w-full h-full flex-1 bg-cover lg:rounded-[16px] overflow-hidden`}
       >
-       {isMobile && <div className="absolute z-30 bottom-0 left-0 right-0 lg:h-[40vh] md:h-[20vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>}
+        {/* {isMobile && (
+          <div className="absolute z-30 bottom-0 left-0 right-0 lg:h-[40vh] md:h-[20vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>
+        )} */}
         <div>
           <ChatOnCameraAndVideoControl
             liveStreamDetail={liveStreamDetail}
@@ -184,7 +195,6 @@ export default function LiveStreamVideo({
             isPlaying={PlayState}
             rewind={handleRewind}
             togglePlayPause={togglePlayPause}
-           
           />
         ) : (
           <div className="h-full w-full relative agroa-video">
@@ -195,41 +205,47 @@ export default function LiveStreamVideo({
           </div>
         )}
 
-        {checkIfOrientedAndMobile && <Header unlockOrientation={unlockOrientation} ShareAndGiftDropdown={ShareAndGiftDropdown} />}
+        {/* {checkIfOrientedAndMobile && (
+          <Header
+            unlockOrientation={unlockOrientation}
+            ShareAndGiftDropdown={ShareAndGiftDropdown}
+          />
+        )} */}
         <div>
-          {!isLive&&<MobilePlayer
-            orientationLocked={!orientationLocked}
-            toggleMute={toggleMuteUnmute}
-            togglePlayPause={togglePlayPause}
-            isPlaying={PlayState}
-            rewind={handleRewind}
-            calculateProgressPercentage={progress}
-            fastForward={handleForward}
-            currentTime={currentTime}
-          />}
+          {/* {!isLive && (
+            <MobilePlayer
+              orientationLocked={!orientationLocked}
+              toggleMute={toggleMuteUnmute}
+              togglePlayPause={togglePlayPause}
+              isPlaying={PlayState}
+              rewind={handleRewind}
+              calculateProgressPercentage={progress}
+              fastForward={handleForward}
+              currentTime={currentTime}
+            />
+          )} */}
 
-
-          {orientationLocked && (
+          {/* {orientationLocked && (
             <div className="">
-   <button
-              className="absolute z-10 flex lg:hidden gap-2 text-[12px] left-5 bottom-5 items-center text-white"
-              onClick={() =>
-                orientationLocked ? lockOrientation() : unlockOrientation()
-              }
-            >
-              <FullScreenIcon />
-              {!orientationLocked ? "Exit Fullscreen" : "Fullscreen"}
-            </button>
+              <button
+                className="absolute z-10 flex lg:hidden gap-2 text-[12px] left-5 bottom-5 items-center text-white"
+                onClick={() =>{
+                  {}
+                }
+                }
+              >
+                <FullScreenIcon />
+                {!orientationLocked ? "Exit Fullscreen" : "Fullscreen"}
+              </button>
             </div>
             //  absolute z-30 top-0 left-0 right-0 lg:h-[40vh] md:h-[20vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black
-         
-          )}
-          {checkIfOrientedAndMobile && (
+          )} */}
+          {/* {checkIfOrientedAndMobile && (
             <FullScreenChatAction
               orientationLocked={!orientationLocked}
               unlockOrientation={unlockOrientation}
             />
-          )}
+          )} */}
         </div>
       </div>
     )

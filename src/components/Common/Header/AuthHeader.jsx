@@ -177,10 +177,9 @@ export default function AuthHeader({
                   isOnDemand && isSelected
                 }`}
                 onClick={() => {
-
                   // console.log( router.pathname,onDemandLink,'onDemandLink')
-                  router.pathname ===onDemandLink &&handleCloseModal()
-                  router.push(onDemandLink)
+                  router.pathname === onDemandLink && handleCloseModal();
+                  router.push(onDemandLink);
                 }}
               />
               <ButtonComp

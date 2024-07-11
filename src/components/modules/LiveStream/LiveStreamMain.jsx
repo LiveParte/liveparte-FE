@@ -8,9 +8,10 @@ import { logout, selectOrientationLocked } from "@/store/User";
 import LiveStreamHeaderIndexComp from "@/components/Common/Header/LiveStreamHeader";
 import CustomDropDown from "@/components/Common/CustomDropDown";
 import Link from "next/link";
-import { IsDesktopMobileChat, IsMobileChat, IsMobileLiveStream } from "./style";
+// import { IsDesktopMobileChat, IsMobileChat } from "./style";
 import ScreenOrientationLayout from "@/components/Layout/ScreenRotateLayout/screenLayout";
 import { isMobile } from "react-device-detect";
+import { selectSize } from "@/store/settings";
 // import LiveStreamHeader from './submodules/LiveStreamHeader';
 
 function LiveStream({
@@ -22,8 +23,14 @@ function LiveStream({
 }) {
   const [fullScreenModal, setFullScreenModal] = useState(false);
   const router = useRouter();
+  // const 
+  // const getMobileSize = useSelector(selectSize);
+  const mobileSize = useSelector(selectSize);
+  // alert(mobileSize,'getMobileSize')
   const [isOpen, setIsOpen] = useState(false);
   const orientationLocked = useSelector(selectOrientationLocked);
+   const IsMobileLiveStream=`relative lg:static flex flex-col bg-[#27292E] pt-[0px] lg:pt-[0px] lg:px-[0px] lg:rounded-[16px] lg:h-[100vh]  ${mobileSize==="fullscreen"?'h-[100dvh]':'h-[40dvh]'} `;
+   const IsMobileChat=`lg:hidden   flex flex-col lg:rounded-[26px] bg-[#222428] h-[60vh] max-h-[60dvh] lg:mb-3 `;
 
   const [isOpenII, setIsOpenII] = useState(false);
   const dispatch = useDispatch();

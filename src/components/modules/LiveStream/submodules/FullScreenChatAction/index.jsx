@@ -93,9 +93,10 @@ export default function FullScreenChatAction({
           <div className="relative flex text-white element rounded-[96px]">
             <div
               className="px-[17px]  h-[32px] button-with-shadow bg-[#BACFF70A]  rounded-[96px] py-[10px] flex gap-[9px] text-white min-w-max text-[10px] lg:text-[11px] font500 items-center  cursor-pointer relative w-fit"
+              onClick={ ()=>unlockOrientation()}
               // onClick={() => setPayFlow("purchasePartyCoins")}
             >
-              <div>Add Coins</div>
+              <div >Add Coins</div>
             </div>
           </div>
         </div>

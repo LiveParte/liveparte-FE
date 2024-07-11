@@ -2,15 +2,35 @@ import ButtonComp from "@/components/Ui/button";
 import React, { memo, useEffect, useRef, useState } from "react";
 import GiftingCoins from "./giftingCoins";
 import PurchasePaartyCoins from "./PurchasePaartyCoins";
-
+import WebSocket from 'isomorphic-ws';
 import { useSelector } from "react-redux";
 import { selectCoins } from "@/store/User";
 import { TextInputComp } from "./chatsubmodules/textInputComp";
 import { SendCoinsComp } from "./chatsubmodules/sendCoins";
 import { ChatList } from "./chatsubmodules/chatList";
+import useWebSocket, { ReadyState } from "react-use-websocket";
+
 import ChatBody from "./Chat/chatbody/chatBody";
 
 function Chat({ onLeave, liveStreamDetail, userProfileData }) {
+  // const [message, setMessage] = useState('');
+  const WS_URL = "ws://staging-be.liveparte.com";
+
+  // const ws = new WebSocket("wss://ws.bitstamp.net");
+  const [bids, setBids] = useState([0]);
+
+  const { sendJsonMessage, readyState } = useWebSocket(WS_URL, {
+    onOpen: () => {
+      console.log("WebSocket connection established.");
+    },
+    share: true,
+    filter: () => false,
+    retryOnError: true,
+    shouldReconnect: () => true,
+  });
+
+
+
   const [showComment, setShowComment] = useState(true);
   const userCoinsBalance = useSelector(selectCoins);
   // alert(userCoinsBalance,'userCoinsBalance')
@@ -167,6 +187,32 @@ function Chat({ onLeave, liveStreamDetail, userProfileData }) {
   const handleOnChange = (e) => {
     setTextMessages(e.target.value);
   };
+
+  const [message, setMessage] = useState('');
+
+    useEffect(() => {
+        const ws = new WebSocket('wss://staging-be.liveparte.com');
+
+        ws.onopen = () => {
+            console.log('Connected to WebSocket server');
+        };
+
+        // ws.onmessage = (event) => {
+        //     setMessage(event.data);
+        //     console.log('Received message:', event.data);
+        // };
+
+        ws.onclose = () => {
+            console.log('Disconnected from WebSocket server');
+        };
+
+        return () => {
+            ws.close();
+        };
+    }, []);
+
+    
+
 
   const options = [
     { label: "Option 1", href: "#" },

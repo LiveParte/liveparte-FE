@@ -13,7 +13,7 @@ const AppVideo = ({ liveStreamDetail, handlePlayerReady }) => {
   const videoJsOptions = useMemo(
     () => ({
       autoplay: true,
-      controls: false,
+      controls: true,
       responsive: true,
       fluid: true,
       loop: true,
@@ -35,21 +35,6 @@ const AppVideo = ({ liveStreamDetail, handlePlayerReady }) => {
   return (
     <>
       <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
-
-      {/* <div className="p-4">
-        <div className="relative h-2 bg-gray-300 rounded-full">
-          <div
-            className="absolute top-0 left-0 h-2 bg-blue-500 rounded-full"
-            style={{ width: `${progress}%` }}
-          ></div>
-        </div>
-        <div className="mt-2">
-          Current Time: {formatTime(currentTimeRef.current)} / Duration:{" "}
-          {durationRef.current !== null
-            ? formatTime(durationRef.current)
-            : "Loading..."}
-        </div>
-      </div> */}
     </>
   );
 };

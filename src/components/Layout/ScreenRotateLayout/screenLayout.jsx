@@ -31,7 +31,7 @@ const ScreenOrientationLayout = ({ children }) => {
     const container = document.querySelector('#container');
     if (container) {
       if (container.requestFullscreen) {
-        await container.requestFullscreen();
+        // await container.requestFullscreen();
       } else if (container.webkitRequestFullScreen) {
         // await container.webkitRequestFullScreen();
       }
@@ -49,11 +49,11 @@ const ScreenOrientationLayout = ({ children }) => {
   const lockOrientationHandler = async () => {
     try {
       await goFullscreen();
-      await window.screen.orientation.lock('landscape-primary');
+      // await window.screen.orientation.lock('landscape-primary');
       // document.webkitExitFullscreen();
       dispatch(lockOrientation());
     } catch (error) {
-      alert(error);
+      // alert(error);
     }
     // document.webkitExitFullscreen();
   };
