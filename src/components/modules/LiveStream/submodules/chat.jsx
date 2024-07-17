@@ -11,23 +11,17 @@ import { ChatList } from "./chatsubmodules/chatList";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 
 import ChatBody from "./Chat/chatbody/chatBody";
+import DropDownBootstrap from "@/components/Ui/DropDownBootsrap";
+import Image from "next/image";
 
-function Chat({ onLeave, liveStreamDetail, userProfileData }) {
+function Chat({ onLeave, liveStreamDetail, }) {
   // const [message, setMessage] = useState('');
   const WS_URL = "ws://staging-be.liveparte.com";
 
   // const ws = new WebSocket("wss://ws.bitstamp.net");
   const [bids, setBids] = useState([0]);
 
-  const { sendJsonMessage, readyState } = useWebSocket(WS_URL, {
-    onOpen: () => {
-      console.log("WebSocket connection established.");
-    },
-    share: true,
-    filter: () => false,
-    retryOnError: true,
-    shouldReconnect: () => true,
-  });
+  
 
 
 
@@ -135,9 +129,7 @@ function Chat({ onLeave, liveStreamDetail, userProfileData }) {
     }
   };
 
-  useEffect(() => {
-    handleChatToTheBottom();
-  }, [chatMessages]);
+
 
   const [payFlow, setPayFlow] = useState(null);
   const paymentFlow = [
@@ -190,30 +182,7 @@ function Chat({ onLeave, liveStreamDetail, userProfileData }) {
 
   const [message, setMessage] = useState('');
 
-    useEffect(() => {
-        const ws = new WebSocket('wss://staging-be.liveparte.com');
-
-        ws.onopen = () => {
-            console.log('Connected to WebSocket server');
-        };
-
-        // ws.onmessage = (event) => {
-        //     setMessage(event.data);
-        //     console.log('Received message:', event.data);
-        // };
-
-        ws.onclose = () => {
-            console.log('Disconnected from WebSocket server');
-        };
-
-        return () => {
-            ws.close();
-        };
-    }, []);
-
-    
-
-
+   
   const options = [
     { label: "Option 1", href: "#" },
     { label: "Option 2", href: "#" },
@@ -221,7 +190,7 @@ function Chat({ onLeave, liveStreamDetail, userProfileData }) {
   ];
 
   return (
-    <div className="flex flex-col  lg:px-[0px]   h-full lg:h-full  w-full lg:w-[356px] relative  rounded-sm flex-1">
+    <div className="flex flex-col  lg:px-[0px]   h-full lg:h-full  w-full lg:w-[356px] relative  rounded-sm flex-1 ">
       <div>
         {/* <div className="lg:hidden flex flex-col items-end gap-[16px] pb-[16px] absolute right-[16px] bottom-16">
           <Image
@@ -259,60 +228,58 @@ function Chat({ onLeave, liveStreamDetail, userProfileData }) {
         />
       </div>
 
-      <div className="flex flex-col justify-end  flex-1">
-        <div className="h-[40dvh] lg:h-[58vh]">
-          {/*  */}
-          <ChatBody
-            chatBoxRef={chatBoxRef}
-            setShowComment={setShowComment}
-            showComment={showComment}
-            data={chatMessages}
-          />
-        </div>
-        <div className=" px-[4px] lg:px-0  mb-3 md:mb-0 border-t-[#343F4B] border-t-[1px] lg:border-0 pt-[10px]">
-          <div className="relative w-full lg:hidden">
-            {payFlow && <GiftCoin />}
-          </div>
-          {!showComment && (
-            <div className="text-[11px] text-[#FFFFFF]  font500 text-end py-[7px]  px-[16px]">
-              <div
-                className="cursor-pointer inline"
-                onClick={() => {
-                  handleChatToTheBottom();
-                  setShowComment(true);
-                }}
-              >
-                Show comments
-              </div>
+      <div className="flex flex-col justify-end flex-1 ">
+      <div className="flex flex-col justify-end">
+        <ChatBody
+          chatBoxRef={chatBoxRef}
+          setShowComment={setShowComment}
+          showComment={showComment}
+          data={chatMessages}
+        />
+        {!showComment && (
+          <div className="text-[11px] text-[#FFFFFF] font500 text-end py-[7px] px-[16px]">
+            <div
+              className="cursor-pointer inline"
+              onClick={() => {
+                handleChatToTheBottom();
+                setShowComment(true);
+              }}
+            >
+              Show comments
             </div>
-          )}
-          <TextInputComp
-            handleOnChange={handleOnChange}
-            messageRef={messageRef}
-            options={options}
+          </div>
+        )}
+      </div>
+      <div className="px-[4px] lg:px-0 mb-3 md:mb-0 border-t-[#343F4B] border-t-[1px] lg:border-0 pt-[10px]">
+        <div className="relative w-full lg:hidden">
+          {payFlow && <GiftCoin />}
+        </div>
+        <TextInputComp
+          handleOnChange={handleOnChange}
+          messageRef={messageRef}
+          options={options}
+          setPayFlow={setPayFlow}
+          textMessages={textMessages}
+          userCoinsBalance={userCoinsBalance}
+          handleSendChat={handleSendChat}
+        />
+        <div className="hidden lg:flex justify-between items-center relative">
+          <SendCoinsComp
             setPayFlow={setPayFlow}
-            textMessages={textMessages}
             userCoinsBalance={userCoinsBalance}
-            handleSendChat={handleSendChat}
           />
-          <div className="hidden lg:flex justify-between items-center relative ">
-            {/* <div className="relative w-full"></div> */}
-            {payFlow && <GiftCoin />}
-            <SendCoinsComp
-              setPayFlow={setPayFlow}
-              userCoinsBalance={userCoinsBalance}
-            />
-            <div className="relative hidden lg:flex text-white element rounded-[96px]">
-              <div
-                className="px-[17px] h-[32px] rounded-[96px] flex gap-[9px] text-white text-[10px] lg:text-[11px] font500 items-center bg-[#BACFF70A] cursor-pointer relative w-fit"
-                onClick={() => setPayFlow("purchasePartyCoins")}
-              >
-                <div>Add Coins</div>
-              </div>
+          {payFlow && <GiftCoin />}
+          <div className="relative hidden lg:flex text-white element rounded-[96px]">
+            <div
+              className="px-[17px] h-[32px] rounded-[96px] flex gap-[9px] text-white text-[10px] lg:text-[11px] font500 items-center bg-[#BACFF70A] cursor-pointer w-fit"
+              onClick={() => setPayFlow("purchasePartyCoins")}
+            >
+              <div>Add Coins</div>
             </div>
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 }

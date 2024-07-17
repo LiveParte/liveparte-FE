@@ -70,6 +70,7 @@ export const {
   useGetEventOnDemandQuery,
   useGetEventStreamQuery,
   useGetEventViaIdQuery,
+  useLazyGetEventDetailViaIdQuery,
   useGetEventDetailViaIdQuery,
   useUserShowsQuery,
   useLazyUserShowsQuery,

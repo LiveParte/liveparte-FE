@@ -487,7 +487,17 @@ select:-webkit-autofill:focus {
 }
 
 .video-js {
-  height: 100% !important;
+  height: auto !important;
+}
+.vjs-loading-spinner{
+  display: none !important;
+}
+.video-js video {
+  object-fit: contain !important;
+}
+
+.vjs-big-play-button{
+  
 }
 
 /* styles.css */

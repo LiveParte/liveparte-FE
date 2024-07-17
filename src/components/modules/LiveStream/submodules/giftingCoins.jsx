@@ -48,9 +48,8 @@ export default function GiftingCoins({ onNext, onClose, eventId,usersCoinsBalanc
     const response = await giftCoins(payload);
     if (response?.data?.message === "Coins gifted successfully") {
       dispatch(setCoins(userCoinsBalance-data?.coins))
-      
-      dispatch(userApi.util.invalidateTags(["user"]));
-      reset()
+      // dispatch(userApi.util.invalidateTags(["user"]));
+      // reset()
       onClose();
       return SuccessNotification({ message: response.data.message });
     }

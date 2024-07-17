@@ -2,6 +2,36 @@ import { CountdownTimerII, CountdownTimerIII } from "@/utils/reusableComponent";
 import React from "react";
 
 export default function CountDown({date,onBack}) {
+
+  function calculateTimeLeft(targetDate) {
+    const currentDate = new Date();
+  const targetDateTime = new Date(targetDate);
+
+  // Set targetDateTime to midnight UTC of the target date
+  targetDateTime.setUTCHours(0, 0, 0, 0);
+
+  // Calculate the difference in milliseconds between target date and current date
+  const difference = targetDateTime.getTime() - currentDate.getTime();
+
+  if (difference <= 0) {
+    // If target date has passed or is equal to current date, return all zeros
+    return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+  }
+
+  // Convert milliseconds difference into days, hours, minutes, and seconds
+  let seconds = Math.floor(difference / 1000);
+  let minutes = Math.floor(seconds / 60);
+  let hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  hours %= 24;
+  minutes %= 60;
+  seconds %= 60;
+
+  return { days, hours, minutes, seconds };
+  }
+
+  console.log(date,'Hello')
   return (
     <div className="bg-[#1B1C20] py-[43px] rounded-[16px] text-center text-white relative">
       <div onClick={onBack} className="absolute right-4 top-4  cursor-pointer">
@@ -35,6 +65,7 @@ export default function CountDown({date,onBack}) {
         <br /> the count down to when the event will start
       </div>
      {date&& <CountdownTimerIII targetDate={date}/>}
+     {date&&console.log(calculateTimeLeft(date),"hello2")}
       {/* <CountdownTimerII
       onNext={()=>{
         <div className="flex  justify-center text-[64px] text-[#FFFFFF] font-1">

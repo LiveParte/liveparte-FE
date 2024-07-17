@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import Chat from "./chat";
 import { IsDesktopMobileChat } from "../style";
@@ -17,7 +17,7 @@ const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
   ssr: false,
 });
 
-export default function LiveStreamVideo({
+ function LiveStreamVideo({
   activeConnection,
   setActiveConnection,
   isLive = false,
@@ -50,6 +50,7 @@ export default function LiveStreamVideo({
       const savedTime = localStorage.getItem("video-current-time");
       if (savedTime) {
         player.currentTime(parseFloat(savedTime));
+        playerRef.current.play();
       }
     });
 
@@ -82,13 +83,15 @@ export default function LiveStreamVideo({
     });
 
     // Set initial play/pause state
-    isPlayingRef.current = player.paused();
+    isPlayingRef.current = !player.paused();
     isMutedRef.current = player.muted();
+    playerRef.current.play();
+    player.volume(100);
 
     forceUpdate();
   }, []);
 
-  const PlayState = !isPlayingRef?.current;
+  const PlayState = isPlayingRef?.current;
   const MuteState = isMutedRef?.current;
 
   const togglePlayPause = () => {
@@ -111,21 +114,21 @@ export default function LiveStreamVideo({
     }
   };
 
-  useEffect(() => {
-    // Save the current time when the component unmounts
-    return () => {
-      if (
-        playerRef.current &&
-        typeof playerRef.current.currentTime === "function"
-      ) {
-        const currentTime =
-          playerRef.current.currentTime && playerRef.current?.currentTime();
-        if (currentTime !== undefined) {
-          localStorage.setItem("video-current-time", currentTime.toString());
-        }
-      }
-    };
-  }, []);
+  // useEffect(() => {
+  //   // Save the current time when the component unmounts
+  //   return () => {
+  //     if (
+  //       playerRef.current &&
+  //       typeof playerRef.current.currentTime === "function"
+  //     ) {
+  //       const currentTime =
+  //         playerRef.current.currentTime && playerRef.current?.currentTime();
+  //       if (currentTime !== undefined) {
+  //         localStorage.setItem("video-current-time", currentTime.toString());
+  //       }
+  //     }
+  //   };
+  // }, []);
 
   const toggleMuteUnmute = () => {
     if (playerRef.current?.muted()) {
@@ -166,7 +169,7 @@ export default function LiveStreamVideo({
   return (
     !isLoading && (
       <div
-        className={`w-full h-full flex-1 bg-cover lg:rounded-[16px] overflow-hidden`}
+        className={`w-full h-full flex-1 bg-cover lg:rounded-[16px] overflow-hidden `}
       >
         {/* {isMobile && (
           <div className="absolute z-30 bottom-0 left-0 right-0 lg:h-[40vh] md:h-[20vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>
@@ -195,6 +198,7 @@ export default function LiveStreamVideo({
             isPlaying={PlayState}
             rewind={handleRewind}
             togglePlayPause={togglePlayPause}
+            liveStreamDetail={liveStreamDetail}
           />
         ) : (
           <div className="h-full w-full relative agroa-video">
@@ -251,3 +255,6 @@ export default function LiveStreamVideo({
     )
   );
 }
+
+
+export default memo(LiveStreamVideo)

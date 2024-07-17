@@ -17,6 +17,8 @@ import { setLiveStreamEventData } from "@/store/Event";
 import { MainContainer } from "@/utils/styleReuse";
 import MyModal from "@/components/Ui/Modal";
 import CountDown from "@/components/Common/Coundown";
+import { useLazyGetEventDetailViaIdQuery } from "@/store/Event/eventApi";
+import moment from "moment";
 // import UserShowsCard from "@/components/UserShow";
 
 export default function Shows({
@@ -29,26 +31,33 @@ export default function Shows({
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [eventDate, setEventDate] = useState();
+  const [getEventById,{isLoading:eventByIdLoader}]= useLazyGetEventDetailViaIdQuery()
 
   const container = "px-[20px] md:px-[40px] lg:px-[120px] ";
   const isLength = Data?.length;
 
-  const handleOnClick = (item) => {
+  const handleOnClick = async(item) => {
     dispatch(setLiveStreamEventData(item));
-    // alert(item?.eventStarted)
     if (item?.eventStarted) {
       return router.push(
         `${liveStreamLink}/${replaceSpaceWithDashFunc(item?.name)}/${item?._id}`
       );
     } else {
-      setEventDate(item?.event_date);
+      console.log(item,'Hellloooo')
+      const singleEvent =await getEventById(item?._id);
+      console.log(singleEvent?.data,'singleEventsingleEventsingleEvent')
+      if(singleEvent?.data?.event_date){
+          setEventDate(singleEvent?.data);
       setIsOpen(true);
-      // return ErrorNotification({ message: 'Event not live yet'});
-      // return router.push(`${liveStreamLink}/${item?._id}`)
+      }
+      // setEventDate(item?.event_date);
+      // setIsOpen(true);
+  
     }
-    // console.log(item,'setLiveStreamEventData')
-    //
+   
   };
+
+  console.log(Data[0]?._id===eventDate?._id,Data,'eventDateeventDate')
   return (
     <>
       {isActive == "Upcoming" && (
@@ -59,16 +68,18 @@ export default function Shows({
               containerStyle={`!w-[543px]`}
               closeModal={() => setIsOpen(false)}
               bodyComponent={
-                <CountDown date={eventDate} onBack={() => setIsOpen(false)} />
+                <CountDown date={moment(eventDate?.event_date).format('YYYY-MM-DD') } onBack={() => setIsOpen(false)} />
               }
             />
           )}
+
           <div className={MainContainer}>
             {isLength > 0 && (
               <div className=" grid-cols-2  md:grid-cols-2  xl:grid-cols-4 gap-[20px] lg:gap-x-[40px] gap-y-[40px] lg:gap-y-[104px] pb-[100px] lg:pb-[247px]  grid">
                 {!isLoading &&
                   Data?.map((item, index) => (
                     <ShowsCard
+                      countdownLoading={(item?._id === eventDate?._id )&&eventByIdLoader}
                       key={index}
                       id={item?._id}
                       name={item?.name}

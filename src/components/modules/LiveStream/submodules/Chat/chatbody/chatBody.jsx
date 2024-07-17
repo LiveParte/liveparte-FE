@@ -10,7 +10,7 @@ export default function ChatBody({
 }) {
   // console.log(isOrientation, "isOrientation");
   return (
-    showComment && (
+    showComment ? (
       <div className="backdrop-blur-[8px] bg-black/30 rounded-[8px] overflow-hidden h-full min-w-[236px]">
         <div
           className={`hidden lg:block text-[11px] text-[#FFFFFF] backdrop-blur-xl bg-black/10 font500 text-end py-[7px]  px-[16px] ${
@@ -28,7 +28,7 @@ export default function ChatBody({
         <div
           className={`flex flex-col pb-[21px] overflow-hidden customScrollHorizontal ${
             showComment && "overflow-y-auto lg:overflow-auto"
-          }  max-h-[57vh] `}
+          }  max-h-[40dvh] lg:max-h-[50vh] `}
         >
           {showComment && (
             <>
@@ -47,8 +47,8 @@ export default function ChatBody({
             </>
           )}
         </div>
-        <div className=" h-[10px]"></div>
+        <div className=" h-[10px] max-h-[57vh]"></div>
       </div>
-    )
+    ):<div className=" max-h-[57vh]"></div>
   );
 }

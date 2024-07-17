@@ -37,8 +37,8 @@ const VideoJS = ({ options, onReady }) => {
   }, [options, onReady]);
 
   return (
-    <div className="h-full w-full" data-vjs-player>
-      <div className="h-full w-full" ref={videoRef} />
+    <div className="h-full w-full  flex justify-center items-center bg-black" data-vjs-player>
+      <div className="h-full flex-1 w-full flex justify-center items-center" ref={videoRef} />
     </div>
   );
 };
