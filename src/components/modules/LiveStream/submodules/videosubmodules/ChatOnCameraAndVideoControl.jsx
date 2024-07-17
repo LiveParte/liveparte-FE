@@ -1,8 +1,5 @@
-import React, { memo, useState } from "react";
-import {
-  IsDesktopMobileChat,
-  IsDesktopMobileChatChangeName,
-} from "../../style";
+import React, { memo, useState, useCallback } from "react";
+import { IsDesktopMobileChat } from "../../style";
 import Chat from "../chat";
 import {
   VideoMuteIcon,
@@ -20,6 +17,8 @@ import { useSelector } from "react-redux";
 import { selectCoins } from "@/store/User";
 import PurchasePaartyCoins from "../PurchasePaartyCoins";
 import { useRouter } from "next/router";
+
+const MemoizedChat = memo(Chat);
 
 function ChatOnCameraAndVideoControl({
   liveStreamDetail,
@@ -47,15 +46,22 @@ function ChatOnCameraAndVideoControl({
   const [isOpenGiftCoins, setIsOpenGiftCoins] = useState(false);
   const [isOpenBuyCoins, setIsOpenBuyCoins] = useState(false);
 
-  // console.log(isOpenGiftCoins,isOpenBuyCoins, "userCoinsBalance");
+  const handleLeave = useCallback(() => {
+    router.back();
+  }, [router]);
 
-  //  bg-gradient-to-l from-[#0000000f] to-[#0000000a]
+  const ChatComp = useCallback(() => {
+    return (
+      <div className={`lg:mr-[80px] flex flex-col `}>
+        <MemoizedChat liveStreamDetail={liveStreamDetail} onLeave={handleLeave} />
+      </div>
+    );
+  }, [liveStreamDetail, handleLeave]);
 
   const SendCoinsComp = () => (
     <div className="relative text-white element rounded-[98px] p-[4px]">
       <div
         className="p-[4px] pr-[10px] rounded-[96px] hidden lg:flex gap-[9px] text-white text-[10px] md:text-[13px] font500 items-center bg-[#BACFF70A] cursor-pointer relative w-fit"
-        // onClick={() => setPayFlow("giftCoins")}
       >
         <Image
           src={`/svg/Liveparte coin.svg`}
@@ -69,7 +75,6 @@ function ChatOnCameraAndVideoControl({
         </div>
         <div
           className="py-[4px] px-[9px] rounded-[96px] hidden lg:flex gap-[9px] text-white text-[13px] font500 items-center shadow-1 shadow-2 shadow-3 bg-[#BACFF70A] cursor-pointer relative w-fit"
-          // onClick={() => setPayFlow("giftCoins")}
         >
           <div className=""> Send</div>
         </div>
@@ -78,20 +83,17 @@ function ChatOnCameraAndVideoControl({
   );
 
   return (
-    <div
-      className={`${IsDesktopMobileChat} left-0 bg-red-600   flex   lg:mb-0  `}
-    >
-      <div className="flex   align-bottom flex-1 justify-end overflow-hidden linear-gradient">
+    <div className={`${IsDesktopMobileChat} left-0 bg-red-600 flex lg:mb-0`}>
+      <div className="flex align-bottom flex-1 justify-end overflow-hidden linear-gradient">
         <div className="flex-1 items-end justify-end flex ">
           {isLive && (
-            <div className="z-50  pb-5 text-white w-full  pt-8   pl-[80px] pr-[45px]">
+            <div className="z-50 pb-[27px] text-white w-full pt-8 pl-[80px] pr-[45px]">
               <div
                 className=" flex items-center gap-[16px] cursor-pointer"
                 onMouseDown={handleMouseDown}
                 onMouseMove={handleMouseMove}
                 onMouseUp={handleMouseUp}
                 onMouseLeave={handleMouseUp}
-                // Ensures dragging stops when the mouse leaves the progress bar
               >
                 <div className="flex-1 bg-[#CCEDEB] h-[5px] rounded-[30px] relative">
                   <div
@@ -130,17 +132,7 @@ function ChatOnCameraAndVideoControl({
             </div>
           )}
         </div>
-        <div className={`lg:mr-[80px] flex flex-col `}>
-          <Chat
-            liveStreamDetail={liveStreamDetail}
-            userProfileData={userProfileData}
-            onLeave={() => {
-              // router.back()
-              // setActiveConnection(false);
-              // router.push(myShowLink);
-            }}
-          />
-        </div>
+        <ChatComp />
       </div>
     </div>
   );

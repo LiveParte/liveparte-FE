@@ -9,6 +9,7 @@ const AppVideo = ({ liveStreamDetail, handlePlayerReady }) => {
   const durationRef = useRef(null);
   const currentTimeRef = useRef(0);
   const [, forceUpdate] = React.useReducer((x) => x + 1, 0);
+  // console.log(liveStreamDetail?.streaming_url,'liveStreamDetail')
 
   const videoJsOptions = useMemo(
     () => ({
@@ -17,14 +18,16 @@ const AppVideo = ({ liveStreamDetail, handlePlayerReady }) => {
       responsive: true,
       fluid: true,
       loop: true,
-      muted: false,
+      muted: true,
       playsinline: true,
+      preload: "auto", // Options: 'auto', 'metadata', 'none'
+      playbackRates: [0.5, 1, 1.5, 2],
       sources: [
         {
           src:
-            `https://res.cloudinary.com/dnvwcmqhw/video/upload/v1713949269/onDemandVideo/Screen_Recording_2024-04-22_at_14.37.28_nezabk.mp4` ||
             liveStreamDetail?.streaming_url ||
-            liveStreamDetail?.promotional_url,
+            liveStreamDetail?.promotional_url ||
+            `https://res.cloudinary.com/dnvwcmqhw/video/upload/v1713949269/onDemandVideo/Screen_Recording_2024-04-22_at_14.37.28_nezabk.mp4`,
           type: "video/mp4",
         },
       ],
