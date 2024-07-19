@@ -8,7 +8,7 @@ import { selectEvent } from "@/store/User";
 
 export default function HeroTime({ notEvent = true,router,onClick }) {
   const eventSelected =useSelector(selectEvent);
-  console.log(eventSelected,'eventSelected')
+  // console.log(eventSelected,'eventSelected')
   return (
     <div
       className={`relative font400  bg-[url('/webp/bg1.png')] bg-cover bg-center  xl:bg-left ${MainContainer} grayscale flex-1`}

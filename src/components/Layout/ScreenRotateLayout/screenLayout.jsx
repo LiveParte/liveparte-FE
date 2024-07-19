@@ -65,7 +65,7 @@ const ScreenOrientationLayout = ({ children }) => {
   };
 
   return (
-    <div id="container" >
+    <div id="container " className='flex flex-col flex-1 w-full h-full' >
       {/* <p className='text-white' id="orientation-status">
         {orientation ? `${orientation} mode` : 'Loading...'}
       </p>
@@ -85,7 +85,7 @@ const ScreenOrientationLayout = ({ children }) => {
       >
         Unlock
       </button> */}
-      <div>
+      <div  className='flex flex-col flex-1'>
         {/* Pass lock and unlock functions to children */}
         {React.Children.map(children, (child) => {
           if (React.isValidElement(child)) {

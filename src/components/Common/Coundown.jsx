@@ -65,7 +65,7 @@ export default function CountDown({date,onBack}) {
         <br /> the count down to when the event will start
       </div>
      {date&& <CountdownTimerIII targetDate={date}/>}
-     {date&&console.log(calculateTimeLeft(date),"hello2")}
+     {/* {date&&console.log(calculateTimeLeft(date),"hello2")} */}
       {/* <CountdownTimerII
       onNext={()=>{
         <div className="flex  justify-center text-[64px] text-[#FFFFFF] font-1">

@@ -3,7 +3,7 @@ export const IsMobileLiveStream=`  relative lg:static flex flex-col bg-[#27292E]
 export const IsDesktopLiveStream=`hidden  lg:flex flex-col lg:rounded-[26px] bg-[#222428]`
 
 
-export const IsDesktopMobileChat =` hidden z-50 absolute right-0 top-[30vh]  bottom-0  lg:flex flex-col lg:rounded-[26px] bg-transparent`;
+export const IsDesktopMobileChat =` hidden z-50 absolute right-0  bottom-0  lg:flex flex-col lg:rounded-[26px] bg-transparent`;
 export const IsMobileChat=`lg:hidden   flex flex-col lg:rounded-[26px] bg-[#222428] h-[60vh] max-h-[60dvh] lg:mb-3 `;
 
 

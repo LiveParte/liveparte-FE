@@ -29,13 +29,15 @@ export default function Index() {
     skip: !userInfo?._id,
   });
   const NestedLiveStreamData = useSelector(selectLiveStreamEvent) || data;
-  const liveStream = { ...NestedLiveStreamData, ...NestedLiveStreamData?.event };
+  const liveStream = { ...data, ...NestedLiveStreamData?.event };
   const modalRef = useRef(null);
 
   const handleCloseModal = () => {
     modalRef.current = null;
     forceUpdate();
   };
+
+  // console.log(data,'NestedLiveStreamData')
 
   const handleOpenModal = (modalName) => {
     modalRef.current = modalName;

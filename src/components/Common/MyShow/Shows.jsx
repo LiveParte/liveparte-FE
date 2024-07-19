@@ -34,23 +34,17 @@ export default function ShowsCard({
   onDemand = false,
   countdownLoading,
 }) {
-  const backgroundImage = `https://res.cloudinary.com/dammymoses/image/upload/v1710175667/LiveParte/a7_zeemus.png`;
   const router = useRouter();
   const dispatch = useDispatch();
   const shows = useSelector(selectEvent) || {};
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [posterImage, setPosterImage] = useState();
-  useEffect(() => {
-    setPosterImage(showImage || backgroundImage);
-  }, [showImage, backgroundImage]);
+
 
   const videoRef = useRef(null);
   const noVideoRef = useRef(null);
-  const backUrl =
-    id == 1
-      ? `bg-[url('https://res.cloudinary.com/dammymoses/image/upload/v1710175667/LiveParte/a7_zeemus.png')]`
-      : `bg-[url('/webp/show2.png')]`;
+  
 
   const handleMouseEnter = () => {
     setIsPlaying(true);
@@ -104,11 +98,11 @@ export default function ShowsCard({
         </div>
       )}
       <div
-        className={` relative min-h-[200px] h-[25vh] md:h-[27vh] lg:h-[45vh] xl:h-[27vh] rounded-[8px] lg:rounded-[20px] ${backUrl} bg-cover bg-center bg-gradient-to-b from-black to-transparent  overflow-hidden group cursor-pointer duration-300 ease-in-out group-hover:opacity-100 relative mb-[16px]`}
+        className={` relative min-h-[200px] h-[25vh] md:h-[27vh] lg:h-[45vh] xl:h-[27vh] rounded-[8px] lg:rounded-[20px] bg-cover bg-center bg-gradient-to-b from-black to-transparent  overflow-hidden group cursor-pointer duration-300 ease-in-out group-hover:opacity-100 relative mb-[16px]`}
       >
         <div>
           <ImageOrVideo
-            image={showImage || backgroundImage}
+            image={showImage}
             isPlaying={showVideo ? isPlaying : false}
             videoRef={showVideo ? videoRef : noVideoRef}
             item={item}
