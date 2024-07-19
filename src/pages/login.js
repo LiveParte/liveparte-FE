@@ -1,10 +1,9 @@
 import NoAuth from "@/components/Layout/NoAuth";
 import Footer from "@/components/Common/Footer";
 import { useRouter } from "next/router";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 
-
-import Hero  from "@/components/modules/LandingPage/Hero";
+import Hero from "@/components/modules/LandingPage/Hero";
 import FavoriteShow from "@/components/modules/LandingPage/FavoriteShows";
 import Features from "@/components/modules/LandingPage/Features";
 import ArtistList from "@/components/modules/LandingPage/Artist";
@@ -13,7 +12,7 @@ import LazyLoader from "@/components/Common/LazyComponent";
 import withLazyLoad from "@/components/Common/LazyLoading/lazyLoading";
 const LazyComponentWithLazyLoad = withLazyLoad(Hero);
 const LazyComponentWithLazyLoad1 = withLazyLoad(FavoriteShow);
-const LazyComponentWithLazyLoad2= withLazyLoad(Features);
+const LazyComponentWithLazyLoad2 = withLazyLoad(Features);
 const LazyComponentWithLazyLoad3 = withLazyLoad(FAQ);
 const LazyComponentWithLazyLoad4 = withLazyLoad(Hero);
 const LazyComponentWithLazyLoad5 = withLazyLoad(ArtistList);
@@ -26,11 +25,9 @@ export default function Home() {
     <NoAuth>
       {/* <LazyLoader> */}
       <LazyComponentWithLazyLoad router={router} notEvent={true} />
-      {/* </LazyLoader> */}
-   {/* <LazyLoader>  */}
+
       <LazyComponentWithLazyLoad1 />
-      {/* </LazyLoader> */}
-   
+
       <LazyComponentWithLazyLoad2 />
       <LazyComponentWithLazyLoad5 />
       <LazyComponentWithLazyLoad3 />
