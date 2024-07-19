@@ -24,7 +24,7 @@ function LiveStream({
   const mobileSize = useSelector(selectSize);
   const [isOpen, setIsOpen] = useState(false);
   const orientationLocked = useSelector(selectOrientationLocked);
-  const IsMobileLiveStream = `relative lg:static flex flex-col bg-[#27292E] pt-[0px] lg:pt-[0px] lg:px-[0px] lg:rounded-[16px] lg:h-[100vh]  ${mobileSize === "fullscreen" ? 'h-[100dvh]' : 'h-[40dvh]'} `;
+  const IsMobileLiveStream = `relative lg:static flex  flex-1 flex-col bg-[#27292E] pt-[0px] lg:pt-[0px] lg:px-[0px] lg:rounded-[16px] lg:h-[100vh]  ${mobileSize === "fullscreen" ? 'h-[100dvh]' : 'h-[40dvh]'} `;
   const IsMobileChat = `lg:hidden flex flex-col lg:rounded-[26px] bg-[#222428] h-[60vh] max-h-[60dvh] lg:mb-3 `;
   
   const [isOpenII, setIsOpenII] = useState(false);
@@ -77,6 +77,8 @@ function LiveStream({
       </CustomDropDown>
     );
   }
+
+  // console.log(liveStreamDetail,'liveStreamDetail')
 
   const Container = useMemo(() => {
     return function Container({ lockOrientation, unlockOrientation, orientation }) {

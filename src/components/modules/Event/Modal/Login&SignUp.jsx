@@ -223,7 +223,7 @@ export default function LoginSignUp({
       // dispatch(userApi.util.invalidateTags(["user"]));
       dispatch(setUserData(response?.user));
       dispatch(setCoins(response?.user?.totalCoin));
-      console.log(response?.user, "response?.user");
+      // console.log(response?.user, "response?.user");
       SuccessNotification({ message: "You're in!" });
 
       storage.localStorage.set(

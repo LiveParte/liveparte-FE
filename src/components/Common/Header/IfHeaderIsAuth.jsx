@@ -76,7 +76,7 @@ export default function IfHeaderIsAuth({
       id: userInfo?._id,
     };
     const checkTwoAccounts = await updateUserDetails(payload);
-    console.log(checkTwoAccounts, "checkTwoAccounts");
+    // console.log(checkTwoAccounts, "checkTwoAccounts");
   }
 
   useEffect(() => {

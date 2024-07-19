@@ -169,7 +169,7 @@ const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
   return (
     !isLoading && (
       <div
-        className={`w-full h-full flex-1 bg-cover lg:rounded-[16px] overflow-hidden `}
+        className={`w-full h-full flex-1 bg-cover lg:rounded-[16px] overflow-hidden flex flex-col  `}
       >
         {/* {isMobile && (
           <div className="absolute z-30 bottom-0 left-0 right-0 lg:h-[40vh] md:h-[20vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>

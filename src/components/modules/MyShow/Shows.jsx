@@ -43,9 +43,9 @@ export default function Shows({
         `${liveStreamLink}/${replaceSpaceWithDashFunc(item?.name)}/${item?._id}`
       );
     } else {
-      console.log(item,'Hellloooo')
+      // console.log(item,'Hellloooo')
       const singleEvent =await getEventById(item?._id);
-      console.log(singleEvent?.data,'singleEventsingleEventsingleEvent')
+      // console.log(singleEvent?.data,'singleEventsingleEventsingleEvent')
       if(singleEvent?.data?.event_date){
           setEventDate(singleEvent?.data);
       setIsOpen(true);
@@ -57,7 +57,7 @@ export default function Shows({
    
   };
 
-  console.log(Data[0]?._id===eventDate?._id,Data,'eventDateeventDate')
+  // console.log(Data[0]?._id===eventDate?._id,Data,'eventDateeventDate')
   return (
     <>
       {isActive == "Upcoming" && (

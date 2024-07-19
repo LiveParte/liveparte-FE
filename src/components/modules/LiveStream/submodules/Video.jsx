@@ -3,18 +3,16 @@ import React, { useRef, useMemo, useEffect, useCallback, memo } from "react";
 import videojs from "video.js";
 // import { videoUrl } from "../../../utils/constants";
 import VideoJS from "@/components/VideoPlayer";
+import { videoUrl } from "@/utils/functions/deleteLater";
+import {isMobile} from 'react-device-detect';
 
 const AppVideo = ({ liveStreamDetail, handlePlayerReady }) => {
-  const playerRef = useRef(null);
-  const durationRef = useRef(null);
-  const currentTimeRef = useRef(0);
-  const [, forceUpdate] = React.useReducer((x) => x + 1, 0);
   // console.log(liveStreamDetail?.streaming_url,'liveStreamDetail')
 
   const videoJsOptions = useMemo(
     () => ({
       autoplay: true,
-      controls: true,
+      controls:isMobile? true:false,
       responsive: true,
       fluid: true,
       loop: true,
@@ -25,6 +23,7 @@ const AppVideo = ({ liveStreamDetail, handlePlayerReady }) => {
       sources: [
         {
           src:
+            videoUrl ||
             liveStreamDetail?.streaming_url ||
             liveStreamDetail?.promotional_url ||
             `https://res.cloudinary.com/dnvwcmqhw/video/upload/v1713949269/onDemandVideo/Screen_Recording_2024-04-22_at_14.37.28_nezabk.mp4`,
