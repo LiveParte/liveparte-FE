@@ -22,12 +22,16 @@ export default function Index() {
   const router = useRouter();
   const showId = isArray(router.query?.slug) && router.query?.slug[1];
   const userInfo = useSelector(selectCurrentUserData) || {};
-  const { data, isLoading, refetch, isSuccess } = useGetEventDetailViaIdQuery(showId, {
-    skip: !showId,
-  });
-  const { data: userProfileData, isLoading: userProfileLoader } = useGetUserProfileQuery(undefined, {
-    skip: !userInfo?._id,
-  });
+  const { data, isLoading, refetch, isSuccess } = useGetEventDetailViaIdQuery(
+    showId,
+    {
+      skip: !showId,
+    }
+  );
+  const { data: userProfileData, isLoading: userProfileLoader } =
+    useGetUserProfileQuery(undefined, {
+      skip: !userInfo?._id,
+    });
   const NestedLiveStreamData = useSelector(selectLiveStreamEvent) || data;
   const liveStream = { ...data, ...NestedLiveStreamData?.event };
   const modalRef = useRef(null);
@@ -47,15 +51,11 @@ export default function Index() {
   const ModalList = [
     {
       name: "giftTicket",
-      component: (
-        <GiftTicket Data={liveStream} closeModal={handleCloseModal} />
-      ),
+      component: <GiftTicket Data={liveStream} closeModal={handleCloseModal} />,
     },
     {
       name: "shareEvent",
-      component: (
-        <ShareEvent Data={liveStream} closeModal={handleCloseModal} />
-      ),
+      component: <ShareEvent Data={liveStream} closeModal={handleCloseModal} />,
     },
   ];
 
@@ -66,7 +66,8 @@ export default function Index() {
       {modalRef.current && (
         <MyModal
           bodyComponent={
-            ModalList?.find((item, index) => item?.name === modalRef.current)?.component
+            ModalList?.find((item, index) => item?.name === modalRef.current)
+              ?.component
           }
           containerStyle={`bg-[#1B1C20] border-[1px] border-[#343F4B] rounded-[16px]  !w-[486px]`}
           isOpen={!!modalRef.current}
