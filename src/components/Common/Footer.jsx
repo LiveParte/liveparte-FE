@@ -8,8 +8,8 @@ export default function Footer() {
     <div className={container}>
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-[9px] md:gap-[23px]">
-          <Link className=" text-[#495969] no-underline hover:text-white" href={termsUrl} target="_blank">Terms</Link>
-          <Link className=" text-[#495969] no-underline hover:text-white" href={PolicyUrl} target="_blank">Privacy</Link>
+          <Link className=" text-[#495969] no-underline hover:text-white" href={termsUrl} >Terms</Link>
+          <Link className=" text-[#495969] no-underline hover:text-white" href={PolicyUrl} >Privacy</Link>
           <Link className=" text-[#495969] no-underline hover:text-white" href={ContactUs} target="_blank">Contact Us</Link>
           {/* <div className="hidden md:block">Contact Us</div> */}
         </div>

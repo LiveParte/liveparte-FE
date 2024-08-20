@@ -73,7 +73,7 @@ export default function EventId() {
 
   const eventsData={ ...data,...data?.event, ...shows   }
 
-  console.log(router.query,id,'routerrouter')
+  console.log(data,'routerrouter')
  
   return (
     <NoAuth>

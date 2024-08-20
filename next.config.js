@@ -56,7 +56,7 @@ const nextConfig = {
     // period (in ms) where the server will keep pages in the buffer
     maxInactiveAge: 10 * 1000,
     // number of pages that should be kept simultaneously without being disposed
-    pagesBufferLength: 1,
+    pagesBufferLength: 2,
   },
   // images: {
   //   domains: ['res.cloudinary.com', 'url.com', 'imagedomain.com', 'imagedomain2.com'],
@@ -68,6 +68,11 @@ const nextConfig = {
         hostname: 'res.cloudinary.com',
         pathname: '**',
       },
+      {
+        protocol: 'https',
+        hostname:'liveparte-s3-bucket.s3.amazonaws.com',
+        pathname: '**',
+      }
     ],
   },
   // mode: 'jit',

@@ -41,7 +41,7 @@ export const eventApi = createApi({
     }),
     getEventDetailViaId: builder.query({
       query: (id) => ({
-        url: `/event/details/${id}`,
+        url: `/event/${id}`,
         method: "GET",
       }),
       providesTags: (result, error, id) => [{ type: 'singleEvent', id }],

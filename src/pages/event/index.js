@@ -72,7 +72,7 @@ export default function Home() {
   // console.log(filteredEventsHero, "filteredHeroShows");
 
   const filteredUpcoming = isArray(data?.event)
-    ? data?.event.filter((event) => event?.isLiveStreamed)
+    ? data?.event.filter((event) => !event?.isLiveStreamed)
     : [];
 
   //moment(event.event_date) > moment()
@@ -90,7 +90,7 @@ export default function Home() {
     ? filteredEventsHero[randomBetweenOneAndTen(filteredEventsHero?.length)]
     : {};
 
-  // console.log(heroEvent,'ArrayLengh')
+  console.log(data,'ArrayLengh')
   return (
     <div className="min-h-[100vh] bg-black">
       {/* <ButtonComp> */}

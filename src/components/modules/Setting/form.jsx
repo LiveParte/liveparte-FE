@@ -25,6 +25,8 @@ import {
   SuccessNotification,
 } from "@/utils/reusableComponent";
 import { MainContainer } from "@/utils/styleReuse";
+import { uploadFile } from "@/utils/function/lib/aws/s3Service";
+import { Spinner } from "react-bootstrap";
 
 export default function SettingForm({
   isActive,
@@ -71,38 +73,57 @@ export default function SettingForm({
   };
 
 
-  const CloudinaryUpload = (photo) => {
+  const CloudinaryUpload = async(photo) => {
     if(!getValues()?.phone){
       return setError('phone', { type: 'custom', message: 'Phone number is required' });
     }
     setIsLoading(true);
-    const data = new FormData();
-    data.append("file", photo);
-    data.append("upload_preset", "wnvzkduq");
-    data.append("cloud_name", "dnvwcmqhw");
-    fetch("https://api.cloudinary.com/v1_1/dnvwcmqhw/image/upload", {
-      method: "post",
-      body: data,
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log(data,'response1')
-       
-        setImageUrl(data?.secure_url);
-        handleUpdateUser({
-          ...getValues(),
-          profile_image: data.secure_url,
-        })
-        // onChange()
-        // scrollToBottom();
-      })
-      .catch((err) => {
-        setIsLoading(false);
-      })
-      .finally(() => {
-        setIsLoading(false);
-       
+    // const data = new FormData();
+    // data.append("file", photo);
+    // data.append("upload_preset", "wnvzkduq");
+    // data.append("cloud_name", "dnvwcmqhw");
+    try {
+      const result = await uploadFile(photo, 'profile-image');
+      console.log('File uploaded successfully:', result?.Location);
+      
+      setImageUrl(result?.Location);
+      
+      handleUpdateUser({
+        ...getValues(),
+        profile_image: result?.Location,
       });
+      
+      setIsLoading(false);
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      setIsLoading(false);
+    } finally {
+      setIsLoading(false);
+    }
+    
+    // fetch("https://api.cloudinary.com/v1_1/dnvwcmqhw/image/upload", {
+    //   method: "post",
+    //   body: data,
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     // console.log(data,'response1')
+       
+    //     setImageUrl(data?.secure_url);
+    //     handleUpdateUser({
+    //       ...getValues(),
+    //       profile_image: data.secure_url,
+    //     })
+    //     // onChange()
+    //     // scrollToBottom();
+    //   })
+    //   .catch((err) => {
+    //     setIsLoading(false);
+    //   })
+    //   .finally(() => {
+    //     setIsLoading(false);
+       
+    //   });
   };
 
   const handleChange = (event) => {
@@ -244,7 +265,10 @@ export default function SettingForm({
         <div className="mb-[29px] flex items-center gap-[12px] text-white ">
           <div className="h-[40px] w-[40px]">
             {/* <NoProfile /> */}
-            <div className="h-[40px] w-[40px]">
+            <div className="h-[40px] w-[40px] relative">
+             { isLoading&&<div className="absolute left-0 right-0 top-0 bottom-0 flex justify-center items-center opacity-[0.6]">
+              <Spinner size="sm"/>
+              </div>}
               {imageUrl || userInfo?.profile_image||data?.profile_image ? (
                 <Image
                   src={imageUrl || data?.profile_image||userInfo?.profile_image}
