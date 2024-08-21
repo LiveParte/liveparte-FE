@@ -1,17 +1,16 @@
 import { isValidMediaUrl } from "@/utils/functions/VideoValidation";
 import Image from "next/image";
 import React from "react";
-import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
 
 export default function ImageOrVideo({ videoRef, image, isPlaying, item }) {
-  // console.log(item?._id==="66c4eee915739abfe57c18da"&&item,'ImageOrVideoImageOrVideoImageOrVideo')
+  console.log(item?._id==="66c4eee915739abfe57c18da"&&item,'ImageOrVideoImageOrVideoImageOrVideo')
   return (
     <div className="">
       <div className="flex-[1] flex justify-center items-center absolute left-0 right-0 top-[0px] bottom-0  bg-gradient-to-t from-[#00000079] z-10"></div>
-      {true  ?
+      {true ? (isValidMediaUrl(item?.thumbnail_url_laptop)&&
         <Image
-          src={isMobile?item?.thumbnail_url_mobile:item?.thumbnail_url}
-          blurDataURL={isMobile?item?.thumbnail_url_mobile:item?.thumbnail_url}
+          src={'https://liveparte-s3-bucket.s3.amazonaws.com/cropped_image.png'}
+          blurDataURL={item?.thumbnail_url_laptop||item?.thumbnail_url}
           className={`object-cover  ${
             !isPlaying ? "z-30" : "z-0"
           }`}
@@ -28,7 +27,7 @@ export default function ImageOrVideo({ videoRef, image, isPlaying, item }) {
           height={0}
           style={{width:'100%',height:'100%'}}
         />
-       : (isValidMediaUrl(item?.promotional_url)&&
+      ) : (isValidMediaUrl(item?.promotional_url)&&
         <video
           // ref={videoRef}
           autoPlay

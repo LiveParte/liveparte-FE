@@ -2609,3 +2609,12 @@ export const ExitFullScreenIcon = () => (
     />
   </svg>
 );
+
+
+
+export const ArrowDownSelectIcon =()=>(
+  <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M12.7993 6.8999L8.79932 10.8999L4.79932 6.8999" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+
+)

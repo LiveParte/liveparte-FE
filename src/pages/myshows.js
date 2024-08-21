@@ -70,7 +70,7 @@ export default function MyShows() {
         <Header
           Data={HeaderData}
           isActive={isActive}
-          setIsActive={setIsActive}
+          // setIsActive={setIsActive}
           title="My Shows"
         />
         {isActive === "On Demand" && (
