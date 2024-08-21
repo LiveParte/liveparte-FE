@@ -33,27 +33,28 @@ export default function SettingForm({
   // CloudinaryUpload,
   imageUrl,
   isImageUrlLoading,
-  setImageUrl
+  setImageUrl,
 }) {
   const checkIfNonImageExist = storage.localStorage.get("noUserProfileImage");
   const [userProfile, setUserProfile] = useState();
   const userInfo = useSelector(selectCurrentUserData);
-  const dispatch =useDispatch()
+  const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
-  const { control, handleSubmit, setValue, watch, setError, reset,getValues } = useForm({
-    defaultValues: {
-      fullName: "",
-      email: "",
-      phone: "",
-      country: "",
-      state: "",
-      address: "",
-      id: "",
-      currentPassword: "",
-      newPassword: "",
-      confirmPassword: "",
-    },
-  });
+  const { control, handleSubmit, setValue, watch, setError, reset, getValues } =
+    useForm({
+      defaultValues: {
+        fullName: "",
+        email: "",
+        phone: "",
+        country: "",
+        state: "",
+        address: "",
+        id: "",
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      },
+    });
 
   // let userInfo =storage["localStorage"]?.get(userDetailStorageName)
 
@@ -65,17 +66,19 @@ export default function SettingForm({
     );
   }, [checkIfNonImageExist?.nonProfileImage]);
   //upload Image
-  
+
   const hiddenFileInput = useRef(null);
 
   const handleClick = (event) => {
     hiddenFileInput.current.click();
   };
 
-
-  const CloudinaryUpload = async(photo) => {
-    if(!getValues()?.phone){
-      return setError('phone', { type: 'custom', message: 'Phone number is required' });
+  const CloudinaryUpload = async (photo) => {
+    if (!getValues()?.phone) {
+      return setError("phone", {
+        type: "custom",
+        message: "Phone number is required",
+      });
     }
     setIsLoading(true);
     // const data = new FormData();
@@ -83,24 +86,24 @@ export default function SettingForm({
     // data.append("upload_preset", "wnvzkduq");
     // data.append("cloud_name", "dnvwcmqhw");
     try {
-      const result = await uploadFile(photo, 'profile-image');
-      console.log('File uploaded successfully:', result?.Location);
-      
+      const result = await uploadFile(photo, "profile-image");
+      console.log("File uploaded successfully:", result?.Location);
+
       setImageUrl(result?.Location);
-      
+
       handleUpdateUser({
         ...getValues(),
         profile_image: result?.Location,
       });
-      
+
       setIsLoading(false);
     } catch (error) {
-      console.error('Error uploading file:', error);
+      console.error("Error uploading file:", error);
       setIsLoading(false);
     } finally {
       setIsLoading(false);
     }
-    
+
     // fetch("https://api.cloudinary.com/v1_1/dnvwcmqhw/image/upload", {
     //   method: "post",
     //   body: data,
@@ -108,7 +111,7 @@ export default function SettingForm({
     //   .then((res) => res.json())
     //   .then((data) => {
     //     // console.log(data,'response1')
-       
+
     //     setImageUrl(data?.secure_url);
     //     handleUpdateUser({
     //       ...getValues(),
@@ -122,20 +125,24 @@ export default function SettingForm({
     //   })
     //   .finally(() => {
     //     setIsLoading(false);
-       
+
     //   });
   };
 
   const handleChange = (event) => {
     const fileUploaded = event.target.files[0];
-   
+
     CloudinaryUpload(fileUploaded);
     // handleFile(fileUploaded);
   };
 
   //
-  const { data, isLoading:profileLoader, isError } = useGetUserProfileQuery(undefined,{
-    skip:!userInfo?._id
+  const {
+    data,
+    isLoading: profileLoader,
+    isError,
+  } = useGetUserProfileQuery(undefined, {
+    skip: !userInfo?._id,
   });
   const [UpdatePassword, { isLoading: updatePasswordLoader }] =
     useChangePasswordMutation();
@@ -143,43 +150,37 @@ export default function SettingForm({
   const [UpdateUser, { isLoading: updateUserLoader }] =
     useUpdateProfileMutation();
 
-
-
   useEffect(() => {
     setValue("email", data?.email || userInfo?.email);
     setValue("id", data?._id) || userInfo?._id;
     setValue("phone", data?.phone || userInfo?.phone);
     setValue("address", userInfo?.address);
-    setValue("country", userInfo?.countryInfo?.name||'Nigeria');
+    setValue("country", userInfo?.countryInfo?.name || "Nigeria");
     setValue("state", userInfo?.state);
     // setValue(
     //   "username",
     //   data?.fullName ||data?.username
     // );
-    setValue(
-      "fullName",
-      data?.fullName 
-    );
-  }, [data?._id, data, userInfo,setValue]);
+    setValue("fullName", data?.fullName);
+  }, [data?._id, data, userInfo, setValue]);
 
   const confirmPassword = watch("confirmPassword");
 
   async function handleUpdateUser(data) {
     const payload = {
-      fullName:data?.fullName,
+      fullName: data?.fullName,
       profile_image: imageUrl,
       ...data,
-     
     };
     const handleRegisterUser = await UpdateUser(payload);
     const response = handleRegisterUser?.data;
     const UserString = JSON.stringify(response?.updatedUser);
     // console.log(response,imageUrl,'response')
-    dispatch(setUserData(response?.updatedUser))
-    setValue('profile_image',response?.updatedUser?.profile_image)
+    dispatch(setUserData(response?.updatedUser));
+    setValue("profile_image", response?.updatedUser?.profile_image);
     // storage.localStorage.set(userDetailStorageName, JSON.stringify(response?.updatedUser));
-    response?.updatedUser?._id&& storage.localStorage.set(userDetailStorageName, UserString);
-   
+    response?.updatedUser?._id &&
+      storage.localStorage.set(userDetailStorageName, UserString);
 
     if (response?.statusCode && response?.statusCode !== 200) {
       CheckIfArray(response?.message)
@@ -188,7 +189,7 @@ export default function SettingForm({
     }
     if (response?.updatedUser?._id) {
       SuccessNotification({ message: response?.message });
-      setImageUrl()
+      setImageUrl();
       // toast.success(response?.message);
       // storage.localStorage.set('accessTokenLiveParte1',response?.accessToken);
 
@@ -210,7 +211,6 @@ export default function SettingForm({
     }
     const handleRegisterUser = await UpdatePassword(payload);
     const response = handleRegisterUser?.data;
-
 
     if (response?.statusCode && response?.statusCode !== 200) {
       if (CheckIfArray(response?.message)) {
@@ -236,28 +236,24 @@ export default function SettingForm({
     }
   }
 
-
-
-  function CheckPhoneNumber(){
-    if(watch('phone')===data?.phone){
-      return false
+  function CheckPhoneNumber() {
+    if (watch("phone") === data?.phone) {
+      return false;
     }
-    return true
+    return true;
   }
 
-
-  function CheckUserName(){
-    if(watch('fullName') ===data?.fullName){
-      return false
+  function CheckUserName() {
+    if (watch("fullName") === data?.fullName) {
+      return false;
     }
     // if(watch('username') ===data?.username){
     //   return false
     // }
-    return true
+    return true;
   }
 
-  
-  const isChangedState =CheckPhoneNumber()||CheckUserName()||imageUrl;
+  const isChangedState = CheckPhoneNumber() || CheckUserName() || imageUrl;
 
   return (
     <div className={`md:w-[60vw] xl:w-[40vw] ${MainContainer}`}>
@@ -266,12 +262,16 @@ export default function SettingForm({
           <div className="h-[40px] w-[40px]">
             {/* <NoProfile /> */}
             <div className="h-[40px] w-[40px] relative">
-             { isLoading&&<div className="absolute left-0 right-0 top-0 bottom-0 flex justify-center items-center opacity-[0.6]">
-              <Spinner size="sm"/>
-              </div>}
-              {imageUrl || userInfo?.profile_image||data?.profile_image ? (
+              {isLoading && (
+                <div className="absolute left-0 right-0 top-0 bottom-0 flex justify-center items-center opacity-[0.6]">
+                  <Spinner size="sm" />
+                </div>
+              )}
+              {imageUrl || userInfo?.profile_image || data?.profile_image ? (
                 <Image
-                  src={imageUrl || data?.profile_image||userInfo?.profile_image}
+                  src={
+                    imageUrl || data?.profile_image || userInfo?.profile_image
+                  }
                   key={imageUrl || data?.profile_image}
                   width={40}
                   height={40}
@@ -309,43 +309,46 @@ export default function SettingForm({
       <div className="lg:pb-[92px]" autoComplete={`false`}>
         {isActive == "Profile" && (
           <div className="flex flex-col gap-[20px] ">
-            {SettingFormLabel(CheckPhoneNumber,CheckUserName)?.map((item, index) => (
-              <div key={index} className="cursor-not-allowed">
-                <Controller
-                  key={index}
-                  control={control}
-                  name={item?.name}
-                  rules={{
-                    required: `${item?.label} is required`,
-                    pattern: item?.pattern,
-                  }}
-                  render={({
-                    field: { onChange, value },
-                    formState: { errors },
-                  }) => (
-                    <FloatingLabelInput
-                      key={index}
-                      label={item?.label}
-                      type={item?.type}
-                      name={item?.name}
-                      value={value}
-                      onChange={onChange}
-                      error={errors[item?.name]?.message}
-                      errors={errors}
-                      disabled={item?.disabled}
-                      onBlur={item?.onBlur}
-                    />
-                  )}
-                />
-              </div>
-            ))}
+            {SettingFormLabel(CheckPhoneNumber, CheckUserName)?.map(
+              (item, index) => (
+                <div key={index} className="cursor-not-allowed">
+                  <Controller
+                    key={index}
+                    control={control}
+                    name={item?.name}
+                    rules={{
+                      required: `${item?.label} is required`,
+                      pattern: item?.pattern,
+                    }}
+                    render={({
+                      field: { onChange, value },
+                      formState: { errors },
+                    }) => (
+                      <FloatingLabelInput
+                        key={index}
+                        label={item?.label}
+                        type={item?.type}
+                        name={item?.name}
+                        value={value}
+                        onChange={onChange}
+                        error={errors[item?.name]?.message}
+                        errors={errors}
+                        disabled={item?.disabled}
+                        onBlur={item?.onBlur}
+                      />
+                    )}
+                  />
+                </div>
+              )
+            )}
             <div className="mt-[20px] lg:mt-[10px]">
               <ButtonComp
                 btnText={"Save Changes"}
                 className={`w-full text-[13px] font500`}
                 onClick={handleSubmit(handleUpdateUser)}
-                isLoading={ updateUserLoader}
-                isDisabled={isLoading||
+                isLoading={updateUserLoader}
+                isDisabled={
+                  isLoading ||
                   isImageUrlLoading ||
                   profileLoader ||
                   !isChangedState
@@ -371,6 +374,7 @@ export default function SettingForm({
                   formState: { errors },
                 }) => (
                   <FloatingLabelInput
+                    offAutoComplete={true}
                     key={index}
                     label={item?.label}
                     type={item?.type}

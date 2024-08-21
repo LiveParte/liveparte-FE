@@ -29,8 +29,11 @@ const Header = React.memo(
               <div
                 key={i}
                 onClick={() => {
-                  setIsActive && setIsActive(item?.name)
-                  router.push(`myshows?show=${item.link}`)
+                  if(setIsActive){
+                    return setIsActive(item?.name)
+                  }
+                  // setIsActive && 
+                  item.link&& router.push(`myshows?show=${item.link}`)
                 }}
                 className={`text-[14px]  font500 cursor-pointer px-[15px] md:px-[25px] customScrollVertical  flex justify-center items-center leading-none  text-nowrap lg:px-[32px] h-[36px] ${
                   isActive === item?.name
@@ -47,8 +50,13 @@ const Header = React.memo(
               <div
                 key={i}
                 onClick={() =>{
-                  setIsActive && setIsActive(item?.name)
-                  router.push(`myshows?show=${item.link}`)
+                  // setIsActive && setIsActive(item?.name)
+                  // router.push(`myshows?show=${item.link}`)
+                  if(setIsActive){
+                    return setIsActive(item?.name)
+                  }
+                  // setIsActive && 
+                  item.link&& router.push(`myshows?show=${item.link}`)
                 }}
                 className={`lg:px-[32px] px-[18px]  !h-[38px] flex justify-center items-center rounded-[8px]  customScrollVertical ${
                   isActive === item?.name
