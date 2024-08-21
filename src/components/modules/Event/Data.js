@@ -122,22 +122,54 @@ export const SignUpForm =()=>{
             pattern:REGEX_PATTERNS?.EMAIL
             // type:''
         },
-        // {
-        //     name:'phoneNumber',
-        //     label:'Phone number',
-        //     type:'tel',
-        //     pattern:REGEX_PATTERNS?.NUMBER
-        // },
         {
             name:'password',
             label:'Password',
             type:'password'
         },
-        // {
-        //     name:'confirmPassword',
-        //     label:'Confirm Password',
-        //     type:'password'
-        // },
+        {
+            name:'gender',
+            label:'Gender',
+            type:'select',
+            options:[
+                {
+                    label:'Female',
+                    value:'Female'
+                },
+                {
+                    label:'Male',
+                    value:'Male'
+                },
+            ]
+        },
+        {
+            name:'age',
+            label:'Age bracket',
+            type:'select',
+            options:[
+                {
+                    label:'17-22',
+                    value:'17-22'
+                },
+                {
+                    label:'23 -28',
+                    value:'23 -28'
+                },
+                {
+                    label:'29 -34',
+                    value:'29 -34'
+                },
+                {
+                    label:'35 -40',
+                    value:'35 -40'
+                },
+                {
+                    label:'41 +',
+                    value:'41 +'
+                },
+               
+            ]
+        },
     ]
 }
 

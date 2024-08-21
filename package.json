@@ -15,6 +15,7 @@
     "@reduxjs/toolkit": "^2.2.1",
     "agora-rtc-react": "^2.1.0",
     "agora-rtc-sdk-ng": "^4.20.2",
+    "aws-sdk": "^2.1679.0",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.2",
     "cloudinary": "^2.0.3",

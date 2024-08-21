@@ -11,7 +11,7 @@ export const ERRORS = {
     ONLY_NUMBERS: "Only numbers are allowed",
     NUMBER_INVALID: "Number is not valid",
     ALPHA_LETTERS: "Only combinations of numbers and letters are allowed",
-    CAPITAL_SYMBOL_SIX:"Password must contain atleast six characters of one capital letter, one number, one symbol",
+    CAPITAL_SYMBOL_SIX:"Password must contain at least six characters of one capital letter, one number, one symbol",
     NOT_MORE_THAN_99:'Value must be between 1 and 99',
     NUMBER_AND_COMMA:'Only alphabetic characters,numbers and commas are allowed',
     ALPHANUMERIC_WITH_COMMA:'Only alphabetic characters and commas are allowed'

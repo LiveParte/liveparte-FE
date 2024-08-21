@@ -32,7 +32,8 @@ export default function ShowDetails({ onNext, item, id }) {
           <div className="text-[#B4BECB] text-[14px] md:text-[15px] mb-[4px] mb:mb-[8px] font-medium font500 whitespace-nowrap overflow-hidden text-ellipsis  flex items-center font400">
             {moment(item?.event_date).format("MMM DD")}
             <BsDot size={20} />
-            {moment(item?.event_date).format("h:mm a")}
+            {item?.event_time}
+            {/* {moment(item?.event_time).format("h:mm a")} */}
           </div>
           <div className="text-[#B4BECB] text-[14px] md:text-[15px] mb-[10px] md:mb-[24px]  font-medium font500 whitespace-nowrap overflow-hidden text-ellipsis  font400">
             {item?.address}

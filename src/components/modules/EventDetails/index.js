@@ -37,8 +37,8 @@ export default function EventDetails({ HeroSectionEvent }) {
                 <div className="text-[#63768D] text-[15px]">
                 Time
                 </div>
-                <div className="text-[#FFFFFF] text-[15px] font500">
-                  {moment(HeroSectionEvent?.event_date).format('h:mm a')}
+                <div className="text-[#FFFFFF] text-[15px] font500">{HeroSectionEvent?.event_time}
+                  {/* {moment(HeroSectionEvent?.event_date).format('h:mm a')} */}
                 </div>
               </div>
             </div>

@@ -71,7 +71,7 @@ export default function CheckOut({
         <div className="flex items-center gap-[17px]  mb-[56px]">
           <div>
             <Image
-              src={Data?.thumbnail_url}
+              src={Data?.thumbnail_url_mobile}
               className="w-[89px] h-[89px] object-cover rounded-[8px]"
               alt="web"
               width={89}
