@@ -119,7 +119,7 @@ export default function Hero({
     }
     return "justDate";
   };
-  // console.log(HeroSectionEvent,EventStarted,'targetDatePlusDuration1')
+  console.log(HeroSectionEvent,EventStarted,'targetDatePlusDuration1')
 
   return (
     <div
