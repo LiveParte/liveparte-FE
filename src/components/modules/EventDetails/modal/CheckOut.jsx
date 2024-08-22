@@ -49,6 +49,8 @@ export default function CheckOut({
       ticket_id: show?.ticket?.id || show?.ticket?._id,
       user_id: userData?._id,
       purchase_date: new Date(),
+      "recipient_email": userData?.email,
+      "is_gift": false,
     };
     const response = await CreatePurchase(payload);
     if (response?.data?.createdPurchase?._id) {
@@ -146,19 +148,19 @@ export default function CheckOut({
         <div className="border-[#343F4B] border-[1px] rounded-[8px] py-[13px] px-[16px] flex flex-col gap-[7px] mb-[35px]">
                 <div className="flex items-center justify-between text-white">
                   <div className="text-[13px] text-[#63768D]">Ticket Fee</div>
-                  <div className="text-[14px]  text-right">₦8000</div>
+                  <div className="text-[14px]  text-right">{formatMoney(Data?.ticket?.price)}</div>
                 </div>
                 <div className="flex items-center justify-between text-white">
                   <div className="text-[13px] text-[#63768D]">Service Fee</div>
-                  <div className="text-[14px]  text-right">₦800</div>
+                  <div className="text-[14px]  text-right">0</div>
                 </div>
                 <div className="flex items-center justify-between text-white mt-[8px]">
                   <div className="text-[14px] text-[#FFFFFF]">Total</div>
-                  <div className="text-[14px]  text-[#FFFFFF]">₦8000</div>
+                  <div className="text-[14px]  text-[#FFFFFF]">{formatMoney(Data?.ticket?.price)}</div>
                 </div>
         </div>
         {Data?.ticket?.price > 0 ? (
-          !checkIfNNigeria ? (
+          checkIfNNigeria ? (
             <PayStack
               isDisabled={false || eventIsPurchase || !Data?.name}
               showDetails={Data}
