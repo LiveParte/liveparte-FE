@@ -37,8 +37,9 @@ export default function GiftTicket({ closeModal, Data, show }) {
 
   // console.log(Data,'DataDataData')
   const userData = useSelector(selectCurrentUserData) || {};
-
-  const ticketPrice=  returnBothCurrencies({currencyCode:'NGN',HeroSectionEvent:Data,userData:userData});
+  console.log(userData,'userDatauserData')
+  const location =userData?.countryInfo?.code==="NG"?'NGN':'USD'
+  const ticketPrice=  returnBothCurrencies({currencyCode:location,HeroSectionEvent:Data,userData:userData});
   const isValidateMain = watch("recipient_name") && watch("recipient_email");
   const router = useRouter();
   const handleAction = () => {

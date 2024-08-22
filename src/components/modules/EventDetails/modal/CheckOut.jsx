@@ -34,8 +34,8 @@ export default function CheckOut({
   const [payWithStrip, { isLoading }] = useStripPaymentMutation();
   const dispatch = useDispatch();
   const userData = useSelector(selectCurrentUserData) || {};
-  const getPayEvent = useSelector(selectStripPaidEvent);
-  const ticketPrice=  returnBothCurrencies({HeroSectionEvent:Data,userData:userData});
+  const location =userData?.countryInfo?.code==="NG"?'NGN':'USD'
+  const ticketPrice=  returnBothCurrencies({HeroSectionEvent:Data,userData:userData,currencyCode:location});
   const stripAmount =returnBothCurrencies({HeroSectionEvent:Data,returnJustAmount:true,userData:userData,currencyCode:'USD'});
   const stripAmountTest =Array.isArray(Data?.tickets) &&
   Data?.tickets?.find(
