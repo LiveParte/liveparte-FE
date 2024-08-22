@@ -28,6 +28,7 @@ import { selectCurrentUserData } from "@/store/User";
 import ShareEvent from "../../EventDetails/modal/ShareEvent";
 import { setLiveStreamEventData } from "@/store/Event";
 import { useRouter } from "next/router";
+import { returnBothCurrencies } from "@/utils/functions/returnBothCurrencies";
 
 export default function EventButton({
   HeroSectionEvent,
@@ -49,7 +50,7 @@ export default function EventButton({
   HappeningNow,
   show,
   isSingleEvent = false,
-  isOnDemand
+  isOnDemand,
 }) {
   const router = useRouter();
   const dropdownRef = useRef(null);
@@ -57,6 +58,7 @@ export default function EventButton({
   const [isOpen, setIsOpen] = useState(false);
   const [openModal, setModal] = useState(false);
   const userData = useSelector(selectCurrentUserData) || {};
+  const ticketPrice=  returnBothCurrencies({currencyCode:'NGN',HeroSectionEvent:HeroSectionEvent,userData:userData});
   const handleCloseModal = () => {
     setModal(null);
     // implementation for  whatever you want to do when the Paystack dialog closed.
@@ -78,7 +80,7 @@ export default function EventButton({
     },
     {
       name: "gift ticket",
-      component: <GiftTicket Data={show} closeModal={handleCloseModal}/>,
+      component: <GiftTicket Data={show} closeModal={handleCloseModal} />,
     },
     {
       name: "login/signup",
@@ -123,13 +125,17 @@ export default function EventButton({
     if (buttonAction() === "isPaidAndEventIsLive") {
       // dispatch(setLiveStreamEventData(HeroSectionEvent));
 
-     return router.push({
-        pathname: `${liveStreamLink}/${replaceSpaceWithDashFunc(HeroSectionEvent?.name)}/${HeroSectionEvent?._id}`,
+      return router.push({
+        pathname: `${liveStreamLink}/${replaceSpaceWithDashFunc(
+          HeroSectionEvent?.name
+        )}/${HeroSectionEvent?._id}`,
       });
     }
 
     return router.push({
-      pathname: `${eventLink}/${replaceSpaceWithDashFunc(HeroSectionEvent?.name)}/${HeroSectionEvent?._id}`,
+      pathname: `${eventLink}/${replaceSpaceWithDashFunc(
+        HeroSectionEvent?.name
+      )}/${HeroSectionEvent?._id}`,
     });
   };
 
@@ -152,39 +158,45 @@ export default function EventButton({
   function CallToActionIcon() {
     return (
       <div className="flex gap-x-2 md:gap-x-4 items-center h-[44px]">
-        {(!isSingleEvent )&& (
+        {!isSingleEvent && (
           <div className="cursor-pointer" onClick={handleJoinEvent}>
             <InfoIcon />
           </div>
         )}
-        {TextTypeAction()==="pastEvent"?null:(buttonAction() === "isPaidAndEventIsLive" || isSingleEvent) && (
-          <div className="relative  leading-none">
-            {isOpen && (
-              <DropdownMenu
-                giftTicket={handleOpenGiftTicket}
-                openModalShareEvent={handleOpenGShareEvent}
-                HeroSectionEvent={HeroSectionEvent}
-                isSingleEvent={isSingleEvent}
-                HappeningNow={HappeningNow}
-              />
-              // </CustomDropDown>
+        {TextTypeAction() === "pastEvent"
+          ? null
+          : (buttonAction() === "isPaidAndEventIsLive" || isSingleEvent) && (
+              <div className="relative  leading-none">
+                {isOpen && (
+                  <DropdownMenu
+                    giftTicket={handleOpenGiftTicket}
+                    openModalShareEvent={handleOpenGShareEvent}
+                    HeroSectionEvent={HeroSectionEvent}
+                    isSingleEvent={isSingleEvent}
+                    HappeningNow={HappeningNow}
+                  />
+                  // </CustomDropDown>
+                )}
+                <button
+                  className="leading-none flex items-center"
+                  onClick={() => setIsOpen(!isOpen)}
+                >
+                  <ThreeDot />
+                </button>
+              </div>
             )}
-            <button
-              className="leading-none flex items-center"
-              onClick={() => setIsOpen(!isOpen)}
-            >
-              <ThreeDot />
-            </button>
-          </div>
-        )}
-        {!isOnDemand||isSingleEvent||buttonAction() !== "isPaidAndEventIsLive" && (
-          <div className=" cursor-pointer" onClick={toggleMute}>
-            {!muted ? <UnMuteIcon /> : <MuteIcon />}
-          </div>
-        )}
+        {!isOnDemand ||
+          isSingleEvent ||
+          (buttonAction() !== "isPaidAndEventIsLive" && (
+            <div className=" cursor-pointer" onClick={toggleMute}>
+              {!muted ? <UnMuteIcon /> : <MuteIcon />}
+            </div>
+          ))}
       </div>
     );
   }
+
+  console.log(ticketPrice,HeroSectionEvent,userData,'ticketPriceticketPriceticketPrice')
 
   function ButtonActions(buttonType) {
     switch (buttonType) {
@@ -209,7 +221,7 @@ export default function EventButton({
             />
           </div>
         );
-        // pastShow
+      // pastShow
 
       case "isPaidAndEventNotLIve":
         return (
@@ -221,7 +233,7 @@ export default function EventButton({
             />
           </div>
         );
-        case "FreeTicket":
+      case "FreeTicket":
         return (
           <div>
             <ButtonComp
@@ -236,7 +248,7 @@ export default function EventButton({
             />
           </div>
         );
-      
+
       case "notPaidButIsLive":
         return (
           <div>
@@ -246,7 +258,7 @@ export default function EventButton({
                 handleGetTicket && handleGetTicket();
               }}
               className={`py-[12px] px-[16px] md:px-[39px] text-[13px] xl:text-[13px] font500`}
-              btnText={`Get Ticket 
+              btnText={` Get Ticket ${ticketPrice&&'-'} ${ticketPrice}
              
               `}
             />
@@ -257,6 +269,18 @@ export default function EventButton({
         break;
     }
   }
+
+  // function returnBothCurrencies(currencyCode = "USD",HeroSectionEvent=[]) {
+  //   const selectCurrenciesSymbol=currencyCode==="USD"?'$':'N'
+  //   const amount=  (
+  //     Array.isArray(HeroSectionEvent?.tickets) &&
+  //     HeroSectionEvent?.tickets?.find(
+  //       (item) => item?.currency?.code === currencyCode
+  //     )
+  //   );
+  //   return `${selectCurrenciesSymbol}${formatMoney(amount?.price)}`
+  // }
+
 
   // - ${
   //   HeroSectionEvent?.ticket?.code ||
@@ -297,14 +321,14 @@ export default function EventButton({
             Watch live
           </div>
         );
-        case "pastEvent":
-          return (
-            <div className="   flex gap-[8px] items-center justify-center md:justify-start">
-              <div className="text-[11px] lg:text-[13px]  text-white   font500">
-                Past Event
-              </div>
+      case "pastEvent":
+        return (
+          <div className="   flex gap-[8px] items-center justify-center md:justify-start">
+            <div className="text-[11px] lg:text-[13px]  text-white   font500">
+              Past Event
             </div>
-          );
+          </div>
+        );
       default:
         break;
     }
@@ -335,8 +359,9 @@ export default function EventButton({
           {TextType(TextTypeAction())}
         </div>
 
-        <div className="flex   flex-col mb-[5vh] items-center md:hidden"
-        // ref={dropdownRef} 
+        <div
+          className="flex   flex-col mb-[5vh] items-center md:hidden"
+          // ref={dropdownRef}
         >
           <div className="">{TextType(TextTypeAction())}</div>
           <div className="flex justify-center flex-wrap items-center gap-x-2 md:gap-x-4  gap-y-2 mt-4">

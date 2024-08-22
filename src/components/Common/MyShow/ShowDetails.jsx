@@ -1,14 +1,18 @@
+import { selectCurrentUserData } from "@/store/User";
 import { formatMoney } from "@/utils/formatMoney";
+import { returnBothCurrencies } from "@/utils/functions/returnBothCurrencies";
 import { isArray } from "@/utils/helper";
 import moment from "moment";
 import { useRouter } from "next/router";
 import React from "react";
 import { BsDot } from "react-icons/bs";
+import { useSelector } from "react-redux";
 
 export default function ShowDetails({ onNext, item, id }) {
   const router = useRouter();
   const ItemIsArray=Array.isArray(item?.tickets)?item?.tickets[0]:[]
-
+  const userData = useSelector(selectCurrentUserData) || {};
+  const ticketPrice=  returnBothCurrencies({currencyCode:'NGN',HeroSectionEvent:item,userData:userData});
   return (
     <div className=" z-30 relative">
       <div className=" flex flex-col  relative">
@@ -38,11 +42,11 @@ export default function ShowDetails({ onNext, item, id }) {
           <div className="text-[#B4BECB] text-[14px] md:text-[15px] mb-[10px] md:mb-[24px]  font-medium font500 whitespace-nowrap overflow-hidden text-ellipsis  font400">
             {item?.address}
           </div>
-        { ( isArray(item?.tickets) &&ItemIsArray?.price )  ?<div className="font500 font-medium">
-            ₦ {formatMoney(
+        { ( isArray(item?.tickets) &&ItemIsArray?.price )  ?<div className="font500 font-medium">{ticketPrice}
+            {/* ₦ {formatMoney(
               isArray(item?.tickets) && ItemIsArray?.price,
               false
-            )}
+            )} */}
             
           </div>:ItemIsArray?.price===0?'Free':null
 }

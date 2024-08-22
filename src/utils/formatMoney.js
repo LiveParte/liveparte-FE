@@ -1,4 +1,4 @@
-export const formatMoney = (amount, koboRes = true,currencySymbol ='₦') => {
+export const formatMoney = (amount, koboRes = true,currencySymbol) => {
     if (!amount) return null;
     //ensure all commas are striped from the amount
     amount = String(amount).replace(/,/g, "");
@@ -8,7 +8,7 @@ export const formatMoney = (amount, koboRes = true,currencySymbol ='₦') => {
     let naira = amount[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     let kobo = String(amount[1]);
     if (!kobo || kobo === "undefined") kobo = "00";
-    return koboRes ? ` ${naira}.${kobo}` :  `${naira}`;
+    return koboRes ? `${naira}.${kobo}`:`${naira}`;
 };
 
 

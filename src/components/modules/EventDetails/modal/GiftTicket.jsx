@@ -16,6 +16,9 @@ import PayStack from "@/components/PayStack/payStack";
 import { useGiftTicketMutation } from "@/store/Transaction/transactionApi";
 import { Controller, useForm } from "react-hook-form";
 import { isArray } from "@/utils/helper";
+import { returnBothCurrencies } from "@/utils/functions/returnBothCurrencies";
+import { selectCurrentUserData } from "@/store/User";
+import { useSelector } from "react-redux";
 
 export default function GiftTicket({ closeModal, Data, show }) {
   const [giftTicket, { isLoading }] = useGiftTicketMutation();
@@ -33,7 +36,9 @@ export default function GiftTicket({ closeModal, Data, show }) {
   });
 
   // console.log(Data,'DataDataData')
+  const userData = useSelector(selectCurrentUserData) || {};
 
+  const ticketPrice=  returnBothCurrencies({currencyCode:'NGN',HeroSectionEvent:Data,userData:userData});
   const isValidateMain = watch("recipient_name") && watch("recipient_email");
   const router = useRouter();
   const handleAction = () => {
@@ -109,7 +114,7 @@ export default function GiftTicket({ closeModal, Data, show }) {
               {/* {Data?.ticket?.code} ₦ */}
               {Data?.ticket?.price === 0
                 ? "Ticket is Free"
-                : formatMoney(Data?.ticket?.price, false || "0")}
+                : ticketPrice}
             </div>
           </div>
         </div>
@@ -154,15 +159,15 @@ export default function GiftTicket({ closeModal, Data, show }) {
         <div className="border-[#343F4B] border-[1px] rounded-[8px] py-[13px] px-[16px] flex flex-col gap-[7px] mb-[35px] mt-[64px]">
           <div className="flex items-center justify-between text-white">
             <div className="text-[13px] text-[#63768D]">Ticket Fee</div>
-            <div className="text-[14px]  text-right">₦8000</div>
+            <div className="text-[14px]  text-right">{ticketPrice}</div>
           </div>
           <div className="flex items-center justify-between text-white">
             <div className="text-[13px] text-[#63768D]">Service Fee</div>
-            <div className="text-[14px]  text-right">₦800</div>
+            <div className="text-[14px]  text-right">0</div>
           </div>
           <div className="flex items-center justify-between text-white mt-[8px]">
             <div className="text-[14px] text-[#FFFFFF]">Total</div>
-            <div className="text-[14px]  text-[#FFFFFF]">₦8000</div>
+            <div className="text-[14px]  text-[#FFFFFF]">{ticketPrice}</div>
           </div>
         </div>
         {/* {console.log(Data?.ticket?.price,'DataDataData')} */}
@@ -174,7 +179,7 @@ export default function GiftTicket({ closeModal, Data, show }) {
            ${Data?.ticket?.price === 0 ? "" : Data?.ticket?.code || ""} ${
               Data?.ticket?.price === 0
                 ? ""
-                : formatMoney(Data?.ticket?.price || "0", false || "0")
+                : ticketPrice
             } `}
             className={`w-full text-[13px] font500] h-[44px] mt-[20px]`}
             onClick={handleSubmit(handleValidation)}
@@ -190,7 +195,7 @@ export default function GiftTicket({ closeModal, Data, show }) {
               isLoading={isLoading}
               btnText={`Proceed To Make Payment ${
                 Data?.ticket?.price === 0 ? "" : Data?.ticket?.code || ""
-              } ${formatMoney(Data?.ticket?.price || "0", false || "0")} `}
+              } ${ticketPrice} `}
               className={`w-full text-[13px] font500] h-[44px] mt-[20px]`}
               // onClick={handleSubmit(handleValidation)}
             />

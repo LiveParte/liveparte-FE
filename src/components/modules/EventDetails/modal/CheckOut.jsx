@@ -16,6 +16,7 @@ import {
 } from "@/store/User";
 import { eventApi } from "@/store/Event/eventApi";
 import { useStripPaymentMutation } from "@/store/others/stripPayment";
+import { returnBothCurrencies } from "@/utils/functions/returnBothCurrencies";
 
 export default function CheckOut({
   closeModal,
@@ -34,7 +35,9 @@ export default function CheckOut({
   const dispatch = useDispatch();
   const userData = useSelector(selectCurrentUserData) || {};
   const getPayEvent = useSelector(selectStripPaidEvent);
-
+  const ticketPrice=  returnBothCurrencies({currencyCode:'NGN',HeroSectionEvent:Data,userData:userData});
+  const stripAmount =returnBothCurrencies({HeroSectionEvent:Data,returnJustAmount:true,userData:userData,currencyCode:'USD'});
+  console.log(stripAmount,'userDatauserDatauserDatauserData')
   // useEffect(() => {
   //   if (getPayEvent?.payment === "success") {
   //     handleSuccess();
@@ -49,6 +52,8 @@ export default function CheckOut({
       ticket_id: show?.ticket?.id || show?.ticket?._id,
       user_id: userData?._id,
       purchase_date: new Date(),
+      recipient_email: userData?.email,
+      is_gift: false,
     };
     const response = await CreatePurchase(payload);
     if (response?.data?.createdPurchase?._id) {
@@ -61,21 +66,22 @@ export default function CheckOut({
     }
   };
 
+
   const handleStripPayment = async () => {
     const payload = {
-      amount: Data?.ticket?.price || 5000,
+      amount: stripAmount,
       currency: "usd",
-      "type": "event",
+      type: "event",
       event_id: Data?._id,
       ticket_id: Data?.ticket?.id || Data?.ticket?._id,
-      "is_gift": false,
-       "recipient_email": userData?.email,
+      is_gift: false,
+      recipient_email: userData?.email,
       // "amount": 5000,
       // "currency": "usd",
       // "type": "event",
       // "eventId": "66c51c6415739abfe57c1b28",
       // "ticket_id": "66c71ad768a17ace413f23f6",
-      "user_id":  userData?._id,
+      user_id: userData?._id,
       // "is_gift": false,
       // "recipient_email": "bola@gmail.com"
     };
@@ -101,8 +107,8 @@ export default function CheckOut({
     Data?.pruchase?.id || Data?.purchase?.id ? true : false;
   const checkIfNNigeria = userData?.countryInfo?.code === "NG" ? true : false;
   // console.log(Data,'config')
-
-  console.log(userData, "userDatauserDatauserDatauserData");
+//returnBothCurrencies('NGN',HeroSectionEvent)
+  console.log(stripAmount,ticketPrice, "userDatauserDatauserDatauserData123");
   return (
     <div className="bg-[#1B1C20] pb-[56px] px-[16px] lg:px-[56px] pt-[16px] lg:pt-[24px]">
       <nav className="flex justify-between items-center mb-[32px]">
@@ -139,23 +145,30 @@ export default function CheckOut({
               {/* {Data?.ticket?.code}{" "} */}
               {Data?.ticket?.price === 0
                 ? "Ticket is Free"
-                : formatMoney(Data?.ticket?.price || "0", false || "0")}
+                :
+                ticketPrice
+                //  formatMoney(Data?.ticket?.price || "0", false || "0")
+                }
             </div>
           </div>
         </div>
         <div className="border-[#343F4B] border-[1px] rounded-[8px] py-[13px] px-[16px] flex flex-col gap-[7px] mb-[35px]">
-                <div className="flex items-center justify-between text-white">
-                  <div className="text-[13px] text-[#63768D]">Ticket Fee</div>
-                  <div className="text-[14px]  text-right">₦8000</div>
-                </div>
-                <div className="flex items-center justify-between text-white">
-                  <div className="text-[13px] text-[#63768D]">Service Fee</div>
-                  <div className="text-[14px]  text-right">₦800</div>
-                </div>
-                <div className="flex items-center justify-between text-white mt-[8px]">
-                  <div className="text-[14px] text-[#FFFFFF]">Total</div>
-                  <div className="text-[14px]  text-[#FFFFFF]">₦8000</div>
-                </div>
+          <div className="flex items-center justify-between text-white">
+            <div className="text-[13px] text-[#63768D]">Ticket Fee</div>
+            <div className="text-[14px]  text-right">
+            {ticketPrice}
+            </div>
+          </div>
+          <div className="flex items-center justify-between text-white">
+            <div className="text-[13px] text-[#63768D]">Service Fee</div>
+            <div className="text-[14px]  text-right">0</div>
+          </div>
+          <div className="flex items-center justify-between text-white mt-[8px]">
+            <div className="text-[14px] text-[#FFFFFF]">Total</div>
+            <div className="text-[14px]  text-[#FFFFFF]">
+            {ticketPrice}
+            </div>
+          </div>
         </div>
         {Data?.ticket?.price > 0 ? (
           !checkIfNNigeria ? (

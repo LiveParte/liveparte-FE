@@ -120,6 +120,8 @@ export default function Hero({
 
   // Zustand store
 
+  console.log(HeroSectionEvent,'HeroSectionEvent')
+
   return (
     <div
     className={`relative font400 hello bg-cover bg-center xl:bg-top ${MainContainer}`}
