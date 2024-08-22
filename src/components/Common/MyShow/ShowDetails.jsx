@@ -12,7 +12,7 @@ export default function ShowDetails({ onNext, item, id }) {
   const router = useRouter();
   const ItemIsArray=Array.isArray(item?.tickets)?item?.tickets[0]:[]
   const userData = useSelector(selectCurrentUserData) || {};
-  const ticketPrice=  returnBothCurrencies({currencyCode:'NGN',HeroSectionEvent:item,userData:userData});
+  const ticketPrice=  returnBothCurrencies({HeroSectionEvent:item,userData:userData});
   return (
     <div className=" z-30 relative">
       <div className=" flex flex-col  relative">

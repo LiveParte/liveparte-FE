@@ -59,7 +59,7 @@ export default function EventButton({
   const [openModal, setModal] = useState(false);
   const userData = useSelector(selectCurrentUserData) || {};
   const ticketPrice = returnBothCurrencies({
-    currencyCode: "NGN",
+    // currencyCode: "NGN",
     HeroSectionEvent: HeroSectionEvent,
     userData: userData,
   });
