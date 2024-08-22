@@ -25,7 +25,11 @@ export function returnBothCurrencies({
       );
       const amountAlt=Array.isArray(HeroSectionEvent?.tickets)&& HeroSectionEvent?.tickets[0]?.price
 
-    //   console.log(amount,'amountamountamountamount')
+
+      console.log(amount,amountAlt,HeroSectionEvent,'amountamountamountamount')
+
+
+
   
      
     if (returnJustAmount) {
