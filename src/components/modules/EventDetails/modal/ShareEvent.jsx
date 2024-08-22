@@ -12,6 +12,9 @@ import { formatMoney } from "@/utils/formatMoney";
 import CopyToClipboard from "react-copy-to-clipboard";
 import Image from "next/image";
 import moment from "moment";
+import { useSelector } from "react-redux";
+import { selectCurrentUserData } from "@/store/User";
+import { returnBothCurrencies } from "@/utils/functions/returnBothCurrencies";
 
 export default function ShareEvent({ closeModal, Data }) {
   const [copiedText, copy] = useCopyToClipboard();
@@ -24,6 +27,11 @@ export default function ShareEvent({ closeModal, Data }) {
   const handleAction = () => {
     // router.push('/event_time_out')
   };
+    // console.log(Data,'DataDataData')
+    const userData = useSelector(selectCurrentUserData) || {};
+    console.log(userData,'userDatauserData')
+    const location =userData?.countryInfo?.code==="NG"?'NGN':'USD'
+    const ticketPrice=  returnBothCurrencies({currencyCode:location,HeroSectionEvent:Data,userData:userData});
 
   const handleCopy = (text, result) => {
     if (result) {
@@ -80,7 +88,7 @@ export default function ShareEvent({ closeModal, Data }) {
             </div>
             <div className="text-[14px] text-white font500 line-clamp-1">
               {Data?.ticket?.code}{" "}
-              {formatMoney(Data?.ticket?.price, false || "0")}{" "}
+              {ticketPrice}{" "}
             </div>
           </div>
         </div>

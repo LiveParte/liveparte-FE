@@ -58,8 +58,9 @@ export default function EventButton({
   const [isOpen, setIsOpen] = useState(false);
   const [openModal, setModal] = useState(false);
   const userData = useSelector(selectCurrentUserData) || {};
+    const location =userData?.countryInfo?.code==="NG"?'NGN':'USD'
   const ticketPrice = returnBothCurrencies({
-    // currencyCode: "NGN",
+    currencyCode: location,
     HeroSectionEvent: HeroSectionEvent,
     userData: userData,
   });
