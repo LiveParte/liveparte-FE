@@ -16,6 +16,13 @@ export const otherApi = createApi({
         // body: payload,
       }),
     }),
+    getUserLocation2: builder.query({
+      query: () => ({
+        url: "/",
+        method: "GET",
+        // body: payload,
+      }),
+    }),
   
     
   }),
