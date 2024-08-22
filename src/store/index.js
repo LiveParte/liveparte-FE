@@ -9,6 +9,7 @@ import { persistReducer, persistStore } from "redux-persist";
 import createWebStorage from 'redux-persist/lib/storage/createWebStorage';
 import { setupListeners } from "@reduxjs/toolkit/query";
 import settingReducer from "./settings"; // Import the reducer
+import { stripPaymentApi } from "./others/stripPayment";
 
 const createNoopStorage = () => {
   return {
@@ -33,13 +34,15 @@ const rootReducer = combineReducers({
   [userApi.reducerPath]: userApi.reducer,
   [eventApi.reducerPath]: eventApi.reducer,
   [transactionApi.reducerPath]: transactionApi.reducer,
-  [otherApi.reducerPath]: otherApi.reducer
+  [otherApi.reducerPath]: otherApi.reducer,
+  [stripPaymentApi.reducerPath]: stripPaymentApi.reducer
+  //stripPaymentApi
 });
 
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['userApi', 'eventApi', 'otherApi', 'transactionApi'],
+  blacklist: ['userApi', 'eventApi', 'otherApi', 'transactionApi','stripPaymentApi'],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -53,7 +56,8 @@ export const store = configureStore({
       userApi.middleware,
       eventApi.middleware,
       otherApi.middleware,
-      transactionApi.middleware
+      transactionApi.middleware,
+      stripPaymentApi.middleware,
     ),
 });
 

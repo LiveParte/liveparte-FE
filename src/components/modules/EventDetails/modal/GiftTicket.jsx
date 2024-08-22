@@ -3,7 +3,11 @@ import React from "react";
 import { GiftTicketForm } from "../Data";
 import { FloatingLabelInput } from "@/components/Ui/TextInput";
 import { FloatingLabelTextArea } from "@/components/Ui/TextArea";
-import { CountdownTimerII, ErrorNotification, SuccessNotification } from "@/utils/reusableComponent";
+import {
+  CountdownTimerII,
+  ErrorNotification,
+  SuccessNotification,
+} from "@/utils/reusableComponent";
 import { useRouter } from "next/router";
 import { CloseII } from "../../../../../public/svg";
 import { formatMoney } from "@/utils/formatMoney";
@@ -28,9 +32,9 @@ export default function GiftTicket({ closeModal, Data, show }) {
     },
   });
 
-// console.log(Data,'DataDataData')
+  // console.log(Data,'DataDataData')
 
-  const isValidateMain=watch('recipient_name')&&watch('recipient_email');
+  const isValidateMain = watch("recipient_name") && watch("recipient_email");
   const router = useRouter();
   const handleAction = () => {
     router.push("/event_time_out");
@@ -44,28 +48,28 @@ export default function GiftTicket({ closeModal, Data, show }) {
   const handleGiftTicket = async (data) => {
     const payload = {
       event_id: Data?._id,
-      ticket_id: Data?.ticket?._id|| Data?.ticket?.id,
-      message:getValues()?.message,
-      recipient_email:getValues()?.recipient_email,
+      ticket_id: Data?.ticket?._id || Data?.ticket?.id,
+      message: getValues()?.message,
+      recipient_email: getValues()?.recipient_email,
       recipient_name: getValues()?.recipient_name,
     };
     // console.log(data, "data");
     const response = await giftTicket(payload);
     // console.log(response, "handleGiftTicket");
     if (response?.data?.error) {
-     return ErrorNotification({
+      return ErrorNotification({
         message: isArray(response.data?.message)
           ? response.data?.message[0]
           : response.data?.message,
       });
     }
-    if(response?.data?.message==="Ticket has been succesfully gifted") {
-      closeModal()
+    if (response?.data?.message === "Ticket has been succesfully gifted") {
+      closeModal();
       return SuccessNotification({
-        message:response?.data?.message
+        message: response?.data?.message,
       });
     }
-   
+
     // console.log(response, "handleGiftTicket");
   };
 
@@ -105,7 +109,7 @@ export default function GiftTicket({ closeModal, Data, show }) {
               {/* {Data?.ticket?.code} ₦ */}
               {Data?.ticket?.price === 0
                 ? "Ticket is Free"
-              :formatMoney(Data?.ticket?.price, false || "0")}
+                : formatMoney(Data?.ticket?.price, false || "0")}
             </div>
           </div>
         </div>
@@ -117,7 +121,7 @@ export default function GiftTicket({ closeModal, Data, show }) {
               control={control}
               name={item?.name}
               rules={{
-                required:item?.required&& `${item?.label} is required`,
+                required: item?.required && `${item?.label} is required`,
                 pattern: item?.pattern,
               }}
               render={({ field: { onChange, value }, formState: { errors } }) =>
@@ -146,34 +150,52 @@ export default function GiftTicket({ closeModal, Data, show }) {
             />
           ))}
         </form>
+
+        <div className="border-[#343F4B] border-[1px] rounded-[8px] py-[13px] px-[16px] flex flex-col gap-[7px] mb-[35px] mt-[64px]">
+          <div className="flex items-center justify-between text-white">
+            <div className="text-[13px] text-[#63768D]">Ticket Fee</div>
+            <div className="text-[14px]  text-right">₦8000</div>
+          </div>
+          <div className="flex items-center justify-between text-white">
+            <div className="text-[13px] text-[#63768D]">Service Fee</div>
+            <div className="text-[14px]  text-right">₦800</div>
+          </div>
+          <div className="flex items-center justify-between text-white mt-[8px]">
+            <div className="text-[14px] text-[#FFFFFF]">Total</div>
+            <div className="text-[14px]  text-[#FFFFFF]">₦8000</div>
+          </div>
+        </div>
         {/* {console.log(Data?.ticket?.price,'DataDataData')} */}
-        {Data?.ticket?.price==0?
-        <ButtonComp
-        isDisabled={isLoading||!isValidateMain}
-        isLoading={isLoading}
-          btnText={`Proceed To Make Payment
-           ${Data?.ticket?.price === 0?'':
-            Data?.ticket?.code || ""
-          } ${Data?.ticket?.price === 0?'':formatMoney(Data?.ticket?.price || "0", false || "0")} `}
-          className={`w-full text-[13px] font500] h-[44px] mt-[20px]`}
-          onClick={handleSubmit(handleValidation)}
-        />
-       : 
-        <PayStack
-          showDetails={Data}
-          proceed={isLoading?false:isValid}
-          customFunction={handleGiftTicket}
-        >
+        {Data?.ticket?.price == 0 ? (
           <ButtonComp
-          isDisabled={isLoading||!isValid}
-          isLoading={isLoading}
-            btnText={`Proceed To Make Payment ${Data?.ticket?.price === 0?'':
-              Data?.ticket?.code || ""
-            } ${formatMoney(Data?.ticket?.price || "0", false || "0")} `}
+            isDisabled={isLoading || !isValidateMain}
+            isLoading={isLoading}
+            btnText={`Proceed To Make Payment
+           ${Data?.ticket?.price === 0 ? "" : Data?.ticket?.code || ""} ${
+              Data?.ticket?.price === 0
+                ? ""
+                : formatMoney(Data?.ticket?.price || "0", false || "0")
+            } `}
             className={`w-full text-[13px] font500] h-[44px] mt-[20px]`}
-            // onClick={handleSubmit(handleValidation)}
+            onClick={handleSubmit(handleValidation)}
           />
-        </PayStack>}
+        ) : (
+          <PayStack
+            showDetails={Data}
+            proceed={isLoading ? false : isValid}
+            customFunction={handleGiftTicket}
+          >
+            <ButtonComp
+              isDisabled={isLoading || !isValid}
+              isLoading={isLoading}
+              btnText={`Proceed To Make Payment ${
+                Data?.ticket?.price === 0 ? "" : Data?.ticket?.code || ""
+              } ${formatMoney(Data?.ticket?.price || "0", false || "0")} `}
+              className={`w-full text-[13px] font500] h-[44px] mt-[20px]`}
+              // onClick={handleSubmit(handleValidation)}
+            />
+          </PayStack>
+        )}
       </main>
     </div>
   );
