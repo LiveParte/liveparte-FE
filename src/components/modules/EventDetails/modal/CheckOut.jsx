@@ -35,9 +35,12 @@ export default function CheckOut({
   const dispatch = useDispatch();
   const userData = useSelector(selectCurrentUserData) || {};
   const getPayEvent = useSelector(selectStripPaidEvent);
-  const ticketPrice=  returnBothCurrencies({currencyCode:'NGN',HeroSectionEvent:Data,userData:userData});
+  const ticketPrice=  returnBothCurrencies({HeroSectionEvent:Data,userData:userData});
   const stripAmount =returnBothCurrencies({HeroSectionEvent:Data,returnJustAmount:true,userData:userData,currencyCode:'USD'});
-  console.log(stripAmount,'userDatauserDatauserDatauserData')
+  const stripAmountTest =Array.isArray(Data?.tickets) &&
+  Data?.tickets?.find(
+    (item) => item?.currency?.code === 'USD'
+  )?._id;
   // useEffect(() => {
   //   if (getPayEvent?.payment === "success") {
   //     handleSuccess();
@@ -66,6 +69,8 @@ export default function CheckOut({
     }
   };
 
+  // console.log(stripAmountTest,'stripAmountTeststripAmountTest')
+
 
   const handleStripPayment = async () => {
     const payload = {
@@ -73,7 +78,7 @@ export default function CheckOut({
       currency: "usd",
       type: "event",
       event_id: Data?._id,
-      ticket_id: Data?.ticket?.id || Data?.ticket?._id,
+      ticket_id: stripAmountTest,
       is_gift: false,
       recipient_email: userData?.email,
       // "amount": 5000,
@@ -183,7 +188,7 @@ export default function CheckOut({
                   eventIsPurchase
                     ? `Ticket already purchased`
                     : `Proceed To Make Payment  ${
-                        Data?.ticket?.price > 0 ? "- ₦" : ""
+                        Data?.ticket?.price > 0 ? "-" : ""
                       } ${
                         Data?.ticket?.price
                           ? ticketPrice
