@@ -7,7 +7,7 @@ export default function EventDetails({ HeroSectionEvent }) {
   return (
     <div className={`${MainContainer}  bg-[#060809] pt-4`}>
       <div className=" bg-[#060809]">
-        <div  dangerouslySetInnerHTML={{__html:HeroSectionEvent?.description}} className="lg:w-[75%] text-white text-[20px] lg:text-[35px] font600 leading-[27px] lg:leading-[45px] pb-[53px] lg:pb-[101px]">
+        <div  dangerouslySetInnerHTML={{__html:HeroSectionEvent?.description}} className="lg:w-[75%] text-white text-[20px] font400 lg:text-[30px]  leading-[27px] lg:leading-[45px] pb-[53px] lg:pb-[101px]">
           {/* { } */}
         </div>
 
