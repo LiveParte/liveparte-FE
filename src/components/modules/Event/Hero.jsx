@@ -17,8 +17,10 @@ import {
 } from "@/utils/reusableComponent";
 import Image from "next/image";
 import { isArray } from "@/utils/helper";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setEventData } from "@/store/Event";
+import { returnBothCurrencies } from "@/utils/functions/returnBothCurrencies";
+import { selectCurrentUserData } from "@/store/User";
 
 export default function Hero({
   notEvent = true,
@@ -37,7 +39,8 @@ export default function Hero({
   const dispatch = useDispatch();
   const eventIsPurchase = HeroSectionEvent?.pruchase?.id?true:false;
   const isLive = HeroSectionEvent?.isLiveStreamed;
-
+  const userData = useSelector(selectCurrentUserData) || {};
+  const ticketPrice=  returnBothCurrencies({currencyCode:'NGN',HeroSectionEvent:Data,userData:userData});
   const EventStarted =
   HeroSectionEvent?.eventStarted &&
   checkShowDuration(
@@ -279,10 +282,7 @@ export default function Hero({
                               ? `Ticket already purchased`
                               : `Get Ticket - ${
                                   HeroSectionEvent?.ticket?.code || ""
-                                } ${formatMoney(
-                                  HeroSectionEvent?.ticket?.price || " ",
-                                  true
-                                )}`
+                                } ${ticketPrice}`
                           }
                         />}
                         <div onClick={() => setIsOpen(!isOpen)}>

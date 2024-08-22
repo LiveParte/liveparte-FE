@@ -58,7 +58,11 @@ export default function EventButton({
   const [isOpen, setIsOpen] = useState(false);
   const [openModal, setModal] = useState(false);
   const userData = useSelector(selectCurrentUserData) || {};
-  const ticketPrice=  returnBothCurrencies({currencyCode:'NGN',HeroSectionEvent:HeroSectionEvent,userData:userData});
+  const ticketPrice = returnBothCurrencies({
+    currencyCode: "NGN",
+    HeroSectionEvent: HeroSectionEvent,
+    userData: userData,
+  });
   const handleCloseModal = () => {
     setModal(null);
     // implementation for  whatever you want to do when the Paystack dialog closed.
@@ -196,7 +200,12 @@ export default function EventButton({
     );
   }
 
-  console.log(ticketPrice,HeroSectionEvent,userData,'ticketPriceticketPriceticketPrice')
+  console.log(
+    ticketPrice,
+    HeroSectionEvent,
+    userData,
+    "ticketPriceticketPriceticketPrice"
+  );
 
   function ButtonActions(buttonType) {
     switch (buttonType) {
@@ -258,7 +267,7 @@ export default function EventButton({
                 handleGetTicket && handleGetTicket();
               }}
               className={`py-[12px] px-[16px] md:px-[39px] text-[13px] xl:text-[13px] font500`}
-              btnText={` Get Ticket ${ticketPrice&&'-'} ${ticketPrice}
+              btnText={` Get Ticket ${ticketPrice && "-"} ${ticketPrice}
              
               `}
             />
@@ -280,7 +289,6 @@ export default function EventButton({
   //   );
   //   return `${selectCurrenciesSymbol}${formatMoney(amount?.price)}`
   // }
-
 
   // - ${
   //   HeroSectionEvent?.ticket?.code ||

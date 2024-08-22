@@ -171,7 +171,7 @@ export default function CheckOut({
           </div>
         </div>
         {Data?.ticket?.price > 0 ? (
-          !checkIfNNigeria ? (
+          checkIfNNigeria ? (
             <PayStack
               isDisabled={false || eventIsPurchase || !Data?.name}
               showDetails={Data}
@@ -186,7 +186,7 @@ export default function CheckOut({
                         Data?.ticket?.price > 0 ? "- ₦" : ""
                       } ${
                         Data?.ticket?.price
-                          ? formatMoney(Data?.ticket?.price || "", false || "0")
+                          ? ticketPrice
                           : ""
                       } `
                 }
@@ -202,9 +202,9 @@ export default function CheckOut({
                 eventIsPurchase
                   ? `Ticket already purchased`
                   : `Proceed To Make Payment
-           ${Data?.ticket?.price > 0 ? "- ₦" : ""} ${
+           ${Data?.ticket?.price > 0 ? "- " : ""} ${
                       Data?.ticket?.price
-                        ? formatMoney(Data?.ticket?.price || "", false || "0")
+                        ? ticketPrice
                         : ""
                     } `
               }
@@ -220,9 +220,9 @@ export default function CheckOut({
               eventIsPurchase
                 ? `Ticket already purchased`
                 : `Proceed To Make Payment
-            ${Data?.ticket?.price > 0 ? "- ₦" : ""} ${
+            ${Data?.ticket?.price > 0 ? "-" : ""} ${
                     Data?.ticket?.price
-                      ? formatMoney(Data?.ticket?.price || "", false || "0")
+                      ? ticketPrice
                       : ""
                   } `
             }
