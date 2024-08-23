@@ -1,18 +1,14 @@
 import ButtonComp from "@/components/Ui/button";
 import { CountdownTimerII, myShowLink } from "@/utils/reusableComponent";
 import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import React from "react";
 import { CloseII } from "../../../../../public/svg";
-import { formatMoney } from "@/utils/formatMoney";
-import { PaystackConsumer } from "react-paystack";
 import Image from "next/image";
 import PayStack from "@/components/PayStack/payStack";
 import { useCreatePurchaseMutation } from "@/store/Transaction/transactionApi";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  selectCurrentUserData,
-  selectStripPaidEvent,
-  setStripPaidEvent,
+  selectCurrentUserData,  setStripPaidEvent,
 } from "@/store/User";
 import { eventApi } from "@/store/Event/eventApi";
 import { useStripPaymentMutation } from "@/store/others/stripPayment";
@@ -21,11 +17,6 @@ import { returnBothCurrencies } from "@/utils/functions/returnBothCurrencies";
 export default function CheckOut({
   closeModal,
   Data,
-  makePayment,
-  componentProps,
-  handleClose,
-  // handleSuccess,
-  IsBought,
   onNext,
   isHero = true,
 }) {
@@ -48,16 +39,17 @@ export default function CheckOut({
   });
 
   const stripAmountTest =
-  Array.isArray(Data?.tickets) &&
-  (Data?.tickets?.find(
-      (item) => 
+    Array.isArray(Data?.tickets) &&
+    (Data?.tickets?.find(
+      (item) =>
+        (item?.currency?.code || item?.code === "USD") &&
+        (item?._id || item?.id)
+    )?._id ||
+      Data?.tickets?.find(
+        (item) =>
           (item?.currency?.code || item?.code === "USD") &&
           (item?._id || item?.id)
-  )?._id || Data?.tickets?.find(
-      (item) => 
-          (item?.currency?.code || item?.code === "USD") &&
-          (item?._id || item?.id)
-  )?.id);
+      )?.id);
 
   const handleSuccess = async (reference) => {
     const show = Data;
@@ -82,7 +74,6 @@ export default function CheckOut({
   };
 
   // console.log(stripAmountTest,Data,'stripAmountTeststripAmountTest')
-
 
   const handleStripPayment = async () => {
     const payload = {
