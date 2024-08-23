@@ -10,7 +10,9 @@ export default function Index() {
 
   useEffect(() => {
     dispatch(setStripPaidEvent({ ...getPayEvent, payment: "success" }));
-    router.push(getPayEvent?.pathUrl || "event");
+    // router.push(getPayEvent?.pathUrl || "event");
+      router.push("/myshows");
+
   }, []);
 
   return <div></div>;
