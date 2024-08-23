@@ -50,6 +50,31 @@ export default function GiftTicket({ closeModal, Data, show }) {
 
   // console.log(Data, "Data");
 
+  const handleStripPayment = async () => {
+    const payload = {
+      amount: stripAmount,
+      currency: "usd",
+      type: "event",
+      eventId: Data?._id,
+      ticket_id: stripAmountTest,
+      is_gift: true,
+      recipient_email: getValues()?.recipient_email,
+      user_id: userData?._id,
+    };
+
+    const response = await payWithStrip(payload);
+    // console.log(response?.data?.url, "responseresponse");
+    dispatch(
+      setStripPaidEvent({
+        ...Data,
+        payment: "isPending",
+        isHero: isHero,
+        pathUrl: router?.pathname,
+        done: false,
+      })
+    );
+    router.replace(response?.data?.url);
+  };
   const handleGiftTicket = async (data) => {
     const payload = {
       event_id: Data?._id,

@@ -1,4 +1,4 @@
-import { ContactUs, PolicyUrl, termsUrl } from "@/utils/reusableComponent";
+import { ContactUs, FaqUrl, PolicyUrl, termsUrl } from "@/utils/reusableComponent";
 import Link from "next/link";
 import React from "react";
 
@@ -11,6 +11,8 @@ export default function Footer() {
           <Link className=" text-[#495969] no-underline hover:text-white" href={termsUrl} >Terms</Link>
           <Link className=" text-[#495969] no-underline hover:text-white" href={PolicyUrl} >Privacy</Link>
           <Link className=" text-[#495969] no-underline hover:text-white" href={ContactUs} target="_blank">Contact Us</Link>
+          <Link className=" text-[#495969] no-underline hover:text-white" href={FaqUrl} target="_blank">FAQ</Link>
+        
           {/* <div className="hidden md:block">Contact Us</div> */}
         </div>
         <div>© 2024, Liveparte</div>

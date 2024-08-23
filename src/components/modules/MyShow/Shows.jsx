@@ -37,6 +37,7 @@ export default function Shows({
   const isLength = Data?.length;
 
   const handleOnClick = async(item) => {
+    console.log(item,'handleOnClickhandleOnClick')
     dispatch(setLiveStreamEventData(item));
     if (item?.eventStarted) {
       return router.push(
@@ -46,10 +47,12 @@ export default function Shows({
       // console.log(item,'Hellloooo')
       const singleEvent =await getEventById(item?._id);
       // console.log(singleEvent?.data,'singleEventsingleEventsingleEvent')
-      if(singleEvent?.data?.event_date){
-          setEventDate(singleEvent?.data);
+      if(singleEvent?.data?.event_date||item?.eventStarted){
+          setEventDate(singleEvent?.data||item);
       setIsOpen(true);
       }
+      setEventDate(item);
+      setIsOpen(true);
       // setEventDate(item?.event_date);
       // setIsOpen(true);
   
@@ -57,7 +60,7 @@ export default function Shows({
    
   };
 
-  // console.log(Data[0]?._id===eventDate?._id,Data,'eventDateeventDate')
+  console.log(eventDate?.event_date,'eventDateeventDate')
   return (
     <>
       {isActive == "Upcoming" && (
@@ -65,7 +68,7 @@ export default function Shows({
           {isOpen && (
             <MyModal
               isOpen={isOpen}
-              containerStyle={`!w-[543px]`}
+              containerStyle={`!w-[507px]`}
               closeModal={() => setIsOpen(false)}
               bodyComponent={
                 <CountDown date={moment(eventDate?.event_date).format('YYYY-MM-DD') } onBack={() => setIsOpen(false)} />
