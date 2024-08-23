@@ -7,19 +7,12 @@ import Image from "next/image";
 import PayStack from "@/components/PayStack/payStack";
 import { useCreatePurchaseMutation } from "@/store/Transaction/transactionApi";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  selectCurrentUserData,  setStripPaidEvent,
-} from "@/store/User";
+import { selectCurrentUserData, setStripPaidEvent } from "@/store/User";
 import { eventApi } from "@/store/Event/eventApi";
 import { useStripPaymentMutation } from "@/store/others/stripPayment";
 import { returnBothCurrencies } from "@/utils/functions/returnBothCurrencies";
 
-export default function CheckOut({
-  closeModal,
-  Data,
-  onNext,
-  isHero = true,
-}) {
+export default function CheckOut({ closeModal, Data, onNext, isHero = true }) {
   const router = useRouter();
   const [CreatePurchase, { isLoading: cpLoader }] = useCreatePurchaseMutation();
   const [payWithStrip, { isLoading }] = useStripPaymentMutation();
@@ -80,7 +73,7 @@ export default function CheckOut({
       amount: stripAmount,
       currency: "usd",
       type: "event",
-      event_id: Data?._id,
+      eventId: Data?._id,
       ticket_id: stripAmountTest,
       is_gift: false,
       recipient_email: userData?.email,
