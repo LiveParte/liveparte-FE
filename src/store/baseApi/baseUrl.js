@@ -1,4 +1,4 @@
-const isTestEnvironment=true;
+const isTestEnvironment=false;
 export const baseUrl =`https://staging-be.liveparte.com/v1/api/`;
 export const baseUrlProd =`https://backend.liveparte.com/v1/api/`;
  const payStackDev=`pk_test_9b34d7cad3b54108b6eb034c951d89366eadcc3d`;
