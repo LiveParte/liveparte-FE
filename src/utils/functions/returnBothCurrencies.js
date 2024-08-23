@@ -11,23 +11,25 @@ export function returnBothCurrencies({
   }) {
     // const []=useState()
     // Always call useSelector without conditions
-  
+    console.log(userData,HeroSectionEvent,'amountamountamountamount')
+
     const isNigeria = userData?.countryInfo?.code === "NG" ? "₦" : "$";
   
-    if (HeroSectionEvent?.length === 0) {
+    if (HeroSectionEvent?.tickets?.length === 0) {
+    
       return '';
     }
   
     const amount =
       Array.isArray(HeroSectionEvent?.tickets) &&
       HeroSectionEvent?.tickets?.find(
-        (item) => item?.currency?.code === currencyCode
+        (item) => item?.currency?.code|| item?.code === currencyCode
       );
       const amountAlt=Array.isArray(HeroSectionEvent?.tickets)&& HeroSectionEvent?.tickets[0]?.price
 
+      // console.log(amountAlt,amount,'amountamountamountamount')
 
-      console.log(amount,amountAlt,HeroSectionEvent,'amountamountamountamount')
-
+      // alert('this')
 
 
   

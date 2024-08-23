@@ -46,14 +46,18 @@ export default function CheckOut({
     userData: userData,
     currencyCode: "USD",
   });
+
   const stripAmountTest =
-    Array.isArray(Data?.tickets) &&
-    Data?.tickets?.find((item) => item?.currency?.code === "USD")?._id;
-  // useEffect(() => {
-  //   if (getPayEvent?.payment === "success") {
-  //     handleSuccess();
-  //   }
-  // }, [getPayEvent?.payment]);
+  Array.isArray(Data?.tickets) &&
+  (Data?.tickets?.find(
+      (item) => 
+          (item?.currency?.code || item?.code === "USD") &&
+          (item?._id || item?.id)
+  )?._id || Data?.tickets?.find(
+      (item) => 
+          (item?.currency?.code || item?.code === "USD") &&
+          (item?._id || item?.id)
+  )?.id);
 
   const handleSuccess = async (reference) => {
     const show = Data;
@@ -77,7 +81,8 @@ export default function CheckOut({
     }
   };
 
-  // console.log(stripAmountTest,'stripAmountTeststripAmountTest')
+  // console.log(stripAmountTest,Data,'stripAmountTeststripAmountTest')
+
 
   const handleStripPayment = async () => {
     const payload = {
