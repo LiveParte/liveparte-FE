@@ -34,13 +34,21 @@ export default function CheckOut({
   const [payWithStrip, { isLoading }] = useStripPaymentMutation();
   const dispatch = useDispatch();
   const userData = useSelector(selectCurrentUserData) || {};
-  const location =userData?.countryInfo?.code==="NG"?'NGN':'USD'
-  const ticketPrice=  returnBothCurrencies({HeroSectionEvent:Data,userData:userData,currencyCode:location});
-  const stripAmount =returnBothCurrencies({HeroSectionEvent:Data,returnJustAmount:true,userData:userData,currencyCode:'USD'});
-  const stripAmountTest =Array.isArray(Data?.tickets) &&
-  Data?.tickets?.find(
-    (item) => item?.currency?.code === 'USD'
-  )?._id;
+  const location = userData?.countryInfo?.code === "NG" ? "NGN" : "USD";
+  const ticketPrice = returnBothCurrencies({
+    HeroSectionEvent: Data,
+    userData: userData,
+    currencyCode: location,
+  });
+  const stripAmount = returnBothCurrencies({
+    HeroSectionEvent: Data,
+    returnJustAmount: true,
+    userData: userData,
+    currencyCode: "USD",
+  });
+  const stripAmountTest =
+    Array.isArray(Data?.tickets) &&
+    Data?.tickets?.find((item) => item?.currency?.code === "USD")?._id;
   // useEffect(() => {
   //   if (getPayEvent?.payment === "success") {
   //     handleSuccess();
@@ -63,14 +71,13 @@ export default function CheckOut({
       dispatch(
         eventApi.util.invalidateTags(["ondemand", "event", "eventStream"])
       );
-      dispatch(setStripPaidEvent(null));
+      // dispatch(setStripPaidEvent(null));
       // onNext && onNext();
       router.push(myShowLink);
     }
   };
 
   // console.log(stripAmountTest,'stripAmountTeststripAmountTest')
-
 
   const handleStripPayment = async () => {
     const payload = {
@@ -81,14 +88,7 @@ export default function CheckOut({
       ticket_id: stripAmountTest,
       is_gift: false,
       recipient_email: userData?.email,
-      // "amount": 5000,
-      // "currency": "usd",
-      // "type": "event",
-      // "eventId": "66c51c6415739abfe57c1b28",
-      // "ticket_id": "66c71ad768a17ace413f23f6",
       user_id: userData?._id,
-      // "is_gift": false,
-      // "recipient_email": "bola@gmail.com"
     };
     const response = await payWithStrip(payload);
     // console.log(response?.data?.url, "responseresponse");
@@ -112,8 +112,8 @@ export default function CheckOut({
     Data?.pruchase?.id || Data?.purchase?.id ? true : false;
   const checkIfNNigeria = userData?.countryInfo?.code === "NG" ? true : false;
   // console.log(Data,'config')
-//returnBothCurrencies('NGN',HeroSectionEvent)
-  console.log(stripAmount,ticketPrice, "userDatauserDatauserDatauserData123");
+  //returnBothCurrencies('NGN',HeroSectionEvent)
+  console.log(stripAmount, ticketPrice, "userDatauserDatauserDatauserData123");
   return (
     <div className="bg-[#1B1C20] pb-[56px] px-[16px] lg:px-[56px] pt-[16px] lg:pt-[24px]">
       <nav className="flex justify-between items-center mb-[32px]">
@@ -148,21 +148,17 @@ export default function CheckOut({
             </div>
             <div className="text-[14px] text-white font500">
               {/* {Data?.ticket?.code}{" "} */}
-              {Data?.ticket?.price === 0
-                ? "Ticket is Free"
-                :
-                ticketPrice
+              {
+                Data?.ticket?.price === 0 ? "Ticket is Free" : ticketPrice
                 //  formatMoney(Data?.ticket?.price || "0", false || "0")
-                }
+              }
             </div>
           </div>
         </div>
         <div className="border-[#343F4B] border-[1px] rounded-[8px] py-[13px] px-[16px] flex flex-col gap-[7px] mb-[35px]">
           <div className="flex items-center justify-between text-white">
             <div className="text-[13px] text-[#63768D]">Ticket Fee</div>
-            <div className="text-[14px]  text-right">
-            {ticketPrice}
-            </div>
+            <div className="text-[14px]  text-right">{ticketPrice}</div>
           </div>
           <div className="flex items-center justify-between text-white">
             <div className="text-[13px] text-[#63768D]">Service Fee</div>
@@ -170,9 +166,7 @@ export default function CheckOut({
           </div>
           <div className="flex items-center justify-between text-white mt-[8px]">
             <div className="text-[14px] text-[#FFFFFF]">Total</div>
-            <div className="text-[14px]  text-[#FFFFFF]">
-            {ticketPrice}
-            </div>
+            <div className="text-[14px]  text-[#FFFFFF]">{ticketPrice}</div>
           </div>
         </div>
         {Data?.ticket?.price > 0 ? (
@@ -180,20 +174,17 @@ export default function CheckOut({
             <PayStack
               isDisabled={false || eventIsPurchase || !Data?.name}
               showDetails={Data}
-              onNext={true ? handleStripPayment : onNext}
+              onNext={onNext}
             >
               <ButtonComp
+                isLoading={cpLoader || isLoading}
                 isDisabled={eventIsPurchase || !Data?.name}
                 btnText={
                   eventIsPurchase
                     ? `Ticket already purchased`
                     : `Proceed To Make Payment  ${
                         Data?.ticket?.price > 0 ? "-" : ""
-                      } ${
-                        Data?.ticket?.price
-                          ? ticketPrice
-                          : ""
-                      } `
+                      } ${Data?.ticket?.price ? ticketPrice : ""} `
                 }
                 className={`w-full text-[13px] font500] h-[44px] `}
                 // onClick={() => initializePayment(handleSuccess, handleClose)}
@@ -208,9 +199,7 @@ export default function CheckOut({
                   ? `Ticket already purchased`
                   : `Proceed To Make Payment
            ${Data?.ticket?.price > 0 ? "- " : ""} ${
-                      Data?.ticket?.price
-                        ? ticketPrice
-                        : ""
+                      Data?.ticket?.price ? ticketPrice : ""
                     } `
               }
               className={`w-full text-[13px] font500] h-[44px] `}
@@ -226,9 +215,7 @@ export default function CheckOut({
                 ? `Ticket already purchased`
                 : `Proceed To Make Payment
             ${Data?.ticket?.price > 0 ? "-" : ""} ${
-                    Data?.ticket?.price
-                      ? ticketPrice
-                      : ""
+                    Data?.ticket?.price ? ticketPrice : ""
                   } `
             }
             className={`w-full text-[13px] font500] h-[44px] `}
