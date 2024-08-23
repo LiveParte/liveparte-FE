@@ -42,6 +42,6 @@ export function returnBothCurrencies({
         return ''
     }
   
-    return `${isNigeria}${formatMoney(amount?.price||amountAlt, false)}`;
+    return  userData?._id?`${isNigeria}${formatMoney(amount?.price||amountAlt, false)}`:'';
   }
   

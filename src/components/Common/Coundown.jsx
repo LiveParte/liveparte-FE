@@ -60,9 +60,10 @@ export default function CountDown({date,onBack}) {
       <div className=" text-[24px] mb-[23px] uppercase font-1 font-bold">
         Not started yet
       </div>
-      <div className="text-[13px] text-[#63768D] font400 mb-[68px] leading-[17px]">
-        Artiste radar live haven’t started yet, below is
-        <br /> the count down to when the event will start
+      <div className="text-[13px] text-[#63768D] font400 mb-[18px] leading-[17px]">
+        Get ready for an exciting live event.<br/> Please come back soon to watch the event.
+        {/* The event haven’t started yet, below is
+        <br /> the count down to when the event will start */}
       </div>
      {date&& <CountdownTimerIII targetDate={date}/>}
      {/* {date&&console.log(calculateTimeLeft(date),"hello2")} */}
