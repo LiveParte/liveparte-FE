@@ -45,8 +45,7 @@ export default function PayStack({ showDetails, onNext, children,isDisabled,cust
     },
   };
 
-  // console.log(show,showDetails,'config')
-  // you can call this function anything
+  
   const handleSuccess = async (reference) => {
     if(customFunction){
       return customFunction()
