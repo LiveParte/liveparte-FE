@@ -18,7 +18,10 @@ const initialState = {
   loading: false,
   location: {},
   coins: 0,
-  event:{},
+  event: {},
+  lastEventAttended: {},
+  locked: false,
+  paymentEvent:{}
 };
 
 export const authSlice = createSlice({
@@ -37,35 +40,62 @@ export const authSlice = createSlice({
 
       state;
     },
-    setSingleEvent: (state,{ payload }) => {
-      state.event= payload;
+    setSingleEvent: (state, { payload }) => {
+      state.event = payload;
       state;
     },
     setCoins: (state, { payload }) => {
       state.coins = payload;
       state;
     },
+    setLastEventAttended: (state, { payload }) => {
+      state.lastEventAttended = payload;
+      state;
+    },
+    setStripPaidEvent: (state, { payload }) => {
+      state.paymentEvent = payload;
+      state;
+    },
+    
     logout: (state) => {
       state.userData = null;
       state.userInfo = {};
       state.coins = 0;
-      state.location={};
-      state.event={};
+      state.location = {};
+      state.event = {};
       storage["localStorage"].remove(userDetailStorageName);
       storage["localStorage"].remove(accessTokenStorageName);
       state.isLoggedIn = false;
     },
-    
+    lockOrientation(state) {
+      state.locked = true;
+    },
+    unlockOrientation(state) {
+      state.locked = false;
+    },
   },
 });
 
 // export const { reducer, actions } = authSlice;
-export const { logout,  setUserData, setLocation, setCoins ,setSingleEvent} =
-  authSlice?.actions;
+export const {
+  logout,
+  setUserData,
+  setLocation,
+  setCoins,
+  setSingleEvent,
+  setLastEventAttended,
+  setStripPaidEvent,
+  lockOrientation,
+  unlockOrientation
+} = authSlice?.actions;
 export default authSlice.reducer;
+export const selectOrientationLocked = (state) => state.auth.locked;
+
 // export const authState = reducer;
 // export const selectCurrentPharamaserveData = (state) => state.auth.pharamData;
 export const selectLocation = (state) => state.auth.location;
+export const selectLastEventAttended = (state) => state.auth?.lastEventAttended;
+export const selectStripPaidEvent = (state) => state.auth?.paymentEvent;
 export const selectCoins = (state) => state.auth.coins;
 export const selectEvent = (state) => state.auth?.event;
 export const selectCurrentUserData = (state) => state.auth.userInfo;

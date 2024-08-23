@@ -3,12 +3,18 @@ import dynamic from "next/dynamic";
 import { Play } from "../../../../public/svg";
 import moment from "moment";
 import { useRouter } from "next/router";
-import { eventLink, singleEventLink } from "@/utils/reusableComponent";
+import {
+  eventLink,
+  replaceDashWithSpace,
+  replaceSpaceWithDashFunc,
+  singleEventLink,
+} from "@/utils/reusableComponent";
 import { isArray } from "@/utils/helper";
 import { useDispatch, useSelector } from "react-redux";
 // import { selectEvent, setEventData } from "@/store/Event";
 import ShowDetails from "./ShowDetails";
 import { selectEvent, setSingleEvent } from "@/store/User";
+import { Spinner } from "react-bootstrap";
 // import ImageOrVideo from "";
 const ImageOrVideo = dynamic(() => import("./ImageOrVideo"), { ssr: false });
 // const ShowDetails = dynamic(() => import("./ShowDetails"));
@@ -25,26 +31,20 @@ export default function ShowsCard({
   onNext,
   isPlayIcon = true,
   showVideo = true,
-  onDemand=false
-  
+  onDemand = false,
+  countdownLoading,
 }) {
-  const backgroundImage = `https://res.cloudinary.com/dammymoses/image/upload/v1710175667/LiveParte/a7_zeemus.png`;
   const router = useRouter();
   const dispatch = useDispatch();
   const shows = useSelector(selectEvent) || {};
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [posterImage, setPosterImage] = useState();
-  useEffect(() => {
-    setPosterImage(showImage || backgroundImage);
-  }, [showImage, backgroundImage]);
+
 
   const videoRef = useRef(null);
   const noVideoRef = useRef(null);
-  const backUrl =
-    id == 1
-      ? `bg-[url('https://res.cloudinary.com/dammymoses/image/upload/v1710175667/LiveParte/a7_zeemus.png')]`
-      : `bg-[url('/webp/show2.png')]`;
+  
 
   const handleMouseEnter = () => {
     setIsPlaying(true);
@@ -64,32 +64,45 @@ export default function ShowsCard({
 
   // console.log(shows,'showsshowsshows')
 
-
   return (
     <div
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       onTouchStart={handleMouseEnter}
       onTouchEnd={handleMouseLeave}
-      className="cursor-pointer"
-      onClick={()=>{
+      className="cursor-pointer relative"
+      onClick={() => {
         if (onNext) {
           return onNext(item);
         }
         // alert('Hello')
         // console.log({...item,ticket:isArray(item?.tickets)&&item?.tickets[0]},'showsshowsshows1');
-        dispatch(setSingleEvent({...item,ticket:isArray(item?.tickets)&&item?.tickets[0]}));
+        dispatch(
+          setSingleEvent({
+            ...item,
+            ticket: isArray(item?.tickets) && item?.tickets[0],
+          })
+        );
         router.push({
-          pathname: `${eventLink}/${item?._id}`,
+          pathname: `${eventLink}/${replaceSpaceWithDashFunc(item?.name)}/${
+            item?._id
+          }`,
         });
       }}
     >
+      {countdownLoading && (
+        <div className="absolute  right-0 top-2 z-40">
+          <Spinner size="sm" variant="light" animation="border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </Spinner>
+        </div>
+      )}
       <div
-        className={` relative min-h-[200px] h-[25vh] md:h-[27vh] lg:h-[45vh] xl:h-[27vh] rounded-[8px] lg:rounded-[20px] ${backUrl} bg-cover bg-center bg-gradient-to-b from-black to-transparent  overflow-hidden group cursor-pointer duration-300 ease-in-out group-hover:opacity-100 relative mb-[16px]`}
+        className={` relative min-h-[200px] h-[25vh] md:h-[27vh] lg:h-[45vh] xl:h-[27vh] rounded-[8px] lg:rounded-[20px] bg-cover bg-center bg-gradient-to-b from-black to-transparent  overflow-hidden group cursor-pointer duration-300 ease-in-out group-hover:opacity-100 relative mb-[16px]`}
       >
         <div>
           <ImageOrVideo
-            image={showImage || backgroundImage}
+            image={showImage}
             isPlaying={showVideo ? isPlaying : false}
             videoRef={showVideo ? videoRef : noVideoRef}
             item={item}
@@ -97,11 +110,18 @@ export default function ShowsCard({
           <div className="flex-1 absolute left-0 top-0 z-20">
             {showHeader && (
               <span className="flex-1">
-                {isLive||onDemand ? (
+                {isLive || onDemand ? (
                   <div className="mt-[8px] lg:mt-[12px] ml-[8px] lg:ml-[14px] rounded-[9px] flex gap-[8px] items-center px-[5px] lg:px-[10px] py-[6px] bg-[#06080933] backdrop-blur-[60px] w-fit ">
-                    <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div>
-                    <div className="text-[11px] lg:text-[13px]  text-white  " style={{letterSpacing:'0.5px'}}>
-                      {onDemand?'On Demand':'Happening Now'}
+                    <div
+                      className={`h-[8px] w-[8px] rounded-full  ${
+                        onDemand ? "bg-[#FFC41B]" : "bg-[#FA4354]"
+                      }`}
+                    ></div>
+                    <div
+                      className="text-[11px] lg:text-[13px]  text-white  "
+                      style={{ letterSpacing: "0.5px" }}
+                    >
+                      {onDemand ? "On Demand" : "Happening Now"}
                     </div>
                   </div>
                 ) : (

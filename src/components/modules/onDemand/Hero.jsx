@@ -8,6 +8,7 @@ import { isArray } from "@/utils/helper";
 import {  useSelector } from "react-redux";
 import { selectCurrentUserData } from "@/store/User";
 import { useCreatePurchaseMutation } from "@/store/Transaction/transactionApi";
+import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
 
 import EventButton from "./submodules/EventButton";
 
@@ -118,7 +119,7 @@ export default function Hero({
     }
     return "justDate";
   };
-  // console.log(HeroSectionEvent,EventStarted,'targetDatePlusDuration1')
+  console.log(HeroSectionEvent,EventStarted,'targetDatePlusDuration1')
 
   return (
     <div
@@ -135,7 +136,7 @@ export default function Hero({
         loop
         muted
         className="absolute left-0 right-0 top-0 bottom-0  h-[90vh] md:h-[100vh] w-[100vw] object-cover"
-        poster={HeroSectionEvent?.thumbnail_url}
+        poster={isMobile?HeroSectionEvent?.thumbnail_url_mobile:HeroSectionEvent?.thumbnail_url}
         style={{
           backgroundAttachment: "fixed",
           width: "100%",

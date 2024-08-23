@@ -10,14 +10,17 @@ import {
   checkShowDuration,
   convertAndAddOneHour,
   convertDateTime,
+  convertToUTC,
   CopyEventLink,
   eventLink,
   GetTransformedImageUrl,
 } from "@/utils/reusableComponent";
 import Image from "next/image";
 import { isArray } from "@/utils/helper";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setEventData } from "@/store/Event";
+import { returnBothCurrencies } from "@/utils/functions/returnBothCurrencies";
+import { selectCurrentUserData } from "@/store/User";
 
 export default function Hero({
   notEvent = true,
@@ -36,7 +39,8 @@ export default function Hero({
   const dispatch = useDispatch();
   const eventIsPurchase = HeroSectionEvent?.pruchase?.id?true:false;
   const isLive = HeroSectionEvent?.isLiveStreamed;
-
+  const userData = useSelector(selectCurrentUserData) || {};
+  const ticketPrice=  returnBothCurrencies({currencyCode:'NGN',HeroSectionEvent:Data,userData:userData});
   const EventStarted =
   HeroSectionEvent?.eventStarted &&
   checkShowDuration(
@@ -84,7 +88,7 @@ export default function Hero({
               className=" text-white no-underline  "
               href={`https://calendar.google.com/calendar/r/eventedit?text=${
                 replaceAmpersandWithAnd(HeroSectionEvent?.name)
-              }&dates=${convertDateTime(HeroSectionEvent?.event_date)}/${convertAndAddOneHour(HeroSectionEvent?.event_date)}&details=<b>${replaceAmpersandWithAnd(HeroSectionEvent?.name)}</b><br/><br/><b>Location:</b>${replaceAmpersandWithAnd(HeroSectionEvent?.country)}
+              }&dates=${convertToUTC(HeroSectionEvent?.event_date)}/${convertAndAddOneHour(HeroSectionEvent?.event_date)}&details=<b>${replaceAmpersandWithAnd(HeroSectionEvent?.name)}</b><br/><br/><b>Location:</b>${replaceAmpersandWithAnd(HeroSectionEvent?.country)}
               <br/>
               <br/>
               <b>Description:</b>${replaceAmpersandWithAnd(HeroSectionEvent?.description)}
@@ -118,6 +122,8 @@ export default function Hero({
   }
 
   // Zustand store
+
+  console.log(HeroSectionEvent,'HeroSectionEvent')
 
   return (
     <div
@@ -276,10 +282,7 @@ export default function Hero({
                               ? `Ticket already purchased`
                               : `Get Ticket - ${
                                   HeroSectionEvent?.ticket?.code || ""
-                                } ${formatMoney(
-                                  HeroSectionEvent?.ticket?.price || " ",
-                                  true
-                                )}`
+                                } ${ticketPrice}`
                           }
                         />}
                         <div onClick={() => setIsOpen(!isOpen)}>

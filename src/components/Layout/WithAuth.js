@@ -10,7 +10,7 @@ import { storage, userDetailStorageName } from "@/utils/helper";
 import { useSelector, useDispatch } from "react-redux";
 import IfHeaderIsAuth from "../Common/Header/IfHeaderIsAuth";
 
-function WithAuth({ children, showHeader = true }) {
+function WithAuth({ children, showHeader = true, showNav = true }) {
   const router = useRouter();
   const [updateUserLocation] = useUpdateUserLocationMutation();
 
@@ -71,7 +71,7 @@ function WithAuth({ children, showHeader = true }) {
     <div className="min-h-[100dvh] md:min-h-[100vh] bg-black flex flex-col justify-end ">
       {showHeader && (
         <div className="absolute left-0 right-0 z-50 top-0">
-          <IfHeaderIsAuth />
+          <IfHeaderIsAuth showNav={showNav} />
         </div>
       )}
       {children}

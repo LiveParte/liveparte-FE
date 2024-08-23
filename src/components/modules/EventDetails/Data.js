@@ -36,7 +36,7 @@ export const GiftTicketForm =()=>{
             name:'message',
             label:'Type your message here (Optional)',
             type:'textarea',
-            required: true
+            required: false
         },
     ]
 }
