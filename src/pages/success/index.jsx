@@ -8,12 +8,12 @@ export default function Index() {
   const getPayEvent = useSelector(selectStripPaidEvent);
   const dispatch = useDispatch();
 
-  console.log(getPayEvent, router, "getPayEventgetPayEvent");
+  // console.log(getPayEvent, router, "getPayEventgetPayEvent");
 
   useEffect(() => {
     dispatch(setStripPaidEvent({ ...getPayEvent, payment: "success" }));
     // if (getPayEvent?.done===false) {
-      router.push(getPayEvent?.pathUrl);
+    router.push(getPayEvent?.pathUrl || "event");
     // }
   }, []);
 
