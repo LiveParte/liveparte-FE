@@ -1,7 +1,4 @@
-stages:
-  - deploy
-
-deploy_to_staging:
+deploy_to_ec2:
   stage: deploy
   image: ubuntu:latest
   script:
@@ -9,20 +6,13 @@ deploy_to_staging:
     - echo "$EC2_PRIVATE_KEY" > larparte-keypair.pem
     - chmod 600 larparte-keypair.pem
 
-    # SSH into the EC2 instance and run the staging deployment script
-    - ssh -o StrictHostKeyChecking=no -i larparte-keypair.pem ubuntu@$SERVER_IP_STAGING "cd /home/ubuntu/liveparte-FE && chmod +x deploy.sh && ./deploy.sh"
-  only:
-    - staging
-
-deploy_to_production:
-  stage: deploy
-  image: ubuntu:latest
-  script:
-    - apt-get update && apt-get install -y openssh-client
-    - echo "$EC2_PRIVATE_KEY" > larparte-keypair.pem
-    - chmod 600 larparte-keypair.pem
-
-    # SSH into the EC2 instance and run the production deployment script
-    - ssh -o StrictHostKeyChecking=no -i larparte-keypair.pem ubuntu@$SERVER_IP "cd /home/ubuntu/liveparte-FE && chmod +x deploy-prod.sh && ./deploy-prod.sh"
+    # SSH into the EC2 instance and run the appropriate deploy script
+    - |
+      if [[ "$CI_COMMIT_REF_NAME" == "main" ]]; then
+        ssh -o StrictHostKeyChecking=no -i larparte-keypair.pem ubuntu@$SERVER_IP "cd /home/ubuntu/liveparte-FE && chmod +x deploy-prod.sh && ./deploy-prod.sh"
+      elif [[ "$CI_COMMIT_REF_NAME" == "staging" ]]; then
+        ssh -o StrictHostKeyChecking=no -i larparte-keypair.pem ubuntu@$SERVER_IP_STAGING "cd /home/ubuntu/liveparte-FE && chmod +x deploy.sh && ./deploy.sh"
+      fi
   only:
     - main
+    - staging
