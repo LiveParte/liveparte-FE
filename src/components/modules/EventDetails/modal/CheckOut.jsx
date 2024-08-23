@@ -45,7 +45,7 @@ export default function CheckOut({ closeModal, Data, onNext, isHero = true }) {
       )?.id);
 
 
-      console.log(stripAmountTest,Data,userData,'stripAmountTest')
+      // console.log(stripAmountTest,Data,userData,'stripAmountTest')
 
   const handleSuccess = async (reference) => {
     const show = Data;
