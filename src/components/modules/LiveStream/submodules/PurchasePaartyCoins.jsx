@@ -3,20 +3,24 @@ import Image from "next/image";
 import ButtonComp from "@/components/Ui/button";
 import LiveStreamHeader from "./LiveStreamHeader";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCoins, selectCurrentUserData, setCoins } from "@/store/User";
+import { selectCoins, selectCurrentUserData, setCoins, setStripPaidEvent } from "@/store/User";
 import { isArray } from "@/utils/helper";
 import { formatMoney } from "@/utils/formatMoney";
 import PayStack from "@/components/PayStack/payStack";
 import { usePurchaseCoinsMutation } from "@/store/Transaction/transactionApi";
 import { SuccessNotification } from "@/utils/reusableComponent";
+import { useStripPaymentMutation } from "@/store/others/stripPayment";
+import { useRouter } from "next/router";
 export default function PurchasePaartyCoins({
   onClose,
   onBack,
   containerStyle,
   path,
 }) {
+  const router =useRouter();
   const [purchaseCoins, { isLoading}] = usePurchaseCoinsMutation();
   const [coinsNeeded, setCoinsNeeded] = useState(0);
+  const [payWithStrip, { isLoading:stripLoader }] = useStripPaymentMutation();
   const dispatch = useDispatch();
   const userInfo = useSelector(selectCurrentUserData)||{};
   const coinsList = useSelector(selectCoins);
@@ -34,9 +38,43 @@ export default function PurchasePaartyCoins({
     getCostPerCoin(coinsPrice, coinsAmount) * coinsNeeded,
     false
   );
+  const coinsToPrice = getCostPerCoin(coinsPrice, coinsAmount) * coinsNeeded;
+
+
+  const handleStripPayment = async () => {
+    const payload = {
+      amount: coinsToPrice,
+      "currency": "usd",
+      "type": "coin",
+      "eventId": "66c5183715739abfe57c1b12",
+      "ticket_id": "66c8737ae57665730a89cd01",
+      // "user_id": "66c7b70c4fa40c8e8deda4fb",
+      "is_gift": false,
+      "recipient_email": "Uwagbalecourage@gmail.com",
+      user_id: userInfo?._id,
+
+  //     "event_id": "641cde26cbf530b653fefe5a",
+  // "ticket_id": "641cde26cbf530b653fefe5a",
+  // "user_id": "641cde26cbf530b653fefe5a",
+  // "is_gift": true,
+  // "recipient_email": "john.doe@example.com"
+    };
+    const response = await payWithStrip(payload);
+    // console.log(response?.data?.url, "responseresponse");
+    // dispatch(
+    //   setStripPaidEvent({
+    //     ...Data,
+    //     payment: "isPending",
+    //     isHero: isHero,
+    //     pathUrl: router?.pathname,
+    //     done: false,
+    //     type:'coins  purchase'
+    //   })
+    // );
+    router.replace(response?.data?.url);
+  };
 
   async function handlePurchaseCoins() {
-    const coinsToPrice = getCostPerCoin(coinsPrice, coinsAmount) * coinsNeeded;
     const payload = {
       userId: userInfo?._id,
       amountPaid: coinsToPrice,
@@ -94,11 +132,11 @@ export default function PurchasePaartyCoins({
     {coinSelectionItems}
     </div>
       {/* */}
-      <div className="pb-[26px]">
+      <div className="pb-[26px] hid">
         <PayStack
           amount={getCostPerCoin(coinsPrice, coinsAmount) * coinsNeeded}
           type="Coins Purchase"
-          customFunction={handlePurchaseCoins}
+          customFunction={handleStripPayment}
           isDisabled={isLoading || !coinsNeeded}
           proceed={coinsNeeded ? true : false}
         >
@@ -112,6 +150,15 @@ export default function PurchasePaartyCoins({
           />
           {/* Purchase Coins ₦5,000 */}
         </PayStack>
+        <ButtonComp
+        onClick={handleStripPayment}
+            btnText={`Purchase Coins ${totalCost ? "₦" : ""} ${
+              totalCost ? totalCost : ""
+            }`}
+            className={`h-[39px] text-[#060809] w-full text-[13px] py-[5px]`}
+            isLoading={isLoading}
+            isDisabled={!coinsNeeded}
+          />
       </div>
     </div>
   );
