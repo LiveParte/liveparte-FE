@@ -1,9 +1,10 @@
 import { LogoImage } from "@/utils/styleReuse";
-import React from "react";
+import React, { memo } from "react";
 import UserProfile from "../../UserProfile";
 import { FullScreenIcon, ThreeDotSmall } from "../../../../../public/svg";
+import { Dropdown, DropdownButton } from "react-bootstrap";
 
-export default function HeaderMd({
+ function HeaderMd({
   setIsOpen,
   isOpen,
   ProfileDropdown,
@@ -24,7 +25,7 @@ export default function HeaderMd({
      {isOpen && <ProfileDropdown />}
      <UserProfile onClick={() => setIsOpen(!isOpen)} />
    </div>
-    <div className="md:hidden">
+    <div className="md:hidden z-50">
       <div className="absolute  left-0 right-0 px-[16px] lg:px-[18px] top-0 py-[17px] flex justify-between text-white z-30 bg-gradient-to-b h-[100px] items-start from-black lg:rounded-[16px]">
         {!isLoading && (
           <div className="flex justify-between items-center w-full">
@@ -37,17 +38,31 @@ export default function HeaderMd({
               </div>
             ) : (
               <div className="flex items-center gap-[8px]">
-                <div className="h-[8px] w-[8px] rounded-full bg-black"></div>
+                <div className="h-[8px] w-[8px] rounded-full bg-[#FFC41B]"></div>
                 <div className="font500 text-[13px] tracking-[0.48px] leading-none ">
-                  on Demand
+                  On Demand
                 </div>
               </div>
             )}
             {/* <div>Hello</div> */}
-            <div className=" " onClick={() => setIsOpenII(!isOpenII)}>
+            <DropdownButton
+            id="dropdown-basic-button"
+            title={
+              <div className="#333D474D">
+                <ThreeDotSmall />
+              </div>
+            }
+          >
+            <Dropdown.Item href="#/action-1" className="p-0 m-0  bg-transparent">
+            {/* <div className="bg-black h-[30px] w-[30vw]"></div> */}
+            <ShareAndGiftDropdown />
+            </Dropdown.Item>
+            
+          </DropdownButton>
+            {/* <div className=" " onClick={() => setIsOpenII(!isOpenII)}>
               {isOpenII && <ShareAndGiftDropdown />}
               <ThreeDotSmall/>
-            </div>
+            </div> */}
             <div
               className="text-[13px]  gap-[8px] items-center hidden lg:flex cursor-pointer"
               onClick={() => handleOpenModalAll(setFullScreenModal)}
@@ -63,3 +78,6 @@ export default function HeaderMd({
   
   );
 }
+
+
+export default memo(HeaderMd);

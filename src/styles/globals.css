@@ -409,6 +409,13 @@ body {
   body {
     min-height: 100dvh;
   }
+
+  .video-js,
+  .vjs-tech {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+  }
 }
 
 .arrow {
@@ -440,6 +447,7 @@ body {
     /* Inner shadow 2 */ 0px 1px 1px 0px #d8ecf833 inset; /* Inner shadow 3 */
 }
 
+
 .elementI {
   box-shadow: 0px 0px 0px 1px #bacff71f inset,
     /* Inner shadow 1 */ 0px 24px 48px 0px #a8d8f50f inset,
@@ -467,10 +475,60 @@ select:-webkit-autofill:focus {
 }
 
 .agroa-video video {
+  /* object-fit: contain !important; */
+}
+
+.linear-gradient {
+  /* background:linear-gradient(0deg, black 46%, rgba(0, 0, 0, 0) 97.19%); */
+  background: linear-gradient(0deg, black 2%, rgba(0, 0, 0, 0) 23.19%);
+}
+
+.widthFillSpace {
+  width: -webkit-fill-available;
+}
+
+.video-js {
+  height: auto !important;
+}
+.vjs-loading-spinner{
+  display: none !important;
+}
+.video-js video {
   object-fit: contain !important;
 }
 
-.linear-gradient{
-  background:linear-gradient(0deg, black 46%, rgba(0, 0, 0, 0) 97.19%);
+.vjs-big-play-button{
+  
+}
 
+/* styles.css */
+.button-with-shadow {
+  box-shadow: 0px 24px 48px 0px #a8d8f50f inset, 0px 1px 1px 0px #d8ecf833 inset;
+}
+
+.dropdown-toggle {
+  background: transparent !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+}
+
+.dropdown-toggle::after {
+  display: none !important;
+}
+
+.dropdown-menu.show {
+  background-color: transparent !important;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent !important;
+}
+
+.dropdown-menu.show:hover {
+  background-color: transparent !important;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: transparent !important;
 }

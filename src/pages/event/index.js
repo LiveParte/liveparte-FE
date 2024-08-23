@@ -56,22 +56,28 @@ export default function Home() {
   const onDemandEvents = onDemandEvent?.event;
   const filteredEvents = Array.isArray(data?.event)
     ? data?.event.filter((event) =>
-        checkShowDuration(event?.event_date,event?.name==="Artiste radar live"?0:  event?.event_length)
+        checkShowDuration(
+          event?.event_date,
+          event?.name === "Artiste radar live" ? 0 : event?.event_length
+        )
       )
     : [];
   const filteredEventsHero = data?.event?.filter((event) =>
-    checkShowDurationAfter(event?.event_date, event?.name==="Artiste radar live"?300000: event?.event_length)
+    checkShowDurationAfter(
+      event?.event_date,
+      event?.name === "Artiste radar live" ? 300000 : event?.event_length
+    )
   );
 
   // console.log(filteredEventsHero, "filteredHeroShows");
 
   const filteredUpcoming = isArray(data?.event)
-    ? data?.event.filter((event) => event?.isLiveStreamed )
+    ? data?.event.filter((event) => !event?.isLiveStreamed)
     : [];
 
-    //moment(event.event_date) > moment()
+  //moment(event.event_date) > moment()
 
-//why i wrote  this code 
+  //why i wrote  this code
   // useEffect(() => {
   //   if (user?._id) {
   //     getAllEventRefetch();
@@ -80,11 +86,11 @@ export default function Home() {
   // }, [user?._id]);
 
   //randomBetweenOneAndTen(filteredEventsHero?.length)
-  const heroEvent = isArray(filteredEventsHero )
+  const heroEvent = isArray(filteredEventsHero)
     ? filteredEventsHero[randomBetweenOneAndTen(filteredEventsHero?.length)]
     : {};
 
-  // console.log(heroEvent,'ArrayLengh')
+  console.log(data,'ArrayLengh')
   return (
     <div className="min-h-[100vh] bg-black">
       {/* <ButtonComp> */}
@@ -104,7 +110,6 @@ export default function Home() {
           events={filteredEvents}
           upComingEvent={filteredUpcoming}
           OnDemandEvent={onDemandEvents}
-          
         />
         <Footer />
       </NoAuth>

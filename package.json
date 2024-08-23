@@ -15,6 +15,7 @@
     "@reduxjs/toolkit": "^2.2.1",
     "agora-rtc-react": "^2.1.0",
     "agora-rtc-sdk-ng": "^4.20.2",
+    "aws-sdk": "^2.1679.0",
     "axios": "^1.6.8",
     "bootstrap": "^5.3.2",
     "cloudinary": "^2.0.3",
@@ -24,6 +25,7 @@
     "framer-motion": "^11.0.5",
     "i": "^0.3.7",
     "install": "^0.13.0",
+    "isomorphic-ws": "^5.0.0",
     "js-cookie": "^3.0.5",
     "lit": "^3.1.2",
     "moment": "^2.30.1",
@@ -36,6 +38,7 @@
     "react-bootstrap": "^2.10.0",
     "react-calendar": "^4.8.0",
     "react-copy-to-clipboard": "^5.1.0",
+    "react-device-detect": "^2.2.3",
     "react-dom": "^18.2.0",
     "react-fast-marquee": "^1.6.4",
     "react-geolocated": "^4.1.2",
@@ -45,12 +48,15 @@
     "react-player": "^2.14.1",
     "react-redux": "^9.1.0",
     "react-toastify": "^10.0.4",
+    "react-use-websocket": "^4.8.1",
     "redux": "^5.0.1",
     "redux-persist": "^6.0.0",
     "swiper": "^10.3.1",
     "usehooks-ts": "^3.1.0",
     "video-react": "^0.16.0",
+    "video.js": "^8.12.0",
     "webpack-bundle-analyzer": "^4.10.2",
+    "ws": "^8.18.0",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
@@ -58,7 +64,8 @@
     "eslint": "^8",
     "eslint-config-next": "14.1.0",
     "postcss": "^8.4.38",
-    "tailwindcss": "^3.4.1"
+    "tailwindcss": "^3.4.1",
+    "typescript": "5.5.3"
   },
   "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

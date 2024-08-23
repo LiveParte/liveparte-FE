@@ -45,8 +45,7 @@ export default function PayStack({ showDetails, onNext, children,isDisabled,cust
     },
   };
 
-  // console.log(show,showDetails,'config')
-  // you can call this function anything
+  
   const handleSuccess = async (reference) => {
     if(customFunction){
       return customFunction()
@@ -58,6 +57,8 @@ export default function PayStack({ showDetails, onNext, children,isDisabled,cust
       ticket_id: show?.ticket?.id||show?.ticket?._id,
       user_id: userData?._id,
       purchase_date: new Date(),
+      recipient_email: userData?.email,
+      is_gift: false,
     };
     const response = await CreatePurchase(payload);
     // console.log(response,'CreatePurchase')

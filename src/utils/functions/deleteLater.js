@@ -1,0 +1,1 @@
+export const videoUrl='https://res.cloudinary.com/dnvwcmqhw/video/upload/v1713949264/onDemandVideo/Screen_Recording_2024-04-22_at_14.34.51_urb0mp.mp4'

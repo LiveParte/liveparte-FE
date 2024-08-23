@@ -35,7 +35,7 @@ export default function OnDemandEvent() {
   return (
     <div className="bg-black m-h-[100vh] ">
       <NoAuth>
-        {HeroSectionEvent?.name ? (
+        {!onDemandEventLoader && HeroSectionEvent?.name ? (
           <Hero
             HeroSectionEvent={HeroSectionEvent}
             router={router}
@@ -47,7 +47,7 @@ export default function OnDemandEvent() {
             }}
           />
         ) : (
-          <EventEmptyState />
+          !onDemandEventLoader && <EventEmptyState />
         )}
 
         {OnDemandEvent?.length > 0 && (

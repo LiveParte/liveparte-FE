@@ -6,49 +6,54 @@ export const eventApi = createApi({
   baseQuery: baseQueryWithRetry,
   tagTypes: ['event', 'singleEvent', 'ondemand', 'eventStream'],
   refetchOnReconnect: true,
-  refetchOnFocus: true,
   endpoints: (builder) => ({
     getAllEvent: builder.query({
       query: () => ({
         url: `/event?skip=0&limit=20`,
         method: "GET",
       }),
-      providesTags: ['event']
+      providesTags: ['event'],
+      refetchOnFocus: true // Enable refetch on focus for this query
     }),
     getEventStream: builder.query({
       query: () => ({
         url: `/event/stream?skip=0&limit=10`,
         method: "GET",
       }),
-      providesTags: ['eventStream']
+      providesTags: ['eventStream'],
+      refetchOnFocus: false // Disable refetch on focus for this query
     }),
     getEventOnDemand: builder.query({
       query: () => ({
         url: `/event/ondemand?skip=0&limit=10`,
         method: "GET",
       }),
-      providesTags: ['ondemand']
+      providesTags: ['ondemand'],
+      refetchOnFocus: true // Enable refetch on focus for this query
     }),
     getEventViaId: builder.query({
       query: (id) => ({
         url: `/event/${id}`,
         method: "GET",
       }),
-      providesTags: (result, error, id) => [{ type: 'singleEvent', id }]
+      providesTags: (result, error, id) => [{ type: 'singleEvent', id }],
+      refetchOnFocus: false // Disable refetch on focus for this query
     }),
     getEventDetailViaId: builder.query({
       query: (id) => ({
         url: `/event/details/${id}`,
         method: "GET",
       }),
-      providesTags: (result, error, id) => [{ type: 'singleEvent', id }]
+      providesTags: (result, error, id) => [{ type: 'singleEvent', id }],
+      refetchOnFocus: false // Enable refetch on focus for this query
     }),
     userShows: builder.query({
       query: (userId) => ({
         url: `/event/myevents/${userId}?skip=0&limit=30`,
         method: "GET",
       }),
-      providesTags: (result, error, userId) => [{ type: 'event', userId }]
+      providesTags: (result, error, userId) => [{ type: 'event', userId }],
+      refetchOnFocus: false // Disable refetch on focus for this query
     }),
     loginApi: builder.mutation({
       query: (payload) => ({
@@ -65,6 +70,7 @@ export const {
   useGetEventOnDemandQuery,
   useGetEventStreamQuery,
   useGetEventViaIdQuery,
+  useLazyGetEventDetailViaIdQuery,
   useGetEventDetailViaIdQuery,
   useUserShowsQuery,
   useLazyUserShowsQuery,

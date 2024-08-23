@@ -57,10 +57,8 @@ export default function Hero({
                   <span key={textChange} className="invisible">
                     .
                   </span>
-                  <div className="text-[#FFC41B]">
-                    {/* {textChange} */}
-                    {/* <span className="inline-block animate-bounce">Okay</span> */}
-
+                  <div className="text-[#FFC41B] inline-flex">
+                  
                     <Animate textChange={textChange} />
                   </div>
                 </div>

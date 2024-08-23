@@ -82,7 +82,7 @@ export default function PurchasePaartyCoins({
 
   return (
     <div
-      className={`px-[16px] pt-[16px] bg-[#060809] w-[200px] lg:w-max   max-w-max ${containerStyle}`}
+      className={`px-[16px] pt-[16px] bg-[#060809] w-[200px] lg:w-max    max-w-max ${containerStyle} `}
     >
       <LiveStreamHeader
         path={path}
