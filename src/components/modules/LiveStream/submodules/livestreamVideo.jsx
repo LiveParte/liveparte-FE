@@ -166,6 +166,8 @@ const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
   const duration =
     durationRef.current !== null && formatTime(durationRef.current);
 
+    console.log(liveStreamDetail,'liveStreamDetail')
+
   return (
     !isLoading && (
       <div
@@ -191,7 +193,7 @@ const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
           />
         </div>
 
-        {!isLive ? (
+        {(!isLive&&liveStreamDetail?.promotional_url) ? (
           <Video
             handlePlayerReady={handlePlayerReady}
             currentTimeRef={currentTime}

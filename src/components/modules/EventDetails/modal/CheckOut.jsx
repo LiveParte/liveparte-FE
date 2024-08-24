@@ -35,17 +35,17 @@ export default function CheckOut({ closeModal, Data, onNext, isHero = true }) {
     Array.isArray(Data?.tickets) &&
     (Data?.tickets?.find(
       (item) =>
-        (item?.currency?.code || item?.code === "USD") &&
+        (item?.currency?.code  === "USD" || item?.code === "USD") &&
         (item?._id || item?.id)
     )?._id ||
       Data?.tickets?.find(
         (item) =>
-          (item?.currency?.code || item?.code === "USD") &&
+          (item?.currency?.code === "USD" || item?.code === "USD") &&
           (item?._id || item?.id)
       )?.id);
 
 
-      // console.log(stripAmountTest,Data,userData,'stripAmountTest')
+      // console.log(stripAmount,'stripAmountTest')
 
   const handleSuccess = async (reference) => {
     const show = Data;
@@ -69,7 +69,7 @@ export default function CheckOut({ closeModal, Data, onNext, isHero = true }) {
     }
   };
 
-  // console.log(stripAmountTest,Data,'stripAmountTeststripAmountTest')
+  // console.log(stripAmountTest,Data?.tickets,'stripAmountTeststripAmountTest')
 
   const handleStripPayment = async () => {
     const payload = {
@@ -93,7 +93,7 @@ export default function CheckOut({ closeModal, Data, onNext, isHero = true }) {
         done: false,
       })
     );
-    router.replace(response?.data?.url);
+    response?.data?.url&&router.replace(response?.data?.url);
   };
   const handleAction = () => {
     router.push("/event_time_out");
@@ -105,7 +105,7 @@ export default function CheckOut({ closeModal, Data, onNext, isHero = true }) {
   const checkIfNNigeria = userData?.countryInfo?.code === "NG" ? true : false;
   // console.log(Data,'config')
   //returnBothCurrencies('NGN',HeroSectionEvent)
-  console.log(stripAmount, ticketPrice, "userDatauserDatauserDatauserData123");
+  // console.log(stripAmount, ticketPrice, "userDatauserDatauserDatauserData123");
   return (
     <div className="bg-[#1B1C20] pb-[56px] px-[16px] lg:px-[56px] pt-[16px] lg:pt-[24px]">
       <nav className="flex justify-between items-center mb-[32px]">

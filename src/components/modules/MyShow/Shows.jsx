@@ -17,8 +17,9 @@ import { setLiveStreamEventData } from "@/store/Event";
 import { MainContainer } from "@/utils/styleReuse";
 import MyModal from "@/components/Ui/Modal";
 import CountDown from "@/components/Common/Coundown";
-import { useLazyGetEventDetailViaIdQuery } from "@/store/Event/eventApi";
+import { useLazyGetEventDetailViaIdQuery, useLazyGetEventViaIdQuery } from "@/store/Event/eventApi";
 import moment from "moment";
+import { combineDateTime } from "@/utils/functions/combineTimeDate";
 // import UserShowsCard from "@/components/UserShow";
 
 export default function Shows({
@@ -31,13 +32,15 @@ export default function Shows({
   const dispatch = useDispatch();
   const [isOpen, setIsOpen] = useState(false);
   const [eventDate, setEventDate] = useState();
-  const [getEventById,{isLoading:eventByIdLoader}]= useLazyGetEventDetailViaIdQuery()
+  const [getEventById, { isLoading: eventByIdLoader }] =
+    useLazyGetEventDetailViaIdQuery();
+    const [getEventId,{isLoading:eventIdLoader}]=useLazyGetEventViaIdQuery();
 
   const container = "px-[20px] md:px-[40px] lg:px-[120px] ";
   const isLength = Data?.length;
 
-  const handleOnClick = async(item) => {
-    console.log(item,'handleOnClickhandleOnClick')
+  const handleOnClick = async (item) => {
+    // console.log(item, "handleOnClickhandleOnClick");
     dispatch(setLiveStreamEventData(item));
     if (item?.eventStarted) {
       return router.push(
@@ -45,22 +48,21 @@ export default function Shows({
       );
     } else {
       // console.log(item,'Hellloooo')
-      const singleEvent =await getEventById(item?._id);
+      const singleEvent = await getEventId(item?._id);
       // console.log(singleEvent?.data,'singleEventsingleEventsingleEvent')
-      if(singleEvent?.data?.event_date||item?.eventStarted){
-          setEventDate(singleEvent?.data||item);
-      setIsOpen(true);
+      if (singleEvent?.data?.event_date || item?.eventStarted) {
+        // console.log()
+        setEventDate(singleEvent?.data || item);
+       return  setIsOpen(true);
       }
       setEventDate(item);
       setIsOpen(true);
       // setEventDate(item?.event_date);
       // setIsOpen(true);
-  
     }
-   
   };
 
-  console.log(eventDate?.event_date,'eventDateeventDate')
+  // console.log(eventDate?.event_date,'eventDateeventDate')
   return (
     <>
       {isActive == "Upcoming" && (
@@ -71,7 +73,10 @@ export default function Shows({
               containerStyle={`!w-[507px]`}
               closeModal={() => setIsOpen(false)}
               bodyComponent={
-                <CountDown date={moment(eventDate?.event_date).format('YYYY-MM-DD') } onBack={() => setIsOpen(false)} />
+                <CountDown
+                  date={combineDateTime({eventDate:eventDate?.event_date,eventTime:eventDate?.event_time})}
+                  onBack={() => setIsOpen(false)}
+                />
               }
             />
           )}
@@ -82,7 +87,9 @@ export default function Shows({
                 {!isLoading &&
                   Data?.map((item, index) => (
                     <ShowsCard
-                      countdownLoading={(item?._id === eventDate?._id )&&eventByIdLoader}
+                      countdownLoading={
+                        item?._id === eventDate?._id && eventByIdLoader
+                      }
                       key={index}
                       id={item?._id}
                       name={item?.name}
