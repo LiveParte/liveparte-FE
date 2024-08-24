@@ -78,7 +78,7 @@ function LiveStream({
     );
   }
 
-  console.log(liveStreamDetail,'liveStreamDetailliveStreamDetail')
+  // console.log(liveStreamDetail,'liveStreamDetailliveStreamDetail')
 
   const Container = useMemo(() => {
     return function Container({ lockOrientation, unlockOrientation, orientation }) {
