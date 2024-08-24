@@ -71,6 +71,7 @@ export const {
   useGetEventStreamQuery,
   useGetEventViaIdQuery,
   useLazyGetEventDetailViaIdQuery,
+  useLazyGetEventViaIdQuery,
   useGetEventDetailViaIdQuery,
   useUserShowsQuery,
   useLazyUserShowsQuery,

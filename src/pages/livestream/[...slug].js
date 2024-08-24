@@ -61,6 +61,8 @@ export default function Index() {
 
   const forceUpdate = React.useReducer(() => ({}), {})[1]; // Force update for re-render
 
+  console.log(liveStream,'liveStreamliveStream')
+
   return (
     <WithAuth showHeader={false}>
       {modalRef.current && (
@@ -76,7 +78,7 @@ export default function Index() {
       )}
       <div className="flex-1 flex flex-col bg-[#060809] overflow-hidden h-[100dvh] lg:h-[100vh]">
         <LiveStream
-          isLive={liveStream?.isLiveStreamed}
+          isLive={(liveStream?.isLiveStreamed &&liveStream?.eventStarted)}
           liveStreamDetail={liveStream}
           handleOpenModal={handleOpenModal}
           handleCloseModal={handleCloseModal}

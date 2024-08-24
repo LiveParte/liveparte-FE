@@ -150,7 +150,7 @@ export default function PurchasePaartyCoins({
           />
           {/* Purchase Coins ₦5,000 */}
         </PayStack>
-        <ButtonComp
+        {/* <ButtonComp
         onClick={handleStripPayment}
             btnText={`Purchase Coins ${totalCost ? "₦" : ""} ${
               totalCost ? totalCost : ""
@@ -158,7 +158,7 @@ export default function PurchasePaartyCoins({
             className={`h-[39px] text-[#060809] w-full text-[13px] py-[5px]`}
             isLoading={isLoading}
             isDisabled={!coinsNeeded}
-          />
+          /> */}
       </div>
     </div>
   );

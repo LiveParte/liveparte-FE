@@ -17,11 +17,14 @@ import { useGiftTicketMutation } from "@/store/Transaction/transactionApi";
 import { Controller, useForm } from "react-hook-form";
 import { isArray } from "@/utils/helper";
 import { returnBothCurrencies } from "@/utils/functions/returnBothCurrencies";
-import { selectCurrentUserData } from "@/store/User";
-import { useSelector } from "react-redux";
+import { selectCurrentUserData, setStripPaidEvent } from "@/store/User";
+import { useDispatch, useSelector } from "react-redux";
+import { useStripPaymentMutation } from "@/store/others/stripPayment";
 
 export default function GiftTicket({ closeModal, Data, show }) {
   const [giftTicket, { isLoading }] = useGiftTicketMutation();
+  const [payWithStrip, { isLoading:stripeLoader }] = useStripPaymentMutation();
+  const dispatch = useDispatch();
   const {
     control,
     handleSubmit,
@@ -37,7 +40,14 @@ export default function GiftTicket({ closeModal, Data, show }) {
 
   // console.log(Data,'DataDataData')
   const userData = useSelector(selectCurrentUserData) || {};
-  const location =userData?.countryInfo?.code==="NG"?'NGN':'USD'
+  const location =userData?.countryInfo?.code==="NG"?'NGN':'USD';
+  const checkIfNNigeria = userData?.countryInfo?.code === "NG" ? true : false;
+  const stripAmount = returnBothCurrencies({
+    HeroSectionEvent: Data,
+    returnJustAmount: true,
+    userData: userData,
+    currencyCode: "USD",
+  });
   const ticketPrice=  returnBothCurrencies({currencyCode:location,HeroSectionEvent:Data,userData:userData});
   const isValidateMain = watch("recipient_name") && watch("recipient_email");
   const router = useRouter();
@@ -47,6 +57,19 @@ export default function GiftTicket({ closeModal, Data, show }) {
   const handleValidation = (data) => {
     handleGiftTicket(data);
   };
+  const stripAmountTest =
+  Array.isArray(Data?.tickets) &&
+  (Data?.tickets?.find(
+    (item) =>
+      (item?.currency?.code || item?.code === "USD") &&
+      (item?._id || item?.id)
+  )?._id ||
+    Data?.tickets?.find(
+      (item) =>
+        (item?.currency?.code || item?.code === "USD") &&
+        (item?._id || item?.id)
+    )?.id);
+
 
   // console.log(Data, "Data");
 
@@ -68,12 +91,13 @@ export default function GiftTicket({ closeModal, Data, show }) {
       setStripPaidEvent({
         ...Data,
         payment: "isPending",
-        isHero: isHero,
+        // isHero: isHero,
         pathUrl: router?.pathname,
         done: false,
+        paymentType:'gifting'
       })
     );
-    router.replace(response?.data?.url);
+    response?.data?.url&&router.replace(response?.data?.url);
   };
   const handleGiftTicket = async (data) => {
     const payload = {
@@ -211,7 +235,7 @@ export default function GiftTicket({ closeModal, Data, show }) {
             className={`w-full text-[13px] font500] h-[44px] mt-[20px]`}
             onClick={handleSubmit(handleValidation)}
           />
-        ) : (
+        ) : (checkIfNNigeria?
           <PayStack
             showDetails={Data}
             proceed={isLoading ? false : isValid}
@@ -226,7 +250,17 @@ export default function GiftTicket({ closeModal, Data, show }) {
               className={`w-full text-[13px] font500] h-[44px] mt-[20px]`}
               // onClick={handleSubmit(handleValidation)}
             />
-          </PayStack>
+          </PayStack>:
+          <ButtonComp
+          onClick={handleStripPayment}
+          isDisabled={!isValid||stripeLoader}
+          isLoading={isLoading}
+          btnText={`Proceed To Make Payment ${
+            Data?.ticket?.price === 0 ? "" : Data?.ticket?.code || ""
+          } ${ticketPrice} `}
+          className={`w-full text-[13px] font500] h-[44px] mt-[20px]`}
+          // onClick={handleSubmit(handleValidation)}
+        />
         )}
       </main>
     </div>
