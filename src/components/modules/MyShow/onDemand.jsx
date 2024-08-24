@@ -20,7 +20,7 @@ export default function OnDemand({
 
   const handleOnClick = (item) => {
     // console.log(item,'handleOnClick')
-    if (item?.streaming_url) {
+    if (item?.streaming_url && item?.rewatchAvailable) {
       dispatch(setLiveStreamEventData(item));
       router.push(`${liveStreamLink}/${replaceSpaceWithDashFunc(item?.name)}/${item?._id}`);
     }
