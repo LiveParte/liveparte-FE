@@ -171,12 +171,12 @@ const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
   return (
     !isLoading && (
       <div
-        className={`w-full h-full flex-1 bg-cover lg:rounded-[16px] overflow-hidden flex flex-col  `}
+        className={`w-full h-full flex-1 bg-cover lg:rounded-[16px] overflow-hidden flex flex-col `}
       >
         {/* {isMobile && (
           <div className="absolute z-30 bottom-0 left-0 right-0 lg:h-[40vh] md:h-[20vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>
         )} */}
-        <div>
+       {isLive&& <div>
           <ChatOnCameraAndVideoControl
             liveStreamDetail={liveStreamDetail}
             userProfileData={userProfileData}
@@ -191,9 +191,9 @@ const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
             currentTime={currentTime}
             duration={duration}
           />
-        </div>
+        </div>}
 
-        {(!isLive&&liveStreamDetail?.promotional_url) ? (
+        {(false) ? (
           <Video
             handlePlayerReady={handlePlayerReady}
             currentTimeRef={currentTime}
@@ -203,7 +203,7 @@ const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
             liveStreamDetail={liveStreamDetail}
           />
         ) : (
-          <div className="h-full w-full relative agroa-video">
+          <div className=" w-full relative agroa-video  h-[100vh]">
             <JoinAudience
               liveStreamDetail={liveStreamDetail}
               eventId={liveStreamDetail?._id}
@@ -211,12 +211,7 @@ const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
           </div>
         )}
 
-        {/* {checkIfOrientedAndMobile && (
-          <Header
-            unlockOrientation={unlockOrientation}
-            ShareAndGiftDropdown={ShareAndGiftDropdown}
-          />
-        )} */}
+       
         <div>
           {/* {!isLive && (
             <MobilePlayer
