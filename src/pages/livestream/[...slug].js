@@ -2,14 +2,14 @@ import React, { useRef } from "react";
 import dynamic from "next/dynamic";
 import WithAuth from "@/components/Layout/WithAuth";
 import { useSelector } from "react-redux";
-import { selectLiveStreamEvent } from "@/store/Event";
+// import { selectLiveStreamEvent } from "@/store/Event";
 import GiftTicket from "@/components/modules/EventDetails/modal/GiftTicket";
 import ShareEvent from "@/components/modules/EventDetails/modal/ShareEvent";
 import MyModal from "@/components/Ui/Modal";
-import { useGetEventDetailViaIdQuery } from "@/store/Event/eventApi";
+import { useGetEventDetailViaIdQuery, useGetEventViaIdQuery } from "@/store/Event/eventApi";
 import { useRouter } from "next/router";
 import { useGetUserProfileQuery } from "@/store/User/userApi";
-import { selectCurrentUserData } from "@/store/User";
+import { selectCurrentUserData, selectLiveStreamEvent } from "@/store/User";
 import { isFutureDate } from "@/utils/reusableComponent";
 import { isArray } from "@/utils/helper";
 
@@ -28,12 +28,17 @@ export default function Index() {
       skip: !showId,
     }
   );
+  const {data:eventDetail,}=useGetEventViaIdQuery( showId,
+    {
+      skip: !showId,
+    })
+  //useLazyGetEventViaIdQuery
   const { data: userProfileData, isLoading: userProfileLoader } =
     useGetUserProfileQuery(undefined, {
       skip: !userInfo?._id,
     });
   const NestedLiveStreamData = useSelector(selectLiveStreamEvent) || data;
-  const liveStream = { ...data, ...NestedLiveStreamData?.event };
+  const liveStream = { ...data, ...NestedLiveStreamData?.event,...eventDetail };
   const modalRef = useRef(null);
 
   const handleCloseModal = () => {
@@ -41,7 +46,7 @@ export default function Index() {
     forceUpdate();
   };
 
-  // console.log(data,'NestedLiveStreamData')
+  console.log(NestedLiveStreamData,'NestedLiveStreamData')
 
   const handleOpenModal = (modalName) => {
     modalRef.current = modalName;
@@ -61,7 +66,7 @@ export default function Index() {
 
   const forceUpdate = React.useReducer(() => ({}), {})[1]; // Force update for re-render
 
-  console.log(liveStream,'liveStreamliveStream')
+  console.log(NestedLiveStreamData,'liveStreamliveStream')
 
   return (
     <WithAuth showHeader={false}>
