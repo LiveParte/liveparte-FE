@@ -38,7 +38,7 @@ export default function GiftTicket({ closeModal, Data, show }) {
     },
   });
 
-  // console.log(Data,'DataDataData')
+  console.log(Data,'liveStreamDetailliveStreamDetail')
   const userData = useSelector(selectCurrentUserData) || {};
   const location =userData?.countryInfo?.code==="NG"?'NGN':'USD';
   const checkIfNNigeria = userData?.countryInfo?.code === "NG" ? true : false;
@@ -58,17 +58,17 @@ export default function GiftTicket({ closeModal, Data, show }) {
     handleGiftTicket(data);
   };
   const stripAmountTest =
-  Array.isArray(Data?.tickets) &&
-  (Data?.tickets?.find(
-    (item) =>
-      (item?.currency?.code || item?.code === "USD") &&
-      (item?._id || item?.id)
-  )?._id ||
-    Data?.tickets?.find(
+    Array.isArray(Data?.tickets) &&
+    (Data?.tickets?.find(
       (item) =>
-        (item?.currency?.code || item?.code === "USD") &&
+        (item?.currency?.code  === "USD" || item?.code === "USD") &&
         (item?._id || item?.id)
-    )?.id);
+    )?._id ||
+      Data?.tickets?.find(
+        (item) =>
+          (item?.currency?.code === "USD" || item?.code === "USD") &&
+          (item?._id || item?.id)
+      )?.id);
 
 
   // console.log(Data, "Data");

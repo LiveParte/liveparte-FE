@@ -21,7 +21,8 @@ const initialState = {
   event: {},
   lastEventAttended: {},
   locked: false,
-  paymentEvent:{}
+  paymentEvent:{},
+  liveStreamEvent:{}
 };
 
 export const authSlice = createSlice({
@@ -56,6 +57,10 @@ export const authSlice = createSlice({
       state.paymentEvent = payload;
       state;
     },
+    setLiveStreamEvent: (state, { payload }) => {
+      state.liveStreamEvent = payload;
+      state;
+    },
     
     logout: (state) => {
       state.userData = null;
@@ -86,7 +91,8 @@ export const {
   setLastEventAttended,
   setStripPaidEvent,
   lockOrientation,
-  unlockOrientation
+  unlockOrientation,
+  setLiveStreamEvent
 } = authSlice?.actions;
 export default authSlice.reducer;
 export const selectOrientationLocked = (state) => state.auth.locked;
@@ -94,6 +100,8 @@ export const selectOrientationLocked = (state) => state.auth.locked;
 // export const authState = reducer;
 // export const selectCurrentPharamaserveData = (state) => state.auth.pharamData;
 export const selectLocation = (state) => state.auth.location;
+export const selectLiveStreamEvent = (state) => state.event?.liveStreamEvent;
+
 export const selectLastEventAttended = (state) => state.auth?.lastEventAttended;
 export const selectStripPaidEvent = (state) => state.auth?.paymentEvent;
 export const selectCoins = (state) => state.auth.coins;

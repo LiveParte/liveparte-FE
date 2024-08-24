@@ -19,11 +19,19 @@ export default function Hero({
   isLoading = false,
   isSingleEvent=false
 }) {
+  const heroImage =isMobile?HeroSectionEvent?.thumbnail_url_mobile:HeroSectionEvent?.thumbnail_url
 
   const videoRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const [muted, setMuted] = useState(true);
+  const [backgroundImage, setBackgroundImage] = useState(heroImage);
+
+  useEffect(() => {
+    const img = new Image();
+    img.src = heroImage;
+    img.onload = () => setBackgroundImage(heroImage);
+  }, [heroImage]);
 
   const EventStarted =
     HeroSectionEvent?.eventStarted &&
@@ -119,7 +127,7 @@ export default function Hero({
     }
     return "justDate";
   };
-  console.log(HeroSectionEvent,EventStarted,'targetDatePlusDuration1')
+  // console.log(HeroSectionEvent,EventStarted,'targetDatePlusDuration1')
 
   return (
     <div
@@ -128,6 +136,9 @@ export default function Hero({
       {showTopGradient && (
         <div className=" absolute top-0 left-0 right-0 h-[20vh]  z-50  bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>
       )}
+      {/* <img src={backgroundImage} alt="" loading="lazy"   
+       className="absolute left-0 right-0 top-0 bottom-0  h-[90vh] md:h-[100vh] w-[100vw] object-cover"/>
+      <iframe src={backgroundImage} loading="lazy"></iframe> */}
       <video
         // controls
         src={HeroSectionEvent?.promotional_url}
@@ -135,8 +146,10 @@ export default function Hero({
         autoPlay={isSingleEvent?false:true}
         loop
         muted
+      
+        preload
         className="absolute left-0 right-0 top-0 bottom-0  h-[90vh] md:h-[100vh] w-[100vw] object-cover"
-        poster={isMobile?HeroSectionEvent?.thumbnail_url_mobile:HeroSectionEvent?.thumbnail_url}
+        poster={backgroundImage}
         style={{
           backgroundAttachment: "fixed",
           width: "100%",
