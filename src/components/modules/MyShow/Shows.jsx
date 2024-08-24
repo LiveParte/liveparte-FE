@@ -20,6 +20,7 @@ import CountDown from "@/components/Common/Coundown";
 import { useLazyGetEventDetailViaIdQuery, useLazyGetEventViaIdQuery } from "@/store/Event/eventApi";
 import moment from "moment";
 import { combineDateTime } from "@/utils/functions/combineTimeDate";
+import { setLiveStreamEvent } from "@/store/User";
 // import UserShowsCard from "@/components/UserShow";
 
 export default function Shows({
@@ -41,22 +42,20 @@ export default function Shows({
 
   const handleOnClick = async (item) => {
     // console.log(item, "handleOnClickhandleOnClick");
-    dispatch(setLiveStreamEventData(item));
-    if (item?.eventStarted) {
+    dispatch(setLiveStreamEvent(item));
+    const singleEvent = await getEventById(item?._id);
+    if (singleEvent?.data?.eventStarted&&singleEvent.data?.isLiveStreamed) {
       return router.push(
         `${liveStreamLink}/${replaceSpaceWithDashFunc(item?.name)}/${item?._id}`
       );
     } else {
-      // console.log(item,'Hellloooo')
-      const singleEvent = await getEventId(item?._id);
-      // console.log(singleEvent?.data,'singleEventsingleEventsingleEvent')
-      if (singleEvent?.data?.event_date || item?.eventStarted) {
+      if (singleEvent?.data?.event_date) {
         // console.log()
         setEventDate(singleEvent?.data || item);
        return  setIsOpen(true);
       }
-      setEventDate(item);
-      setIsOpen(true);
+      // setEventDate(item);
+      // setIsOpen(true);
       // setEventDate(item?.event_date);
       // setIsOpen(true);
     }

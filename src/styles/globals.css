@@ -475,7 +475,7 @@ select:-webkit-autofill:focus {
 }
 
 .agroa-video video {
-  /* object-fit: contain !important; */
+  object-fit: contain !important;
 }
 
 .linear-gradient {

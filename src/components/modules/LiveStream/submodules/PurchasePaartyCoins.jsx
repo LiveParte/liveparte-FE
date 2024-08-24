@@ -71,7 +71,7 @@ export default function PurchasePaartyCoins({
     //     type:'coins  purchase'
     //   })
     // );
-    router.replace(response?.data?.url);
+    response?.data?.url&& router.replace(response?.data?.url);
   };
 
   async function handlePurchaseCoins() {
@@ -136,7 +136,7 @@ export default function PurchasePaartyCoins({
         <PayStack
           amount={getCostPerCoin(coinsPrice, coinsAmount) * coinsNeeded}
           type="Coins Purchase"
-          customFunction={handleStripPayment}
+          customFunction={handlePurchaseCoins}
           isDisabled={isLoading || !coinsNeeded}
           proceed={coinsNeeded ? true : false}
         >

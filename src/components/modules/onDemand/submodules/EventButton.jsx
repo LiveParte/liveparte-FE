@@ -24,7 +24,7 @@ import LoginSignUp from "../../Event/Modal/Login&SignUp";
 import { eventApi } from "@/store/Event/eventApi";
 import { useDispatch, useSelector } from "react-redux";
 import MyModal from "@/components/Ui/Modal";
-import { selectCurrentUserData } from "@/store/User";
+import { selectCurrentUserData, setSingleEvent } from "@/store/User";
 import ShareEvent from "../../EventDetails/modal/ShareEvent";
 import { setLiveStreamEventData } from "@/store/Event";
 import { useRouter } from "next/router";
@@ -127,6 +127,12 @@ export default function EventButton({
   const handleJoinEvent = () => {
     // console.log(HeroSectionEvent,'HeroSectionEvent')
     dispatch(setLiveStreamEventData(HeroSectionEvent));
+    dispatch(
+      setSingleEvent({
+        ...HeroSectionEvent,
+        ticket: isArray(HeroSectionEvent?.tickets) && HeroSectionEvent?.tickets[0],
+      })
+    );
     if (buttonAction() === "isPaidAndEventIsLive") {
       // dispatch(setLiveStreamEventData(HeroSectionEvent));
 
