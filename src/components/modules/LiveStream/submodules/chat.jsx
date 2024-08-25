@@ -13,6 +13,7 @@ import useWebSocket, { ReadyState } from "react-use-websocket";
 import ChatBody from "./Chat/chatbody/chatBody";
 import DropDownBootstrap from "@/components/Ui/DropDownBootsrap";
 import Image from "next/image";
+import { isMobile } from "react-device-detect";
 
 function Chat({ onLeave, liveStreamDetail, }) {
   // const [message, setMessage] = useState('');
@@ -25,7 +26,7 @@ function Chat({ onLeave, liveStreamDetail, }) {
 
 
 
-  const [showComment, setShowComment] = useState(true);
+  const [showComment, setShowComment] = useState(false);
   const userCoinsBalance = useSelector(selectCoins);
   // alert(userCoinsBalance,'userCoinsBalance')
   const chatBoxRef = useRef(null);
@@ -233,11 +234,12 @@ function Chat({ onLeave, liveStreamDetail, }) {
         <ChatBody
           chatBoxRef={chatBoxRef}
           setShowComment={setShowComment}
-          showComment={showComment}
-          data={chatMessages}
+          showComment={isMobile?true:showComment}
+          data={[]}
+
         />
-        {!showComment && (
-          <div className="text-[11px] text-[#FFFFFF] font500 text-end py-[7px] px-[16px]">
+        {(!showComment) && (
+          <div className={`text-[11px] text-[#FFFFFF] font500 text-end py-[7px] px-[16px] ${isMobile&&'hidden'}`}>
             <div
               className="cursor-pointer inline"
               onClick={() => {

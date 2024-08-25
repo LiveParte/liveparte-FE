@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { MainContainer } from "@/utils/styleReuse";
 import {
   checkDateStatus,
+  checkEventStatusII,
   checkShowDuration,
 } from "@/utils/reusableComponent";
 import { isArray } from "@/utils/helper";
@@ -69,12 +70,12 @@ export default function Hero({
     }
   };
 
-  const eventIsPast=checkDateStatus(HeroSectionEvent?.event_date)==="Past"&&!HeroSectionEvent?.streaming_url
+  const eventIsPast=checkEventStatusII(HeroSectionEvent?.event_date,HeroSectionEvent?.event_time,HeroSectionEvent?.event_length)==="Past"
 
   const HappeningNow =
     HeroSectionEvent?.purchase?.id &&
-    HeroSectionEvent?.eventStarted &&
-    EventStarted;
+    HeroSectionEvent?.eventStarted;
+    // EventStarted;
 
     // console.log(HeroSectionEvent,HappeningNow,'HeroSectionEvent111');
 
@@ -114,6 +115,8 @@ export default function Hero({
 
   // console.log(checkDateStatus(HeroSectionEvent?.event_date),'checkDateStatus')
 
+  // console.log(isOnDemand, HeroSectionEvent ,'HeroSectionEventHeroSectionEvent')
+
   const TextType = () => {
     // pastEvent
     if (eventIsPast) {
@@ -122,7 +125,7 @@ export default function Hero({
     if (isOnDemand) {
       return "onDemand";
     }
-    if (!isOnDemand && HeroSectionEvent?.eventStarted && EventStarted) {
+    if (!isOnDemand && HeroSectionEvent?.eventStarted ) {
       return "happeningNow";
     }
     return "justDate";

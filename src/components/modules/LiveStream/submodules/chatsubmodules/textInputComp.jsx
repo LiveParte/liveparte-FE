@@ -21,7 +21,7 @@ export const TextInputComp = ({
       <div className="z-20 flex flex-1 items-center gap-[8px] border-[1px] py-[4px] border-[#343F4B] lg:mb-[13px] bg-[#27292E] rounded-[8px] h-[35px] pr-[4px]">
         <input
           className=" lg:h-[35px] bg-transparent w-[23px] border-[#343F4B] flex-1 placeholder:text-[#495969] placeholder:text-[11px] pl-[10px] text-white outline-none text-[11px]"
-          placeholder="Comment is disabled..."
+          placeholder="Comment is disabled for this event..."
           value={textMessages}
           onChange={handleOnChange}
           autoFocus={false}

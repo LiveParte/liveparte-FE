@@ -179,7 +179,7 @@ export default function Hero({
                         <div className="   flex gap-[8px] items-center   ">
                           <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div>
                           <div className="text-[11px] lg:text-[13px]  text-white  ">
-                            Happening Nows
+                            Happening Now
                           </div>
                         </div>
                       )}
@@ -198,7 +198,7 @@ export default function Hero({
                         <div className="   flex gap-[8px] items-center   justify-center md:justify-start">
                           <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div>
                           <div className="text-[11px] lg:text-[13px]  text-white  ">
-                            Happening Nows
+                            Happening Now
                           </div>
                         </div>
                       )}

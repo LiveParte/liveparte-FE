@@ -44,7 +44,7 @@ const JoinAudience = ({ eventId, liveStreamDetail }) => {
           setStatus(newStatus);
           // console.log('Status updated:', newStatus);
           if (
-            checkIfEventDurationHaveEnded &&
+            // checkIfEventDurationHaveEnded &&
             newStatus === "Host has left the stream"
           ) {
             router.push("/livestream/ended");
