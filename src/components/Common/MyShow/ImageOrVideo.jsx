@@ -10,6 +10,15 @@ import {
 
 export default function ImageOrVideo({ videoRef, image, isPlaying, item }) {
   // console.log(item, "ImageOrVideoImageOrVideo");
+
+  // function checkId(item){
+  //     if(item?._id==="6658c375168a0994109075bd"){
+  //       item?.thumbnail_url 
+  //     }
+  //     isMobile
+  //     ? item?.thumbnail_url_mobile
+  //     : item?.thumbnail_url || item?.thumbnail_url
+  // }
   // console.log(item?._id==="66c4eee915739abfe57c18da"&&item,'ImageOrVideoImageOrVideoImageOrVideo')
   return (
     <div className="">
@@ -20,15 +29,12 @@ export default function ImageOrVideo({ videoRef, image, isPlaying, item }) {
           item?.thumbnail_url
       ) ? (
         <Image
-          src={
-            isMobile
-              ? item?.thumbnail_url_mobile
-              : item?.thumbnail_url_laptop || item?.thumbnail_url
+          src={  
+            item?._id==="6658c375168a0994109075bd"? item?.thumbnail_url:isMobile
+            ? item?.thumbnail_url_mobile
+            : item?.thumbnail_url || item?.thumbnail_url
           }
-          blurDataURL={
-            isMobile
-              ? item?.thumbnail_url_mobile
-              : item?.thumbnail_url 
+          blurDataURL={ item?.thumbnail_url 
           }
           className={`object-cover  ${!isPlaying ? "z-30" : "z-0"}`}
           // width={'100%'}
