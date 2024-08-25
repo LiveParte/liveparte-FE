@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 export default function PrivacyTermsLayout({ children }) {
   const [selectTab, setSelectTab] = useState("privacy");
   const router =useRouter();
-  console.log(router?.pathname,'router')
+  // console.log(router?.pathname,'router')
 
   return (
     <NoAuth>

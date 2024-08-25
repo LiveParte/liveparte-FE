@@ -15,7 +15,7 @@ class ErrorBoundary extends Component {
 
   componentDidCatch(error, errorInfo) {
     // Log the error to an error reporting service
-    console.error('Error Boundary caught an error:', error, errorInfo);
+    // console.error('Error Boundary caught an error:', error, errorInfo);
 
     // Redirect to the home page
     this.props.router.push('/');
@@ -24,7 +24,7 @@ class ErrorBoundary extends Component {
   render() {
     if (this.state.hasError) {
       // Optionally, you can render a fallback UI before the redirect occurs
-      return <h1>Redirecting...</h1>;
+      return <h1></h1>;
     }
 
     return this.props.children; 
