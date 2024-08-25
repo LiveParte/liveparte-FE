@@ -66,7 +66,6 @@ export default function Index() {
 
   const forceUpdate = React.useReducer(() => ({}), {})[1]; // Force update for re-render
 
-  // console.log(NestedLiveStreamData,'liveStreamliveStream')
 
   return (
     <WithAuth showHeader={false}>
