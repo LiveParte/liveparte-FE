@@ -3,7 +3,7 @@ export function isValidMediaUrl(url) {
         const parsedUrl = new URL(url);
         
         // Check if the hostname contains 'res.cloudinary.com'
-        return parsedUrl.hostname === 'res.cloudinary.com';
+        return parsedUrl.hostname === 'liveparte-s3-bucket.s3.amazonaws.com';
     } catch (e) {
         // If URL constructor throws an error, the URL is not valid
         return false;

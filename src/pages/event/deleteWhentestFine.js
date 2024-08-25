@@ -65,7 +65,7 @@ export default function EventId() {
 
   const eventsData = { ...data, ...data?.event, ...shows };
 
-  console.log(router,'routerrouter')
+  // console.log(router,'routerrouter')
 
   return (
     <NoAuth>

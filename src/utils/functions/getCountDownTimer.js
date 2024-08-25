@@ -7,7 +7,7 @@ export function CountdownTimerIII({ targetDate, onTimerEnd }) {
 
     // Check if targetDateTime is a valid date
     if (isNaN(targetDateTime.getTime())) {
-      console.error('Invalid date format for targetDate:', targetDate);
+      // console.error('Invalid date format for targetDate:', targetDate);
       return { days: 0, hours: 0, minutes: 0, seconds: 0 };
     }
 
