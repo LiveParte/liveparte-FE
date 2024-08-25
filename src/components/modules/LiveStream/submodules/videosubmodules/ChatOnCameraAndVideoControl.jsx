@@ -52,7 +52,7 @@ function ChatOnCameraAndVideoControl({
 
   const ChatComp = useCallback(() => {
     return (
-      <div className={`lg:mr-[80px] flex flex-col `}>
+      <div className={`lg:mr-[80px] flex flex-col  min-h-[80vh] `}>
         <MemoizedChat liveStreamDetail={liveStreamDetail} onLeave={handleLeave} />
       </div>
     );

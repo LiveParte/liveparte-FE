@@ -7,6 +7,7 @@ let hostUid = null;
 let networkQualityCallback;
 
 export const initializeAgoraClient = (container, setHostDimensions, setNetworkQuality, setStatus) => {
+  console.log(APP_ID,'APP_IDAPP_ID')
   if (typeof window !== 'undefined') {
     client = createClient({ mode: 'live', codec: 'vp8' });
 
@@ -110,13 +111,13 @@ export const initializeAgoraClient = (container, setHostDimensions, setNetworkQu
   }
 };
 
-export const joinChannel = async (eventId) => {
+export const joinChannel = async (eventId,token) => {
   if (!client) {
     initializeAgoraClient();
   }
 
   try {
-    await client.join(APP_ID, eventId, null, null);
+    await client.join(APP_ID, eventId, token, null);
     console.log('Joined channel:', eventId);
   } catch (error) {
     console.error('Failed to join the channel:', error);

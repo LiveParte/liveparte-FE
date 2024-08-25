@@ -191,7 +191,7 @@ function Chat({ onLeave, liveStreamDetail, }) {
   ];
 
   return (
-    <div className="flex flex-col  lg:px-[0px]   h-full lg:h-full  w-full lg:w-[356px] relative  rounded-sm flex-1 ">
+    <div className="flex flex-col  lg:px-[0px]   h-full lg:h-full  w-full lg:w-[356px] relative  rounded-sm flex-1  ">
       <div>
         {/* <div className="lg:hidden flex flex-col items-end gap-[16px] pb-[16px] absolute right-[16px] bottom-16">
           <Image
@@ -230,12 +230,12 @@ function Chat({ onLeave, liveStreamDetail, }) {
       </div>
 
       <div className="flex flex-col justify-end flex-1 ">
-      <div className="flex flex-col justify-end">
+      <div className="flex flex-col justify-end ">
         <ChatBody
           chatBoxRef={chatBoxRef}
           setShowComment={setShowComment}
           showComment={isMobile?true:showComment}
-          data={[]}
+          data={chatMessages}
 
         />
         {(!showComment) && (
@@ -253,7 +253,7 @@ function Chat({ onLeave, liveStreamDetail, }) {
         )}
       </div>
       <div className="px-[4px] lg:px-0 mb-3 md:mb-0 border-t-[#343F4B] border-t-[1px] lg:border-0 pt-[10px]">
-        <div className="relative w-full lg:hidden">
+        <div className=" w-full lg:hidden">
           {payFlow && <GiftCoin />}
         </div>
         <TextInputComp
