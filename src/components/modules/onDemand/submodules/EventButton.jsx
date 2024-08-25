@@ -207,12 +207,12 @@ export default function EventButton({
     );
   }
 
-  console.log(
-    ticketPrice,
-    HeroSectionEvent,
-    userData,
-    "ticketPriceticketPriceticketPrice"
-  );
+  // console.log(
+  //   ticketPrice,
+  //   HeroSectionEvent,
+  //   userData,
+  //   "ticketPriceticketPriceticketPrice"
+  // );
 
   function ButtonActions(buttonType) {
     switch (buttonType) {

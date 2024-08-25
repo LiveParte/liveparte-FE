@@ -193,7 +193,7 @@ const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
           />
         </div>}
 
-        {(false) ? (
+        {(!isLive) ? (
           <Video
             handlePlayerReady={handlePlayerReady}
             currentTimeRef={currentTime}
@@ -203,7 +203,7 @@ const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
             liveStreamDetail={liveStreamDetail}
           />
         ) : (
-          <div className=" w-full relative agroa-video  h-[100vh]">
+          <div className=" w-full relative agroa-video h-[40dvh]  sm:h-[90vh] md:h-[100vh]">
             <JoinAudience
               liveStreamDetail={liveStreamDetail}
               eventId={liveStreamDetail?._id}

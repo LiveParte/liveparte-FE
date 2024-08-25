@@ -320,6 +320,17 @@ const inputDateTime = "2024-07-05T19:00";
 const newDateTime = convertAndAddOneHour(inputDateTime);
 // console.log(newDateTime);  // Output: "20240705T200000Z"
 
+export function isCurrentTimeGreater(event_date, event_time) {
+  // Combine event_date and event_time into a single Date object
+  const eventDateTimeString = `${event_date?.split('T')[0]} ${event_time}`;
+  const eventDateTime = new Date(eventDateTimeString);
+
+  // Get the current date and time
+  const currentDate = new Date();
+
+  // Return true if the current date and time are greater than the event's date and time
+  return currentDate > eventDateTime;
+}
 
 export function checkShowDuration(targetDateTime, durationMins) {
     // Current date and time
@@ -395,4 +406,27 @@ export function checkDateStatus(dateString) {
   } else {
       return "Present";
   }
+}
+
+export function checkEventStatusII(event_date, event_time, event_length) {
+  // Combine event_date and event_time into a single Date object
+  if(event_date &&event_time){
+  const eventDateTimeString = `${event_date?.split('T')[0]} ${event_time}`;
+  const eventDateTime = new Date(eventDateTimeString);
+
+  // Calculate the end time of the event by adding event_length (in milliseconds)
+  const eventEndTime = new Date(eventDateTime.getTime() + event_length);
+
+  // Get the current date and time
+  const currentDate = new Date();
+
+  // Compare the current date with the event end time
+  if (currentDate > eventEndTime) {
+    return "Past";
+  } else if (currentDate < eventDateTime) {
+    return "Future";
+  } else {
+    return "Present";
+  }
+}
 }
