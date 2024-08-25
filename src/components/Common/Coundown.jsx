@@ -31,7 +31,7 @@ export default function CountDown({date,onBack}) {
   return { days, hours, minutes, seconds };
   }
 
-  console.log(date,'Hello')
+  // console.log(date,'Hello')
   return (
     <div className="bg-[#1B1C20] py-[43px] rounded-[16px] text-center text-white relative">
       <div onClick={onBack} className="absolute right-4 top-4  cursor-pointer">

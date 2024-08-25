@@ -123,7 +123,7 @@ export default function Hero({
 
   // Zustand store
 
-  console.log(HeroSectionEvent,'HeroSectionEvent')
+  // console.log(HeroSectionEvent,'HeroSectionEvent')
 
   return (
     <div

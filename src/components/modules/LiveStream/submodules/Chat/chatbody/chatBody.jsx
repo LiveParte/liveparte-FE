@@ -37,7 +37,7 @@ export default function ChatBody({
                 ref={chatBoxRef ? chatBoxRef : {}}
                 className="flex flex-col pt-[10px] px-[14px] lg:overflow-y-auto customScrollHorizontal"
               >
-              {data?.length===0 &&  <div className="flex flex-col justify-center items-center py-[81px]">
+              {[]?.length===0 &&  <div className="flex flex-col justify-center items-center py-[81px]">
                  
                   <div className="mb-[17px] flex items-center">
                   <CommentIcon/>
@@ -46,7 +46,7 @@ export default function ChatBody({
                   Comment section is currently<br className="hidden lg:block"/> disabled
                   </div>
                 </div>}
-                {data.map((item, i) => (
+                {[]?.map((item, i) => (
                   <ChatList
                     key={i}
                     message={item?.message}

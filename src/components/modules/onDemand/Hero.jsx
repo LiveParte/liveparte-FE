@@ -71,7 +71,7 @@ export default function Hero({
   };
 
   const eventIsPast=checkEventStatusII(HeroSectionEvent?.event_date,HeroSectionEvent?.event_time,HeroSectionEvent?.event_length)==="Past"
-
+  // console.log(eventIsPast,'eventIsPasteventIsPast')
   const HappeningNow =
     HeroSectionEvent?.purchase?.id &&
     HeroSectionEvent?.eventStarted;

@@ -3,7 +3,7 @@ import Image from "next/image";
 import React from "react";
 
 export default function ImageOrVideo({ videoRef, image, isPlaying, item }) {
-  console.log(item?._id==="66c4eee915739abfe57c18da"&&item,'ImageOrVideoImageOrVideoImageOrVideo')
+  // console.log(item?._id==="66c4eee915739abfe57c18da"&&item,'ImageOrVideoImageOrVideoImageOrVideo')
   return (
     <div className="">
       <div className="flex-[1] flex justify-center items-center absolute left-0 right-0 top-[0px] bottom-0  bg-gradient-to-t from-[#00000079] z-10"></div>
