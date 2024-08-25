@@ -116,7 +116,7 @@ export default function FullScreenChatAction({
             isOrientation={orientationLocked}
             showComment={hideChat}
             setShowComment={setHideChat}
-            data={chatMessages}
+            data={[]}
           />
         </div>
       </div>

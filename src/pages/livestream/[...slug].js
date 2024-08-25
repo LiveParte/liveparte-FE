@@ -46,7 +46,7 @@ export default function Index() {
     forceUpdate();
   };
 
-  console.log(NestedLiveStreamData,'NestedLiveStreamData')
+  // console.log(NestedLiveStreamData,'NestedLiveStreamData')
 
   const handleOpenModal = (modalName) => {
     modalRef.current = modalName;
@@ -66,7 +66,7 @@ export default function Index() {
 
   const forceUpdate = React.useReducer(() => ({}), {})[1]; // Force update for re-render
 
-  console.log(NestedLiveStreamData,'liveStreamliveStream')
+  // console.log(NestedLiveStreamData,'liveStreamliveStream')
 
   return (
     <WithAuth showHeader={false}>

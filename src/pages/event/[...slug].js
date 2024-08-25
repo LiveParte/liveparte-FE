@@ -71,9 +71,9 @@ export default function EventId() {
     setIsOpen("share event");
   }
 
-  const eventsData={ ...data,...data?.event, ...shows   }
+  const eventsData={...shows, ...data,...data?.event,   }
 
-  console.log(data,'eventsDataeventsDataeventsData')
+  // console.log(data,'eventsDataeventsDataeventsData')
  
   return (
     <NoAuth>

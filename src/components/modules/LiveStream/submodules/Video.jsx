@@ -34,7 +34,7 @@ const AppVideo = ({ liveStreamDetail, handlePlayerReady }) => {
     []
   );
 
-  return (
+  return ((liveStreamDetail?.promotional_url||liveStreamDetail?.promotional_url)&&
     <>
       <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
     </>

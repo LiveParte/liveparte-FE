@@ -227,7 +227,7 @@ function Chat({ onLeave, liveStreamDetail }) {
             chatBoxRef={chatBoxRef}
             setShowComment={setShowComment}
             showComment={showComment}
-            data={chatMessages}
+            data={[]||chatMessages}
           />
           {!showComment && (
             <div className="text-[11px] text-[#FFFFFF] font500 text-end py-[7px] px-[16px]">
