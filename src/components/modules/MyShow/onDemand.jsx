@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { setLiveStreamEventData } from "@/store/Event";
 import { MainContainer } from "@/utils/styleReuse";
 import ShowsCard from "@/components/Common/MyShow/Shows";
+import { useLazyGetEventDetailViaIdQuery } from "@/store/Event/eventApi";
 
 export default function OnDemand({
   Data = [],
@@ -14,13 +15,16 @@ export default function OnDemand({
   OnDemandData = [],
 }) {
   const router = useRouter();
+  const [getEventById, { isLoading: eventByIdLoader }] =useLazyGetEventDetailViaIdQuery();
   const dispatch = useDispatch();
   const container = MainContainer;
   const isLength = Data?.length;
 
-  const handleOnClick = (item) => {
-    // console.log(item,'handleOnClick')
-    if (item?.streaming_url && item?.rewatchAvailable) {
+  const handleOnClick = async(item) => {
+    const singleEvent = await getEventById(item?._id);
+
+    // console.log(singleEvent,'handleOnClickhandleOnClick')
+    if (singleEvent?.data?.streaming_url && singleEvent?.data?.rewatchAvailable) {
       dispatch(setLiveStreamEventData(item));
       router.push(`${liveStreamLink}/${replaceSpaceWithDashFunc(item?.name)}/${item?._id}`);
     }
