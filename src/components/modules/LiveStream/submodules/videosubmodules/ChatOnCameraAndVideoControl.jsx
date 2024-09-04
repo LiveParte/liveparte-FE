@@ -86,7 +86,7 @@ function ChatOnCameraAndVideoControl({
     <div className={`${IsDesktopMobileChat} left-0 bg-red-600 flex lg:mb-0`}>
       <div className="flex align-bottom flex-1 justify-end overflow-hidden linear-gradient">
         <div className="flex-1 items-end justify-end flex ">
-          {isLive && (
+          {!isLive && (
             <div className="z-50 pb-[27px] text-white w-full pt-8 pl-[80px] pr-[45px]">
               <div
                 className=" flex items-center gap-[16px] cursor-pointer"

@@ -218,7 +218,7 @@ video {
 }
 
 .newRole video {
-  object-fit: cover;
+  /* object-fit: cover; */
   height: 100vh;
 }
 
@@ -402,6 +402,8 @@ body {
   height: calc(100vh - 100px);
 }
 
+
+
 @media only screen and (max-width: 768px) {
   .takeScreen {
     height: 100dvh;
@@ -414,7 +416,10 @@ body {
   .vjs-tech {
     width: 100% !important;
     height: 100% !important;
-    object-fit: cover;
+    /* object-fit: cover; */
+  }
+  .ytp-chrome-top{
+    display: none;
   }
 }
 
@@ -494,7 +499,7 @@ select:-webkit-autofill:focus {
   display: none !important;
 }
 .video-js video {
-  object-fit: contain !important;
+  /* object-fit: contain !important; */
 }
 
 .vjs-big-play-button{
@@ -531,4 +536,18 @@ select:-webkit-autofill:focus {
   margin: 0;
   border: none;
   background: transparent !important;
+}
+
+
+.ytp-chrome-top{
+  display: none !important;
+}
+
+.ytp-copylink-icon{
+  display: none;
+}
+
+.videoplayer .ytp-watermark{
+  display: none !important;
+  border: 10px solid red;
 }

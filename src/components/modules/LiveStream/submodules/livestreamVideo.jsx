@@ -166,7 +166,7 @@ const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
   const duration =
     durationRef.current !== null && formatTime(durationRef.current);
 
-    console.log(liveStreamDetail,'liveStreamDetail')
+    // console.log(liveStreamDetail,isLive,'liveStreamDetail')
 
   return (
     !isLoading && (
@@ -176,7 +176,7 @@ const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
         {/* {isMobile && (
           <div className="absolute z-30 bottom-0 left-0 right-0 lg:h-[40vh] md:h-[20vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>
         )} */}
-       {isLive&& <div>
+       {!isLive&& <div>
           <ChatOnCameraAndVideoControl
             liveStreamDetail={liveStreamDetail}
             userProfileData={userProfileData}
@@ -184,7 +184,7 @@ const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
             isMuted={MuteState}
             toggleMute={toggleMuteUnmute}
             togglePlayPause={togglePlayPause}
-            isLive={!isLive}
+            isLive={isLive}
             isPlaying={PlayState}
             rewind={handleRewind}
             fastForward={handleForward}
@@ -203,7 +203,7 @@ const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
             liveStreamDetail={liveStreamDetail}
           />
         ) : (
-          <div className=" w-full relative agroa-video h-[40dvh]  sm:h-[90vh] md:h-[100vh]">
+          <div className=" w-full relative agroa-video h-[40dvh]  max-sm:h-[100vh]">
             <JoinAudience
               liveStreamDetail={liveStreamDetail}
               eventId={liveStreamDetail?._id}

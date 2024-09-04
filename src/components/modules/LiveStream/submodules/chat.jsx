@@ -230,7 +230,7 @@ function Chat({ onLeave, liveStreamDetail, }) {
       </div>
 
       <div className="flex flex-col justify-end flex-1 ">
-      <div className="flex flex-col justify-end ">
+      <div className="flex flex-col justify-end  flex-1">
         <ChatBody
           chatBoxRef={chatBoxRef}
           setShowComment={setShowComment}
