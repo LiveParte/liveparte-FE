@@ -4,7 +4,7 @@ export default function Document() {
   return (
     <Html lang="en" suppressHydrationWarning>
       <Head>
-        <script
+        {/* <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-HEFV796PMR"
         ></script>
@@ -18,7 +18,7 @@ export default function Document() {
               gtag('config', 'G-HEFV796PMR');
             `,
           }}
-        />
+        /> */}
       </Head>
 
       <body suppressHydrationWarning>
