@@ -1,23 +1,15 @@
-import React, { memo, useCallback, useEffect, useRef, useState } from "react";
+import React, { memo, useCallback, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
-import Chat from "./chat";
-import { IsDesktopMobileChat } from "../style";
 import ChatOnCameraAndVideoControl from "./videosubmodules/ChatOnCameraAndVideoControl";
-import { FullScreenIcon, HostLeftIcon } from "../../../../../public/svg";
-import { checkShowDurationAfter } from "@/utils/reusableComponent";
 import { useDispatch } from "react-redux";
-import { lockOrientation, unlockOrientation } from "@/store/User";
-import MobilePlayer from "./MobilePlayer";
-import FullScreenChatAction from "./FullScreenChatAction";
 import Video from "./Video";
-import Header from "./LandScapeComp/header";
 import { isMobile } from "react-device-detect";
 
 const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
   ssr: false,
 });
 
- function LiveStreamVideo({
+function LiveStreamVideo({
   activeConnection,
   setActiveConnection,
   isLive = false,
@@ -36,17 +28,18 @@ const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
   const isPlayingRef = useRef(false);
   const isMutedRef = useRef(false);
   const [, forceUpdate] = React.useReducer((x) => x + 1, 0);
-  const checkIfOrientedAndMobile = isMobile && !orientationLocked;
 
   const handlePlayerReady = useCallback((player) => {
     playerRef.current = player;
 
-    // Set the duration once the player is ready
+    player.on("play", () => {
+      console.log("Video started playing");
+    });
+
     player.on("loadedmetadata", () => {
       durationRef.current = player.duration();
       forceUpdate();
 
-      // Set the video to start from the saved time
       const savedTime = localStorage.getItem("video-current-time");
       if (savedTime) {
         player.currentTime(parseFloat(savedTime));
@@ -54,7 +47,6 @@ const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
       }
     });
 
-    // Update current time as the video plays
     player.on("timeupdate", () => {
       if (playerRef.current) {
         currentTimeRef.current = player.currentTime();
@@ -62,7 +54,6 @@ const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
       }
     });
 
-    // Save the current time periodically
     const saveCurrentTime = () => {
       if (playerRef.current) {
         localStorage.setItem(
@@ -71,32 +62,27 @@ const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
         );
       }
     };
+
     player.on("timeupdate", saveCurrentTime);
 
-    // You can handle other player events here, for example:
     player.on("waiting", () => {
-      videojs.log("player is waiting");
+      console.log("Player is waiting");
     });
 
     player.on("dispose", () => {
-      videojs.log("player will dispose");
+      console.log("Player will dispose");
     });
 
-    // Set initial play/pause state
-    isPlayingRef.current = !player.paused();
-    isMutedRef.current = player.muted();
+    isPlayingRef.current = player.paused();
+    isMutedRef.current = !player.muted();
     playerRef.current.play();
     player.volume(100);
-
     forceUpdate();
   }, []);
 
-  const PlayState = isPlayingRef?.current;
-  const MuteState = isMutedRef?.current;
-
   const togglePlayPause = () => {
     if (playerRef.current) {
-      if (playerRef.current?.paused()) {
+      if (playerRef.current.paused()) {
         playerRef.current.play();
         isPlayingRef.current = true;
       } else {
@@ -106,56 +92,57 @@ const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
       forceUpdate();
     }
   };
-
-  const handleRewind = () => {
-    const newTime = Math.max(currentTimeRef.current - 10, 0);
+  const handlePlayToggle = () => {
     if (playerRef.current) {
-      playerRef.current.currentTime(newTime);
+      const isPlaying = playerRef.current.getInternalPlayer().getPlayerState() === 1; // 1 indicates playing state for YouTube
+      if (isPlaying) {
+        playerRef.current.getInternalPlayer().pauseVideo();
+      } else {
+        playerRef.current.getInternalPlayer().playVideo();
+      }
     }
   };
 
-  // useEffect(() => {
-  //   // Save the current time when the component unmounts
-  //   return () => {
-  //     if (
-  //       playerRef.current &&
-  //       typeof playerRef.current.currentTime === "function"
-  //     ) {
-  //       const currentTime =
-  //         playerRef.current.currentTime && playerRef.current?.currentTime();
-  //       if (currentTime !== undefined) {
-  //         localStorage.setItem("video-current-time", currentTime.toString());
-  //       }
-  //     }
-  //   };
-  // }, []);
-
   const toggleMuteUnmute = () => {
-    if (playerRef.current?.muted()) {
-      playerRef.current.muted(false);
-      isMutedRef.current = false;
-    } else {
-      playerRef.current.muted(true);
-      isMutedRef.current = true;
+    if (playerRef.current) {
+      const isMuted = playerRef.current.muted();
+      playerRef.current.muted(!isMuted);
+      isMutedRef.current = !isMuted;
+      forceUpdate();
     }
-    forceUpdate();
+  };
+
+  const handleRewind = () => {
+    if (playerRef.current) {
+      const newTime = Math.max(currentTimeRef.current - 10, 0);
+      playerRef.current.currentTime(newTime);
+    }
   };
 
   const handleForward = () => {
-    const newTime = Math.min(
-      currentTimeRef.current + 10,
-      durationRef.current || 0
-    );
     if (playerRef.current) {
+      const newTime = Math.min(currentTimeRef.current + 10, durationRef.current || 0);
       playerRef.current.currentTime(newTime);
     }
   };
 
+  const handleMouseDown = (e) => {
+    if (!durationRef.current || !playerRef.current) return;
+
+    const progressBar = e.currentTarget;
+    const rect = progressBar.getBoundingClientRect();
+    const clickPosition = e.clientX - rect.left;
+    const percentage = clickPosition / rect.width;
+    const newTime = percentage * durationRef.current;
+
+    playerRef.current.currentTime(newTime);
+  };
+
+  // const handle
+
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60);
-    const seconds = Math.floor(time % 60)
-      .toString()
-      .padStart(2, "0");
+    const seconds = Math.floor(time % 60).toString().padStart(2, "0");
     return `${minutes}:${seconds}`;
   };
 
@@ -166,92 +153,47 @@ const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
   const duration =
     durationRef.current !== null && formatTime(durationRef.current);
 
-    // console.log(liveStreamDetail,isLive,'liveStreamDetail')
-
   return (
     !isLoading && (
-      <div
-        className={`w-full h-full flex-1 bg-cover lg:rounded-[16px] overflow-hidden flex flex-col `}
-      >
-        {/* {isMobile && (
-          <div className="absolute z-30 bottom-0 left-0 right-0 lg:h-[40vh] md:h-[20vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>
-        )} */}
-       {!isLive&& <div>
+      <div className="w-full h-full flex-1 bg-cover lg:rounded-[16px] overflow-hidden flex flex-col">
+        {!isLive && (
           <ChatOnCameraAndVideoControl
             liveStreamDetail={liveStreamDetail}
             userProfileData={userProfileData}
             calculateProgressPercentage={progress}
-            isMuted={MuteState}
+            isMuted={isMutedRef.current}
             toggleMute={toggleMuteUnmute}
-            togglePlayPause={togglePlayPause}
+            togglePlayPause={handlePlayToggle}
             isLive={isLive}
-            isPlaying={PlayState}
+            isPlaying={isPlayingRef.current}
             rewind={handleRewind}
             fastForward={handleForward}
             currentTime={currentTime}
             duration={duration}
+            handleMouseDown={handleMouseDown}
           />
-        </div>}
+        )}
 
-        {(!isLive) ? (
+        {!isLive ? (
           <Video
             handlePlayerReady={handlePlayerReady}
             currentTimeRef={currentTime}
-            isPlaying={PlayState}
+            isPlaying={isPlayingRef.current}
             rewind={handleRewind}
             togglePlayPause={togglePlayPause}
             liveStreamDetail={liveStreamDetail}
           />
         ) : (
-          <div className=" w-full relative agroa-video h-[40dvh]  max-sm:h-[100vh]">
+          <div className="w-full relative agroa-video h-[40dvh] max-sm:h-[100vh]">
             <JoinAudience
               liveStreamDetail={liveStreamDetail}
               eventId={liveStreamDetail?._id}
             />
           </div>
         )}
-
-       
-        <div>
-          {/* {!isLive && (
-            <MobilePlayer
-              orientationLocked={!orientationLocked}
-              toggleMute={toggleMuteUnmute}
-              togglePlayPause={togglePlayPause}
-              isPlaying={PlayState}
-              rewind={handleRewind}
-              calculateProgressPercentage={progress}
-              fastForward={handleForward}
-              currentTime={currentTime}
-            />
-          )} */}
-
-          {/* {orientationLocked && (
-            <div className="">
-              <button
-                className="absolute z-10 flex lg:hidden gap-2 text-[12px] left-5 bottom-5 items-center text-white"
-                onClick={() =>{
-                  {}
-                }
-                }
-              >
-                <FullScreenIcon />
-                {!orientationLocked ? "Exit Fullscreen" : "Fullscreen"}
-              </button>
-            </div>
-            //  absolute z-30 top-0 left-0 right-0 lg:h-[40vh] md:h-[20vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black
-          )} */}
-          {/* {checkIfOrientedAndMobile && (
-            <FullScreenChatAction
-              orientationLocked={!orientationLocked}
-              unlockOrientation={unlockOrientation}
-            />
-          )} */}
-        </div>
       </div>
     )
   );
 }
 
-
-export default memo(LiveStreamVideo)
+export default memo(LiveStreamVideo);

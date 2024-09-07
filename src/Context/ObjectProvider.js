@@ -1,19 +1,133 @@
 // Create a context
-import { createContext, useContext, useState } from 'react';
+import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 
 const ObjectContext = createContext();
 
 export const ObjectProvider = ({ children }) => {
   const [myObject, setMyObject] = useState({});
   const [liveStreamShow, setLiveStreamShow] = useState(null);
-  const [routerLoader,setRouterLoader] =useState(null)
+  const [routerLoader, setRouterLoader] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isMuted, setIsMuted] = useState(false);
+  const [duration, setDuration] = useState(0); // Total video duration
+  const [playedSeconds, setPlayedSeconds] = useState(0); // Current time played
+  const playerRef = useRef(null);  // <-- useRef initialized here
+  const progressRef = useRef(null); // Reference for the progress bar
+
+  const [isDragging, setIsDragging] = useState(false); // Track dragging state
 
 
-  const AddShows = object => {
+  // Toggle play/pause
+  const togglePlayPause = useCallback(() => {
+    setIsPlaying((prev) => !prev);
+  }, []);
+
+  // Toggle mute/unmute
+  const toggleMute = useCallback(() => {
+    setIsMuted((prev) => !prev);
+  }, []);
+
+    // Handle fast forward by 10 seconds
+    const handleFastForward = () => {
+      if (playerRef.current) {
+        const newTime = Math.min(playedSeconds + 10, duration); // Ensure it doesn't exceed duration
+        playerRef.current.seekTo(newTime);
+      }
+    };
+
+     // Handle rewind by 10 seconds
+  const handleRewind = () => {
+    if (playerRef.current) {
+      const newTime = Math.max(playedSeconds - 10, 0); // Ensure it doesn't go below 0
+      playerRef.current.seekTo(newTime);
+    }
+  };
+  const handleProgress = (state) => {
+    setPlayedSeconds(state.playedSeconds); // Update current time
+  };
+
+  const handleDuration = (duration) => {
+    setDuration(duration); // Set total duration
+  };
+
+   // Format seconds to mm:ss format
+   const formatTime = (seconds) => {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = Math.floor(seconds % 60);
+    return `${minutes}:${remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds}`;
+  };
+
+  const handleSeek = (event) => {
+    const rect = progressRef.current.getBoundingClientRect();
+    const clickX = event.clientX - rect.left; // X position relative to the progress bar
+    const newTime = (clickX / rect.width) * duration; // Calculate time based on click position
+    playerRef.current.seekTo(newTime);
+    setPlayedSeconds(newTime);
+  };
+
+  // Handle mouse down event on the progress bar to start dragging
+  const handleMouseDown = (event) => {
+    setIsDragging(true);
+    handleSeek(event);
+  };
+
+  // Handle mouse move event during dragging
+  const handleMouseMove = (event) => {
+    if (isDragging) {
+      handleSeek(event);
+    }
+  };
+
+  // Handle mouse up event to stop dragging
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  useEffect(() => {
+    let unmuteTimer;
+    if (isPlaying) {
+      unmuteTimer = setTimeout(() => {
+        console.log("Video started playing for 3 seconds.");
+        // setIsMuted(false); // Unmute after 3 seconds
+      }, 3000);
+    }
+    return () => clearTimeout(unmuteTimer); // Clear timeout if video stops
+  }, [isPlaying]);
+
+
+  const AddShows = (object) => {
     setMyObject(object);
   };
   return (
-    <ObjectContext.Provider value={{ myObject, setMyObject,AddShows,liveStreamShow,setLiveStreamShow,routerLoader,setRouterLoader }}>
+    <ObjectContext.Provider
+      value={{
+        myObject,
+        setMyObject,
+        AddShows,
+        liveStreamShow,
+        setLiveStreamShow,
+        routerLoader,
+        setRouterLoader,
+        playerRef,
+        progressRef,
+        isPlaying,
+        isMuted,
+        playedSeconds,
+        duration,
+        isDragging,
+        togglePlayPause,
+        toggleMute,
+        handleFastForward,
+        handleRewind,
+        handleProgress,
+        handleDuration,
+        formatTime,
+        handleMouseDown,
+        handleMouseMove,
+        handleMouseUp
+       
+      }}
+    >
       {children}
     </ObjectContext.Provider>
   );

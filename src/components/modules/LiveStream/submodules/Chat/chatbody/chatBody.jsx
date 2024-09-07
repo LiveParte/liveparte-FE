@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ChatList } from "../../chatsubmodules/chatList";
 import { CommentIcon } from "../../../../../../../public/svg";
+import socketIOClient from "socket.io-client";
 
 export default function ChatBody({
   data = [],
@@ -9,6 +10,8 @@ export default function ChatBody({
   chatBoxRef,
   isOrientation,
 }) {
+  
+
   // console.log(isOrientation, "isOrientation");
   return (
     showComment ? (
@@ -29,15 +32,15 @@ export default function ChatBody({
         <div
           className={`flex flex-col pb-[21px] flex-1 overflow-hidden customScrollHorizontal ${
             showComment && "overflow-y-auto lg:overflow-auto"
-          }  max-h-[40dvh] lg:max-h-[50vh] `}
+          }  max-h-[40dvh] lg:max-h-[65vh] `}
         >
           {showComment && (
             <>
               <div
                 ref={chatBoxRef ? chatBoxRef : {}}
-                className="flex flex-col pt-[10px] px-[14px] lg:overflow-y-auto customScrollHorizontal flex-1"
+                className="flex flex-col pt-[10px] px-[14px] lg:overflow-y-auto customScrollHorizontal flex-1 pb-5"
               >
-              {[]?.length===0 &&  <div className="flex flex-col justify-center items-center py-[81px] flex-1">
+              {data?.length===0 &&  <div className="flex flex-col justify-center items-center py-[81px] flex-1">
                  
                   <div className="mb-[17px] flex items-center">
                   <CommentIcon/>
@@ -46,7 +49,7 @@ export default function ChatBody({
                   Comment section is currently<br className="hidden lg:block"/> disabled
                   </div>
                 </div>}
-                {[]?.map((item, i) => (
+                {data?.map((item, i) => (
                   <ChatList
                     key={i}
                     message={item?.message}

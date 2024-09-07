@@ -6,6 +6,6 @@ export default function OnStreamVideo({
     handlePlayerReady
 }) {
   return (
-    <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
+    <VideoJS options={videoJsOptions} onReady={handlePlayerReady}  />
   )
 }
