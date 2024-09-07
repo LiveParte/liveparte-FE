@@ -4,44 +4,45 @@ import { selectCurrentUserData } from "@/store/User";
 import { useState } from "react";
 
 export function returnBothCurrencies({
-    currencyCode = "USD",
-    HeroSectionEvent = [],
-    returnJustAmount = false,
-    userData = {}
-  }) {
-    // const []=useState()
-    // Always call useSelector without conditions
-    // console.log(userData,HeroSectionEvent,'amountamountamountamount')
+  currencyCode = "USD",
+  HeroSectionEvent = [],
+  returnJustAmount = false,
+  userData = {},
+}) {
+  // const []=useState()
+  // Always call useSelector without conditions
+  // console.log(userData,HeroSectionEvent,'amountamountamountamount')
 
-    const isNigeria = userData?.countryInfo?.code === "NG" ? "₦" : "$";
-  
-    if (HeroSectionEvent?.tickets?.length === 0) {
-    
-      return '';
-    }
-  
-    //
-    const amount =
-      Array.isArray(HeroSectionEvent?.tickets) &&
-      HeroSectionEvent?.tickets?.find(
-        (item) => item?.currency?.code?.toLowerCase() == currencyCode?.toLowerCase()||item?.code?.toLowerCase() == currencyCode?.toLowerCase()
-      );
-      const amountAlt=Array.isArray(HeroSectionEvent?.tickets)&& HeroSectionEvent?.tickets[0]?.price
+  const isNigeria = userData?.countryInfo?.code === "NG" ? "₦" : "$";
 
-      // console.log(amountAlt,amount,'amountamountamountamount')
-
-      // alert('this')
-
-
-  
-     
-    if (returnJustAmount) {
-      return amount?.price;
-    }
-    if(!amount){
-        return ''
-    }
-  
-    return  userData?._id?`${isNigeria}${formatMoney(amount?.price||amountAlt, false)}`:'';
+  if (HeroSectionEvent?.tickets?.length === 0) {
+    return "";
   }
-  
+
+  //
+  const amount =
+    Array.isArray(HeroSectionEvent?.tickets) &&
+    HeroSectionEvent?.tickets?.find(
+      (item) =>
+        item?.currency?.code?.toLowerCase() == currencyCode?.toLowerCase() ||
+        item?.code?.toLowerCase() == currencyCode?.toLowerCase()
+    );
+  const amountAlt =
+    Array.isArray(HeroSectionEvent?.tickets) &&
+    HeroSectionEvent?.tickets[0]?.price;
+
+
+
+  if (returnJustAmount) {
+    return amount?.price;
+  }
+  if (!amount) {
+    return "";
+  }
+
+  console.log('returnBothCurrencies',amount?.price,amountAlt)
+
+  return userData?._id
+    ? `${isNigeria}${formatMoney(amount?.price || amountAlt||'0', false)}`
+    : "";
+}

@@ -1,71 +1,282 @@
-import React, { useState } from "react";
-// import { useParams, useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-
-import {
-  LocalUser,
-  RemoteUser,
-  useJoin,
-  useLocalCameraTrack,
-  useLocalMicrophoneTrack,
-  usePublish,
-  useRemoteAudioTracks,
-  useRemoteUsers,
-} from "agora-rtc-react";
-import { selectCurrentUserData } from "@/store/User";
+import React, { memo, useCallback, useEffect, useRef, useState } from "react";
+import dynamic from "next/dynamic";
+import Chat from "./chat";
+import { IsDesktopMobileChat } from "../style";
+import ChatOnCameraAndVideoControl from "./videosubmodules/ChatOnCameraAndVideoControl";
+import { FullScreenIcon, HostLeftIcon } from "../../../../../public/svg";
+import { checkShowDurationAfter } from "@/utils/reusableComponent";
+import { useDispatch } from "react-redux";
+import { lockOrientation, unlockOrientation } from "@/store/User";
+import MobilePlayer from "./MobilePlayer";
+import FullScreenChatAction from "./FullScreenChatAction";
 import Video from "./Video";
-export default function LiveStreamVideo({
+import Header from "./LandScapeComp/header";
+import { isMobile } from "react-device-detect";
+
+const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
+  ssr: false,
+});
+
+ function LiveStreamVideo({
   activeConnection,
   setActiveConnection,
-  isLive,
+  isLive = false,
   liveStreamDetail,
+  isLoading,
+  userProfileData = {},
+  lockOrientation,
+  unlockOrientation,
+  orientationLocked,
+  ShareAndGiftDropdown,
 }) {
-  const appId = "Agora Project App ID";
-  const user = useSelector(selectCurrentUserData);
+  const dispatch = useDispatch();
+  const playerRef = useRef(null);
+  const durationRef = useRef(null);
+  const currentTimeRef = useRef(0);
+  const isPlayingRef = useRef(false);
+  const isMutedRef = useRef(false);
+  const [, forceUpdate] = React.useReducer((x) => x + 1, 0);
+  const checkIfOrientedAndMobile = isMobile && !orientationLocked;
 
-  const [micOn, setMic] = useState(true);
-  const [cameraOn, setCamera] = useState(true);
+  const handlePlayerReady = useCallback((player) => {
+    playerRef.current = player;
 
-  useJoin(
-    {
-      appid: "8345cf82e4054c9fb9a29a3471f03e09",
-      channel: liveStreamDetail?._id,
-      token:null,
-      userId: "272740306",
-    },
-    activeConnection
-  );
+     // Video starts playing event
+  player.on("play", () => {
+    console.log("Video started playing");
+    
+    // playerRef.current.muted(false);
+    // Perform any additional logic when the video starts playing
+  });
+
+    // Set the duration once the player is ready
+    player.on("loadedmetadata", () => {
+      durationRef.current = player.duration();
+      forceUpdate();
+
+      // Set the video to start from the saved time
+      const savedTime = localStorage.getItem("video-current-time");
+      if (savedTime) {
+        player.currentTime(parseFloat(savedTime));
+        playerRef.current.play();
+      }
+    });
+
+    // Update current time as the video plays
+    player.on("timeupdate", () => {
+      if (playerRef.current) {
+        currentTimeRef.current = player.currentTime();
+        forceUpdate();
+      }
+    });
+
+    // Save the current time periodically
+    const saveCurrentTime = () => {
+      if (playerRef.current) {
+        localStorage.setItem(
+          "video-current-time",
+          playerRef.current.currentTime().toString()
+        );
+      }
+    };
+    player.on("timeupdate", saveCurrentTime);
+
+    // You can handle other player events here, for example:
+    player.on("waiting", () => {
+      videojs.log("player is waiting");
+    });
+
+    player.on("dispose", () => {
+      videojs.log("player will dispose");
+    });
+
+    // Set initial play/pause state
+    isPlayingRef.current = player.paused();
+    isMutedRef.current = !player.muted();
+    playerRef.current.play();
+    player.volume(100);
+    // alert('playing')
+    // setTimeout(() => {
+    //   toggleMuteUnmute();
+    //   // togglePlayPause();
+    // }, 3000);
+    forceUpdate();
+  }, []);
+
+  const PlayState = isPlayingRef?.current;
+  const MuteState = isMutedRef?.current;
+
+  const togglePlayPause = () => {
+    if (playerRef.current) {
+      if (playerRef.current?.paused()) {
+        playerRef.current.play();
+        isPlayingRef.current = true;
+      } else {
+        playerRef.current.pause();
+        isPlayingRef.current = false;
+      }
+      forceUpdate();
+    }
+  };
+
+  const handleRewind = () => {
+    const newTime = Math.max(currentTimeRef.current - 10, 0);
+    if (playerRef.current) {
+      playerRef.current.currentTime(newTime);
+    }
+  };
+
+  // useEffect(() => {
+  //   // Save the current time when the component unmounts
+  //   return () => {
+  //     if (
+  //       playerRef.current &&
+  //       typeof playerRef.current.currentTime === "function"
+  //     ) {
+  //       const currentTime =
+  //         playerRef.current.currentTime && playerRef.current?.currentTime();
+  //       if (currentTime !== undefined) {
+  //         localStorage.setItem("video-current-time", currentTime.toString());
+  //       }
+  //     }
+  //   };
+  // }, []);
+
+  const toggleMuteUnmute = () => {
+    if (playerRef.current?.muted()) {
+      playerRef.current.muted(false);
+      isMutedRef.current = false;
+    } else {
+      playerRef.current.muted(true);
+      isMutedRef.current = true;
+    }
+    forceUpdate();
+  };
+
+  const handleMouseDown = (e) => {
+    if (!durationRef.current || !playerRef.current) return;
   
+    const progressBar = e.currentTarget;
+    const rect = progressBar.getBoundingClientRect();
+    const clickPosition = e.clientX - rect.left;
+    const percentage = clickPosition / rect.width;
+    const newTime = percentage * durationRef.current;
+  
+    playerRef.current.currentTime(newTime); // Seek to the new time
+  };
 
-  usePublish([]);
+  const handleForward = () => {
+    const newTime = Math.min(
+      currentTimeRef.current + 10,
+      durationRef.current || 0
+    );
+    if (playerRef.current) {
+      playerRef.current.currentTime(newTime);
+    }
+  };
 
-  //remote users
-  const remoteUsers = useRemoteUsers();
-  const { audioTracks } = useRemoteAudioTracks(remoteUsers);
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60);
+    const seconds = Math.floor(time % 60)
+      .toString()
+      .padStart(2, "0");
+    return `${minutes}:${seconds}`;
+  };
 
-  // play the remote user audio tracks
-  audioTracks.forEach((track) => track.play());
+  const progress = durationRef.current
+    ? (currentTimeRef.current / durationRef.current) * 100
+    : 0;
+  const currentTime = formatTime(currentTimeRef.current);
+  const duration =
+    durationRef.current !== null && formatTime(durationRef.current);
 
-  //bg-[url('/webp/livestream.webp')]
-  // console.log(remoteUsers,'liveStreamDetail')
+    // console.log(liveStreamDetail,isLive,'liveStreamDetail')
+
   return (
-    <div className="w-full min-h-[30vh] lg:h-[70vh]  bg-cover lg:rounded-[16px] overflow-hidden ">
-      {!isLive ? (
-        <Video
-        liveStreamDetail={liveStreamDetail}
-        />
-      ) : (
-        <div id="remoteVideoGrid" className="h-full w-full">
-          {remoteUsers?.map((user) => (
-            <div
-              key={user.uid}
-              className=" relative w-full overflow-hidden aspect-square h-full max-w-full"
-            >
-              <RemoteUser user={user} />
+    !isLoading && (
+      <div
+        className={`w-full h-full flex-1 bg-cover lg:rounded-[16px] overflow-hidden flex flex-col `}
+      >
+        {/* {isMobile && (
+          <div className="absolute z-30 bottom-0 left-0 right-0 lg:h-[40vh] md:h-[20vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>
+        )} */}
+       {!isLive&& <div>
+          <ChatOnCameraAndVideoControl
+            liveStreamDetail={liveStreamDetail}
+            userProfileData={userProfileData}
+            calculateProgressPercentage={progress}
+            isMuted={MuteState}
+            toggleMute={toggleMuteUnmute}
+            togglePlayPause={togglePlayPause}
+            isLive={isLive}
+            isPlaying={PlayState}
+            rewind={handleRewind}
+            fastForward={handleForward}
+            currentTime={currentTime}
+            duration={duration}
+            handleMouseDown={handleMouseDown}
+          />
+        </div>}
+
+        {(!isLive) ? (
+          <Video
+            handlePlayerReady={handlePlayerReady}
+            currentTimeRef={currentTime}
+            isPlaying={PlayState}
+            rewind={handleRewind}
+            togglePlayPause={togglePlayPause}
+            liveStreamDetail={liveStreamDetail}
+          />
+        ) : (
+          <div className=" w-full relative agroa-video h-[40dvh]  max-sm:h-[100vh]">
+            <JoinAudience
+              liveStreamDetail={liveStreamDetail}
+              eventId={liveStreamDetail?._id}
+            />
+          </div>
+        )}
+
+       
+        <div>
+          {/* {!isLive && (
+            <MobilePlayer
+              orientationLocked={!orientationLocked}
+              toggleMute={toggleMuteUnmute}
+              togglePlayPause={togglePlayPause}
+              isPlaying={PlayState}
+              rewind={handleRewind}
+              calculateProgressPercentage={progress}
+              fastForward={handleForward}
+              currentTime={currentTime}
+            />
+          )} */}
+
+          {/* {orientationLocked && (
+            <div className="">
+              <button
+                className="absolute z-10 flex lg:hidden gap-2 text-[12px] left-5 bottom-5 items-center text-white"
+                onClick={() =>{
+                  {}
+                }
+                }
+              >
+                <FullScreenIcon />
+                {!orientationLocked ? "Exit Fullscreen" : "Fullscreen"}
+              </button>
             </div>
-          ))}
+            //  absolute z-30 top-0 left-0 right-0 lg:h-[40vh] md:h-[20vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black
+          )} */}
+          {/* {checkIfOrientedAndMobile && (
+            <FullScreenChatAction
+              orientationLocked={!orientationLocked}
+              unlockOrientation={unlockOrientation}
+            />
+          )} */}
         </div>
-      )}
-    </div>
+      </div>
+    )
   );
 }
+
+
+export default memo(LiveStreamVideo)

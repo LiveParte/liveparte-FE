@@ -80,7 +80,7 @@ export default function Index() {
           closeModal={handleCloseModal}
         />
       )}
-      <div className="flex-1 flex flex-col bg-[#060809] overflow-hidden h-[100dvh] lg:h-[100vh]">
+      <div className="flex-1 flex flex-col bg-[#060809] overflow-hidden h-[100dvh] lg:h-[30vh] relative ">
         <LiveStream
           isLive={(liveStream?.isLiveStreamed &&liveStream?.eventStarted)}
           liveStreamDetail={liveStream}

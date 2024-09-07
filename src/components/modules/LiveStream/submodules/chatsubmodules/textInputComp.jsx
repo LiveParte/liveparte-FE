@@ -16,16 +16,19 @@ export const TextInputComp = ({
   userCoinsBalance,
   handleSendChat
 }) => {
+
+  console.log(textMessages,'liveStreamDetail1')
   return (
     <div className="z-20 flex items-center flex-1 gap-[16px] mx-[10px] lg:mx-0 ">
       <div className="z-20 flex flex-1 items-center gap-[8px] border-[1px] py-[4px] border-[#343F4B] lg:mb-[13px] bg-[#27292E] rounded-[8px] h-[35px] pr-[4px]">
         <input
           className=" lg:h-[35px] bg-transparent w-[23px] border-[#343F4B] flex-1 placeholder:text-[#495969] placeholder:text-[11px] pl-[10px] text-white outline-none text-[11px]"
-          placeholder="Comment is disabled for this event..."
+          // placeholder="Comment is disabled for this event..."
+          placeholder="Comment here..."
           value={textMessages}
           onChange={handleOnChange}
-          autoFocus={false}
-          disabled
+          // autoFocus={false}
+          // disabled
           // onKeyDown={(e) => e.key === 'Enter' && handleOnChange()}
         />
         <span className="hidden md:block">
@@ -60,7 +63,7 @@ export const TextInputComp = ({
         </span>
         <div
           ref={messageRef}
-          className="bg-white absolute bottom-[70px] right-[9px] text-[11px] font-normal leading-[15px] px-[13px] py-[11px] rounded-[6px] animate-bounce duration-5000 delay-4000"
+          className={`bg-white absolute  bottom-[70px] right-[9px] text-[11px] font-normal leading-[15px] px-[13px] py-[11px] rounded-[6px] animate-bounce duration-5000 delay-4000 ${userCoinsBalance>0 &&'hidden'}`}
           style={{ display: "none" }}
         >
           <div className="relative">

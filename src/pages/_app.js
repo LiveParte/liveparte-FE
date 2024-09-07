@@ -16,6 +16,7 @@ import { getServerSession } from "next-auth";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { persistor,store } from "../store";
 import ErrorBoundary from "@/components/ErrorBoundary";
+import { ObjectProvider } from "@/Context/ObjectProvider";
 
 export default function App({ Component, pageProps }) {
   // const session = getServerSession();
@@ -37,6 +38,7 @@ export default function App({ Component, pageProps }) {
         />
       </Head>
       <ErrorBoundary>
+        <ObjectProvider>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <GoogleOAuthProvider clientId="845158309668-olf8vmklh4baunlh2m7jb3fnidupl1u2.apps.googleusercontent.com">
@@ -63,6 +65,7 @@ export default function App({ Component, pageProps }) {
           </GoogleOAuthProvider>
         </PersistGate>
       </Provider>
+      </ObjectProvider>
       </ErrorBoundary>
     </>
   );

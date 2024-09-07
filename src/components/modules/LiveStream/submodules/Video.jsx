@@ -1,71 +1,90 @@
-import dynamic from 'next/dynamic';
-
-import React, { useRef, useMemo, useEffect, useCallback, memo } from "react";
-// import VideoJS from "@/components/video";
-import videojs from "video.js";
-// import { videoUrl } from "../../../utils/constants";
-import VideoJS from "@/components/VideoPlayer";
-import { videoUrl } from "@/utils/functions/deleteLater";
-import {isMobile} from 'react-device-detect';
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import ReactPlayer from "react-player";
-import "videojs-youtube";
-// import OnStreamVideo from "./videosubmodules/onStreamVideo";
+import { isMobile } from "react-device-detect";
+import { useObject } from "@/Context/ObjectProvider";
 
-const OnStreamVideo = dynamic(() => import("./videosubmodules/onStreamVideo"),{ssr:false});
-const AppVideo = ({ liveStreamDetail, handlePlayerReady,playerRef }) => {
-  // console.log(liveStreamDetail?.streaming_url,'liveStreamDetail')
-//liveStreamDetail?.promotional_url||liveStreamDetail?.promotional_url
- // 'https://res.cloudinary.com/dipc6jvcc/video/upload/v1725441078/Shortest_Video_on_Youtube_znanmv.mp4'||
-            // videoUrl ||
-            // liveStreamDetail?.streaming_url ||
-            // liveStreamDetail?.promotional_url ||
+const AppVideo = ({ liveStreamDetail }) => {
+  const {isPlaying,isMuted,togglePlayPause,toggleMute,playerRef, handleFastForward,
+    handleRewind,
+    isDragging,
+    handleProgress,
+    handleDuration,
+    formatTime, playedSeconds,
+    duration, handleMouseDown,
+    handleMouseUp,
+    progressRef,
+    handleMouseMove} =useObject()
 
-
-
-  const videoJsOptions = useMemo(
-    () => ({
-      techOrder: ['youtube'],
-      autoplay: true,
-      controls:isMobile ? true : false,
-      responsive: true,
-      fluid: true,
-      loop: true,
-      muted: true,
-      playsinline: true,
-      preload: "auto", // Options: 'auto', 'metadata', 'none'
-      playbackRates: [0.5, 1, 1.5, 2],
-      sources: [
-        {
-          src:liveStreamDetail?.streaming_url,
-          type: "video/youtube",
-        },
-      ],
-    }),
-    []
-  );
-
-  return (true&&
-    <div  className=" flex-1 h-full w-full flex justify-center items-center videoplayer">
-      {/* <ReactPlayer
-      ref={playerRef}
+  return (
+    <div className="flex-1 h-full w-full flex justify-center items-center videoplayer relative">
+      <ReactPlayer
+        ref={playerRef}
         style={{
-          width: '100vw',
-          height: '100%',
-          objectFit:'contain'
+          width: "100vw",
+          height: "100%",
+          objectFit: "contain",
         }}
-        height={'100vh'}
-        width={'100vw'}
-        url="https://youtu.be/W36KOlQFTd8?si=UkOF9Ye77-uthnJu"
-        playing={true}
-        controls={false}
-      /> */}
-      <OnStreamVideo 
-      handlePlayerReady={handlePlayerReady}
-       videoJsOptions={videoJsOptions}
+        height={isMobile ? "40vh" : "90vh"}
+        width={"100vw"}
+        url={liveStreamDetail?.streaming_url}
+        playing={isPlaying}
+        controls={isMobile ?true:false} // Disable default controls
+        muted={isMuted}
+        autoPlay={true}
+        onProgress={handleProgress} // Track progress
+        onDuration={handleDuration} // Set total duration
+        config={{
+          youtube: {
+            playerVars: {
+              modestbranding: 0,
+              rel: 0,
+              showinfo: 0,
+              disablekb: 1,
+              fs: 0,
+            },
+          },
+        }}
       />
-      {/* <VideoJS options={videoJsOptions} onReady={handlePlayerReady} /> */}
+
+      {/* Custom Controls */}
+      <div className="absolute left-0 right-0 px-4 bottom-[0] py-4 flex justify-between text-white z-30 bg-gradient-to-t h-[50px] items-start from-black bg-[#000000a6] lg:rounded-[16px] ">
+        {/* <button onClick={togglePlayPause} className="text-white">
+          {isPlaying ? "Pause" : "Play"}
+        </button>
+        <button onClick={toggleMute} className="text-white">
+          {isMuted ? "Unmute" : "Mute"}
+        </button>
+        <button onClick={handleRewind} className="text-white">
+          Rewind 10s
+        </button>
+        <button onClick={handleFastForward} className="text-white">
+          Fast Forward 10s
+        </button> */}
+         {/* Progress Bar */}
+      {/* <div
+        className="absolute bottom-16 left-4 right-4 h-2 bg-gray-500 rounded cursor-pointer"
+        onMouseDown={handleMouseDown} // Start dragging
+        onMouseMove={handleMouseMove} // Dragging
+        onMouseUp={handleMouseUp} // Stop dragging
+        ref={progressRef}
+        style={{ width: "calc(100% - 2rem)" }}
+      >
+        <div
+          className="bg-blue-500 h-full rounded"
+          style={{
+            width: `${(playedSeconds / duration) * 100}%`, // Progress width based on played time
+          }}
+        ></div>
+      </div> */}
+
+      {/* <div className="absolute bottom-4 left-4 text-white">
+        {formatTime(playedSeconds)} / {formatTime(duration)}
+      </div> */}
+      </div>
+
+     
     </div>
   );
 };
 
-export default memo(AppVideo);
+export default React.memo(AppVideo);

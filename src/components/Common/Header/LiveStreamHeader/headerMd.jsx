@@ -26,7 +26,7 @@ import { Dropdown, DropdownButton } from "react-bootstrap";
      <UserProfile onClick={() => setIsOpen(!isOpen)} />
    </div>
     <div className="md:hidden z-50">
-      <div className="absolute  left-0 right-0 px-[16px] lg:px-[18px] top-0 py-[17px] flex justify-between text-white z-30 bg-gradient-to-b h-[100px] items-start from-black lg:rounded-[16px]">
+      <div className="absolute  left-0 right-0 px-[16px] lg:px-[18px] top-0 py-[17px] flex justify-between text-white z-30 bg-gradient-to-t h-[50px] items-start from-black bg-black lg:rounded-[16px]">
         {!isLoading && (
           <div className="flex justify-between items-center w-full">
             {isLive ? (
