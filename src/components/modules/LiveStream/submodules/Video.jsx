@@ -47,7 +47,7 @@ const AppVideo = ({ liveStreamDetail }) => {
       />
 
       {/* Custom Controls */}
-      <div className="absolute left-0 right-0 px-4 bottom-[0] py-4 flex justify-between text-white z-30 bg-gradient-to-t h-[50px] items-start from-black bg-[#000000a6] lg:rounded-[16px] ">
+      <div className={`absolute left-0 right-0 px-4 bottom-[0] py-4 flex justify-between text-white z-30 bg-gradient-to-t h-[50px] items-start from-black  ${!isPlaying ? 'bg-black ':'bg-[#000000a6]'} lg:rounded-[16px] `}>
         {/* <button onClick={togglePlayPause} className="text-white">
           {isPlaying ? "Pause" : "Play"}
         </button>

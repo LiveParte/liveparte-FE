@@ -7,7 +7,7 @@ export const ObjectProvider = ({ children }) => {
   const [myObject, setMyObject] = useState({});
   const [liveStreamShow, setLiveStreamShow] = useState(null);
   const [routerLoader, setRouterLoader] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
   const [duration, setDuration] = useState(0); // Total video duration
   const [playedSeconds, setPlayedSeconds] = useState(0); // Current time played

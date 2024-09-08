@@ -84,7 +84,7 @@ function LiveStream({
     return function Container({ lockOrientation, unlockOrientation, orientation }) {
       return (
         <div className="relative flex-1 flex flex-col h-full w-full">
-          <div className="absolute z-30 top-0 left-0 right-0 lg:h-[40vh] md:h-[10vh] bg-contain xl:bg-cover !bg-no-repeat custom-gradient "></div>
+          <div className="absolute z-30 top-0 left-0 right-0 lg:h-[35vh] md:h-[10vh] bg-contain xl:bg-cover !bg-no-repeat custom-gradient "></div>
           <div className={`${IsMobileLiveStream} `}>
             <LiveStreamVideo
               setActiveConnection={setActiveConnection}

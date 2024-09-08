@@ -491,7 +491,7 @@ select:-webkit-autofill:focus {
 }
 .custom-gradient {
   @apply bg-gradient-to-b from-black;
-  background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.953) 25%, transparent 80%);
+  background-image: linear-gradient(to bottom, #060809 25%, transparent 80%);
 }
 
 .widthFillSpace {
