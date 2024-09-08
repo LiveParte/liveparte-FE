@@ -4,13 +4,13 @@ export default function Document() {
   return (
     <Html lang="en" suppressHydrationWarning>
       <Head>
-      <link rel="stylesheet" href="/some-third-party.css" />
+        <link rel="stylesheet" href="/some-third-party.css" />
 
-        {/* <script
+        <script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-HEFV796PMR"
-        ></script> */}
-        {/* <script
+        ></script> 
+        <script
           dangerouslySetInnerHTML={{
             __html: `
               window.dataLayer = window.dataLayer || [];
@@ -20,7 +20,7 @@ export default function Document() {
               gtag('config', 'G-HEFV796PMR');
             `,
           }}
-        /> */}
+        />
         {/* Adding inline styles */}
         <style>{`
           body {
