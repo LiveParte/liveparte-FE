@@ -81,23 +81,28 @@ export default function Hero({
 
   const buttonAction = () => {
     const ticket =Array.isArray(HeroSectionEvent?.tickets)&&HeroSectionEvent?.tickets[0];
-    console.log(HeroSectionEvent,'tbuttonActionicket')
+    // console.log(HeroSectionEvent,'tbuttonActionicket')
     // if(eventIsPast){
     //   return "pastShow";
     // }
-    if (ticket?.price===0 && !EventStarted) {
-      return "FreeTicket";
-    }
+   
     if (userData?._id) {
       if (HappeningNow||HeroSectionEvent?.purchase?.id &&isOnDemand) {
         return "isPaidAndEventIsLive";
       }
-      
+     
       if (
         HeroSectionEvent?.purchase?.id &&
         !EventStarted 
       ) {
+        if (ticket?.price===0 && !EventStarted) {
+          return "FreeTicket";
+        }
         return "isPaidAndEventNotLIve";
+      }
+    }else{
+      if (ticket?.price===0 && !EventStarted) {
+        return "FreeTicket";
       }
     }
 

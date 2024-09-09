@@ -133,6 +133,7 @@ export default function PurchasePaartyCoins({
     </div>
       {/* */}
       <div className="pb-[26px] hid">
+      {/* <PaystackHookExample></PaystackHookExample> */}
         <PayStack
           amount={getCostPerCoin(coinsPrice, coinsAmount) * coinsNeeded}
           type="Coins Purchase"
@@ -140,6 +141,7 @@ export default function PurchasePaartyCoins({
           isDisabled={isLoading || !coinsNeeded}
           proceed={coinsNeeded ? true : false}
         >
+          {/* <PaystackHookExample> */}
           <ButtonComp
             btnText={`Purchase Coins ${totalCost ? "₦" : ""} ${
               totalCost ? totalCost : ""
@@ -148,7 +150,7 @@ export default function PurchasePaartyCoins({
             isLoading={isLoading}
             isDisabled={!coinsNeeded}
           />
-          {/* Purchase Coins ₦5,000 */}
+          {/* </PaystackHookExample> */}
         </PayStack>
         {/* <ButtonComp
         onClick={handleStripPayment}
