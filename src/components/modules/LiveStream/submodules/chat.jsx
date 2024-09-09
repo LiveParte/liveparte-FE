@@ -15,6 +15,7 @@ import ChatBody from "./Chat/chatbody/chatBody";
 import DropDownBootstrap from "@/components/Ui/DropDownBootsrap";
 import Image from "next/image";
 import { isMobile } from "react-device-detect";
+import PaystackHookExample from "@/components/PayStack/testPayStack";
 
 function Chat({ onLeave, liveStreamDetail, }) {
   const userData = useSelector(selectCurrentUserData) || {};
@@ -105,72 +106,72 @@ function Chat({ onLeave, liveStreamDetail, }) {
   // alert(userCoinsBalance,'userCoinsBalance')
   const chatBoxRef = useRef(null);
   const [textMessages, setTextMessages] = useState("");
-  const [chatMessages, setChatMessages] = useState([
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-  ]);
+  // const [chatMessages, setChatMessages] = useState([
+  //   {
+  //     name: "Bola",
+  //     message: "Please Wait for me to join",
+  //   },
+  //   {
+  //     name: "Bola",
+  //     message: "Please Wait for me to join",
+  //   },
+  //   {
+  //     name: "Bola",
+  //     message: "Please Wait for me to join",
+  //   },
+  //   {
+  //     name: "Bola",
+  //     message: "Please Wait for me to join",
+  //   },
+  //   {
+  //     name: "Bola",
+  //     message: "Please Wait for me to join",
+  //   },
+  //   {
+  //     name: "Bola",
+  //     message: "Please Wait for me to join",
+  //   },
+  //   {
+  //     name: "Bola",
+  //     message: "Please Wait for me to join",
+  //   },
+  //   {
+  //     name: "Bola",
+  //     message: "Please Wait for me to join",
+  //   },
+  //   {
+  //     name: "Bola",
+  //     message: "Please Wait for me to join",
+  //   },
+  //   {
+  //     name: "Bola",
+  //     message: "Please Wait for me to join",
+  //   },
+  //   {
+  //     name: "Bola",
+  //     message: "Please Wait for me to join",
+  //   },
+  //   {
+  //     name: "Bola",
+  //     message: "Please Wait for me to join",
+  //   },
+  //   {
+  //     name: "Bola",
+  //     message: "Please Wait for me to join",
+  //   },
+  //   {
+  //     name: "Bola",
+  //     message: "Please Wait for me to join",
+  //   },
+  //   {
+  //     name: "Bola",
+  //     message: "Please Wait for me to join",
+  //   },
+  //   {
+  //     name: "Bola",
+  //     message: "Please Wait for me to join",
+  //   },
+  // ]);
 
   const messageRef = useRef(null);
 
@@ -357,6 +358,7 @@ function Chat({ onLeave, liveStreamDetail, }) {
               className="px-[17px] h-[32px] rounded-[96px] flex gap-[9px] text-white text-[10px] lg:text-[11px] font500 items-center bg-[#BACFF70A] cursor-pointer w-fit"
               onClick={() => setPayFlow("purchasePartyCoins")}
             >
+             
               <div>Add Coins</div>
             </div>
           </div>

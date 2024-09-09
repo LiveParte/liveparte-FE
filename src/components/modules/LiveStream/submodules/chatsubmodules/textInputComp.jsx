@@ -17,11 +17,22 @@ export const TextInputComp = ({
   handleSendChat
 }) => {
 
+  const handleKeyPress = (event) => {
+    // setKey(event.key);
+    if (event.key === "Enter") {
+      // Perform your action when the Enter key is pressed
+      console.log("Send button clicked!");
+      handleSendChat()
+      // alert("Enter key pressed")
+    }
+  };
+
   console.log(textMessages,'liveStreamDetail1')
   return (
     <div className="z-20 flex items-center flex-1 gap-[16px] mx-[10px] lg:mx-0 ">
       <div className="z-20 flex flex-1 items-center gap-[8px] border-[1px] py-[4px] border-[#343F4B] lg:mb-[13px] bg-[#27292E] rounded-[8px] h-[35px] pr-[4px]">
         <input
+        onKeyDown={handleKeyPress}
           className=" lg:h-[35px] bg-transparent w-[23px] border-[#343F4B] flex-1 placeholder:text-[#495969] placeholder:text-[11px] pl-[10px] text-white outline-none text-[11px]"
           // placeholder="Comment is disabled for this event..."
           placeholder="Comment here..."
