@@ -27,11 +27,15 @@ export default function ShareEvent({ closeModal, Data }) {
   const handleAction = () => {
     // router.push('/event_time_out')
   };
-    // console.log(Data,'DataDataData')
-    const userData = useSelector(selectCurrentUserData) || {};
-    console.log(userData,'userDatauserData')
-    const location =userData?.countryInfo?.code==="NG"?'NGN':'USD'
-    const ticketPrice=  returnBothCurrencies({currencyCode:location,HeroSectionEvent:Data,userData:userData});
+  // console.log(Data,'DataDataData')
+  const userData = useSelector(selectCurrentUserData) || {};
+  console.log(userData, "userDatauserData");
+  const location = userData?.countryInfo?.code === "NG" ? "NGN" : "USD";
+  const ticketPrice = returnBothCurrencies({
+    currencyCode: location,
+    HeroSectionEvent: Data,
+    userData: userData,
+  });
 
   const handleCopy = (text, result) => {
     if (result) {
@@ -81,14 +85,15 @@ export default function ShareEvent({ closeModal, Data }) {
             <div className="text-[14px] text-white font500 mb-[8px] line-clamp-1">
               {Data?.name}
             </div>
-            <div className="text-[#B4BECB] text-[13px] lg:text-[15px] mb-[6px] lg:flex items-center  line-clamp-1  gap-2">
-              {moment(Data?.event_date).format("MMMM DD")}
-              <div className="rounded-full h-[4px] w-[4px] bg-[#D9D9D9] mx-[8px] hidden md:block"></div>{" "}
-              {Data?.address}
+            <div className="text-[#B4BECB] text-[13px] lg:text-[15px] mb-[6px] lg:flex items-center  line-clamp-1  gap-2  font400">
+              <span className="inline-flex text-[15px] text-[#B4BECB] whitespace-nowrap">
+                {moment(Data?.event_date).format("MMM DD")}
+              </span>
+              <div className="rounded-full h-[4px] w-[4px] bg-[#D9D9D9] mx-[8px] hidden md:inline-block"></div>{" "}
+              <span className="line-clamp-1">{Data?.address}</span>
             </div>
             <div className="text-[14px] text-white font500 line-clamp-1">
-              {Data?.ticket?.code}{" "}
-              {ticketPrice}{" "}
+              {Data?.ticket?.code} {ticketPrice}{" "}
             </div>
           </div>
         </div>

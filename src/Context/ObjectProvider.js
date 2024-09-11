@@ -8,28 +8,28 @@ export const ObjectProvider = ({ children }) => {
   const [routerLoader, setRouterLoader] = useState(null);
   const [isPlaying, setIsPlaying] = useState(true); // Start in playing state
   const [isMuted, setIsMuted] = useState(true); // Start muted to allow autoplay
+  const [hasUnmutedAutomatically, setHasUnmutedAutomatically] = useState(false); // Track if video has been unmuted automatically
   const [duration, setDuration] = useState(0); // Total video duration
   const [playedSeconds, setPlayedSeconds] = useState(0); // Current time played
   const playerRef = useRef(null); // Reference to the video player
   const progressRef = useRef(null); // Reference for the progress bar
   const [isDragging, setIsDragging] = useState(false); // Track dragging state
 
-  // Automatically unmute after a delay when autoplay works
+  // Automatically unmute after a delay when autoplay works, only once
   useEffect(() => {
-    if (isMuted) {
+    if (isMuted && !hasUnmutedAutomatically) {
       const timer = setTimeout(() => {
-        setIsMuted(false)
+        setIsMuted(false);
         if (playerRef.current) {
-          // alert('sgout')
-          // playerRef.current.muted = false; // Unmute the video after a delay
-          setIsPlaying(true)
-          setIsMuted(false)
+          setIsPlaying(true);
+          setIsMuted(false);
         }
+        setHasUnmutedAutomatically(true); // Mark that the video has been unmuted automatically
       }, 1000); // 1 second delay before unmuting
 
       return () => clearTimeout(timer); // Cleanup timer on unmount or change
     }
-  }, [isMuted]);
+  }, [isMuted, hasUnmutedAutomatically]);
 
   // Toggle play/pause
   const togglePlayPause = useCallback(() => {

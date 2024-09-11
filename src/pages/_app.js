@@ -17,6 +17,8 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { persistor,store } from "../store";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { ObjectProvider } from "@/Context/ObjectProvider";
+import  { Metadata } from 'next'
+
 
 export default function App({ Component, pageProps }) {
   // const session = getServerSession();
@@ -34,6 +36,10 @@ export default function App({ Component, pageProps }) {
         <link rel="icon" href="/logo.svg" sizes="any" />
         <meta
           property="og:description"
+          content="Get direct access to live and on-demand concert, performances by your award-winning artistes and comedians anywhere in the world from the comfort of your devices."
+        />
+         <meta
+          property="og:title"
           content="Get direct access to live and on-demand concert, performances by your award-winning artistes and comedians anywhere in the world from the comfort of your devices."
         />
       </Head>
