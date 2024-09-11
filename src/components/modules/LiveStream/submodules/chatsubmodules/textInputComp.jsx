@@ -72,7 +72,7 @@ export const TextInputComp = ({
             </div>
           </DropdownButton>
         </span>
-        <div
+        {userCoinsBalance<1&&<div
           ref={messageRef}
           className={`bg-white absolute  bottom-[70px] right-[9px] text-[11px] font-normal leading-[15px] px-[13px] py-[11px] rounded-[6px] animate-bounce duration-5000 delay-4000 ${userCoinsBalance>0 &&'hidden'}`}
           style={{ display: "none" }}
@@ -84,7 +84,7 @@ export const TextInputComp = ({
               <ChatIcon />
             </div>
           </div>
-        </div>
+        </div>}
         {textMessages?.length > 0 ? (
           <div className=" ">
             <button
