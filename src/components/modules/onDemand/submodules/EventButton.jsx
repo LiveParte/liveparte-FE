@@ -273,7 +273,7 @@ export default function EventButton({
               onClick={() => {
                 handleGetTicket && handleGetTicket();
               }}
-              className={`py-[12px] px-[16px] md:px-[39px] text-[13px] xl:text-[13px] font500`}
+              className={`py-[12px] px-[61px] md:px-[39px] text-[13px] xl:text-[13px] font500`}
               btnText={` Get Ticket ${ticketPrice && "-"} ${ticketPrice}
              
               `}

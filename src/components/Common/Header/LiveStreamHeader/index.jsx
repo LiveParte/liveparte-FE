@@ -49,10 +49,17 @@ export default function LiveStreamHeaderIndexComp({
         <ShareEvent Data={liveStreamDetail} closeModal={handleCloseModal} />
       ),
     },
+    {
+      name: "shareEvent",
+      component: (
+        <ShareEvent Data={liveStreamDetail} closeModal={handleCloseModal} />
+      ),
+    },
   ];
+
   return (
     <div
-      className={`${MainContainer}  absolute left-0 right-0 lg:top-6 bg-black`}
+      className={`${MainContainer}  absolute left-0 right-0 lg:top-6 bg-[#060809]  `}
     >
       {isOpen && (
         <MyModal
@@ -72,7 +79,7 @@ export default function LiveStreamHeaderIndexComp({
           setActiveConnection={setActiveConnection}
         />
       </div>
-      <div className="block lg:hidden">
+      <div className="block lg:hidden ">
         <HeaderMd
           ProfileDropdown={ProfileDropdown}
           setIsOpen={setIsOpen}

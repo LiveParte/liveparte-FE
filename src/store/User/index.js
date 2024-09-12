@@ -71,6 +71,8 @@ export const authSlice = createSlice({
       storage["localStorage"].remove(userDetailStorageName);
       storage["localStorage"].remove(accessTokenStorageName);
       state.isLoggedIn = false;
+      state.liveStreamEvent={};
+      state.paymentEvent={}
     },
     lockOrientation(state) {
       state.locked = true;

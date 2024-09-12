@@ -1,5 +1,5 @@
 import { LogoImage } from "@/utils/styleReuse";
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import UserProfile from "../../UserProfile";
 import { FullScreenIcon, ThreeDotSmall } from "../../../../../public/svg";
 import { Dropdown, DropdownButton } from "react-bootstrap";
@@ -16,17 +16,19 @@ import { Dropdown, DropdownButton } from "react-bootstrap";
   handleOpenModalAll,
   setFullScreenModal,
 }) {
+
+  const [showDropDown,setShowDropDown] =useState(false)
   return (
-    <div>
- <div className=" items-center justify-between  hidden md:flex">
-     <div className="pt-[12px] lg:pt-[32px] pb-[27px] ">
+    <div className="  z-50">
+      <div className="absolute  left-0 right-0 px-[16px] lg:px-[18px] top-0 py-[17px] flex justify-between text-white z-30 bg-gradient-to-b h-[8vh] sm:h-[30vh] items-start from-[#060809]  lg:rounded-[16px]">
+      <div className="pt-[12px] lg:pt-[32px] pb-[27px]  hidden sm:block">
        <LogoImage />
      </div>
-     {isOpen && <ProfileDropdown />}
-     <UserProfile onClick={() => setIsOpen(!isOpen)} />
+     {isOpenII && <ProfileDropdown />}
+     <UserProfile onClick={() => setIsOpenII(!isOpenII)} />
    </div>
-    <div className="md:hidden z-50">
-      <div className="absolute  left-0 right-0 px-[16px] lg:px-[18px] top-0 py-[17px] flex justify-between text-white z-30 bg-gradient-to-b h-[100px] items-start from-black lg:rounded-[16px]">
+    <div className="md:hidden">
+      <div className="absolute  left-0 right-0 px-[16px] lg:px-[18px] top-0 py-[17px] flex justify-between text-white z-30 bg-gradient-to-b h-[10vh] sm:h-[30vh] items-start from-[#060809]  lg:rounded-[16px]">
         {!isLoading && (
           <div className="flex justify-between items-center w-full">
             {isLive ? (
@@ -45,7 +47,7 @@ import { Dropdown, DropdownButton } from "react-bootstrap";
               </div>
             )}
             {/* <div>Hello</div> */}
-            <DropdownButton
+            {/* <DropdownButton
             id="dropdown-basic-button"
             title={
               <div className="#333D474D">
@@ -54,11 +56,11 @@ import { Dropdown, DropdownButton } from "react-bootstrap";
             }
           >
             <Dropdown.Item href="#/action-1" className="p-0 m-0  bg-transparent">
-            {/* <div className="bg-black h-[30px] w-[30vw]"></div> */}
+            
             <ShareAndGiftDropdown />
             </Dropdown.Item>
             
-          </DropdownButton>
+          </DropdownButton> */}
             {/* <div className=" " onClick={() => setIsOpenII(!isOpenII)}>
               {isOpenII && <ShareAndGiftDropdown />}
               <ThreeDotSmall/>
