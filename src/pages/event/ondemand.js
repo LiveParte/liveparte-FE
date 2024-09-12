@@ -27,15 +27,16 @@ export default function OnDemandEvent() {
     : [];
   const HeroSectionEvent =
     isArray(onDemandEvent?.event) &&
-    onDemandEvent?.event[randomBetweenOneAndTen(onDemandEvent.length)];
+    onDemandEvent?.event[randomBetweenOneAndTen(onDemandEvent?.event.length)];
   const HeroSectionEvent2 =
     isArray(onDemandEvent?.event) && onDemandEvent?.event[3];
   const router = useRouter();
+  // console.log(onDemandEvent,'onDemandEventonDemandEvent')
 
   return (
     <div className="bg-black m-h-[100vh] ">
       <NoAuth>
-        {!onDemandEventLoader && HeroSectionEvent?.name ? (
+        {(!onDemandEventLoader && HeroSectionEvent?.name) ? (
           <Hero
             HeroSectionEvent={HeroSectionEvent}
             router={router}

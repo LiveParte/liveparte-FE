@@ -1,29 +1,19 @@
-import React from "react";
+import React, { useState, useRef, useCallback, useEffect } from "react";
 import ReactPlayer from "react-player";
 import { isMobile } from "react-device-detect";
 import { useObject } from "@/Context/ObjectProvider";
-import { MuteIcon, VideoIsMute } from "../../../../../public/svg";
 
 const AppVideo = ({ liveStreamDetail }) => {
-  const {
-    isPlaying,
-    isMuted,
-    togglePlayPause,
-    toggleMute,
-    playerRef,
-    handleFastForward,
+  const {isPlaying,isMuted,togglePlayPause,toggleMute,playerRef, handleFastForward,
     handleRewind,
+    isDragging,
     handleProgress,
     handleDuration,
-    progressRef,
-    isDragging,
-    handleMouseDown,
-    handleMouseMove,
+    formatTime, playedSeconds,
+    duration, handleMouseDown,
     handleMouseUp,
-    formatTime,
-    playedSeconds,
-    duration,
-  } = useObject();
+    progressRef,
+    handleMouseMove} =useObject()
 
   return (
     <div className="flex-1 h-full w-full flex justify-center items-center videoplayer relative">
@@ -34,13 +24,13 @@ const AppVideo = ({ liveStreamDetail }) => {
           height: "100%",
           objectFit: "contain",
         }}
-        height={isMobile ? "40dvh" : "90vh"}
+        height={isMobile ? "40vh" : "90vh"}
         width={"100vw"}
         url={liveStreamDetail?.streaming_url}
-        playing={isPlaying} // Auto play video on load
-        controls={isMobile} // Show controls on mobile
+        playing={isPlaying}
+        controls={isMobile ?true:false} // Disable default controls
         muted={isMuted}
-        autoPlay={true} // Ensure the video plays automatically
+        autoPlay={true}
         onProgress={handleProgress} // Track progress
         onDuration={handleDuration} // Set total duration
         config={{
@@ -55,20 +45,9 @@ const AppVideo = ({ liveStreamDetail }) => {
           },
         }}
       />
-      {isMuted && (
-        <div className="absolute left-0 right-0 top-0 bottom-0 text-[24px]  flex justify-center items-center " onClick={toggleMute}>
-          <div className="relative text-white py-[16px] px-[32px] flex gap-[16px] rounded-[30px] justify-center items-center bg-[#333D4780] cursor-pointer z-50 font500">
-            <VideoIsMute />
-            <span>Unmute</span>
-          </div>
-        </div>
-      )}
+
       {/* Custom Controls */}
-      <div
-        className={`absolute left-0 right-0 px-4 bottom-[0] py-4 flex justify-between text-white z-30 bg-gradient-to-t h-[50px] items-start from-black  ${
-          !isPlaying ? "bg-black " : "bg-[#000000a6]"
-        } lg:rounded-[16px] `}
-      >
+      <div className={`absolute left-0 right-0 px-4 bottom-[0] py-4 flex justify-between text-white z-30 bg-gradient-to-t h-[50px] items-start from-black  ${!isPlaying ? 'bg-black ':'bg-[#000000a6]'} lg:rounded-[16px] `}>
         {/* <button onClick={togglePlayPause} className="text-white">
           {isPlaying ? "Pause" : "Play"}
         </button>
@@ -81,7 +60,29 @@ const AppVideo = ({ liveStreamDetail }) => {
         <button onClick={handleFastForward} className="text-white">
           Fast Forward 10s
         </button> */}
+         {/* Progress Bar */}
+      {/* <div
+        className="absolute bottom-16 left-4 right-4 h-2 bg-gray-500 rounded cursor-pointer"
+        onMouseDown={handleMouseDown} // Start dragging
+        onMouseMove={handleMouseMove} // Dragging
+        onMouseUp={handleMouseUp} // Stop dragging
+        ref={progressRef}
+        style={{ width: "calc(100% - 2rem)" }}
+      >
+        <div
+          className="bg-blue-500 h-full rounded"
+          style={{
+            width: `${(playedSeconds / duration) * 100}%`, // Progress width based on played time
+          }}
+        ></div>
+      </div> */}
+
+      {/* <div className="absolute bottom-4 left-4 text-white">
+        {formatTime(playedSeconds)} / {formatTime(duration)}
+      </div> */}
       </div>
+
+     
     </div>
   );
 };

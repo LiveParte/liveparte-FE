@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ChatList } from "../../chatsubmodules/chatList";
 import { CommentIcon } from "../../../../../../../public/svg";
+import socketIOClient from "socket.io-client";
 
 export default function ChatBody({
   data = [],
@@ -9,10 +10,12 @@ export default function ChatBody({
   chatBoxRef,
   isOrientation,
 }) {
+  
+
   // console.log(isOrientation, "isOrientation");
   return (
     showComment ? (
-      <div className="backdrop-blur-[8px] bg-black/30 rounded-[8px] overflow-hidden h-full min-w-[236px]">
+      <div className="backdrop-blur-[8px] flex flex-1 flex-col bg-black/30 rounded-[8px] overflow-hidden h-full min-w-[236px]">
         <div
           className={`hidden lg:block text-[11px] text-[#FFFFFF] backdrop-blur-xl bg-black/10 font500 text-end py-[7px]  px-[16px] ${
             isOrientation && "!block"
@@ -27,17 +30,17 @@ export default function ChatBody({
         </div>
 
         <div
-          className={`flex flex-col pb-[21px] overflow-hidden customScrollHorizontal ${
+          className={`flex flex-col pb-[21px] flex-1 overflow-hidden customScrollHorizontal ${
             showComment && "overflow-y-auto lg:overflow-auto"
-          }  max-h-[40dvh] lg:max-h-[50vh] `}
+          }  max-h-[40dvh] lg:max-h-[65vh] `}
         >
           {showComment && (
             <>
               <div
                 ref={chatBoxRef ? chatBoxRef : {}}
-                className="flex flex-col pt-[10px] px-[14px] lg:overflow-y-auto customScrollHorizontal"
+                className="flex flex-col pt-[10px] px-[14px] lg:overflow-y-auto customScrollHorizontal flex-1 pb-5"
               >
-              {[]?.length===0 &&  <div className="flex flex-col justify-center items-center py-[81px]">
+              {data?.length===0 &&  <div className="flex flex-col justify-center items-center py-[81px] flex-1">
                  
                   <div className="mb-[17px] flex items-center">
                   <CommentIcon/>
@@ -46,7 +49,7 @@ export default function ChatBody({
                   Comment section is currently<br className="hidden lg:block"/> disabled
                   </div>
                 </div>}
-                {[]?.map((item, i) => (
+                {data?.map((item, i) => (
                   <ChatList
                     key={i}
                     message={item?.message}

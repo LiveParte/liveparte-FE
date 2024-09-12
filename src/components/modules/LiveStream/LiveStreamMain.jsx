@@ -24,9 +24,11 @@ function LiveStream({
   const mobileSize = useSelector(selectSize);
   const [isOpen, setIsOpen] = useState(false);
   const orientationLocked = useSelector(selectOrientationLocked);
-  const IsMobileLiveStream = `relative lg:static flex  flex-1 flex-col bg-[#27292E] pt-[0px] lg:pt-[0px] lg:px-[0px] lg:rounded-[16px]   ${!isMobile ? 'h-[100dvh]' : 'h-[40dvh]'} `;
+  const IsMobileLiveStream = `relative lg:static flex  flex-1 flex-col bg-[#27292E] pt-[0px] lg:pt-[0px] lg:px-[0px] lg:rounded-[16px]   ${
+    !isMobile ? "h-[100dvh]" : "h-[40dvh]"
+  } `;
   const IsMobileChat = `lg:hidden flex flex-col lg:rounded-[26px] bg-[#222428] h-[60vh] max-h-[60dvh] lg:mb-3 `;
-  console.log(isMobile,'isMobile')
+  console.log(isMobile, "isMobile");
   const [isOpenII, setIsOpenII] = useState(false);
   const dispatch = useDispatch();
   const [activeConnection, setActiveConnection] = useState(true);
@@ -67,7 +69,10 @@ function LiveStream({
     return (
       <CustomDropDown dropdownRef={dropdownRef} setIsOpen={setIsOpen}>
         <div className="bg-[#1B1C20] border-[1px] text-left border-[#343F4B] font500 text-[13px] md:text-[14px] text-white rounded-[16px] md:w-[230px] px-[40px] py-[24px]">
-          <Link href={"/setting"} className="py-[12px] cursor-pointer no-underline text-white">
+          <Link
+            href={"/setting"}
+            className="py-[12px] cursor-pointer no-underline text-white"
+          >
             Settings
           </Link>
           <div onClick={handleLogOut} className="py-[12px] cursor-pointer">
@@ -81,10 +86,14 @@ function LiveStream({
   // console.log(liveStreamDetail,'liveStreamDetailliveStreamDetail')
 
   const Container = useMemo(() => {
-    return function Container({ lockOrientation, unlockOrientation, orientation }) {
+    return function Container({
+      lockOrientation,
+      unlockOrientation,
+      orientation,
+    }) {
       return (
         <div className="relative flex-1 flex flex-col h-full w-full">
-          <div className="absolute z-30 top-0 left-0 right-0 lg:h-[40vh] md:h-[20vh] bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>
+          <div className="absolute z-10 top-0 left-0 right-0 md:h-[35vh] sm:h-[10vh] bg-contain xl:bg-cover !bg-no-repeat custom-gradient "></div>
           <div className={`${IsMobileLiveStream} `}>
             <LiveStreamVideo
               setActiveConnection={setActiveConnection}
@@ -111,12 +120,20 @@ function LiveStream({
         </div>
       );
     };
-  }, [IsMobileLiveStream, IsMobileChat, activeConnection, isLive, liveStreamDetail, isLoading, userProfileData]);
+  }, [
+    IsMobileLiveStream,
+    IsMobileChat,
+    activeConnection,
+    isLive,
+    liveStreamDetail,
+    isLoading,
+    userProfileData,
+  ]);
 
   return (
     <main ref={dropdownRef} className="flex flex-col overflow-hidden flex-1">
       <div className="flex-1 flex flex-col relative">
-        <div className="flex-1 flex flex-col bg-black">
+        <div className="flex-1 flex flex-col bg-black  ">
           <LiveStreamHeaderIndexComp
             ProfileDropdown={ProfileDropdown}
             handleOpenModal={handleOpenModal}

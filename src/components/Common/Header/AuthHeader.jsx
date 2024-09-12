@@ -56,7 +56,9 @@ export default function AuthHeader({
 
   function handleLogOut() {
     dispatch(userApi.util.resetApiState());
+    dispatch(eventApi.util.resetApiState());
     dispatch(setUserData({}));
+    dispatch(logout({}));
     localStorage.removeItem(userDetailStorageName);
     localStorage.removeItem(accessTokenStorageName);
 

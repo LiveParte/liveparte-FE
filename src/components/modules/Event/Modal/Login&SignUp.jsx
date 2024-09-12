@@ -29,6 +29,7 @@ import {
   singleEventLink,
 } from "@/utils/reusableComponent";
 import { eventApi, useLoginApiMutation } from "@/store/Event/eventApi";
+import { transactionApi } from "@/store/Transaction/transactionApi";
 
 export default function LoginSignUp({
   closeModal,
@@ -169,6 +170,9 @@ export default function LoginSignUp({
       );
       dispatch(setCoins(response?.data?.user?.totalCoin));
       dispatch(setUserData(response?.data?.user));
+      dispatch(userApi.util.resetApiState());
+      dispatch(eventApi.util.resetApiState());
+      dispatch(transactionApi.util.resetApiState());
       // dispatch(userApi.util.invalidateTags(["user"]));
       // dispatch(baseApi.util.resetApiState());
 
@@ -223,6 +227,9 @@ export default function LoginSignUp({
       // dispatch(userApi.util.invalidateTags(["user"]));
       dispatch(setUserData(response?.user));
       dispatch(setCoins(response?.user?.totalCoin));
+      dispatch(userApi.util.resetApiState());
+      dispatch(eventApi.util.resetApiState());
+      dispatch(transactionApi.util.resetApiState());
       // console.log(response?.user, "response?.user");
       SuccessNotification({ message: "You're in!" });
 

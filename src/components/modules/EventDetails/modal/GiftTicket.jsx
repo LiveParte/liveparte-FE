@@ -102,7 +102,7 @@ export default function GiftTicket({ closeModal, Data, show }) {
   const handleGiftTicket = async (data) => {
     const payload = {
       event_id: Data?._id,
-      ticket_id: Data?.ticket?._id || Data?.ticket?.id,
+      ticket_id: stripAmountTest,
       message: getValues()?.message,
       recipient_email: getValues()?.recipient_email,
       recipient_name: getValues()?.recipient_name,
