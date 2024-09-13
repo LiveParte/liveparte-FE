@@ -48,7 +48,8 @@ export default function ChatBody({
                     <CommentIcon />
                   </div>
                   <div className="text-center text-[#788AA1] text-[13px] font400">
-                    {/* Comment section is currently<br className="hidden lg:block"/> disabled */}
+                    No Comment Yet
+                    {/* <br className="hidden lg:block"/> disabled */}
                   </div>
                 </div>
               )}
