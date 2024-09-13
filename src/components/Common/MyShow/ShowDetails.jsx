@@ -10,10 +10,16 @@ import { useSelector } from "react-redux";
 
 export default function ShowDetails({ onNext, item, id }) {
   const router = useRouter();
-  const ItemIsArray=Array.isArray(item?.tickets)?item?.tickets[0]:[]
+  const ItemIsArray = Array.isArray(item?.tickets) ? item?.tickets[0] : [];
   const userData = useSelector(selectCurrentUserData) || {};
-  const location =userData?.countryInfo?.code==="NG"?'NGN':'USD'
-  const ticketPrice=  returnBothCurrencies({HeroSectionEvent:item,userData:userData,currencyCode:location});
+  const location = userData?.countryInfo?.code === "NG" ? "NGN" : "USD";
+  const ticketPrice = returnBothCurrencies({
+    HeroSectionEvent: item,
+    userData: userData,
+    currencyCode: location,
+  });
+
+  // console.log(userData,'ticketsitemticketsitem')
   // const ticketPrice=  returnBothCurrencies({HeroSectionEvent:item,userData:userData});
   return (
     <div className=" z-30 relative">
@@ -24,7 +30,6 @@ export default function ShowDetails({ onNext, item, id }) {
               return onNext(item);
             }
 
-           
             router.push({
               pathname: `event/${id}`,
             });
@@ -44,14 +49,18 @@ export default function ShowDetails({ onNext, item, id }) {
           <div className="text-[#B4BECB] text-[14px] md:text-[15px] mb-[10px] md:mb-[24px]  font-medium font500 whitespace-nowrap overflow-hidden text-ellipsis  font400">
             {item?.address}
           </div>
-        { ( isArray(item?.tickets) &&ItemIsArray?.price )  ?<div className="font500 font-medium">{ticketPrice}
-            {/* ₦ {formatMoney(
+          {isArray(item?.tickets) && ItemIsArray?.price>0 ? (
+            <div className="font500 font-medium">
+              {ticketPrice}
+              {/* ₦ {formatMoney(
               isArray(item?.tickets) && ItemIsArray?.price,
               false
             )} */}
-            
-          </div>:ItemIsArray?.price===0?'Free':null
-}
+            </div>
+          ) :
+          (userData?._id && ItemIsArray?.price === 0) ? (
+            "Free"
+          ) : null}
         </div>
       </div>
     </div>

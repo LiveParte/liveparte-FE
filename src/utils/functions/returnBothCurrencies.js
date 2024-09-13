@@ -31,8 +31,6 @@ export function returnBothCurrencies({
     Array.isArray(HeroSectionEvent?.tickets) &&
     HeroSectionEvent?.tickets[0]?.price;
 
-
-
   if (returnJustAmount) {
     return amount?.price;
   }
@@ -40,9 +38,9 @@ export function returnBothCurrencies({
     return "";
   }
 
-  console.log('returnBothCurrencies',amount?.price,amountAlt)
+  // console.log('returnBothCurrencies',amount?.price,amountAlt)
 
   return userData?._id
-    ? `${isNigeria}${formatMoney(amount?.price || amountAlt||'0', false)}`
+    ? `${isNigeria}${formatMoney(amount?.price || amountAlt || "0", false)}`
     : "";
 }

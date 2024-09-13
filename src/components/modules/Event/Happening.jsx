@@ -14,7 +14,7 @@ export default function Happening({ events = [], upComingEvent = [] }) {
         <div className=" absolute top-0 left-0 right-0 h-[10vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-b from-black"></div>
 
         {/* <LazyLoadComponent> */}
-        {events?.length > 0 && <HappeningNow events={events} />}
+        {/* {events?.length > 0 && <HappeningNow events={events} />} */}
         {/* </LazyLoadComponent> */}
 
         {upComingEvent?.length > 0 && (
