@@ -227,9 +227,7 @@ export default function LoginSignUp({
       // dispatch(userApi.util.invalidateTags(["user"]));
       dispatch(setUserData(response?.user));
       dispatch(setCoins(response?.user?.totalCoin));
-      dispatch(userApi.util.resetApiState());
-      dispatch(eventApi.util.resetApiState());
-      dispatch(transactionApi.util.resetApiState());
+   
       // console.log(response?.user, "response?.user");
       SuccessNotification({ message: "You're in!" });
 
@@ -246,6 +244,9 @@ export default function LoginSignUp({
       }
       closeModal && closeModal();
     }
+    dispatch(userApi.util.resetApiState());
+    dispatch(eventApi.util.resetApiState());
+    dispatch(transactionApi.util.resetApiState());
     dispatch(eventApi.util.invalidateTags(["event", "ondemand"]));
   }
 

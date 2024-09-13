@@ -32,6 +32,13 @@ function Chat({ onLeave, liveStreamDetail, }) {
   const [socket, setSocket] = useState(null);
   const [userId] = useState(userData?._id); // Replace with unique userId for each user
 
+  const handleChatToTheBottom = () => {
+    if(showComment){
+    if (chatBoxRef.current) {
+      chatBoxRef.current.scrollTop = chatBoxRef.current?.scrollHeight;
+    }
+  }
+  };
   const handleOnChange = (e) => {
     // setTextMessages(e.target.value);
     setMessage(e.target.value);
@@ -53,11 +60,13 @@ function Chat({ onLeave, liveStreamDetail, }) {
 
         newSocket.on("joinRoomSuccess", () => {
           console.log(`Joined room: ${roomId||liveStreamDetail?._id}`);
+          // handleChatToTheBottom() n;
         });
 
         newSocket.on("previousMessages", (msg) => {
           console.log("Previous messages: ", msg.chatMessages);
           setMessages((prevMessages) => [...prevMessages, ...msg.chatMessages]);
+          // handleChatToTheBottom()
         });
       });
 
@@ -73,11 +82,13 @@ function Chat({ onLeave, liveStreamDetail, }) {
       newSocket.on("sendChatMessage", (msg) => {
         console.log("Received message:", msg);
         setMessages((prevMessages) => [...prevMessages, msg]); // Add new message to the messages state
+      
       });
-
+      // handleChatToTheBottom()
       return () => {
         newSocket.disconnect();
       };
+    
     }
   }, [endpoint, token, liveStreamDetail?._id||roomId]);
 
@@ -101,7 +112,7 @@ function Chat({ onLeave, liveStreamDetail, }) {
 
 
 
-  const [showComment, setShowComment] = useState(false);
+  const [showComment, setShowComment] = useState(true);
   const userCoinsBalance = useSelector(selectCoins);
   // alert(userCoinsBalance,'userCoinsBalance')
   const chatBoxRef = useRef(null);
@@ -199,13 +210,11 @@ function Chat({ onLeave, liveStreamDetail, }) {
     }
   }, [userCoinsBalance]);
 
-  const handleChatToTheBottom = () => {
-    if(showComment){
-    if (chatBoxRef.current) {
-      chatBoxRef.current.scrollTop = chatBoxRef.current?.scrollHeight;
-    }
-  }
-  };
+  useEffect(() => {
+    handleChatToTheBottom()
+  }, [messages?.length>0])
+  
+  
 
 
 
@@ -318,6 +327,7 @@ function Chat({ onLeave, liveStreamDetail, }) {
           setShowComment={setShowComment}
           showComment={isMobile?true:showComment}
           data={messages}
+          handleChatToTheBottom={handleChatToTheBottom}
 
         />
         {(!showComment) && (

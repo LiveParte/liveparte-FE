@@ -31,6 +31,8 @@ export const ObjectProvider = ({ children }) => {
     }
   }, [isMuted, hasUnmutedAutomatically]);
 
+  console.log(playerRef.current,'playerRefCurrent')
+
   // Toggle play/pause
   const togglePlayPause = useCallback(() => {
     setIsPlaying((prev) => !prev);
