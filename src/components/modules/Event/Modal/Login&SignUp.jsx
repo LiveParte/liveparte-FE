@@ -96,7 +96,7 @@ export default function LoginSignUp({
     // "password": "string"
     const payload = {
       ...e,
-      username: e.email,
+      username: e.fullName,
       fullName: e?.fullName,
     };
     const handleRegisterUser = await RegisterUser(payload);
