@@ -1,4 +1,4 @@
-const isTestEnvironment=false;
+const isTestEnvironment=true;
 export const baseUrl =process.env.NEXT_PUBLIC_BASEURL;
 export const baseUrlProd =process.env.NEXT_PUBLIC_BASEURL_PROD;
  const payStackDev=process.env.NEXT_PUBLIC_PAYSTACKDEV;
