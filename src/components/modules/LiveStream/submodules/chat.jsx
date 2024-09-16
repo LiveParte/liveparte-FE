@@ -102,7 +102,7 @@ function Chat({ onLeave, liveStreamDetail, }) {
       // chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
       handleChatToTheBottom()
       setMessage("");
-
+      setShowComment(true)
     }
   };
 

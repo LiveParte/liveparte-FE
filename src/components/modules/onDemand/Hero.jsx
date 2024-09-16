@@ -126,7 +126,6 @@ export default function Hero({
   // console.log(isOnDemand, HeroSectionEvent ,'HeroSectionEventHeroSectionEvent')
 
   const TextType = () => {
-    console.log(isPastDate(HeroSectionEvent?.event_date),HeroSectionEvent?.event_date,'isPastDate(HeroSectionEvent?.event_date)')
     if(isPastDate(HeroSectionEvent?.event_date)&&!HeroSectionEvent?.streaming_url&&!HeroSectionEvent?.rewatchAvailable){
       return "eventNotAvailable";
     }
