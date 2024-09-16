@@ -325,7 +325,7 @@ export default function EventButton({
           return (
             <div className="   flex gap-[8px] items-center justify-center md:justify-start">
               <div className="text-[11px] lg:text-[13px]  text-white   font500">
-                ReWatch Not Available
+                Rewatch Not Available
               </div>
             </div>
           );
