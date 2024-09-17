@@ -184,7 +184,7 @@ function LiveStreamVideo({
             liveStreamDetail={liveStreamDetail}
           />
         ) : (
-          <div className="w-full relative agroa-video h-[40dvh] max-sm:h-[100vh]">
+          <div className="w-full relative agroa-video h-[40dvh] md:h-[100vh]">
             <JoinAudience
               liveStreamDetail={liveStreamDetail}
               eventId={liveStreamDetail?._id}
