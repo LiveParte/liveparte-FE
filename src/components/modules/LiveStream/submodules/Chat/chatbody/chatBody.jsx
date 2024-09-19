@@ -9,31 +9,25 @@ export default function ChatBody({
   showComment,
   chatBoxRef,
   isOrientation,
+  handleChatToTheBottom,
 }) {
-  
-
   // console.log(isOrientation, "isOrientation");
-  return (
-    showComment ? (
-      <div className="backdrop-blur-[8px] flex flex-1 flex-col bg-black/30 rounded-[8px] overflow-hidden h-full min-w-[236px]">
+  return showComment ? (
+    <div className="backdrop-blur-[8px] flex flex-1 flex-col bg-black/30 rounded-[8px] overflow-hidden h-full min-w-[236px]">
+      <div
+        className={`hidden lg:block text-[11px] text-[#FFFFFF] backdrop-blur-xl bg-black/10 font500 text-end py-[7px]  px-[16px] ${
+          isOrientation && "!block"
+        }`}
+      >
         <div
-          className={`hidden lg:block text-[11px] text-[#FFFFFF] backdrop-blur-xl bg-black/10 font500 text-end py-[7px]  px-[16px] ${
-            isOrientation && "!block"
-          }`}
-        >
-          <div
-            className="cursor-pointer inline"
-            onClick={() => setShowComment && setShowComment(false)}
-          >
-            Hide comments
-          </div>
-        </div>
+          className="cursor-pointer inline"
+          onClick={() => 
+            setShowComment && setShowComment(false)
+            // handleChatToTheBottom()
 
-        <div
-          className={`flex flex-col pb-[21px] flex-1 overflow-hidden customScrollHorizontal ${
-            showComment && "overflow-y-auto lg:overflow-auto"
-          }  max-h-[40dvh] lg:max-h-[65vh] `}
+          }
         >
+<<<<<<< HEAD
           {showComment && (
             <>
               <div
@@ -59,9 +53,48 @@ export default function ChatBody({
               </div>
             </>
           )}
+=======
+          Hide comments
+>>>>>>> 4311c67535eef69fea600080639095528d1f7254
         </div>
-        <div className=" h-[10px] max-h-[57vh]"></div>
       </div>
-    ):<div className=" max-h-[57vh]"></div>
+
+      <div
+        className={`flex flex-col pb-[21px] flex-1 overflow-hidden customScrollHorizontal ${
+          showComment && "overflow-y-auto lg:overflow-auto"
+        }  max-h-[40dvh] lg:max-h-[65vh] `}
+      >
+        {showComment && (
+          <>
+            <div
+              ref={chatBoxRef ? chatBoxRef : {}}
+              className="flex flex-col pt-[10px] px-[14px] lg:overflow-y-auto customScrollHorizontal flex-1 pb-5"
+            >
+              {data?.length === 0 && (
+                <div className="flex flex-col justify-center items-center py-[81px] flex-1">
+                  <div className="mb-[17px] flex items-center">
+                    <CommentIcon />
+                  </div>
+                  <div className="text-center text-[#788AA1] text-[13px] font400">
+                    No Comment Yet
+                    {/* <br className="hidden lg:block"/> disabled */}
+                  </div>
+                </div>
+              )}
+              {data?.map((item, i) => (
+                <ChatList
+                  key={i}
+                  message={item?.message}
+                  userName={item?.name}
+                />
+              ))}
+            </div>
+          </>
+        )}
+      </div>
+      <div className=" h-[10px] max-h-[57vh]"></div>
+    </div>
+  ) : (
+    <div className=" max-h-[57vh]"></div>
   );
 }

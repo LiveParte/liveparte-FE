@@ -2,7 +2,7 @@ import ButtonComp from "@/components/Ui/button";
 import React, { memo, useEffect, useRef, useState } from "react";
 import GiftingCoins from "./giftingCoins";
 import PurchasePaartyCoins from "./PurchasePaartyCoins";
-import WebSocket from 'isomorphic-ws';
+import WebSocket from "isomorphic-ws";
 import { useSelector } from "react-redux";
 import { selectCoins, selectCurrentUserData } from "@/store/User";
 import { TextInputComp } from "./chatsubmodules/textInputComp";
@@ -17,7 +17,7 @@ import Image from "next/image";
 import { isMobile } from "react-device-detect";
 import PaystackHookExample from "@/components/PayStack/testPayStack";
 
-function Chat({ onLeave, liveStreamDetail, }) {
+function Chat({ onLeave, liveStreamDetail }) {
   const userData = useSelector(selectCurrentUserData) || {};
 
   // const [message, setMessage] = useState('');
@@ -28,20 +28,29 @@ function Chat({ onLeave, liveStreamDetail, }) {
   const [messages, setMessages] = useState([]);
   const [roomId] = useState(liveStreamDetail?._id); // Ensure both users use the same roomId
   const [message, setMessage] = useState("");
-  const [token, setToken] = useState("U2FsdGVkX19RED/Ahe4wxLmzyqzlHd4rkzXrf+PGlq+/TKS9mWklLu36rzooIC6y3DMsL3D3yyvDJXVK96mxrT/+kluDd2NvEmM80+bsnvWacXe6m0ERjmjzjIS47fqLMd4j1YatpuW7FBSRjKQZOAzX70zoF4euhoJWSw+QBUzNviL0Zlk2zS7MADXKfFh06ggctS8ot28c2UoanLtLDSP+VEAxFc5MmqM0CDG20GhA++Z3lJPY79jGrznzU8nxkrdi54eK3tVWpzUXt7S2ERxhCipf1T3qCdJdGlJMHCeoj5Bf6gtEpLH6Q2X1vfT/5bGlO/kL/81PNBd5zgYPJw==");
+  const [token, setToken] = useState(
+    "U2FsdGVkX19RED/Ahe4wxLmzyqzlHd4rkzXrf+PGlq+/TKS9mWklLu36rzooIC6y3DMsL3D3yyvDJXVK96mxrT/+kluDd2NvEmM80+bsnvWacXe6m0ERjmjzjIS47fqLMd4j1YatpuW7FBSRjKQZOAzX70zoF4euhoJWSw+QBUzNviL0Zlk2zS7MADXKfFh06ggctS8ot28c2UoanLtLDSP+VEAxFc5MmqM0CDG20GhA++Z3lJPY79jGrznzU8nxkrdi54eK3tVWpzUXt7S2ERxhCipf1T3qCdJdGlJMHCeoj5Bf6gtEpLH6Q2X1vfT/5bGlO/kL/81PNBd5zgYPJw=="
+  );
   const [socket, setSocket] = useState(null);
   const [userId] = useState(userData?._id); // Replace with unique userId for each user
 
+  const handleChatToTheBottom = () => {
+    if (showComment) {
+      if (chatBoxRef.current) {
+        chatBoxRef.current.scrollTop = chatBoxRef.current?.scrollHeight;
+      }
+    }
+  };
   const handleOnChange = (e) => {
     // setTextMessages(e.target.value);
     setMessage(e.target.value);
   };
 
   useEffect(() => {
-    setMessage()
+    setMessage();
     if (token) {
       const newSocket = socketIOClient(endpoint, {
-        query: { token } // Include the token in the query
+        query: { token }, // Include the token in the query
       });
       setSocket(newSocket);
 
@@ -49,15 +58,17 @@ function Chat({ onLeave, liveStreamDetail, }) {
         console.log("Connected to the socket server");
 
         // Automatically join the room when connected
-        newSocket.emit("joinRoom", { event: roomId||liveStreamDetail?._id });
+        newSocket.emit("joinRoom", { event: roomId || liveStreamDetail?._id });
 
         newSocket.on("joinRoomSuccess", () => {
-          console.log(`Joined room: ${roomId||liveStreamDetail?._id}`);
+          console.log(`Joined room: ${roomId || liveStreamDetail?._id}`);
+          // handleChatToTheBottom() n;
         });
 
         newSocket.on("previousMessages", (msg) => {
           console.log("Previous messages: ", msg.chatMessages);
           setMessages((prevMessages) => [...prevMessages, ...msg.chatMessages]);
+          // handleChatToTheBottom()
         });
       });
 
@@ -74,34 +85,36 @@ function Chat({ onLeave, liveStreamDetail, }) {
         console.log("Received message:", msg);
         setMessages((prevMessages) => [...prevMessages, msg]); // Add new message to the messages state
       });
-
+      // handleChatToTheBottom()
       return () => {
         newSocket.disconnect();
       };
     }
-  }, [endpoint, token, liveStreamDetail?._id||roomId]);
+  }, [endpoint, token, liveStreamDetail?._id || roomId]);
 
   const sendMessage = () => {
-    handleChatToTheBottom()
+    handleChatToTheBottom();
     // alert("Sent message")
     if (socket) {
-      const newMessage = { event: roomId, message: message, user: userId||userData?._id };
+      const newMessage = {
+        event: roomId,
+        message: message,
+        user: userId || userData?._id,
+      };
       socket.emit("sendChatMessage", newMessage);
       setMessages((prevMessages) => [...prevMessages, { message }]); // Add new message to the messages state
       // chatBoxRef.current.scrollTop = chatBoxRef.current.scrollHeight;
-      handleChatToTheBottom()
+      handleChatToTheBottom();
       setMessage("");
-
+      setShowComment(true);
     }
   };
 
-  function clearText(){
-    setMessage(null)
+  function clearText() {
+    setMessage(null);
   }
 
-
-
-  const [showComment, setShowComment] = useState(false);
+  const [showComment, setShowComment] = useState(true);
   const userCoinsBalance = useSelector(selectCoins);
   // alert(userCoinsBalance,'userCoinsBalance')
   const chatBoxRef = useRef(null);
@@ -199,15 +212,9 @@ function Chat({ onLeave, liveStreamDetail, }) {
     }
   }, [userCoinsBalance]);
 
-  const handleChatToTheBottom = () => {
-    if(showComment){
-    if (chatBoxRef.current) {
-      chatBoxRef.current.scrollTop = chatBoxRef.current?.scrollHeight;
-    }
-  }
-  };
-
-
+  useEffect(() => {
+    handleChatToTheBottom();
+  }, [messages?.length > 0]);
 
   const [payFlow, setPayFlow] = useState(null);
   const paymentFlow = [
@@ -235,8 +242,6 @@ function Chat({ onLeave, liveStreamDetail, }) {
     },
   ];
 
- 
-
   const GiftCoin = () => {
     return (
       <div className="absolute dropdownIII transform translate-x-1 -translate-y-[20px] w-full mr-2  lg:-translate-y-[40px] z-50 bg-black rounded-[16px] widthFillSpace overflow-hidden">
@@ -247,30 +252,27 @@ function Chat({ onLeave, liveStreamDetail, }) {
 
   useEffect(() => {
     handleChatToTheBottom();
-  }, [showComment])
-  
+  }, [showComment]);
 
-  function showCommentBox(){
-   
+  function showCommentBox() {
     setShowComment(true);
     // setTimeout(() => {
     //   handleChatToTheBottom();
     // }, 1000);
   }
 
- 
-
-   
   const options = [
     { label: "Option 1", href: "#" },
     { label: "Option 2", href: "#" },
     { label: "Option 3", href: "#" },
   ];
 
-  console.log(showComment,
+  console.log(
+    showComment,
     // liveStreamDetail,userData,
-    messages,'liveStreamDetail')
-
+    messages,
+    "liveStreamDetail"
+  );
 
   return (
     <div className="flex flex-col  lg:px-[0px]   h-full lg:h-full  w-full lg:w-[356px] relative  rounded-sm flex-1  ">
@@ -352,19 +354,52 @@ function Chat({ onLeave, liveStreamDetail, }) {
             setPayFlow={setPayFlow}
             userCoinsBalance={userCoinsBalance}
           />
-          {payFlow && <GiftCoin />}
-          <div className="relative hidden lg:flex text-white element rounded-[96px]">
+          {!showComment && (
             <div
-              className="px-[17px] h-[32px] rounded-[96px] flex gap-[9px] text-white text-[10px] lg:text-[11px] font500 items-center bg-[#BACFF70A] cursor-pointer w-fit"
-              onClick={() => setPayFlow("purchasePartyCoins")}
+              className={`text-[11px] text-[#FFFFFF] font500 text-end py-[7px] px-[16px] ${
+                isMobile && "hidden"
+              }`}
             >
-             
-              <div>Add Coins</div>
+              <div
+                className="cursor-pointer inline"
+                onClick={() => {
+                  showCommentBox();
+                }}
+              >
+                Show comments
+              </div>
+            </div>
+          )}
+        </div>
+        <div className="px-[4px] lg:px-0 mb-3 md:mb-0 border-t-[#343F4B] border-t-[1px] lg:border-0 pt-[10px]">
+          <div className=" w-full lg:hidden">{payFlow && <GiftCoin />}</div>
+          <TextInputComp
+            handleOnChange={handleOnChange}
+            messageRef={messageRef}
+            options={options}
+            setPayFlow={setPayFlow}
+            textMessages={message}
+            userCoinsBalance={userCoinsBalance}
+            handleSendChat={sendMessage}
+            // setMessages={setMessages}
+          />
+          <div className="hidden lg:flex justify-between items-center relative">
+            <SendCoinsComp
+              setPayFlow={setPayFlow}
+              userCoinsBalance={userCoinsBalance}
+            />
+            {payFlow && <GiftCoin />}
+            <div className="relative hidden lg:flex text-white element rounded-[96px]">
+              <div
+                className="px-[17px] h-[32px] rounded-[96px] flex gap-[9px] text-white text-[10px] lg:text-[11px] font500 items-center bg-[#BACFF70A] cursor-pointer w-fit"
+                onClick={() => setPayFlow("purchasePartyCoins")}
+              >
+                <div>Add Coins</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
     </div>
   );
 }
