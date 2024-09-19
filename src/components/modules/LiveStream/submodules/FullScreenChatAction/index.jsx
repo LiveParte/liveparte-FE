@@ -10,72 +10,7 @@ export default function FullScreenChatAction({
   unlockOrientation,
   orientationLocked,
 }) {
-  const [chatMessages, setChatMessages] = useState([
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-    {
-      name: "Bola",
-      message: "Please Wait for me to join",
-    },
-  ]);
+ 
   const [hideChat, setHideChat] = useState(false);
   return (
     <div className="lg:hidden left-0 right-0 bottom-[0px] pb-[10px] px-[56px] z-50 text-white absolute    bg-gradient-to-t from-black  ">

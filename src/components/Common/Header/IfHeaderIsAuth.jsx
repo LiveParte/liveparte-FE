@@ -5,14 +5,12 @@ import AuthHeader from "./AuthHeader";
 import {
   selectCoins,
   selectCurrentUserData,
-  setCoins,
   setUserData,
 } from "@/store/User";
 import LoginSignUp from "@/components/modules/Event/Modal/Login&SignUp";
 import ForgetPassword from "@/components/modules/Event/Modal/submodules/ForgetPassword/ForgetPassword";
 import MyModal from "@/components/Ui/Modal";
 import { useRouter } from "next/router";
-// import { useGetAllCoinsQuery } from "@/store/Transaction/transactionApi";
 import {
   useGetUserProfileQuery,
   useLazyGetUserProfileQuery,
@@ -20,29 +18,26 @@ import {
   useUpdateUserLocationMutation,
 } from "@/store/User/userApi";
 import { useGetUserLocationQuery } from "@/store/others/othersApi";
-import {
-  accessTokenStorageName,
-  storage,
-  userDetailStorageName,
-} from "@/utils/helper";
-import { useGetAllEventQuery } from "@/store/Event/eventApi";
+import { accessTokenStorageName } from "@/utils/helper";
 
 export default function IfHeaderIsAuth({
   openModalLoginSignUp,
   showNav = true,
+  userLocation, // userLocation is passed in as a prop
 }) {
   const [userDetail, setUserDetail] = useState(false);
   const dispatch = useDispatch();
   const userInfo = useSelector(selectCurrentUserData) || {};
   const userCoinsBalance = useSelector(selectCoins);
   const isTokenAvailable = localStorage.getItem(accessTokenStorageName);
-  // console.log(userCoinsBalance,'userCoinsBalance')
+
+  // Log the userLocation prop to console
+  console.log(userLocation, "userLocation from props");
 
   const { address, state, countryInfo, coin } = userInfo || {};
   const name = countryInfo ? countryInfo.name : null;
   const coinsPrice = coin ? coin?.price : null;
   const [checkProfile, { isLoading: cpLoading }] = useLazyGetUserProfileQuery();
-  // const { data, isLoading: isLoadingCoins } = useGetAllCoinsQuery();
   const [updateUserLocation, { isSuccess: updateUserLocationIsSuccess }] =
     useUpdateUserLocationMutation();
   const check = !address || !state || !name || !coinsPrice;
@@ -53,6 +48,7 @@ export default function IfHeaderIsAuth({
   } = useGetUserLocationQuery({
     skip: !check,
   });
+
   const {
     data: userProfileData,
     isLoading: userProfileLoader,
@@ -62,9 +58,9 @@ export default function IfHeaderIsAuth({
     skip: !check || !userInfo?.id,
   });
 
-  //this code is to make a p
   const [updateUserDetails, { isSuccess: updateUserDetailsIsSuccess }] =
     useUpdateProfileMutation();
+
   async function handleCheckIfTwoAccounts() {
     const payload = {
       fullName: userInfo.fullName,
@@ -76,7 +72,6 @@ export default function IfHeaderIsAuth({
       id: userInfo?._id,
     };
     const checkTwoAccounts = await updateUserDetails(payload);
-    // console.log(checkTwoAccounts, "checkTwoAccounts");
   }
 
   useEffect(() => {
@@ -95,11 +90,8 @@ export default function IfHeaderIsAuth({
   useEffect(() => {
     if (check && isSuccess) {
       userInfo?._id && handleUpdateUserLocation(extraDetails);
-      // userInfo?._id&&dispatch(setUserData(userProfileData));
     }
   }, [check, userInfo?._id]);
-
-  // console.log(userInfo,extraDetails,check,'userInfouserInfo')
 
   const router = useRouter();
   let [isOpen, setIsOpen] = useState();
@@ -127,7 +119,6 @@ export default function IfHeaderIsAuth({
     setUserDetail(userInfo?._id);
   }, [userInfo?._id]);
 
-  // console.log(userDetail,user,'user')
   useEffect(() => {
     if (router?.pathname === "/reset-password") {
       openModal("ForgetPassword");
@@ -214,4 +205,16 @@ export default function IfHeaderIsAuth({
       )}
     </div>
   );
+}
+
+export async function getServerSideProps() {
+  // Fetch user location from the API
+  const locationRes = await fetch('https://ipapi.co/json/');
+  const userLocation = await locationRes.json();
+  console.log(userLocation, 'userLocation from getServerSideProps'); // Log the user location data
+  return {
+    props: {
+      userLocation, // Pass the user location data
+    },
+  };
 }
