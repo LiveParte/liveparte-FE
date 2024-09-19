@@ -17,7 +17,8 @@ export default function EventDetails({ HeroSectionEvent }) {
           {/* { } */}
         </div>
 {/* grid sm:grid-cols-1 lg:grid-cols-3 xl:grid-cols-5 */}
-        <div className="flex justify-between flex-wrap lg:flex-nowrap w-[100%] lg:w-[90%] gap-[56px] lg:gap-[148px] items-center pb-[111px]">
+{/* flex justify-between flex-wrap lg:flex-nowrap */}
+        <div className=" grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 w-[100%] lg:w-[90%] gap-[56px] lg:gap-[148px] items-center pb-[111px]">
           <div className="flex">
             <div className="flex gap-[12px] items-center">
               <div className="p-[18px] bg-[#343F4B] rounded-[8px]">
@@ -65,7 +66,7 @@ export default function EventDetails({ HeroSectionEvent }) {
             </div>
           </div>
           {/*  */}
-          <div className="flex col-span-2">
+          <div className="flex col-span-1 xl:col-span-2">
             <div className="flex gap-[12px] items-center">
               <div className="p-[18px] bg-[#343F4B] rounded-[8px]">
                 <EventIcon3 />
