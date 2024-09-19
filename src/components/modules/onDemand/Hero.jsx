@@ -12,6 +12,7 @@ import { useCreatePurchaseMutation } from "@/store/Transaction/transactionApi";
 import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
 
 import EventButton from "./submodules/EventButton";
+import { isPastDate, isSecondDay } from "@/utils/functions/checkIfItSecondDay";
 
 export default function Hero({
   HeroSectionEvent,
@@ -82,9 +83,9 @@ export default function Hero({
   const buttonAction = () => {
     const ticket =Array.isArray(HeroSectionEvent?.tickets)&&HeroSectionEvent?.tickets[0];
     // console.log(HeroSectionEvent,'tbuttonActionicket')
-    // if(eventIsPast){
-    //   return "pastShow";
-    // }
+    if(isPastDate(HeroSectionEvent?.event_date)&&!HeroSectionEvent?.streaming_url&&!HeroSectionEvent?.rewatchAvailable){
+      return "pastShow";
+    }
    
     if (userData?._id) {
       if (HappeningNow||HeroSectionEvent?.purchase?.id &&isOnDemand) {
@@ -125,6 +126,9 @@ export default function Hero({
   // console.log(isOnDemand, HeroSectionEvent ,'HeroSectionEventHeroSectionEvent')
 
   const TextType = () => {
+    if(isPastDate(HeroSectionEvent?.event_date)&&!HeroSectionEvent?.streaming_url&&!HeroSectionEvent?.rewatchAvailable){
+      return "eventNotAvailable";
+    }
     // pastEvent
     if (eventIsPast) {
       return "pastEvent";

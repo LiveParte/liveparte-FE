@@ -257,7 +257,7 @@ export default function EventButton({
               onClick={() => {
                 handleGetTicket && handleGetTicket();
               }}
-              className={`py-[12px] px-[16px] md:px-[39px] text-[13px] xl:text-[13px] font500`}
+              className={`py-[12px] px-[66px] md:px-[39px] text-[13px] xl:text-[13px] font500`}
               btnText={`Get Free Ticket 
              
               `}
@@ -310,6 +310,7 @@ export default function EventButton({
   //   true
   // )}
 
+  //eventNotAvailable
   function TextType(textType) {
     switch (textType) {
       case "onDemand":
@@ -320,12 +321,20 @@ export default function EventButton({
             </div>
           </div>
         );
+        case "eventNotAvailable":
+          return (
+            <div className="   flex gap-[8px] items-center justify-center md:justify-start">
+              <div className="text-[11px] lg:text-[13px]  text-white   font500">
+                Rewatch Not Available
+              </div>
+            </div>
+          );
       case "happeningNow":
         return (
           <div className="flex gap-[8px] items-center">
             <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div>
             <div className="text-[11px] lg:text-[13px]  text-white  font500">
-              Happening now
+              Happening Now
             </div>
           </div>
         );
@@ -333,7 +342,7 @@ export default function EventButton({
         return (
           <div className="text-[#B4BECB] text-[13px] md:text-[15px] z-10 relative  font500">
             {moment(HeroSectionEvent?.event_date).format("MMM DD, YYYY")} -
-            Watch live
+            Watch Live
           </div>
         );
       case "pastEvent":

@@ -32,6 +32,10 @@ const showTokens = [
   {
     tokenId:'007eJxTYOCqrNNae2vmEuZlkyZI3dqy2TJt2kapyuedG6JDHtt9nrxfgcHC2MQ0Oc3CKNXEwNQk2TItyTLRyDLR2MTcMM3AONXAMkXwdFpDICNDH08sIyMDBIL4EgxmZskWKckpFmbGaZZpaSkpqUCtJslpiQwMACwYJZA=',
     eventId:'66c8dcd863f9ffddeb9a4cfa'
+  },
+  {
+    tokenId:'007eJxTYEhJZ2J4+vOZ8A+OXYa39V0kI/Zr2dyO81kcMuGqu6rmzHcKDBbGJqbJaRZGqSYGpibJlmlJlolGlonGJuaGaQbGqQaW0wxfpzUEMjLsz4hgZGSAQBBfgsHMLNXCwjAlxSAlzdzUMDXN3Dwt0TQ5NY2BAQBw0COm',
+    eventId:'66e881dd0df751ef77fa5cef'
   }
 ];
 
