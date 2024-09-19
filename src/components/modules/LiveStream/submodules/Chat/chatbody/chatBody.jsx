@@ -27,35 +27,7 @@ export default function ChatBody({
 
           }
         >
-<<<<<<< HEAD
-          {showComment && (
-            <>
-              <div
-                ref={chatBoxRef ? chatBoxRef : {}}
-                className="flex flex-col pt-[10px] px-[14px] lg:overflow-y-auto customScrollHorizontal flex-1 pb-5"
-              >
-              {data?.length===0 &&  <div className="flex flex-col justify-center items-center py-[81px] flex-1">
-                 
-                  <div className="mb-[17px] flex items-center">
-                  <CommentIcon/>
-                  </div>
-                  <div className="text-center text-[#788AA1] text-[13px] font400"> 
-                  Comment section is currently<br className="hidden lg:block"/> disabled
-                  </div>
-                </div>}
-                {data?.map((item, i) => (
-                  <ChatList
-                    key={i}
-                    message={item?.message}
-                    userName={item?.name}
-                  />
-                ))}
-              </div>
-            </>
-          )}
-=======
           Hide comments
->>>>>>> 4311c67535eef69fea600080639095528d1f7254
         </div>
       </div>
 

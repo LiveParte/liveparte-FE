@@ -78,7 +78,7 @@ export default function Hero({
     HeroSectionEvent?.eventStarted;
     // EventStarted;
 
-    // console.log(HeroSectionEvent,HappeningNow,'HeroSectionEvent111');
+    console.log(HeroSectionEvent,HappeningNow,'HeroSectionEvent111');
 
   const buttonAction = () => {
     const ticket =Array.isArray(HeroSectionEvent?.tickets)&&HeroSectionEvent?.tickets[0];

@@ -314,45 +314,13 @@ function Chat({ onLeave, liveStreamDetail }) {
       </div>
 
       <div className="flex flex-col justify-end flex-1 ">
-      <div className="flex flex-col justify-end  flex-1 ">
-        <ChatBody
-          chatBoxRef={chatBoxRef}
-          setShowComment={setShowComment}
-          showComment={isMobile?true:showComment}
-          data={messages}
-
-        />
-        {(!showComment) && (
-          <div className={`text-[11px] text-[#FFFFFF] font500 text-end py-[7px] px-[16px] ${isMobile&&'hidden'}`}>
-            <div
-              className="cursor-pointer inline"
-              onClick={() => {
-                showCommentBox()
-              }}
-            >
-              Show comments
-            </div>
-          </div>
-        )}
-      </div>
-      <div className="px-[4px] lg:px-0 mb-3 md:mb-0 border-t-[#343F4B] border-t-[1px] lg:border-0 pt-[10px]">
-        <div className=" w-full lg:hidden">
-          {payFlow && <GiftCoin />}
-        </div>
-        <TextInputComp
-          handleOnChange={handleOnChange}
-          messageRef={messageRef}
-          options={options}
-          setPayFlow={setPayFlow}
-          textMessages={message}
-          userCoinsBalance={userCoinsBalance}
-          handleSendChat={sendMessage}
-          // setMessages={setMessages}
-        />
-        <div className="hidden lg:flex justify-between items-center relative">
-          <SendCoinsComp
-            setPayFlow={setPayFlow}
-            userCoinsBalance={userCoinsBalance}
+        <div className="flex flex-col justify-end  flex-1 ">
+          <ChatBody
+            chatBoxRef={chatBoxRef}
+            setShowComment={setShowComment}
+            showComment={isMobile ? true : showComment}
+            data={messages}
+            handleChatToTheBottom={handleChatToTheBottom}
           />
           {!showComment && (
             <div
