@@ -9,6 +9,15 @@ deploy_to_ec2:
     - echo "$EC2_PRIVATE_KEY" > larparte-keypair.pem
     - chmod 600 larparte-keypair.pem
 
+  # SSH into the EC2 instance and copy the contents of the appropriate env file into .env
+    - |
+      if [[ "$CI_COMMIT_REF_NAME" == "main" ]]; then
+        ssh -o StrictHostKeyChecking=no -i larparte-keypair.pem ubuntu@$SERVER_IP "cd /home/ubuntu/liveparte-FE && cat .env.prod > .env"
+      elif [[ "$CI_COMMIT_REF_NAME" == "staging" ]]; then
+        ssh -o StrictHostKeyChecking=no -i larparte-keypair.pem ubuntu@$SERVER_IP_STAGING "cd /home/ubuntu/liveparte-FE && cat .env.dev > .env"
+      fi
+
+
     # SSH into the EC2 instance and run the appropriate deploy script
     - |
       if [[ "$CI_COMMIT_REF_NAME" == "main" ]]; then
