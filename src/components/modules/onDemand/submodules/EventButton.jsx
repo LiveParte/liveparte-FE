@@ -381,6 +381,7 @@ export default function EventButton({
           {/* <CallToActionIcon /> */}
           <CallToActionIcon />
           {TextType(TextTypeAction())}
+          Lorem ipsum dolor sit amet.
         </div>
 
         <div

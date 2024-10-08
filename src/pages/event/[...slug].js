@@ -11,7 +11,7 @@ const Hero = dynamic(() => import('@/components/modules/onDemand/Hero'), {
 import {
   useGetEventDetailViaIdQuery,
  
-} from "@/store/Event/eventApi";
+} from "@/store/Event/eventApi";  
 import { useDispatch, useStore } from "react-redux";
 
 import { useRouter } from "next/router";
