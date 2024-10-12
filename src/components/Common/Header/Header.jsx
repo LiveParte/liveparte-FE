@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import ButtonComp from "@/components/Ui/button";
@@ -10,8 +10,10 @@ import {
   singleEventLink,
 } from "@/utils/reusableComponent";
 import LogoImage2 from "@/utils/LogoImage";
+import { useObject } from "@/Context/ObjectProvider";
 export default function Header({ className, openModal }) {
   const router = useRouter();
+  const {handlePreventScroll} =useObject();
   const isHome = router?.pathname === "/";
   const isEvents = router?.pathname === eventLink;
   // const MainContainer = `px-[20px] md:px-[40px] lg:px-[120px] relative`;
@@ -23,59 +25,77 @@ export default function Header({ className, openModal }) {
   const isSelected = HeaderOnSelect;
   const handleCheckIfITHome = (link) => {
     router?.pathname === link && setDropDown(false);
+
     // isHome&&setDropDown(false)
   };
 
+  useEffect(() => {
+    if(!dropDown){
+      handlePreventScroll(false);
+    }
+    if(dropDown){
+      handlePreventScroll(true);
+    }
+   
+  }, [dropDown,handlePreventScroll])
+
   const MenuDropdown = () => {
     return (
-      <div className="bg-[#1B1C20]  left-0 right-0 top-0 bottom-0 z-[99] px-[24px] py-[14px] lg:py-[30px] overflow-hidden  flex flex-col fixed  lg:hidden">
-        <div className="flex justify-between items-center mb-[28px] ">
-          <div className="text-white">
-            {" "}
-            <LogoImage router={router} />
-            {/* <MyPage router={router}/> */}
-            {/* Logo */}
+      <div className=" left-0 right-0 top-0 bottom-0 z-[99]   overflow-hidden  flex flex-col fixed  lg:hidden ">
+        <div className="bg-[#1B1C20E5] navbar-background px-[24px] py-[14px] lg:py-[30px] rounded-b-[12px]">
+          <div className="flex justify-between items-center mb-[28px] ">
+            <div className="text-white">
+              {" "}
+              <LogoImage router={router} />
+              {/* <MyPage router={router}/> */}
+              {/* Logo */}
+            </div>
+            <div>
+              <ButtonComp
+                btnText={`Close`}
+                className={`px-[24px] !h-[30px] text-[13px] font500 md:h-fit border-[#262C32] border-[1px] !bg-[#25272d] !text-white !rounded-full`}
+                onClick={() => {
+                  setDropDown(false);
+                  // handlePreventScroll(false);
+                }}
+              />
+            </div>
           </div>
-          <div>
-            <ButtonComp
-              btnText={`Close`}
-              className={`px-[24px] !h-[30px] text-[13px] font500 md:h-fit border-[#262C32] border-[1px] !bg-[#25272d] !text-white !rounded-full`}
-              onClick={() => setDropDown(false)}
-            />
+          <div className="text-[14px] text-white font500 flex-1 flex flex-col justify-center items-center mb-[45px]">
+            <Link
+              onClick={() => handleCheckIfITHome(eventLink)}
+              href={eventLink}
+              className="py-[15px]  cursor-pointer no-underline text-white "
+            >
+              Browse Events
+            </Link>
+            <Link
+              onClick={() => handleCheckIfITHome(onDemandLink)}
+              href={onDemandLink}
+              className="py-[15px]  cursor-pointer no-underline text-white"
+            >
+              On Demand
+            </Link>
+            <Link
+              onClick={() => handleCheckIfITHome(onDemandLink)}
+              href={onDemandLink}
+              className="py-[15px]  cursor-pointer no-underline text-white"
+            >
+              For Entertainers
+            </Link>
           </div>
-        </div>
-        <div className="text-[15px] text-white font500 flex-1 flex flex-col">
-          <Link
-            onClick={() => handleCheckIfITHome(eventLink)}
-            href={eventLink}
-            className="py-[25px]  cursor-pointer no-underline text-white"
-          >
-            Browse Events
-          </Link>
-          <Link
-            onClick={() => handleCheckIfITHome(onDemandLink)}
-            href={onDemandLink}
-            className="py-[12px]  cursor-pointer no-underline text-white"
-          >
-            On Demand
-          </Link>
-        </div>
 
-        {/* <ButtonComp
-          onClick={()=>openModal('SignUp')}
-          btnText={`Log In/Sign Up`}
-          className={`text-[13px] font500  `}
-        /> */}
-        <ButtonComp
-          onClick={() => openModal("SignUp")}
-          btnText={`Sign Up`}
-          className={`text-[13px] font500 mb-[16px]  w-full`}
-        />
-        <ButtonComp
-          onClick={() => openModal(`Login`)}
-          btnText={`Login`}
-          className={`text-[13px] font500 mb-[0px]  w-full !bg-[#27292e] text-white`}
-        />
+          <ButtonComp
+            onClick={() => openModal("SignUp")}
+            btnText={`Sign Up`}
+            className={`text-[13px] font500 mb-[16px]  w-full`}
+          />
+          <ButtonComp
+            onClick={() => openModal(`Login`)}
+            btnText={`Login`}
+            className={`text-[13px] font500 mb-[25px]  w-full !bg-[#27292E] text-white`}
+          />
+        </div>
       </div>
     );
   };
@@ -129,7 +149,10 @@ export default function Header({ className, openModal }) {
               />
             </div>
             <ButtonComp
-              onClick={() => setDropDown(true)}
+              onClick={() => {
+                setDropDown(true);
+                // handlePreventScroll(true);
+              }}
               btnText="Menu"
               className="text-[13px] font-medium  lg:hidden !h-[30px] !px-[24px] gap-[10px] !bg-[#BAD6F70F] rounded-[999px] border-[white] border-[1px] font500 text-white backdrop-blur-[60px] md:h-fit "
             />

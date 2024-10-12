@@ -89,10 +89,11 @@ export default function Home() {
   const heroEvent = isArray(filteredEventsHero)
     ? filteredEventsHero[randomBetweenOneAndTen(filteredEventsHero?.length)]
     : {};
+    
 
   // console.log(data,'ArrayLengh')
   return (
-    <div className="min-h-[100vh] bg-black">
+    <div className="min-h-[100vh] bg-black over">
       {/* <ButtonComp> */}
       <NoAuth>
         {heroEvent ? (

@@ -31,8 +31,9 @@ export default function IfHeaderIsAuth({
   const userCoinsBalance = useSelector(selectCoins);
   const isTokenAvailable = localStorage.getItem(accessTokenStorageName);
 
+
   // Log the userLocation prop to console
-  console.log(userLocation, "userLocation from props");
+  // console.log(userLocation, "userLocation from props");
 
   const { address, state, countryInfo, coin } = userInfo || {};
   const name = countryInfo ? countryInfo.name : null;

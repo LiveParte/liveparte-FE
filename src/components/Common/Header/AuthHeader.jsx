@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import ButtonComp from "../../Ui/button";
 import { useRouter } from "next/router";
@@ -20,6 +20,7 @@ import { eventLink, myShowLink, onDemandLink } from "@/utils/reusableComponent";
 import { formatMoney } from "@/utils/formatMoney";
 import { accessTokenStorageName, userDetailStorageName } from "@/utils/helper";
 import { LiveParteCoins } from "../../../../public/svg";
+import { useObject } from "@/Context/ObjectProvider";
 
 const MenuDropdown = dynamic(() => import("./submodules/NavDropDown"), {
   ssr: false,
@@ -34,6 +35,7 @@ export default function AuthHeader({
 }) {
   const router = useRouter();
   const dispatch = useDispatch();
+  const {handlePreventScroll} =useObject();
   // const coins =
   const MainContainer = `px-[20px] md:px-[40px] lg:px-[80px] xl:[120px] relative`;
   const [dropDown, setDropDown] = useState(false);
@@ -53,6 +55,16 @@ export default function AuthHeader({
   function handleCloseModal() {
     setModalName();
   }
+
+  useEffect(() => {
+    if(!dropDown){
+      handlePreventScroll(false);
+    }
+    if(dropDown){
+      handlePreventScroll(true);
+    }
+   
+  }, [dropDown,handlePreventScroll])
 
   function handleLogOut() {
     dispatch(userApi.util.resetApiState());
@@ -140,7 +152,10 @@ export default function AuthHeader({
           setModalName={setModalName}
           userInfo={userInfo}
           coinsBalance={coinsBalance}
-          handleCloseModal={handleCloseModal}
+          handleCloseModal={()=>{
+            handleCloseModal()
+
+          }}
         />
       )}
       {modalName && (
