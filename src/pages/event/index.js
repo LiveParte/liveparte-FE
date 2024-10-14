@@ -2,7 +2,9 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import {
   useGetAllEventQuery,
+  useGetEventHappingTodayQuery,
   useGetEventOnDemandQuery,
+  useGetEventUpcomingQuery,
 } from "@/store/Event/eventApi";
 import moment from "moment";
 import { isArray, storage, userDetailStorageName } from "@/utils/helper";
@@ -49,6 +51,19 @@ export default function Home() {
     refetch: onDemandRefresh,
   } = useGetEventOnDemandQuery();
 
+  const { data: upcomingEvents, isLoading: upcomingEventLoader } =
+    useGetEventUpcomingQuery();
+
+  const { data: happingNowEvents, isLoading: happingNowEventLoader } =
+    useGetEventHappingTodayQuery();
+
+    const happeningNowData =happingNowEvents?.event;
+    const UpcomingNowData =upcomingEvents?.event;
+
+
+  // useGetEventUpcomingQuery,
+  // useGetEventHappingTodayQuery
+
   // Data processing
   const happeningNowEvents = data?.event?.filter(
     (item) => item?.eventStarted === true
@@ -75,10 +90,12 @@ export default function Home() {
     ? data?.event.filter((event) => !event?.isLiveStreamed)
     : [];
 
-  const heroEvent = isArray(filteredEventsHero)
-    ? filteredEventsHero[randomBetweenOneAndTen(filteredEventsHero?.length)]
+  const heroEvent = (isArray(onDemandEvents)&&!onDemandEventLoader)
+    ? onDemandEvents[randomBetweenOneAndTen(onDemandEvents?.length)]
     : {};
-    
+
+    console.log(onDemandEvents, "happingNowEvents");
+
 
   // console.log(data,'ArrayLengh')
   return (
@@ -100,9 +117,10 @@ export default function Home() {
           events={filteredEvents}
           upComingEvent={filteredUpcoming}
           OnDemandEvent={onDemandEvents}
+          // allEvent={UpcomingNowData}
         />
         <Footer />
       </NoAuth>
     </div>
-  );
+  ); 
 }

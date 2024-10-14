@@ -178,14 +178,14 @@ export default function Hero({
         loop
         muted
         preload
-        className="absolute left-0 right-0 top-0 bottom-0  h-[90vh] md:h-[100vh] w-[100vw] object-cover"
+        className="absolute left-0 right-0 top-0 bottom-0  h-[90vh] md:h-[100vh] w-[100vw] object-cover object-top"
         poster={backgroundImage}
         style={{
           backgroundAttachment: "fixed",
           width: "100%",
           height: "100%",
           objectFit: "cover",
-          objectPosition: "center",
+          objectPosition: "top",
         }}
         playsInline
       >
