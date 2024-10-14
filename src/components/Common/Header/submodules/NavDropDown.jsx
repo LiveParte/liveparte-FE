@@ -32,7 +32,7 @@ export default function MenuDropdown({
   // console.log(userInfo,'userInfo');
 
   return (
-    <div className="  left-0 right-0 top-0 bottom-0 z-[999]   pb-[20px] mb:pb-[0px]  justify-between lg:hidden  flex flex-col fixed overflow-y-scroll ">
+    <div className="  left-0 right-0 top-0 bottom-0 z-[999]   pb-[20px] mb:pb-[0px]  justify-between lg:hidden  flex flex-col backdrop-blur-[15px] fixed overflow-y-scroll ">
       <div className="bg-[#1B1C20E5] navbar-background   px-[24px] py-[14px] ">
       <div className="justify-between lg:hidden flex-1  flex flex-col relative">
         <div className="flex justify-between items-center mb-[28px] ">
@@ -42,7 +42,7 @@ export default function MenuDropdown({
           <div>
             <ButtonComp
               btnText={`Close`}
-              className={`px-[24px] !h-[30px]  text-[13px] font500 md:h-fit border-[#262C32] rounded-[999px] border-[1px] !bg-[#25272d] !text-white`}
+              className={`px-[12px] !h-[27px]  text-[11px] font500 md:h-fit border-[#262C32] rounded-[999px] border-[1px] !bg-[#25272d] !text-white buttonClose`}
               onClick={() => setDropDown(false)}
             />
           </div>

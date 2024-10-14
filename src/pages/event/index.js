@@ -75,17 +75,6 @@ export default function Home() {
     ? data?.event.filter((event) => !event?.isLiveStreamed)
     : [];
 
-  //moment(event.event_date) > moment()
-
-  //why i wrote  this code
-  // useEffect(() => {
-  //   if (user?._id) {
-  //     getAllEventRefetch();
-  //     onDemandRefresh();
-  //   }
-  // }, [user?._id]);
-
-  //randomBetweenOneAndTen(filteredEventsHero?.length)
   const heroEvent = isArray(filteredEventsHero)
     ? filteredEventsHero[randomBetweenOneAndTen(filteredEventsHero?.length)]
     : {};

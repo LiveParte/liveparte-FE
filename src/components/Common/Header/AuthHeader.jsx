@@ -14,9 +14,8 @@ import dynamic from "next/dynamic";
 import UserProfile from "../UserProfile";
 import { userApi } from "@/store/User/userApi";
 import { eventApi } from "@/store/Event/eventApi";
-import { transactionApi } from "@/store/Transaction/transactionApi";
 import { HeaderOnSelect, LogoImage } from "@/utils/styleReuse";
-import { eventLink, myShowLink, onDemandLink } from "@/utils/reusableComponent";
+import { entertainersLink, eventLink, myShowLink, onDemandLink } from "@/utils/reusableComponent";
 import { formatMoney } from "@/utils/formatMoney";
 import { accessTokenStorageName, userDetailStorageName } from "@/utils/helper";
 import { LiveParteCoins } from "../../../../public/svg";
@@ -188,6 +187,7 @@ export default function AuthHeader({
                 }`}
                 onClick={() => router.push(eventLink)}
               />
+              
               <ButtonComp
                 btnText="On Demand"
                 className={` font-medium  hidden lg:block   !h-[32px] text-[13px] px-[16px] md:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${
@@ -205,6 +205,13 @@ export default function AuthHeader({
                   isMyShow ? isSelected : "bg-transparent"
                 }`}
                 onClick={() => router.push(myShowLink)}
+              />
+              <ButtonComp
+                btnText="For Entertainers"
+                className={`  text-[13px]   !h-[32px] font-medium  hidden lg:block  px-[16px] md:px-[32px]   gap-[10px]    font500 text-white  ${isFocused} ${
+                  isMyShow ? isSelected : "bg-transparent"
+                }`}
+                onClick={() => router.push(entertainersLink)}
               />
             </div>
           )}

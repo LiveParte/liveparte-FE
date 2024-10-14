@@ -6,10 +6,15 @@ import {
   checkShowDuration,
 } from "@/utils/reusableComponent";
 import { isArray } from "@/utils/helper";
-import {  useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { selectCurrentUserData } from "@/store/User";
 import { useCreatePurchaseMutation } from "@/store/Transaction/transactionApi";
-import { BrowserView, MobileView, isBrowser, isMobile } from 'react-device-detect';
+import {
+  BrowserView,
+  MobileView,
+  isBrowser,
+  isMobile,
+} from "react-device-detect";
 
 import EventButton from "./submodules/EventButton";
 import { isPastDate, isSecondDay } from "@/utils/functions/checkIfItSecondDay";
@@ -19,9 +24,11 @@ export default function Hero({
   showTopGradient = false,
   isOnDemand = false,
   isLoading = false,
-  isSingleEvent=false
+  isSingleEvent = false,
 }) {
-  const heroImage =isMobile?HeroSectionEvent?.thumbnail_url_mobile:HeroSectionEvent?.thumbnail_url
+  const heroImage = isMobile
+    ? HeroSectionEvent?.thumbnail_url_mobile
+    : HeroSectionEvent?.thumbnail_url;
 
   const videoRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -44,7 +51,9 @@ export default function Hero({
   const userData = useSelector(selectCurrentUserData) || {};
   const show = {
     ...HeroSectionEvent,
-    ticket: isArray(HeroSectionEvent?.tickets) ? HeroSectionEvent?.tickets[0]:HeroSectionEvent?.ticket,
+    ticket: isArray(HeroSectionEvent?.tickets)
+      ? HeroSectionEvent?.tickets[0]
+      : HeroSectionEvent?.ticket,
   };
   useEffect(() => {
     function handleClickOutside(event) {
@@ -71,52 +80,56 @@ export default function Hero({
     }
   };
 
-  const eventIsPast=checkEventStatusII(HeroSectionEvent?.event_date,HeroSectionEvent?.event_time,HeroSectionEvent?.event_length)==="Past"
+  const eventIsPast =
+    checkEventStatusII(
+      HeroSectionEvent?.event_date,
+      HeroSectionEvent?.event_time,
+      HeroSectionEvent?.event_length
+    ) === "Past";
   // console.log(eventIsPast,'eventIsPasteventIsPast')
   const HappeningNow =
-    HeroSectionEvent?.purchase?.id &&
-    HeroSectionEvent?.eventStarted;
-    // EventStarted;
+    HeroSectionEvent?.purchase?.id && HeroSectionEvent?.eventStarted;
+  // EventStarted;
 
-    console.log(HeroSectionEvent,HappeningNow,'HeroSectionEvent111');
+  console.log(HeroSectionEvent, HappeningNow, "HeroSectionEvent111");
 
   const buttonAction = () => {
-    const ticket =Array.isArray(HeroSectionEvent?.tickets)&&HeroSectionEvent?.tickets[0];
+    const ticket =
+      Array.isArray(HeroSectionEvent?.tickets) && HeroSectionEvent?.tickets[0];
     // console.log(HeroSectionEvent,'tbuttonActionicket')
-    if(isPastDate(HeroSectionEvent?.event_date)&&!HeroSectionEvent?.streaming_url&&!HeroSectionEvent?.rewatchAvailable){
+    if (
+      isPastDate(HeroSectionEvent?.event_date) &&
+      !HeroSectionEvent?.streaming_url &&
+      !HeroSectionEvent?.rewatchAvailable
+    ) {
       return "pastShow";
     }
-   
+
     if (userData?._id) {
-      if (HappeningNow||HeroSectionEvent?.purchase?.id &&isOnDemand) {
+      if (HappeningNow || (HeroSectionEvent?.purchase?.id && isOnDemand)) {
         return "isPaidAndEventIsLive";
       }
-     
-      if (
-        HeroSectionEvent?.purchase?.id &&
-        !EventStarted 
-      ) {
-        if (ticket?.price===0 && !EventStarted) {
+
+      if (HeroSectionEvent?.purchase?.id && !EventStarted) {
+        if (ticket?.price === 0 && !EventStarted) {
           return "FreeTicket";
         }
         return "isPaidAndEventNotLIve";
       }
-    }else{
-      if (ticket?.price===0 && !EventStarted) {
+    } else {
+      if (ticket?.price === 0 && !EventStarted) {
         return "FreeTicket";
       }
     }
 
     //remove later  event_date
 
-   
-    // 
+    //
 
-   
     if (!HeroSectionEvent?.eventStarted && !EventStarted) {
       return "notPaidButIsLive";
     }
-   
+
     //
     return "notPaidButIsLive";
   };
@@ -126,7 +139,11 @@ export default function Hero({
   // console.log(isOnDemand, HeroSectionEvent ,'HeroSectionEventHeroSectionEvent')
 
   const TextType = () => {
-    if(isPastDate(HeroSectionEvent?.event_date)&&!HeroSectionEvent?.streaming_url&&!HeroSectionEvent?.rewatchAvailable){
+    if (
+      isPastDate(HeroSectionEvent?.event_date) &&
+      !HeroSectionEvent?.streaming_url &&
+      !HeroSectionEvent?.rewatchAvailable
+    ) {
       return "eventNotAvailable";
     }
     // pastEvent
@@ -136,10 +153,10 @@ export default function Hero({
     if (isOnDemand) {
       return "onDemand";
     }
-    if (!isOnDemand && HeroSectionEvent?.eventStarted ) {
+    if (!isOnDemand && HeroSectionEvent?.eventStarted) {
       return "happeningNow";
     }
-    return "justDate"; 
+    return "justDate";
   };
   // console.log(HeroSectionEvent,EventStarted,'targetDatePlusDuration1')
 
@@ -157,10 +174,9 @@ export default function Hero({
         // controls
         src={HeroSectionEvent?.promotional_url}
         ref={videoRef}
-        autoPlay={isSingleEvent?false:true}
+        autoPlay={isSingleEvent ? false : true}
         loop
         muted
-      
         preload
         className="absolute left-0 right-0 top-0 bottom-0  h-[90vh] md:h-[100vh] w-[100vw] object-cover"
         poster={backgroundImage}
@@ -198,7 +214,6 @@ export default function Hero({
                 isSingleEvent={isSingleEvent}
                 isOnDemand={isOnDemand}
               />
-              
             </div>
           </div>
         </div>
