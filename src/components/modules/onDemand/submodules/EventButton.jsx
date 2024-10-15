@@ -29,6 +29,8 @@ import ShareEvent from "../../EventDetails/modal/ShareEvent";
 import { setLiveStreamEventData } from "@/store/Event";
 import { useRouter } from "next/router";
 import { returnBothCurrencies } from "@/utils/functions/returnBothCurrencies";
+import { Avatar5 } from "../../../../../public/svg/avatars";
+import UserProfile from "@/components/Common/UserProfile";
 
 export default function EventButton({
   HeroSectionEvent,
@@ -331,19 +333,34 @@ export default function EventButton({
           );
       case "happeningNow":
         return (
+          <div>
           <div className="flex gap-[8px] items-center">
             <div className="h-[8px] w-[8px] rounded-full bg-[#FA4354]"></div>
             <div className="text-[11px] lg:text-[13px]  text-white  font500">
               Happening Now
             </div>
+
+          </div>
+          <div>And several people joined</div>
+
           </div>
         );
       case "justDate":
         return (
-          <div className="text-[#B4BECB] text-[13px] md:text-[15px] z-10 relative  font500">
+          <div>
+          <div className="text-[#B4BECB] text-[13px] md:text-[15px] z-10 relative md:text-start font500 pt-3">
             {moment(HeroSectionEvent?.event_date).format("MMM DD, YYYY")} -
             Watch Live
           </div>
+          <div className="flex items-center   gap-[5px]  ">
+            <div className="flex w-[35px] h-[20.13px] relative mb-3  ">
+           <Image src='/svg/Dee.svg' width={20.13} height={20.13}/>
+           <Image src='/svg/Wumpus – 25.svg' width={20.13} height={20.13} className="absolute left-3"/>
+           </div>
+        
+            <p className="text-[#788AA1] text-[13px] text-center ">And Several people already bought ticket</p>
+          </div>
+          </div>  
         );
       case "pastEvent":
         return (
@@ -381,11 +398,10 @@ export default function EventButton({
           {/* <CallToActionIcon /> */}
           <CallToActionIcon />
           {TextType(TextTypeAction())}
-          Lorem ipsum dolor sit amet.
         </div>
 
         <div
-          className="flex   flex-col mb-[5vh] items-center md:hidden"
+          className="flex  flex-col mb-[5vh] items-center md:hidden"
           // ref={dropdownRef}
         >
           <div className="">{TextType(TextTypeAction())}</div>

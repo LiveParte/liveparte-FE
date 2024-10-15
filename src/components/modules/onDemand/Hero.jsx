@@ -37,7 +37,7 @@ export default function Hero({
 
   const EventStarted =
     HeroSectionEvent?.eventStarted &&
-    checkShowDuration(
+    checkShowDuration(      
       HeroSectionEvent?.event_date,
       HeroSectionEvent?.event_length
     );
