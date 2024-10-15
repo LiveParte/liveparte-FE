@@ -40,7 +40,7 @@ const Faq = () => {
                     <div className='bg-grey.300 lg:mt-16 mt-10 lg:w-[378px] h-[161px] rounded-[12px] p-6'>
                         <h1 className='font-mattersq font-medium text-[14px] leading-[16.8px] tracking-[-0.12px] text-grey.200'>Still have questions?</h1>
                         <p className='font-mattersq font-medium text-[14px] leading-[16.8px] mt-2 tracking-[-0.12px] text-grey.200'><span className='text-green.400 underline'>Contact us!</span> We’ll be happy to help you</p>
-                        <button className='text-black.100 text-[13px] bg-white.200 mt-5 h-[44px] rounded-[8px] font-mattersq font-medium tracking-[-0.12px] px-3'>View all Frequently Asked Questions</button>
+                        <button className='text-black.100 text-[13px] bg-white.200 mt-3 h-[44px] rounded-[8px] font-mattersq font-medium tracking-[-0.12px] px-3'>View all Frequently Asked Questions</button>
                     </div>
                 </div>
                 <div className='lg:w-[60%] lg:ml-4 lg:mt-0 mt-10'>

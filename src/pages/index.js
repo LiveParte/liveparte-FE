@@ -7,6 +7,7 @@ import PayAnyhow from '@/components/modules/Home/PayAnyhow'
 import Entertainer from '@/components/modules/Home/Entertainer'
 import Faq from './entertainers/Faq'
 import Footer from './entertainers/Footer'
+import ForEnter from '@/components/modules/Home/ForEnter'
 
 export default function index() {
   return (
@@ -17,6 +18,7 @@ export default function index() {
       <DisplayCard/>
       <PayAnyhow/>
       <Entertainer/>
+      <ForEnter/>
       <Faq />
       <Footer />
       </NoAuth>

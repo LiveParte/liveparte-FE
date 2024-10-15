@@ -70,7 +70,7 @@ const Earning = () => {
                             <h1 className='text-[52px] leading-[52px] tracking-[0.48px] font-mdtest font-bold'>${thousand(rangeValue * Number(ticket))}</h1>
                         </div>
                     </div>
-                    <div className='md:w-[306px] rounded-[12px] border border-green.400  bg-grey.300 p-6'>
+                    <div className='md:w-[306px] rounded-[12px] border-[1px] !border-green.400  bg-grey.300 p-6'>
                         <h1 className='uppercase font-mdtest text-[32px] leading-[32px] font-bold tracking-[0.48px]'>Liveparte</h1>
                         <div className='mt-8'>
                             <h2 className='font-mattersq text-[14px] leading-[16.8px] tracking-[-0.12px] text-grey.600'>Fans needed</h2>

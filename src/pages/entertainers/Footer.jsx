@@ -14,7 +14,7 @@ const Footer = () => {
   return (
     <div className="!text-white">
       <div className="w-[90%] mx-auto lg:mt-[1rem]4 mt-16 lg:grid lg:grid-cols-4 flex flex-col-reverse lg:ml-44 mb-5">
-        <div className="flex lg:flex-col flex-row lg:justify-start justify-between lg:items-start items-center lg:mt-0 mt-10">
+        <div className="flex lg:flex-col lg:justify-start justify-between lg:items-start items-center lg:mt-0 mt-10">
           <div>
             <Image src={logo} alt="liveparte logo" />
             <div className="mt-8 flex gap-4">
@@ -72,7 +72,7 @@ const Footer = () => {
               <div className="mt-[1rem] text-white no-underline">
                 <Link
                   href="/"
-                  className="font-mattersq font-medium text-base leading-[19.2px] tracking-[-0.12px] text-[#1B1C20]"
+                  className="font-mattersq font-medium text-base leading-[19.2px] tracking-[-0.12px] text-[#1B1C20] no-underline"
                 >
                   Careers
                 </Link>
@@ -80,7 +80,7 @@ const Footer = () => {
               <div className="mt-[1rem]">
                 <Link
                   href="/"
-                  className="font-mattersq font-medium text-base leading-[19.2px] tracking-[-0.12px]"
+                  className="font-mattersq font-medium text-base leading-[19.2px] tracking-[-0.12px] text-white no-underline"
                 >
                   Studio
                 </Link>

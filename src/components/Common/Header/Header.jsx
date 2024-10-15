@@ -120,7 +120,7 @@ export default function Header({ className, openModal }) {
           <div className="flex items-center justify-between lg:gap-[24px]">
             <ButtonComp
               btnText="Browse Events"
-              className={` font-medium  hidden lg:block  px-[16px] bg-transparent  gap-[10px] xl:!px-[32px] !border-none  font500 text-white  ${isFocused} ${
+              className={` font-medium  hidden lg:block  px-[16px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${
                 isEvent && isSelected
               }  text-[13px]   !h-[32px]`}
               onClick={() => {
@@ -129,7 +129,7 @@ export default function Header({ className, openModal }) {
             />
             <ButtonComp
               btnText="On Demand"
-              className={` font-medium  hidden lg:block !py-[11px]  gap-[10px] !bg-transparent xl:!px-[32px]   font500 text-white ${isFocused}   text-[13px] ${
+              className={` font-medium  hidden lg:block !py-[11px]  gap-[10px] !bg-transparent   font500 text-white ${isFocused}   text-[13px] ${
                 isOnDemand && isSelected
               }  !h-[32px]`}
               onClick={() => {
@@ -138,7 +138,7 @@ export default function Header({ className, openModal }) {
             />
             <ButtonComp
               btnText="For Entertainers"
-              className={` font-medium  hidden lg:block !py-[11px] xl:!px-[32px] gap-[10px] !bg-transparent    font500 text-white ${isFocused}   text-[13px] ${
+              className={` font-medium  hidden lg:block !py-[11px]  gap-[10px] !bg-transparent    font500 text-white ${isFocused}   text-[13px] ${
                 isOnDemand && isSelected
               }  !h-[32px]`}
               onClick={() => {
@@ -159,7 +159,7 @@ export default function Header({ className, openModal }) {
               <ButtonComp
                 onClick={() => openModal("SignUp")}
                 btnText="Sign Up"
-                className="text-[13px] font-medium font500 px-[40px] py-[12px]"
+                className="text-[13px] font-medium font500 px-[40px] py-[12px] text-black"
               />
             </div>
             <ButtonComp

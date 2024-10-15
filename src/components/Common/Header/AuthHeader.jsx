@@ -179,10 +179,10 @@ export default function AuthHeader({
           <LogoImage router={router} />
 
           {showNav && (
-            <div className="flex items-center justify-between   !hover:scale-100">
+            <div className="flex items-center justify-between gap-[16px]  xl:gap-[24px]  !hover:scale-100">
               <ButtonComp
                 btnText="Browse Events"
-                className={` font-medium  hidden lg:block   !h-[32px] text-[13px] md:px-[16px] xl:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${
+                className={` font-medium  hidden lg:block   !h-[32px] text-[13px]  bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused}  ${
                   isEvent && isSelected
                 }`}
                 onClick={() => router.push(eventLink)}
@@ -190,7 +190,7 @@ export default function AuthHeader({
               
               <ButtonComp
                 btnText="On Demand"
-                className={` font-medium  hidden lg:block   !h-[32px] text-[13px] px-[16px] xl:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${
+                className={` font-medium  hidden lg:block   !h-[32px] text-[13px]  bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused}  ${
                   isOnDemand && isSelected
                 }`}
                 onClick={() => {
@@ -201,15 +201,15 @@ export default function AuthHeader({
               />
               <ButtonComp
                 btnText="My Shows"
-                className={`  text-[13px]   !h-[32px] font-medium  hidden lg:block  px-[16px] xl:px-[32px]   gap-[10px]    font500 text-white  ${isFocused} ${
-                  isMyShow ? isSelected : "bg-transparent"
+                className={`  text-[13px]   !h-[32px] font-medium  hidden lg:block    gap-[10px]    font500 text-white  ${isFocused}   ${
+                  isMyShow ? isSelected : "bg-transparent  px-[16px]"
                 }`}
                 onClick={() => router.push(myShowLink)}
               />
               <ButtonComp
                 btnText="For Entertainers"
-                className={`  text-[13px]   !h-[32px] font-medium  hidden lg:block   xl:px-[32px]   gap-[10px]    font500 text-white  ${isFocused} ${
-                  isMyShow ? isSelected : "bg-transparent"
+                className={`  text-[13px]   !h-[32px] font-medium  hidden lg:block    gap-[10px]    font500 text-white  ${isFocused} ${
+                  isMyShow ? isSelected : "bg-transparent px-[16px]"
                 }`}
                 onClick={() => router.push(entertainersLink)}
               />

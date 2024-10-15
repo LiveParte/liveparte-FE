@@ -20,22 +20,22 @@ export default function Random() {
   return (
     <div className='mt-32'>
                 <h1 className='font-mdtest font-bold text-center md:text-[62px] md:w-full w-[70%] mx-auto text-[32px] md:leading-[62px] leading-[32px] tracking-[0.48px]'>GO LIVE IN MINUTES, NOT WEEKS</h1>
-                <div className='flex md:flex-row flex-col justify-center mx-auto gap-8 mt-16'>
+                <div className='flex md:flex-row flex-col justify-center mx-auto  mt-16 gap-[30px] items-center'>
                     <GoLiveCard
-                        title='Create your Account'
+                        title='1.Create your Account'
                         description='Join as an artist or event organizer on Liveparte to access our platform.'
                         bgColor='bg-yellow.500'
                         bgImg={liveparte}
                     />
                     <GoLiveCard
-                        title='Get Verified'
+                        title='2.Get Verified'
                         description='Once your account is verified, you can access Studio to create events.'
                         bgColor='bg-blue.200'
                         bgImg={liveparte1}
                     />
                     <GoLiveCard
-                        title='Go Live'
-                        description=''
+                        title='3.Go Live'
+                        description='Create your event, get streaming key and go live'
                         bgColor='bg-red.200'
                         bgImg={liveparte2}
                     />

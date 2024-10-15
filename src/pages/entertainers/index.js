@@ -10,6 +10,7 @@ import Engagement from "./Enagement";
 import Faq from "./Faq";
 import Footer from "./Footer";
 import Random from "./Random";
+import ForEnter from "@/components/modules/Home/ForEnter";
 // import Footer from "@/components/Common/Footer";
 
 const Entertainer = () => {
@@ -23,7 +24,8 @@ const Entertainer = () => {
       <Earning/>
       <Engagement/>
       <Random/>
-        <MakePossible />
+     
+        {/* <MakePossible /> */}
         <Faq/>
       <Footer/>
         {/* <Footer /> */}

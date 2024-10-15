@@ -116,7 +116,7 @@ body {
   font-family: "MatterSQ-Medium", sans-serif, cursive !important;
   min-height: 100vh;
   /* background-color: black !important; */
-  color: rgba(255, 255, 255, 1);
+  /* color: rgba(255, 255, 255, 1); */
   background: #060809;
   overflow-x: hidden;
   margin-bottom: 0px;
