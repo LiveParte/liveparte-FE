@@ -4,11 +4,26 @@ import { logout, selectCurrentUserData, setUserData } from "@/store/User";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetUserProfileQuery, useUpdateUserLocationMutation } from "@/store/User/userApi";
+import { useObject } from "@/Context/ObjectProvider";
 
 function NoAuth({ children }) {
   const router = useRouter();
+  const {stopScrolling} =useObject();
 
+  useEffect(() => {
+    if (stopScrolling) {
+      // Prevent scrolling
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Restore scrolling
+      document.body.style.overflow = 'auto';
+    }
 
+    // Cleanup function to restore scrolling when the component unmounts
+    return () => {
+      document.body.style.overflow = 'auto';
+    };
+  }, [stopScrolling]);
 
   const { data, isLoading, isError,error, isSuccess,status,refetch} = useGetUserProfileQuery(undefined,{
    

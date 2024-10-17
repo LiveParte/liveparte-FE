@@ -1,4 +1,4 @@
-import Footer from "@/components/Common/Footer";
+// import Footer from "@/components/Common/Footer";
 import NoAuth from "@/components/Layout/NoAuth";
 import dynamic from 'next/dynamic'
 // import DropDown from '@/components/Ui/DropDown'
@@ -11,7 +11,7 @@ const Hero = dynamic(() => import('@/components/modules/onDemand/Hero'), {
 import {
   useGetEventDetailViaIdQuery,
  
-} from "@/store/Event/eventApi";
+} from "@/store/Event/eventApi";  
 import { useDispatch, useStore } from "react-redux";
 
 import { useRouter } from "next/router";
@@ -20,6 +20,7 @@ import { selectCurrentUserData, selectEvent } from "@/store/User";
 import { CloseIcon } from "../../../public/svg";
 import CountDown from "@/components/Common/Coundown";
 import { isArray } from "@/utils/helper";
+import Footer from "../entertainers/Footer";
 
 export default function EventId() {
   const dispatch = useDispatch()
