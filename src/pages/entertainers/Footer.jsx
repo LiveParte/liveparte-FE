@@ -79,7 +79,7 @@ const Footer = () => {
               </div>
               <div className="mt-[1rem]">
                 <Link
-                  href="/"
+                  href="https://studio-staging.liveparte.com/"
                   className="font-mattersq font-medium text-base leading-[19.2px] tracking-[-0.12px] text-white no-underline"
                 >
                   Studio
@@ -168,7 +168,7 @@ const Footer = () => {
             <>
               <div className="mt-[1rem]">
                 <Link
-                  href="/"
+                  href="/terms"
                   className="font-mattersq font-medium text-base leading-[19.2px] tracking-[-0.12px] text-white no-underline"
                 >
                   Terms of Service
@@ -176,7 +176,7 @@ const Footer = () => {
               </div>
               <div className="mt-[1rem]">
                 <Link
-                  href="/"
+                  href="/privacy"
                   className="font-mattersq font-medium text-base leading-[19.2px] tracking-[-0.12px] text-white no-underline"
                 >
                   Purchase Policy
@@ -184,7 +184,7 @@ const Footer = () => {
               </div>
               <div className="mt-[1rem] ">
                 <Link
-                  href="/"
+                  href="/privacy"
                   className="font-mattersq font-medium text-base leading-[19.2px] tracking-[-0.12px] text-white no-underline mb-0"
                 >
                   Privacy Policy

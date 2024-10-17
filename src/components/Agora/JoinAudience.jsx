@@ -41,7 +41,6 @@ const showTokens = [
     tokenId:'007eJxTYJgRVS2r+TD8ccvpE4F5h61C1XL5JUuOVi1+fn9HpfcN7/MKDBbGJqbJaRZGqSYGpibJlmlJlolGlonGJuaGaQbGqQaW2zbypTcEMjLMnvyZhZEBAkF8CQYzc4PUJENzCxMzk1QDQ/NEU1MjIM/QkoEBACB1JEw=',
     eventId:'670eb178464e017a55217819'
   },
-  
 ];
 
 const JoinAudience = ({ eventId, liveStreamDetail }) => {

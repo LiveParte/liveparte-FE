@@ -10,7 +10,7 @@ import google from "../../../../public/images/google.png";
 
 const PayAnyhow = () => {
   return (
-    <div className="lg:w-[85%] w-full lg:px-0 px-2 relative mx-auto lg:h-auto min-h-[741px] mt-24">
+    <div className=" lg:px-0 px-2 relative  lg:h-auto min-h-[741px] md:w-[60%] lg:w-[80%] w-[90%] mx-auto mt-28">
       <div className="max-w-sm mx-auto p-4 bg-teal-500 rounded-3xl shadow-lg hidden"></div>
     
       {/*  */}

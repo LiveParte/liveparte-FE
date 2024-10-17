@@ -17,9 +17,9 @@ const Happening = dynamic(
   () => import("@/components/modules/Event/Happening"),
   { ssr: false }
 );
-const Footer = dynamic(() => import("@/components/Common/Footer"), {
-  ssr: false,
-});
+// const Footer = dynamic(() => import("@/components/Common/Footer"), {
+//   ssr: false,
+// });
 import NoAuth from "@/components/Layout/NoAuth";
 import {
   checkShowDuration,
@@ -33,6 +33,7 @@ import { useEffect } from "react";
 import { selectCurrentUserData } from "@/store/User";
 import { useSelector } from "react-redux";
 import ButtonComp from "@/components/Ui/button";
+import Footer from "../entertainers/Footer";
 const userData = storage.localStorage.get(userDetailStorageName);
 const CheckUser = isJSON(userData) && JSON.parse(userData);
 export default function Home() {

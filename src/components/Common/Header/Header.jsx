@@ -22,6 +22,8 @@ export default function Header({ className, openModal }) {
   const isEvent =
     router?.pathname === eventLink || router?.pathname == singleEventLink;
   const isOnDemand = router?.pathname === onDemandLink;
+  const isEntertainer = router?.pathname === entertainersLink;
+
   const isFocused = `hover:!bg-[#FFFFFF26] hover:rounded-[8px]  hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`;
   const isSelected = HeaderOnSelect;
   const handleCheckIfITHome = (link) => {
@@ -139,7 +141,7 @@ export default function Header({ className, openModal }) {
             <ButtonComp
               btnText="For Entertainers"
               className={` font-medium  hidden lg:block !py-[11px]  gap-[10px] !bg-transparent    font500 text-white ${isFocused}   text-[13px] ${
-                isOnDemand && isSelected
+                isEntertainer && isSelected
               }  !h-[32px]`}
               onClick={() => {
                 router.push(entertainersLink);
