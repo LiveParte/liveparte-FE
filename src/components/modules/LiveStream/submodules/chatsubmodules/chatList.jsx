@@ -1,13 +1,13 @@
 import Image from "next/image";
 
-export const ChatList = ({ message, userName }) => {
+export const ChatList = ({ message, userName,avatar }) => {
     return (
       <div className="pb-[16px] flex items-start  lg:items-center gap-[8px]  max-w-[90%] lg:w-full">
         <Image
-          src={`/webp/profile.png`}
+          src={avatar}
           width={30}
           height={30}
-          className="object-cover w-[20px] h-[20px] lg:h-[30px] md:w-[30px]"
+          className="object-cover w-[20px] h-[20px] lg:h-[30px] md:w-[30px] rounded-full"
           alt="profile-image-user"
         />
         <div>

@@ -11,7 +11,7 @@ export default function ChatBody({
   isOrientation,
   handleChatToTheBottom,
 }) {
-  // console.log(isOrientation, "isOrientation");
+  console.log(data, "isOrientation");
   return showComment ? (
     <div className="backdrop-blur-[8px] flex flex-1 flex-col bg-black/30 rounded-[8px] overflow-hidden h-full min-w-[236px]">
       <div
@@ -58,6 +58,7 @@ export default function ChatBody({
                   key={i}
                   message={item?.message}
                   userName={item?.name}
+                  avatar={item?.user?.profile_image||'https://avatar.iran.liara.run/public'}
                 />
               ))}
             </div>
