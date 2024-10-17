@@ -58,7 +58,7 @@ export default function ChatBody({
                   key={i}
                   message={item?.message}
                   userName={item?.name}
-                  avatar={item?.user?.profile_image||'https://avatar.iran.liara.run/public'}
+                  avatar={item?.user?.profile_image}
                 />
               ))}
             </div>
