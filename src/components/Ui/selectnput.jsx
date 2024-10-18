@@ -32,17 +32,18 @@ export const FloatingLabelSelect = ({
             setIsFocused(false);
             onBlur && onBlur(e);
           }}
-          className={`block flex-1 rounded-[8px] z-10 px-[16px] pb-2.5 pt-[20px] w-full text-[13px] focus:border-[1px] border-[0px] appearance-none dark:text-white focus:outline-none focus:ring-0 focus:border-[#63768D] peer h-[50px] relative bg-transparent ${
+          className={`block flex-1 rounded-[8px] z-10 px-[16px] pb-2.5 pt-[25px] w-full text-[13px] focus:border-[1px] border-[0px] appearance-none dark:text-white focus:outline-none focus:ring-0 focus:border-[#63768D] peer h-[50px] relative bg-transparent ${
             disabled ? "cursor-not-allowed !text-[#63768D]" : "text-white"
           }`}
+          // style={{ paddingTop: '10px' }}
         >
           <option value="" disabled hidden>{placeholder}</option>
           {options?.map((option) => (
-            <option key={option.value} className="text-white" value={option.value}>
+            <option key={option.value} className="text-white  bg-[#222428] hover:bg-[#63768D] " value={option.value}>
               {option.label}
             </option>
           ))}
-        </select>
+        </select> 
         <span className="text-white absolute right-[9.2px] "><ArrowDownSelectIcon/></span>
       </div>
        </div>
@@ -63,3 +64,5 @@ export const FloatingLabelSelect = ({
     </div>
   );
 };
+ 
+
