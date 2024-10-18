@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { isArray } from "@/utils/helper";
 import { eventLink, randomBetweenOneAndTen } from "@/utils/reusableComponent";
 import EventEmptyState from "@/components/Common/EventEmptyState";
+import Footer from "../entertainers/Footer";
 // const OnDemandListLazyLoad = withLazyLoad(OnDemandList);
 const Hero = dynamic(() => import("@/components/modules/onDemand/Hero"), {
   ssr: false,
@@ -16,9 +17,9 @@ const OnDemandListLazyLoad = dynamic(
     ssr: false,
   }
 );
-const Footer = dynamic(() => import("@/components/Common/Footer"), {
-  ssr: false,
-});
+// const Footer = dynamic(() => import("@/components/Common/Footer"), {
+//   ssr: false,
+// });
 export default function OnDemandEvent() {
   const { data: onDemandEvent, isLoading: onDemandEventLoader } =
     useGetEventOnDemandQuery();
