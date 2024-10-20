@@ -160,16 +160,16 @@ export const SignUpForm =()=>{
                     value:'17-22'
                 },
                 {
-                    label:'23 -28',
-                    value:'23 -28'
+                    label:'23-28',
+                    value:'23-28'
                 },
                 {
-                    label:'29 -34',
-                    value:'29 -34'
+                    label:'29-34',
+                    value:'29-34'
                 },
                 {
-                    label:'35 -40',
-                    value:'35 -40'
+                    label:'35-40',
+                    value:'35-40'
                 },
                 {
                     label:'41 +',

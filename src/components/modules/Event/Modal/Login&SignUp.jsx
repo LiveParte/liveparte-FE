@@ -94,11 +94,21 @@ export default function LoginSignUp({
     // "username": "string",
     // "fullName": "string",
     // "password": "string"
+
+    // return console.log(e , 'handleRegister');
+    
+
     const payload = {
-      ...e,
+      // ...e,
       username: e.fullName,
       fullName: e?.fullName,
+      gender : e?.gender,
+      ageBracket : e?.age,
+      email : e?.email,
+      password : e?.password
     };
+
+
     const handleRegisterUser = await RegisterUser(payload);
     const response = handleRegisterUser;
 
@@ -148,10 +158,16 @@ export default function LoginSignUp({
         });
       }
       //
-      CheckIfArray(response?.message)
+
+      return console.log(response.message);
+      
+      (CheckIfArray(response?.message) && response.message.length>0)
         ? ErrorNotification(response?.message[0])
         : ErrorNotification(response?.message);
+      
+        
     }
+
     if (response?.data?.user?._id) {
       // const userData = JSON.parse(response?.user);
 
@@ -187,6 +203,8 @@ export default function LoginSignUp({
     }
     dispatch(eventApi.util.invalidateTags(["event", "ondemand"]));
   }
+
+
 
   async function handleLogin(e) {
     const payload = {
