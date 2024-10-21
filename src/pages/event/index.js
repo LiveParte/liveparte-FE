@@ -2,7 +2,9 @@ import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 import {
   useGetAllEventQuery,
+  useGetEventHappingTodayQuery,
   useGetEventOnDemandQuery,
+  useGetEventUpcomingQuery,
 } from "@/store/Event/eventApi";
 import moment from "moment";
 import { isArray, storage, userDetailStorageName } from "@/utils/helper";
@@ -15,9 +17,9 @@ const Happening = dynamic(
   () => import("@/components/modules/Event/Happening"),
   { ssr: false }
 );
-const Footer = dynamic(() => import("@/components/Common/Footer"), {
-  ssr: false,
-});
+// const Footer = dynamic(() => import("@/components/Common/Footer"), {
+//   ssr: false,
+// });
 import NoAuth from "@/components/Layout/NoAuth";
 import {
   checkShowDuration,
@@ -31,6 +33,7 @@ import { useEffect } from "react";
 import { selectCurrentUserData } from "@/store/User";
 import { useSelector } from "react-redux";
 import ButtonComp from "@/components/Ui/button";
+import Footer from "../entertainers/Footer";
 const userData = storage.localStorage.get(userDetailStorageName);
 const CheckUser = isJSON(userData) && JSON.parse(userData);
 export default function Home() {
@@ -48,6 +51,19 @@ export default function Home() {
     isLoading: onDemandEventLoader,
     refetch: onDemandRefresh,
   } = useGetEventOnDemandQuery();
+
+  const { data: upcomingEvents, isLoading: upcomingEventLoader } =
+    useGetEventUpcomingQuery();
+
+  const { data: happingNowEvents, isLoading: happingNowEventLoader } =
+    useGetEventHappingTodayQuery();
+
+    const happeningNowData =happingNowEvents?.event;
+    const UpcomingNowData =upcomingEvents?.event;
+
+
+  // useGetEventUpcomingQuery,
+  // useGetEventHappingTodayQuery
 
   // Data processing
   const happeningNowEvents = data?.event?.filter(
@@ -75,24 +91,16 @@ export default function Home() {
     ? data?.event.filter((event) => !event?.isLiveStreamed)
     : [];
 
-  //moment(event.event_date) > moment()
-
-  //why i wrote  this code
-  // useEffect(() => {
-  //   if (user?._id) {
-  //     getAllEventRefetch();
-  //     onDemandRefresh();
-  //   }
-  // }, [user?._id]);
-
-  //randomBetweenOneAndTen(filteredEventsHero?.length)
-  const heroEvent = isArray(filteredEventsHero)
-    ? filteredEventsHero[randomBetweenOneAndTen(filteredEventsHero?.length)]
+  const heroEvent = (isArray(onDemandEvents)&&!onDemandEventLoader)
+    ? onDemandEvents[randomBetweenOneAndTen(onDemandEvents?.length)]
     : {};
+
+    console.log(onDemandEvents, "happingNowEvents");
+
 
   // console.log(data,'ArrayLengh')
   return (
-    <div className="min-h-[100vh] bg-black">
+    <div className="min-h-[100vh] bg-black over">
       {/* <ButtonComp> */}
       <NoAuth>
         {heroEvent ? (
@@ -110,9 +118,10 @@ export default function Home() {
           events={filteredEvents}
           upComingEvent={filteredUpcoming}
           OnDemandEvent={onDemandEvents}
+          // allEvent={UpcomingNowData}
         />
         <Footer />
       </NoAuth>
     </div>
-  );
+  ); 
 }

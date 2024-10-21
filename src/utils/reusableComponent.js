@@ -186,6 +186,7 @@ export function replaceDashWithSpace(str) {
 }
 
 export const myShowLink = `/myshows`;
+export const entertainersLink='/entertainers'
 export const eventLink = `/event`;
 export const singleEventLink = `/event/[id]`;
 export const onDemandLink = `/event/ondemand`;

@@ -3,6 +3,7 @@ import { createContext, useCallback, useContext, useEffect, useRef, useState } f
 const ObjectContext = createContext();
 
 export const ObjectProvider = ({ children }) => {
+  const [stopScrolling,setStopScrolling] =useState(false);
   const [myObject, setMyObject] = useState({});
   const [liveStreamShow, setLiveStreamShow] = useState(null);
   const [routerLoader, setRouterLoader] = useState(null);
@@ -102,6 +103,10 @@ export const ObjectProvider = ({ children }) => {
     setIsDragging(false);
   };
 
+  const handlePreventScroll = (state) =>{
+    setStopScrolling(state)
+  }
+
   return (
     <ObjectContext.Provider
       value={{
@@ -128,6 +133,8 @@ export const ObjectProvider = ({ children }) => {
         handleMouseDown,
         handleMouseMove,
         handleMouseUp,
+        stopScrolling,
+        handlePreventScroll
       }}
     >
       {children}

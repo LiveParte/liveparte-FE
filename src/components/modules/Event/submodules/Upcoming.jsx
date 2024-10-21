@@ -6,7 +6,7 @@ import withLazyLoad from "@/components/Common/LazyLoading/lazyLoading";
 
 const SingleShowCard = withLazyLoad(ShowsCard);
 
-export default function Upcoming({ upComingEvent }) {
+export default function Upcoming({ upComingEvent,eventTitle='Event Already Happened' }) {
   const container = "pl-[20px] pr-[20px] lg:px-[60px]";
   return (
     <div className={`bg-[#060809]  py-[30px] pb-[42px] lg:pb-[77px] relative`}>
@@ -14,7 +14,8 @@ export default function Upcoming({ upComingEvent }) {
         className={`flex justify-between items-center ${MainContainer}  mb-[40px] `}
       >
         <div className={`text-[20px] font500 text-white `}>
-          Event Already Happened
+          {eventTitle}
+         
         </div>
         <div className="hidden md:flex items-center gap-[16px]">
           <div className="hidden md:flex items-center gap-[16px] ">

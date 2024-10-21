@@ -31,7 +31,7 @@ const isSelected=`border-[#262C32] border-[1px] backdrop-blur-[60px] !bg-[#BAD6F
           </div>
           <div>
             <ButtonComp
-              btnText={`close`}
+              btnText={`closes`}
               className={`px-[24px] py-[8px] text-[13px] font500 h-fit border-[#262C32] border-[1px] !bg-[#25272d] !text-white !rounded-full`}
               onClick={() => setDropDown(false)}
             />
@@ -112,6 +112,7 @@ const isSelected=`border-[#262C32] border-[1px] backdrop-blur-[60px] !bg-[#BAD6F
               className={`text-[13px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] bg-transparent rounded-[999px]  font500 text-white  focus:${isFocused}`}
               onClick={()=>router.push(eventLink)}
             />
+            
             <ButtonComp
               btnText="On Demand"
               className={`text-[13px] font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-transparent rounded-[999px]   font500 text-white ${isFocused} `}

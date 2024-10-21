@@ -178,8 +178,9 @@ export const SignUpForm =()=>{
                
             ]
         },
-    ]
-}
+            ]
+        }
+  
 
 export const ForgetPasswordForm =()=>{
     return [

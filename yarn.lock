@@ -2356,6 +2356,10 @@ browserslist@^4.21.10, browserslist@^4.23.0, browserslist@^4.23.1, "browserslist
     electron-to-chromium "^1.5.28"
     node-releases "^2.0.18"
     update-browserslist-db "^1.1.0"
+    caniuse-lite "^1.0.30001663"
+    electron-to-chromium "^1.5.28"
+    node-releases "^2.0.18"
+    update-browserslist-db "^1.1.0"
 
 buffer-from@^1.0.0:
   version "1.1.2"
@@ -6944,6 +6948,8 @@ update-browserslist-db@^1.1.0:
   resolved "https://registry.npmjs.org/update-browserslist-db/-/update-browserslist-db-1.1.1.tgz"
   integrity sha512-R8UzCaa9Az+38REPiJ1tXlImTJXlVfgHZsglwBD/k6nj76ctsH1E3q4doGrukiLQd3sGQYu56r5+lo5r94l29A==
   dependencies:
+    escalade "^3.2.0"
+    picocolors "^1.1.0"
     escalade "^3.2.0"
     picocolors "^1.1.0"
 

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import ButtonComp from "../../Ui/button";
 import { useRouter } from "next/router";
@@ -14,12 +14,12 @@ import dynamic from "next/dynamic";
 import UserProfile from "../UserProfile";
 import { userApi } from "@/store/User/userApi";
 import { eventApi } from "@/store/Event/eventApi";
-import { transactionApi } from "@/store/Transaction/transactionApi";
 import { HeaderOnSelect, LogoImage } from "@/utils/styleReuse";
-import { eventLink, myShowLink, onDemandLink } from "@/utils/reusableComponent";
+import { entertainersLink, eventLink, myShowLink, onDemandLink } from "@/utils/reusableComponent";
 import { formatMoney } from "@/utils/formatMoney";
 import { accessTokenStorageName, userDetailStorageName } from "@/utils/helper";
 import { LiveParteCoins } from "../../../../public/svg";
+import { useObject } from "@/Context/ObjectProvider";
 
 const MenuDropdown = dynamic(() => import("./submodules/NavDropDown"), {
   ssr: false,
@@ -34,6 +34,7 @@ export default function AuthHeader({
 }) {
   const router = useRouter();
   const dispatch = useDispatch();
+  const {handlePreventScroll} =useObject();
   // const coins =
   const MainContainer = `px-[20px] md:px-[40px] lg:px-[80px] xl:[120px] relative`;
   const [dropDown, setDropDown] = useState(false);
@@ -53,6 +54,16 @@ export default function AuthHeader({
   function handleCloseModal() {
     setModalName();
   }
+
+  useEffect(() => {
+    if(!dropDown){
+      handlePreventScroll(false);
+    }
+    if(dropDown){
+      handlePreventScroll(true);
+    }
+   
+  }, [dropDown,handlePreventScroll])
 
   function handleLogOut() {
     dispatch(userApi.util.resetApiState());
@@ -140,7 +151,10 @@ export default function AuthHeader({
           setModalName={setModalName}
           userInfo={userInfo}
           coinsBalance={coinsBalance}
-          handleCloseModal={handleCloseModal}
+          handleCloseModal={()=>{
+            handleCloseModal()
+
+          }}
         />
       )}
       {modalName && (
@@ -165,17 +179,18 @@ export default function AuthHeader({
           <LogoImage router={router} />
 
           {showNav && (
-            <div className="flex items-center justify-between  xl:gap-[24px] !hover:scale-100">
+            <div className="flex items-center justify-between gap-[16px]  xl:gap-[24px]  !hover:scale-100">
               <ButtonComp
                 btnText="Browse Events"
-                className={` font-medium  hidden lg:block   !h-[32px] text-[13px] px-[16px] md:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${
+                className={` font-medium  hidden lg:block   !h-[32px] text-[13px]  bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused}  ${
                   isEvent && isSelected
                 }`}
                 onClick={() => router.push(eventLink)}
               />
+              
               <ButtonComp
                 btnText="On Demand"
-                className={` font-medium  hidden lg:block   !h-[32px] text-[13px] px-[16px] md:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${
+                className={` font-medium  hidden lg:block   !h-[32px] text-[13px]  bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused}  ${
                   isOnDemand && isSelected
                 }`}
                 onClick={() => {
@@ -186,10 +201,17 @@ export default function AuthHeader({
               />
               <ButtonComp
                 btnText="My Shows"
-                className={`  text-[13px]   !h-[32px] font-medium  hidden lg:block  px-[16px] md:px-[32px]   gap-[10px]    font500 text-white  ${isFocused} ${
-                  isMyShow ? isSelected : "bg-transparent"
+                className={`  text-[13px]   !h-[32px] font-medium  hidden lg:block    gap-[10px]    font500 text-white  ${isFocused}   ${
+                  isMyShow ? isSelected : "bg-transparent  px-[16px]"
                 }`}
                 onClick={() => router.push(myShowLink)}
+              />
+              <ButtonComp
+                btnText="For Entertainers"
+                className={`  text-[13px]   !h-[32px] font-medium  hidden lg:block    gap-[10px]    font500 text-white  ${isFocused} ${
+                  isMyShow ? isSelected : "bg-transparent px-[16px]"
+                }`}
+                onClick={() => router.push(entertainersLink)}
               />
             </div>
           )}
