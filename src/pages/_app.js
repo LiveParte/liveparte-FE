@@ -34,6 +34,17 @@ export default function App({ Component, pageProps }) {
           content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
         />
         <link rel="icon" href="/logo.svg" sizes="any" />
+        
+          {/* Google Site Verification Meta Tag */}
+
+          {/* <meta name="google-site-verification" content="QfE0tb4mBA0BreoYT9u5p9Ttnzmn0RCtjChgeNxupys" /> */}
+
+
+         {/* Meta tag for Google Search  */}
+  <meta
+    name="description"
+    content="Get direct access to live and on-demand concerts and performances by your favorite artistes and comedians anywhere in the world from the comfort of your devices."
+  />
         <meta
           property="og:description"
           content="Get direct access to live and on-demand concert, performances by your award-winning artistes and comedians anywhere in the world from the comfort of your devices."
