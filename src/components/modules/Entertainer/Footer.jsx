@@ -1,13 +1,13 @@
 "use client";
 import React, { useState } from "react";
-import footerBg from "../../../public/images/liveparte_footer.png";
-import logo from "../../../public/svgs/logo.svg";
+import footerBg from "../../../../public/images/liveparte_footer.png";
+import logo from "../../../../public/svgs/logo.svg";
 import Image from "next/image";
 import Link from "next/link";
-import facebook from "../../../public/svgs/facebook.svg";
-import instagram from "../../../public/svgs/instagram.svg";
-import linkedin from "../../../public/svgs/linkedin.svg";
-import twitter from "../../../public/svgs/x.svg";
+import facebook from "../../../../public/svgs/facebook.svg";
+import instagram from "../../../../public/svgs/instagram.svg";
+import linkedin from "../../../../public/svgs/linkedin.svg";
+import twitter from "../../../../public/svgs/x.svg";
 
 const Footer = () => {
   const [toggle, setToggle] = useState(true);

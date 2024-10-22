@@ -1,6 +1,6 @@
 import Image from 'next/image';
 import React from 'react';
-import liveparte from  '../../../public/images/circle_bg.png'
+import liveparte from  '../../../../public/images/circle_bg.png'
 
 const Studio = () => {
     return (

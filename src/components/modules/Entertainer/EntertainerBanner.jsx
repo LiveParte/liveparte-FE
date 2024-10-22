@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
-import liveparte_e from '../../../public/images/liveparte-e.png';
-import mobile_e from '../../../public/images/mobile_view.png'
+import liveparte_e from '../../../../public/images/liveparte-e.png';
+import mobile_e from '../../../../public/images/mobile_view.png'
 
 const EntertainerBanner = () => {
     return (

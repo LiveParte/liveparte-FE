@@ -33,7 +33,7 @@ import { useEffect } from "react";
 import { selectCurrentUserData } from "@/store/User";
 import { useSelector } from "react-redux";
 import ButtonComp from "@/components/Ui/button";
-import Footer from "../entertainers/Footer";
+import Footer from "../../components/modules/Entertainer/Footer";
 const userData = storage.localStorage.get(userDetailStorageName);
 const CheckUser = isJSON(userData) && JSON.parse(userData);
 export default function Home() {

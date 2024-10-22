@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 import { isArray } from "@/utils/helper";
 import { eventLink, randomBetweenOneAndTen } from "@/utils/reusableComponent";
 import EventEmptyState from "@/components/Common/EventEmptyState";
-import Footer from "../entertainers/Footer";
+import Footer from "../../components/modules/Entertainer/Footer";
 // const OnDemandListLazyLoad = withLazyLoad(OnDemandList);
 const Hero = dynamic(() => import("@/components/modules/onDemand/Hero"), {
   ssr: false,

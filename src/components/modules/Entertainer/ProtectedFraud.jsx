@@ -1,6 +1,6 @@
 import Image from "next/image";
 import React from "react";
-import lock from "../../../public/images/lock.png";
+import lock from "../../../../public/images/lock.png";
 
 export default function ProtectedFraud() {
   return (

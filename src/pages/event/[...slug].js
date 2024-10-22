@@ -20,7 +20,7 @@ import { selectCurrentUserData, selectEvent } from "@/store/User";
 import { CloseIcon } from "../../../public/svg";
 import CountDown from "@/components/Common/Coundown";
 import { isArray } from "@/utils/helper";
-import Footer from "../entertainers/Footer";
+import Footer from "../../components/modules/Entertainer/Footer";
 
 export default function EventId() {
   const dispatch = useDispatch()

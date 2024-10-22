@@ -3,11 +3,11 @@ import Image from 'next/image';
 import React, { ChangeEvent, useState } from 'react';
 // import comment from '../../../public/images/comment-ent.png';
 // import comment1 from '../../../public/images/comment-ent1.png';
-import liveparte from '../../../public/svgs/group-ent.svg';
-import enage_comment1 from '../../../public/images/enage-comment1.png';
-import enage_comment2 from '../../../public/svgs/enage-comment2.svg';
-import enage_comment3 from '../../../public/svgs/enage-comment3.svg';
-import { thousand } from '../../../helpers';
+import liveparte from '../../../../public/svgs/group-ent.svg';
+import enage_comment1 from '../../../../public/images/enage-comment1.png';
+import enage_comment2 from '../../../../public/svgs/enage-comment2.svg';
+import enage_comment3 from '../../../../public/svgs/enage-comment3.svg';
+import { thousand } from '../../../../helpers';
 // import { thousand } from '@/helper';
 
 const Earning = () => {

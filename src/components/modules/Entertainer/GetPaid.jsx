@@ -1,10 +1,10 @@
 import Image from 'next/image';
 import React from 'react';
-import comment_ent from '../../../public/svgs/comment-ent.svg'
-import comment_ent1 from '../../../public/svgs/comment-ent1.svg'
-import comment_ent2 from '../../../public/svgs/comment-ent2.svg'
-import comment_loc from '../../../public/svgs/comment-loc.svg'
-import comment_loc1 from '../../../public/svgs/comment-loc1.svg'
+import comment_ent from '../../../../public/svgs/comment-ent.svg'
+import comment_ent1 from '../../../../public/svgs/comment-ent1.svg'
+import comment_ent2 from '../../../../public/svgs/comment-ent2.svg'
+import comment_loc from '../../../../public/svgs/comment-loc.svg'
+import comment_loc1 from '../../../../public/svgs/comment-loc1.svg'
 
 const GetPaid = () => {
     return (
