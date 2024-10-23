@@ -133,6 +133,10 @@ export const SignUpForm =()=>{
             type:'select',
             options:[
                 {
+                    label:'select gender',
+                    value:'select gender'
+                },
+                {
                     label:'Female',
                     value:'Female'
                 },
@@ -148,20 +152,24 @@ export const SignUpForm =()=>{
             type:'select',
             options:[
                 {
+                    label:'select age',
+                    value:'select age'
+                },
+                {
                     label:'17-22',
                     value:'17-22'
                 },
                 {
-                    label:'23 -28',
-                    value:'23 -28'
+                    label:'23-28',
+                    value:'23-28'
                 },
                 {
-                    label:'29 -34',
-                    value:'29 -34'
+                    label:'29-34',
+                    value:'29-34'
                 },
                 {
-                    label:'35 -40',
-                    value:'35 -40'
+                    label:'35-40',
+                    value:'35-40'
                 },
                 {
                     label:'41 +',
@@ -170,8 +178,9 @@ export const SignUpForm =()=>{
                
             ]
         },
-    ]
-}
+            ]
+        }
+  
 
 export const ForgetPasswordForm =()=>{
     return [

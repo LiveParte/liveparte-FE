@@ -44,7 +44,7 @@ export default function Hero({
 
   const EventStarted =
     HeroSectionEvent?.eventStarted &&
-    checkShowDuration(
+    checkShowDuration(      
       HeroSectionEvent?.event_date,
       HeroSectionEvent?.event_length
     );
@@ -156,7 +156,7 @@ export default function Hero({
     if (!isOnDemand && HeroSectionEvent?.eventStarted) {
       return "happeningNow";
     }
-    return "justDate";
+    return "justDate"; 
   };
   // console.log(HeroSectionEvent,EventStarted,'targetDatePlusDuration1')
 
