@@ -14,11 +14,10 @@ import "swiper/css/pagination";
 // import { persistor, store } from "@/store";
 import { getServerSession } from "next-auth";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { persistor,store } from "../store";
+import { persistor, store } from "../store";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { ObjectProvider } from "@/Context/ObjectProvider";
-import  { Metadata } from 'next'
-
+import { Metadata } from "next";
 
 export default function App({ Component, pageProps }) {
   // const session = getServerSession();
@@ -34,44 +33,50 @@ export default function App({ Component, pageProps }) {
           content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
         />
         <link rel="icon" href="/logo.svg" sizes="any" />
+
+        {/* Google Site Verification Meta Tag */}
+
+        {/* <meta name="google-site-verification" content="QfE0tb4mBA0BreoYT9u5p9Ttnzmn0RCtjChgeNxupys" /> */}
+
+        {/* Meta tag for Google Search  */}
+        <meta
+          name="description"
+          content="Get direct access to live and on-demand concerts and performances by your favorite artistes and comedians anywhere in the world from the comfort of your devices."
+        />
         <meta
           property="og:description"
           content="Get direct access to live and on-demand concert, performances by your award-winning artistes and comedians anywhere in the world from the comfort of your devices."
         />
-         <meta
+        <meta
           property="og:title"
           content="Get direct access to live and on-demand concert, performances by your award-winning artistes and comedians anywhere in the world from the comfort of your devices."
         />
       </Head>
       <ErrorBoundary>
         <ObjectProvider>
-      <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <GoogleOAuthProvider clientId="845158309668-olf8vmklh4baunlh2m7jb3fnidupl1u2.apps.googleusercontent.com">
-            <ToastContainer
-              className={`z-[9999]`}
-              position="bottom-center"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
+          <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+              <GoogleOAuthProvider clientId="845158309668-olf8vmklh4baunlh2m7jb3fnidupl1u2.apps.googleusercontent.com">
+                <ToastContainer
+                  className={`z-[9999]`}
+                  position="bottom-center"
+                  autoClose={5000}
+                  hideProgressBar={false}
+                  newestOnTop={false}
+                  closeOnClick
+                  rtl={false}
+                  pauseOnFocusLoss
+                  draggable
+                  pauseOnHover
+                />
 
-              // style={{}}
-            />
-            {/* <SessionProvider session={pageProps.session}> */}
+                <NextNProgress />
 
-            <NextNProgress />
-
-            <Component {...pageProps} />
-            {/* </SessionProvider> */}
-          </GoogleOAuthProvider>
-        </PersistGate>
-      </Provider>
-      </ObjectProvider>
+                <Component {...pageProps} />
+              </GoogleOAuthProvider>
+            </PersistGate>
+          </Provider>
+        </ObjectProvider>
       </ErrorBoundary>
     </>
   );
