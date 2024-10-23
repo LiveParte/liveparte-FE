@@ -55,25 +55,25 @@ function Chat({ onLeave, liveStreamDetail }) {
       setSocket(newSocket);
 
       newSocket.on("connect", () => {
-        console.log("Connected to the socket server");
-
+        // console.log("Connected to the socket server");
+// 
         // Automatically join the room when connected
         newSocket.emit("joinRoom", { event: roomId || liveStreamDetail?._id });
 
         newSocket.on("joinRoomSuccess", () => {
-          console.log(`Joined room: ${roomId || liveStreamDetail?._id}`);
+          // console.log(`Joined room: ${roomId || liveStreamDetail?._id}`);
           // handleChatToTheBottom() n;
         });
 
         newSocket.on("previousMessages", (msg) => {
-          console.log("Previous messages: ", msg.chatMessages);
+          // console.log("Previous messages: ", msg.chatMessages);
           setMessages((prevMessages) => [...prevMessages, ...msg.chatMessages]);
           // handleChatToTheBottom()
         });
       });
 
       newSocket.on("disconnect", () => {
-        console.log("Disconnected from the socket server");
+        // console.log("Disconnected from the socket server");
       });
 
       newSocket.on("joinRoom", (col) => {
@@ -82,7 +82,7 @@ function Chat({ onLeave, liveStreamDetail }) {
 
       // Listening for incoming chat messages
       newSocket.on("sendChatMessage", (msg) => {
-        console.log("Received message:", msg);
+        // console.log("Received message:", msg);
         setMessages((prevMessages) => [...prevMessages, msg]); // Add new message to the messages state
       });
       // handleChatToTheBottom()

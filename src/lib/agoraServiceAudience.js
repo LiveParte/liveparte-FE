@@ -7,15 +7,15 @@ let hostUid = null;
 let networkQualityCallback;
 
 export const initializeAgoraClient = (container, setHostDimensions, setNetworkQuality, setStatus) => {
-  console.log(APP_ID,'APP_IDAPP_ID')
+  // console.log(APP_ID,'APP_IDAPP_ID')
   if (typeof window !== 'undefined') {
     client = createClient({ mode: 'live', codec: 'vp8' });
 
     client.on('user-published', async (user, mediaType) => {
-      console.log('user-published:', user.uid, mediaType);
+      // console.log('user-published:', user.uid, mediaType);
       if (!hostUid) {
         hostUid = user.uid;
-        console.log('Host UID set:', hostUid);
+        // console.log('Host UID set:', hostUid);
         setStatus('Host is live');
       } else if (user.uid !== hostUid) {
         return;
@@ -23,7 +23,7 @@ export const initializeAgoraClient = (container, setHostDimensions, setNetworkQu
 
       try {
         await client.subscribe(user, mediaType);
-        console.log('Subscribed to user:', user.uid, mediaType);
+        // console.log('Subscribed to user:', user.uid, mediaType);
         if (mediaType === 'video') {
           let playerContainer = document.getElementById(user.uid.toString());
           if (!playerContainer) {
@@ -39,7 +39,7 @@ export const initializeAgoraClient = (container, setHostDimensions, setNetworkQu
           const settings = videoTrack.getSettings();
           setHostDimensions({ width: settings.width, height: settings.height });
           setStatus('Host is live');
-          console.log('Host is live');
+          // console.log('Host is live');
         }
 
         if (mediaType === 'audio') {
@@ -47,24 +47,24 @@ export const initializeAgoraClient = (container, setHostDimensions, setNetworkQu
         }
 
       } catch (error) {
-        console.error('Failed to subscribe to user:', error);
+        // console.error('Failed to subscribe to user:', error);
       }
     });
 
     client.on('user-unpublished', user => {
-      console.log('user-unpublished:', user.uid);
+      // console.log('user-unpublished:', user.uid);
       if (user.uid === hostUid) {
         const playerContainer = document.getElementById(user.uid);
         if (playerContainer) {
           playerContainer.remove();
         }
         setStatus('Host has stopped publishing');
-        console.log('Host has stopped publishing');
+        // console.log('Host has stopped publishing');
       }
     });
 
     client.on('user-left', user => {
-      console.log('user-left:', user.uid);
+      // console.log('user-left:', user.uid);
       if (user.uid === hostUid) {
         const playerContainer = document.getElementById(user.uid);
         if (playerContainer) {
@@ -72,7 +72,7 @@ export const initializeAgoraClient = (container, setHostDimensions, setNetworkQu
         }
         hostUid = null;
         setStatus('Host has left the stream');
-        console.log('Host has left the stream');
+        // console.log('Host has left the stream');
         if (networkQualityCallback) {
           networkQualityCallback('Host has left the stream');
         }
@@ -103,7 +103,7 @@ export const initializeAgoraClient = (container, setHostDimensions, setNetworkQu
             break;
         }
         setNetworkQuality(quality);
-        console.log('Network quality:', quality);
+        // console.log('Network quality:', quality);
       }
     });
 
@@ -118,16 +118,16 @@ export const joinChannel = async (eventId,token) => {
 
   try {
     await client.join(APP_ID, eventId, token, null);
-    console.log('Joined channel:', eventId);
+    // console.log('Joined channel:', eventId);
   } catch (error) {
-    console.error('Failed to join the channel:', error);
+    // console.error('Failed to join the channel:', error);
   }
 };
 
 export const leaveChannel = async () => {
   if (client) {
     await client.leave();
-    console.log('Left channel');
+    // console.log('Left channel');
     if (hostUid !== null) {
       const playerContainer = document.getElementById(hostUid.toString());
       if (playerContainer) {

@@ -97,7 +97,7 @@ const JoinAudience = ({ eventId, liveStreamDetail }) => {
     try {
       await joinChannel(eventId, token);
       setJoined(true);
-      console.log("Joined channel as audience");
+      // console.log("Joined channel as audience");
     } catch (error) {
       console.error("Failed to join as audience:", error);
     }
@@ -108,7 +108,7 @@ const JoinAudience = ({ eventId, liveStreamDetail }) => {
       await leaveChannel();
       setJoined(false);
       // router.push("/myshows");
-      console.log("Left channel as audience");
+      // console.log("Left channel as audience");
     } catch (error) {
       console.error("Failed to leave the channel:", error);
     }

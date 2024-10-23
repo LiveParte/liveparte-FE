@@ -11,6 +11,6 @@ const currentDate = moment().startOf('day'); // Normalize current date to start 
 
 // Calculate the difference in days
 
-console.log(inputDate.diff(currentDate, 'days'),'inputDate.diff(currentDate')
+// console.log(inputDate.diff(currentDate, 'days'),'inputDate.diff(currentDate')
 return inputDate.diff(currentDate, 'days') >=0?false:true;
 }

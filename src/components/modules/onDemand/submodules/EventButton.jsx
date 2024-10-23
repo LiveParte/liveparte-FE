@@ -71,7 +71,7 @@ export default function EventButton({
     // implementation for  whatever you want to do when the Paystack dialog closed.
   };
 
-  console.log(ticketPrice,'ticketPrice')
+  // console.log(ticketPrice,'ticketPrice')
 
   // console.log(HeroSectionEvent,userData,'HeroSectionEvent')
 

@@ -91,7 +91,7 @@ export default function Hero({
     HeroSectionEvent?.purchase?.id && HeroSectionEvent?.eventStarted;
   // EventStarted;
 
-  console.log(HeroSectionEvent, HappeningNow, "HeroSectionEvent111");
+  // console.log(HeroSectionEvent, HappeningNow, "HeroSectionEvent111");
 
   const buttonAction = () => {
     const ticket =
