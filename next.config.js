@@ -74,6 +74,11 @@ const nextConfig = {
         protocol: 'https',
         hostname:'liveparte-s3-bucket.s3.amazonaws.com',
         pathname: '**',
+      },
+      {
+        pathname:'**',
+        hostname:'avatar.iran.liara.run',
+        protocol: 'https',
       }
     ],
   },

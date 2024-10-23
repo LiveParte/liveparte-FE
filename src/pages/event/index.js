@@ -95,7 +95,7 @@ export default function Home() {
     ? onDemandEvents[randomBetweenOneAndTen(onDemandEvents?.length)]
     : {};
 
-    console.log(onDemandEvents, "happingNowEvents");
+    // console.log(onDemandEvents, "happingNowEvents");
 
 
   // console.log(data,'ArrayLengh')

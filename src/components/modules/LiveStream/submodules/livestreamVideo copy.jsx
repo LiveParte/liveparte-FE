@@ -43,7 +43,7 @@ const JoinAudience = dynamic(() => import("@/components/Agora/JoinAudience"), {
 
      // Video starts playing event
   player.on("play", () => {
-    console.log("Video started playing");
+    // console.log("Video started playing");
     
     // playerRef.current.muted(false);
     // Perform any additional logic when the video starts playing

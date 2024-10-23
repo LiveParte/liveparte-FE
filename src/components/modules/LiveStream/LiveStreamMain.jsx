@@ -28,7 +28,7 @@ function LiveStream({
     !isMobile ? "h-[100dvh]" : "h-[40dvh]"
   } `;
   const IsMobileChat = `lg:hidden flex flex-col lg:rounded-[26px] bg-[#222428] h-[60vh] max-h-[60dvh] lg:mb-3 `;
-  console.log(isMobile, "isMobile");
+  // console.log(isMobile, "isMobile");
   const [isOpenII, setIsOpenII] = useState(false);
   const dispatch = useDispatch();
   const [activeConnection, setActiveConnection] = useState(true);
