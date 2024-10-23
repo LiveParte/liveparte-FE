@@ -363,8 +363,8 @@ export default function EventButton({
           </div>
           <div className="flex items-center   gap-[5px]  ">
             <div className="flex w-[35px] h-[20.13px] relative mb-3  ">
-           <Image src='/svg/Dee.svg' width={20.13} height={20.13}/>
-           <Image src='/svg/Wumpus – 25.svg' width={20.13} height={20.13} className="absolute left-3"/>
+           <Image src='/svg/Dee.svg' alt="dee" width={20.13} height={20.13}/>
+           <Image src='/svg/Wumpus – 25.svg' alt="wumps" width={20.13} height={20.13} className="absolute left-3"/>
            </div>
         
             <p className="text-[#788AA1] text-[13px] text-center ">And Several people already bought ticket</p>
