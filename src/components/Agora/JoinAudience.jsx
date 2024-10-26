@@ -110,7 +110,7 @@ const JoinAudience = ({ eventId, liveStreamDetail }) => {
       // router.push("/myshows");
       // console.log("Left channel as audience");
     } catch (error) {
-      console.error("Failed to leave the channel:", error);
+      // console.error("Failed to leave the channel:", error);
     }
   };
 

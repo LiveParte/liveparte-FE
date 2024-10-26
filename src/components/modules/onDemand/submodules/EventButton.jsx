@@ -384,6 +384,8 @@ export default function EventButton({
     }
   }
 
+  // console.log(buttonAction(),'buttonAction()')
+
   return (
     HeroSectionEvent?._id && (
       <div ref={dropdownRef}>

@@ -49,7 +49,7 @@ const Earning = () => {
             </div>
             <div>
                 <h1 className='text-center mt-28 font-mdtest md:text-[62px] text-[32px] md:leading-[62px] leading-[32px] font-bold uppercase tracking-[0.48px] md:w-[45%] w-[90%] mx-auto'>See how much you can earn on liveparte</h1>
-                <div className='flex md:flex-row flex-col md:w-[70%] w-[90%] mt-14 mx-auto gap-6'>
+                <div className='flex md:flex-row flex-col md:w-[70%] w-[90%] mt-14 mx-auto gap-6 justify-center'>
                     <div className='bg-grey.300 md:w-[378px] p-6 h-[428px] rounded-[12px]'>
                         <h1 className='text-center font-mdtest font-bold text-[52px] leading-[52px] tracking-[0.48px]'>{thousand(rangeValue)}</h1>
                         <p className='text-center text-[14px] leading-[16.8px] tracking-[-0.12px] text-[#63768D] mt-2'>Fans</p>
