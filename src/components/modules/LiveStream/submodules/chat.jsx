@@ -267,12 +267,12 @@ function Chat({ onLeave, liveStreamDetail }) {
     { label: "Option 3", href: "#" },
   ];
 
-  console.log(
-    showComment,
-    // liveStreamDetail,userData,
-    messages,
-    "liveStreamDetail"
-  );
+  // console.log(
+  //   showComment,
+  //   // liveStreamDetail,userData,
+  //   messages,
+  //   "liveStreamDetail"
+  // );
 
   return (
     <div className="flex flex-col  lg:px-[0px]   h-full lg:h-full  w-full lg:w-[356px] relative  rounded-sm flex-1  ">

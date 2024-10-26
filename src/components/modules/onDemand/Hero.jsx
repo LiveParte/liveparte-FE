@@ -111,9 +111,9 @@ export default function Hero({
       }
 
       if (HeroSectionEvent?.purchase?.id && !EventStarted) {
-        if (ticket?.price === 0 && !EventStarted) {
-          return "FreeTicket";
-        }
+        // if (ticket?.price === 0 && !EventStarted) {
+        //   return "FreeTicket";
+        // }
         return "isPaidAndEventNotLIve";
       }
     } else {

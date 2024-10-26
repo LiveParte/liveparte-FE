@@ -1,8 +1,6 @@
 // import Footer from "@/components/Common/Footer";
 import NoAuth from "@/components/Layout/NoAuth";
 import dynamic from 'next/dynamic'
-// import DropDown from '@/components/Ui/DropDown'
-import MyModal from "@/components/Ui/Modal";
 import EventDetails from "@/components/modules/EventDetails";
 import React, {  useState } from "react";
 const Hero = dynamic(() => import('@/components/modules/onDemand/Hero'), {
@@ -17,8 +15,6 @@ import { useDispatch, useStore } from "react-redux";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import { selectCurrentUserData, selectEvent } from "@/store/User";
-import { CloseIcon } from "../../../public/svg";
-import CountDown from "@/components/Common/Coundown";
 import { isArray } from "@/utils/helper";
 import Footer from "../entertainers/Footer";
 
@@ -27,7 +23,6 @@ export default function EventId() {
   
   // const { event, setEvent } = useStore();
 
-  const [userDetail, setUserDetail] = useState(true);
   const userInfo = useSelector(selectCurrentUserData) || {};
   const shows = useSelector(selectEvent) || {};
 
@@ -78,14 +73,6 @@ export default function EventId() {
  
   return (
     <NoAuth>
-      {/* <MyModal
-      isOpen={userDetail}
-      containerStyle={`!w-[543px]`}
-      closeModal={()=>setUserDetail(false)}
-      bodyComponent={<CountDown/>
-     }
-      /> */}
-     
       <Hero
         HeroSectionEvent={eventsData}
         openModalLoginSignUp={openModalLoginSignUp}

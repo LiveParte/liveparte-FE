@@ -25,6 +25,11 @@ const AppVideo = ({ liveStreamDetail }) => {
     duration,
   } = useObject();
 
+  const handlePlay = (e) => {
+    // playerRef.current?.getInternalPlayer().play();
+    playerRef.current.seekTo(parseFloat(e.target.value));
+  };
+
   return (
     <div className="flex-1 h-full w-full flex justify-center items-center videoplayer relative">
       <ReactPlayer
@@ -55,8 +60,11 @@ const AppVideo = ({ liveStreamDetail }) => {
           },
         }}
       />
-      {isMuted && (
-        <div className="absolute left-0 right-0 top-0 bottom-0 text-[24px]  flex justify-center items-center " onClick={toggleMute}>
+      {isMuted||!playerRef?.current?.player?.isPlaying && (
+        <div className="absolute left-0 right-0 top-0 bottom-0 text-[24px]  flex justify-center items-center " onClick={()=>{
+          toggleMute();
+          // handlePlay()
+        }}>
           <div className="relative text-white py-[16px] px-[32px] flex gap-[16px] rounded-[30px] justify-center items-center bg-[#333D4780] cursor-pointer z-50 font500">
             <VideoIsMute />
             <span>Unmute</span>
