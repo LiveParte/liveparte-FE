@@ -33,7 +33,7 @@ function LiveStreamVideo({
     playerRef.current = player;
 
     player.on("play", () => {
-      console.log("Video started playing");
+      // console.log("Video started playing");
     });
 
     player.on("loadedmetadata", () => {
@@ -66,11 +66,11 @@ function LiveStreamVideo({
     player.on("timeupdate", saveCurrentTime);
 
     player.on("waiting", () => {
-      console.log("Player is waiting");
+      // console.log("Player is waiting");
     });
 
     player.on("dispose", () => {
-      console.log("Player will dispose");
+      // console.log("Player will dispose");
     });
 
     isPlayingRef.current = player.paused();

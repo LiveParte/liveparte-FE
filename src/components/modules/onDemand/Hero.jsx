@@ -91,7 +91,7 @@ export default function Hero({
     HeroSectionEvent?.purchase?.id && HeroSectionEvent?.eventStarted;
   // EventStarted;
 
-  console.log(HeroSectionEvent, HappeningNow, "HeroSectionEvent111");
+  // console.log(HeroSectionEvent, HappeningNow, "HeroSectionEvent111");
 
   const buttonAction = () => {
     const ticket =
@@ -111,9 +111,9 @@ export default function Hero({
       }
 
       if (HeroSectionEvent?.purchase?.id && !EventStarted) {
-        if (ticket?.price === 0 && !EventStarted) {
-          return "FreeTicket";
-        }
+        // if (ticket?.price === 0 && !EventStarted) {
+        //   return "FreeTicket";
+        // }
         return "isPaidAndEventNotLIve";
       }
     } else {

@@ -129,7 +129,7 @@ function ChatOnCameraAndVideoControl({
               <div className="px-[16px] flex items-center gap-[32px] mt-[23px] justify-center">
                 {/* Play/Pause Button */}
                 <button onClick={togglePlayPause}>
-                  {isPlaying ? <VideoPauseIcon /> : <VideoPlayIcon />}
+                  {playerRef?.current?.player?.isPlaying  ? <VideoPauseIcon /> : <VideoPlayIcon />}
                 </button>
                 {/* Mute/Unmute Button */}
                 <button onClick={toggleMute}>

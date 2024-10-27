@@ -212,7 +212,7 @@ export async function getServerSideProps() {
   // Fetch user location from the API
   const locationRes = await fetch('https://ipapi.co/json/');
   const userLocation = await locationRes.json();
-  console.log(userLocation, 'userLocation from getServerSideProps'); // Log the user location data
+  // console.log(userLocation, 'userLocation from getServerSideProps'); // Log the user location data
   return {
     props: {
       userLocation, // Pass the user location data

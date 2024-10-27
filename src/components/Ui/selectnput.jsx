@@ -15,7 +15,7 @@ export const FloatingLabelSelect = ({
   placeholder
 }) => {
   const [isFocused, setIsFocused] = useState(false);
-    console.log(value,'valuevaluevalue')
+    // console.log(value,'valuevaluevalue')
   return (
     <div className="relative">
       <div className="relative bg-[#222428] rounded-[8px] cursor-pointer">
