@@ -32,7 +32,7 @@ export const FloatingLabelSelect = ({
             setIsFocused(false);
             onBlur && onBlur(e);
           }}
-          className={`block flex-1 rounded-[8px] z-10 px-[16px] pb-2.5 pt-[25px] w-full text-[13px] focus:border-[1px] border-[0px] appearance-none dark:text-white focus:outline-none focus:ring-0 focus:border-[#63768D] peer h-[50px] relative bg-transparent ${
+          className={`block flex-1 rounded-[8px] z-10 px-[16px] pb-1.5 pt-[25px] w-full text-[13px] focus:border-[1px] border-[0px] appearance-none dark:text-white focus:outline-none focus:ring-0 focus:border-[#63768D] peer h-[50px] relative bg-transparent ${
             disabled ? "cursor-not-allowed !text-[#63768D]" : "text-white"
           }`}
           // style={{ paddingTop: '10px' }}
