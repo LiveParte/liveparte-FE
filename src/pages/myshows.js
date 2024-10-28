@@ -1,5 +1,5 @@
 import dynamic from "next/dynamic";
-import Footer from "@/components/Common/Footer";
+// import Footer from "@/components/Common/Footer";
 import { useUserShowsQuery } from "@/store/Event/eventApi";
 import { selectCurrentUserData } from "@/store/User";
 import React, { useEffect, useState } from "react";
@@ -9,6 +9,7 @@ import { separateEventsByDate } from "@/utils/helper";
 import MyModal from "@/components/Ui/Modal";
 import CountDown from "@/components/Common/Coundown";
 import { useRouter } from "next/router";
+import Footer from "./entertainers/Footer";
 // import OnDemand from "@/components/modules/MyShow/onDemand";
 const OnDemand = dynamic(() => import("@/components/modules/MyShow/onDemand"), {
   ssr: false,
@@ -87,7 +88,7 @@ export default function MyShows() {
             isActive={isActive}
           />
         )}
-        <div className="absolute bottom-0 left-0 right-0">
+        <div className="">
           <Footer />
         </div>
       </div>

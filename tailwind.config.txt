@@ -57,9 +57,6 @@ module.exports = {
         //1100
         // => @media (min-height: 800px) { ... }
       },
-      maxWidth: {
-        container: "1400px",
-      },
       fontFamily: {
         mattersq: "Matter SQ Regular",
         mdtest: ["MD Nichrome Test, sans-serif;"]

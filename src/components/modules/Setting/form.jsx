@@ -87,7 +87,7 @@ export default function SettingForm({
     // data.append("cloud_name", "dnvwcmqhw");
     try {
       const result = await uploadFile(photo, "profile-image");
-      console.log("File uploaded successfully:", result?.Location);
+      // console.log("File uploaded successfully:", result?.Location);
 
       setImageUrl(result?.Location);
 

@@ -46,6 +46,7 @@ export default function AuthHeader({
   const purchaseCoinRef = useRef(null);
   const isMyShow = router?.pathname == myShowLink;
   const isOnDemand = router?.pathname == onDemandLink;
+  const isEntertainer =router?.pathname ==entertainersLink;
   const isEvent =
     router?.pathname === "/event" || router?.pathname == "/event/[id]";
   const isFocused = `hover:!bg-[#FFFFFF26] hover:rounded-[8px]  hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`;
@@ -209,7 +210,7 @@ export default function AuthHeader({
               <ButtonComp
                 btnText="For Entertainers"
                 className={`  text-[13px]   !h-[32px] font-medium  hidden lg:block    gap-[10px]    font500 text-white  ${isFocused} ${
-                  isMyShow ? isSelected : "bg-transparent px-[16px]"
+                  isEntertainer ? isSelected : "bg-transparent px-[16px]"
                 }`}
                 onClick={() => router.push(entertainersLink)}
               />

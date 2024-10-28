@@ -37,7 +37,7 @@ const Faq = () => {
             <div className='flex lg:flex-row flex-col-reverse'>
                 <div className='lg:w-[40%] h-auto'>
                     <h1 className='font-mdtest uppercase lg:block hidden font-bold lg:leading-[62px] text-[32px] leading-[32px] lg:text-[62px] tracking-[0.48px]'>Frequently asked questions</h1>
-                    <div className='bg-grey.300 lg:mt-16 mt-10 lg:w-[378px] h-[161px] rounded-[12px] p-6'>
+                    <div className='bg-grey.300 lg:mt-16 mt-10 xl:w-[378px] h-[161px] rounded-[12px] p-6'>
                         <h1 className='font-mattersq font-medium text-[14px] leading-[16.8px] tracking-[-0.12px] text-grey.200'>Still have questions?</h1>
                         <p className='font-mattersq font-medium text-[14px] leading-[16.8px] mt-2 tracking-[-0.12px] text-grey.200'><span className='text-green.400 underline'>Contact us!</span> We’ll be happy to help you</p>
                         <button className='text-black.100 text-[13px] bg-white.200 mt-3 h-[44px] rounded-[8px] font-mattersq font-medium tracking-[-0.12px] px-3'>View all Frequently Asked Questions</button>
