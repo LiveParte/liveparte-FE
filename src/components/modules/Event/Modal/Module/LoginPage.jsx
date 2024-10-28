@@ -53,10 +53,10 @@ export default function LoginPage({
         })
         .catch((error) => {
           setUser();
-          console.error(
-            "There has been a problem with your fetch operation:",
-            error
-          );
+          // console.error(
+          //   "There has been a problem with your fetch operation:",
+          //   error
+          // );
         });
     }
   }, [user]);

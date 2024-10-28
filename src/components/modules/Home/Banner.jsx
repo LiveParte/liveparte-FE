@@ -5,7 +5,7 @@ import bannerMobile from "../../../../public/images/Subtract.webp";
 
 const Banner = () => {
   return (
-    <div className="w-[95%] mx-auto pt-20">
+    <div className="w-[95%] mx-auto pt-24">
       <div className="relative">
         <Image
           className="w-full lg:h-[662px] h-[524px] hidden md:block"
