@@ -38,7 +38,7 @@ export default function GiftTicket({ closeModal, Data, show }) {
     },
   });
 
-  console.log(Data,'liveStreamDetailliveStreamDetail')
+  // console.log(Data,'liveStreamDetailliveStreamDetail')
   const userData = useSelector(selectCurrentUserData) || {};
   const location =userData?.countryInfo?.code==="NG"?'NGN':'USD';
   const checkIfNNigeria = userData?.countryInfo?.code === "NG" ? true : false;

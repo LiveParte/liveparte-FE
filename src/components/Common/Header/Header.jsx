@@ -4,6 +4,7 @@ import Link from "next/link";
 import ButtonComp from "@/components/Ui/button";
 import { HeaderOnSelect, LogoImage, MainContainer } from "@/utils/styleReuse";
 import {
+  entertainersLink,
   eventLink,
   myShowLink,
   onDemandLink,
@@ -21,6 +22,8 @@ export default function Header({ className, openModal }) {
   const isEvent =
     router?.pathname === eventLink || router?.pathname == singleEventLink;
   const isOnDemand = router?.pathname === onDemandLink;
+  const isEntertainer = router?.pathname === entertainersLink;
+
   const isFocused = `hover:!bg-[#FFFFFF26] hover:rounded-[8px]  hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`;
   const isSelected = HeaderOnSelect;
   const handleCheckIfITHome = (link) => {
@@ -41,7 +44,7 @@ export default function Header({ className, openModal }) {
 
   const MenuDropdown = () => {
     return (
-      <div className=" left-0 right-0 top-0 bottom-0 z-[99]   overflow-hidden  flex flex-col fixed  lg:hidden ">
+      <div className=" left-0 right-0 top-0 bottom-0 z-[99]   overflow-hidden  flex flex-col fixed  lg:hidden  backdrop-blur-[15px] ">
         <div className="bg-[#1B1C20E5] navbar-background px-[24px] py-[14px] lg:py-[30px] rounded-b-[12px]">
           <div className="flex justify-between items-center mb-[28px] ">
             <div className="text-white">
@@ -53,7 +56,7 @@ export default function Header({ className, openModal }) {
             <div>
               <ButtonComp
                 btnText={`Close`}
-                className={`px-[24px] !h-[30px] text-[13px] font500 md:h-fit border-[#262C32] border-[1px] !bg-[#25272d] !text-white !rounded-full`}
+                className={`px-[12px] !h-[27px]  text-[11px] font500 md:h-fit border-[#262C32] rounded-[999px] border-[1px] !bg-[#25272d] !text-white buttonClose`}
                 onClick={() => {
                   setDropDown(false);
                   // handlePreventScroll(false);
@@ -69,6 +72,7 @@ export default function Header({ className, openModal }) {
             >
               Browse Events
             </Link>
+            
             <Link
               onClick={() => handleCheckIfITHome(onDemandLink)}
               href={onDemandLink}
@@ -115,10 +119,10 @@ export default function Header({ className, openModal }) {
           <LogoImage router={router} />
           {/* <LogoImage router={router}/> */}
 
-          <div className="flex items-center gap-[24px]">
+          <div className="flex items-center justify-between lg:gap-[24px]">
             <ButtonComp
               btnText="Browse Events"
-              className={` font-medium  hidden lg:block  px-[16px] md:px-[32px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${
+              className={` font-medium  hidden lg:block  px-[16px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${
                 isEvent && isSelected
               }  text-[13px]   !h-[32px]`}
               onClick={() => {
@@ -127,13 +131,25 @@ export default function Header({ className, openModal }) {
             />
             <ButtonComp
               btnText="On Demand"
-              className={` font-medium  hidden lg:block !py-11px] !px-[32px] gap-[10px] !bg-transparent    font500 text-white ${isFocused}   text-[13px] ${
+              className={` font-medium  hidden lg:block !py-[11px]  gap-[10px] !bg-transparent   font500 text-white ${isFocused}   text-[13px] ${
                 isOnDemand && isSelected
               }  !h-[32px]`}
               onClick={() => {
                 router.push(onDemandLink);
               }}
             />
+            <ButtonComp
+              btnText="For Entertainers"
+              className={` font-medium  hidden lg:block !py-[11px]  gap-[10px] !bg-transparent    font500 text-white ${isFocused}   text-[13px] ${
+                isEntertainer && isSelected
+              }  !h-[32px]`}
+              onClick={() => {
+                router.push(entertainersLink);
+              }}
+            />
+            {/* <Link href="/entertainers" className={`font-mattersq font-semibold text-[15px] leading-[14px] tracking-[-0.12px] ${isActive('/entertainers') ? 'text-red.300' : ''}`}>
+                        <div className='font-mattersq font-semibold text-[15px] leading-[14px] tracking-[-0.12px]'>For Entertainers</div>
+                    </Link> */}
           </div>
           <div>
             <div className="hidden lg:flex  gap-x-[40px] items-center">
@@ -145,7 +161,7 @@ export default function Header({ className, openModal }) {
               <ButtonComp
                 onClick={() => openModal("SignUp")}
                 btnText="Sign Up"
-                className="text-[13px] font-medium font500 px-[40px] py-[12px]"
+                className="text-[13px] font-medium font500 px-[40px] py-[12px] text-black"
               />
             </div>
             <ButtonComp

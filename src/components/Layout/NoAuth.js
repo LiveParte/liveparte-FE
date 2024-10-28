@@ -5,6 +5,7 @@ import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetUserProfileQuery, useUpdateUserLocationMutation } from "@/store/User/userApi";
 import { useObject } from "@/Context/ObjectProvider";
+import ContainerLayout from "./containerLayout";
 
 function NoAuth({ children }) {
   const router = useRouter();
@@ -37,10 +38,12 @@ function NoAuth({ children }) {
 
   return (
     <div className="min-h-[100vh] bg-[#000000] flex flex-col justify-end relative">
+      {/* <ContainerLayout> */}
       <div className="absolute left-0 right-0 z-50 top-0">
         <IfHeaderIsAuth />
       </div>
       {children}
+      {/* </ContainerLayout> */}
     </div>
   );
 }

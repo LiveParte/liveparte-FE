@@ -16,9 +16,12 @@ export const ObjectProvider = ({ children }) => {
   const progressRef = useRef(null); // Reference for the progress bar
   const [isDragging, setIsDragging] = useState(false); // Track dragging state
 
+
+  // console.log(playerRef,'playerRef')
+
   // Automatically unmute after a delay when autoplay works, only once
   useEffect(() => {
-    if (isMuted && !hasUnmutedAutomatically) {
+    if (isMuted && !hasUnmutedAutomatically||!playerRef?.current?.player?.isPlaying) {
       const timer = setTimeout(() => {
         setIsMuted(false);
         if (playerRef.current) {
