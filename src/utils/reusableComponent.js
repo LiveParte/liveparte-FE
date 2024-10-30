@@ -217,7 +217,7 @@ export function GetEmailSearchUrl(email) {
 
   // For other email providers, return a generic URL
   // You might need to update this to match the search functionality of other email providers
-  return `https://www.example.com/search?email=${email}&q=${searchQuery}`;
+  return `https://mail.google.com/mail/u/0/`;
 }
 
 export const isJSON = (str) => {

@@ -10,9 +10,13 @@ import linkedin from "../../../public/svgs/linkedin.svg";
 import twitter from "../../../public/svgs/x.svg";
 
 const Footer = () => {
+  const handleEmailClick = () => {
+    window.location.href = "mailto:support@liveparte.com?subject=Support&body=This%20is%20a%20message";
+  };
+
   const [toggle, setToggle] = useState(true);
   return (
-    <div className="!text-white">
+    <div className="!text-white bg-[#060809]">
       <div className="w-[90%] mx-auto lg:mt-[1rem]4 mt-16 lg:grid lg:grid-cols-4 flex flex-col-reverse lg:ml-44 mb-5">
         <div className="flex lg:flex-col lg:justify-start justify-between lg:items-start items-center lg:mt-0 mt-10">
           <div>
@@ -63,7 +67,7 @@ const Footer = () => {
             <>
               <div className="mt-[1rem]">
                 <Link
-                  href="/"
+                  href="/about"
                   className="font-mattersq font-medium text-base leading-[19.2px] tracking-[-0.12px] text-white no-underline"
                 >
                   About Us
@@ -79,7 +83,7 @@ const Footer = () => {
               </div>
               <div className="mt-[1rem]">
                 <Link
-                  href="https://studio-staging.liveparte.com/"
+                  href="/entertainers"
                   className="font-mattersq font-medium text-base leading-[19.2px] tracking-[-0.12px] text-white no-underline"
                 >
                   Studio
@@ -123,12 +127,13 @@ const Footer = () => {
                 </Link>
               </div>
               <div className="mt-[1rem]">
-                <Link
-                  href="/"
+                <button
+                onClick={handleEmailClick}
+                  // href="/"
                   className="font-mattersq font-medium text-base leading-[19.2px] tracking-[-0.12px] text-white no-underline"
                 >
                   Email us
-                </Link>
+                </button>
               </div>
               <div className="mt-[1rem]">
                 <Link
@@ -176,7 +181,7 @@ const Footer = () => {
               </div>
               <div className="mt-[1rem]">
                 <Link
-                  href="/privacy"
+                  href="/"
                   className="font-mattersq font-medium text-base leading-[19.2px] tracking-[-0.12px] text-white no-underline"
                 >
                   Purchase Policy

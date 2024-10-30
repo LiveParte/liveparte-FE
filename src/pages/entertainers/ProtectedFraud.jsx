@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 import lock from "../../../public/images/lock.png";
+import Link from "next/link";
 
 export default function ProtectedFraud() {
   return (
@@ -14,15 +15,15 @@ export default function ProtectedFraud() {
             <div className="flex-1 p-[56px]  w-[95%]">
               <div className="flex-1 items-center ">
                 <div className="">
-                  <h1 className="font-mdtest md:text-[62px] md:pl-0 pl-4 text-[42px] md:leading-[62px] leading-[42px] tracking-[0.48px] font-bold">
+                  <h1 className="font-mdtest md:text-[55px] md:pl-0 pl-4 text-[42px] md:leading-[62px] leading-[42px] tracking-[0.48px] font-bold">
                     YOU’RE PROTECTED AGAINST FRAUD
                   </h1>
-                  <p className="font-mattersq md:text-base text-[13px] md:pl-0 pl-4 font-[400] leading-[19.2px] tracking-[-0.12px] w-[90%] mt-4">
+                  <p className="font-mattersq md:text-base text-[13px] md:pl-0 pl-4 font-[400] leading-[19.2px] tracking-[-0.12px] w-[90%] mt-[16px]">
                     All live events are securely protected to reduce stream
                     fraud and account sharing, ensuring that only paying fans
                     get access.
                   </p>
-                  <div className="flex items-center gap-3 md:mt-7 mt-5 md:pl-0 pl-4">
+                  <div className="flex items-center gap-3 md:mt-[32px] mt-5 md:pl-0 pl-4">
                     <div className="bg-[#FE4365] w-[32px] h-[32px] rounded-full flex justify-center items-center">
                       <svg
                         width="16"
@@ -48,10 +49,10 @@ export default function ProtectedFraud() {
                         />
                       </svg>
                     </div>
-                    <p className="text-[13px] md:text-base">One device login</p>
+                    <p className="text-[13px] md:text-base mb-0">One device login</p>
                   </div>
                   <div className="flex gap-3 items-center md:mt-5 mt-4 md:pl-0 pl-4">
-                    <div className="bg-[#FE4365] w-[32px] h-[32px] flex justify-center items-center rounded-full">
+                    <div className="bg-[#FE4365] w-[32px] h-[32px] flex justify-center items-center rounded-full mb-0">
                       <svg
                         width="16"
                         height="16"
@@ -67,15 +68,15 @@ export default function ProtectedFraud() {
                         />
                       </svg>
                     </div>
-                    <p className="text-[13px] md:text-base">
+                    <p className="text-[13px] md:text-base !mb-0">
                       No screen recording
                     </p>
                   </div>
                 </div>
                 <div className="flex gap-8 = md:mt-6 pb-4 items-center font-mattersq text-[15px] font-semibold">
-                  <button className="text-black.100 text-[13px] md:w-auto w-full bg-white.200 px-4 rounded-[8px] md:py-4 py-3">
+                  <Link href={'/https://studio-staging.liveparte.com/signup'} className="text-black.100 text-[13px] md:w-auto w-full bg-white.200 px-4 rounded-[8px] md:py-4 py-3 no-underline" >
                     Create An Account
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -151,7 +152,7 @@ export default function ProtectedFraud() {
                       />
                     </svg>
                   </div>
-                  <p className="text-[13px] md:text-base">One device login</p>
+                  <p className="text-[13px] md:text-base mb-0">One device login</p>
                 </div>
                 <div className="flex gap-3 items-center md:mt-5 mt-4 md:pl-0 pl-4">
                   <div className="bg-[#FE4365] w-[32px] h-[32px] flex justify-center items-center rounded-full">
@@ -170,13 +171,13 @@ export default function ProtectedFraud() {
                       />
                     </svg>
                   </div>
-                  <p className="text-[13px] md:text-base">
+                  <p className="text-[13px] md:text-base mb-0">
                     No screen recording
                   </p>
                 </div>
               </div>
               <div className="flex gap-8 = md:mt-6 pb-4 items-center font-mattersq text-[15px] font-semibold">
-                <button className="text-black.100 text-[13px] md:w-auto w-full bg-white.200 px-4 rounded-[8px] md:py-4 py-3 mt-[48px]">
+                <button className="text-black.100 text-[13px] md:w-auto w-full bg-white.200 px-4 rounded-[8px] md:py-4 py-3 mt-[48px] !no-underline">
                   Create An Account
                 </button>
               </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { HeaderOnSelect, IsHover, MainContainer } from "@/utils/styleReuse";
+import { HeaderOnSelect, HeaderOnSelectShows, IsHover, MainContainer } from "@/utils/styleReuse";
 import { useRouter } from "next/router";
 
 const Header = React.memo(
@@ -37,7 +37,7 @@ const Header = React.memo(
                 }}
                 className={`text-[14px]  font500 cursor-pointer px-[15px] md:px-[25px] customScrollVertical  flex justify-center items-center leading-none  text-nowrap lg:px-[32px] h-[36px] ${
                   isActive === item?.name
-                    ? ` rounded-[8px]  ${HeaderOnSelect} ]`
+                    ? ` rounded-[8px]  ${HeaderOnSelectShows}`
                     : ""
                 }  ${IsHover}`}
               >
@@ -60,7 +60,7 @@ const Header = React.memo(
                 }}
                 className={`lg:px-[32px] px-[18px]  !h-[38px] flex justify-center items-center rounded-[8px]  customScrollVertical ${
                   isActive === item?.name
-                    ? `${HeaderOnSelect} `
+                    ? `${HeaderOnSelectShows} `
                     : ""
                 } text-[18px] font500 cursor-pointer text-nowrap  ${IsHover}`}
               >

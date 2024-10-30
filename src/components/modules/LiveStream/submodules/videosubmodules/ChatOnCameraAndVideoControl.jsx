@@ -43,6 +43,7 @@ function ChatOnCameraAndVideoControl({
     isDragging,
     handleProgress,
     handleDuration,
+    isUserPause,
     formatTime, playedSeconds,
     duration, handleMouseDown,
     handleMouseUp,
@@ -128,7 +129,10 @@ function ChatOnCameraAndVideoControl({
               </div>
               <div className="px-[16px] flex items-center gap-[32px] mt-[23px] justify-center">
                 {/* Play/Pause Button */}
-                <button onClick={togglePlayPause}>
+                <button onClick={()=>{
+                  togglePlayPause();
+                  isUserPause(false)
+                }}>
                   {playerRef?.current?.player?.isPlaying  ? <VideoPauseIcon /> : <VideoPlayIcon />}
                 </button>
                 {/* Mute/Unmute Button */}

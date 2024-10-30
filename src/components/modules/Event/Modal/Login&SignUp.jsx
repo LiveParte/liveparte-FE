@@ -128,9 +128,9 @@ export default function LoginSignUp({
       }
 
       if (response?.error?.data?.message === "Username is already in use") {
-        return setError2("email", {
+        return setError2("fullName", {
           type: "custom",
-          message: "Email is already in use",
+          message: response?.error?.data?.message,
         });
       }
 
