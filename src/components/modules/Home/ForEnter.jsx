@@ -1,10 +1,12 @@
 import Image from "next/image";
 import React from "react";
 import union from "../../../../public/webp/forenter.webp";
+import { useRouter } from "next/router";
 // import 
 
 export default function ForEnter() {
-  return (
+  const route = useRouter();
+    return (
     <>
     {/* <div className="relative lg:w-[85%] w-[90%] mx-auto mt-28">
       <div className="w-full h-full relative lg:bg-[#060809] bg-grey.300 lg:p-0 p-4 rounded-[30px]">
@@ -227,7 +229,9 @@ export default function ForEnter() {
                   </p>
                 </div>
                 </div>
-                <button className="text-black.100 text-[13px] lg:w-[160.29px] w-full bg-white.200   h-[44px] rounded-[8px] font-mattersq font-medium tracking-[-0.12px]">
+                <button target='_blank' onClick={()=>{
+                  route.push('https://studio-staging.liveparte.com/signup')
+                }} className="text-black.100 text-[13px] lg:w-[160.29px] w-full bg-white.200   h-[44px] rounded-[8px] font-mattersq font-medium tracking-[-0.12px] no-underline">
                 Go Live
               </button>
                 <div>

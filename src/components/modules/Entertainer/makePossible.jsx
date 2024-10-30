@@ -6,6 +6,7 @@ import os from "../../../../public/svgs/os.svg";
 import of from "../../../../public/svgs/of.svg";
 import oc from "../../../../public/svgs/oc.svg";
 import coc from "../../../../public/svgs/coc.svg";
+import Link from "next/link";
 // import hjhf from '../../../../'
 export default function MakePossible() {
   return (
@@ -162,9 +163,9 @@ export default function MakePossible() {
                   </p>
                 </div>
               </div>
-              <button className="text-black.100 text-[13px] lg:w-[160.29px] w-full bg-white.200 lg:mt-12 mt-8 h-[44px] rounded-[8px] font-mattersq font-medium tracking-[-0.12px]">
+              <Link target='_blank' href={'https://studio-staging.liveparte.com/signup'} className="text-black.100 text-[13px] lg:w-[160.29px] w-full bg-white.200 lg:mt-12 mt-8 h-[44px] rounded-[8px] font-mattersq font-medium tracking-[-0.12px] underline">
                 Go Live
-              </button>
+              </Link>
             </div>
           </div>
         </div>

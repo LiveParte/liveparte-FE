@@ -15,7 +15,7 @@ import ForEnter from "@/components/modules/Home/ForEnter";
 
 const Entertainer = () => {
   return (
-    <div className="min-h-[100vh] bg-black over text-white">
+    <div className="min-h-[100vh] bg-[#060809] over text-white">
       {/* <ButtonComp> */}
       <NoAuth>
       <EntertainerBanner />

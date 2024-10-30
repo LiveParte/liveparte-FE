@@ -6,6 +6,8 @@ export const MainContainer = `px-[20px] md:px-[40px] lg:px-[80px] xl:[120px]`;
 export const MainContainerLivestream = `px-[0px] lg:px-[40px] lg:px-[80px] xl:[120px]`;
 
 export const HeaderOnSelect = `rounded-[8px]  border-[0px] font500 backdrop-blur-[60px] element !bg-[#BACFF70A] hover:!px-[16px]`;
+export const HeaderOnSelectShows = `rounded-[8px]  border-[0px] font500 backdrop-blur-[60px] element !bg-[#BACFF70A] `;
+
 export const IsHover = `hover:!bg-[#BACFF70A] hover:rounded-[8px]  hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`;
 ("px-[20px] md:px-[40px] lg:px-[120px] ");
 

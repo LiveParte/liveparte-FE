@@ -13,9 +13,12 @@ import Footer from "./entertainers/Footer";
 // import OnDemand from "@/components/modules/MyShow/onDemand";
 const OnDemand = dynamic(() => import("@/components/modules/MyShow/onDemand"), {
   ssr: false,
+  // loading:<div className="h-[80vh] bg-black"></div>
 });
 const Shows = dynamic(() => import("@/components/modules/MyShow/Shows"), {
   ssr: false,
+  // loading:<div className="h-[80vh] bg-black"></div>,
+  // loader:<div className="h-[80vh]"></div>
 });
 const Header = dynamic(() => import("@/components/modules/MyShow/Header"), {
   ssr: false,
@@ -74,6 +77,7 @@ export default function MyShows() {
           // setIsActive={setIsActive}
           title="My Shows"
         />
+        {isLoading&&<div className="bg-[#060809] h-[80vh]"/>}
         {isActive === "On Demand" && (
           <OnDemand
             Data={separateEventsByDate(userShows?.event)?.oldEvents}

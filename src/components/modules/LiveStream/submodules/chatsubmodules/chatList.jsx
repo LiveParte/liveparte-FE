@@ -6,8 +6,9 @@ export const ChatList = ({ message, userName,avatar }) => {
         <Avatar
          width={30}
          height={30}
-         className="object-cover w-[20px] h-[20px] lg:h-[30px] md:w-[30px] rounded-full"
+         className="object-cover !w-[20px] !h-[20px] md:!h-[30px]  md:!w-[30px] rounded-full"
          alt="profile-image-user"
+         src={avatar}
         />
        
         <div>

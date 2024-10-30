@@ -8,6 +8,7 @@ export const ObjectProvider = ({ children }) => {
   const [liveStreamShow, setLiveStreamShow] = useState(null);
   const [routerLoader, setRouterLoader] = useState(null);
   const [isPlaying, setIsPlaying] = useState(true); // Start in playing state
+  const [userPause,isUserPause]=useState(true);
   const [isMuted, setIsMuted] = useState(true); // Start muted to allow autoplay
   const [hasUnmutedAutomatically, setHasUnmutedAutomatically] = useState(false); // Track if video has been unmuted automatically
   const [duration, setDuration] = useState(0); // Total video duration
@@ -16,24 +17,27 @@ export const ObjectProvider = ({ children }) => {
   const progressRef = useRef(null); // Reference for the progress bar
   const [isDragging, setIsDragging] = useState(false); // Track dragging state
 
+  
+
 
   // console.log(playerRef,'playerRef')
 
   // Automatically unmute after a delay when autoplay works, only once
-  useEffect(() => {
-    if (isMuted && !hasUnmutedAutomatically||!playerRef?.current?.player?.isPlaying) {
-      const timer = setTimeout(() => {
-        setIsMuted(false);
-        if (playerRef.current) {
-          setIsPlaying(true);
-          setIsMuted(false);
-        }
-        setHasUnmutedAutomatically(true); // Mark that the video has been unmuted automatically
-      }, 1000); // 1 second delay before unmuting
+  // useEffect(() => {
+  //   if (!playerRef?.current?.player?.isPlaying) {
+  //     const timer = setTimeout(() => {
+  //       setIsMuted(false);
+        
+  //       if (playerRef.current ) {
+  //         setIsPlaying(true);
+  //         setIsMuted(false);
+  //       }
+  //       // setHasUnmutedAutomatically(true); // Mark that the video has been unmuted automatically
+  //     }, 1000); // 1 second delay before unmuting
 
-      return () => clearTimeout(timer); // Cleanup timer on unmount or change
-    }
-  }, [isMuted, hasUnmutedAutomatically]);
+  //     return () => clearTimeout(timer); // Cleanup timer on unmount or change
+  //   }
+  // }, [isMuted, hasUnmutedAutomatically,playerRef?.current?.player?.isPlaying,userPause]);
 
 
   // Toggle play/pause
@@ -137,7 +141,8 @@ export const ObjectProvider = ({ children }) => {
         handleMouseMove,
         handleMouseUp,
         stopScrolling,
-        handlePreventScroll
+        handlePreventScroll,
+        isUserPause
       }}
     >
       {children}

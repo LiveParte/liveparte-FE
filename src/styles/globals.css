@@ -108,7 +108,7 @@
 
 html {
   /* min-height: 100vh; */
-  background-color: black !important;
+  background-color: #060809 !important;
 }
 
 body {
@@ -717,4 +717,8 @@ box-shadow: 0px 1px 1px 0px #D8ECF833 inset;
   
     .custom-range:active::-ms-thumb {
       background: #008f6d;
+    }
+
+    p{
+      margin-bottom: 0 ;
     }

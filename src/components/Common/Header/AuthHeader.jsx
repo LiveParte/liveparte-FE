@@ -180,7 +180,7 @@ export default function AuthHeader({
           <LogoImage router={router} />
 
           {showNav && (
-            <div className="flex items-center justify-between gap-[16px]  xl:gap-[24px]  !hover:scale-100">
+            <div className="flex items-center justify-between gap-[1px] lg:gap-[0px]  xl:gap-[24px]  !hover:scale-100">
               <ButtonComp
                 btnText="Browse Events"
                 className={` font-medium  hidden lg:block   !h-[32px] text-[13px]  bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused}  ${

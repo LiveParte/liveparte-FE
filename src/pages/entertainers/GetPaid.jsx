@@ -14,7 +14,7 @@ const GetPaid = () => {
                     <div className='flex justify-center h-full'>
                         <div className='flex justify-between flex-col h-full'>
                             <div className='flex justify-center flex-col items-center'>
-                                <h1 className='font-mdtest font-bold text-[35px] uppercase leading-[35px] tracking-[-0.12px]'>Get Paid</h1>
+                                <h1 className='font-mdtest font-bold text-[35px] uppercase leading-[35px] tracking-[-0.12px] mb-0'>Get Paid</h1>
                                 <p className='text-base text-grey.200 tracking-[-0.12px] md:w-[55%] mt-2.5 text-center leading-[19.2px]'>Set your price and be in full control and visibility over your event revenue. </p>
                             </div>
                             <div className='pb-6 flex justify-center'>
@@ -31,8 +31,8 @@ const GetPaid = () => {
                     <div className='flex justify-center h-full'>
                         <div className='flex justify-between flex-col h-full'>
                             <div className='flex justify-center flex-col items-center'>
-                                <h1 className='font-mdtest font-bold text-[35px] uppercase leading-[35px] tracking-[-0.12px]'>Own Your Fan Data</h1>
-                                <p className='text-base text-grey.200 tracking-[-0.12px] md:w-[55%] w-[90%] mt-2.5 text-center leading-[19.2px]'>Get unparalleled access to all your fan’s anonymized data, including: demographic information, contact information and more. </p>
+                                <h1 className='font-mdtest font-bold text-[35px] uppercase leading-[35px] tracking-[-0.12px] mb-0'>Own Your Fan Data</h1>
+                                <p className='text-base text-grey.200 tracking-[-0.12px] md:w-[55%] xl:w-[60%]  mt-2.5 text-center leading-[19.2px] font400 mb-0'>Get unparalleled access to all your fan’s anonymized data, including: demographic information, contact information and more. </p>
                             </div>
                             <div className='md:pb-6 pt-14 flex justify-center relative'>
                                 <Image className='z-40 relative md:w-[277px] w-[207px]' src={comment_loc} alt='liveparte_comment' />
