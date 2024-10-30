@@ -132,10 +132,10 @@ export const SignUpForm =()=>{
             label:'Gender',
             type:'select',
             options:[
-                {
-                    label:'select gender',
-                    value:'select gender'
-                },
+                // {
+                //     label:'select gender',
+                //     value:'select gender'
+                // },
                 {
                     label:'Female',
                     value:'Female'
@@ -151,10 +151,10 @@ export const SignUpForm =()=>{
             label:'Age bracket',
             type:'select',
             options:[
-                {
-                    label:'select age',
-                    value:'select age'
-                },
+                // {
+                //     label:'select age',
+                //     value:'select age'
+                // },
                 {
                     label:'17-22',
                     value:'17-22'
