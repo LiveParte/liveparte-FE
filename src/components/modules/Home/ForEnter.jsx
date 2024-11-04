@@ -2,6 +2,10 @@ import Image from "next/image";
 import React from "react";
 import union from "../../../../public/webp/forenter.webp";
 import { useRouter } from "next/router";
+<<<<<<< HEAD
+import Link from "next/link";
+=======
+>>>>>>> 7cc22e56e8d0a8d217052dd9f15e2f5bb789fbac
 // import 
 
 export default function ForEnter() {
@@ -229,11 +233,14 @@ export default function ForEnter() {
                   </p>
                 </div>
                 </div>
-                <button target='_blank' onClick={()=>{
-                  route.push('https://studio-staging.liveparte.com/signup')
+                {/* <button  onClick={()=>{
+                  route.push('https://studio-staging.liveparte.com/login')
                 }} className="text-black.100 text-[13px] lg:w-[160.29px] w-full bg-white.200   h-[44px] rounded-[8px] font-mattersq font-medium tracking-[-0.12px] no-underline">
                 Go Live
-              </button>
+              </button> */}
+              <Link target="_blank" href={`https://studio-staging.liveparte.com/login`}  className="text-black.100 text-[13px] lg:w-[160.29px] w-full bg-white.200 flex items-center justify-center  h-[44px] rounded-[8px] font-mattersq font-medium tracking-[-0.12px] no-underline text-center" >
+                Go Live
+              </Link>
                 <div>
 
                 </div>
