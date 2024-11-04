@@ -22,11 +22,11 @@ const Earning = () => {
     return (
         <div className='text-white'>
             <div className='w-[90%] mx-auto mt-6'>
-                <div className='bg-grey.300 md:h-[426px] pb-10 h-auto md:rounded-[40px] mx-auto rounded-[12px] mt-6 flex md:flex-row flex-col justify-between items-center'>
+                <div className='bg-grey.300 md:h-[426px] lg:pt-[75px] pb-10 h-auto md:rounded-[40px] mx-auto rounded-[12px] mt-6 flex md:flex-row flex-col justify-between items-center lg:items-start'>
                     <div className=' h-full'>
                         <div className='md:pl-16 pl-6 md:pt-10 pb-12 flex flex-col justify-between h-full'>
                             <div>
-                                <h1 className='text-[35px] uppercase font-mdtest font-bold leading-[35px] tracking-[-0.12px] mt-6'>Engage with Fans</h1>
+                                <h1 className='text-[35px] uppercase font-mdtest font-bold leading-[35px] tracking-[-0.12px] '>Engage with Fans</h1>
                                 <p className='text-grey.200 font-mattersq leading-[19.2px] text-base tracking-[-0.12px] md:w-[50%] mt-2'>
                                     Create more than a fanbase - engage your fans with personalized messages and drive more revenue.
                                 </p>
@@ -39,8 +39,8 @@ const Earning = () => {
                     </div>
                     <div className='md:pr-44 relative md:mt-0 mt-10'>
                         <Image className='absolute top-0 z-40 md:-ml-24 -ml-10 md:h-[80px] md:w-[344px] w-[141px] h-[39.86px] bg-cover object-center' src={enage_comment1} alt='' />
-                        <Image className='absolute md:bottom-12 bottom-2 md:-ml-52 -ml-20 z-40 md:w-[344px] md:h-[54px] w-[171.14px] h-[22.13px]' src={enage_comment2} alt='' />
-                        <Image className='absolute md:top-32 top-10 pt-2 w-[174px] md:w-[288px] md:h-[55px] h-[33.23px] md:ml-32 ml-16 z-40' src={enage_comment3} alt='' />
+                        <Image className='absolute  md:bottom-12 bottom-2 md:-ml-52 -ml-20 z-40 md:w-[344px] md:h-[54px] w-[171.14px] h-[22.13px]' src={enage_comment2} alt='' />
+                        <Image className='absolute right-0 lg:right-10 md:top-32 top-10 pt-2 w-[174px] md:w-[288px] md:h-[55px] h-[33.23px] md:ml-32 ml-16 z-40' src={enage_comment3} alt='' />
 
                         <Image className='relative md:w-full w-[145.67px] z-30' src={liveparte} alt='' />
 

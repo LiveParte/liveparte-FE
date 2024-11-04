@@ -2,8 +2,10 @@ import Image from "next/image";
 import React from "react";
 import banner from "../../../../public/images/liveparte_banner.webp";
 import bannerMobile from "../../../../public/images/Subtract.webp";
+import Link from "next/link";
 
 const Banner = () => {
+  
   return (
     <div className="w-[95%] mx-auto pt-24">
       <div className="relative">
@@ -29,9 +31,9 @@ const Banner = () => {
               world
             </p>
 
-            <button className="text-black.100 text-[13px] bg-white.200 mt-10 px-5 rounded-[8px] font-medium py-3 tracking-[-0.12px]">
+            <Link href={'/event'} className="text-black.100 text-[13px] bg-white.200 mt-10 px-5 rounded-[8px] font-medium py-3 tracking-[-0.12px] no-underline">
               Browse Events
-            </button>
+            </Link>
           </div>
         </div>
       </div>

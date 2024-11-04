@@ -43,10 +43,10 @@ const Engagement = () => {
                 <Image className='bg-cover object-cover' src={group} alt='' />
             </div>
             <div className='flex-1'>
-                <div className='font-mdtest font-medium text-base leading-4 text-black.300 tracking-[-0.12px] bg-yellow.200 text-center rounded-[30px] flex justify-center items-center w-[149px] h-[32px]'>Coming Soon</div>
-                <h1 className='font-mdtest mt-5 font-bold mb-0 text-[62px] leading-[62px] tracking-[0.48px]
+                <div className='font-mdtest font-medium text-base leading-4 text-black.300 tracking-[-0.12px] bg-yellow.200 text-center rounded-[30px] flex justify-center items-center w-[149px] h-[32px] mb-0'>Coming Soon</div>
+                <h1 className='font-mdtest mt-[24px] mb-0 font-bold text-[62px] leading-[62px] tracking-[0.48px]
                 ]'>SUPER FAN <br /> ENGAGEMENT</h1>
-                <p className='font-mattersq text-base mb-10 tracking-[-0.12px] leading-[19.2px] w-[65%] text-grey.200 mt-5'>Engage with fans who attended your event through e-mail and SMS campaigns. Promote upcoming shows, contents and new merch in a click.</p>
+                <p className='font-mattersq text-base mb-10 tracking-[-0.12px] leading-[19.2px] w-[65%] text-grey.200 mt-4'>Engage with fans who attended your event through e-mail and SMS campaigns. Promote upcoming shows, contents and new merch in a click.</p>
                 {data.map((_v, _i) => (
                     <div key={_i} className='flex gap-3'>
                         <div className='flex justify-center flex-col items-center'>

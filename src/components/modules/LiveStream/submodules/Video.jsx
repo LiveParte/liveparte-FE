@@ -23,12 +23,15 @@ const AppVideo = ({ liveStreamDetail }) => {
     formatTime,
     playedSeconds,
     duration,
+    isUserPause
   } = useObject();
 
   const handlePlay = (e) => {
     // playerRef.current?.getInternalPlayer().play();
     playerRef.current.seekTo(parseFloat(e.target.value));
   };
+
+  //!playerRef?.current?.player?.isPlaying
 
   return (
     <div className="flex-1 h-full w-full flex justify-center items-center videoplayer relative">
@@ -43,7 +46,7 @@ const AppVideo = ({ liveStreamDetail }) => {
         width={"100vw"}
         url={liveStreamDetail?.streaming_url}
         playing={isPlaying} // Auto play video on load
-        controls={isMobile} // Show controls on mobile
+        controls={false} // Show controls on mobile
         muted={isMuted}
         autoPlay={true} // Ensure the video plays automatically
         onProgress={handleProgress} // Track progress
@@ -51,7 +54,7 @@ const AppVideo = ({ liveStreamDetail }) => {
         config={{
           youtube: {
             playerVars: {
-              modestbranding: 0,
+              modestbranding: 1,
               rel: 0,
               showinfo: 0,
               disablekb: 1,
@@ -60,7 +63,7 @@ const AppVideo = ({ liveStreamDetail }) => {
           },
         }}
       />
-      {isMuted||!playerRef?.current?.player?.isPlaying && (
+      {isMuted && (
         <div className="absolute left-0 right-0 top-0 bottom-0 text-[24px]  flex justify-center items-center " onClick={()=>{
           toggleMute();
           // handlePlay()
@@ -71,10 +74,11 @@ const AppVideo = ({ liveStreamDetail }) => {
           </div>
         </div>
       )}
+      <div className="absolute left-0 right-0 top-0 z-30 bg-gradient-to-b h-[8vh] md:h-[18vh] lg:h-[30vh] xl:h-[50vh]  items-start from-[#060809]"></div>
       {/* Custom Controls */}
       <div
-        className={`absolute left-0 right-0 px-4 bottom-[0] py-4 flex justify-between text-white z-30 bg-gradient-to-t h-[50px] items-start from-black  ${
-          !isPlaying ? "bg-black " : "bg-[#000000a6]"
+        className={`absolute left-0 right-0 px-4 bottom-[-2px] md:py-4 flex justify-between text-white z-30 bg-gradient-to-t h-[5vh] lg:h-[10vh] items-start from-black  ${
+          !isPlaying||!playerRef?.current?.player?.isPlaying ? "bg-black " : "bg-[#000000a6]"
         } lg:rounded-[16px] `}
       >
         {/* <button onClick={togglePlayPause} className="text-white">

@@ -13,13 +13,13 @@ const Avatar = ({ src, alt = 'profile-image-user', width = 30, height = 30 }) =>
 
   return (
     <Image
-      src={hasError ? DEFAULT_IMAGE : src}
-      width={width}
-      height={height}
-      className="object-cover w-[20px] h-[20px] lg:h-[30px] md:w-[30px] rounded-full"
-      alt={alt}
-      onError={handleError}
-    />
+    src={hasError || !src ? DEFAULT_IMAGE : src}
+    width={width}
+    height={height}
+    className="object-cover w-[20px] h-[20px] md:h-[30px] md:w-[30px] rounded-full"
+    alt={alt}
+    onError={handleError}
+  />
   );
 };
 

@@ -93,7 +93,7 @@ function LiveStream({
     }) {
       return (
         <div className="relative flex-1 flex flex-col h-full w-full">
-          <div className="absolute z-10 top-0 left-0 right-0 md:h-[35vh] sm:h-[10vh] bg-contain xl:bg-cover !bg-no-repeat custom-gradient "></div>
+          {/* <div className="absolute z-10 top-0 left-0 right-0 md:h-[35vh] sm:h-[5vh] bg-contain xl:bg-cover !bg-no-repeat custom-gradient "></div> */}
           <div className={`${IsMobileLiveStream} `}>
             <LiveStreamVideo
               setActiveConnection={setActiveConnection}

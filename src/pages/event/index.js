@@ -91,8 +91,8 @@ export default function Home() {
     ? data?.event.filter((event) => !event?.isLiveStreamed)
     : [];
 
-  const heroEvent = (isArray(onDemandEvents)&&!onDemandEventLoader)
-    ? onDemandEvents[randomBetweenOneAndTen(onDemandEvents?.length)]
+  const heroEvent = !onDemandEventLoader?
+     onDemandEvents[randomBetweenOneAndTen(onDemandEvents?.length)]
     : {};
 
     // console.log(onDemandEvents, "happingNowEvents");
