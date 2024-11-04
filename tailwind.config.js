@@ -16,7 +16,7 @@ module.exports = {
         'gradient-to-top': 'linear-gradient(0deg, #000000 0%, rgba(0, 0, 0, 0) 99.19%)',
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+        "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
         "linear-gradient-yellow": "linear-gradient(to bottom, rgba(255, 196, 27, 0), rgba(255, 196, 27, 1), rgba(255, 196, 27, 1))",
         "linear-gradient-red": "linear-gradient(to bottom, rgba(250, 67, 84, 0), rgba(250, 67, 84, 1), rgba(250, 67, 84, 1))",
         "linear-gradient-blue": "linear-gradient(to bottom, rgba(85, 196, 241, 0), rgba(85, 196, 241, 1), rgba(85, 196, 241, 1))",
@@ -45,7 +45,8 @@ module.exports = {
         "yellow.200": "#FFF3D1",
         "yellow.400": "#FFCE41",
         "yellow.500": "#FFC41B",
-        "blue.200": "#55C4F1"
+        "blue.200": "#55C4F1",
+        "black-background":"#060809"
       },
       screens: {
         tall: { raw: "(max-height: 600px)" },

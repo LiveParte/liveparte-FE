@@ -163,7 +163,7 @@ export default function MakePossible() {
                   </p>
                 </div>
               </div>
-              <Link target='_blank' href={'https://studio-staging.liveparte.com/signup'} className="text-black.100 text-[13px] lg:w-[160.29px] w-full bg-white.200 lg:mt-12 mt-8 h-[44px] rounded-[8px] font-mattersq font-medium tracking-[-0.12px] underline">
+              <Link target='_blank' href={'https://studio-staging.liveparte.com/login'} className="text-black.100 text-[13px] lg:w-[160.29px] w-full bg-white.200 lg:mt-12 mt-8 h-[44px] rounded-[8px] font-mattersq font-medium tracking-[-0.12px] underline">
                 Go Live
               </Link>
             </div>

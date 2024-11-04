@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import NoAuth from "./NoAuth";
-import Footer from "../Common/Footer";
+// import Footer from "../Common/Footer";
 import { useRouter } from "next/router";
+import Footer from "@/pages/entertainers/Footer";
 
 export default function PrivacyTermsLayout({ children }) {
-  const [selectTab, setSelectTab] = useState("privacy");
   const router =useRouter();
   // console.log(router?.pathname,'router')
 
@@ -12,6 +12,7 @@ export default function PrivacyTermsLayout({ children }) {
     <NoAuth>
       <div className="min-h-[100vh] bg-black  flex flex-col justify-start pb-24">
         <div className="relative">
+          <picture>
           <img
             alt="privacy_img"
             width={0}
@@ -19,6 +20,7 @@ export default function PrivacyTermsLayout({ children }) {
             className="w-full h-[300px] lg:h-[381px] object-cover"
             src={"/Image/privacy.webp"}
           />
+          </picture>
           <div className=" absolute -bottom-1 left-0 right-0 h-[20vh] lg:h-[50vh]   bg-contain xl:bg-cover !bg-no-repeat bg-gradient-to-t from-black"></div>
         </div>
         <div className="pt-[86px] px-[20px] lg:px-[70px]">
@@ -43,6 +45,16 @@ export default function PrivacyTermsLayout({ children }) {
                 }`}
               >
                 Term of use
+              </button>
+              <button
+                onClick={() => router.push("purchase-policy")}
+                className={`text-[14px] w-full text-start  font400 px-[12px] py-[14px]  min-h-[48px] ${
+                    router?.pathname === "/purchase-policy"
+                    ? "bg-[#22272F] text-white font500 border-l-[2px]"
+                    : "text-[#8F96A3]"
+                }`}
+              >
+                Purchase Policy
               </button>
             </div>
             <div className="w-full">{children}</div>

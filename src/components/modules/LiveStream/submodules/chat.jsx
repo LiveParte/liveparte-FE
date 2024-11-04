@@ -114,77 +114,14 @@ function Chat({ onLeave, liveStreamDetail }) {
     setMessage(null);
   }
 
+  console.log(userData?.profile_image,'userDatauserData')
+
   const [showComment, setShowComment] = useState(true);
   const userCoinsBalance = useSelector(selectCoins);
   // alert(userCoinsBalance,'userCoinsBalance')
   const chatBoxRef = useRef(null);
   const [textMessages, setTextMessages] = useState("");
-  // const [chatMessages, setChatMessages] = useState([
-  //   {
-  //     name: "Bola",
-  //     message: "Please Wait for me to join",
-  //   },
-  //   {
-  //     name: "Bola",
-  //     message: "Please Wait for me to join",
-  //   },
-  //   {
-  //     name: "Bola",
-  //     message: "Please Wait for me to join",
-  //   },
-  //   {
-  //     name: "Bola",
-  //     message: "Please Wait for me to join",
-  //   },
-  //   {
-  //     name: "Bola",
-  //     message: "Please Wait for me to join",
-  //   },
-  //   {
-  //     name: "Bola",
-  //     message: "Please Wait for me to join",
-  //   },
-  //   {
-  //     name: "Bola",
-  //     message: "Please Wait for me to join",
-  //   },
-  //   {
-  //     name: "Bola",
-  //     message: "Please Wait for me to join",
-  //   },
-  //   {
-  //     name: "Bola",
-  //     message: "Please Wait for me to join",
-  //   },
-  //   {
-  //     name: "Bola",
-  //     message: "Please Wait for me to join",
-  //   },
-  //   {
-  //     name: "Bola",
-  //     message: "Please Wait for me to join",
-  //   },
-  //   {
-  //     name: "Bola",
-  //     message: "Please Wait for me to join",
-  //   },
-  //   {
-  //     name: "Bola",
-  //     message: "Please Wait for me to join",
-  //   },
-  //   {
-  //     name: "Bola",
-  //     message: "Please Wait for me to join",
-  //   },
-  //   {
-  //     name: "Bola",
-  //     message: "Please Wait for me to join",
-  //   },
-  //   {
-  //     name: "Bola",
-  //     message: "Please Wait for me to join",
-  //   },
-  // ]);
+ 
 
   const messageRef = useRef(null);
 
@@ -267,36 +204,11 @@ function Chat({ onLeave, liveStreamDetail }) {
     { label: "Option 3", href: "#" },
   ];
 
-  // console.log(
-  //   showComment,
-  //   // liveStreamDetail,userData,
-  //   messages,
-  //   "liveStreamDetail"
-  // );
-
+ 
   return (
     <div className="flex flex-col  lg:px-[0px]   h-full lg:h-full  w-full lg:w-[356px] relative  rounded-sm flex-1  ">
       <div>
-        {/* <div className="lg:hidden flex flex-col items-end gap-[16px] pb-[16px] absolute right-[16px] bottom-16">
-          <Image
-            src={`/svg/reaction1.svg`}
-            width={32}
-            height={32}
-            alt="reaction1"
-          />
-          <Image
-            src={`/svg/reaction2.svg`}
-            width={32}
-            height={32}
-            alt="reaction2"
-          />
-          <Image
-            src={`/svg/reaction3.svg`}
-            width={32}
-            height={32}
-            alt="reaction3"
-          />
-        </div> */}
+      
       </div>
       <div className=" justify-between items-center   py-[7px]  flex lg:hidden border-b-[1px] border-b-[#262C32] px-[16px]">
         <div className="text-white font700">

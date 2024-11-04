@@ -30,7 +30,7 @@ import { Dropdown, DropdownButton } from "react-bootstrap";
     </div>
    </div>
     <div className="md:hidden">
-      <div className="absolute  left-0 right-0 px-[16px] lg:px-[18px] top-0 py-[17px] flex justify-between text-white z-30 bg-gradient-to-b h-[18vh] sm:h-[20vh] items-start from-[#060809]  lg:rounded-[16px]">
+      <div className="absolute  left-0 right-0 px-[16px] lg:px-[18px] top-0 py-[17px] flex justify-between text-white z-30 bg-gradient-to-b h-[5vh] md:h-[18vh] sm:h-[20vh] items-start from-[#060809]  lg:rounded-[16px]">
         {!isLoading && (
           <div className="flex justify-between items-center w-full">
             {isLive ? (

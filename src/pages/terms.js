@@ -1,7 +1,4 @@
-import Footer from "@/components/Common/Footer";
-import NoAuth from "@/components/Layout/NoAuth";
 import PrivacyTermsLayout from "@/components/Layout/Privacy&TermsLayout";
-import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 
