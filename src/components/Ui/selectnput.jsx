@@ -75,6 +75,7 @@ export const FloatingLabelSelect = ({
         </div>
         
         <label
+          htmlFor={name}
           className={`absolute z-30 text-[13px] duration-300 transform -translate-y-[8px] ${
             isFocused || value
               ? "top-[13px] scale-75"
@@ -107,6 +108,7 @@ export const FloatingLabelSelect = ({
     </div>
   );
 };
+
 
 
 

@@ -74,7 +74,7 @@ const AppVideo = ({ liveStreamDetail }) => {
           </div>
         </div>
       )}
-      <div className="absolute left-0 right-0 top-0 z-30 bg-gradient-to-b h-[8vh] md:h-[18vh] lg:h-[30vh] xl:h-[50vh]  items-start from-[#060809]"></div>
+      <div className="absolute left-0 right-0 top-0 z-30 bg-gradient-to-b h-[6vh] md:h-[18vh] lg:h-[12vh] xl:h-[12vh] bg-black items-start from-[#060809]"></div>
       {/* Custom Controls */}
       <div
         className={`absolute left-0 right-0 px-4 bottom-[-2px] md:py-4 flex justify-between text-white z-30 bg-gradient-to-t h-[5vh] lg:h-[10vh] items-start from-black  ${
