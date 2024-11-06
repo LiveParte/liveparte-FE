@@ -3,6 +3,7 @@ import NoAuth from "./NoAuth";
 // import Footer from "../Common/Footer";
 import { useRouter } from "next/router";
 import Footer from "@/pages/entertainers/Footer";
+import Image from "next/image";
 
 export default function PrivacyTermsLayout({ children }) {
   const router =useRouter();
@@ -13,7 +14,7 @@ export default function PrivacyTermsLayout({ children }) {
       <div className="min-h-[100vh] bg-black  flex flex-col justify-start pb-24">
         <div className="relative">
           <picture>
-          <img
+          <Image
             alt="privacy_img"
             width={0}
             height={0}
