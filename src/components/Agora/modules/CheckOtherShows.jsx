@@ -51,6 +51,7 @@ export default function CheckOtherShows() {
               width={293}
               height={242}
               className="w-[293px] h-[242px] object-cover mb-[24px] rounded-md"
+              alt="thumbnail"
             />
           )}
           <div className="max-w-[292px] text-center text-[15px] font400 leading-5 mb-[25px]">
