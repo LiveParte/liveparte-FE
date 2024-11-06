@@ -77,7 +77,7 @@ export default function SignUpPage({
   });
   return (
     <form
-      className="px-[15px] lg:px-[30px] flex flex-col  lg:pb-[0px]"
+      className=" px-[15px] lg:px-[30px] flex flex-col  lg:pb-[0px]"
       autoComplete="off"
     >
      
@@ -162,3 +162,5 @@ export default function SignUpPage({
     </form>
   );
 }
+
+
