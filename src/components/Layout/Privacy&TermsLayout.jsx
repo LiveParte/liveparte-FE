@@ -14,7 +14,7 @@ export default function PrivacyTermsLayout({ children }) {
       <div className="min-h-[100vh] bg-black  flex flex-col justify-start pb-24">
         <div className="relative">
           <picture>
-          <img
+          <Image
             alt="privacy_img"
             width={0}
             height={0}
