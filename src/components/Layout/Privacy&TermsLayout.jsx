@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import NoAuth from "./NoAuth";
 import Footer from "../Common/Footer";
 import { useRouter } from "next/router";
+import Image from "next/image";
 
 export default function PrivacyTermsLayout({ children }) {
   const [selectTab, setSelectTab] = useState("privacy");
@@ -12,7 +13,7 @@ export default function PrivacyTermsLayout({ children }) {
     <NoAuth>
       <div className="min-h-[100vh] bg-black  flex flex-col justify-start pb-24">
         <div className="relative">
-          <img
+          <Image
             alt="privacy_img"
             width={0}
             height={0}
