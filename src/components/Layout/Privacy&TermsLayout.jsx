@@ -35,7 +35,7 @@ export default function PrivacyTermsLayout({ children }) {
                     : "text-[#8F96A3]"
                 }`}
               >
-                Privacy policy
+                Privacy Policy
               </button>
               <button
                 onClick={() => router.push("terms")}
@@ -45,7 +45,7 @@ export default function PrivacyTermsLayout({ children }) {
                     : "text-[#8F96A3]"
                 }`}
               >
-                Term of use
+                Term of Service
               </button>
               <button
                 onClick={() => router.push("purchase-policy")}
@@ -57,6 +57,7 @@ export default function PrivacyTermsLayout({ children }) {
               >
                 Purchase Policy
               </button>
+              
             </div>
             <div className="w-full">{children}</div>
           </div>

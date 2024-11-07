@@ -131,8 +131,9 @@ export const termsUrl = `/terms`;
 export const PolicyUrl = "/privacy";
 export const ContactUs = `mailto:support@liveparte.com`;
 export const FaqUrl = "https://liveparte.freshdesk.com/a/solutions ";
+
 export function randomBetweenOneAndTen(ArrayLength = 9) {
-  return Math.floor(Math.random() * (ArrayLength - 1)); // Generate a random number between 0 and 9
+  return Math.floor(Math.random() * ArrayLength);
 }
 
 export function SuccessNotification({ message }) {

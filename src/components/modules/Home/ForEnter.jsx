@@ -2,10 +2,7 @@ import Image from "next/image";
 import React from "react";
 import union from "../../../../public/webp/forenter.webp";
 import { useRouter } from "next/router";
-<<<<<<< HEAD
 import Link from "next/link";
-=======
->>>>>>> 7cc22e56e8d0a8d217052dd9f15e2f5bb789fbac
 // import 
 
 export default function ForEnter() {

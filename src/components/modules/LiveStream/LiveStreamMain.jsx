@@ -18,6 +18,7 @@ function LiveStream({
   userProfileData,
   handleOpenModal,
   isLoading,
+  isYoutubeVideo,
 }) {
   const [fullScreenModal, setFullScreenModal] = useState(false);
   const router = useRouter();
@@ -106,6 +107,7 @@ function LiveStream({
               unlockOrientation={unlockOrientation}
               orientationLocked={orientation}
               ShareAndGiftDropdown={ShareAndGiftDropdown}
+              isYoutubeVideo={isYoutubeVideo}
             />
           </div>
           {orientation && (

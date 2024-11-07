@@ -7,7 +7,7 @@ export default function privacy() {
     <PrivacyTermsLayout>
       <div className="w-full">
         <div className="text-[45px] font-1 font-medium text-white mb-[40px]">
-          Terms of Use
+          Terms of Service
         </div>
         <div className="text-[14px] text-white font500">
           <div className=" text-[14px] font500 text-white mb-[10px]">
