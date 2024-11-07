@@ -8,6 +8,9 @@ import {
 } from "@/store/Event/eventApi";
 import moment from "moment";
 import { isArray, storage, userDetailStorageName } from "@/utils/helper";
+import { useEffect, useMemo } from "react";
+import { selectCurrentUserData } from "@/store/User";
+import { useSelector } from "react-redux";
 
 // Dynamic imports
 const Hero = dynamic(() => import("@/components/modules/onDemand/Hero"), {
@@ -17,91 +20,73 @@ const Happening = dynamic(
   () => import("@/components/modules/Event/Happening"),
   { ssr: false }
 );
-// const Footer = dynamic(() => import("@/components/Common/Footer"), {
-//   ssr: false,
-// });
 import NoAuth from "@/components/Layout/NoAuth";
 import {
   checkShowDuration,
   checkShowDurationAfter,
-  eventLink,
   isJSON,
   randomBetweenOneAndTen,
-  singleEventLink,
 } from "@/utils/reusableComponent";
-import { useEffect } from "react";
-import { selectCurrentUserData } from "@/store/User";
-import { useSelector } from "react-redux";
-import ButtonComp from "@/components/Ui/button";
 import Footer from "../entertainers/Footer";
+
 const userData = storage.localStorage.get(userDetailStorageName);
 const CheckUser = isJSON(userData) && JSON.parse(userData);
+
 export default function Home() {
   const router = useRouter();
   const user = useSelector(selectCurrentUserData) || {};
+  
   // Queries
-  const {
-    data,
-    isLoading,
-    isError,
-    refetch: getAllEventRefetch,
-  } = useGetAllEventQuery();
-  const {
-    data: onDemandEvent,
-    isLoading: onDemandEventLoader,
-    refetch: onDemandRefresh,
-  } = useGetEventOnDemandQuery();
+  const { data, isLoading } = useGetAllEventQuery();
+  const { data: onDemandEvent, isLoading: onDemandEventLoader } = useGetEventOnDemandQuery();
+  const { data: upcomingEvents } = useGetEventUpcomingQuery();
+  const { data: happeningNowEvents } = useGetEventHappingTodayQuery();
 
-  const { data: upcomingEvents, isLoading: upcomingEventLoader } =
-    useGetEventUpcomingQuery();
-
-  const { data: happingNowEvents, isLoading: happingNowEventLoader } =
-    useGetEventHappingTodayQuery();
-
-    const happeningNowData =happingNowEvents?.event;
-    const UpcomingNowData =upcomingEvents?.event;
-
-
-  // useGetEventUpcomingQuery,
-  // useGetEventHappingTodayQuery
+  const happeningNowData = happeningNowEvents?.event;
+  const upcomingNowData = upcomingEvents?.event;
 
   // Data processing
-  const happeningNowEvents = data?.event?.filter(
-    (item) => item?.eventStarted === true
-  );
-  const onDemandEvents = onDemandEvent?.event;
   const filteredEvents = Array.isArray(data?.event)
-    ? data?.event.filter((event) =>
-        checkShowDuration(
-          event?.event_date,
-          event?.name === "Artiste radar live" ? 0 : event?.event_length
-        )
+    ? data.event.filter((event) =>
+        checkShowDuration(event?.event_date, event?.name === "Artiste radar live" ? 0 : event?.event_length)
       )
     : [];
-  const filteredEventsHero = data?.event?.filter((event) =>
-    checkShowDurationAfter(
-      event?.event_date,
-      event?.name === "Artiste radar live" ? 300000 : event?.event_length
-    )
-  );
-
-  // console.log(filteredEventsHero, "filteredHeroShows");
-
+  
   const filteredUpcoming = isArray(data?.event)
-    ? data?.event.filter((event) => !event?.isLiveStreamed)
+    ? data.event.filter((event) => !event.isLiveStreamed)
     : [];
-
-  const heroEvent = !onDemandEventLoader?
-     onDemandEvents[randomBetweenOneAndTen(onDemandEvents?.length)]
-    : {};
-
-    // console.log(onDemandEvents, "happingNowEvents");
+  
+  const onDemandEvents = onDemandEvent?.event;
 
 
-  // console.log(data,'ArrayLengh')
+  const today = new Date();
+
+
+  //filter events to all return event with 
+  const filteredOnDemandEvents = onDemandEvents?.filter((item) => {
+  const hasStreamingUrl = !!item?.streaming_url;
+  // const isPurchased = item?.purchase?.id ?? item?.purchase?._id;
+  const eventDate = new Date(item?.event_date);
+  const isFutureEvent = eventDate > today;
+
+  // Include items where all conditions are true
+  return hasStreamingUrl || isFutureEvent 
+  // && !isPurchased;
+});
+    // Memoize the heroEvent to prevent re-evaluation on re-renders
+    const heroEvent = useMemo(() => {
+      if (!onDemandEventLoader && filteredOnDemandEvents?.length) {
+        return filteredOnDemandEvents[randomBetweenOneAndTen(filteredOnDemandEvents.length)];
+      }
+      return null;
+    }, [onDemandEventLoader, filteredOnDemandEvents]);
+  
+  
+
+  console.log(filteredOnDemandEvents,'onDemandEvents')
+
   return (
     <div className="min-h-[100vh] bg-black over">
-      {/* <ButtonComp> */}
       <NoAuth>
         {heroEvent ? (
           <Hero
@@ -118,10 +103,10 @@ export default function Home() {
           events={filteredEvents}
           upComingEvent={filteredUpcoming}
           OnDemandEvent={onDemandEvents}
-          // allEvent={UpcomingNowData}
         />
         <Footer />
       </NoAuth>
     </div>
-  ); 
+  );
 }
+

@@ -74,7 +74,7 @@ export default function ProtectedFraud() {
                   </div>
                 </div>
                 <div className="flex gap-8 = md:mt-6 pb-4 items-center font-mattersq text-[15px] font-semibold">
-                  <Link href={'/https://studio-staging.liveparte.com/signup'} className="text-black.100 text-[13px] md:w-auto w-full bg-white.200 px-4 rounded-[8px] md:py-4 py-3 no-underline" >
+                  <Link target="_blank" href={'https://studio-staging.liveparte.com/signup'} className="text-black.100 text-[13px] md:w-auto w-full bg-white.200 px-4 rounded-[8px] md:py-4 py-3 no-underline" >
                     Create An Account
                   </Link>
                 </div>

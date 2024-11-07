@@ -519,7 +519,7 @@ select:-webkit-autofill:focus {
 }
 
 .video-js {
-  height: auto !important;
+  /* height: auto !important; */
 }
 .vjs-loading-spinner{
   display: none !important;
@@ -721,4 +721,26 @@ box-shadow: 0px 1px 1px 0px #D8ECF833 inset;
 
     p{
       margin-bottom: 0 ;
+    }
+
+    /* .player-wrapper {
+      width: auto; 
+      height: auto; 
+    }
+    .react-player {
+      padding-top: 56.25%; 
+      position: relative; 
+    }
+    
+    .react-player > div {
+      position: absolute; 
+    }
+    .react-player {
+      position: absolute;
+      top: 0;
+      left: 0;
+    } */
+
+    .vjs_video_3{
+      height: 100vh !important;
     }

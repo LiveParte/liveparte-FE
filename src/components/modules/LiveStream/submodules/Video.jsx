@@ -4,26 +4,27 @@ import { isMobile } from "react-device-detect";
 import { useObject } from "@/Context/ObjectProvider";
 import { MuteIcon, VideoIsMute } from "../../../../../public/svg";
 
-const AppVideo = ({ liveStreamDetail }) => {
+const AppVideo = ({ liveStreamDetail,isYoutubeVideo }) => {
   const {
     isPlaying,
     isMuted,
-    togglePlayPause,
+    // togglePlayPause,
     toggleMute,
     playerRef,
-    handleFastForward,
-    handleRewind,
+    // handleFastForward,
+    // handleRewind,
     handleProgress,
     handleDuration,
-    progressRef,
-    isDragging,
-    handleMouseDown,
-    handleMouseMove,
-    handleMouseUp,
-    formatTime,
-    playedSeconds,
-    duration,
-    isUserPause
+    // progressRef,
+    // isDragging,
+    // handleMouseDown,
+    // handleMouseMove,
+    // handleMouseUp,
+    // formatTime,
+    // playedSeconds,
+    // duration,
+    // isUserPause,
+    // isYoutubeVideo
   } = useObject();
 
   const handlePlay = (e) => {
@@ -34,7 +35,15 @@ const AppVideo = ({ liveStreamDetail }) => {
   //!playerRef?.current?.player?.isPlaying
 
   return (
-    <div className="flex-1 h-full w-full flex justify-center items-center videoplayer relative">
+    <div className="flex-1 h-full w-full flex justify-center items-center videoplayer relative border">
+      
+      {/* <video controls   autoPlay width="100%">
+        <source
+          src={liveStreamDetail?.streaming_url}
+          type="video/mp4"
+        />
+        Your browser does not support the video tag.
+      </video> */}
       <ReactPlayer
         ref={playerRef}
         style={{
@@ -42,7 +51,7 @@ const AppVideo = ({ liveStreamDetail }) => {
           height: "100%",
           objectFit: "contain",
         }}
-        height={isMobile ? "40dvh" : "90vh"}
+        height={isMobile ? "40dvh" : "100%"}
         width={"100vw"}
         url={liveStreamDetail?.streaming_url}
         playing={isPlaying} // Auto play video on load
@@ -74,26 +83,15 @@ const AppVideo = ({ liveStreamDetail }) => {
           </div>
         </div>
       )}
-      <div className="absolute left-0 right-0 top-0 z-30 bg-gradient-to-b h-[6vh] md:h-[18vh] lg:h-[12vh] xl:h-[12vh] bg-black items-start from-[#060809]"></div>
+      <div className={`absolute left-0 right-0 top-0 z-30 bg-gradient-to-b h-[6vh] md:h-[18vh] lg:h-[12vh] xl:h-[12vh] ${isYoutubeVideo?'bg-black':' xl:h-[52vh] lg:h-[32vh]'}  items-start from-[#060809]`}></div>
       {/* Custom Controls */}
-      <div
+      {/* <div
         className={`absolute left-0 right-0 px-4 bottom-[-2px] md:py-4 flex justify-between text-white z-30 bg-gradient-to-t h-[5vh] lg:h-[10vh] items-start from-black  ${
           !isPlaying||!playerRef?.current?.player?.isPlaying ? "bg-black " : "bg-[#000000a6]"
         } lg:rounded-[16px] `}
       >
-        {/* <button onClick={togglePlayPause} className="text-white">
-          {isPlaying ? "Pause" : "Play"}
-        </button>
-        <button onClick={toggleMute} className="text-white">
-          {isMuted ? "Unmute" : "Mute"}
-        </button>
-        <button onClick={handleRewind} className="text-white">
-          Rewind 10s
-        </button>
-        <button onClick={handleFastForward} className="text-white">
-          Fast Forward 10s
-        </button> */}
-      </div>
+       
+      </div> */}
     </div>
   );
 };

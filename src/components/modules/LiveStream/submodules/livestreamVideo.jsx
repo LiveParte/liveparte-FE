@@ -20,6 +20,7 @@ function LiveStreamVideo({
   unlockOrientation,
   orientationLocked,
   ShareAndGiftDropdown,
+  isYoutubeVideo
 }) {
   const dispatch = useDispatch();
   const playerRef = useRef(null);
@@ -155,7 +156,7 @@ function LiveStreamVideo({
 
   return (
     !isLoading && (
-      <div className="w-full h-full flex-1 bg-cover lg:rounded-[16px] overflow-hidden flex flex-col">
+      <div className="w-full  flex-1 bg-cover lg:rounded-[16px] overflow-hidden flex flex-col h-[95vh]">
         {!isLive && (
           <ChatOnCameraAndVideoControl
             liveStreamDetail={liveStreamDetail}
@@ -182,6 +183,7 @@ function LiveStreamVideo({
             rewind={handleRewind}
             togglePlayPause={togglePlayPause}
             liveStreamDetail={liveStreamDetail}
+            isYoutubeVideo={isYoutubeVideo}
           />
         ) : (
           <div className="w-full relative agroa-video h-[40dvh] md:h-[100vh]">
