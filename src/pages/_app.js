@@ -18,6 +18,7 @@ import { persistor, store } from "../store";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { ObjectProvider } from "@/Context/ObjectProvider";
 import { Metadata } from "next";
+import { VideoJSProvider } from "@/Context/VideoJsContext";
 
 export default function App({ Component, pageProps }) {
   // const session = getServerSession();
@@ -53,6 +54,7 @@ export default function App({ Component, pageProps }) {
         />
       </Head>
       <ErrorBoundary>
+        <VideoJSProvider>
         <ObjectProvider>
           <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
@@ -77,6 +79,7 @@ export default function App({ Component, pageProps }) {
             </PersistGate>
           </Provider>
         </ObjectProvider>
+        </VideoJSProvider>
       </ErrorBoundary>
     </>
   );

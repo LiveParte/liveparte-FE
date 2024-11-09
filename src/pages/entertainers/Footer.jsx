@@ -74,12 +74,12 @@ const Footer = () => {
                 </Link>
               </div>
               <div className="mt-[1rem] text-white no-underline">
-                <Link
-                  href="/"
+                <div
+                  // href="/"
                   className="font-mattersq font-medium text-base leading-[19.2px] tracking-[-0.12px] text-[#B4BECB] no-underline"
                 >
                   Careers
-                </Link>
+                </div>
               </div>
               <div className="mt-[1rem]">
                 <Link
@@ -137,13 +137,13 @@ const Footer = () => {
                 </button>
               </div>
               <div className="mt-[1rem]">
-                <Link
+                <div
                   href="#"
                   className="font-mattersq font-medium text-base leading-[19.2px] tracking-[-0.12px] text-[#B4BECB]  no-underline "
                   
                 >
                   Blog
-                </Link>
+                </div>
               </div>
             </>
           )}

@@ -15,6 +15,9 @@
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 }
+body{
+  background: #060809 !important;
+}
 
 @media (prefers-color-scheme: dark) {
   :root {
@@ -744,3 +747,23 @@ box-shadow: 0px 1px 1px 0px #D8ECF833 inset;
     .vjs_video_3{
       height: 100vh !important;
     }
+
+    /* Custom range input styling */
+.custom-range {
+  width: 100%;
+}
+
+/** FF*/
+input[type="range"]::-moz-range-progress {
+  background-color: #43e5f7 !important; 
+}
+input[type="range"]::-moz-range-track {  
+  background-color: #9a905d !important;
+}
+/* IE*/
+input[type="range"]::-ms-fill-lower {
+  background-color: #43e5f7 !important; 
+}
+input[type="range"]::-ms-fill-upper {  
+  background-color: #9a905d !important;
+}
