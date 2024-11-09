@@ -86,51 +86,7 @@ function LiveStream({
 
   // console.log(liveStreamDetail,'liveStreamDetailliveStreamDetail')
 
-  const Container = useMemo(() => {
-    return function Container({
-      lockOrientation,
-      unlockOrientation,
-      orientation,
-    }) {
-      return (
-        <div className="relative flex-1 flex flex-col h-full w-full">
-          {/* <div className="absolute z-10 top-0 left-0 right-0 md:h-[35vh] sm:h-[5vh] bg-contain xl:bg-cover !bg-no-repeat custom-gradient "></div> */}
-          <div className={`${IsMobileLiveStream} `}>
-            <LiveStreamVideo
-              setActiveConnection={setActiveConnection}
-              activeConnection={activeConnection}
-              isLive={isLive}
-              liveStreamDetail={liveStreamDetail}
-              isLoading={isLoading}
-              userProfileData={userProfileData}
-              lockOrientation={lockOrientation}
-              unlockOrientation={unlockOrientation}
-              orientationLocked={orientation}
-              ShareAndGiftDropdown={ShareAndGiftDropdown}
-              isYoutubeVideo={isYoutubeVideo}
-            />
-          </div>
-          {orientation && (
-            <div className={IsMobileChat}>
-              <Chat
-                liveStreamDetail={liveStreamDetail}
-                userProfileData={userProfileData}
-                onLeave={() => router.back()}
-              />
-            </div>
-          )}
-        </div>
-      );
-    };
-  }, [
-    IsMobileLiveStream,
-    IsMobileChat,
-    activeConnection,
-    isLive,
-    liveStreamDetail,
-    isLoading,
-    userProfileData,
-  ]);
+ 
 
   return (
     <main ref={dropdownRef} className="flex flex-col overflow-hidden flex-1">
@@ -151,9 +107,30 @@ function LiveStream({
             isLoading={isLoading}
             liveStreamDetail={liveStreamDetail}
           />
-          <ScreenOrientationLayout>
-            <Container />
-          </ScreenOrientationLayout>
+          <div>
+          <div className="relative flex-1 flex flex-col h-full w-full">
+          {/* <div className="absolute z-10 top-0 left-0 right-0 md:h-[35vh] sm:h-[5vh] bg-contain xl:bg-cover !bg-no-repeat custom-gradient "></div> */}
+          <div className={`${IsMobileLiveStream} `}>
+            <LiveStreamVideo
+              setActiveConnection={setActiveConnection}
+              activeConnection={activeConnection}
+              isLive={isLive}
+              liveStreamDetail={liveStreamDetail}
+              isLoading={isLoading}
+              userProfileData={userProfileData}
+              ShareAndGiftDropdown={ShareAndGiftDropdown}
+              isYoutubeVideo={isYoutubeVideo}
+            />
+          </div>
+          <div className={IsMobileChat}>
+              <Chat
+                liveStreamDetail={liveStreamDetail}
+                userProfileData={userProfileData}
+                onLeave={() => router.back()}
+              />
+            </div>
+        </div>
+          </div>
         </div>
       </div>
     </main>

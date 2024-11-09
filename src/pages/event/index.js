@@ -86,7 +86,7 @@ export default function Home() {
   console.log(filteredOnDemandEvents,'onDemandEvents')
 
   return (
-    <div className="min-h-[100vh] bg-black over">
+    <div className="min-h-[100vh]  over">
       <NoAuth>
         {heroEvent ? (
           <Hero
@@ -104,7 +104,10 @@ export default function Home() {
           upComingEvent={filteredUpcoming}
           OnDemandEvent={onDemandEvents}
         />
-        <Footer />
+        {/* */}
+        <div className=" bg-black-background">
+        <Footer /> 
+        </div>
       </NoAuth>
     </div>
   );

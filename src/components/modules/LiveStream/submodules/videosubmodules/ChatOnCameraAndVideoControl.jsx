@@ -15,40 +15,36 @@ import { useSelector } from "react-redux";
 import { selectCoins } from "@/store/User";
 import { useRouter } from "next/router";
 import { useObject } from "@/Context/ObjectProvider";
+import VideoJsControl from "./modules/players/videoJsControl";
 
 const MemoizedChat = memo(Chat);
 
 function ChatOnCameraAndVideoControl({
   liveStreamDetail,
-  userProfileData,
-  calculateProgressPercentage,
-  // handleMouseDown,
-  // handleMouseMove,
-  // handleMouseUp,
-  // formatTime,
-  currentTimeRef,
-  durationRef,
-  // isPlaying,
-  // isMuted,
   isLive,
-  // togglePlayPause,
-  rewind,
-  // toggleMute,
-  fastForward,
-  currentTime,
+  isYoutubeVideo,
   // duration,
 }) {
-  const {isPlaying,isMuted,togglePlayPause,toggleMute,playerRef, handleFastForward,
+  const {
+    isPlaying,
+    isMuted,
+    togglePlayPause,
+    toggleMute,
+    playerRef,
+    handleFastForward,
     handleRewind,
     isDragging,
     handleProgress,
     handleDuration,
     isUserPause,
-    formatTime, playedSeconds,
-    duration, handleMouseDown,
+    formatTime,
+    playedSeconds,
+    duration,
+    handleMouseDown,
     handleMouseUp,
     progressRef,
-    handleMouseMove} =useObject()
+    handleMouseMove,
+  } = useObject();
   const router = useRouter();
   const userCoinsBalance = useSelector(selectCoins);
   const [isOpenGiftCoins, setIsOpenGiftCoins] = useState(false);
@@ -61,41 +57,46 @@ function ChatOnCameraAndVideoControl({
   const ChatComp = useCallback(() => {
     return (
       <div className={`lg:mr-[80px] flex flex-col min-h-[80vh]`}>
-        <MemoizedChat liveStreamDetail={liveStreamDetail} onLeave={handleLeave} />
+        <MemoizedChat
+          liveStreamDetail={liveStreamDetail}
+          onLeave={handleLeave}
+        />
       </div>
     );
   }, [liveStreamDetail, handleLeave]);
 
-  const SendCoinsComp = () => (
-    <div className="relative text-white element rounded-[98px] p-[4px]">
-      <div
-        className="p-[4px] pr-[10px] rounded-[96px] hidden lg:flex gap-[9px] text-white text-[10px] md:text-[13px] font500 items-center bg-[#BACFF70A] cursor-pointer relative w-fit"
-      >
-        <Image
-          src={`/svg/Liveparte coin.svg`}
-          width={24}
-          height={24}
-          alt="coins"
-        />
-        <div>
-          {formatMoney(userCoinsBalance || "0", false)}{" "}
-          {userCoinsBalance > 1 ? "Coins" : "Coin"}
-        </div>
-        <div
-          className="py-[4px] px-[9px] rounded-[96px] hidden lg:flex gap-[9px] text-white text-[13px] font500 items-center shadow-1 shadow-2 shadow-3 bg-[#BACFF70A] cursor-pointer relative w-fit"
-        >
-          <div className="">Send</div>
-        </div>
-      </div>
-    </div>
-  );
+  // const SendCoinsComp = () => (
+  //   <div className="relative text-white element rounded-[98px] p-[4px]">
+  //     <div
+  //       className="p-[4px] pr-[10px] rounded-[96px] hidden lg:flex gap-[9px] text-white text-[10px] md:text-[13px] font500 items-center bg-[#BACFF70A] cursor-pointer relative w-fit"
+  //     >
+  //       <Image
+  //         src={`/svg/Liveparte coin.svg`}
+  //         width={24}
+  //         height={24}
+  //         alt="coins"
+  //       />
+  //       <div>
+  //         {formatMoney(userCoinsBalance || "0", false)}{" "}
+  //         {userCoinsBalance > 1 ? "Coins" : "Coin"}
+  //       </div>
+  //       <div
+  //         className="py-[4px] px-[9px] rounded-[96px] hidden lg:flex gap-[9px] text-white text-[13px] font500 items-center shadow-1 shadow-2 shadow-3 bg-[#BACFF70A] cursor-pointer relative w-fit"
+  //       >
+  //         <div className="">Send</div>
+  //       </div>
+  //     </div>
+  //   </div>
+  // );
 
   return (
-    <div className={`${IsDesktopMobileChat} left-0 bg-red-600 flex lg:mb-0`}>
+    <div className={`${IsDesktopMobileChat} left-0  flex lg:mb-0 bg-[red]`}>
       <div className="flex align-bottom flex-1 justify-end overflow-hidden linear-gradient">
         <div className="flex-1 items-end justify-end flex">
           {/* Custom Video Controls */}
+
           {!isLive && (
+            isYoutubeVideo?
             <div className="z-50 pb-[27px] text-white w-full pt-8 pl-[80px] pr-[45px]">
               <div
                 className="flex items-center gap-[16px] cursor-pointer"
@@ -114,7 +115,6 @@ function ChatOnCameraAndVideoControl({
                     className="h-[5px] rounded-[30px] flex items-center"
                     style={{
                       width: `${(playedSeconds / duration) * 100}%`, // Progress width based on played time
-
                     }}
                   >
                     <div className="flex-1 bg-[#00A699] h-[2px] w-[2px]"></div>
@@ -124,16 +124,22 @@ function ChatOnCameraAndVideoControl({
                   </div>
                 </div>
                 <span className="text-[10px]">
-                {formatTime(playedSeconds)}  / {formatTime(duration)}
+                  {formatTime(playedSeconds)} / {formatTime(duration)}
                 </span>
               </div>
               <div className="px-[16px] flex items-center gap-[32px] mt-[23px] justify-center">
                 {/* Play/Pause Button */}
-                <button onClick={()=>{
-                  togglePlayPause();
-                  isUserPause(false)
-                }}>
-                  {playerRef?.current?.player?.isPlaying  ? <VideoPauseIcon /> : <VideoPlayIcon />}
+                <button
+                  onClick={() => {
+                    togglePlayPause();
+                    isUserPause(false);
+                  }}
+                >
+                  {playerRef?.current?.player?.isPlaying ? (
+                    <VideoPauseIcon />
+                  ) : (
+                    <VideoPlayIcon />
+                  )}
                 </button>
                 {/* Mute/Unmute Button */}
                 <button onClick={toggleMute}>
@@ -149,6 +155,8 @@ function ChatOnCameraAndVideoControl({
                 </button>
               </div>
             </div>
+            :
+            <VideoJsControl />
           )}
         </div>
         {/* Chat Component */}
