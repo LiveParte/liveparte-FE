@@ -4,7 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
 
-export default function VideoJsPlayer() {
+export default function VideoJsPlayer({liveStreamDetail}) {
  const  {
     videoRef,
     playerRef,
@@ -28,7 +28,7 @@ export default function VideoJsPlayer() {
     playerRef.current = videojs(videoRef.current, {
       sources: [
         {
-          src: "https://liveparte-s3-bucket.s3.us-east-1.amazonaws.com/hls/DT_THERAPY_HYPEMAN_AARE_20241105130400/DT_THERAPY_HYPEMAN_AARE.m3u8",
+          src: liveStreamDetail?.streaming_url,
           type: "application/x-mpegURL",
         },
       ],

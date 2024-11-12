@@ -41,7 +41,7 @@ const AppVideo = ({ liveStreamDetail, isYoutubeVideo }) => {
       {isYoutubeVideo ? (
         <ReactPlayerJS liveStreamDetail={liveStreamDetail} />
       ) : (
-        <VideoJsPlayer />
+        <VideoJsPlayer liveStreamDetail={liveStreamDetail}  />
       )}
       <div
         className={`absolute left-0 right-0 top-0 z-30 bg-gradient-to-b h-[6vh] md:h-[18vh] lg:h-[12vh] xl:h-[12vh] ${
