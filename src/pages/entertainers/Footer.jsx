@@ -11,7 +11,7 @@ import twitter from "../../../public/svgs/x.svg";
 
 const Footer = () => {
   const handleEmailClick = () => {
-    window.location.href = "mailto:support@liveparte.com?subject=Support&body=This%20is%20a%20message";
+    window.location.href = "mailto:support@liveparte.com";
   };
 
   const [toggle, setToggle] = useState(true);
