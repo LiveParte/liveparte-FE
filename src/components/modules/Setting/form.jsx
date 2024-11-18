@@ -8,7 +8,7 @@ import {
   useChangePasswordMutation,
   useGetUserProfileQuery,
   useUpdateProfileMutation,
-} from "@/store/User/userApi";
+} from "@/store/User/userApi";    
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 import {
@@ -27,6 +27,10 @@ import {
 import { MainContainer } from "@/utils/styleReuse";
 import { uploadFile } from "@/utils/function/lib/aws/s3Service";
 import { Spinner } from "react-bootstrap";
+import {useRouter} from 'next/navigation'
+
+
+
 
 export default function SettingForm({
   isActive,
@@ -35,6 +39,7 @@ export default function SettingForm({
   isImageUrlLoading,
   setImageUrl,
 }) {
+  const router = useRouter()
   const checkIfNonImageExist = storage.localStorage.get("noUserProfileImage");
   const [userProfile, setUserProfile] = useState();
   const userInfo = useSelector(selectCurrentUserData);
@@ -176,6 +181,9 @@ export default function SettingForm({
   }
 
   async function handleUpdatePassword(data) {
+
+    
+
     const payload = {
       // ...data,
       "currentPassword": data?.currentPassword,
@@ -212,7 +220,11 @@ export default function SettingForm({
       setValue("phone", data?.phone);
       setValue("fullName", data?.fullName);
       // setValue('profile_image',data?.profile_image)
-      return toast.success(response?.message);
+      toast.success(response?.message);
+      setTimeout(() => {
+        router.push("/");
+      } , 1500) 
+      return;
     }
   }
 
