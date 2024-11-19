@@ -77,34 +77,10 @@ export default function SignUpPage({
   });
   return (
     <form
-      className="px-[15px] lg:px-[30px] flex flex-col  lg:pb-[0px]"
+      className=" px-[15px] lg:px-[30px] flex flex-col  lg:pb-[0px]"
       autoComplete="off"
     >
-      {/* <div className="w-full ">
-      <div className="">
-        <ButtonComp
-        onClick={(e)=>{
-          e.preventDefault();
-          googleLogin();
-        }}
-          className={`w-full text-[#060809] text-[13px] font500`}
-          btnText={
-            <div className="flex justify-center items-center gap-[12px]">
-              <GoogleIcon />
-              Sign up with Google
-            </div>
-          }
-        />
-      </div>
-
      
-      <div className="flex items-center text-[13px] text-white  py-[28px] ">
-        <div className="bg-[#343F4B]  h-[1px] flex-grow-1"></div>
-        <div className="px-[28px] tracking-[1.5px]"> Or</div>
-
-        <div className="bg-[#343F4B]  h-[1px] flex-grow-1"></div>
-      </div>
-    </div> */}
       <div className="flex flex-col gap-[20px] mt-3">
         {SignUpForm()
           ?.slice(0, 3)
@@ -186,3 +162,5 @@ export default function SignUpPage({
     </form>
   );
 }
+
+

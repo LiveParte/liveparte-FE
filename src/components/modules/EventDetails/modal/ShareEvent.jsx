@@ -29,7 +29,7 @@ export default function ShareEvent({ closeModal, Data }) {
   };
   // console.log(Data,'DataDataData')
   const userData = useSelector(selectCurrentUserData) || {};
-  console.log(userData, "userDatauserData");
+  // console.log(userData, "userDatauserData");
   const location = userData?.countryInfo?.code === "NG" ? "NGN" : "USD";
   const ticketPrice = returnBothCurrencies({
     currencyCode: location,

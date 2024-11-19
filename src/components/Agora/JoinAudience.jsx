@@ -36,7 +36,11 @@ const showTokens = [
   {
     tokenId:'007eJxTYEhJZ2J4+vOZ8A+OXYa39V0kI/Zr2dyO81kcMuGqu6rmzHcKDBbGJqbJaRZGqSYGpibJlmlJlolGlonGJuaGaQbGqQaW0wxfpzUEMjLsz4hgZGSAQBBfgsHMLNXCwjAlxSAlzdzUMDXN3Dwt0TQ5NY2BAQBw0COm',
     eventId:'66e881dd0df751ef77fa5cef'
-  }
+  },
+  {
+    tokenId:'007eJxTYJgRVS2r+TD8ccvpE4F5h61C1XL5JUuOVi1+fn9HpfcN7/MKDBbGJqbJaRZGqSYGpibJlmlJlolGlonGJuaGaQbGqQaW2zbypTcEMjLMnvyZhZEBAkF8CQYzc4PUJENzCxMzk1QDQ/NEU1MjIM/QkoEBACB1JEw=',
+    eventId:'670eb178464e017a55217819'
+  },
 ];
 
 const JoinAudience = ({ eventId, liveStreamDetail }) => {
@@ -93,7 +97,7 @@ const JoinAudience = ({ eventId, liveStreamDetail }) => {
     try {
       await joinChannel(eventId, token);
       setJoined(true);
-      console.log("Joined channel as audience");
+      // console.log("Joined channel as audience");
     } catch (error) {
       console.error("Failed to join as audience:", error);
     }
@@ -104,9 +108,9 @@ const JoinAudience = ({ eventId, liveStreamDetail }) => {
       await leaveChannel();
       setJoined(false);
       // router.push("/myshows");
-      console.log("Left channel as audience");
+      // console.log("Left channel as audience");
     } catch (error) {
-      console.error("Failed to leave the channel:", error);
+      // console.error("Failed to leave the channel:", error);
     }
   };
 

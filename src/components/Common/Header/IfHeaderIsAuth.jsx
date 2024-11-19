@@ -31,8 +31,9 @@ export default function IfHeaderIsAuth({
   const userCoinsBalance = useSelector(selectCoins);
   const isTokenAvailable = localStorage.getItem(accessTokenStorageName);
 
+
   // Log the userLocation prop to console
-  console.log(userLocation, "userLocation from props");
+  // console.log(userLocation, "userLocation from props");
 
   const { address, state, countryInfo, coin } = userInfo || {};
   const name = countryInfo ? countryInfo.name : null;
@@ -211,7 +212,7 @@ export async function getServerSideProps() {
   // Fetch user location from the API
   const locationRes = await fetch('https://ipapi.co/json/');
   const userLocation = await locationRes.json();
-  console.log(userLocation, 'userLocation from getServerSideProps'); // Log the user location data
+  // console.log(userLocation, 'userLocation from getServerSideProps'); // Log the user location data
   return {
     props: {
       userLocation, // Pass the user location data
