@@ -2,11 +2,30 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 @import url("https://c.webfontfree.com/c.js?f=MatterSQ-Light");
 @import url("https://db.onlinewebfonts.com/c/367cb1d4d8a017fec88cbbcf75d6b3cc?family=Matter+SQ+Medium");
+@import url(https://db.onlinewebfonts.com/c/8611cf274fd66935b8f771ac84029521?family=Matter+SQ+Regular);
+@import url('https://fonts.cdnfonts.com/css/md-nichrome-test');
 /* @import "~video-react/styles/scss/video-react";  */
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+body{
+  background: #060809 !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-rgb: 255, 255, 255;
+    --background-start-rgb: 0, 0, 0;
+    --background-end-rgb: 0, 0, 0;
+  }
+}
 
 /* 300 */
 @font-face {
@@ -92,14 +111,18 @@
 
 html {
   /* min-height: 100vh; */
-  background-color: black !important;
+  background-color: #060809 !important;
 }
 
 body {
   /* font-family: 'CustomFont' !important; */
   font-family: "MatterSQ-Medium", sans-serif, cursive !important;
   min-height: 100vh;
-  background-color: black !important;
+  /* background-color: black !important; */
+  /* color: rgba(255, 255, 255, 1); */
+  background: #060809;
+  overflow-x: hidden;
+  margin-bottom: 0px;
 }
 
 .swiper {
@@ -499,7 +522,7 @@ select:-webkit-autofill:focus {
 }
 
 .video-js {
-  height: auto !important;
+  /* height: auto !important; */
 }
 .vjs-loading-spinner{
   display: none !important;
@@ -584,4 +607,163 @@ select:-webkit-autofill:focus {
 }
 #vjs_video_3_youtube_api{
   /* display: none !important;; */
+}
+
+.navbar-background{
+  backdrop-filter: blur(54px);
+box-shadow: 0px 4px 4px 0px #FFFFFF33;
+}
+
+.buttonClose{
+  box-shadow: 0px 0px 0px 1px #BACFF71F inset;
+
+box-shadow: 0px 24px 48px 0px #A8D8F50F inset;
+
+box-shadow: 0px 1px 1px 0px #D8ECF833 inset;
+
+}
+
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  
+}
+
+    .custom-range {
+      -webkit-appearance: none;
+      /* Ensure custom styling is applied */
+      appearance: none;
+      width: 100%;
+      /* Full width of the container */
+      background: #343F4B;
+      /* Track color */
+      height: 6px;
+      border-radius: 3px;
+      outline: none;
+      /* Remove default focus outline */
+    }
+  
+    /* Track styles for WebKit browsers (Chrome, Safari) */
+    .custom-range::-webkit-slider-runnable-track {
+      background: #343F4B;
+      /* Track color */
+      height: 6px;
+      border-radius: 3px;
+    }
+  
+    /* Thumb styles for WebKit browsers */
+    .custom-range::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      /* Thumb color */
+      border-radius: 50%;
+      border: 4px solid #00A699;
+      /* Inner white circle */
+      cursor: pointer;
+      margin-top: -7px;
+      /* Aligns thumb perfectly with track */
+    }
+  
+    /* Track styles for Firefox */
+    .custom-range::-moz-range-track {
+      background: #343F4B;
+      /* Track color */
+      height: 6px;
+      border-radius: 3px;
+    }
+  
+    /* Thumb styles for Firefox */
+    .custom-range::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      border-radius: 50%;
+      border: 4px solid #00A699;
+      cursor: pointer;
+    }
+  
+    /* Track styles for Microsoft Edge/IE */
+    .custom-range::-ms-track {
+      background: #343F4B;
+      /* Track color */
+      height: 6px;
+      border-radius: 3px;
+      border: none;
+      color: transparent;
+      /* Hide the track border */
+    }
+  
+    /* Thumb styles for Microsoft Edge/IE */
+    .custom-range::-ms-thumb {
+      width: 20px;
+      height: 20px;
+      background: #fff;
+      border-radius: 50%;
+      border: 4px solid #00A699;
+      cursor: pointer;
+    }
+  
+    /* Styles for the active thumb when dragging */
+    .custom-range:active::-webkit-slider-thumb {
+      background: #008f6d;
+      /* Darker thumb when active */
+    }
+  
+    .custom-range:active::-moz-range-thumb {
+      background: #008f6d;
+    }
+  
+    .custom-range:active::-ms-thumb {
+      background: #008f6d;
+    }
+
+    p{
+      margin-bottom: 0 ;
+    }
+
+    /* .player-wrapper {
+      width: auto; 
+      height: auto; 
+    }
+    .react-player {
+      padding-top: 56.25%; 
+      position: relative; 
+    }
+    
+    .react-player > div {
+      position: absolute; 
+    }
+    .react-player {
+      position: absolute;
+      top: 0;
+      left: 0;
+    } */
+
+    .vjs_video_3{
+      height: 100vh !important;
+    }
+
+    /* Custom range input styling */
+.custom-range {
+  width: 100%;
+}
+
+/** FF*/
+input[type="range"]::-moz-range-progress {
+  background-color: #43e5f7 !important; 
+}
+input[type="range"]::-moz-range-track {  
+  background-color: #9a905d !important;
+}
+/* IE*/
+input[type="range"]::-ms-fill-lower {
+  background-color: #43e5f7 !important; 
+}
+input[type="range"]::-ms-fill-upper {  
+  background-color: #9a905d !important;
 }

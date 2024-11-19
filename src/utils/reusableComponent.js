@@ -131,8 +131,9 @@ export const termsUrl = `/terms`;
 export const PolicyUrl = "/privacy";
 export const ContactUs = `mailto:support@liveparte.com`;
 export const FaqUrl = "https://liveparte.freshdesk.com/a/solutions ";
+
 export function randomBetweenOneAndTen(ArrayLength = 9) {
-  return Math.floor(Math.random() * (ArrayLength - 1)); // Generate a random number between 0 and 9
+  return Math.floor(Math.random() * ArrayLength);
 }
 
 export function SuccessNotification({ message }) {
@@ -186,6 +187,7 @@ export function replaceDashWithSpace(str) {
 }
 
 export const myShowLink = `/myshows`;
+export const entertainersLink='/entertainers'
 export const eventLink = `/event`;
 export const singleEventLink = `/event/[id]`;
 export const onDemandLink = `/event/ondemand`;
@@ -216,7 +218,7 @@ export function GetEmailSearchUrl(email) {
 
   // For other email providers, return a generic URL
   // You might need to update this to match the search functionality of other email providers
-  return `https://www.example.com/search?email=${email}&q=${searchQuery}`;
+  return `https://mail.google.com/mail/u/0/`;
 }
 
 export const isJSON = (str) => {

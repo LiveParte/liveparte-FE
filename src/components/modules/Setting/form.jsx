@@ -8,7 +8,7 @@ import {
   useChangePasswordMutation,
   useGetUserProfileQuery,
   useUpdateProfileMutation,
-} from "@/store/User/userApi";
+} from "@/store/User/userApi";    
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
 import {
@@ -27,6 +27,10 @@ import {
 import { MainContainer } from "@/utils/styleReuse";
 import { uploadFile } from "@/utils/function/lib/aws/s3Service";
 import { Spinner } from "react-bootstrap";
+import {useRouter} from 'next/navigation'
+
+
+
 
 export default function SettingForm({
   isActive,
@@ -35,6 +39,7 @@ export default function SettingForm({
   isImageUrlLoading,
   setImageUrl,
 }) {
+  const router = useRouter()
   const checkIfNonImageExist = storage.localStorage.get("noUserProfileImage");
   const [userProfile, setUserProfile] = useState();
   const userInfo = useSelector(selectCurrentUserData);
@@ -55,6 +60,8 @@ export default function SettingForm({
         confirmPassword: "",
       },
     });
+
+    
 
   // let userInfo =storage["localStorage"]?.get(userDetailStorageName)
 
@@ -81,13 +88,10 @@ export default function SettingForm({
       });
     }
     setIsLoading(true);
-    // const data = new FormData();
-    // data.append("file", photo);
-    // data.append("upload_preset", "wnvzkduq");
-    // data.append("cloud_name", "dnvwcmqhw");
+  
     try {
       const result = await uploadFile(photo, "profile-image");
-      console.log("File uploaded successfully:", result?.Location);
+      // console.log("File uploaded successfully:", result?.Location);
 
       setImageUrl(result?.Location);
 
@@ -104,29 +108,7 @@ export default function SettingForm({
       setIsLoading(false);
     }
 
-    // fetch("https://api.cloudinary.com/v1_1/dnvwcmqhw/image/upload", {
-    //   method: "post",
-    //   body: data,
-    // })
-    //   .then((res) => res.json())
-    //   .then((data) => {
-    //     // console.log(data,'response1')
-
-    //     setImageUrl(data?.secure_url);
-    //     handleUpdateUser({
-    //       ...getValues(),
-    //       profile_image: data.secure_url,
-    //     })
-    //     // onChange()
-    //     // scrollToBottom();
-    //   })
-    //   .catch((err) => {
-    //     setIsLoading(false);
-    //   })
-    //   .finally(() => {
-    //     setIsLoading(false);
-
-    //   });
+   
   };
 
   const handleChange = (event) => {
@@ -199,8 +181,14 @@ export default function SettingForm({
   }
 
   async function handleUpdatePassword(data) {
+
+    
+
     const payload = {
-      ...data,
+      // ...data,
+      "currentPassword": data?.currentPassword,
+      "newPassword": data?.newPassword,
+      "confirmPassword": data?.confirmPassword
     };
 
     if (payload?.newPassword !== payload?.confirmPassword) {
@@ -232,7 +220,11 @@ export default function SettingForm({
       setValue("phone", data?.phone);
       setValue("fullName", data?.fullName);
       // setValue('profile_image',data?.profile_image)
-      return toast.success(response?.message);
+      toast.success(response?.message);
+      setTimeout(() => {
+        router.push("/");
+      } , 1500) 
+      return;
     }
   }
 

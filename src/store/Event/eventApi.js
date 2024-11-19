@@ -25,12 +25,29 @@ export const eventApi = createApi({
     }),
     getEventOnDemand: builder.query({
       query: () => ({
-        url: `/event/ondemand?skip=0&limit=10`,
+        url: `/event/ondemand?skip=0&limit=50`,
         method: "GET",
       }),
       providesTags: ['ondemand'],
       refetchOnFocus: true // Enable refetch on focus for this query
     }),
+    getEventUpcoming: builder.query({
+      query: () => ({
+        url: `/event/upcoming?skip=0&limit=50`,
+        method: "GET",
+      }),
+      // providesTags: ['ondemand'],
+      refetchOnFocus: true // Enable refetch on focus for this query
+    }),
+    getEventHappingToday: builder.query({
+      query: () => ({
+        url: `/event/happening-today?skip=0&limit=50`,
+        method: "GET",
+      }),
+      // providesTags: ['ondemand'],
+      refetchOnFocus: true // Enable refetch on focus for this query
+    }),
+    //upcoming?skip=0&limit=10
     getEventViaId: builder.query({
       query: (id) => ({
         url: `/event/${id}`,
@@ -49,7 +66,7 @@ export const eventApi = createApi({
     }),
     userShows: builder.query({
       query: (userId) => ({
-        url: `/event/myevents/${userId}?skip=0&limit=30`,
+        url: `/event/myevents/${userId}?skip=0&limit=50`,
         method: "GET",
       }),
       providesTags: (result, error, userId) => [{ type: 'event', userId }],
@@ -75,5 +92,7 @@ export const {
   useGetEventDetailViaIdQuery,
   useUserShowsQuery,
   useLazyUserShowsQuery,
-  useLoginApiMutation
+  useLoginApiMutation,
+  useGetEventUpcomingQuery,
+  useGetEventHappingTodayQuery
 } = eventApi;

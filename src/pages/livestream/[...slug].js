@@ -39,6 +39,8 @@ export default function Index() {
     });
   const NestedLiveStreamData = useSelector(selectLiveStreamEvent) || data;
   const liveStream = { ...data, ...NestedLiveStreamData?.event,...eventDetail };
+  const isYoutubeVideo =liveStream?.streaming_url?.includes("youtube");
+  console.log(isYoutubeVideo,'isYoutubeVideo')
   const modalRef = useRef(null);
 
   const handleCloseModal = () => {
@@ -88,6 +90,7 @@ export default function Index() {
           handleCloseModal={handleCloseModal}
           userProfileData={userProfileData || userInfo}
           isLoading={isLoading}
+          isYoutubeVideo={isYoutubeVideo}
         />
       </div>
     </WithAuth>

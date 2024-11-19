@@ -59,7 +59,7 @@ export default function LiveStreamHeaderIndexComp({
 
   return (
     <div
-      className={`${MainContainer}  absolute left-0 right-0 lg:top-6 bg-[#060809]  `}
+      className={`${MainContainer}  absolute left-0 right-0 lg:top-2 bg-[#060809]  `}
     >
       {isOpen && (
         <MyModal

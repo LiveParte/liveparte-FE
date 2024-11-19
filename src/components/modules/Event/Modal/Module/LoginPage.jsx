@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { LoginForm } from "../../Data";
 import ButtonComp from "@/components/Ui/button";
-import { GoogleIcon } from "../../../../../../public/svg";
 import { FloatingLabelInput } from "@/components/Ui/TextInput";
-import { GoogleLogin, useGoogleLogin } from "@react-oauth/google";
-import { signIn } from "next-auth/react";
-import axios from "axios";
+import {  useGoogleLogin } from "@react-oauth/google";
 
 export default function LoginPage({
   Controller,
@@ -53,10 +50,10 @@ export default function LoginPage({
         })
         .catch((error) => {
           setUser();
-          console.error(
-            "There has been a problem with your fetch operation:",
-            error
-          );
+          // console.error(
+          //   "There has been a problem with your fetch operation:",
+          //   error
+          // );
         });
     }
   }, [user]);
