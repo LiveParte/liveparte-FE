@@ -143,9 +143,7 @@ export default function Header({ className, openModal }) {
               className={` font-medium  hidden lg:block !py-[11px]  gap-[10px] !bg-transparent    font500 text-white ${isFocused}   text-[13px] ${
                 isEntertainer && isSelected
               }  !h-[32px]`}
-              onClick={() => {
-                router.push(entertainersLink);
-              }}
+              onClick={() => window.open(entertainersLink, "_blank")}
             />
             {/* <Link href="/entertainers" className={`font-mattersq font-semibold text-[15px] leading-[14px] tracking-[-0.12px] ${isActive('/entertainers') ? 'text-red.300' : ''}`}>
                         <div className='font-mattersq font-semibold text-[15px] leading-[14px] tracking-[-0.12px]'>For Entertainers</div>
