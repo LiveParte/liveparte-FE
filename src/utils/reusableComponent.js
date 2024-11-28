@@ -187,7 +187,8 @@ export function replaceDashWithSpace(str) {
 }
 
 export const myShowLink = `/myshows`;
-export const entertainersLink='/entertainers'
+export const entertainersLink= process.env.NEXT_PUBLIC_ENTERTAINERS_URL || "https://studio-staging.liveparte.com/entertainers";
+
 export const eventLink = `/event`;
 export const singleEventLink = `/event/[id]`;
 export const onDemandLink = `/event/ondemand`;
