@@ -8,6 +8,7 @@ import facebook from "../../../public/svgs/facebook.svg";
 import instagram from "../../../public/svgs/instagram.svg";
 import linkedin from "../../../public/svgs/linkedin.svg";
 import twitter from "../../../public/svgs/x.svg";
+import { entertainersLink} from "@/utils/reusableComponent";
 
 const Footer = () => {
   const handleEmailClick = () => {
@@ -74,16 +75,19 @@ const Footer = () => {
                 </Link>
               </div>
               <div className="mt-[1rem] text-white no-underline">
-                <div
-                  // href="/"
-                  className="font-mattersq font-medium text-base leading-[19.2px] tracking-[-0.12px] text-[#B4BECB] no-underline"
+                <Link
+                 href="#"
+                 onClick={(e) => e.preventDefault()}
+                  className="font-mattersq font-medium text-base leading-[19.2px] tracking-[-0.12px] text-[#B4BECB] opacity-50 no-underline"
                 >
                   Careers
-                </div>
+                </Link>
               </div>
               <div className="mt-[1rem]">
                 <Link
-                  href="/entertainers"
+                   href={entertainersLink}
+                   target="_blank"
+                   rel="noopener noreferrer"
                   className="font-mattersq font-medium text-base leading-[19.2px] tracking-[-0.12px] text-white no-underline"
                 >
                   Studio
@@ -137,13 +141,14 @@ const Footer = () => {
                 </button>
               </div>
               <div className="mt-[1rem]">
-                <div
+                <Link
                   href="#"
-                  className="font-mattersq font-medium text-base leading-[19.2px] tracking-[-0.12px] text-[#B4BECB]  no-underline "
+                  onClick={(e) => e.preventDefault()}
+                  className="font-mattersq font-medium text-base leading-[19.2px] tracking-[-0.12px] text-[#B4BECB] opacity-50  no-underline "
                   
                 >
                   Blog
-                </div>
+                </Link>
               </div>
             </>
           )}
