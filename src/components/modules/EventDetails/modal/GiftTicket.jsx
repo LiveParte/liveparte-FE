@@ -76,7 +76,7 @@ export default function GiftTicket({ closeModal, Data, show }) {
   const handleStripPayment = async () => {
     const payload = {
       amount: stripAmount,
-      currency: "usd",
+      currency: "usd", 
       type: "event",
       eventId: Data?._id,
       ticket_id: stripAmountTest,

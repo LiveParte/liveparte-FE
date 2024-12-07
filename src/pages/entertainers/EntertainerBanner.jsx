@@ -12,7 +12,7 @@ const EntertainerBanner = () => {
                     <h1 className="font-mdtest font-bold lg:text-[92px] lg:leading-[92px] text-center text-[69px] leading-[69px] tracking-[0.48px] uppercase">BRING THE SHOWS HOME</h1>
                     <p className="font-mattersq lg:text-[20px] text-[13px] leading-[28px] font-normal tracking-[-0.2px] lg:w-[45%] w-[95%] mt-3 text-center">Reach more fans with real-time broadcasts of incredible performances. Create immersive experiences, expand your revenue and unlock fan engagements.</p>
 
-                    <Link target='_blank' href={'https://studio-staging.liveparte.com/login'}  className='text-black.100 text-[13px] bg-white.200 mt-10 px-5 rounded-[8px] font-medium py-3 tracking-[-0.12px] no-underline'>Get Started</Link>
+                    <Link target='_blank' href={'http://www.studio.liveparte.com/login'}  className='text-black.100 text-[13px] bg-white.200 mt-10 px-5 rounded-[8px] font-medium py-3 tracking-[-0.12px] no-underline'>Get Started</Link>
                 </div>
             </div>
 
