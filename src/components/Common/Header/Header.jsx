@@ -12,6 +12,8 @@ import {
 } from "@/utils/reusableComponent";
 import LogoImage2 from "@/utils/LogoImage";
 import { useObject } from "@/Context/ObjectProvider";
+
+
 export default function Header({ className, openModal }) {
   const router = useRouter();
   const {handlePreventScroll} =useObject();
@@ -138,19 +140,15 @@ export default function Header({ className, openModal }) {
                 router.push(onDemandLink);
               }}
             />
-            {/* <ButtonComp
-              btnText="Entertainers"
-              className={` font-medium  hidden lg:block !py-[11px]  gap-[10px] !bg-transparent    font500 text-white ${isFocused}   text-[13px] ${
-                isEntertainer && isSelected
-              }  !h-[32px]`}
-              onClick={() => window.open(entertainersLink, "_blank")}
-            /> */}
+           
 
       <Link
       href={entertainersLink}
       target="_blank"
       rel="noopener noreferrer"
-      className="flex items-center gap-1 text-white no-underline"
+      className={` no-underline text-[13px]   !h-[32px] font-medium  hidden lg:flex lg:items-center  gap-[10px]    font500 text-white  ${isFocused} ${
+        isEntertainer ? isSelected : "bg-transparent px-[16px]"
+      }`}
     >
       Entertainers
       <svg
