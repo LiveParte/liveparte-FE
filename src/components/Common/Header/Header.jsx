@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import ButtonComp from "@/components/Ui/button";
 import { HeaderOnSelect, LogoImage, MainContainer } from "@/utils/styleReuse";
 import {
+  entertainersLink,
   entertainersLink,
   eventLink,
   myShowLink,
@@ -12,8 +14,10 @@ import {
 } from "@/utils/reusableComponent";
 import LogoImage2 from "@/utils/LogoImage";
 import { useObject } from "@/Context/ObjectProvider";
+import { useObject } from "@/Context/ObjectProvider";
 export default function Header({ className, openModal }) {
   const router = useRouter();
+  const {handlePreventScroll} =useObject();
   const {handlePreventScroll} =useObject();
   const isHome = router?.pathname === "/";
   const isEvents = router?.pathname === eventLink;
@@ -24,13 +28,26 @@ export default function Header({ className, openModal }) {
   const isOnDemand = router?.pathname === onDemandLink;
   const isEntertainer = router?.pathname === entertainersLink;
 
+  const isEntertainer = router?.pathname === entertainersLink;
+
   const isFocused = `hover:!bg-[#FFFFFF26] hover:rounded-[8px]  hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`;
   const isSelected = HeaderOnSelect;
   const handleCheckIfITHome = (link) => {
     router?.pathname === link && setDropDown(false);
 
+
     // isHome&&setDropDown(false)
   };
+
+  useEffect(() => {
+    if(!dropDown){
+      handlePreventScroll(false);
+    }
+    if(dropDown){
+      handlePreventScroll(true);
+    }
+   
+  }, [dropDown,handlePreventScroll])
 
   useEffect(() => {
     if(!dropDown){
@@ -88,7 +105,62 @@ export default function Header({ className, openModal }) {
               For Entertainers
             </Link>
           </div>
+      <div className=" left-0 right-0 top-0 bottom-0 z-[99]   overflow-hidden  flex flex-col fixed  lg:hidden  backdrop-blur-[15px] ">
+        <div className="bg-[#1B1C20E5] navbar-background px-[24px] py-[14px] lg:py-[30px] rounded-b-[12px]">
+          <div className="flex justify-between items-center mb-[28px] ">
+            <div className="text-white">
+              {" "}
+              <LogoImage router={router} />
+              {/* <MyPage router={router}/> */}
+              {/* Logo */}
+            </div>
+            <div>
+              <ButtonComp
+                btnText={`Close`}
+                className={`px-[12px] !h-[27px]  text-[11px] font500 md:h-fit border-[#262C32] rounded-[999px] border-[1px] !bg-[#25272d] !text-white buttonClose`}
+                onClick={() => {
+                  setDropDown(false);
+                  // handlePreventScroll(false);
+                }}
+              />
+            </div>
+          </div>
+          <div className="text-[14px] text-white font500 flex-1 flex flex-col justify-center items-center mb-[45px]">
+            <Link
+              onClick={() => handleCheckIfITHome(eventLink)}
+              href={eventLink}
+              className="py-[15px]  cursor-pointer no-underline text-white "
+            >
+              Browse Events
+            </Link>
+            
+            <Link
+              onClick={() => handleCheckIfITHome(onDemandLink)}
+              href={onDemandLink}
+              className="py-[15px]  cursor-pointer no-underline text-white"
+            >
+              On Demand
+            </Link>
+            <Link
+              onClick={() => handleCheckIfITHome(onDemandLink)}
+              href={onDemandLink}
+              className="py-[15px]  cursor-pointer no-underline text-white"
+            >
+              For Entertainers
+            </Link>
+          </div>
 
+          <ButtonComp
+            onClick={() => openModal("SignUp")}
+            btnText={`Sign Up`}
+            className={`text-[13px] font500 mb-[16px]  w-full`}
+          />
+          <ButtonComp
+            onClick={() => openModal(`Login`)}
+            btnText={`Login`}
+            className={`text-[13px] font500 mb-[25px]  w-full !bg-[#27292E] text-white`}
+          />
+        </div>
           <ButtonComp
             onClick={() => openModal("SignUp")}
             btnText={`Sign Up`}
@@ -120,8 +192,10 @@ export default function Header({ className, openModal }) {
           {/* <LogoImage router={router}/> */}
 
           <div className="flex items-center justify-between lg:gap-[24px]">
+          <div className="flex items-center justify-between lg:gap-[24px]">
             <ButtonComp
               btnText="Browse Events"
+              className={` font-medium  hidden lg:block  px-[16px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${
               className={` font-medium  hidden lg:block  px-[16px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${
                 isEvent && isSelected
               }  text-[13px]   !h-[32px]`}
@@ -131,6 +205,7 @@ export default function Header({ className, openModal }) {
             />
             <ButtonComp
               btnText="On Demand"
+              className={` font-medium  hidden lg:block !py-[11px]  gap-[10px] !bg-transparent   font500 text-white ${isFocused}   text-[13px] ${
               className={` font-medium  hidden lg:block !py-[11px]  gap-[10px] !bg-transparent   font500 text-white ${isFocused}   text-[13px] ${
                 isOnDemand && isSelected
               }  !h-[32px]`}
@@ -183,9 +258,14 @@ export default function Header({ className, openModal }) {
                 onClick={() => openModal("SignUp")}
                 btnText="Sign Up"
                 className="text-[13px] font-medium font500 px-[40px] py-[12px] text-black"
+                className="text-[13px] font-medium font500 px-[40px] py-[12px] text-black"
               />
             </div>
             <ButtonComp
+              onClick={() => {
+                setDropDown(true);
+                // handlePreventScroll(true);
+              }}
               onClick={() => {
                 setDropDown(true);
                 // handlePreventScroll(true);
