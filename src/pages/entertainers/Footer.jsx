@@ -8,10 +8,7 @@ import facebook from "../../../public/svgs/facebook.svg";
 import instagram from "../../../public/svgs/instagram.svg";
 import linkedin from "../../../public/svgs/linkedin.svg";
 import twitter from "../../../public/svgs/x.svg";
-<<<<<<< HEAD
 import { entertainersLink} from "@/utils/reusableComponent";
-=======
->>>>>>> 83447bda55eccbade6252680b6f7a9c27d5ac1ff
 
 const Footer = () => {
   const handleEmailClick = () => {
@@ -78,7 +75,6 @@ const Footer = () => {
                 </Link>
               </div>
               <div className="mt-[1rem] text-white no-underline">
-<<<<<<< HEAD
                 <Link
                  href="#"
                  onClick={(e) => e.preventDefault()}
@@ -92,18 +88,6 @@ const Footer = () => {
                    href={entertainersLink}
                    target="_blank"
                    rel="noopener noreferrer"
-=======
-                <div
-                  // href="/"
-                  className="font-mattersq font-medium text-base leading-[19.2px] tracking-[-0.12px] text-[#B4BECB] no-underline"
-                >
-                  Careers
-                </div>
-              </div>
-              <div className="mt-[1rem]">
-                <Link
-                  href="/entertainers"
->>>>>>> 83447bda55eccbade6252680b6f7a9c27d5ac1ff
                   className="font-mattersq font-medium text-base leading-[19.2px] tracking-[-0.12px] text-white no-underline"
                 >
                   Studio
@@ -157,7 +141,6 @@ const Footer = () => {
                 </button>
               </div>
               <div className="mt-[1rem]">
-<<<<<<< HEAD
                 <Link
                   href="#"
                   onClick={(e) => e.preventDefault()}
@@ -166,15 +149,6 @@ const Footer = () => {
                 >
                   Blog
                 </Link>
-=======
-                <div
-                  href="#"
-                  className="font-mattersq font-medium text-base leading-[19.2px] tracking-[-0.12px] text-[#B4BECB]  no-underline "
-                  
-                >
-                  Blog
-                </div>
->>>>>>> 83447bda55eccbade6252680b6f7a9c27d5ac1ff
               </div>
             </>
           )}
