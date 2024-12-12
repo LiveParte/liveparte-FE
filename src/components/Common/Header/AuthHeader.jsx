@@ -207,13 +207,38 @@ export default function AuthHeader({
                 }`}
                 onClick={() => router.push(myShowLink)}
               />
-              <ButtonComp
-                btnText="For Entertainers"
+              {/* <ButtonComp
+                btnText="Entertainers"
                 className={`  text-[13px]   !h-[32px] font-medium  hidden lg:block    gap-[10px]    font500 text-white  ${isFocused} ${
                   isEntertainer ? isSelected : "bg-transparent px-[16px]"
                 }`}
                 onClick={() => router.push(entertainersLink)}
-              />
+              /> */}
+              <Link
+                href={entertainersLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                // className="flex items-center gap-1 text-white no-underline"
+                className={` no-underline text-[13px]   !h-[32px] font-medium  hidden lg:flex lg:items-center  gap-[10px]    font500 text-white  ${isFocused} ${
+                  isEntertainer ? isSelected : "bg-transparent px-[16px]"
+                }`}
+              >
+                Entertainers
+                <svg
+                  width="9"
+                  height="9"
+                  viewBox="0 0 9 9"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fillRule="evenodd"
+                    clipRule="evenodd"
+                    d="M2.37498 0.833252C2.37498 0.419038 2.71077 0.083252 3.12498 0.083252H8.16665C8.58086 0.083252 8.91665 0.419038 8.91665 0.833252V5.87492C8.91665 6.28913 8.58086 6.62492 8.16665 6.62492C7.75243 6.62492 7.41665 6.28913 7.41665 5.87492V2.64391L1.36364 8.69692C1.07075 8.98981 0.595876 8.98981 0.302983 8.69692C0.0100897 8.40402 0.0100897 7.92915 0.302983 7.63626L6.35599 1.58325H3.12498C2.71077 1.58325 2.37498 1.24747 2.37498 0.833252Z"
+                    fill="white"
+                  />
+                </svg>
+              </Link>
             </div>
           )}
           {showNav && (
