@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -102,7 +103,7 @@ export default function Header({ className, openModal }) {
             </Link>
   </div>
       <div className=" left-0 right-0 top-0 bottom-0 z-[99]   overflow-hidden  flex flex-col fixed  lg:hidden  backdrop-blur-[15px] ">
-        <div className="bg-[#1B1C20E5] navbar-background px-[24px] py-[14px] lg:py-[30px] rounded-b-[12px]">
+        <div className="bg-[#1B1C20E5] navbar-background px-[24px] py-[14px]  lg:py-[30px] rounded-b-[12px]">
           <div className="flex justify-between items-center mb-[28px] ">
             <div className="text-white">
               {" "}
@@ -188,7 +189,7 @@ export default function Header({ className, openModal }) {
           <LogoImage router={router} />
           {/* <LogoImage router={router}/> */}
 
-          <div className="flex items-center justify-between lg:gap-[24px]">
+          <div className="flex items-center justify-between lg:gap-[450px]">
             <div className="flex items-center justify-between lg:gap-[24px]">
               <ButtonComp
                 btnText="Browse Events"
@@ -232,7 +233,7 @@ export default function Header({ className, openModal }) {
                 </svg>
               </Link>
   
-            </div>
+            </div>    
             <div>
               <div className="hidden lg:flex  gap-x-[40px] items-center">
                 <ButtonComp
@@ -262,5 +263,6 @@ export default function Header({ className, openModal }) {
     </>
   );
 };
+
 
 
