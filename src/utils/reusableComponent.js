@@ -187,13 +187,29 @@ export function replaceDashWithSpace(str) {
 }
 
 export const myShowLink = `/myshows`;
-export const entertainersLink= process.env.NEXT_PUBLIC_ENTERTAINERS_URL || "https://studio-staging.liveparte.com/entertainers";
-
 export const eventLink = `/event`;
 export const singleEventLink = `/event/[id]`;
 export const onDemandLink = `/event/ondemand`;
 export const settingLink = `/setting`;
 export const liveStreamLink = `/livestream`;
+
+export const getEntertainersLink = () => {
+  // 1. Retrieve the current environment from environment variables
+  const env = process.env.NEXT_PUBLIC_ENVIRONMENT;
+
+   // 2. Log the current environment for debugging
+   console.log('Current environment:' , env);
+
+   // 3. Create a mapping of environments to their specific URLs
+   const envMap = {
+    'production': 'https://studio.liveparte.com/entertainers',
+    'staging': 'https://studio-staging.liveparte.com/entertainers',
+   }
+
+    // 4. Return the URL based on the current environment
+    return envMap[env] || envMap['staging'];
+   
+}
 
 export const CopyEventLink = ({ link }) => {
   return `${eventCopyLink}${link}`;

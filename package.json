@@ -1,4 +1,4 @@
-{
+  {
   "name": "liveparrty",
   "version": "0.1.0",
   "private": true,
@@ -6,6 +6,8 @@
     "build": "next build",
     "lint": "next lint",
     "dev": "next dev",
+    "build:staging": "NEXT_PUBLIC_ENVIRONMENT=staging next build",
+    "build:prod": "NEXT_PUBLIC_ENVIRONMENT=production next build",
     "start": "next start "
   },
   "dependencies": {

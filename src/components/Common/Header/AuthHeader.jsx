@@ -15,7 +15,7 @@ import UserProfile from "../UserProfile";
 import { userApi } from "@/store/User/userApi";
 import { eventApi } from "@/store/Event/eventApi";
 import { HeaderOnSelect, LogoImage } from "@/utils/styleReuse";
-import { entertainersLink, eventLink, myShowLink, onDemandLink } from "@/utils/reusableComponent";
+import { getEntertainersLink, eventLink, myShowLink, onDemandLink } from "@/utils/reusableComponent";
 import { formatMoney } from "@/utils/formatMoney";
 import { accessTokenStorageName, userDetailStorageName } from "@/utils/helper";
 import { LiveParteCoins } from "../../../../public/svg";
@@ -45,7 +45,7 @@ export default function AuthHeader({
   const dropdownRef = useRef(null);
   const purchaseCoinRef = useRef(null);
   const isMyShow = router?.pathname == myShowLink;
-  const isOnDemand = router?.pathname == onDemandLink;
+  const isOnDemand = router?.pathname == onDemandLink;       
   const isEntertainer =router?.pathname ==entertainersLink;
   const isEvent =
     router?.pathname === "/event" || router?.pathname == "/event/[id]";
@@ -138,6 +138,13 @@ export default function AuthHeader({
     );
   }
 
+  useEffect(() => {
+    console.log('Environment Details:', {
+      NEXT_PUBLIC_ENVIRONMENT: process.env.NEXT_PUBLIC_ENVIRONMENT,
+      ENTERTAINERS_URL: process.env.NEXT_PUBLIC_ENTERTAINERS_URL
+    });
+  }, []);
+
   // console.log( router.pathname===onDemandLink,'onDemandLink')
 
   // console.log(userCoinsBalance,'userCoinsBalance')
@@ -213,9 +220,9 @@ export default function AuthHeader({
                   isEntertainer ? isSelected : "bg-transparent px-[16px]"
                 }`}
                 onClick={() => router.push(entertainersLink)}
-              /> */}
+              /> */}  
               <Link
-                href={entertainersLink}
+                href={getEntertainersLink()}
                 target="_blank"
                 rel="noopener noreferrer"
                 // className="flex items-center gap-1 text-white no-underline"
