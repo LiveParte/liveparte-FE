@@ -189,7 +189,7 @@ export default function Header({ className, openModal }) {
           <LogoImage router={router} />
           {/* <LogoImage router={router}/> */}
 
-          <div className="flex items-center justify-between lg:gap-[450px]">
+          <div className="flex items-center justify-between  md:w-[65%]">
             <div className="flex items-center justify-between lg:gap-[24px]">
               <ButtonComp
                 btnText="Browse Events"
@@ -258,7 +258,7 @@ export default function Header({ className, openModal }) {
               />
             </div>
           </div>
-        </div>
+        </div>  
       </div>
     </>
   );
