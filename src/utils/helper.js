@@ -9,8 +9,8 @@ const secretKey = 'hahahahah';
 export const useAppDispatch = () => useDispatch();
 export const accessTokenStorageName =`accessTokenLiveParte`;
 export const userDetailStorageName=`UserLiveParte`;
-export const client_id=`845158309668-olf8vmklh4baunlh2m7jb3fnidupl1u2.apps.googleusercontent.com`;
-export const client_secret=`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`
+export const client_id=`361306731149-vkfv4brt4ajc565sd2q895gj6rgl9522.apps.googleusercontent.com`;
+export const client_secret=`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`
 export const storage = {
   localStorage: {
     set: (key, value) => {

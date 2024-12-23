@@ -81,9 +81,6 @@ export default function Home() {
       return null;
     }, [onDemandEventLoader, filteredOnDemandEvents]);
   
-  
-
-  console.log(filteredOnDemandEvents,'onDemandEvents')
 
   return (
     <div className="min-h-[100vh]  over">
