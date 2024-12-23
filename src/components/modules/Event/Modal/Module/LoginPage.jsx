@@ -2,7 +2,14 @@ import React, { useEffect, useState } from "react";
 import { LoginForm } from "../../Data";
 import ButtonComp from "@/components/Ui/button";
 import { FloatingLabelInput } from "@/components/Ui/TextInput";
-import {  useGoogleLogin } from "@react-oauth/google";
+import { useGoogleLogin } from "@react-oauth/google";
+import { GoogleIcon } from "../../../../../../public/svg";
+import { toast } from "react-toastify";
+import { useRouter } from "next/router";
+import { setUserData } from "@/store/User";
+import { ErrorNotification, eventLink } from "@/utils/reusableComponent";
+import { useDispatch } from "react-redux";
+import { accessTokenStorageName, encryptText, storage } from "@/utils/helper";
 
 export default function LoginPage({
   Controller,
@@ -14,76 +21,85 @@ export default function LoginPage({
   openModal,
   isEvent,
   GoogleSignIn,
-  // googleLogin
 }) {
-  const [user, setUser] = useState([]);
 
-  useEffect(() => {
-    if (user?.access_token) {
-      fetch(
-        `https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.access_token}`,
-            Accept: "application/json",
-          },
-        }
-      )
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error(
-              "Network response was not ok " + response.statusText
-            );
-          }
-          return response.json();
-        })
-        .then((data) => {
-          const payload = {
-            email: data?.email,
-            password: `${data?.given_name}${data?.id}1La@`,
-            isGoogle: true,
-          };
-          GoogleSignIn(payload);
-          setUser();
-          // console.log(data);
-          // setProfile(data);
-        })
-        .catch((error) => {
-          setUser();
-          // console.error(
-          //   "There has been a problem with your fetch operation:",
-          //   error
-          // );
-        });
-    }
-  }, [user]);
+  const base_url = process.env.NEXT_PUBLIC_BASEURL
+  const [userToken, setUserToken] = useState(null); // Store the Google access token
+
+  const router = useRouter();
+  const dispatch = useDispatch();
 
   const googleLogin = useGoogleLogin({
     onSuccess: (tokenResponse) => {
-      setUser(tokenResponse);
-      // console.log(tokenResponse,'tokenResponse')
-      // You can now use the tokenResponse to authenticate the user in your app
+      setUserToken(tokenResponse.access_token); // Save the access token
     },
     onError: () => {
-      // console.error("Google login failed");
-      // Handle login errors here
+      toast.error("Google login failed"); // Show error toast on login failure
     },
-    // flow: 'auth-code', // Use 'auth-code' for the authorization code flow
   });
+
+  useEffect(() => {
+    const authenticateUser = async () => {
+      try {
+        const response = await fetch(
+          `${base_url}auth/oauth/google/login`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              token: userToken, // Send the token to the backend
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+
+        if (data?.accessToken) {
+          dispatch(setUserData(data?.user));
+          storage.localStorage.set(
+            accessTokenStorageName,
+            encryptText(data?.accessToken)
+          );
+          SuccessNotification({ message: "You're in!" });
+          router.push(eventLink);
+          if (router?.pathname === "/") {
+        return router.push(eventLink);
+      }
+      if (onNext) {
+        return onNext(data?.user);
+      }
+        }
+      } catch (error) {
+        console.log(error)
+        ErrorNotification({
+        message: error?.message,
+      })
+      }
+    };
+
+    if (userToken) {
+      authenticateUser();
+      setUserToken(null); // Clear the token to prevent re-triggering
+    }
+  }, [userToken, GoogleSignIn]);
 
   return (
     <form
       className="px-[15px] lg:px-[30px] flex flex-col  lg:pb-[0px]"
       autoComplete="off"
     >
-      {/* <div className="w-full ">
+      <div className="w-full ">
         <div className="">
           <ButtonComp
             onClick={(e) => {
               e.preventDefault();
-              // signIn('google')
-              googleLogin();
-              // GoogleSignIn();
+              googleLogin(); // Trigger Google Sign-In
             }}
             className={`w-full text-[#060809] text-[13px] font500`}
             btnText={
@@ -101,7 +117,7 @@ export default function LoginPage({
 
           <div className="bg-[#343F4B]  h-[1px] flex-grow-1"></div>
         </div>
-      </div> */}
+      </div>
       <div className="flex flex-col gap-[20px] mt-4">
         {LoginForm()?.map((item, index) => (
           <Controller
