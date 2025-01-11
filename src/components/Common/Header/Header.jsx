@@ -5,6 +5,7 @@ import Link from "next/link";
 import ButtonComp from "@/components/Ui/button";
 import { HeaderOnSelect, LogoImage, MainContainer } from "@/utils/styleReuse";
 import {
+  getLandingPageUrl,
   entertainersLink,
   eventLink,
   myShowLink,
@@ -13,6 +14,8 @@ import {
 } from "@/utils/reusableComponent";
 import LogoImage2 from "@/utils/LogoImage";
 import { useObject } from "@/Context/ObjectProvider";
+
+
 
 
 export default function Header({ className, openModal }) {
@@ -35,7 +38,7 @@ export default function Header({ className, openModal }) {
 
     // isHome&&setDropDown(false)
   };
-
+   
   useEffect(() => {
     if(!dropDown){
       handlePreventScroll(false);
@@ -46,6 +49,8 @@ export default function Header({ className, openModal }) {
    
   }, [dropDown,handlePreventScroll])
 
+  
+  
   useEffect(() => {
     if(!dropDown){
       handlePreventScroll(false);
@@ -53,9 +58,15 @@ export default function Header({ className, openModal }) {
     if(dropDown){
       handlePreventScroll(true);
     }
-   
+       
   }, [dropDown,handlePreventScroll])
-
+  
+  const handleEntertainersClick = (e) => {
+    e.preventDefault();
+    const landingPageUrl = getLandingPageUrl();
+    window.open(landingPageUrl, '_blank');
+  };
+  
   const MenuDropdown = () => {
     return (
       <div className=" left-0 right-0 top-0 bottom-0 z-[99]   overflow-hidden  flex flex-col fixed  lg:hidden  backdrop-blur-[15px] ">
@@ -210,9 +221,8 @@ export default function Header({ className, openModal }) {
            
 
               <Link
-                href={entertainersLink}
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#"
+                onClick={handleEntertainersClick}
                 className={` no-underline text-[13px]   !h-[32px] font-medium  hidden lg:flex lg:items-center  gap-[10px]    font500 text-white  ${isFocused} ${isEntertainer ? isSelected : "bg-transparent px-[16px]"
                   }`}
               >
