@@ -309,6 +309,8 @@ export default function LoginSignUp({
         {toggle === "Login" && (
           <LoginPage
             handleLogin={handleLogin}
+            onNext={onNext}
+            closeModal={closeModal}
             handleSubmit={handleSubmit}
             Controller={Controller}
             control={control}

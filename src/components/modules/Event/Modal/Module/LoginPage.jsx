@@ -18,6 +18,8 @@ export default function LoginPage({
   handleLogin,
   handleForgetPasswordToggle,
   isLoading,
+  closeModal,
+   onNext,
   openModal,
   isEvent,
   GoogleSignIn,
@@ -38,10 +40,10 @@ export default function LoginPage({
     },
   });
 
-  useEffect(() => {
+   useEffect(() => {
     const authenticateUser = async () => {
       try {
-        const response = await fetch(
+        const responses = await fetch(
           `${base_url}auth/oauth/google/login`,
           {
             method: "POST",
@@ -54,32 +56,67 @@ export default function LoginPage({
           }
         );
 
-        if (!response.ok) {
-          throw new Error(`Error: ${response.statusText}`);
+        if (!responses.ok) {
+          throw new Error(`Error: ${responses.statusText}`);
         }
 
-        const data = await response.json();
+        const response = await responses.json();
+        console.log(response?.user)
+        
+        if (!checkIfNonImageExist?.id) {
+          storage.localStorage.set("noUserProfileImage", {
+            id: response?.user?._id,
+            nonProfileImage: randomBetweenOneAndTen(),
+          });
+        } else {
+          if (response?.user?._id !== checkIfNonImageExist?.id) {
+            storage.localStorage.set("noUserProfileImage", {
+              id: response?.user?._id,
+              nonProfileImage: randomBetweenOneAndTen(),
+            });
+          }
+        }
+        
+        if (response?.error?.data?.statusCode) {
+          // toast.error("Invalid credentials");
+          return ErrorNotification({
+            message: handleRegisterUser?.error?.data?.message,
+          });
+        }
 
-        if (data?.accessToken) {
-          dispatch(setUserData(data?.user));
-          storage.localStorage.set(
+        if (response?.user?._id) {
+          dispatch(userApi.util.invalidateTags(["user"]));
+          dispatch(setUserData(response?.user));
+          dispatch(setCoins(response?.user?.totalCoin));
+
+           storage.localStorage.set(
             accessTokenStorageName,
-            encryptText(data?.accessToken)
+            encryptText(response?.accessToken)
           );
+   
+          // console.log(response?.user, "response?.user");
           SuccessNotification({ message: "You're in!" });
-          router.push(eventLink);
+
           if (router?.pathname === "/") {
-        return router.push(eventLink);
-      }
-      if (onNext) {
-        return onNext(data?.user);
-      }
+            return router.push(eventLink);
+          }
+          if (onNext) {
+            return onNext(response?.user);
+          }
+          closeModal && closeModal();
         }
+
+        dispatch(userApi.util.resetApiState());
+        dispatch(eventApi.util.resetApiState());
+        dispatch(transactionApi.util.resetApiState());
+        dispatch(eventApi.util.invalidateTags(["event", "ondemand"]));
+      
+       
       } catch (error) {
         console.log(error)
         ErrorNotification({
-        message: error?.message,
-      })
+          message: error?.message,
+        })
       }
     };
 
@@ -88,6 +125,57 @@ export default function LoginPage({
       setUserToken(null); // Clear the token to prevent re-triggering
     }
   }, [userToken, GoogleSignIn]);
+
+  // useEffect(() => {
+  //   const authenticateUser = async () => {
+  //     try {
+  //       const response = await fetch(
+  //         `${base_url}auth/oauth/google/login`,
+  //         {
+  //           method: "POST",
+  //           headers: {
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify({
+  //             token: userToken, // Send the token to the backend
+  //           }),
+  //         }
+  //       );
+
+  //       if (!response.ok) {
+  //         throw new Error(`Error: ${response.statusText}`);
+  //       }
+
+  //       const data = await response.json();
+
+  //       if (data?.accessToken) {
+  //         dispatch(setUserData(data?.user));
+  //         storage.localStorage.set(
+  //           accessTokenStorageName,
+  //           encryptText(data?.accessToken)
+  //         );
+  //         SuccessNotification({ message: "You're in!" });
+  //         router.push(eventLink);
+  //         if (router?.pathname === "/") {
+  //       return router.push(eventLink);
+  //     }
+  //     if (onNext) {
+  //       return onNext(data?.user);
+  //     }
+  //       }
+  //     } catch (error) {
+  //       console.log(error)
+  //       ErrorNotification({
+  //       message: error?.message,
+  //     })
+  //     }
+  //   };
+
+  //   if (userToken) {
+  //     authenticateUser();
+  //     setUserToken(null); // Clear the token to prevent re-triggering
+  //   }
+  // }, [userToken, GoogleSignIn]);
 
   return (
     <form
