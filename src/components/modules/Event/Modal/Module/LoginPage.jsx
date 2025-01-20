@@ -61,7 +61,6 @@ export default function LoginPage({
         }
 
         const response = await responses.json();
-        console.log(response?.user)
         
         if (!checkIfNonImageExist?.id) {
           storage.localStorage.set("noUserProfileImage", {
