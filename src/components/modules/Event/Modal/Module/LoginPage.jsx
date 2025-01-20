@@ -6,20 +6,29 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { GoogleIcon } from "../../../../../../public/svg";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-import { setUserData } from "@/store/User";
-import { ErrorNotification, eventLink } from "@/utils/reusableComponent";
 import { useDispatch } from "react-redux";
 import { accessTokenStorageName, encryptText, storage } from "@/utils/helper";
+import { userApi } from "@/store/User/userApi";
+import { setCoins, setLocation, setUserData } from "@/store/User";
+import {
+  ErrorNotification,
+  SuccessNotification,
+  eventLink,
+  randomBetweenOneAndTen,
+  singleEventLink,
+} from "@/utils/reusableComponent";
+import { eventApi, useLoginApiMutation } from "@/store/Event/eventApi";
+import { transactionApi } from "@/store/Transaction/transactionApi";
 
 export default function LoginPage({
   Controller,
   control,
   handleSubmit,
+  onNext,
+  closeModal,
   handleLogin,
   handleForgetPasswordToggle,
   isLoading,
-  closeModal,
-   onNext,
   openModal,
   isEvent,
   GoogleSignIn,
@@ -31,8 +40,11 @@ export default function LoginPage({
   const router = useRouter();
   const dispatch = useDispatch();
 
+  const checkIfNonImageExist = storage.localStorage.get("noUserProfileImage");
+
   const googleLogin = useGoogleLogin({
     onSuccess: (tokenResponse) => {
+      console.log(tokenResponse)
       setUserToken(tokenResponse.access_token); // Save the access token
     },
     onError: () => {
@@ -40,7 +52,7 @@ export default function LoginPage({
     },
   });
 
-   useEffect(() => {
+  useEffect(() => {
     const authenticateUser = async () => {
       try {
         const responses = await fetch(
@@ -61,6 +73,7 @@ export default function LoginPage({
         }
 
         const response = await responses.json();
+        console.log(response?.user)
         
         if (!checkIfNonImageExist?.id) {
           storage.localStorage.set("noUserProfileImage", {
@@ -124,57 +137,6 @@ export default function LoginPage({
       setUserToken(null); // Clear the token to prevent re-triggering
     }
   }, [userToken, GoogleSignIn]);
-
-  // useEffect(() => {
-  //   const authenticateUser = async () => {
-  //     try {
-  //       const response = await fetch(
-  //         `${base_url}auth/oauth/google/login`,
-  //         {
-  //           method: "POST",
-  //           headers: {
-  //             "Content-Type": "application/json",
-  //           },
-  //           body: JSON.stringify({
-  //             token: userToken, // Send the token to the backend
-  //           }),
-  //         }
-  //       );
-
-  //       if (!response.ok) {
-  //         throw new Error(`Error: ${response.statusText}`);
-  //       }
-
-  //       const data = await response.json();
-
-  //       if (data?.accessToken) {
-  //         dispatch(setUserData(data?.user));
-  //         storage.localStorage.set(
-  //           accessTokenStorageName,
-  //           encryptText(data?.accessToken)
-  //         );
-  //         SuccessNotification({ message: "You're in!" });
-  //         router.push(eventLink);
-  //         if (router?.pathname === "/") {
-  //       return router.push(eventLink);
-  //     }
-  //     if (onNext) {
-  //       return onNext(data?.user);
-  //     }
-  //       }
-  //     } catch (error) {
-  //       console.log(error)
-  //       ErrorNotification({
-  //       message: error?.message,
-  //     })
-  //     }
-  //   };
-
-  //   if (userToken) {
-  //     authenticateUser();
-  //     setUserToken(null); // Clear the token to prevent re-triggering
-  //   }
-  // }, [userToken, GoogleSignIn]);
 
   return (
     <form
