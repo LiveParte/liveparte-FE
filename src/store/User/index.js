@@ -33,6 +33,7 @@ export const authSlice = createSlice({
       state.userData = payload;
       state.userInfo = payload;
       state.loading = true;
+      state.user = payload;
       state.isLoggedIn = payload?._id ? true : false;
       state;
     },
