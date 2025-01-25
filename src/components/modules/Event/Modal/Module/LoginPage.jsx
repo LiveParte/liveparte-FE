@@ -6,15 +6,26 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { GoogleIcon } from "../../../../../../public/svg";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
-import { setUserData } from "@/store/User";
-import { ErrorNotification, eventLink } from "@/utils/reusableComponent";
 import { useDispatch } from "react-redux";
 import { accessTokenStorageName, encryptText, storage } from "@/utils/helper";
+import { userApi } from "@/store/User/userApi";
+import { setCoins, setLocation, setUserData } from "@/store/User";
+import {
+  ErrorNotification,
+  SuccessNotification,
+  eventLink,
+  randomBetweenOneAndTen,
+  singleEventLink,
+} from "@/utils/reusableComponent";
+import { eventApi, useLoginApiMutation } from "@/store/Event/eventApi";
+import { transactionApi } from "@/store/Transaction/transactionApi";
 
 export default function LoginPage({
   Controller,
   control,
   handleSubmit,
+  onNext,
+  closeModal,
   handleLogin,
   handleForgetPasswordToggle,
   isLoading,
@@ -29,8 +40,11 @@ export default function LoginPage({
   const router = useRouter();
   const dispatch = useDispatch();
 
+  const checkIfNonImageExist = storage.localStorage.get("noUserProfileImage");
+
   const googleLogin = useGoogleLogin({
     onSuccess: (tokenResponse) => {
+      console.log(tokenResponse)
       setUserToken(tokenResponse.access_token); // Save the access token
     },
     onError: () => {
@@ -41,7 +55,7 @@ export default function LoginPage({
   useEffect(() => {
     const authenticateUser = async () => {
       try {
-        const response = await fetch(
+        const responses = await fetch(
           `${base_url}auth/oauth/google/login`,
           {
             method: "POST",
@@ -54,32 +68,66 @@ export default function LoginPage({
           }
         );
 
-        if (!response.ok) {
-          throw new Error(`Error: ${response.statusText}`);
+        if (!responses.ok) {
+          throw new Error(`Error: ${responses.statusText}`);
         }
 
-        const data = await response.json();
+        const response = await responses.json();
+        console.log(response?.user)
+        
+        if (!checkIfNonImageExist?.id) {
+          storage.localStorage.set("noUserProfileImage", {
+            id: response?.user?._id,
+            nonProfileImage: randomBetweenOneAndTen(),
+          });
+        } else {
+          if (response?.user?._id !== checkIfNonImageExist?.id) {
+            storage.localStorage.set("noUserProfileImage", {
+              id: response?.user?._id,
+              nonProfileImage: randomBetweenOneAndTen(),
+            });
+          }
+        }
+        
+        if (response?.error?.data?.statusCode) {
+          // toast.error("Invalid credentials");
+          return ErrorNotification({
+            message: handleRegisterUser?.error?.data?.message,
+          });
+        }
 
-        if (data?.accessToken) {
-          dispatch(setUserData(data?.user));
-          storage.localStorage.set(
+        if (response?.user?._id) {
+          dispatch(userApi.util.invalidateTags(["users"]));
+          dispatch(setUserData(response?.user));
+          dispatch(setCoins(response?.user?.totalCoin));
+
+           storage.localStorage.set(
             accessTokenStorageName,
-            encryptText(data?.accessToken)
+            encryptText(response?.accessToken)
           );
+   
+          // console.log(response?.user, "response?.user");
           SuccessNotification({ message: "You're in!" });
-          router.push(eventLink);
+
           if (router?.pathname === "/") {
-        return router.push(eventLink);
-      }
-      if (onNext) {
-        return onNext(data?.user);
-      }
+            return router.push(eventLink);
+          }
+          if (onNext) {
+            return onNext(response?.user);
+          }
+          closeModal && closeModal();
         }
+        dispatch(userApi.util.resetApiState());
+        dispatch(eventApi.util.resetApiState());
+        dispatch(transactionApi.util.resetApiState());
+        dispatch(eventApi.util.invalidateTags(["event", "ondemand"]));
+      
+       
       } catch (error) {
         console.log(error)
         ErrorNotification({
-        message: error?.message,
-      })
+          message: error?.message,
+        })
       }
     };
 
