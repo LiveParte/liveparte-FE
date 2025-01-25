@@ -88,11 +88,11 @@ export default function IfHeaderIsAuth({
     }
   }, [userInfo]);
 
-  useEffect(() => {
-    if (check && isSuccess) {
-      userInfo?._id && handleUpdateUserLocation(extraDetails);
-    }
-  }, [check, userInfo?._id]);
+  // useEffect(() => {
+  //   if (check && isSuccess) {
+  //     userInfo?._id && handleUpdateUserLocation(extraDetails);
+  //   }
+  // }, [check, userInfo?._id]);
 
   const router = useRouter();
   let [isOpen, setIsOpen] = useState();
@@ -120,14 +120,14 @@ export default function IfHeaderIsAuth({
     setUserDetail(userInfo?._id);
   }, [userInfo?._id]);
 
-  useEffect(() => {
-    if (router?.pathname === "/reset-password") {
-      openModal("ForgetPassword");
-    }
-    if (router?.pathname === "/login") {
-      openModal("Login");
-    }
-  }, [router?.pathname]);
+  // useEffect(() => {
+  //   if (router?.pathname === "/reset-password") {
+  //     openModal("ForgetPassword");
+  //   }
+  //   if (router?.pathname === "/login") {
+  //     openModal("Login");
+  //   }
+  // }, [router?.pathname]);
 
   function closeModal() {
     setIsOpen();

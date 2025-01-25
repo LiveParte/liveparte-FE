@@ -97,7 +97,7 @@ export default function LoginPage({
         }
 
         if (response?.user?._id) {
-          dispatch(userApi.util.invalidateTags(["user"]));
+          dispatch(userApi.util.invalidateTags(["users"]));
           dispatch(setUserData(response?.user));
           dispatch(setCoins(response?.user?.totalCoin));
 
@@ -117,7 +117,6 @@ export default function LoginPage({
           }
           closeModal && closeModal();
         }
-
         dispatch(userApi.util.resetApiState());
         dispatch(eventApi.util.resetApiState());
         dispatch(transactionApi.util.resetApiState());

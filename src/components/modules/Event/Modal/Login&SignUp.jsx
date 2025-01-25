@@ -217,6 +217,7 @@ export default function LoginSignUp({
 
     const handleRegisterUser = await LoginUser(payload);
     const response = handleRegisterUser?.data;
+    console.log(response)
     const UserString = JSON.stringify(response?.user);
     if (!checkIfNonImageExist?.id) {
       storage.localStorage.set("noUserProfileImage", {
