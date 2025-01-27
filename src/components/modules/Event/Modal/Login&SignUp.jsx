@@ -329,6 +329,8 @@ export default function LoginSignUp({
             handleLogin={handleRegister}
             handleSubmit={handleSubmit2}
             Controller={Controller}
+            onNext={onNext}
+            closeModal={closeModal}
             control={control2}
             registerLoader={registerLoader}
             isEvent={isEvent}
