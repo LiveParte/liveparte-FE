@@ -19,6 +19,7 @@ import {
 } from "@/utils/reusableComponent";
 import { eventApi, useLoginApiMutation } from "@/store/Event/eventApi";
 import { transactionApi } from "@/store/Transaction/transactionApi";
+import useGoogleAuth from "@/utils/useGoogleAuth";
 
 export default function LoginPage({
   Controller,
@@ -34,108 +35,7 @@ export default function LoginPage({
   GoogleSignIn,
 }) {
 
-  const base_url = process.env.NEXT_PUBLIC_BASEURL
-  const [userToken, setUserToken] = useState(null); // Store the Google access token
-
-  const router = useRouter();
-  const dispatch = useDispatch();
-
-  const checkIfNonImageExist = storage.localStorage.get("noUserProfileImage");
-
-  const googleLogin = useGoogleLogin({
-    onSuccess: (tokenResponse) => {
-      console.log(tokenResponse)
-      setUserToken(tokenResponse.access_token); // Save the access token
-    },
-    onError: () => {
-      toast.error("Google login failed"); // Show error toast on login failure
-    },
-  });
-
-  useEffect(() => {
-    const authenticateUser = async () => {
-      try {
-        const responses = await fetch(
-          `${base_url}auth/oauth/google/login`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              token: userToken, // Send the token to the backend
-            }),
-          }
-        );
-
-        if (!responses.ok) {
-          throw new Error(`Error: ${responses.statusText}`);
-        }
-
-        const response = await responses.json();
-        console.log(response?.user)
-        
-        if (!checkIfNonImageExist?.id) {
-          storage.localStorage.set("noUserProfileImage", {
-            id: response?.user?._id,
-            nonProfileImage: randomBetweenOneAndTen(),
-          });
-        } else {
-          if (response?.user?._id !== checkIfNonImageExist?.id) {
-            storage.localStorage.set("noUserProfileImage", {
-              id: response?.user?._id,
-              nonProfileImage: randomBetweenOneAndTen(),
-            });
-          }
-        }
-        
-        if (response?.error?.data?.statusCode) {
-          // toast.error("Invalid credentials");
-          return ErrorNotification({
-            message: handleRegisterUser?.error?.data?.message,
-          });
-        }
-
-        if (response?.user?._id) {
-          dispatch(userApi.util.invalidateTags(["users"]));
-          dispatch(setUserData(response?.user));
-          dispatch(setCoins(response?.user?.totalCoin));
-
-           storage.localStorage.set(
-            accessTokenStorageName,
-            encryptText(response?.accessToken)
-          );
-   
-          // console.log(response?.user, "response?.user");
-          SuccessNotification({ message: "You're in!" });
-
-          if (router?.pathname === "/") {
-            return router.push(eventLink);
-          }
-          if (onNext) {
-            return onNext(response?.user);
-          }
-          closeModal && closeModal();
-        }
-        dispatch(userApi.util.resetApiState());
-        dispatch(eventApi.util.resetApiState());
-        dispatch(transactionApi.util.resetApiState());
-        dispatch(eventApi.util.invalidateTags(["event", "ondemand"]));
-      
-       
-      } catch (error) {
-        console.log(error)
-        ErrorNotification({
-          message: error?.message,
-        })
-      }
-    };
-
-    if (userToken) {
-      authenticateUser();
-      setUserToken(null); // Clear the token to prevent re-triggering
-    }
-  }, [userToken, GoogleSignIn]);
+  const googleLogin = useGoogleAuth({ onNext, closeModal, eventLink });
 
   return (
     <form
