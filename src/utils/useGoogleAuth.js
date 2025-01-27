@@ -6,6 +6,7 @@ import { accessTokenStorageName, encryptText, storage } from "@/utils/helper";
 import { setCoins, setUserData } from "@/store/User";
 import {
   ErrorNotification,
+  randomBetweenOneAndTen,
   SuccessNotification,
 } from "@/utils/reusableComponent";
 
