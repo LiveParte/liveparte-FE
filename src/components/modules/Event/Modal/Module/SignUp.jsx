@@ -5,14 +5,17 @@ import { GoogleIcon } from "../../../../../../public/svg";
 import { FloatingLabelInput } from "@/components/Ui/TextInput";
 import Link from "next/link";
 import { PolicyUrl, termsUrl } from "@/utils/reusableComponent";
-import { useGoogleLogin } from "@react-oauth/google";
 import { FloatingLabelSelect } from "@/components/Ui/selectnput";
+import useGoogleAuth from "@/utils/useGoogleAuth";
+import {eventLink} from "@/utils/reusableComponent";
 
 export default function SignUpPage({
   Controller,
   control,
   handleSubmit,
   handleLogin,
+  onNext,
+  closeModal,
   registerLoader,
   isEvent,
   GoogleSignUp,
@@ -63,25 +66,36 @@ export default function SignUpPage({
     }
   }, [user]);
 
-  const googleLogin = useGoogleLogin({
-    onSuccess: (tokenResponse) => {
-      setUser(tokenResponse);
-      // console.log(tokenResponse,'tokenResponse')
-      // You can now use the tokenResponse to authenticate the user in your app
-    },
-    onError: () => {
-      // console.error('Google login failed');
-      // Handle login errors here
-    },
-    // flow: 'auth-code', // Use 'auth-code' for the authorization code flow
-  });
+  const googleLogin = useGoogleAuth({ onNext, closeModal, eventLink });
+
   return (
     <form
       className=" px-[15px] lg:px-[30px] flex flex-col  lg:pb-[0px]"
       autoComplete="off"
     >
      
-      <div className="flex flex-col gap-[20px] mt-3">
+      <div className="flex flex-col gap-[20px]">
+         <div className="">
+          <ButtonComp
+            onClick={(e) => {
+              e.preventDefault();
+              googleLogin(); // Trigger Google Sign-In
+            }}
+            className={`w-full text-[#060809] text-[13px] font500`}
+            btnText={
+              <div className="flex justify-center items-center gap-[12px]">
+                <GoogleIcon />
+                Sign up with Google
+              </div>
+            }
+          />
+        </div>
+        <div className="flex items-center text-[13px] text-white  py-[10px] ">
+          <div className="bg-[#343F4B]  h-[1px] flex-grow-1"></div>
+          <div className="px-[28px] tracking-[1.5px]"> Or</div>
+
+          <div className="bg-[#343F4B]  h-[1px] flex-grow-1"></div>
+        </div>
         {SignUpForm()
           ?.slice(0, 3)
           ?.map((item, index) => (
@@ -140,7 +154,7 @@ export default function SignUpPage({
             ))}
         </div>
       </div>
-      <div className="mt-[24px]">
+      <div className="mt-[24px] mb-3">
         <ButtonComp
           btnText={isEvent ? "Sign up to Continue" : "Sign Up"}
           className={`w-full text-[13px] font500 `}
@@ -148,7 +162,7 @@ export default function SignUpPage({
           isLoading={registerLoader}
         />
       </div>
-      <div className="text-[#63768d] text-[13px] text-center px-[10px] mt-[19px] ">
+      <div className="text-[#63768d] text-[13px] text-center px-[10px] mt-[10px] ">
         By continuing, you agree and accept the{" "}
         <Link target="_blank" href={termsUrl} className="underline text-white">
           Terms of Service
