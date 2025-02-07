@@ -28,7 +28,7 @@ export default function EnterEmail({onNext,control,handleSubmit,isLoading}) {
             name={item?.name}
             rules={{
               required: `${item?.label} is required`,
-              pattern: item?.pattern,
+              pattern: item?.pattern,   
             }}
             render={({ field: { onChange, value }, formState: { errors } }) => (
               <FloatingLabelInput
