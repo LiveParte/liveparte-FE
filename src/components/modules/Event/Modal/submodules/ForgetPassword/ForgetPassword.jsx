@@ -44,30 +44,43 @@ export default function ForgetPassword({
     }
   }, [Path,router?.pathname ]);
 
-  const handleForgetPassword = async (data) => {
-   
-    const responses = await forgetPassword(data);
 
-    if (
-      responses?.data?.message ==
-      "Password reset token has been sent to your email"
-    ) {
-      return setSelectPage("MailSent");
-      // return SuccessNotification({message:responses?.data?.message})
-    }
-    if (responses?.data?.statusCode !== 200) {
-      if (responses?.data?.message === "User not found") {
-        return setError("email", {
-          type: "custom",
-          message: responses?.data?.message,
-        });
+
+
+  const handleForgetPassword = async (data) => {
+    try {
+      const response = await forgetPassword(data);
+      console.log("API Response:", response); // Keep this for debugging
+  
+      if (response?.data?.message === "Password reset token has been sent to your email") {
+        return setSelectPage("MailSent");
       }
-      // return ErrorNotification({message:responses?.data?.message})
+  
+      // Specifically handle the 404 status and "User not found" message
+      if (response?.error && response.error.data.error === "Not Found" && response?.error?.data?.statusCode === 404) {
+        // Set a user-friendly error message for the email field
+        setError("email", {
+          type: "custom",
+          // message: "The email address you entered is not associated with any account.",
+        });
+        
+        // Show the same message in a toast notification
+        ErrorNotification({ message: "The email address you entered is not associated with any account." });
+        
+        return; // Prevent further execution
+      }
+  
+      // Catch-all for other unexpected errors
+      return ErrorNotification({ message: "Something went wrong. Please try again later." });
+    } catch (error) {
+      // Handle any network or unexpected errors
+      console.error("Forgot Password Error:", error);
+      return ErrorNotification({ message: "Something went wrong. Please try again later." });
     }
-  //  return setSelectPage("MailSent");
-    return ErrorNotification({ message: "Something went wrong" });
-    // setSelectPage('MailSent')
   };
+
+
+
   const handleResetPassword = async (data) => {
 
     if (data?.confirmPassword !== data?.password) {
@@ -75,7 +88,7 @@ export default function ForgetPassword({
         type: "custom",
         message: "Confirm New Password must be the same as New Password",
       });
-    }
+    }    
     const payload = {
       token,
       newPassword: data?.password,
