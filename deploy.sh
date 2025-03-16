@@ -4,4 +4,4 @@ git checkout staging
 
 git pull origin staging
 
-docker compose up -d --build frontend
+docker compose up -d --build frontend || sudo docker compose up -d --build frontend
