@@ -1,10 +1,187 @@
 "use client";
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 
 interface ProgramGuideProps {
   className?: string;
 }
+
+// Move HorizontalScrollView outside to prevent recreation
+const HorizontalScrollView = React.memo(({ 
+  children, 
+  className = ""
+}: { 
+  children: React.ReactNode; 
+  className?: string;
+}) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+
+  return (
+    <div className={`relative w-full ${className}`}>
+      {/* Scrollable container with drag functionality */}
+      <div
+        ref={containerRef}
+        className="overflow-x-auto overflow-y-hidden scrollbar-hide scroll-smooth"
+        style={{ 
+          scrollbarWidth: 'none', 
+          msOverflowStyle: 'none',
+          touchAction: 'pan-x',
+          overscrollBehavior: 'contain'
+        }}
+      >
+        <motion.div 
+          ref={scrollRef}
+          className="flex gap-4 py-2"
+          style={{ width: 'max-content' }}
+          drag="x"
+          dragConstraints={containerRef}
+          dragElastic={0.1}
+          dragMomentum={true}
+          onDragStart={() => setIsDragging(true)}
+          onDragEnd={() => setIsDragging(false)}
+          whileDrag={{ 
+            cursor: 'grabbing',
+            scale: 0.98
+          }}
+          animate={{ 
+            cursor: isDragging ? 'grabbing' : 'grab',
+            scale: isDragging ? 0.98 : 1
+          }}
+          transition={{ 
+            type: "spring", 
+            stiffness: 300, 
+            damping: 30 
+          }}
+        >
+          {children}
+        </motion.div>
+      </div>
+    </div>
+  );
+});
+
+// Move ProgramCard outside to prevent recreation
+const ProgramCard = React.memo(({ 
+  program, 
+  channelId, 
+  index, 
+  isSelected, 
+  onSelect 
+}: {
+  program: any;
+  channelId: string;
+  index: number;
+  isSelected: boolean;
+  onSelect: (channelId: string, index: number) => void;
+}) => (
+  <motion.div
+    className={`min-w-[300px] flex-shrink-0 rounded-[8px] border cursor-pointer transition-all relative p-[16px] ${
+      program.status === 'live'
+        ? 'bg-gray-700 border-gray-600 text-white'
+        : 'bg-gray-800 border-gray-700 text-gray-300 hover:bg-gray-700'
+    } ${isSelected ? 'ring-2 ring-blue-500' : ''}`}
+    whileHover={{ 
+      scale: 1.05,
+      y: -2,
+      transition: { type: "spring", stiffness: 300 }
+    }}
+    whileTap={{ scale: 0.98 }}
+    onClick={(e) => {
+      e.stopPropagation();
+      onSelect(channelId, index);
+    }}
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.3, delay: index * 0.1 }}
+  >
+    {/* LIVE badge */}
+    {program.status === 'live' && (
+      <motion.div 
+        className="absolute top-[12px] right-[12px] bg-red-600 text-white px-[8px] py-[3px] rounded-[4px] text-[11px] font-bold"
+        initial={{ scale: 0, rotate: -180 }}
+        animate={{ scale: 1, rotate: 0 }}
+        transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
+      >
+        LIVE
+      </motion.div>
+    )}
+
+    {/* BREAKING NEWS badge */}
+    {program.breaking && (
+      <motion.div 
+        className="bg-blue-600 text-white px-[8px] py-[3px] rounded-[4px] text-[11px] font-bold mb-[12px] inline-block"
+        initial={{ opacity: 0, scale: 0.8, x: -20 }}
+        animate={{ opacity: 1, scale: 1, x: 0 }}
+        transition={{ delay: 0.7, type: "spring", stiffness: 200 }}
+      >
+        BREAKING NEWS
+      </motion.div>
+    )}
+
+    {/* Bell icon for upcoming programs */}
+    {program.status === 'upcoming' && (
+      <motion.div 
+        className="absolute top-[12px] right-[12px] text-gray-400"
+        initial={{ opacity: 0, scale: 0 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.3 + index * 0.1 }}
+      >
+        <svg className="w-[18px] h-[18px]" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+        </svg>
+      </motion.div>
+    )}
+
+    <div className="mb-[12px]">
+      <h4 className={`text-[16px] font-semibold ${
+        program.status === 'live' ? 'text-white' : 'text-white'
+      }`}>
+        {program.title}
+      </h4>
+    </div>
+    
+    <div className={`text-[13px] mb-[6px] ${
+      program.status === 'live' ? 'text-gray-300' : 'text-gray-400'
+    }`}>
+      {program.genre}
+    </div>
+    
+    <p className={`text-[13px] mb-[8px] leading-relaxed ${
+      program.status === 'live' ? 'text-gray-300' : 'text-gray-400'
+    }`}>
+      {program.description}
+    </p>
+    
+    <div className="flex items-center justify-between mb-[12px]">
+      <span className={`text-[13px] ${
+        program.status === 'live' ? 'text-gray-300' : 'text-gray-400'
+      }`}>
+        {program.time}
+      </span>
+      {program.timeLeft && (
+        <span className={`text-[13px] font-medium ${
+          program.status === 'live' ? 'text-gray-300' : 'text-gray-400'
+        }`}>
+          {program.timeLeft}
+        </span>
+      )}
+    </div>
+    
+    {/* Progress bar for live programs */}
+    {program.status === 'live' && (
+      <div className="w-full bg-gray-600 rounded-full h-[6px] overflow-hidden">
+        <motion.div 
+          className="bg-red-600 h-[6px] rounded-full" 
+          initial={{ width: 0 }}
+          animate={{ width: `${program.progress}%` }}
+          transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+        />
+      </div>
+    )}
+  </motion.div>
+));
 
 const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
   const timeSlots = ['20:00', '20:30', '21:00', '21:30', '22:00', '22:30', '23:00', '23:30', '00:00', '00:30', '01:00', '01:30', '02:00', '02:30', '03:00'];
@@ -169,61 +346,11 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
 
   const [selectedProgram, setSelectedProgram] = useState<string | null>(null);
 
-  // Horizontal scroll component with proper drag functionality
-  const HorizontalScrollView = ({ 
-    children, 
-    className = ""
-  }: { 
-    children: React.ReactNode; 
-    className?: string;
-  }) => {
-    const scrollRef = useRef<HTMLDivElement>(null);
-    const containerRef = useRef<HTMLDivElement>(null);
-    const [isDragging, setIsDragging] = useState(false);
-
-    return (
-      <div className={`relative w-full ${className}`}>
-        {/* Scrollable container with drag functionality */}
-        <div
-          ref={containerRef}
-          className="overflow-x-auto overflow-y-hidden scrollbar-hide scroll-smooth"
-          style={{ 
-            scrollbarWidth: 'none', 
-            msOverflowStyle: 'none',
-            touchAction: 'pan-x',
-            overscrollBehavior: 'contain'
-          }}
-        >
-          <motion.div 
-            ref={scrollRef}
-            className="flex gap-4 py-2"
-            style={{ width: 'max-content' }}
-            drag="x"
-            dragConstraints={containerRef}
-            dragElastic={0.1}
-            dragMomentum={true}
-            onDragStart={() => setIsDragging(true)}
-            onDragEnd={() => setIsDragging(false)}
-            whileDrag={{ 
-              cursor: 'grabbing',
-              scale: 0.98
-            }}
-            animate={{ 
-              cursor: isDragging ? 'grabbing' : 'grab',
-              scale: isDragging ? 0.98 : 1
-            }}
-            transition={{ 
-              type: "spring", 
-              stiffness: 300, 
-              damping: 30 
-            }}
-          >
-            {children}
-          </motion.div>
-        </div>
-      </div>
-    );
-  };
+  // Memoized click handler to prevent unnecessary re-renders
+  const handleProgramClick = useCallback((channelId: string, index: number) => {
+    const programId = `${channelId}-${index}`;
+    setSelectedProgram(prev => prev === programId ? null : programId);
+  }, []);
 
   return (
     <div className={`flex-1 ${className}`} style={{ overflow: 'hidden' }}>
@@ -285,109 +412,14 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
               <div className="flex-1 min-w-0">
                 <HorizontalScrollView>
                   {channel.programs.map((program, index) => (
-                    <motion.div
+                    <ProgramCard
                       key={`${channel.id}-${program.title}-${index}`}
-                      className={`min-w-[300px] flex-shrink-0 rounded-[8px] border cursor-pointer transition-all relative p-[16px] ${
-                        program.status === 'live'
-                          ? 'bg-gray-700 border-gray-600 text-white'
-                          : 'bg-gray-800 border-gray-700 text-gray-300 hover:bg-gray-700'
-                      } ${selectedProgram === `${channel.id}-${index}` ? 'ring-2 ring-blue-500' : ''}`}
-                      whileHover={{ 
-                        scale: 1.05,
-                        y: -2,
-                        transition: { type: "spring", stiffness: 300 }
-                      }}
-                      whileTap={{ scale: 0.98 }}
-                      onClick={() => setSelectedProgram(`${channel.id}-${index}`)}
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.1 }}
-                    >
-                      {/* LIVE badge */}
-                      {program.status === 'live' && (
-                        <motion.div 
-                          className="absolute top-[12px] right-[12px] bg-red-600 text-white px-[8px] py-[3px] rounded-[4px] text-[11px] font-bold"
-                          initial={{ scale: 0, rotate: -180 }}
-                          animate={{ scale: 1, rotate: 0 }}
-                          transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
-                        >
-                          LIVE
-                        </motion.div>
-                      )}
-
-                      {/* BREAKING NEWS badge */}
-                      {program.breaking && (
-                        <motion.div 
-                          className="bg-blue-600 text-white px-[8px] py-[3px] rounded-[4px] text-[11px] font-bold mb-[12px] inline-block"
-                          initial={{ opacity: 0, scale: 0.8, x: -20 }}
-                          animate={{ opacity: 1, scale: 1, x: 0 }}
-                          transition={{ delay: 0.7, type: "spring", stiffness: 200 }}
-                        >
-                          BREAKING NEWS
-                        </motion.div>
-                      )}
-
-                      {/* Bell icon for upcoming programs */}
-                      {program.status === 'upcoming' && (
-                        <motion.div 
-                          className="absolute top-[12px] right-[12px] text-gray-400"
-                          initial={{ opacity: 0, scale: 0 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 0.3 + index * 0.1 }}
-                        >
-                          <svg className="w-[18px] h-[18px]" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
-                          </svg>
-                        </motion.div>
-                      )}
-
-                      <div className="mb-[12px]">
-                        <h4 className={`text-[16px] font-semibold ${
-                          program.status === 'live' ? 'text-white' : 'text-white'
-                        }`}>
-                          {program.title}
-                        </h4>
-                      </div>
-                      
-                      <div className={`text-[13px] mb-[6px] ${
-                        program.status === 'live' ? 'text-gray-300' : 'text-gray-400'
-                      }`}>
-                        {program.genre}
-                      </div>
-                      
-                      <p className={`text-[13px] mb-[8px] leading-relaxed ${
-                        program.status === 'live' ? 'text-gray-300' : 'text-gray-400'
-                      }`}>
-                        {program.description}
-                      </p>
-                      
-                      <div className="flex items-center justify-between mb-[12px]">
-                        <span className={`text-[13px] ${
-                          program.status === 'live' ? 'text-gray-300' : 'text-gray-400'
-                        }`}>
-                          {program.time}
-                        </span>
-                        {program.timeLeft && (
-                          <span className={`text-[13px] font-medium ${
-                            program.status === 'live' ? 'text-gray-300' : 'text-gray-400'
-                          }`}>
-                            {program.timeLeft}
-                          </span>
-                        )}
-                      </div>
-                      
-                      {/* Progress bar for live programs */}
-                      {program.status === 'live' && (
-                        <div className="w-full bg-gray-600 rounded-full h-[6px] overflow-hidden">
-                          <motion.div 
-                            className="bg-red-600 h-[6px] rounded-full" 
-                            initial={{ width: 0 }}
-                            animate={{ width: `${program.progress}%` }}
-                            transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-                          />
-                        </div>
-                      )}
-                    </motion.div>
+                      program={program}
+                      channelId={channel.id}
+                      index={index}
+                      isSelected={selectedProgram === `${channel.id}-${index}`}
+                      onSelect={handleProgramClick}
+                    />
                   ))}
                 </HorizontalScrollView>
               </div>
