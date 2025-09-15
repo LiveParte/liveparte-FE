@@ -127,10 +127,9 @@ export default function Header({ className, openModal }) {
       {dropDown && <MenuDropdown />}
 
       <div
-        className={`pt-[14px]  lg:pt-[16px] pb-[16px]  font400 ${className} ${MainContainer} relative z-50`}
+        className={`bg-black-background pt-[14px]  lg:pt-[16px] pb-[16px]  font400 ${className} ${MainContainer} relative z-50`}
       >
-        <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover  bg-[url('/webp/header.png')] z-30 opacity-25 pointer-events-none"></div>
-        {/* <LogoWhite/> */}
+        {/* Remove the background image overlay */}
         <div
           className="flex justify-between   cursor-pointer relative  z-90 items-center"
           style={{ zIndex: 90 }}
@@ -141,11 +140,11 @@ export default function Header({ className, openModal }) {
           <div className="flex items-center justify-between lg:gap-[24px]">
             <div className="flex items-center justify-between lg:gap-[24px]">
               <ButtonComp
-                btnText="Browse Events"
-                className={` font-medium  hidden lg:block  px-[16px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${isEvent && isSelected
+                btnText="Home"
+                className={` font-medium  hidden lg:block  px-[16px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${isHome && isSelected
                   }  text-[13px]   !h-[32px]`}
                 onClick={() => {
-                  router.push(eventLink);
+                  router.push("/");
                 }}
               />
               <ButtonComp
@@ -157,35 +156,60 @@ export default function Header({ className, openModal }) {
                 }}
               />
               <ButtonComp
-                btnText="On Demand"
-                className={` font-medium  hidden lg:block !py-[11px]  gap-[10px] !bg-transparent   font500 text-white ${isFocused}   text-[13px] ${isOnDemand && isSelected
-                  }  !h-[32px]`}
+                btnText="Movies"
+                className={` font-medium  hidden lg:block !py-[11px]  gap-[10px] !bg-transparent   font500 text-white ${isFocused}   text-[13px]  !h-[32px]`}
                 onClick={() => {
-                  router.push(onDemandLink);
+                  router.push("/movies");
                 }}
               />
-           
-
-              <Link
-                href={entertainersLink}
-                className={` font-medium  hidden lg:block !py-[11px]  gap-[10px] !bg-transparent   font500 text-white ${isFocused}   text-[13px] ${isEntertainer && isSelected
-                  }  !h-[32px]`}
-              >
-                For Entertainers
-              </Link>
+              <ButtonComp
+                btnText="Series"
+                className={` font-medium  hidden lg:block !py-[11px]  gap-[10px] !bg-transparent   font500 text-white ${isFocused}   text-[13px]  !h-[32px]`}
+                onClick={() => {
+                  router.push("/series");
+                }}
+              />
+              <ButtonComp
+                btnText="Sports"
+                className={` font-medium  hidden lg:block !py-[11px]  gap-[10px] !bg-transparent   font500 text-white ${isFocused}   text-[13px]  !h-[32px]`}
+                onClick={() => {
+                  router.push("/sports");
+                }}
+              />
+              <ButtonComp
+                btnText="My List"
+                className={` font-medium  hidden lg:block !py-[11px]  gap-[10px] !bg-transparent   font500 text-white ${isFocused}   text-[13px]  !h-[32px]`}
+                onClick={() => {
+                  router.push("/mylist");
+                }}
+              />
             </div>
 
             <div className="flex items-center gap-[16px]">
-              <ButtonComp
-                onClick={() => openModal("Login")}
-                btnText="Login"
-                className="px-[16px] !h-[32px]  text-[13px] font500 md:h-fit border-[#262C32] rounded-[999px] border-[1px] !bg-[#25272d] !text-white buttonClose"
-              />
-              <ButtonComp
-                onClick={() => openModal("SignUp")}
-                btnText="Sign Up"
-                className="px-[16px] !h-[32px]  text-[13px] font500 md:h-fit border-[#262C32] rounded-[999px] border-[1px] !bg-[#25272d] !text-white buttonClose"
-              />
+              {/* Search Icon */}
+              <button className="text-white hover:text-gray-300 transition-colors">
+                <svg className="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+              </button>
+              
+              {/* Notifications Icon */}
+              <button className="text-white hover:text-gray-300 transition-colors relative">
+                <svg className="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5zM9 12l2 2 4-4" />
+                </svg>
+                <div className="absolute -top-1 -right-1 w-[8px] h-[8px] bg-red-500 rounded-full"></div>
+              </button>
+              
+              {/* Profile Dropdown */}
+              <div className="flex items-center gap-[8px] cursor-pointer">
+                <div className="w-[32px] h-[32px] bg-gray-600 rounded-full flex items-center justify-center">
+                  <span className="text-white text-[14px] font-medium">U</span>
+                </div>
+                <svg className="w-[12px] h-[12px] text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+                </svg>
+              </div>
             </div>
           </div>
 
