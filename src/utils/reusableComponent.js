@@ -428,3 +428,5 @@ export function checkEventStatusII(event_date, event_time, event_length) {
     }
   }
 }
+
+export const liveTvLink = `/livetv`;
