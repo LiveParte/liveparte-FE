@@ -19,7 +19,11 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
       <div className="px-[20px] md:px-[40px] lg:px-[120px] py-[40px]">
         <div className="flex flex-col lg:flex-row gap-[32px]">
           {/* Categories Sidebar */}
-          <CategoriesSidebar />
+          <div className="relative">
+            <CategoriesSidebar />
+            {/* Faint vertical separator line */}
+            <div className="hidden lg:block absolute top-0 right-0 w-[1px] h-full bg-white/10" />
+          </div>
           
           {/* Program Guide */}
           <ProgramGuide />
