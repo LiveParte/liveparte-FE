@@ -15,7 +15,7 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
       logo: 'CNN',
       programs: [
         {
-          title: 'International Desk',
+          title: 'Breaking News Tonight',
           time: '20:00 - 21:00',
           status: 'live',
           description: 'Live coverage of today\'s most important stories',
@@ -25,20 +25,20 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
           progress: 70
         },
         {
-          title: 'International Desk',
+          title: 'Anderson Cooper 360',
           time: '21:00 - 22:00',
           status: 'upcoming',
-          description: 'Upcoming episode',
+          description: 'In-depth analysis of current events',
           genre: 'News',
           timeLeft: null,
           breaking: false,
           progress: 0
         },
         {
-          title: 'International Desk',
+          title: 'CNN Tonight',
           time: '22:00 - 23:00',
           status: 'upcoming',
-          description: 'Upcoming episode',
+          description: 'Late night news and commentary',
           genre: 'News',
           timeLeft: null,
           breaking: false,
@@ -52,30 +52,30 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
       logo: 'BBC',
       programs: [
         {
-          title: 'International Desk',
+          title: 'BBC World News',
           time: '20:00 - 21:00',
           status: 'live',
-          description: 'Live coverage of today\'s most important stories',
+          description: 'Global news and current affairs',
           genre: 'News',
           timeLeft: '30m Left',
           breaking: false,
           progress: 0
         },
         {
-          title: 'International Desk',
+          title: 'Hardtalk',
           time: '21:00 - 22:00',
           status: 'upcoming',
-          description: 'Upcoming episode',
+          description: 'In-depth interviews with world leaders',
           genre: 'News',
           timeLeft: null,
           breaking: false,
           progress: 0
         },
         {
-          title: 'International Desk',
+          title: 'Newsday',
           time: '22:00 - 23:00',
           status: 'upcoming',
-          description: 'Upcoming episode',
+          description: 'Morning news program',
           genre: 'News',
           timeLeft: null,
           breaking: false,
@@ -134,7 +134,7 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
                     key={index}
                     className={`flex-1 p-[12px] rounded-[8px] border cursor-pointer transition-all relative ${
                       program.status === 'live'
-                        ? 'bg-white border-white text-black'
+                        ? 'bg-gray-700 border-gray-600 text-white'
                         : 'bg-gray-800 border-gray-700 text-gray-300 hover:bg-gray-700'
                     }`}
                   >
@@ -163,33 +163,33 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
 
                     <div className="mb-[8px]">
                       <h4 className={`text-[14px] font-semibold ${
-                        program.status === 'live' ? 'text-black' : 'text-white'
+                        program.status === 'live' ? 'text-white' : 'text-white'
                       }`}>
                         {program.title}
                       </h4>
                     </div>
                     
                     <div className={`text-[12px] mb-[4px] ${
-                      program.status === 'live' ? 'text-gray-600' : 'text-gray-400'
+                      program.status === 'live' ? 'text-gray-300' : 'text-gray-400'
                     }`}>
                       {program.genre}
                     </div>
                     
                     <p className={`text-[12px] mb-[4px] ${
-                      program.status === 'live' ? 'text-gray-600' : 'text-gray-400'
+                      program.status === 'live' ? 'text-gray-300' : 'text-gray-400'
                     }`}>
                       {program.description}
                     </p>
                     
                     <div className="flex items-center justify-between mb-[8px]">
                       <span className={`text-[12px] ${
-                        program.status === 'live' ? 'text-gray-600' : 'text-gray-400'
+                        program.status === 'live' ? 'text-gray-300' : 'text-gray-400'
                       }`}>
                         {program.time}
                       </span>
                       {program.timeLeft && (
                         <span className={`text-[12px] font-medium ${
-                          program.status === 'live' ? 'text-gray-600' : 'text-gray-400'
+                          program.status === 'live' ? 'text-gray-300' : 'text-gray-400'
                         }`}>
                           {program.timeLeft}
                         </span>
@@ -198,7 +198,7 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
                     
                     {/* Progress bar for live programs */}
                     {program.status === 'live' && (
-                      <div className="w-full bg-gray-200 rounded-full h-[4px]">
+                      <div className="w-full bg-gray-600 rounded-full h-[4px]">
                         <div 
                           className="bg-red-600 h-[4px] rounded-full" 
                           style={{ width: `${program.progress}%` }}
