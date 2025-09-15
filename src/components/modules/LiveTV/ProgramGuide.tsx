@@ -21,7 +21,8 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
           description: 'Live coverage of today\'s most important stories',
           genre: 'TV-PG News',
           timeLeft: '30m Left',
-          breaking: true
+          breaking: true,
+          progress: 70
         },
         {
           title: 'International Desk',
@@ -30,7 +31,8 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
           description: 'Upcoming episode',
           genre: 'News',
           timeLeft: null,
-          breaking: false
+          breaking: false,
+          progress: 0
         },
         {
           title: 'International Desk',
@@ -39,7 +41,8 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
           description: 'Upcoming episode',
           genre: 'News',
           timeLeft: null,
-          breaking: false
+          breaking: false,
+          progress: 0
         }
       ]
     },
@@ -55,7 +58,8 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
           description: 'Live coverage of today\'s most important stories',
           genre: 'News',
           timeLeft: '30m Left',
-          breaking: false
+          breaking: false,
+          progress: 0
         },
         {
           title: 'International Desk',
@@ -64,7 +68,8 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
           description: 'Upcoming episode',
           genre: 'News',
           timeLeft: null,
-          breaking: false
+          breaking: false,
+          progress: 0
         },
         {
           title: 'International Desk',
@@ -73,7 +78,8 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
           description: 'Upcoming episode',
           genre: 'News',
           timeLeft: null,
-          breaking: false
+          breaking: false,
+          progress: 0
         }
       ]
     }
@@ -92,93 +98,116 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
         </div>
       </div>
 
-      {/* Time slots header */}
+      {/* Time slots header - horizontal at the very top */}
       <div className="flex mb-[16px]">
-        <div className="w-[120px]"></div> {/* Channel name column */}
+        <div className="w-[120px]"></div> {/* Empty space for channel column */}
         <div className="flex-1 flex">
           {timeSlots.map((time, index) => (
-            <div key={time} className="flex-1 text-center text-gray-400 text-[12px] font-medium">
+            <div key={time} className="flex-1 text-center text-gray-400 text-[12px] font-medium py-[8px]">
               {time}
             </div>
           ))}
         </div>
       </div>
 
-      {/* Channels and programs */}
-      <div className="space-y-[12px]">
+      {/* Channels and programs - proper vertical structure with better spacing */}
+      <div className="space-y-[24px]">
         {channels.map((channel) => (
-          <div key={channel.id} className="flex">
-            {/* Channel name */}
-            <div className="w-[120px] flex items-center">
-              <div className="bg-gray-800 text-white px-[8px] py-[4px] rounded-[4px] text-[12px] font-bold">
-                {channel.logo}
+          <div key={channel.id} className="space-y-[12px]">
+            {/* Channel logo and name - above the programs */}
+            <div className="flex items-center">
+              <div className="w-[120px] flex items-center">
+                <div className="flex items-center gap-[8px]">
+                  <div className="bg-gray-800 text-white px-[8px] py-[4px] rounded-[4px] text-[12px] font-bold">
+                    {channel.logo}
+                  </div>
+                  <span className="text-white text-[14px] font-medium">{channel.name}</span>
+                </div>
               </div>
             </div>
             
-            {/* Programs */}
-            <div className="flex-1 flex">
-              {channel.programs.map((program, index) => (
-                <div
-                  key={index}
-                  className={`flex-1 p-[12px] rounded-[8px] border cursor-pointer transition-all ${
-                    program.status === 'live'
-                      ? 'bg-white border-white text-black'
-                      : 'bg-gray-800 border-gray-700 text-gray-300 hover:bg-gray-700'
-                  }`}
-                >
-                  <div className="flex items-start justify-between mb-[8px]">
-                    <h4 className={`text-[14px] font-semibold ${
-                      program.status === 'live' ? 'text-black' : 'text-white'
-                    }`}>
-                      {program.title}
-                    </h4>
+            {/* Programs timeline - below the channel name, starting from far left */}
+            <div className="flex">
+              <div className="flex-1 flex">
+                {channel.programs.map((program, index) => (
+                  <div
+                    key={index}
+                    className={`flex-1 p-[12px] rounded-[8px] border cursor-pointer transition-all relative ${
+                      program.status === 'live'
+                        ? 'bg-white border-white text-black'
+                        : 'bg-gray-800 border-gray-700 text-gray-300 hover:bg-gray-700'
+                    }`}
+                  >
+                    {/* LIVE badge */}
                     {program.status === 'live' && (
-                      <span className="bg-red-600 text-white px-[6px] py-[2px] rounded-[4px] text-[10px] font-bold">
+                      <div className="absolute top-[8px] right-[8px] bg-red-600 text-white px-[6px] py-[2px] rounded-[4px] text-[10px] font-bold">
                         LIVE
-                      </span>
+                      </div>
                     )}
-                  </div>
-                  
-                  {program.breaking && (
-                    <div className="bg-red-600 text-white px-[6px] py-[2px] rounded-[4px] text-[10px] font-bold mb-[4px] inline-block">
-                      BREAKING NEWS
+
+                    {/* BREAKING NEWS badge for featured CNN program */}
+                    {program.breaking && (
+                      <div className="bg-blue-600 text-white px-[6px] py-[2px] rounded-[4px] text-[10px] font-bold mb-[8px] inline-block">
+                        BREAKING NEWS
+                      </div>
+                    )}
+
+                    {/* Bell icon for upcoming programs */}
+                    {program.status === 'upcoming' && (
+                      <div className="absolute top-[8px] right-[8px] text-gray-400">
+                        <svg className="w-[16px] h-[16px]" fill="currentColor" viewBox="0 0 20 20">
+                          <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+                        </svg>
+                      </div>
+                    )}
+
+                    <div className="mb-[8px]">
+                      <h4 className={`text-[14px] font-semibold ${
+                        program.status === 'live' ? 'text-black' : 'text-white'
+                      }`}>
+                        {program.title}
+                      </h4>
                     </div>
-                  )}
-                  
-                  <div className={`text-[12px] mb-[4px] ${
-                    program.status === 'live' ? 'text-gray-600' : 'text-gray-400'
-                  }`}>
-                    {program.genre}
-                  </div>
-                  
-                  <p className={`text-[12px] mb-[4px] ${
-                    program.status === 'live' ? 'text-gray-600' : 'text-gray-400'
-                  }`}>
-                    {program.description}
-                  </p>
-                  
-                  <div className="flex items-center justify-between">
-                    <span className={`text-[12px] ${
+                    
+                    <div className={`text-[12px] mb-[4px] ${
                       program.status === 'live' ? 'text-gray-600' : 'text-gray-400'
                     }`}>
-                      {program.time}
-                    </span>
-                    {program.timeLeft && (
-                      <span className={`text-[12px] font-medium ${
+                      {program.genre}
+                    </div>
+                    
+                    <p className={`text-[12px] mb-[4px] ${
+                      program.status === 'live' ? 'text-gray-600' : 'text-gray-400'
+                    }`}>
+                      {program.description}
+                    </p>
+                    
+                    <div className="flex items-center justify-between mb-[8px]">
+                      <span className={`text-[12px] ${
                         program.status === 'live' ? 'text-gray-600' : 'text-gray-400'
                       }`}>
-                        {program.timeLeft}
+                        {program.time}
                       </span>
+                      {program.timeLeft && (
+                        <span className={`text-[12px] font-medium ${
+                          program.status === 'live' ? 'text-gray-600' : 'text-gray-400'
+                        }`}>
+                          {program.timeLeft}
+                        </span>
+                      )}
+                    </div>
+                    
+                    {/* Progress bar for live programs */}
+                    {program.status === 'live' && (
+                      <div className="w-full bg-gray-200 rounded-full h-[4px]">
+                        <div 
+                          className="bg-red-600 h-[4px] rounded-full" 
+                          style={{ width: `${program.progress}%` }}
+                        ></div>
+                      </div>
                     )}
                   </div>
-                  
-                  {program.status === 'live' && (
-                    <div className="w-full bg-gray-200 rounded-full h-[4px] mt-[8px]">
-                      <div className="bg-red-600 h-[4px] rounded-full w-[70%]"></div>
-                    </div>
-                  )}
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
         ))}
