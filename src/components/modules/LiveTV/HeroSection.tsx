@@ -33,6 +33,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = "", selectedProgr
   const [totalTime, setTotalTime] = useState("1:59:21");
   const [progress, setProgress] = useState(25); // 25% progress
   const [volume, setVolume] = useState(80);
+  const [isDragging, setIsDragging] = useState(false);
 
   // Reset video state when program changes
   useEffect(() => {
@@ -43,13 +44,13 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = "", selectedProgr
 
   // Auto-hide controls after 3 seconds
   useEffect(() => {
-    if (isPlaying && showControls && isVideoPlaying) {
+    if (isPlaying && showControls && isVideoPlaying && !isDragging) {
       const timer = setTimeout(() => {
         setShowControls(false);
       }, 3000);
       return () => clearTimeout(timer);
     }
-  }, [isPlaying, showControls, isVideoPlaying]);
+  }, [isPlaying, showControls, isVideoPlaying, isDragging]);
 
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
@@ -69,12 +70,66 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = "", selectedProgr
   };
 
   const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isDragging) return;
+    
     const rect = e.currentTarget.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
-    const newProgress = (clickX / rect.width) * 100;
+    const newProgress = Math.max(0, Math.min(100, (clickX / rect.width) * 100));
     setProgress(newProgress);
     setShowControls(true);
   };
+
+  const handleProgressMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    setIsDragging(true);
+    setShowControls(true);
+    
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const newProgress = Math.max(0, Math.min(100, (clickX / rect.width) * 100));
+    setProgress(newProgress);
+  };
+
+  const handleProgressMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const newProgress = Math.max(0, Math.min(100, (clickX / rect.width) * 100));
+    setProgress(newProgress);
+  };
+
+  const handleProgressMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  // Add global mouse events for dragging
+  useEffect(() => {
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      if (isDragging) {
+        const progressBar = document.querySelector('.progress-bar');
+        if (progressBar) {
+          const rect = progressBar.getBoundingClientRect();
+          const clickX = e.clientX - rect.left;
+          const newProgress = Math.max(0, Math.min(100, (clickX / rect.width) * 100));
+          setProgress(newProgress);
+        }
+      }
+    };
+
+    const handleGlobalMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    if (isDragging) {
+      document.addEventListener('mousemove', handleGlobalMouseMove);
+      document.addEventListener('mouseup', handleGlobalMouseUp);
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleGlobalMouseMove);
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+    };
+  }, [isDragging]);
 
   const handleWatchLive = () => {
     setIsVideoPlaying(true);
@@ -371,18 +426,21 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = "", selectedProgr
               {/* Progress Bar */}
               <div className="w-full bg-black/20 px-4 py-2">
                 <div 
-                  className="w-full bg-gray-600 h-1 rounded-full cursor-pointer group"
+                  className="progress-bar w-full bg-gray-600 h-1 rounded-full cursor-pointer group select-none"
                   onClick={handleProgressClick}
+                  onMouseDown={handleProgressMouseDown}
+                  onMouseMove={handleProgressMouseMove}
+                  onMouseUp={handleProgressMouseUp}
                 >
                   <div className="relative h-full">
                     <motion.div
                       className="bg-white h-1 rounded-full"
                       style={{ width: `${progress}%` }}
-                      transition={{ duration: 0.1 }}
+                      transition={{ duration: isDragging ? 0 : 0.1 }}
                     />
                     {/* Progress handle */}
                     <div 
-                      className="absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                      className={`absolute top-1/2 -translate-y-1/2 w-3 h-3 bg-white rounded-full transition-opacity shadow-lg ${isDragging ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
                       style={{ left: `${progress}%`, transform: 'translate(-50%, -50%)' }}
                     />
                   </div>

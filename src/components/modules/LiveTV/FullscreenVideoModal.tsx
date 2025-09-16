@@ -31,20 +31,21 @@ const FullscreenVideoModal: React.FC<FullscreenVideoModalProps> = ({ isOpen, onC
   const [totalTime, setTotalTime] = useState("1:59:21");
   const [progress, setProgress] = useState(25);
   const [volume, setVolume] = useState(80);
+  const [isDragging, setIsDragging] = useState(false);
   const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   const { program, channelName, channelLogo } = programData;
 
   // Auto-hide controls after 3 seconds
   useEffect(() => {
-    if (isPlaying && showControls) {
+    if (isPlaying && showControls && !isDragging) {
       const timer = setTimeout(() => {
         setShowControls(false);
       }, 3000);
       controlsTimeoutRef.current = timer;
       return () => clearTimeout(timer);
     }
-  }, [isPlaying, showControls]);
+  }, [isPlaying, showControls, isDragging]);
 
   // Handle escape key to close modal
   useEffect(() => {
@@ -83,12 +84,66 @@ const FullscreenVideoModal: React.FC<FullscreenVideoModalProps> = ({ isOpen, onC
   };
 
   const handleProgressClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (isDragging) return;
+    
     const rect = e.currentTarget.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
-    const newProgress = (clickX / rect.width) * 100;
+    const newProgress = Math.max(0, Math.min(100, (clickX / rect.width) * 100));
     setProgress(newProgress);
     setShowControls(true);
   };
+
+  const handleProgressMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    setIsDragging(true);
+    setShowControls(true);
+    
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const newProgress = Math.max(0, Math.min(100, (clickX / rect.width) * 100));
+    setProgress(newProgress);
+  };
+
+  const handleProgressMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging) return;
+    
+    const rect = e.currentTarget.getBoundingClientRect();
+    const clickX = e.clientX - rect.left;
+    const newProgress = Math.max(0, Math.min(100, (clickX / rect.width) * 100));
+    setProgress(newProgress);
+  };
+
+  const handleProgressMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  // Add global mouse events for dragging
+  useEffect(() => {
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      if (isDragging) {
+        const progressBar = document.querySelector('.fullscreen-progress-bar');
+        if (progressBar) {
+          const rect = progressBar.getBoundingClientRect();
+          const clickX = e.clientX - rect.left;
+          const newProgress = Math.max(0, Math.min(100, (clickX / rect.width) * 100));
+          setProgress(newProgress);
+        }
+      }
+    };
+
+    const handleGlobalMouseUp = () => {
+      setIsDragging(false);
+    };
+
+    if (isDragging) {
+      document.addEventListener('mousemove', handleGlobalMouseMove);
+      document.addEventListener('mouseup', handleGlobalMouseUp);
+    }
+
+    return () => {
+      document.removeEventListener('mousemove', handleGlobalMouseMove);
+      document.removeEventListener('mouseup', handleGlobalMouseUp);
+    };
+  }, [isDragging]);
 
   const handleMouseMove = () => {
     setShowControls(true);
@@ -186,18 +241,21 @@ const FullscreenVideoModal: React.FC<FullscreenVideoModalProps> = ({ isOpen, onC
           {/* Progress Bar */}
           <div className="w-full bg-black/30 px-6 py-3">
             <div 
-              className="w-full bg-gray-600 h-2 rounded-full cursor-pointer group"
+              className="fullscreen-progress-bar w-full bg-gray-600 h-2 rounded-full cursor-pointer group select-none"
               onClick={handleProgressClick}
+              onMouseDown={handleProgressMouseDown}
+              onMouseMove={handleProgressMouseMove}
+              onMouseUp={handleProgressMouseUp}
             >
               <div className="relative h-full">
                 <motion.div
                   className="bg-white h-2 rounded-full"
                   style={{ width: `${progress}%` }}
-                  transition={{ duration: 0.1 }}
+                  transition={{ duration: isDragging ? 0 : 0.1 }}
                 />
                 {/* Progress handle */}
                 <div 
-                  className="absolute top-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full opacity-0 group-hover:opacity-100 transition-opacity shadow-lg"
+                  className={`absolute top-1/2 -translate-y-1/2 w-4 h-4 bg-white rounded-full transition-opacity shadow-lg ${isDragging ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
                   style={{ left: `${progress}%`, transform: 'translate(-50%, -50%)' }}
                 />
               </div>
