@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import HeroSection from './HeroSection';
 import CategoriesSidebar from './CategoriesSidebar';
 import ProgramGuide from './ProgramGuide';
+import FullscreenVideoModal from './FullscreenVideoModal';
 
 interface LiveTVProps {
   className?: string;
@@ -26,17 +27,25 @@ interface SelectedProgram {
 
 const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
   const [selectedProgram, setSelectedProgram] = useState<SelectedProgram | null>(null);
+  const [isFullscreenOpen, setIsFullscreenOpen] = useState(false);
 
   // Callback to handle program selection from ProgramGuide
   const handleProgramSelect = useCallback((programData: SelectedProgram) => {
     setSelectedProgram(programData);
   }, []);
 
-  // Handle video player maximize (for future fullscreen functionality)
-  const handleVideoMaximize = () => {
-    // This will be used for fullscreen functionality later
-    console.log('Maximize video player');
-  };
+  // Handle fullscreen video open/close
+  const handleVideoMaximize = useCallback(() => {
+    if (selectedProgram) {
+      console.log('Opening fullscreen video for:', selectedProgram.program.title);
+      setIsFullscreenOpen(true);
+    }
+  }, [selectedProgram]);
+
+  const handleCloseFullscreen = useCallback(() => {
+    console.log('Closing fullscreen video');
+    setIsFullscreenOpen(false);
+  }, []);
 
   return (
     <div className={`${className}`}>
@@ -62,6 +71,15 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
           <ProgramGuide onProgramSelect={handleProgramSelect} />
         </div>
       </div>
+
+      {/* Fullscreen Video Modal */}
+      {selectedProgram && (
+        <FullscreenVideoModal
+          isOpen={isFullscreenOpen}
+          onClose={handleCloseFullscreen}
+          programData={selectedProgram}
+        />
+      )}
     </div>
   );
 };
