@@ -32,11 +32,20 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
     setSelectedProgram(programData);
   }, []);
 
+  // Handle video player maximize (for future fullscreen functionality)
+  const handleVideoMaximize = () => {
+    // This will be used for fullscreen functionality later
+    console.log('Maximize video player');
+  };
+
   return (
     <div className={`${className}`}>
       {/* Hero Section - Full width, directly below navigation with proper spacing */}
       <div className="mt-[80px]">
-        <HeroSection selectedProgram={selectedProgram} />
+        <HeroSection 
+          selectedProgram={selectedProgram} 
+          onVideoPlay={handleVideoMaximize}
+        />
       </div>
       
       {/* Bottom Section - Categories and Program Guide with padding */}
