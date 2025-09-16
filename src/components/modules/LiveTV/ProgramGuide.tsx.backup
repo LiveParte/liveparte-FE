@@ -35,7 +35,7 @@ const HorizontalScrollView = React.memo(
         >
           <motion.div
             ref={scrollRef}
-            className="flex gap-4 py-2 items-start"
+            className="flex gap-4 py-2"
             style={{ width: "max-content" }}
             drag="x"
             dragConstraints={containerRef}
@@ -94,7 +94,7 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
         {
           title: "Breaking News Tonight",
           time: "20:00 - 21:00",
-          status: "live" as const,
+          status: "live",
           description: "Live coverage of today's most important stories",
           genre: "TV-PG News",
           timeLeft: "30m Left",
@@ -104,7 +104,7 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
         {
           title: "Anderson Cooper 360",
           time: "21:00 - 22:00",
-          status: "upcoming" as const,
+          status: "upcoming",
           description: "In-depth analysis of current events",
           genre: "News",
           timeLeft: null,
@@ -114,7 +114,7 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
         {
           title: "CNN Tonight",
           time: "22:00 - 23:00",
-          status: "upcoming" as const,
+          status: "upcoming",
           description: "Late night news and commentary",
           genre: "News",
           timeLeft: null,
@@ -124,7 +124,7 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
         {
           title: "CNN Newsroom",
           time: "23:00 - 00:00",
-          status: "upcoming" as const,
+          status: "upcoming",
           description: "Overnight news coverage",
           genre: "News",
           timeLeft: null,
@@ -134,7 +134,7 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
         {
           title: "Early Start",
           time: "00:00 - 01:00",
-          status: "upcoming" as const,
+          status: "upcoming",
           description: "Early morning news program",
           genre: "News",
           timeLeft: null,
@@ -144,7 +144,7 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
         {
           title: "CNN This Morning",
           time: "01:00 - 02:00",
-          status: "upcoming" as const,
+          status: "upcoming",
           description: "Morning news and weather",
           genre: "News",
           timeLeft: null,
@@ -154,7 +154,7 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
         {
           title: "New Day",
           time: "02:00 - 03:00",
-          status: "upcoming" as const,
+          status: "upcoming",
           description: "Early morning news program",
           genre: "News",
           timeLeft: null,
@@ -171,7 +171,7 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
         {
           title: "BBC World News",
           time: "20:00 - 21:00",
-          status: "live" as const,
+          status: "live",
           description: "Global news and current affairs",
           genre: "News",
           timeLeft: "30m Left",
@@ -181,7 +181,7 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
         {
           title: "Hardtalk",
           time: "21:00 - 22:00",
-          status: "upcoming" as const,
+          status: "upcoming",
           description: "In-depth interviews with world leaders",
           genre: "News",
           timeLeft: null,
@@ -191,7 +191,7 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
         {
           title: "Newsday",
           time: "22:00 - 23:00",
-          status: "upcoming" as const,
+          status: "upcoming",
           description: "Morning news program",
           genre: "News",
           timeLeft: null,
@@ -201,7 +201,7 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
         {
           title: "BBC World News",
           time: "23:00 - 00:00",
-          status: "upcoming" as const,
+          status: "upcoming",
           description: "Late night global news",
           genre: "News",
           timeLeft: null,
@@ -211,7 +211,7 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
         {
           title: "World Business Report",
           time: "00:00 - 01:00",
-          status: "upcoming" as const,
+          status: "upcoming",
           description: "Global business and financial news",
           genre: "Business",
           timeLeft: null,
@@ -221,7 +221,7 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
         {
           title: "BBC News",
           time: "01:00 - 02:00",
-          status: "upcoming" as const,
+          status: "upcoming",
           description: "Overnight news coverage",
           genre: "News",
           timeLeft: null,
@@ -231,7 +231,7 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
         {
           title: "World News Today",
           time: "02:00 - 03:00",
-          status: "upcoming" as const,
+          status: "upcoming",
           description: "Global news and analysis",
           genre: "News",
           timeLeft: null,
@@ -289,27 +289,38 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
         </div>
       </div>
 
-      {/* Time slots header - horizontal scrollable starting from far left */}
-      <div className="mb-[16px]">
-        <HorizontalScrollView>
-          {timeSlots.map((time, index) => (
-            <div
-              key={`time-${index}`}
-              className="text-center text-gray-400 text-[12px] font-medium py-[8px] min-w-[120px] flex-shrink-0"
-            >
-              {time}
-            </div>
-          ))}
-        </HorizontalScrollView>
+      {/* Time slots header - horizontal scrollable */}
+      <div className="flex mb-[16px]">
+        <div className="w-[120px] flex-shrink-0"></div>
+        <div className="flex-1 min-w-0">
+          <HorizontalScrollView>
+            {timeSlots.map((time, index) => (
+              <motion.div
+                key={`time-${index}`}
+                className="text-center text-gray-400 text-[12px] font-medium py-[8px] min-w-[120px] flex-shrink-0"
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.05 }}
+              >
+                {time}
+              </motion.div>
+            ))}
+          </HorizontalScrollView>
+        </div>
       </div>
 
       {/* Channels and programs */}
       <div className="space-y-[24px]">
         {channels.map((channel) => (
           <div key={channel.id} className="space-y-[12px]">
-            {/* Channel logo and name - positioned absolutely to overlay the scroll */}
-            <div className="relative border-b border-gray-600 pb-3">
-              <div className="bg-black/80 backdrop-blur-sm px-2 py-1 rounded-r-md">
+            {/* Channel logo and name */}
+            <motion.div
+              className="flex items-center"
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+            >
+              <div className="w-[120px] flex-shrink-0 flex items-center">
                 <div className="flex items-center gap-[8px]">
                   <div className="bg-gray-800 text-white px-[8px] py-[4px] rounded-[4px] text-[12px] font-bold">
                     {channel.logo}
@@ -319,22 +330,25 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
                   </span>
                 </div>
               </div>
-            </div>
+            </motion.div>
 
-            {/* Programs timeline - horizontal scrollable starting from far left */}
-            <div>
-              <HorizontalScrollView>
-                {channel.programs.map((program, index) => (
-                  <ProgramCard
-                    key={`${channel.id}-${program.title}-${index}`}
-                    program={program}
-                    channelId={channel.id}
-                    index={index}
-                    isSelected={selectedProgram === `${channel.id}-${index}`}
-                    onSelect={handleProgramClick}
-                  />
-                ))}
-              </HorizontalScrollView>
+            {/* Programs timeline - horizontal scrollable with drag */}
+            <div className="flex">
+              <div className="w-[120px] flex-shrink-0"></div>
+              <div className="flex-1 min-w-0">
+                <HorizontalScrollView>
+                  {channel.programs.map((program, index) => (
+                    <ProgramCard
+                      key={`${channel.id}-${program.title}-${index}`}
+                      program={program}
+                      channelId={channel.id}
+                      index={index}
+                      isSelected={selectedProgram === `${channel.id}-${index}`}
+                      onSelect={handleProgramClick}
+                    />
+                  ))}
+                </HorizontalScrollView>
+              </div>
             </div>
           </div>
         ))}
