@@ -36,7 +36,7 @@ const LiveProgramCard: React.FC<{
       whileHover={{
         scale: 1.05,
         y: -2,
-        transition: { type: "spring", stiffness: 300 },
+        transition: { type: "just", stiffness: 500 },
       }}
       whileTap={{ scale: 0.98 }}
       onClick={(e) => {
@@ -98,7 +98,7 @@ const NormalProgramCard: React.FC<{
       whileHover={{
         scale: 1.05,
         y: -2,
-        transition: { type: "spring", stiffness: 300 },
+        transition: { type: "just", stiffness: 500 },
       }}
       whileTap={{ scale: 0.98 }}
       onClick={(e) => {
@@ -148,19 +148,19 @@ const SelectedProgramCard: React.FC<{
   channelId: string;
   index: number;
   onSelect: (channelId: string, index: number) => void;
-}> = ({ program, channelId, index, onSelect }) => {
+}> = ({ program, index }) => {
   return (
     <motion.div
-      className="min-w-[24.125rem] h-[8.188rem] flex-shrink-0 flex flex-col justify-center rounded-[12px] border bg-gray-900 border-gray-900 text-white cursor-pointer transition-all relative py-2 px-2"
+      className="min-w-[24.125rem] h-[8.188rem] flex-shrink-0 flex flex-col justify-center rounded-[12px] border-3 bg-gray-900 border-white-900 text-white cursor-pointer transition-all relative py-2 px-2"
       whileHover={{
         scale: 1.05,
-        y: -2,
-        transition: { type: "spring", stiffness: 300 },
+        y: 0,
+        transition: { type: "just", stiffness: 800 },
       }}
       whileTap={{ scale: 0.98 }}
       onClick={(e) => {
         e.stopPropagation();
-        onSelect(channelId, index);
+        // onSelect(channelId, index);
       }}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
