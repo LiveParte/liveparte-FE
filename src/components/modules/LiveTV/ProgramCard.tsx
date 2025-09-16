@@ -1,36 +1,41 @@
 "use client";
-import React from 'react';
-import { motion } from 'framer-motion';
+import React from "react";
+import { motion } from "framer-motion";
+
+interface Program {
+  title: string;
+  time: string;
+  status: "live" | "upcoming";
+  description: string;
+  genre: string;
+  timeLeft?: string | null;
+  breaking?: boolean;
+  progress?: number;
+}
 
 interface ProgramCardProps {
-  program: any;
+  program: Program;
   channelId: string;
   index: number;
   isSelected: boolean;
   onSelect: (channelId: string, index: number) => void;
 }
 
-const ProgramCard: React.FC<ProgramCardProps> = ({ 
-  program, 
-  channelId, 
-  index, 
-  isSelected, 
-  onSelect 
-}) => {
-  const isLive = program.status === 'live';
-  const isSelectedProgram = isSelected || isLive;
-
+// Live Program Card Component
+const LiveProgramCard: React.FC<{
+  program: Program;
+  channelId: string;
+  index: number;
+  onSelect: (channelId: string, index: number) => void;
+}> = ({ program, channelId, index, onSelect }) => {
   return (
     <motion.div
-      className={`min-w-[280px] flex-shrink-0 rounded-[8px] border cursor-pointer transition-all relative ${
-        isSelectedProgram
-          ? 'bg-gray-700 border-gray-600 text-white h-[120px]' // Matched height
-          : 'bg-gray-800 border-gray-700 text-gray-300 hover:bg-gray-700 h-[100px]' // Smaller height
-      }`}
-      whileHover={{ 
-        scale: 1.02,
+      className="min-w-[17.75rem] h-[5.375em] flex flex-col justify-between rounded-[12px] border-gray-900 bg-gray-900 text-gray-300 hover:bg-gray-700 cursor-pointer transition-all relative px-4 py-2
+      self-center"
+      whileHover={{
+        scale: 1.05,
         y: -2,
-        transition: { type: "spring", stiffness: 300 }
+        transition: { type: "spring", stiffness: 300 },
       }}
       whileTap={{ scale: 0.98 }}
       onClick={(e) => {
@@ -41,137 +46,221 @@ const ProgramCard: React.FC<ProgramCardProps> = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.1 }}
     >
-      {/* For selected/live programs - show image on left */}
-      {isSelectedProgram && (
-        <div className="flex h-full">
-          {/* Left side - Image */}
-          <div className="w-[60px] h-full bg-gray-600 rounded-l-[8px] flex items-center justify-center relative overflow-hidden">
-            {/* Placeholder for program image */}
-            <div className="w-full h-full bg-gradient-to-br from-gray-500 to-gray-700 flex items-center justify-center">
-              <div className="text-white text-[10px] font-bold text-center px-1">
-                {program.breaking ? 'BREAKING' : 'LIVE'}
-              </div>
-            </div>
-            
-            {/* Audio icon overlay */}
-            <div className="absolute top-1 right-1">
-              <svg className="w-[12px] h-[12px] text-white" fill="currentColor" viewBox="0 0 20 20">
-                <path fillRule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clipRule="evenodd" />
-              </svg>
-            </div>
-          </div>
+      <div className="flex justify-between">
+        <h4 className="text-[16px] font-semibold text-white">
+          {program.title}
+        </h4>
 
-          {/* Right side - Content */}
-          <div className="flex-1 p-[12px] flex flex-col justify-between min-w-0">
-            {/* Top section */}
-            <div className="min-w-0">
-              {/* LIVE badge */}
-              {isLive && (
-                <motion.div 
-                  className="absolute top-[8px] right-[8px] bg-red-600 text-white px-[6px] py-[2px] rounded-[4px] text-[10px] font-bold"
-                  initial={{ scale: 0, rotate: -180 }}
-                  animate={{ scale: 1, rotate: 0 }}
-                  transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
-                >
-                  LIVE
-                </motion.div>
-              )}
-
-              {/* BREAKING NEWS badge */}
-              {program.breaking && (
-                <motion.div 
-                  className="bg-blue-600 text-white px-[6px] py-[2px] rounded-[4px] text-[10px] font-bold mb-[6px] inline-block"
-                  initial={{ opacity: 0, scale: 0.8, x: -20 }}
-                  animate={{ opacity: 1, scale: 1, x: 0 }}
-                  transition={{ delay: 0.7, type: "spring", stiffness: 200 }}
-                >
-                  BREAKING NEWS
-                </motion.div>
-              )}
-
-              <h4 className="text-[14px] font-semibold text-white mb-[2px] truncate">
-                {program.title}
-              </h4>
-              
-              <div className="text-[11px] text-gray-300 mb-[2px] truncate">
-                {program.genre}
-              </div>
-              
-              <p className="text-[11px] text-gray-300 leading-tight line-clamp-2">
-                {program.description}
-              </p>
-            </div>
-
-            {/* Bottom section */}
-            <div className="flex items-center justify-between mt-[4px]">
-              <span className="text-[11px] text-gray-300 truncate">
-                {program.time}
-              </span>
-              {program.timeLeft && (
-                <span className="text-[11px] font-medium text-gray-300 truncate ml-2">
-                  {program.timeLeft}
-                </span>
-              )}
-            </div>
-
-            {/* Progress bar for live programs */}
-            {isLive && (
-              <div className="w-full bg-gray-600 rounded-full h-[3px] overflow-hidden mt-[4px]">
-                <motion.div 
-                  className="bg-red-600 h-[3px] rounded-full" 
-                  initial={{ width: 0 }}
-                  animate={{ width: `${program.progress}%` }}
-                  transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
-                />
-              </div>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* For non-selected programs - normal layout */}
-      {!isSelectedProgram && (
-        <div className="p-[12px] h-full flex flex-col justify-between min-w-0">
-          {/* Bell icon for upcoming programs */}
-          <motion.div 
-            className="absolute top-[8px] right-[8px] text-gray-400"
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3 + index * 0.1 }}
+        {/* Bell icon for upcoming programs */}
+        <motion.div
+          className="text-gray-400"
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3 + index * 0.1 }}
+        >
+          <svg
+            className="w-[18px] h-[18px]"
+            fill="currentColor"
+            viewBox="0 0 20 20"
           >
-            <svg className="w-[14px] h-[14px]" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
-            </svg>
-          </motion.div>
+            <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+          </svg>
+        </motion.div>
+      </div>
 
-          <div className="mb-[8px] min-w-0">
-            <h4 className="text-[14px] font-semibold text-white mb-[2px] truncate">
-              {program.title}
-            </h4>
-          </div>
-          
-          <div className="text-[11px] mb-[4px] text-gray-400 truncate">
-            {program.genre}
-          </div>
-          
-          <p className="text-[11px] mb-[6px] leading-tight text-gray-400 line-clamp-2">
-            {program.description}
-          </p>
-          
-          <div className="flex items-center justify-between">
-            <span className="text-[11px] text-gray-400 truncate">
-              {program.time}
-            </span>
-            {program.timeLeft && (
-              <span className="text-[11px] font-medium text-gray-400 truncate ml-2">
-                {program.timeLeft}
-              </span>
-            )}
-          </div>
+      <div className="flex items-center space-x-3">
+        <span className="text-[12px] text-gray-400">{program.timeLeft}</span>
+        {/* Progress bar for live programs */}
+        <div className="w-[10.75rem] bg-gray-600 rounded-full h-[5px] overflow-hidden">
+          <motion.div
+            className="bg-white h-[5px] rounded-full"
+            initial={{ width: 0 }}
+            animate={{ width: `${program.progress}%` }}
+            transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+          />
         </div>
-      )}
+      </div>
     </motion.div>
   );
 };
+
+// Normal Program Card Component
+const NormalProgramCard: React.FC<{
+  program: Program;
+  channelId: string;
+  index: number;
+  onSelect: (channelId: string, index: number) => void;
+}> = ({ program, channelId, index, onSelect }) => {
+  return (
+    <motion.div
+      className="min-w-[17.75rem] h-[5.375em] flex flex-col justify-between rounded-[12px] border-gray-900 bg-gray-900 text-gray-300 hover:bg-gray-700 cursor-pointer transition-all relative px-4 py-2
+      self-center"
+      whileHover={{
+        scale: 1.05,
+        y: -2,
+        transition: { type: "spring", stiffness: 300 },
+      }}
+      whileTap={{ scale: 0.98 }}
+      onClick={(e) => {
+        e.stopPropagation();
+        onSelect(channelId, index);
+      }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: index * 0.1 }}
+    >
+      <div className="flex justify-between">
+        <h4 className="text-[16px] font-semibold text-white">
+          {program.title}
+        </h4>
+
+        {/* Bell icon for upcoming programs */}
+        <motion.div
+          className="text-gray-400"
+          initial={{ opacity: 0, scale: 0 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.3 + index * 0.1 }}
+        >
+          <svg
+            className="w-[18px] h-[18px]"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
+          </svg>
+        </motion.div>
+      </div>
+
+      <div className="flex items-center">
+        <span className="text-[12px] text-gray-400">{program.time}</span>
+        {program.timeLeft && (
+          <span className="text-[12px] font-medium text-gray-400">
+            {program.timeLeft}
+          </span>
+        )}
+      </div>
+    </motion.div>
+  );
+};
+
+const SelectedProgramCard: React.FC<{
+  program: Program;
+  channelId: string;
+  index: number;
+  onSelect: (channelId: string, index: number) => void;
+}> = ({ program, channelId, index, onSelect }) => {
+  return (
+    <motion.div
+      className="min-w-[300px] flex-shrink-0 rounded-[12px] border bg-gray-900 border-gray-900 text-white cursor-pointer transition-all relative p-[16px]"
+      whileHover={{
+        scale: 1.05,
+        y: -2,
+        transition: { type: "spring", stiffness: 300 },
+      }}
+      whileTap={{ scale: 0.98 }}
+      onClick={(e) => {
+        e.stopPropagation();
+        onSelect(channelId, index);
+      }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3, delay: index * 0.1 }}
+    >
+      {/* LIVE badge */}
+      <motion.div
+        className="absolute top-[12px] right-[12px] bg-red-600 text-white px-[8px] py-[3px] rounded-[4px] text-[11px] font-bold"
+        initial={{ scale: 0, rotate: -180 }}
+        animate={{ scale: 1, rotate: 0 }}
+        transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
+      >
+        LIVE
+      </motion.div>
+
+      {/* BREAKING NEWS badge */}
+      {program.breaking && (
+        <motion.div
+          className="bg-blue-600 text-white px-[8px] py-[3px] rounded-[4px] text-[11px] font-bold mb-[12px] inline-block"
+          initial={{ opacity: 0, scale: 0.8, x: -20 }}
+          animate={{ opacity: 1, scale: 1, x: 0 }}
+          transition={{ delay: 0.7, type: "spring", stiffness: 200 }}
+        >
+          BREAKING NEWS
+        </motion.div>
+      )}
+
+      <div className="mb-[12px]">
+        <h4 className="text-[16px] font-semibold text-white">
+          {program.title}
+        </h4>
+      </div>
+
+      <div className="text-[13px] mb-[6px] text-gray-300">{program.genre}</div>
+
+      <p className="text-[13px] mb-[8px] leading-relaxed text-gray-300">
+        {program.description}
+      </p>
+
+      <div className="flex items-center justify-between mb-[12px]">
+        <span className="text-[13px] text-gray-300">{program.time}</span>
+        {program.timeLeft && (
+          <span className="text-[13px] font-medium text-gray-300">
+            {program.timeLeft}
+          </span>
+        )}
+      </div>
+
+      {/* Progress bar for live programs */}
+      <div className="w-full bg-gray-600 rounded-full h-[6px] overflow-hidden">
+        <motion.div
+          className="bg-red-600 h-[6px] rounded-full"
+          initial={{ width: 0 }}
+          animate={{ width: `${program.progress}%` }}
+          transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+        />
+      </div>
+    </motion.div>
+  );
+};
+
+// Main Program Card Component
+const ProgramCard: React.FC<ProgramCardProps> = React.memo(
+  ({ program, channelId, index, isSelected, onSelect }) => {
+    // Don't render if selected (this logic might need adjustment based on your requirements)
+    if (isSelected) {
+      return (
+        <SelectedProgramCard
+          program={program}
+          channelId={channelId}
+          index={index}
+          onSelect={onSelect}
+        />
+      );
+    }
+
+    // Determine which component to render based on program status
+    if (program.status === "live") {
+      return (
+        <LiveProgramCard
+          program={program}
+          channelId={channelId}
+          index={index}
+          onSelect={onSelect}
+        />
+      );
+    }
+
+    // Default to normal program card for upcoming programs
+    return (
+      <NormalProgramCard
+        program={program}
+        channelId={channelId}
+        index={index}
+        onSelect={onSelect}
+      />
+    );
+  }
+);
+
+ProgramCard.displayName = "ProgramCard";
 
 export default ProgramCard;

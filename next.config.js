@@ -1,6 +1,6 @@
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-})
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+});
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -16,20 +16,25 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'res.cloudinary.com',
-        pathname: '**',
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "**",
       },
       {
-        protocol: 'https',
-        hostname:'liveparte-s3-bucket.s3.amazonaws.com',
-        pathname: '**',
+        protocol: "https",
+        hostname: "liveparte-s3-bucket.s3.amazonaws.com",
+        pathname: "**",
       },
       {
-        pathname:'**',
-        hostname:'avatar.iran.liara.run',
-        protocol: 'https',
-      }
+        pathname: "**",
+        hostname: "avatar.iran.liara.run",
+        protocol: "https",
+      },
+      {
+        pathname: "**",
+        hostname: "picsum.photos",
+        protocol: "https",
+      },
     ],
   },
   // Enable TypeScript checking
@@ -46,6 +51,6 @@ const nextConfig = {
     // your project has ESLint errors.
     ignoreDuringBuilds: false,
   },
-}
+};
 
-module.exports = withBundleAnalyzer(nextConfig)
+module.exports = withBundleAnalyzer(nextConfig);
