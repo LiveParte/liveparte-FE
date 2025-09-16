@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import HeroSection from './HeroSection';
 import CategoriesSidebar from './CategoriesSidebar';
 import ProgramGuide from './ProgramGuide';
@@ -7,12 +7,36 @@ interface LiveTVProps {
   className?: string;
 }
 
+interface SelectedProgram {
+  program: {
+    title: string;
+    time: string;
+    status: "live" | "upcoming";
+    description: string;
+    genre: string;
+    timeLeft?: string | null;
+    breaking?: boolean;
+    progress?: number;
+  };
+  channelId: string;
+  index: number;
+  channelName: string;
+  channelLogo: string;
+}
+
 const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
+  const [selectedProgram, setSelectedProgram] = useState<SelectedProgram | null>(null);
+
+  // Callback to handle program selection from ProgramGuide
+  const handleProgramSelect = useCallback((programData: SelectedProgram) => {
+    setSelectedProgram(programData);
+  }, []);
+
   return (
     <div className={`${className}`}>
       {/* Hero Section - Full width, directly below navigation with proper spacing */}
       <div className="mt-[80px]">
-        <HeroSection />
+        <HeroSection selectedProgram={selectedProgram} />
       </div>
       
       {/* Bottom Section - Categories and Program Guide with padding */}
@@ -26,7 +50,7 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
           </div>
           
           {/* Program Guide */}
-          <ProgramGuide />
+          <ProgramGuide onProgramSelect={handleProgramSelect} />
         </div>
       </div>
     </div>

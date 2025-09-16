@@ -5,6 +5,22 @@ import ProgramCard from "./ProgramCard";
 
 interface ProgramGuideProps {
   className?: string;
+  onProgramSelect?: (programData: {
+    program: {
+      title: string;
+      time: string;
+      status: "live" | "upcoming";
+      description: string;
+      genre: string;
+      timeLeft?: string | null;
+      breaking?: boolean;
+      progress?: number;
+    };
+    channelId: string;
+    index: number;
+    channelName: string;
+    channelLogo: string;
+  }) => void;
 }
 
 // Move HorizontalScrollView outside to prevent recreation
@@ -65,7 +81,7 @@ const HorizontalScrollView = React.memo(
   }
 );
 
-const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
+const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "", onProgramSelect }) => {
   const timeSlots = [
     "20:00",
     "20:30",
@@ -244,11 +260,30 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
 
   const [selectedProgram, setSelectedProgram] = useState<string | null>(null);
 
-  // Memoized click handler to prevent unnecessary re-renders
+  // Enhanced click handler that passes program data to parent
   const handleProgramClick = useCallback((channelId: string, index: number) => {
     const programId = `${channelId}-${index}`;
-    setSelectedProgram((prev) => (prev === programId ? null : programId));
-  }, []);
+    const channel = channels.find((c) => c.id === channelId);
+    
+    if (channel && channel.programs[index]) {
+      const program = channel.programs[index];
+      
+      // Toggle selection
+      const newSelection = selectedProgram === programId ? null : programId;
+      setSelectedProgram(newSelection);
+      
+      // Pass program data to parent component
+      if (onProgramSelect && newSelection) {
+        onProgramSelect({
+          program,
+          channelId,
+          index,
+          channelName: channel.name,
+          channelLogo: channel.logo,
+        });
+      }
+    }
+  }, [selectedProgram, onProgramSelect, channels]);
 
   // Get selected program details
   const getSelectedProgram = () => {
