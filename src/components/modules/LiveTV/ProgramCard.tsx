@@ -1,6 +1,8 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
+import { AudioLines } from "lucide-react";
 
 interface Program {
   title: string;
@@ -30,7 +32,7 @@ const LiveProgramCard: React.FC<{
 }> = ({ program, channelId, index, onSelect }) => {
   return (
     <motion.div
-      className="min-w-[17.75rem] h-[5.375em] flex flex-col justify-between rounded-[12px] border-gray-900 bg-gray-900 text-gray-300 hover:bg-gray-700 cursor-pointer transition-all relative px-4 py-2"
+      className="min-w-[17.75rem] h-[5.375em] flex flex-col self-center justify-between rounded-[12px] border-gray-900 bg-gray-900 text-gray-300 hover:bg-gray-700 cursor-pointer transition-all relative px-4 py-2"
       whileHover={{
         scale: 1.05,
         y: -2,
@@ -92,7 +94,7 @@ const NormalProgramCard: React.FC<{
 }> = ({ program, channelId, index, onSelect }) => {
   return (
     <motion.div
-      className="min-w-[17.75rem] h-[5.375em] flex flex-col justify-between rounded-[12px] border-gray-900 bg-gray-900 text-gray-300 hover:bg-gray-700 cursor-pointer transition-all relative px-4 py-2"
+      className="min-w-[17.75rem] h-[5.375em] flex flex-col self-center justify-between rounded-[12px] border-gray-900 bg-gray-900 text-gray-300 hover:bg-gray-700 cursor-pointer transition-all relative px-4 py-2"
       whileHover={{
         scale: 1.05,
         y: -2,
@@ -149,7 +151,7 @@ const SelectedProgramCard: React.FC<{
 }> = ({ program, channelId, index, onSelect }) => {
   return (
     <motion.div
-      className="min-w-[300px] flex-shrink-0 rounded-[12px] border bg-gray-900 border-gray-900 text-white cursor-pointer transition-all relative p-[16px]"
+      className="min-w-[24.125rem] h-[8.188rem] flex-shrink-0 flex flex-col justify-center rounded-[12px] border bg-gray-900 border-gray-900 text-white cursor-pointer transition-all relative py-2 px-2"
       whileHover={{
         scale: 1.05,
         y: -2,
@@ -164,57 +166,57 @@ const SelectedProgramCard: React.FC<{
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: index * 0.1 }}
     >
-      {/* LIVE badge */}
-      <motion.div
-        className="absolute top-[12px] right-[12px] bg-red-600 text-white px-[8px] py-[3px] rounded-[4px] text-[11px] font-bold"
-        initial={{ scale: 0, rotate: -180 }}
-        animate={{ scale: 1, rotate: 0 }}
-        transition={{ delay: 0.5, type: "spring", stiffness: 200 }}
-      >
-        LIVE
-      </motion.div>
-
-      {/* BREAKING NEWS badge */}
-      {program.breaking && (
-        <motion.div
-          className="bg-blue-600 text-white px-[8px] py-[3px] rounded-[4px] text-[11px] font-bold mb-[12px] inline-block"
-          initial={{ opacity: 0, scale: 0.8, x: -20 }}
-          animate={{ opacity: 1, scale: 1, x: 0 }}
-          transition={{ delay: 0.7, type: "spring", stiffness: 200 }}
-        >
-          BREAKING NEWS
-        </motion.div>
-      )}
-
-      <div className="mb-[12px]">
-        <h4 className="text-[16px] font-semibold text-white">
-          {program.title}
-        </h4>
-      </div>
-
-      <div className="text-[13px] mb-[6px] text-gray-300">{program.genre}</div>
-
-      <p className="text-[13px] mb-[8px] leading-relaxed text-gray-300">
-        {program.description}
-      </p>
-
-      <div className="flex items-center justify-between mb-[12px]">
-        <span className="text-[13px] text-gray-300">{program.time}</span>
-        {program.timeLeft && (
-          <span className="text-[13px] font-medium text-gray-300">
-            {program.timeLeft}
-          </span>
-        )}
-      </div>
-
-      {/* Progress bar for live programs */}
-      <div className="w-full bg-gray-600 rounded-full h-[6px] overflow-hidden">
-        <motion.div
-          className="bg-red-600 h-[6px] rounded-full"
-          initial={{ width: 0 }}
-          animate={{ width: `${program.progress}%` }}
-          transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+      <div className="flex space-x-2 items-center">
+        <Image
+          src={"https://picsum.photos/200/300"}
+          className="rounded-[10px] h-[6.125rem] w-[6.125rem]"
+          alt={program.title}
+          width={98}
+          height={98}
         />
+
+        <div className="flex flex-col w-full max-w-[15.831rem]">
+          <div className="flex items-center justify-between">
+            <div className="flex space-x-2 items-center">
+              <h4 className="text-[16px] truncate overflow-hidden font-semibold text-white">
+                {program.title}
+              </h4>
+              <h3>
+                <AudioLines size={16} />
+              </h3>
+            </div>
+
+            <h3 className="flex justify-center items-center h-5 p-2 rounded-xl bg-red-600 text-[11px] font-bold text-white uppercase">
+              Live
+            </h3>
+          </div>
+
+          <p className="text-[8px] text-white opacity-80 -mt-2">
+            <span>TV-PG</span> <span>News</span>
+          </p>
+
+          <p className="text-[9px] text-white opacity-70 max-w-[11.188rem] text-wrap break-words">
+            {program.description}
+          </p>
+
+          <div className="flex items-center justify-between">
+            {program.timeLeft && (
+              <span className="text-[10.88px] font-medium text-gray-300">
+                {program.timeLeft}
+              </span>
+            )}
+
+            {/* Progress bar for live programs */}
+            <div className="w-[10.75rem] bg-gray-600 rounded-full h-[6px] overflow-hidden">
+              <motion.div
+                className="bg-white h-[6px] rounded-full"
+                initial={{ width: 0 }}
+                animate={{ width: `${program.progress}%` }}
+                transition={{ duration: 1, delay: 0.5, ease: "easeOut" }}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </motion.div>
   );

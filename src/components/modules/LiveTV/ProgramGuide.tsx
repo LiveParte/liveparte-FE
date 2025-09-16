@@ -289,8 +289,8 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
         </div>
       </div>
 
-      {/* Time slots header - horizontal scrollable starting from far left */}
-      <div className="mb-[16px]">
+      {/* Time slots header - horizontal scrollable starting from far left with no padding */}
+      <div className="mb-[16px] -ml-0">
         <HorizontalScrollView>
           {timeSlots.map((time, index) => (
             <div
@@ -321,8 +321,8 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({ className = "" }) => {
               </div>
             </div>
 
-            {/* Programs timeline - horizontal scrollable starting from far left */}
-            <div>
+            {/* Programs timeline - horizontal scrollable starting from far left with no padding */}
+            <div className="-ml-0">
               <HorizontalScrollView>
                 {channel.programs.map((program, index) => (
                   <ProgramCard
