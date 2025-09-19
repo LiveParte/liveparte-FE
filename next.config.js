@@ -51,6 +51,28 @@ const nextConfig = {
     // your project has ESLint errors.
     ignoreDuringBuilds: false,
   },
+  // Handle ES modules
+  experimental: {
+    esmExternals: 'loose',
+  },
+  webpack: (config, { isServer }) => {
+    // Handle ES modules in webpack
+    config.module.rules.push({
+      test: /\.m?js$/,
+      type: 'javascript/auto',
+      resolve: {
+        fullySpecified: false,
+      },
+    });
+
+    // Handle HLS.js specifically
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'hls.js': 'hls.js/dist/hls.min.js',
+    };
+
+    return config;
+  },
 };
 
 module.exports = withBundleAnalyzer(nextConfig);

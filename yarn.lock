@@ -3787,6 +3787,11 @@ hls.js@^0.14.17:
     eventemitter3 "^4.0.3"
     url-toolkit "^2.1.6"
 
+hls.js@^1.6.12:
+  version "1.6.12"
+  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-1.6.12.tgz#a130d2b902bd1e1a30b4d9db9676f3dba3187629"
+  integrity sha512-Pz+7IzvkbAht/zXvwLzA/stUHNqztqKvlLbfpq6ZYU68+gZ+CZMlsbQBPUviRap+3IQ41E39ke7Ia+yvhsehEQ==
+
 hosted-git-info@^7.0.0, hosted-git-info@^7.0.2:
   version "7.0.2"
   resolved "https://registry.npmjs.org/hosted-git-info/-/hosted-git-info-7.0.2.tgz"

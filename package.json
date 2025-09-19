@@ -25,6 +25,7 @@
     "crypto-js": "^4.2.0",
     "flowbite-react": "^0.7.2",
     "framer-motion": "^11.0.5",
+    "hls.js": "^1.6.12",
     "i": "^0.3.7",
     "install": "^0.13.0",
     "isomorphic-ws": "^5.0.0",
