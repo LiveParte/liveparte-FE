@@ -191,7 +191,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = "", selectedProgr
     };
   }, [isVideoPlaying, streamUrl, selectedProgram?.program.status]);
 
-  // Video event listeners
+  // Video event listeners - FIXED TO SYNC STATE PROPERLY
   useEffect(() => {
     if (!videoRef.current || !isVideoPlaying) return;
 
@@ -207,12 +207,12 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = "", selectedProgr
     };
 
     const handlePlay = () => {
-      console.log('Video started playing');
+      console.log('Video PLAY event - setting isPlaying to true');
       setIsPlaying(true);
     };
 
     const handlePause = () => {
-      console.log('Video paused');
+      console.log('Video PAUSE event - setting isPlaying to false');
       setIsPlaying(false);
     };
 
@@ -220,11 +220,33 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = "", selectedProgr
       setIsMuted(video.muted);
     };
 
+    const handleCanPlay = () => {
+      console.log('Video can play');
+    };
+
+    const handleWaiting = () => {
+      console.log('Video waiting');
+    };
+
+    const handlePlaying = () => {
+      console.log('Video playing event - setting isPlaying to true');
+      setIsPlaying(true);
+    };
+
+    const handleEnded = () => {
+      console.log('Video ended - setting isPlaying to false');
+      setIsPlaying(false);
+    };
+
     video.addEventListener('loadedmetadata', handleLoadedMetadata);
     video.addEventListener('timeupdate', handleTimeUpdate);
     video.addEventListener('play', handlePlay);
     video.addEventListener('pause', handlePause);
     video.addEventListener('volumechange', handleVolumeChange);
+    video.addEventListener('canplay', handleCanPlay);
+    video.addEventListener('waiting', handleWaiting);
+    video.addEventListener('playing', handlePlaying);
+    video.addEventListener('ended', handleEnded);
 
     return () => {
       video.removeEventListener('loadedmetadata', handleLoadedMetadata);
@@ -232,17 +254,41 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = "", selectedProgr
       video.removeEventListener('play', handlePlay);
       video.removeEventListener('pause', handlePause);
       video.removeEventListener('volumechange', handleVolumeChange);
+      video.removeEventListener('canplay', handleCanPlay);
+      video.removeEventListener('waiting', handleWaiting);
+      video.removeEventListener('playing', handlePlaying);
+      video.removeEventListener('ended', handleEnded);
     };
   }, [isVideoPlaying]);
 
-  // Enhanced control handlers
+  // FIXED: Play/pause handler with proper state sync
   const handlePlayPause = useCallback(() => {
+    console.log('=== PLAY/PAUSE CLICKED ===');
+    console.log('Current isPlaying state:', isPlaying);
+    console.log('Video ref exists:', !!videoRef.current);
+    
     if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
+      console.log('Video paused state:', videoRef.current.paused);
+      console.log('Video ready state:', videoRef.current.readyState);
+      
+      // Sync state with actual video state first
+      const videoPaused = videoRef.current.paused;
+      console.log('Video is actually paused:', videoPaused);
+      
+      if (videoPaused) {
+        console.log('Video is paused, attempting to PLAY');
+        videoRef.current.play().then(() => {
+          console.log('Play promise resolved - video should be playing');
+        }).catch(err => {
+          console.error('Play promise rejected:', err);
+        });
       } else {
-        videoRef.current.play();
+        console.log('Video is playing, attempting to PAUSE');
+        videoRef.current.pause();
+        console.log('Pause command sent');
       }
+    } else {
+      console.error('Video ref is null!');
     }
     setShowControls(true);
   }, [isPlaying]);
@@ -607,6 +653,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = "", selectedProgr
             <div className="absolute top-4 left-4 z-50 bg-black/50 text-white p-2 rounded text-xs">
               <div>Video Playing: {isVideoPlaying ? 'Yes' : 'No'}</div>
               <div>HLS Loaded: {isHlsLoaded ? 'Yes' : 'No'}</div>
+              <div>Is Playing: {isPlaying ? 'Yes' : 'No'}</div>
+              <div>Video Paused: {videoRef.current?.paused ? 'Yes' : 'No'}</div>
               <div>Stream URL: {streamUrl.substring(0, 50)}...</div>
               <div>Error: {error || 'None'}</div>
             </div>

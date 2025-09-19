@@ -111,16 +111,19 @@ const EnhancedVideoControls: React.FC<EnhancedVideoControlsProps> = ({
               </svg>
             </button>
 
-            {/* Play/Pause Button */}
+            {/* Play/Pause Button - FIXED */}
             <button
               onClick={onPlayPause}
               className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-200 hover:scale-105"
+              title={isPlaying ? "Pause" : "Play"}
             >
               {isPlaying ? (
+                // Pause Icon
                 <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 00-1 1v2a1 1 0 002 0V9a1 1 0 00-1-1zm4 0a1 1 0 00-1 1v2a1 1 0 102 0V9a1 1 0 00-1-1z" clipRule="evenodd" />
                 </svg>
               ) : (
+                // Play Icon
                 <svg className="w-8 h-8 ml-1" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
                 </svg>
