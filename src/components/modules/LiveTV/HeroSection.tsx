@@ -40,6 +40,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = "", selectedProgr
   const [error, setError] = useState<string | null>(null);
   const [isHlsLoaded, setIsHlsLoaded] = useState(false);
   const [playbackRate, setPlaybackRate] = useState(1);
+  const [isFavorited, setIsFavorited] = useState(false);
 
   // Refs
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -54,24 +55,37 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = "", selectedProgr
     return url;
   }, [selectedProgram?.streamingUrl]);
 
-  // Reset video state when program changes
+  // Auto-start video when program is selected - FIXED ORDER
   useEffect(() => {
-    console.log('Program changed, resetting video state');
-    setIsVideoPlaying(false);
-    setIsPlaying(false);
-    setShowControls(true);
-    setCurrentTime(0);
-    setTotalTime(0);
-    setProgress(0);
-    setError(null);
-    setHlsStats(null);
-    setIsHlsLoaded(false);
-    setPlaybackRate(1);
-    
-    if (hlsRef.current) {
-      console.log('Destroying existing HLS instance');
-      hlsRef.current.destroy();
-      hlsRef.current = null;
+    if (selectedProgram) {
+      console.log('Program selected, auto-starting video');
+      // First reset states
+      setIsVideoPlaying(false);
+      setIsPlaying(false);
+      setShowControls(true);
+      setCurrentTime(0);
+      setTotalTime(0);
+      setProgress(0);
+      setError(null);
+      setHlsStats(null);
+      setIsHlsLoaded(false);
+      setPlaybackRate(1);
+      setIsFavorited(false);
+      
+      // Clean up existing HLS instance
+      if (hlsRef.current) {
+        console.log('Destroying existing HLS instance');
+        hlsRef.current.destroy();
+        hlsRef.current = null;
+      }
+      
+      // Then start video after a small delay to ensure cleanup is complete
+      setTimeout(() => {
+        console.log('Starting video playback after cleanup');
+        setIsVideoPlaying(true);
+        setIsPlaying(true);
+        setShowControls(true);
+      }, 100);
     }
   }, [selectedProgram?.channelId, selectedProgram?.program.title]);
 
@@ -101,7 +115,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = "", selectedProgr
     }
 
     const initHLS = async () => {
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await new Promise(resolve => setTimeout(resolve, 200));
       
       if (!videoRef.current) {
         console.log('Video ref not available, retrying...');
@@ -399,6 +413,12 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = "", selectedProgr
     setShowControls(true);
   }, []);
 
+  const handleAddToFavorites = useCallback(() => {
+    setIsFavorited(!isFavorited);
+    console.log('Add to favorites clicked:', !isFavorited);
+    setShowControls(true);
+  }, [isFavorited]);
+
   // Global mouse events for dragging
   useEffect(() => {
     const handleGlobalMouseMove = (e: MouseEvent) => {
@@ -426,17 +446,6 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = "", selectedProgr
       document.removeEventListener('mouseup', handleGlobalMouseUp);
     };
   }, [isDragging, totalTime]);
-
-  const handleWatchLive = useCallback(() => {
-    console.log('Watch Live clicked, starting video playback');
-    setIsVideoPlaying(true);
-    setIsPlaying(true);
-    setShowControls(true);
-  }, []);
-
-  const handleSetReminder = useCallback(() => {
-    console.log('Set reminder for program');
-  }, []);
 
   const handleMaximize = useCallback(() => {
     console.log('Maximize clicked - opening fullscreen');
@@ -533,7 +542,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = "", selectedProgr
       
       <AnimatePresence mode="wait">
         {!isVideoPlaying ? (
-          // Program Details View
+          // Program Details View - REMOVED (now auto-starts)
           <motion.div
             key="program-details"
             className="relative z-10 h-full flex items-center"
@@ -617,24 +626,9 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = "", selectedProgr
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
               >
-                <button 
-                  onClick={handleWatchLive}
-                  className="bg-white text-black px-[32px] py-[16px] rounded-[8px] font-semibold text-[16px] flex items-center gap-[12px] hover:bg-gray-100 transition-colors border-2 border-black"
-                >
-                  <svg className="w-[20px] h-[20px]" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clipRule="evenodd" />
-                  </svg>
-                  {selectedProgram.program.status === "live" ? "Watch Live" : "Set Reminder"}
-                </button>
-                <button 
-                  onClick={handleSetReminder}
-                  className="bg-gray-600 text-white px-[32px] py-[16px] rounded-[8px] font-medium text-[16px] flex items-center gap-[12px] hover:bg-gray-500 transition-colors"
-                >
-                  <svg className="w-[20px] h-[20px]" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
-                  </svg>
-                  Add Channel To Favorites
-                </button>
+                <div className="text-white text-lg">
+                  Click on any program to start watching immediately
+                </div>
               </motion.div>
             </div>
           </motion.div>
@@ -759,6 +753,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({ className = "", selectedProgr
               onShare={handleShare}
               onSettings={handleSettings}
               onSubtitles={handleSubtitles}
+              onAddToFavorites={handleAddToFavorites}
+              isFavorited={isFavorited}
               formatTime={formatTime}
               progressRef={progressRef}
             />
