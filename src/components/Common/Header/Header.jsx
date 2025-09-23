@@ -25,7 +25,7 @@ export default function Header({ className, openModal }) {
   const isEvent =
     router?.pathname === eventLink || router?.pathname == singleEventLink;
   const isOnDemand = router?.pathname === onDemandLink;
-  const isLiveTv = router?.pathname === liveTvLink;
+  const isLiveTv = router?.pathname === liveTvLink || router?.pathname === "/";
   const isEntertainer = router?.pathname === entertainersLink;
 
   // Clean hover and active indicators
@@ -134,15 +134,15 @@ export default function Header({ className, openModal }) {
             
             {/* Navigation items close to logo */}
             <div className="flex items-center gap-[32px]">
-              <ButtonComp
+              {/* <ButtonComp
                 btnText="Home"
                 className={`font-medium hidden rounded-none lg:block px-[16px] py-[8px] bg-transparent gap-[10px] !border-none text-white text-[13px] !h-[32px] ${hoverEffect} ${isHome && isSelected}`}
                 onClick={() => {
                   router.push("/");
                 }}
-              />
+              /> */}
               <ButtonComp
-                btnText="Live TV"
+                btnText="Home"
                 className={`font-medium rounded-none hidden lg:block !py-[8px] gap-[10px] !bg-transparent font500 text-white text-[13px] ${hoverEffect} ${isLiveTv && isSelected} !h-[32px]`}
                 onClick={() => {
                   router.push(liveTvLink);
