@@ -326,12 +326,13 @@ const HLSTestPage: React.FC = () => {
                 className="w-full h-96 object-contain"
                 controls={false}
                 muted={isMuted}
-                volume={volume}
+                // volume={volume}
               />
             )}
 
             {playerType === "react-hls" && (
               <ReactHlsPlayer
+                playerRef={videoRef}
                 src={selectedStream.url}
                 autoPlay={false}
                 controls={false}
