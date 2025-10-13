@@ -1,3 +1,4 @@
+import Footer from "../reusable/footer";
 import Navbar from "../reusable/navbar";
 import ActiveStream from "./active-stream";
 import CategorySection from "./Category-section";
@@ -14,6 +15,7 @@ export default function HomeView() {
       <CategorySection />
       <ActiveStream />
       <FeaturedEvents />
+      <Footer />
     </>
   );
 }
