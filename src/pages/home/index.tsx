@@ -1,7 +1,5 @@
+import HomeView from "@/custom-ui/home-view";
+
 export default function Home() {
-  return (
-    <div>
-      <h1>Home</h1>
-    </div>
-  );
+  return <HomeView />;
 }
