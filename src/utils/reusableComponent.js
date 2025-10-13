@@ -187,17 +187,9 @@ export function replaceDashWithSpace(str) {
 }
 
 export const myShowLink = `/myshows`;
-export const entertainersLink= process.env.NEXT_PUBLIC_ENTERTAINERS_URL || "https://studio-staging.liveparte.com/";
-console.log(entertainersLink, 'entertainersLink')
-
-// Add environment check function
-export const getLandingPageUrl = () => {
-  const isProduction = process.env.NEXT_PUBLIC_ENV === 'production';
-  return isProduction 
-    ? 'https://studio.liveparte.com/'
-    : 'https://studio-staging.liveparte.com/';
-};
-
+export const entertainersLink =
+  process.env.NEXT_PUBLIC_ENTERTAINERS_URL ||
+  "https://studio-staging.liveparte.com/entertainers";
 
 export const eventLink = `/event`;
 export const singleEventLink = `/event/[id]`;
@@ -438,3 +430,5 @@ export function checkEventStatusII(event_date, event_time, event_length) {
     }
   }
 }
+
+export const liveTvLink = `/livetv`;

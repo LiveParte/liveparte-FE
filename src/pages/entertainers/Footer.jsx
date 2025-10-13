@@ -8,20 +8,12 @@ import facebook from "../../../public/svgs/facebook.svg";
 import instagram from "../../../public/svgs/instagram.svg";
 import linkedin from "../../../public/svgs/linkedin.svg";
 import twitter from "../../../public/svgs/x.svg";
-import {getLandingPageUrl} from "@/utils/reusableComponent";
+import { entertainersLink} from "@/utils/reusableComponent";
 
 const Footer = () => {
-
-
   const handleEmailClick = () => {
     window.location.href = "mailto:support@liveparte.com";
   };
-
-   const handleEntertainersClick = (e) => {
-      e.preventDefault();
-      const landingPageUrl = getLandingPageUrl();
-      window.open(landingPageUrl, '_blank');
-    };
 
   const [toggle, setToggle] = useState(true);
   return (
@@ -93,8 +85,7 @@ const Footer = () => {
               </div>
               <div className="mt-[1rem]">
                 <Link
-                   href="#"
-                   onClick={handleEntertainersClick}
+                   href={entertainersLink}
                    target="_blank"
                    rel="noopener noreferrer"
                   className="font-mattersq font-medium text-base leading-[19.2px] tracking-[-0.12px] text-white no-underline"

@@ -1,21 +1,16 @@
-
-import React, { useEffect, useState } from "react";
-import { useRouter } from "next/router";
-import Link from "next/link";
 import ButtonComp from "@/components/Ui/button";
-import { HeaderOnSelect, LogoImage, MainContainer } from "@/utils/styleReuse";
+import { useObject } from "@/Context/ObjectProvider";
 import {
-  getLandingPageUrl,
   entertainersLink,
   eventLink,
-  myShowLink,
+  liveTvLink,
   onDemandLink,
-  singleEventLink,
+  singleEventLink
 } from "@/utils/reusableComponent";
-import LogoImage2 from "@/utils/LogoImage";
-import { useObject } from "@/Context/ObjectProvider";
-
-
+import { LogoImage, MainContainer } from "@/utils/styleReuse";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
 
 
 export default function Header({ className, openModal }) {
@@ -28,17 +23,17 @@ export default function Header({ className, openModal }) {
   const isEvent =
     router?.pathname === eventLink || router?.pathname == singleEventLink;
   const isOnDemand = router?.pathname === onDemandLink;
+  const isLiveTv = router?.pathname === liveTvLink;
   const isEntertainer = router?.pathname === entertainersLink;
 
-  const isFocused = `hover:!bg-[#FFFFFF26] hover:rounded-[8px]  hover:border-[0px] hover:font500  hover:backdrop-blur-[60px]`;
-  const isSelected = HeaderOnSelect;
+  // Clean hover and active indicators
+  const hoverEffect = `hover:border-b-2 hover:border-white hover:border-opacity-50`;
+  const isSelected = `border-b-2 border-white`;
+  
   const handleCheckIfITHome = (link) => {
     router?.pathname === link && setDropDown(false);
-
-
-    // isHome&&setDropDown(false)
   };
-   
+
   useEffect(() => {
     if(!dropDown){
       handlePreventScroll(false);
@@ -49,8 +44,6 @@ export default function Header({ className, openModal }) {
    
   }, [dropDown,handlePreventScroll])
 
-  
-  
   useEffect(() => {
     if(!dropDown){
       handlePreventScroll(false);
@@ -58,25 +51,17 @@ export default function Header({ className, openModal }) {
     if(dropDown){
       handlePreventScroll(true);
     }
-       
+   
   }, [dropDown,handlePreventScroll])
-  
-  const handleEntertainersClick = (e) => {
-    e.preventDefault();
-    const landingPageUrl = getLandingPageUrl();
-    window.open(landingPageUrl, '_blank');
-  };
-  
+
   const MenuDropdown = () => {
     return (
-      <div className=" left-0 right-0 top-0 bottom-0 z-[99]   overflow-hidden  flex flex-col fixed  lg:hidden  backdrop-blur-[15px] ">
+      <div className=" left-0 right-0 top-0 bottom-0 z-[99] overflow-hidden  flex flex-col fixed  lg:hidden  backdrop-blur-[15px] ">
         <div className="bg-[#1B1C20E5] navbar-background px-[24px] py-[14px] lg:py-[30px] rounded-b-[12px]">
           <div className="flex justify-between items-center mb-[28px] ">
             <div className="text-white">
               {" "}
               <LogoImage router={router} />
-              {/* <MyPage router={router}/> */}
-              {/* Logo */}
             </div>
             <div>
               <ButtonComp
@@ -84,7 +69,6 @@ export default function Header({ className, openModal }) {
                 className={`px-[12px] !h-[27px]  text-[11px] font500 md:h-fit border-[#262C32] rounded-[999px] border-[1px] !bg-[#25272d] !text-white buttonClose`}
                 onClick={() => {
                   setDropDown(false);
-                  // handlePreventScroll(false);
                 }}
               />
             </div>
@@ -93,53 +77,17 @@ export default function Header({ className, openModal }) {
             <Link
               onClick={() => handleCheckIfITHome(eventLink)}
               href={eventLink}
-              className="py-[15px]  cursor-pointer no-underline text-white "
+              className="py-[15px] cursor-pointer no-underline text-white "
             >
               Browse Events
             </Link>
             
             <Link
-              onClick={() => handleCheckIfITHome(onDemandLink)}
-              href={onDemandLink}
+              onClick={() => handleCheckIfITHome(liveTvLink)}
+              href={liveTvLink}
               className="py-[15px]  cursor-pointer no-underline text-white"
             >
-              On Demand
-            </Link>
-            <Link
-              onClick={() => handleCheckIfITHome(onDemandLink)}
-              href={onDemandLink}
-              className="py-[15px]  cursor-pointer no-underline text-white"
-            >
-              For Entertainers
-            </Link>
-  </div>
-      <div className=" left-0 right-0 top-0 bottom-0 z-[99]   overflow-hidden  flex flex-col fixed  lg:hidden  backdrop-blur-[15px] ">
-        <div className="bg-[#1B1C20E5] navbar-background px-[24px] py-[14px]  lg:py-[30px] rounded-b-[12px]">
-          <div className="flex justify-between items-center mb-[28px] ">
-            <div className="text-white">
-              {" "}
-              <LogoImage router={router} />
-              {/* <MyPage router={router}/> */}
-              {/* Logo */}
-            </div>
-            <div>
-              <ButtonComp
-                btnText={`Close`}
-                className={`px-[12px] !h-[27px]  text-[11px] font500 md:h-fit border-[#262C32] rounded-[999px] border-[1px] !bg-[#25272d] !text-white buttonClose`}
-                onClick={() => {
-                  setDropDown(false);
-                  // handlePreventScroll(false);
-                }}
-              />
-            </div>
-          </div>
-          <div className="text-[14px] text-white font500 flex-1 flex flex-col justify-center items-center mb-[45px]">
-            <Link
-              onClick={() => handleCheckIfITHome(eventLink)}
-              href={eventLink}
-              className="py-[15px]  cursor-pointer no-underline text-white "
-            >
-              Browse Events
+              Live TV
             </Link>
             
             <Link
@@ -160,119 +108,115 @@ export default function Header({ className, openModal }) {
 
           <ButtonComp
             onClick={() => openModal("SignUp")}
-            btnText={`Sign Up`}
-            className={`text-[13px] font500 mb-[16px]  w-full`}
-          />
-          <ButtonComp
-            onClick={() => openModal(`Login`)}
-            btnText={`Login`}
-            className={`text-[13px] font500 mb-[25px]  w-full !bg-[#27292E] text-white`}
+            btnText="Sign Up"
+            className="px-[24px] !h-[40px]  text-[14px] font500 md:h-fit border-[#262C32] rounded-[999px] border-[1px] !bg-[#25272d] !text-white buttonClose"
           />
         </div>
-          <ButtonComp
-            onClick={() => openModal("SignUp")}
-            btnText={`Sign Up`}
-            className={`text-[13px] font500 mb-[16px]  w-full`}
-          />
-          <ButtonComp
-            onClick={() => openModal(`Login`)}
-            btnText={`Login`}
-            className={`text-[13px] font500 mb-[25px]  w-full !bg-[#27292E] text-white`}
-          />
-        </div>
-        </div>
-        </div>
-    )};
-      
+      </div>
+    );
+  };
+
   return (
     <>
       {dropDown && <MenuDropdown />}
 
       <div
-        className={`pt-[14px]  lg:pt-[16px] pb-[16px]  font400 ${className} ${MainContainer} relative z-50`}
+        className={`bg-black-background pt-[14px]  lg:pt-[16px] pb-[16px]  font400 ${className} ${MainContainer} relative z-50`}
       >
-        <div className="absolute left-0 right-0 top-0 bottom-0 bg-cover  bg-[url('/webp/header.png')] z-30 opacity-25 pointer-events-none"></div>
-        {/* <LogoWhite/> */}
         <div
-          className="flex justify-between   cursor-pointer relative  z-90 items-center"
-          style={{ zIndex: 90 }}
+          className="flex items-center"
         >
-          <LogoImage router={router} />
-          {/* <LogoImage router={router}/> */}
-
-          <div className="flex items-center justify-between  md:w-[65%]">
-            <div className="flex items-center justify-between lg:gap-[24px]">
+          {/* Logo and Navigation grouped together on the left */}
+          <div className="flex items-center gap-[40px]">
+            <LogoImage router={router} />
+            
+            {/* Navigation items close to logo */}
+            <div className="flex items-center gap-[32px]">
               <ButtonComp
-                btnText="Browse Events"
-                className={` font-medium  hidden lg:block  px-[16px] bg-transparent  gap-[10px]  !border-none  font500 text-white  ${isFocused} ${isEvent && isSelected
-                  }  text-[13px]   !h-[32px]`}
+                btnText="Home"
+                className={`font-medium hidden rounded-none lg:block px-[16px] py-[8px] bg-transparent gap-[10px] !border-none text-white text-[13px] !h-[32px] ${hoverEffect} ${isHome && isSelected}`}
                 onClick={() => {
-                  router.push(eventLink);
+                  router.push("/");
                 }}
               />
               <ButtonComp
-                btnText="On Demand"
-                className={` font-medium  hidden lg:block !py-[11px]  gap-[10px] !bg-transparent   font500 text-white ${isFocused}   text-[13px] ${isOnDemand && isSelected
-                  }  !h-[32px]`}
+                btnText="Live TV"
+                className={`font-medium rounded-none hidden lg:block !py-[8px] gap-[10px] !bg-transparent font500 text-white text-[13px] ${hoverEffect} ${isLiveTv && isSelected} !h-[32px]`}
                 onClick={() => {
-                  router.push(onDemandLink);
+                  router.push(liveTvLink);
                 }}
               />
-           
-
-              <Link
-                href="#"
-                onClick={handleEntertainersClick}
-                className={` no-underline text-[13px]   !h-[32px] font-medium  hidden lg:flex lg:items-center  gap-[10px]    font500 text-white  ${isFocused} ${isEntertainer ? isSelected : "bg-transparent px-[16px]"
-                  }`}
-              >
-                Entertainers
-                <svg
-                  width="9"
-                  height="9"
-                  viewBox="0 0 9 9"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M2.37498 0.833252C2.37498 0.419038 2.71077 0.083252 3.12498 0.083252H8.16665C8.58086 0.083252 8.91665 0.419038 8.91665 0.833252V5.87492C8.91665 6.28913 8.58086 6.62492 8.16665 6.62492C7.75243 6.62492 7.41665 6.28913 7.41665 5.87492V2.64391L1.36364 8.69692C1.07075 8.98981 0.595876 8.98981 0.302983 8.69692C0.0100897 8.40402 0.0100897 7.92915 0.302983 7.63626L6.35599 1.58325H3.12498C2.71077 1.58325 2.37498 1.24747 2.37498 0.833252Z"
-                    fill="white"
-                  />
-                </svg>
-              </Link>
-  
-            </div>    
-            <div>
-              <div className="hidden lg:flex  gap-x-[40px] items-center">
-                <ButtonComp
-                  onClick={() => openModal("Login")}
-                  btnText="Log In"
-                  className="text-[13px] font-medium font500 bg-transparent px-0 text-white font500"
-                />
-                <ButtonComp
-                  onClick={() => openModal("SignUp")}
-                  btnText="Sign Up"
-                  className="text-[13px] font-medium font500 px-[40px] py-[12px] text-black"
-                // className="text-[13px] font-medium font500 px-[40px] py-[12px] text-black"
-                />
-              </div>
               <ButtonComp
+                btnText="Movies"
+                className={`font-medium rounded-none hidden lg:block !py-[8px] gap-[10px] !bg-transparent font500 text-white text-[13px] ${hoverEffect} !h-[32px]`}
                 onClick={() => {
-                  setDropDown(true);
-                  // handlePreventScroll(true);
+                  router.push("/movies");
                 }}
-                btnText="Menu"
-                className="text-[13px] font-medium  lg:hidden !h-[30px] !px-[24px] gap-[10px] !bg-[#BAD6F70F] rounded-[999px] border-[white] border-[1px] font500 text-white backdrop-blur-[60px] md:h-fit "
+              />
+              <ButtonComp
+                btnText="Series"
+                className={`font-medium hidden rounded-none lg:block !py-[8px] gap-[10px] !bg-transparent font500 text-white text-[13px] ${hoverEffect} !h-[32px]`}
+                onClick={() => {
+                  router.push("/series");
+                }}
+              />
+              <ButtonComp
+                btnText="Sports"
+                className={`font-medium hidden rounded-none lg:block !py-[8px] gap-[10px] !bg-transparent font500 text-white text-[13px] ${hoverEffect} !h-[32px]`}
+                onClick={() => {
+                  router.push("/sports");
+                }}
+              />
+              <ButtonComp
+                btnText="My List"
+                className={`font-medium hidden rounded-none lg:block !py-[8px] gap-[10px] !bg-transparent font500 text-white text-[13px] ${hoverEffect} !h-[32px]`}
+                onClick={() => {
+                  router.push("/mylist");
+                }}
               />
             </div>
           </div>
-        </div>  
+
+          {/* User actions on the right */}
+          <div className="flex items-center gap-[16px] ml-auto">
+            {/* Search Icon */}
+            <button className="text-white hover:text-gray-300 transition-colors">
+              <svg className="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </button>
+            
+            {/* Notifications Icon */}
+            <button className="text-white hover:text-gray-300 transition-colors relative">
+              <svg className="w-[20px] h-[20px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-5 5v-5zM9 12l2 2 4-4" />
+              </svg>
+              <div className="absolute -top-1 -right-1 w-[8px] h-[8px] bg-red-500 rounded-full"></div>
+            </button>
+            
+            {/* Profile Dropdown */}
+            <div className="flex items-center gap-[8px] cursor-pointer">
+              <div className="w-[32px] h-[32px] bg-gray-600 rounded-full flex items-center justify-center">
+                <span className="text-white text-[14px] font-medium">U</span>
+              </div>
+              <svg className="w-[12px] h-[12px] text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path fillRule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" />
+              </svg>
+            </div>
+
+            {/* Mobile menu button */}
+            <div className="lg:hidden">
+              <ButtonComp
+                btnText="Menu"
+                className="px-[12px] !h-[27px]  text-[11px] font500 md:h-fit border-[#262C32] rounded-[999px] border-[1px] !bg-[#25272d] !text-white buttonClose"
+                onClick={() => {
+                  setDropDown(true);
+                }}
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
-};
-
-
-
+}

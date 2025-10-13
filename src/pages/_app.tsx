@@ -1,4 +1,5 @@
 import Head from "next/head";
+import { AppProps } from "next/app";
 import "../styles/globals.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -11,22 +12,16 @@ import { SessionProvider } from "next-auth/react";
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-// import { persistor, store } from "@/store";
-import { getServerSession } from "next-auth";
+
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { persistor, store } from "../store";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { ObjectProvider } from "@/Context/ObjectProvider";
-import { Metadata } from "next";
 import { VideoJSProvider } from "@/Context/VideoJsContext";
 
-export default function App({ Component, pageProps }) {
-  // const session = getServerSession();
-
+export default function App({ Component, pageProps }: AppProps) {
   return (
     <>
-      {/* <Head><title>This is the title</title></Head> */}
-
       <Head>
         <title>Liveparte - Watch Live Concerts and Performances</title>
         <meta
@@ -34,10 +29,6 @@ export default function App({ Component, pageProps }) {
           content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"
         />
         <link rel="icon" href="/logo.svg" sizes="any" />
-
-        {/* Google Site Verification Meta Tag */}
-
-        {/* <meta name="google-site-verification" content="QfE0tb4mBA0BreoYT9u5p9Ttnzmn0RCtjChgeNxupys" /> */}
 
         {/* Meta tag for Google Search  */}
         <meta
@@ -55,30 +46,30 @@ export default function App({ Component, pageProps }) {
       </Head>
       <ErrorBoundary>
         <VideoJSProvider>
-        <ObjectProvider>
-          <Provider store={store}>
-            <PersistGate loading={null} persistor={persistor}>
-              <GoogleOAuthProvider clientId="845158309668-olf8vmklh4baunlh2m7jb3fnidupl1u2.apps.googleusercontent.com">
-                <ToastContainer
-                  className={`z-[9999]`}
-                  position="bottom-center"
-                  autoClose={5000}
-                  hideProgressBar={false}
-                  newestOnTop={false}
-                  closeOnClick
-                  rtl={false}
-                  pauseOnFocusLoss
-                  draggable
-                  pauseOnHover
-                />
+          <ObjectProvider>
+            <Provider store={store}>
+              <PersistGate loading={null} persistor={persistor}>
+                <GoogleOAuthProvider clientId="845158309668-olf8vmklh4baunlh2m7jb3fnidupl1u2.apps.googleusercontent.com">
+                  <ToastContainer
+                    className={`z-[9999]`}
+                    position="bottom-center"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                  />
 
-                <NextNProgress />
+                  <NextNProgress />
 
-                <Component {...pageProps} />
-              </GoogleOAuthProvider>
-            </PersistGate>
-          </Provider>
-        </ObjectProvider>
+                  <Component {...pageProps} />
+                </GoogleOAuthProvider>
+              </PersistGate>
+            </Provider>
+          </ObjectProvider>
         </VideoJSProvider>
       </ErrorBoundary>
     </>

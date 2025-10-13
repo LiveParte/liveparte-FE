@@ -1,89 +1,78 @@
-// const withBundleAnalyzer = require('@next/bundle-analyzer')({
-//   enabled: process.env.ANALYZE === 'true',
-// });
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+});
 
-// const withPWA = require('next-pwa');
-
-// const nextConfig = {
-//   reactStrictMode: false,
-//   onDemandEntries: {
-//     maxInactiveAge: 10 * 1000,
-//     pagesBufferLength: 1,
-//   },
-//   images: {
-//     remotePatterns: [
-//       {
-//         protocol: 'https',
-//         hostname: 'res.cloudinary.com',
-//         pathname: '**',
-//       },
-//     ],
-//   },
-//   // pwa: {
-//   //   dest: 'public',
-//   //   disable: process.env.NODE_ENV === 'development',
-//   //   runtimeCaching: [
-//   //     {
-//   //       urlPattern: /^https:\/\/res\.cloudinary\.com\/.*\.(mp4|webm)$/,
-//   //       handler: 'CacheFirst',
-//   //       options: {
-//   //         cacheName: 'cloudinary-videos-cache',
-//   //         expiration: {
-//   //           maxEntries: 10,
-//   //           maxAgeSeconds: 7 * 24 * 60 * 60, // Cache for 7 days
-//   //         },
-//   //         cacheableResponse: {
-//   //           statuses: [0, 200],
-//   //         },
-//   //       },
-//   //     },
-//   //   ],
-//   // },
-// };
-
-// module.exports = withBundleAnalyzer(withPWA(nextConfig));
-
-
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-})
- 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   productionBrowserSourceMaps: false,
   swcMinify: false,
   reactStrictMode: false,
-  // externalDir,
   onDemandEntries: {
     // period (in ms) where the server will keep pages in the buffer
     maxInactiveAge: 10 * 1000,
     // number of pages that should be kept simultaneously without being disposed
     pagesBufferLength: 2,
   },
-  // images: {
-  //   domains: ['res.cloudinary.com', 'url.com', 'imagedomain.com', 'imagedomain2.com'],
-  // },
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'res.cloudinary.com',
-        pathname: '**',
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        pathname: "**",
       },
       {
-        protocol: 'https',
-        hostname:'liveparte-s3-bucket.s3.amazonaws.com',
-        pathname: '**',
+        protocol: "https",
+        hostname: "liveparte-s3-bucket.s3.amazonaws.com",
+        pathname: "**",
       },
       {
-        pathname:'**',
-        hostname:'avatar.iran.liara.run',
-        protocol: 'https',
-      }
+        pathname: "**",
+        hostname: "avatar.iran.liara.run",
+        protocol: "https",
+      },
+      {
+        pathname: "**",
+        hostname: "picsum.photos",
+        protocol: "https",
+      },
     ],
   },
-  // mode: 'jit',
+  // Enable TypeScript checking
+  typescript: {
+    // !! WARN !!
+    // Dangerously allow production builds to successfully complete even if
+    // your project has type errors.
+    // !! WARN !!
+    ignoreBuildErrors: false,
+  },
+  // Enable ESLint checking
+  eslint: {
+    // Warning: This allows production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: false,
+  },
+  // Handle ES modules
+  experimental: {
+    esmExternals: 'loose',
+  },
+  webpack: (config, { isServer }) => {
+    // Handle ES modules in webpack
+    config.module.rules.push({
+      test: /\.m?js$/,
+      type: 'javascript/auto',
+      resolve: {
+        fullySpecified: false,
+      },
+    });
 
-}
- 
-module.exports = withBundleAnalyzer(nextConfig)
+    // Handle HLS.js specifically
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'hls.js': 'hls.js/dist/hls.min.js',
+    };
+
+    return config;
+  },
+};
+
+module.exports = withBundleAnalyzer(nextConfig);
