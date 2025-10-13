@@ -1,15 +1,5 @@
-import React from "react";
 import { Search } from "lucide-react";
 import Link from "next/link";
-import {
-  NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-  NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
-} from "../../components/Ui/ui/navigation-menu";
 import { Button } from "../../components/Ui/ui/button";
 import { cn } from "../../lib/utils";
 
@@ -27,7 +17,7 @@ export default function Navbar() {
         <div className="flex items-center h-24">
           {/* Logo Section */}
           <div className="flex items-center space-x-3">
-            <div className="text-white.200 font-bold text-5xl font-1">
+            <div className="text-white.200 font-bold text-5xl font-1 cursor-pointer">
               Liveparte
             </div>
           </div>
