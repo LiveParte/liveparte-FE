@@ -1,4 +1,5 @@
 import Navbar from "../reusable/navbar";
+import CategorySection from "./Category-section";
 import HeroSection from "./hero-section";
 import LiveTVInfo from "./live-tv-info";
 
@@ -8,6 +9,7 @@ export default function HomeView() {
       <Navbar />
       <HeroSection />
       <LiveTVInfo />
+      <CategorySection />
     </>
   );
 }

@@ -27,7 +27,7 @@ export default function LiveTVInfo() {
         {/* Two Column Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-[60%_1fr] gap-8 lg:gap-12">
           {/* Left Column - News Coverage */}
-          <div className="relative">
+          <div className="space-y-6">
             <div className="relative h-[600px] rounded-2xl overflow-hidden">
               <img
                 src="https://images.unsplash.com/photo-1586339949916-3e9457bef6d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
@@ -56,6 +56,38 @@ export default function LiveTVInfo() {
                   <span>•</span>
                   <span>1 hour ago</span>
                 </div>
+              </div>
+            </div>
+
+            {/* TV Schedule Section - Below Left Column Only */}
+            <div className="bg-grey.300/10 rounded-2xl p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h4 className="text-white.200 text-xl font-bold">
+                  TV Schedule
+                </h4>
+                <span className="text-white.200 text-sm">Current: 09:06</span>
+              </div>
+
+              {/* Time Slots */}
+              <div className="flex space-x-3">
+                <button className="px-4 py-2 bg-grey.300/20 text-white.200 rounded-lg text-sm hover:bg-grey.300/30 transition-colors">
+                  7:00 PM
+                </button>
+                <button className="px-4 py-2 bg-grey.300/20 text-white.200 rounded-lg text-sm hover:bg-grey.300/30 transition-colors">
+                  7:30 PM
+                </button>
+                <button className="px-4 py-2 bg-white.200 text-black.100 rounded-lg text-sm font-500">
+                  8:00 PM
+                </button>
+                <button className="px-4 py-2 bg-grey.300/20 text-white.200 rounded-lg text-sm hover:bg-grey.300/30 transition-colors">
+                  8:30 PM
+                </button>
+                <button className="px-4 py-2 bg-grey.300/20 text-white.200 rounded-lg text-sm hover:bg-grey.300/30 transition-colors">
+                  9:00 PM
+                </button>
+                <button className="px-4 py-2 bg-grey.300/20 text-white.200 rounded-lg text-sm hover:bg-grey.300/30 transition-colors">
+                  9:30 PM
+                </button>
               </div>
             </div>
           </div>
