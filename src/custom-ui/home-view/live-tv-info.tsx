@@ -54,37 +54,79 @@ export default function LiveTVInfo() {
           </div>
 
           {/* Right Column - Popular Channels */}
-          <div className="bg-grey.300/5 rounded-2xl p-8">
+          <div className="p-8 pt-0">
             <h3 className="text-2xl font-bold text-white.200 mb-8">
               Popular Channels
             </h3>
 
-            {/* Simple vertical list of channels - Only 2 channels */}
+            {/* Channel Cards */}
             <div className="space-y-4 mb-8">
-              <div className="flex items-center space-x-4 p-2 rounded-lg hover:bg-grey.300/10 transition-colors cursor-pointer">
-                <div className="w-12 h-12 bg-red-600 rounded-full flex items-center justify-center flex-shrink-0">
-                  <span className="text-white text-base font-bold">B</span>
-                </div>
-                <div>
-                  <p className="text-white.200 font-500 text-base">BBC World</p>
-                  <p className="text-grey.200 text-sm">News</p>
+              {/* BBC World Channel Card */}
+              <div className="bg-grey.300/20 rounded-lg p-4 hover:bg-grey.300/30 transition-colors cursor-pointer">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    {/* Channel Logo */}
+                    <div className="w-12 h-12 bg-grey.300/40 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-sm font-bold">BBC</span>
+                    </div>
+
+                    {/* Channel Info */}
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-2 mb-1">
+                        <h4 className="text-white.200 font-bold text-base">
+                          BBC World
+                        </h4>
+                        <div className="w-2 h-2 bg-red.100 rounded-full"></div>
+                      </div>
+                      <p className="text-grey.200 text-sm mb-1">
+                        World Business Report
+                      </p>
+                      <p className="text-grey.200/70 text-xs">
+                        10:00 PM - 10:30 PM
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Right Arrow */}
+                  <ChevronRight className="w-5 h-5 text-grey.200" />
                 </div>
               </div>
 
-              <div className="flex items-center space-x-4 p-2 rounded-lg hover:bg-grey.300/10 transition-colors cursor-pointer">
-                <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
-                  <span className="text-white text-base font-bold">D</span>
-                </div>
-                <div>
-                  <p className="text-white.200 font-500 text-base">Discovery</p>
-                  <p className="text-grey.200 text-sm">Documentary</p>
+              {/* Discovery Channel Card */}
+              <div className="bg-grey.300/20 rounded-lg p-4 hover:bg-grey.300/30 transition-colors cursor-pointer">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    {/* Channel Logo */}
+                    <div className="w-12 h-12 bg-grey.300/40 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <span className="text-white text-sm font-bold">DSC</span>
+                    </div>
+
+                    {/* Channel Info */}
+                    <div className="flex-1">
+                      <div className="flex items-center space-x-2 mb-1">
+                        <h4 className="text-white.200 font-bold text-base">
+                          Discovery Channel
+                        </h4>
+                        <div className="w-2 h-2 bg-red.100 rounded-full"></div>
+                      </div>
+                      <p className="text-grey.200 text-sm mb-1">
+                        Planet Earth III
+                      </p>
+                      <p className="text-grey.200/70 text-xs">
+                        10:30 PM - 11:00 PM
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Right Arrow */}
+                  <ChevronRight className="w-5 h-5 text-grey.200" />
                 </div>
               </div>
             </div>
 
             {/* View All Button */}
-            <Button className="w-full bg-white.200 text-black.100 hover:bg-white.200/90 font-500">
-              View all 50+ channels
+            <Button className="w-full bg-grey.300/20 text-white.200 hover:bg-grey.300/30 font-500 border border-white.200/80 justify-start rounded-lg py-4 text-base">
+              View All 50+ Channels
               <ChevronRight className="ml-2 w-4 h-4" />
             </Button>
           </div>
