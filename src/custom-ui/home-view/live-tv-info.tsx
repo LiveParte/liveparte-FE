@@ -26,12 +26,12 @@ export default function LiveTVInfo() {
 
         {/* Two Column Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-[60%_1fr] gap-8 lg:gap-12">
-          {/* Left Column - International Desk */}
+          {/* Left Column - News Coverage */}
           <div className="relative">
-            <div className="relative h-96 rounded-2xl overflow-hidden">
+            <div className="relative h-[600px] rounded-2xl overflow-hidden">
               <img
-                src="https://images.unsplash.com/photo-1571266028243-e4734c7f5c8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
-                alt="International Desk background"
+                src="https://images.unsplash.com/photo-1586339949916-3e9457bef6d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
+                alt="News coverage background"
                 className="w-full h-full object-cover"
               />
               {/* Dark overlay */}
@@ -41,14 +41,21 @@ export default function LiveTVInfo() {
               <div className="absolute inset-0 flex flex-col justify-end p-8 text-white">
                 <div className="flex items-center space-x-3 mb-3">
                   <div className="w-3 h-3 bg-red.100 rounded-full animate-pulse"></div>
-                  <span className="text-sm font-500">
-                    8:00 PM - 9:00 PM • News
-                  </span>
+                  <span className="text-sm font-500">Live • 1 hour ago</span>
                 </div>
-                <h3 className="text-3xl font-bold mb-2">International Desk</h3>
-                <p className="text-lg text-white/90">
-                  Live coverage of today's most important stories
+                <h3 className="text-2xl font-bold mb-3 leading-tight">
+                  Hong Kong (CNN) China has reported no new locally transmitted
+                  coronavirus cases for the first time since the pandemic began
+                </h3>
+                <p className="text-base text-white/90 mb-2">
+                  The coronavirus pandemic began in China. Today, it reported no
+                  new infections for the first time
                 </p>
+                <div className="flex items-center space-x-2 text-sm text-white/70">
+                  <span>CNN</span>
+                  <span>•</span>
+                  <span>1 hour ago</span>
+                </div>
               </div>
             </div>
           </div>
