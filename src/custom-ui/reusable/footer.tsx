@@ -28,7 +28,7 @@ export default function Footer() {
               {/* Call-to-Action Buttons */}
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button className="bg-white.200 text-black.100 hover:bg-white.200/90 px-6 py-3 rounded-lg font-500">
-                  Download App
+                  Join our Wishlist
                 </Button>
                 <Button className="bg-transparent border border-white.200/80 text-white.200 hover:bg-white.200 hover:text-black.100 px-6 py-3 rounded-lg font-500">
                   Learn More
