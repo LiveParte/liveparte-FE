@@ -54,7 +54,7 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
   return (
     <div className={`${className}`}>
       {/* Hero Section - Full width, directly below navigation with proper spacing */}
-      <div className="mt-[80px]">
+      <div className="mt-24">
         <HeroSection
           selectedProgram={selectedProgram}
           onVideoPlay={handleVideoMaximize}

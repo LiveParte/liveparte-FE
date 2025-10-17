@@ -1,11 +1,14 @@
 import { Search } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { Button } from "../../components/Ui/ui/button";
 import { cn } from "../../lib/utils";
 
 export default function Navbar() {
+  const router = useRouter();
+
   const navigationItems = [
-    { name: "Home", href: "/", active: true },
+    { name: "Home", href: "/" },
     { name: "Live Tv", href: "/livetv" },
     { name: "Live Shows", href: "/liveshows" },
     { name: "My List", href: "/mylist" },
@@ -25,20 +28,23 @@ export default function Navbar() {
           {/* Navigation Menu - Centered */}
           <div className="flex-1 flex justify-center">
             <div className="hidden md:flex items-center space-x-8">
-              {navigationItems.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className={cn(
-                    "text-base font-500 transition-colors duration-200 no-underline",
-                    item.active
-                      ? "text-white.200"
-                      : "text-grey.200 hover:text-white.200"
-                  )}
-                >
-                  {item.name}
-                </Link>
-              ))}
+              {navigationItems.map((item) => {
+                const isActive = router.pathname === item.href;
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    className={cn(
+                      "text-base font-500 transition-colors duration-200 no-underline",
+                      isActive
+                        ? "text-white.200"
+                        : "text-grey.200 hover:text-white.200"
+                    )}
+                  >
+                    {item.name}
+                  </Link>
+                );
+              })}
             </div>
           </div>
 
