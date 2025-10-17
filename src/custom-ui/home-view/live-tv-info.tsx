@@ -1,8 +1,95 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
+import { motion } from "framer-motion";
 import { Button } from "../../components/Ui/ui/button";
 import { ChevronRight } from "lucide-react";
 
+// Channel data
+const channels = [
+  {
+    id: "bbc",
+    name: "BBC World",
+    logo: "BBC",
+    program: "World Business Report",
+    time: "10:00 PM - 10:30 PM",
+    videoUrl:
+      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+    thumbnailUrl:
+      "https://images.unsplash.com/photo-1586339949916-3e9457bef6d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
+    content: {
+      title:
+        "Hong Kong (CNN) China has reported no new locally transmitted coronavirus cases for the first time since the pandemic began",
+      description:
+        "The coronavirus pandemic began in China. Today, it reported no new infections for the first time",
+      source: "CNN",
+      timeAgo: "1 hour ago",
+    },
+  },
+  {
+    id: "discovery",
+    name: "Discovery Channel",
+    logo: "DSC",
+    program: "Planet Earth III",
+    time: "10:30 PM - 11:00 PM",
+    videoUrl:
+      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
+    thumbnailUrl:
+      "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
+    content: {
+      title:
+        "Planet Earth III: The most ambitious natural history series ever made",
+      description:
+        "Discover the incredible diversity of life on Earth through stunning cinematography and groundbreaking technology",
+      source: "Discovery",
+      timeAgo: "30 minutes ago",
+    },
+  },
+  {
+    id: "national-geographic",
+    name: "National Geographic",
+    logo: "NG",
+    program: "Wildlife Documentary",
+    time: "11:00 PM - 11:30 PM",
+    videoUrl:
+      "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+    thumbnailUrl:
+      "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80",
+    content: {
+      title: "Wildlife Documentary: The Secret Life of Big Cats",
+      description:
+        "Follow the lives of majestic big cats in their natural habitats across Africa and Asia",
+      source: "National Geographic",
+      timeAgo: "15 minutes ago",
+    },
+  },
+];
+
 export default function LiveTVInfo() {
+  const [selectedChannel, setSelectedChannel] = useState(channels[0]);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // Handle video loading and playback
+  useEffect(() => {
+    if (isHovered && videoRef.current) {
+      const timer = setTimeout(() => {
+        videoRef.current?.play().catch(console.error);
+      }, 300);
+      return () => clearTimeout(timer);
+    } else {
+      videoRef.current?.pause();
+    }
+  }, [isHovered]);
+
+  const handleVideoLoad = () => {
+    setIsVideoLoaded(true);
+  };
+
+  const handleChannelSelect = (channel: (typeof channels)[0]) => {
+    setSelectedChannel(channel);
+    setIsVideoLoaded(false); // Reset video load state when switching channels
+  };
+
   return (
     <section className="py-24 px-[20px] sm:px-[40px] lg:px-[120px] bg-black-background">
       <div className="w-full">
@@ -26,14 +113,43 @@ export default function LiveTVInfo() {
 
         {/* Two Column Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-[60%_1fr] gap-8 lg:gap-12">
-          {/* Left Column - News Coverage */}
+          {/* Left Column - Dynamic Content */}
           <div className="space-y-6">
-            <div className="relative h-[600px] rounded-2xl overflow-hidden">
+            <div
+              className="relative h-[600px] rounded-2xl overflow-hidden cursor-pointer"
+              onMouseEnter={() => setIsHovered(true)}
+              onMouseLeave={() => setIsHovered(false)}
+            >
+              {/* Background Image */}
               <img
-                src="https://images.unsplash.com/photo-1586339949916-3e9457bef6d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80"
-                alt="News coverage background"
-                className="w-full h-full object-cover"
+                src={selectedChannel.thumbnailUrl}
+                alt={`${selectedChannel.name} background`}
+                className="w-full h-full object-cover transition-opacity duration-1000"
+                style={{
+                  opacity: isHovered && isVideoLoaded ? 0 : 1,
+                }}
               />
+
+              {/* Background Video */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: isHovered && isVideoLoaded ? 1 : 0 }}
+                transition={{ duration: 0.8, ease: "easeInOut" }}
+                className="absolute inset-0 w-full h-full"
+              >
+                <video
+                  ref={videoRef}
+                  className="w-full h-full object-cover"
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  onLoadedData={handleVideoLoad}
+                >
+                  <source src={selectedChannel.videoUrl} type="video/mp4" />
+                </video>
+              </motion.div>
+
               {/* Dark overlay */}
               <div className="absolute inset-0 bg-black/50"></div>
 
@@ -41,20 +157,20 @@ export default function LiveTVInfo() {
               <div className="absolute inset-0 flex flex-col justify-end p-8 text-white">
                 <div className="flex items-center space-x-3 mb-3">
                   <div className="w-3 h-3 bg-red.100 rounded-full animate-pulse"></div>
-                  <span className="text-sm font-500">Live • 1 hour ago</span>
+                  <span className="text-sm font-500">
+                    Live • {selectedChannel.content.timeAgo}
+                  </span>
                 </div>
                 <h3 className="text-2xl font-bold mb-3 leading-tight">
-                  Hong Kong (CNN) China has reported no new locally transmitted
-                  coronavirus cases for the first time since the pandemic began
+                  {selectedChannel.content.title}
                 </h3>
                 <p className="text-base text-white/90 mb-2">
-                  The coronavirus pandemic began in China. Today, it reported no
-                  new infections for the first time
+                  {selectedChannel.content.description}
                 </p>
                 <div className="flex items-center space-x-2 text-sm text-white/70">
-                  <span>CNN</span>
+                  <span>{selectedChannel.content.source}</span>
                   <span>•</span>
-                  <span>1 hour ago</span>
+                  <span>{selectedChannel.content.timeAgo}</span>
                 </div>
               </div>
             </div>
@@ -100,67 +216,48 @@ export default function LiveTVInfo() {
 
             {/* Channel Cards */}
             <div className="space-y-4 mb-8">
-              {/* BBC World Channel Card */}
-              <div className="bg-grey.300/20 rounded-lg p-4 hover:bg-grey.300/30 transition-colors cursor-pointer">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-4">
-                    {/* Channel Logo */}
-                    <div className="w-12 h-12 bg-grey.300/40 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <span className="text-white text-sm font-bold">BBC</span>
-                    </div>
-
-                    {/* Channel Info */}
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2 mb-1">
-                        <h4 className="text-white.200 font-bold text-base">
-                          BBC World
-                        </h4>
-                        <div className="w-2 h-2 bg-red.100 rounded-full"></div>
+              {channels.map((channel) => (
+                <motion.div
+                  key={channel.id}
+                  className={`rounded-lg p-4 transition-all duration-300 cursor-pointer ${
+                    selectedChannel.id === channel.id
+                      ? "bg-white.200/20 border-2 border-white.200/50"
+                      : "bg-grey.300/20 hover:bg-grey.300/30"
+                  }`}
+                  onClick={() => handleChannelSelect(channel)}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-4">
+                      {/* Channel Logo */}
+                      <div className="w-12 h-12 bg-grey.300/40 rounded-lg flex items-center justify-center flex-shrink-0">
+                        <span className="text-white text-sm font-bold">
+                          {channel.logo}
+                        </span>
                       </div>
-                      <p className="text-grey.200 text-sm mb-1">
-                        World Business Report
-                      </p>
-                      <p className="text-grey.200/70 text-xs">
-                        10:00 PM - 10:30 PM
-                      </p>
-                    </div>
-                  </div>
 
-                  {/* Right Arrow */}
-                  <ChevronRight className="w-5 h-5 text-grey.200" />
-                </div>
-              </div>
-
-              {/* Discovery Channel Card */}
-              <div className="bg-grey.300/20 rounded-lg p-4 hover:bg-grey.300/30 transition-colors cursor-pointer">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-4">
-                    {/* Channel Logo */}
-                    <div className="w-12 h-12 bg-grey.300/40 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <span className="text-white text-sm font-bold">DSC</span>
-                    </div>
-
-                    {/* Channel Info */}
-                    <div className="flex-1">
-                      <div className="flex items-center space-x-2 mb-1">
-                        <h4 className="text-white.200 font-bold text-base">
-                          Discovery Channel
-                        </h4>
-                        <div className="w-2 h-2 bg-red.100 rounded-full"></div>
+                      {/* Channel Info */}
+                      <div className="flex-1">
+                        <div className="mb-1">
+                          <h4 className="text-white.200 font-bold text-base leading-tight">
+                            {channel.name}
+                          </h4>
+                        </div>
+                        <p className="text-grey.200 text-sm mb-1">
+                          {channel.program}
+                        </p>
+                        <p className="text-grey.200/70 text-xs">
+                          {channel.time}
+                        </p>
                       </div>
-                      <p className="text-grey.200 text-sm mb-1">
-                        Planet Earth III
-                      </p>
-                      <p className="text-grey.200/70 text-xs">
-                        10:30 PM - 11:00 PM
-                      </p>
                     </div>
-                  </div>
 
-                  {/* Right Arrow */}
-                  <ChevronRight className="w-5 h-5 text-grey.200" />
-                </div>
-              </div>
+                    {/* Right Arrow */}
+                    <ChevronRight className="w-5 h-5 text-grey.200" />
+                  </div>
+                </motion.div>
+              ))}
             </div>
 
             {/* View All Button */}
