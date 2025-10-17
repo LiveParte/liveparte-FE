@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/router";
 import { Button } from "../../components/Ui/ui/button";
 import { ChevronRight } from "lucide-react";
 
@@ -249,6 +250,7 @@ const channelData = {
 };
 
 export default function LiveTVInfo() {
+  const router = useRouter();
   const [selectedChannelId, setSelectedChannelId] =
     useState<keyof typeof channelData>("bbc");
   const [isHovered, setIsHovered] = useState(false);
@@ -432,6 +434,11 @@ export default function LiveTVInfo() {
     setSelectedChannelId(channelId);
     setIsVideoLoaded(false); // Reset video load state when switching channels
     setIsHovered(false); // Reset hover state when switching channels
+  };
+
+  const handleViewAllChannels = () => {
+    console.log("Navigating to Live TV page");
+    router.push("/livetv");
   };
 
   return (
@@ -726,10 +733,28 @@ export default function LiveTVInfo() {
               </div>
 
               {/* View All Button */}
-              <Button className="w-full bg-grey.300/20 text-white.200 hover:bg-grey.300/30 font-500 border border-white.200/80 justify-start rounded-lg py-4 text-base">
-                View All 50+ Channels
-                <ChevronRight className="ml-2 w-4 h-4" />
-              </Button>
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+              >
+                <Button
+                  className="w-full bg-grey.300/20 text-white.200 hover:bg-grey.300/30 font-500 border border-white.200/80 justify-start rounded-lg py-4 text-base transition-all duration-300"
+                  onClick={handleViewAllChannels}
+                >
+                  View All 50+ Channels
+                  <motion.div
+                    className="ml-2"
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{
+                      duration: 1.5,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  >
+                    <ChevronRight className="w-4 h-4" />
+                  </motion.div>
+                </Button>
+              </motion.div>
             </div>
           </div>
         </div>
