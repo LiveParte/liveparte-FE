@@ -18,6 +18,7 @@ import { persistor, store } from "../store";
 import ErrorBoundary from "@/components/ErrorBoundary";
 import { ObjectProvider } from "@/Context/ObjectProvider";
 import { VideoJSProvider } from "@/Context/VideoJsContext";
+import { TransitionProvider } from "@/Context/TransitionContext";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -47,28 +48,30 @@ export default function App({ Component, pageProps }: AppProps) {
       <ErrorBoundary>
         <VideoJSProvider>
           <ObjectProvider>
-            <Provider store={store}>
-              <PersistGate loading={null} persistor={persistor}>
-                <GoogleOAuthProvider clientId="845158309668-olf8vmklh4baunlh2m7jb3fnidupl1u2.apps.googleusercontent.com">
-                  <ToastContainer
-                    className={`z-[9999]`}
-                    position="bottom-center"
-                    autoClose={5000}
-                    hideProgressBar={false}
-                    newestOnTop={false}
-                    closeOnClick
-                    rtl={false}
-                    pauseOnFocusLoss
-                    draggable
-                    pauseOnHover
-                  />
+            <TransitionProvider>
+              <Provider store={store}>
+                <PersistGate loading={null} persistor={persistor}>
+                  <GoogleOAuthProvider clientId="845158309668-olf8vmklh4baunlh2m7jb3fnidupl1u2.apps.googleusercontent.com">
+                    <ToastContainer
+                      className={`z-[9999]`}
+                      position="bottom-center"
+                      autoClose={5000}
+                      hideProgressBar={false}
+                      newestOnTop={false}
+                      closeOnClick
+                      rtl={false}
+                      pauseOnFocusLoss
+                      draggable
+                      pauseOnHover
+                    />
 
-                  <NextNProgress />
+                    <NextNProgress />
 
-                  <Component {...pageProps} />
-                </GoogleOAuthProvider>
-              </PersistGate>
-            </Provider>
+                    <Component {...pageProps} />
+                  </GoogleOAuthProvider>
+                </PersistGate>
+              </Provider>
+            </TransitionProvider>
           </ObjectProvider>
         </VideoJSProvider>
       </ErrorBoundary>
