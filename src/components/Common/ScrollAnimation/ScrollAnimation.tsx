@@ -1,5 +1,5 @@
-import React, { useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import React, { useRef, useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 interface ScrollAnimationProps {
   children: React.ReactNode;
@@ -23,11 +23,31 @@ export default function ScrollAnimation({
   staggerDelay = 0.1,
 }: ScrollAnimationProps) {
   const ref = useRef(null);
-  const isInView = useInView(ref, {
-    once: true,
-    margin: "-100px 0px",
-    amount: 0.1,
-  });
+  const [isInView, setIsInView] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsInView(true);
+        }
+      },
+      {
+        threshold: 0.1,
+        rootMargin: "-100px 0px",
+      }
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, []);
 
   const getInitialPosition = () => {
     switch (direction) {

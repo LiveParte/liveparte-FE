@@ -57,7 +57,7 @@ export default function Navbar() {
 
             {/* Sign In Link */}
             <Link
-              href="/signin"
+              href="/auth/login"
               className="hidden sm:block text-sm font-500 text-grey.200 hover:text-white.200 transition-colors duration-200 no-underline"
             >
               Sign In
@@ -68,7 +68,7 @@ export default function Navbar() {
               asChild
               className="bg-white.200 text-black.100 hover:bg-white.200/90 shadow-lg hover:shadow-xl font-500 no-underline"
             >
-              <Link href="/signup">Sign Up</Link>
+              <Link href="/auth/signup">Sign Up</Link>
             </Button>
 
             {/* Mobile Menu Button */}
