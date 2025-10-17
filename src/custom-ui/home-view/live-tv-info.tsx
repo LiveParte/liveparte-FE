@@ -69,25 +69,55 @@ export default function LiveTVInfo() {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  // Load video when component mounts or channel changes
+  useEffect(() => {
+    if (videoRef.current) {
+      console.log("Loading video for channel:", selectedChannel.name);
+      videoRef.current.load();
+    }
+  }, [selectedChannel]);
+
   // Handle video loading and playback
   useEffect(() => {
-    if (isHovered && videoRef.current) {
+    console.log("Hover state changed:", isHovered);
+    console.log("Video loaded:", isVideoLoaded);
+    console.log("Video ref:", videoRef.current);
+
+    if (isHovered && videoRef.current && isVideoLoaded) {
+      console.log("Attempting to play video");
       const timer = setTimeout(() => {
-        videoRef.current?.play().catch(console.error);
+        videoRef.current?.play().catch((error) => {
+          console.error("Video play error:", error);
+        });
       }, 300);
       return () => clearTimeout(timer);
-    } else {
+    } else if (!isHovered && videoRef.current) {
+      console.log("Pausing video");
       videoRef.current?.pause();
     }
-  }, [isHovered]);
+  }, [isHovered, isVideoLoaded]);
 
   const handleVideoLoad = () => {
+    console.log("Video loaded successfully");
     setIsVideoLoaded(true);
   };
 
+  const handleVideoError = (error: any) => {
+    console.error("Video error:", error);
+    // Try to reload the video after a short delay
+    setTimeout(() => {
+      if (videoRef.current) {
+        console.log("Retrying video load...");
+        videoRef.current.load();
+      }
+    }, 1000);
+  };
+
   const handleChannelSelect = (channel: (typeof channels)[0]) => {
+    console.log("Switching to channel:", channel.name);
     setSelectedChannel(channel);
     setIsVideoLoaded(false); // Reset video load state when switching channels
+    setIsHovered(false); // Reset hover state when switching channels
   };
 
   return (
@@ -136,6 +166,11 @@ export default function LiveTVInfo() {
                 animate={{ opacity: isHovered && isVideoLoaded ? 1 : 0 }}
                 transition={{ duration: 0.8, ease: "easeInOut" }}
                 className="absolute inset-0 w-full h-full"
+                style={{
+                  backgroundColor: isHovered
+                    ? "rgba(255, 0, 0, 0.1)"
+                    : "transparent",
+                }}
               >
                 <video
                   ref={videoRef}
@@ -143,8 +178,10 @@ export default function LiveTVInfo() {
                   muted
                   loop
                   playsInline
-                  preload="metadata"
+                  preload="auto"
                   onLoadedData={handleVideoLoad}
+                  onError={handleVideoError}
+                  onCanPlay={() => console.log("Video can play")}
                 >
                   <source src={selectedChannel.videoUrl} type="video/mp4" />
                 </video>
@@ -155,6 +192,13 @@ export default function LiveTVInfo() {
 
               {/* Content overlay */}
               <div className="absolute inset-0 flex flex-col justify-end p-8 text-white">
+                {/* Debug indicator */}
+                {isHovered && (
+                  <div className="absolute top-4 left-4 bg-red-500 text-white px-2 py-1 rounded text-xs">
+                    HOVERED! Video loaded: {isVideoLoaded ? "Yes" : "No"}
+                  </div>
+                )}
+
                 <div className="flex items-center space-x-3 mb-3">
                   <div className="w-3 h-3 bg-red.100 rounded-full animate-pulse"></div>
                   <span className="text-sm font-500">
