@@ -1,11 +1,20 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "../../components/Ui/ui/button";
-import { ArrowRight, Play, Users, Calendar, MapPin } from "lucide-react";
+import {
+  ArrowRight,
+  Play,
+  Users,
+  Calendar,
+  MapPin,
+  Volume2,
+  VolumeX,
+} from "lucide-react";
 
 export default function HeroSection() {
   const [isHeroHovered, setIsHeroHovered] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [isAudioEnabled, setIsAudioEnabled] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Background video data
@@ -27,6 +36,17 @@ export default function HeroSection() {
       videoRef.current?.pause();
     }
   }, [isHeroHovered]);
+
+  // Handle audio toggle
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isAudioEnabled;
+    }
+  }, [isAudioEnabled]);
+
+  const toggleAudio = () => {
+    setIsAudioEnabled(!isAudioEnabled);
+  };
 
   const handleVideoLoad = () => {
     setIsVideoLoaded(true);
@@ -57,14 +77,32 @@ export default function HeroSection() {
         <video
           ref={videoRef}
           className="w-full h-full object-cover"
-          muted
           loop
           playsInline
           preload="metadata"
+          controls={false}
           onLoadedData={handleVideoLoad}
         >
           <source src={backgroundVideo.videoUrl} type="video/mp4" />
         </video>
+
+        {/* Audio Control Button */}
+        <motion.button
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{
+            opacity: isHeroHovered && isVideoLoaded ? 1 : 0,
+            scale: isHeroHovered && isVideoLoaded ? 1 : 0.8,
+          }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+          onClick={toggleAudio}
+          className="absolute top-6 right-6 z-10 bg-black/70 backdrop-blur-sm border border-white/30 rounded-full p-3 hover:bg-black/80 hover:border-white/50 transition-all duration-300 group shadow-lg"
+        >
+          {isAudioEnabled ? (
+            <Volume2 className="w-5 h-5 text-white" />
+          ) : (
+            <VolumeX className="w-5 h-5 text-white/80" />
+          )}
+        </motion.button>
       </motion.div>
 
       {/* Dark Overlay for better text readability */}
@@ -162,6 +200,28 @@ export default function HeroSection() {
             >
               Get Tickets
             </Button>
+          </motion.div>
+
+          {/* Audio Control Button */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.8, duration: 0.6 }}
+            className="mt-6"
+          >
+            <button
+              onClick={toggleAudio}
+              className="inline-flex items-center gap-2 bg-white.200/10 backdrop-blur-sm border border-white.200/20 rounded-full px-4 py-2 hover:bg-white.200/20 hover:border-white.200/40 transition-all duration-300 group"
+            >
+              {isAudioEnabled ? (
+                <Volume2 className="w-4 h-4 text-white.200" />
+              ) : (
+                <VolumeX className="w-4 h-4 text-white.200/70" />
+              )}
+              <span className="text-white.200/90 text-sm font-500">
+                {isAudioEnabled ? "Audio On" : "Audio Off"}
+              </span>
+            </button>
           </motion.div>
         </motion.div>
       </div>

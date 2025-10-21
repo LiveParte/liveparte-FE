@@ -3,9 +3,13 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { Button } from "../../components/Ui/ui/button";
 import { cn } from "../../lib/utils";
+import { useState } from "react";
+import AuthModal from "../../components/Common/AuthModal/AuthModal";
 
 export default function Navbar() {
   const router = useRouter();
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [authMode, setAuthMode] = useState<"login" | "signup">("login");
 
   const navigationItems = [
     { name: "Home", href: "/" },
@@ -56,19 +60,25 @@ export default function Navbar() {
             </button>
 
             {/* Sign In Link */}
-            <Link
-              href="/auth/login"
-              className="hidden sm:block text-sm font-500 text-grey.200 hover:text-white.200 transition-colors duration-200 no-underline"
+            <button
+              onClick={() => {
+                setAuthMode("login");
+                setIsAuthModalOpen(true);
+              }}
+              className="hidden sm:block text-sm font-500 text-grey.200 hover:text-white.200 transition-colors duration-200"
             >
               Sign In
-            </Link>
+            </button>
 
             {/* Sign Up Button */}
             <Button
-              asChild
-              className="bg-white.200 text-black.100 hover:bg-white.200/90 shadow-lg hover:shadow-xl font-500 no-underline"
+              onClick={() => {
+                setAuthMode("signup");
+                setIsAuthModalOpen(true);
+              }}
+              className="bg-white.200 text-black.100 hover:bg-white.200/90 shadow-lg hover:shadow-xl font-500"
             >
-              <Link href="/auth/signup">Sign Up</Link>
+              Sign Up
             </Button>
 
             {/* Mobile Menu Button */}
@@ -90,6 +100,13 @@ export default function Navbar() {
           </div>
         </div>
       </div>
+
+      {/* Auth Modal */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
+        initialMode={authMode}
+      />
     </nav>
   );
 }
