@@ -14,7 +14,7 @@ export default function Navbar() {
   const navigationItems = [
     { name: "Home", href: "/" },
     { name: "Live Tv", href: "/livetv" },
-    { name: "Live Shows", href: "/liveshows" },
+    { name: "Shows", href: "/shows" },
     { name: "My List", href: "/mylist" },
   ];
 

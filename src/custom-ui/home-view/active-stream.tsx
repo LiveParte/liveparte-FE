@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Button } from "../../components/Ui/ui/button";
-import { Play, Users, Clock, Music } from "lucide-react";
+import { Play, Users, Clock, Music, Volume2, VolumeX } from "lucide-react";
 
 // Comprehensive stream data
 const streamData = {
@@ -80,6 +80,7 @@ export default function ActiveStream() {
     useState<keyof typeof streamData>("summer-festival");
   const [isHovered, setIsHovered] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [isAudioEnabled, setIsAudioEnabled] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Get current stream data
@@ -105,6 +106,13 @@ export default function ActiveStream() {
     console.log("Selecting stream:", streamData[streamId].title);
     setSelectedStream(streamId);
     setIsVideoLoaded(false);
+  };
+
+  const toggleAudio = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isAudioEnabled;
+      setIsAudioEnabled(!isAudioEnabled);
+    }
   };
 
   return (
@@ -150,7 +158,7 @@ export default function ActiveStream() {
                 <video
                   ref={videoRef}
                   className="w-full h-full object-cover"
-                  muted
+                  muted={!isAudioEnabled}
                   loop
                   playsInline
                   preload="auto"
@@ -158,6 +166,24 @@ export default function ActiveStream() {
                 >
                   <source src={currentStream.videoUrl} type="video/mp4" />
                 </video>
+
+                {/* Audio Control Button */}
+                <motion.button
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{
+                    opacity: isHovered && isVideoLoaded ? 1 : 0,
+                    scale: isHovered && isVideoLoaded ? 1 : 0.8,
+                  }}
+                  transition={{ duration: 0.3, ease: "easeInOut" }}
+                  onClick={toggleAudio}
+                  className="absolute top-6 right-6 z-10 bg-black/70 backdrop-blur-sm border border-white/30 rounded-full p-3 hover:bg-black/80 hover:border-white/50 transition-all duration-300 group shadow-lg"
+                >
+                  {isAudioEnabled ? (
+                    <Volume2 className="w-5 h-5 text-white" />
+                  ) : (
+                    <VolumeX className="w-5 h-5 text-white/80" />
+                  )}
+                </motion.button>
               </motion.div>
 
               {/* Dark overlay */}

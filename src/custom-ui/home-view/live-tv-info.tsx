@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/router";
 import { Button } from "../../components/Ui/ui/button";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Volume2, VolumeX } from "lucide-react";
 
 // Comprehensive fake data with time-based programs
 const channelData = {
@@ -257,6 +257,7 @@ export default function LiveTVInfo() {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<Date | null>(null);
+  const [isAudioEnabled, setIsAudioEnabled] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   // Get current channel data
@@ -381,6 +382,13 @@ export default function LiveTVInfo() {
         videoRef.current.load();
       }
     }, 1000);
+  };
+
+  const toggleAudio = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isAudioEnabled;
+      setIsAudioEnabled(!isAudioEnabled);
+    }
   };
 
   // Generate time slots based on current time (current and future only)
@@ -510,7 +518,7 @@ export default function LiveTVInfo() {
                   <video
                     ref={videoRef}
                     className="w-full h-full object-cover"
-                    muted
+                    muted={!isAudioEnabled}
                     loop
                     playsInline
                     preload="auto"
@@ -526,6 +534,24 @@ export default function LiveTVInfo() {
                       type="video/mp4"
                     />
                   </video>
+
+                  {/* Audio Control Button */}
+                  <motion.button
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{
+                      opacity: isHovered && isVideoLoaded ? 1 : 0,
+                      scale: isHovered && isVideoLoaded ? 1 : 0.8,
+                    }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    onClick={toggleAudio}
+                    className="absolute top-6 right-6 z-10 bg-black/70 backdrop-blur-sm border border-white/30 rounded-full p-3 hover:bg-black/80 hover:border-white/50 transition-all duration-300 group shadow-lg"
+                  >
+                    {isAudioEnabled ? (
+                      <Volume2 className="w-5 h-5 text-white" />
+                    ) : (
+                      <VolumeX className="w-5 h-5 text-white/80" />
+                    )}
+                  </motion.button>
                 </motion.div>
 
                 {/* Dark overlay */}
