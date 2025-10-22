@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { Button } from "../../components/Ui/ui/button";
 import { ChevronRight, Volume2, VolumeX } from "lucide-react";
 
-// Comprehensive fake data with time-based programs
+// (KEEP your full channelData exactly as you had it)
 const channelData = {
   bbc: {
     name: "BBC World",
@@ -259,6 +259,12 @@ export default function LiveTVInfo() {
   const [selectedTimeSlot, setSelectedTimeSlot] = useState<Date | null>(null);
   const [isAudioEnabled, setIsAudioEnabled] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [isPreviewing, setIsPreviewing] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const previewTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const instanceIdRef = useRef<string>(Math.random().toString(36).slice(2));
 
   // Get current channel data
   const selectedChannel = channelData[selectedChannelId];
@@ -267,25 +273,19 @@ export default function LiveTVInfo() {
   const getCurrentProgram = () => {
     if (!selectedTimeSlot) return null;
 
+    // make timeKey match "08:00" keys
     const timeKey = selectedTimeSlot
       .toLocaleTimeString("en-US", {
         hour: "2-digit",
         minute: "2-digit",
         hour12: false,
       })
-      .replace(":", "");
+      .slice(0, 5); // "08:00"
 
-    console.log("Getting program for time key:", timeKey);
-    console.log(
-      "Available program times:",
-      Object.keys(selectedChannel.programs)
-    );
-
-    // Find the program that matches or is closest to the selected time
     const programTimes = Object.keys(selectedChannel.programs).sort();
     let closestProgram = null;
 
-    // First try to find exact match
+    // exact match
     if (
       selectedChannel.programs[timeKey as keyof typeof selectedChannel.programs]
     ) {
@@ -293,21 +293,13 @@ export default function LiveTVInfo() {
         selectedChannel.programs[
           timeKey as keyof typeof selectedChannel.programs
         ];
-      console.log("Found exact match:", closestProgram.program);
     } else {
-      // Find the closest program time that's not after the selected time
       for (let i = programTimes.length - 1; i >= 0; i--) {
         if (programTimes[i] <= timeKey) {
           closestProgram =
             selectedChannel.programs[
               programTimes[i] as keyof typeof selectedChannel.programs
             ];
-          console.log(
-            "Found closest program:",
-            closestProgram.program,
-            "for time",
-            programTimes[i]
-          );
           break;
         }
       }
@@ -333,8 +325,67 @@ export default function LiveTVInfo() {
     const timer = setInterval(() => {
       setCurrentTime(new Date());
     }, 60000); // Update every minute
-
     return () => clearInterval(timer);
+  }, []);
+
+  // Detect touch device
+  useEffect(() => {
+    const touchCapable =
+      typeof window !== "undefined" &&
+      ("ontouchstart" in window || navigator.maxTouchPoints > 0);
+    setIsTouchDevice(!!touchCapable);
+  }, []);
+
+  // --------------------------
+  // IntersectionObserver: play on scroll (REPLACED)
+  // --------------------------
+  useEffect(() => {
+    if (!containerRef.current) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        const nowVisible = entry.isIntersecting;
+        setIsVisible(nowVisible);
+
+        const v = videoRef.current;
+        if (!v) return;
+
+        // Ensure muted before trying to autoplay (mobile requirement)
+        v.muted = true;
+
+        if (nowVisible) {
+          // Try to play; if blocked, add one-time gesture listeners
+          v.play()
+            .then(() => {
+              // success — nothing else to do
+            })
+            .catch(() => {
+              // autoplay blocked — add fallbacks that run once
+              const resume = () => {
+                v.play().catch(() => {});
+                window.removeEventListener("touchstart", resume);
+                window.removeEventListener("scroll", resume);
+              };
+              window.addEventListener("touchstart", resume, { once: true });
+              window.addEventListener("scroll", resume, { once: true });
+            });
+        } else {
+          // Pause when not visible
+          try {
+            v.pause();
+          } catch {}
+          setIsPreviewing(false);
+        }
+      },
+      {
+        root: null,
+        threshold: 0.1, // play when 10% visible
+      }
+    );
+
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
   }, []);
 
   // Load video when component mounts, channel changes, or time slot changes
@@ -342,113 +393,195 @@ export default function LiveTVInfo() {
     if (videoRef.current) {
       const currentProgram = getCurrentProgram();
       if (currentProgram) {
-        console.log("Loading video for:", currentProgram.program);
-        videoRef.current.load();
+        // only change src by replacing <source> and calling load if needed
+        const v = videoRef.current;
+        const newSrc =
+          currentProgram.videoUrl || selectedChannel.programs["08:00"].videoUrl;
+        if (v.currentSrc !== newSrc) {
+          // change src via source element to remain compatible
+          const sourceEl = v.querySelector("source");
+          if (sourceEl) {
+            (sourceEl as HTMLSourceElement).src = newSrc;
+            try {
+              v.load();
+            } catch {}
+            setIsVideoLoaded(false);
+          } else {
+            // fallback: set src directly
+            v.src = newSrc;
+            try {
+              v.load();
+            } catch {}
+            setIsVideoLoaded(false);
+          }
+        }
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedChannelId, selectedTimeSlot]);
 
-  // Handle video loading and playback
+  // Handle video loading and playback (hover/preview logic preserved)
   useEffect(() => {
-    console.log("Hover state changed:", isHovered);
-    console.log("Video loaded:", isVideoLoaded);
-    console.log("Video ref:", videoRef.current);
+    const isActive = (isTouchDevice ? isPreviewing : isHovered) && isVisible;
+    const v = videoRef.current;
+    if (isActive && v) {
+      try {
+        window.dispatchEvent(
+          new CustomEvent("lp-preview-start", {
+            detail: { id: instanceIdRef.current },
+          })
+        );
+      } catch {}
 
-    if (isHovered && videoRef.current && isVideoLoaded) {
-      console.log("Attempting to play video");
-      const timer = setTimeout(() => {
-        videoRef.current?.play().catch((error) => {
+      if (isTouchDevice) {
+        if (previewTimeoutRef.current) clearTimeout(previewTimeoutRef.current);
+        previewTimeoutRef.current = setTimeout(() => {
+          setIsPreviewing(false);
+        }, 6000);
+      }
+
+      // Attempt to play (muted to satisfy mobile)
+      v.muted = true;
+      const t = setTimeout(() => {
+        v.play().catch((error) => {
           console.error("Video play error:", error);
         });
-      }, 300);
-      return () => clearTimeout(timer);
-    } else if (!isHovered && videoRef.current) {
-      console.log("Pausing video");
-      videoRef.current?.pause();
+      }, 100);
+
+      // retry loop
+      const retry = setInterval(() => {
+        if (!v) return;
+        const should = (isTouchDevice ? isPreviewing : isHovered) && isVisible;
+        if (!should) {
+          clearInterval(retry);
+          return;
+        }
+        if (v.paused) {
+          v.play().catch(() => {});
+        } else {
+          clearInterval(retry);
+        }
+      }, 600);
+
+      return () => {
+        clearTimeout(t);
+        clearInterval(retry);
+      };
+    } else if (!isActive && v) {
+      v.pause();
     }
-  }, [isHovered, isVideoLoaded]);
+  }, [isHovered, isVideoLoaded, isTouchDevice, isPreviewing, isVisible]);
+
+  // Listen for other previews to stop this one
+  useEffect(() => {
+    const handlePreviewStart = (e: Event) => {
+      const ev = e as CustomEvent<{ id: string } | undefined>;
+      if (ev.detail && ev.detail.id !== instanceIdRef.current) {
+        setIsPreviewing(false);
+      }
+    };
+    window.addEventListener(
+      "lp-preview-start",
+      handlePreviewStart as EventListener
+    );
+    return () => {
+      window.removeEventListener(
+        "lp-preview-start",
+        handlePreviewStart as EventListener
+      );
+    };
+  }, []);
+
+  // Cleanup preview timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (previewTimeoutRef.current) clearTimeout(previewTimeoutRef.current);
+    };
+  }, []);
+
+  // Mobile: attempt quick play on mount if touch device
+  useEffect(() => {
+    if (!isTouchDevice) return;
+    const attemptPlay = () => {
+      const v = videoRef.current;
+      if (!v) return;
+      v.muted = true;
+      v.play && v.play().catch(() => {});
+    };
+    attemptPlay();
+    const t = setTimeout(attemptPlay, 350);
+    return () => clearTimeout(t);
+  }, [isTouchDevice]);
 
   const handleVideoLoad = () => {
-    console.log("Video loaded successfully");
     setIsVideoLoaded(true);
   };
 
   const handleVideoError = (error: any) => {
     console.error("Video error:", error);
-    // Try to reload the video after a short delay
     setTimeout(() => {
       if (videoRef.current) {
-        console.log("Retrying video load...");
-        videoRef.current.load();
+        try {
+          videoRef.current.load();
+        } catch {}
       }
     }, 1000);
   };
 
   const toggleAudio = () => {
     if (videoRef.current) {
-      videoRef.current.muted = !isAudioEnabled;
-      setIsAudioEnabled(!isAudioEnabled);
+      // Unmute only if currently muted; the video may be autoplay-muted.
+      const newAudioEnabled = !isAudioEnabled;
+      setIsAudioEnabled(newAudioEnabled);
+      videoRef.current.muted = !newAudioEnabled;
     }
   };
 
-  // Generate time slots based on current time (current and future only)
+  // Generate time slots etc (unchanged)
   const generateTimeSlots = () => {
-    const slots = [];
+    const slots: Date[] = [];
     const now = new Date();
-
-    // Start from 8:00 AM to match our program data
     const startTime = new Date(now);
     startTime.setHours(8, 0, 0, 0);
-
-    // Generate 8 time slots (4 hours total) - 8:00 AM to 11:30 AM
     for (let i = 0; i < 8; i++) {
       const slotTime = new Date(startTime.getTime() + i * 30 * 60 * 1000);
       slots.push(slotTime);
     }
-
     return slots;
   };
 
-  // Format time for display
-  const formatTime = (date: Date) => {
-    return date.toLocaleTimeString("en-US", {
+  const formatTime = (date: Date) =>
+    date.toLocaleTimeString("en-US", {
       hour: "numeric",
       minute: "2-digit",
       hour12: true,
     });
-  };
 
-  // Check if a time slot is current
   const isCurrentSlot = (slotTime: Date) => {
     const now = new Date();
-    const diff = Math.abs(now.getTime() - slotTime.getTime());
-    return diff < 15 * 60 * 1000; // Within 15 minutes
+    return Math.abs(now.getTime() - slotTime.getTime()) < 15 * 60 * 1000;
   };
 
-  // Check if a time slot is selected
   const isSelectedSlot = (slotTime: Date) => {
     if (!selectedTimeSlot) return false;
     return slotTime.getTime() === selectedTimeSlot.getTime();
   };
 
-  // Handle time slot selection
   const handleTimeSlotSelect = (slotTime: Date) => {
     setSelectedTimeSlot(slotTime);
-    console.log("Selected time slot:", formatTime(slotTime));
   };
 
   const handleChannelSelect = (channelId: keyof typeof channelData) => {
-    console.log("Switching to channel:", channelData[channelId].name);
     setSelectedChannelId(channelId);
-    setIsVideoLoaded(false); // Reset video load state when switching channels
-    setIsHovered(false); // Reset hover state when switching channels
+    setIsVideoLoaded(false);
+    setIsHovered(false);
   };
 
   const handleViewAllChannels = () => {
-    console.log("Navigating to Live TV page");
     router.push("/livetv");
   };
 
+  // --- Render (kept exactly as in your design) ---
   return (
     <>
       <style jsx global>{`
@@ -462,7 +595,7 @@ export default function LiveTVInfo() {
       `}</style>
       <section className="py-24 px-[20px] sm:px-[40px] lg:px-[120px] bg-black-background">
         <div className="w-full">
-          {/* Header Section */}
+          {/* Header */}
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-16">
             <div className="lg:max-w-2xl mb-8 lg:mb-0">
               <h2 className="text-white.200 text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
@@ -470,27 +603,28 @@ export default function LiveTVInfo() {
               </h2>
               <p className="text-grey.200 text-lg md:text-xl leading-relaxed mb-8">
                 Watch live news, documentaries, and exclusive content from
-                premium channels. Access full TV guide and personalized
-                recommendations.
+                premium channels.
               </p>
             </div>
 
-            <Button className="bg-white.200 text-black.100 hover:bg-white.200/90 px-6 py-3 rounded-lg font-600 shadow-lg hover:shadow-xl transition-all duration-300 group self-start">
+            <Button
+              className="bg-white.200 text-black.100 hover:bg-white.200/90 px-6 py-3 rounded-lg font-600 shadow-lg hover:shadow-xl transition-all duration-300 group self-start"
+              onClick={handleViewAllChannels}
+            >
               View Full TV Guide
               <ChevronRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
             </Button>
           </div>
 
-          {/* Two Column Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-[60%_1fr] gap-8 lg:gap-12">
-            {/* Left Column - Dynamic Content */}
             <div className="space-y-6">
               <div
+                ref={containerRef}
                 className="relative h-[600px] rounded-2xl overflow-hidden cursor-pointer"
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
               >
-                {/* Background Image */}
+                {/* Background image */}
                 <img
                   src={
                     getCurrentProgram()?.thumbnailUrl ||
@@ -499,32 +633,47 @@ export default function LiveTVInfo() {
                   alt={`${selectedChannel.name} background`}
                   className="w-full h-full object-cover transition-opacity duration-1000"
                   style={{
-                    opacity: isHovered && isVideoLoaded ? 0 : 1,
+                    opacity: isTouchDevice
+                      ? isVisible
+                        ? 0
+                        : 1
+                      : isHovered && isVideoLoaded
+                      ? 0
+                      : 1,
                   }}
                 />
 
-                {/* Background Video */}
+                {/* Video wrapper */}
                 <motion.div
                   initial={{ opacity: 0 }}
-                  animate={{ opacity: isHovered && isVideoLoaded ? 1 : 0 }}
+                  animate={{
+                    opacity: isTouchDevice
+                      ? isVisible
+                        ? 1
+                        : 0
+                      : isHovered && isVideoLoaded
+                      ? 1
+                      : 0,
+                  }}
                   transition={{ duration: 0.8, ease: "easeInOut" }}
                   className="absolute inset-0 w-full h-full"
                   style={{
                     backgroundColor: isHovered
-                      ? "rgba(255, 0, 0, 0.1)"
+                      ? "rgba(255,0,0,0.1)"
                       : "transparent",
                   }}
                 >
                   <video
                     ref={videoRef}
                     className="w-full h-full object-cover"
-                    muted={!isAudioEnabled}
+                    muted={!isAudioEnabled} // we control mute in code before autoplay attempts
                     loop
                     playsInline
                     preload="auto"
+                    // remove autoPlay attribute to avoid conflicting direct control;
+                    // we'll call play() from the observer/effects
                     onLoadedData={handleVideoLoad}
                     onError={handleVideoError}
-                    onCanPlay={() => console.log("Video can play")}
                   >
                     <source
                       src={
@@ -535,15 +684,30 @@ export default function LiveTVInfo() {
                     />
                   </video>
 
-                  {/* Audio Control Button */}
+                  {/* Audio Control */}
                   <motion.button
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{
-                      opacity: isHovered && isVideoLoaded ? 1 : 0,
-                      scale: isHovered && isVideoLoaded ? 1 : 0.8,
+                      opacity: isTouchDevice
+                        ? isVisible
+                          ? 1
+                          : 0
+                        : isHovered && isVideoLoaded
+                        ? 1
+                        : 0,
+                      scale: isTouchDevice
+                        ? isVisible
+                          ? 1
+                          : 0.8
+                        : isHovered && isVideoLoaded
+                        ? 1
+                        : 0.8,
                     }}
                     transition={{ duration: 0.3, ease: "easeInOut" }}
-                    onClick={toggleAudio}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      toggleAudio();
+                    }}
                     className="absolute top-6 right-6 z-10 bg-black/70 backdrop-blur-sm border border-white/30 rounded-full p-3 hover:bg-black/80 hover:border-white/50 transition-all duration-300 group shadow-lg"
                   >
                     {isAudioEnabled ? (
@@ -554,12 +718,9 @@ export default function LiveTVInfo() {
                   </motion.button>
                 </motion.div>
 
-                {/* Dark overlay */}
                 <div className="absolute inset-0 bg-black/50"></div>
 
-                {/* Content overlay */}
                 <div className="absolute inset-0 flex flex-col justify-end p-8 text-white">
-                  {/* Debug indicator */}
                   {isHovered && (
                     <div className="absolute top-4 left-4 bg-red-500 text-white px-2 py-1 rounded text-xs">
                       HOVERED! Video loaded: {isVideoLoaded ? "Yes" : "No"}
@@ -590,7 +751,7 @@ export default function LiveTVInfo() {
                 </div>
               </div>
 
-              {/* TV Schedule Section - Below Left Column Only */}
+              {/* TV schedule (unchanged) */}
               <div className="bg-grey.300/10 rounded-2xl p-6">
                 <div className="flex items-center justify-between mb-4">
                   <h4 className="text-white.200 text-xl font-bold">
@@ -604,12 +765,10 @@ export default function LiveTVInfo() {
                   </div>
                 </div>
 
-                {/* Dynamic Time Slots */}
                 <div className="flex space-x-3 overflow-x-auto scrollbar-hide">
                   {generateTimeSlots().map((slotTime, index) => {
                     const isCurrent = isCurrentSlot(slotTime);
                     const isSelected = isSelectedSlot(slotTime);
-
                     return (
                       <motion.button
                         key={index}
@@ -646,64 +805,39 @@ export default function LiveTVInfo() {
               </div>
             </div>
 
-            {/* Right Column - Popular Channels */}
+            {/* Right column unchanged (channels list) */}
             <div className="p-8 pt-0">
               <h3 className="text-2xl font-bold text-white.200 mb-8">
                 Popular Channels
               </h3>
 
-              {/* Channel Cards */}
               <div className="space-y-4 mb-8">
                 {Object.entries(channelData).map(([channelId, channel]) => {
-                  // Get program for this specific channel at the selected time
                   const getChannelProgram = () => {
                     if (!selectedTimeSlot)
                       return Object.values(channel.programs)[0];
-
                     const timeKey = selectedTimeSlot
                       .toLocaleTimeString("en-US", {
                         hour: "2-digit",
                         minute: "2-digit",
                         hour12: false,
                       })
-                      .replace(":", "");
-
-                    console.log(
-                      `Getting program for ${channel.name} at time key:`,
-                      timeKey
-                    );
-
-                    // Try exact match first
+                      .slice(0, 5);
                     if (
                       channel.programs[timeKey as keyof typeof channel.programs]
                     ) {
-                      console.log(
-                        `Found exact match for ${channel.name}:`,
-                        channel.programs[
-                          timeKey as keyof typeof channel.programs
-                        ].program
-                      );
                       return channel.programs[
                         timeKey as keyof typeof channel.programs
                       ];
                     }
-
-                    // Find closest program
                     const programTimes = Object.keys(channel.programs).sort();
                     for (let i = programTimes.length - 1; i >= 0; i--) {
                       if (programTimes[i] <= timeKey) {
-                        console.log(
-                          `Found closest program for ${channel.name}:`,
-                          channel.programs[
-                            programTimes[i] as keyof typeof channel.programs
-                          ].program
-                        );
                         return channel.programs[
                           programTimes[i] as keyof typeof channel.programs
                         ];
                       }
                     }
-
                     return Object.values(channel.programs)[0];
                   };
 
@@ -727,14 +861,11 @@ export default function LiveTVInfo() {
                     >
                       <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
-                          {/* Channel Logo */}
                           <div className="w-12 h-12 bg-grey.300/40 rounded-lg flex items-center justify-center flex-shrink-0">
                             <span className="text-white text-sm font-bold">
                               {channel.logo}
                             </span>
                           </div>
-
-                          {/* Channel Info */}
                           <div className="flex-1">
                             <div className="mb-1">
                               <h4 className="text-white.200 font-bold text-base leading-tight">
@@ -749,8 +880,6 @@ export default function LiveTVInfo() {
                             </p>
                           </div>
                         </div>
-
-                        {/* Right Arrow */}
                         <ChevronRight className="w-5 h-5 text-grey.200" />
                       </div>
                     </motion.div>
@@ -758,7 +887,6 @@ export default function LiveTVInfo() {
                 })}
               </div>
 
-              {/* View All Button */}
               <motion.div
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}

@@ -15,7 +15,12 @@ export default function HeroSection() {
   const [isHeroHovered, setIsHeroHovered] = useState(false);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [isAudioEnabled, setIsAudioEnabled] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
+  const [isPreviewing, setIsPreviewing] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const retryIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   // Background video data
   const backgroundVideo = {
@@ -25,17 +30,87 @@ export default function HeroSection() {
       "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
   };
 
-  // Handle video loading and playback
+  // Detect touch device
   useEffect(() => {
-    if (isHeroHovered && videoRef.current) {
-      const timer = setTimeout(() => {
-        videoRef.current?.play().catch(console.error);
-      }, 300);
-      return () => clearTimeout(timer);
+    const touchCapable =
+      typeof window !== "undefined" &&
+      ("ontouchstart" in window || navigator.maxTouchPoints > 0);
+    setIsTouchDevice(!!touchCapable);
+  }, []);
+
+  // Observe visibility for autoplay on mobile
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        setIsVisible(entry.isIntersecting);
+        if (!entry.isIntersecting) {
+          videoRef.current?.pause();
+          setIsPreviewing(false);
+        } else if (entry.isIntersecting && isTouchDevice) {
+          setIsPreviewing(true);
+        }
+      },
+      { root: null, threshold: 0.3 }
+    );
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, [isTouchDevice]);
+
+  // Handle video loading and playback (mobile uses visibility, desktop uses hover)
+  useEffect(() => {
+    const isActive = isTouchDevice ? isVisible && isPreviewing : isHeroHovered;
+    if (isActive && videoRef.current && (!isTouchDevice || isVideoLoaded)) {
+      try {
+        videoRef.current.load();
+      } catch {}
+      const playOnce = () => videoRef.current?.play().catch(() => {});
+      const timer = setTimeout(playOnce, 100);
+
+      if (retryIntervalRef.current) clearInterval(retryIntervalRef.current);
+      retryIntervalRef.current = setInterval(() => {
+        const v = videoRef.current;
+        if (!v) return;
+        const shouldBePlaying = isTouchDevice
+          ? isVisible && isPreviewing
+          : isHeroHovered;
+        if (!shouldBePlaying) {
+          if (retryIntervalRef.current) clearInterval(retryIntervalRef.current);
+          return;
+        }
+        if (v.paused) {
+          v.play().catch(() => {});
+        } else if (retryIntervalRef.current) {
+          clearInterval(retryIntervalRef.current);
+        }
+      }, 600);
+      return () => {
+        clearTimeout(timer);
+        if (retryIntervalRef.current) clearInterval(retryIntervalRef.current);
+      };
     } else {
       videoRef.current?.pause();
     }
-  }, [isHeroHovered]);
+  }, [isHeroHovered, isTouchDevice, isVisible, isPreviewing, isVideoLoaded]);
+
+  // Mobile: Force autoplay on mount if visible, bounce any errors
+  useEffect(() => {
+    if (!isTouchDevice) return;
+    // On mobile, try to play as soon as possible if visible
+    const attemptPlay = () => {
+      if (videoRef.current) {
+        try {
+          videoRef.current.load();
+        } catch {}
+        videoRef.current.play && videoRef.current.play().catch(() => {});
+      }
+    };
+    attemptPlay();
+    // Some devices need a short retry
+    const tryMore = setTimeout(attemptPlay, 350);
+    return () => clearTimeout(tryMore);
+  }, [isTouchDevice]);
 
   // Handle audio toggle
   useEffect(() => {
@@ -69,8 +144,15 @@ export default function HeroSection() {
 
       {/* Background Video */}
       <motion.div
+        ref={containerRef}
         initial={{ opacity: 0 }}
-        animate={{ opacity: isHeroHovered && isVideoLoaded ? 1 : 0 }}
+        animate={{
+          opacity:
+            (isTouchDevice ? isVisible && isPreviewing : isHeroHovered) &&
+            isVideoLoaded
+              ? 1
+              : 0,
+        }}
         transition={{ duration: 0.8, ease: "easeInOut" }}
         className="absolute inset-0 w-full h-full"
       >
@@ -81,6 +163,8 @@ export default function HeroSection() {
           playsInline
           preload="metadata"
           controls={false}
+          muted={!isAudioEnabled}
+          autoPlay={true}
           onLoadedData={handleVideoLoad}
         >
           <source src={backgroundVideo.videoUrl} type="video/mp4" />
@@ -90,8 +174,16 @@ export default function HeroSection() {
         <motion.button
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{
-            opacity: isHeroHovered && isVideoLoaded ? 1 : 0,
-            scale: isHeroHovered && isVideoLoaded ? 1 : 0.8,
+            opacity:
+              (isTouchDevice ? isVisible && isPreviewing : isHeroHovered) &&
+              isVideoLoaded
+                ? 1
+                : 0,
+            scale:
+              (isTouchDevice ? isVisible && isPreviewing : isHeroHovered) &&
+              isVideoLoaded
+                ? 1
+                : 0.8,
           }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
           onClick={toggleAudio}
