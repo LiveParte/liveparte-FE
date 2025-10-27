@@ -28,7 +28,7 @@ export default function MyModal({
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
-            <div className={`flex min-h-full bg-[#0000001c] backdrop-blur-[10px] items-center justify-center  text-center h-full ${mainContainer?mainContainer:'p-4'}`}>
+            <div className={`flex min-h-full bg-[#0000001c] backdrop-blur-[10px] items-center justify-center text-center ${mainContainer?mainContainer:'p-4'}`}>
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -38,7 +38,7 @@ export default function MyModal({
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className={`lg:w-[60%] transform overflow-hidden bg-transparent text-left align-middle shadow-xl max-h-[90vh] transition-all overflow-y-scroll customScrollHorizontal ${containerStyle}`}>
+                <Dialog.Panel className={`lg:w-[60%] transform bg-transparent text-left align-middle shadow-xl transition-all w-full overflow-y-auto max-h-[85vh] sm:max-h-[90vh] customScrollHorizontal ${containerStyle}`}>
                  {bodyComponent}
                 </Dialog.Panel>
               </Transition.Child>

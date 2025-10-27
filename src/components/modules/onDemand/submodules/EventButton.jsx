@@ -395,7 +395,7 @@ export default function EventButton({
               ModalList?.find((item, index) => item?.name == openModal)
                 ?.component
             }
-            containerStyle={`bg-[#1B1C20] border-[1px] border-[#343F4B] rounded-[16px]  !w-[486px]`}
+            containerStyle={`bg-[#1B1C20] border-[1px] border-[#343F4B] rounded-[16px] !w-full sm:!w-[486px]`}
             isOpen={openModal ? true : false}
             closeModal={() => setModal(null)}
             // openModal={()=>setCheckOut(true)}

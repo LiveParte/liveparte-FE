@@ -70,31 +70,31 @@ export default function SignUpPage({
 
   return (
     <form
-      className=" px-[15px] lg:px-[30px] flex flex-col  lg:pb-[0px]"
+      className="px-[15px] lg:px-[30px] flex flex-col lg:pb-[0px]"
       autoComplete="off"
     >
      
-      <div className="flex flex-col gap-[20px]">
+      <div className="flex flex-col gap-[16px] sm:gap-[20px]">
          <div className="">
           <ButtonComp
             onClick={(e) => {
               e.preventDefault();
               googleLogin(); // Trigger Google Sign-In
             }}
-            className={`w-full text-[#060809] text-[13px] font500`}
+            className={`w-full text-[#060809] text-[11px] sm:text-[13px] font500`}
             btnText={
-              <div className="flex justify-center items-center gap-[12px]">
+              <div className="flex justify-center items-center gap-[8px] sm:gap-[12px]">
                 <GoogleIcon />
                 Sign up with Google
               </div>
             }
           />
         </div>
-        <div className="flex items-center text-[13px] text-white  py-[10px] ">
-          <div className="bg-[#343F4B]  h-[1px] flex-grow-1"></div>
-          <div className="px-[28px] tracking-[1.5px]"> Or</div>
+        <div className="flex items-center text-[11px] sm:text-[13px] text-white py-[10px]">
+          <div className="bg-[#343F4B] h-[1px] flex-grow-1"></div>
+          <div className="px-[16px] sm:px-[28px] tracking-[1.5px]"> Or</div>
 
-          <div className="bg-[#343F4B]  h-[1px] flex-grow-1"></div>
+          <div className="bg-[#343F4B] h-[1px] flex-grow-1"></div>
         </div>
         {SignUpForm()
           ?.slice(0, 3)
@@ -154,15 +154,15 @@ export default function SignUpPage({
             ))}
         </div>
       </div>
-      <div className="mt-[24px] mb-3">
+      <div className="mt-[20px] sm:mt-[24px] mb-3">
         <ButtonComp
           btnText={isEvent ? "Sign up to Continue" : "Sign Up"}
-          className={`w-full text-[13px] font500 `}
+          className={`w-full text-[11px] sm:text-[13px] font500`}
           onClick={handleSubmit(handleLogin)}
           isLoading={registerLoader}
         />
       </div>
-      <div className="text-[#63768d] text-[13px] text-center px-[10px] mt-[10px] ">
+      <div className="text-[#63768d] text-[10px] sm:text-[13px] text-center px-[10px] mt-[10px]">
         By continuing, you agree and accept the{" "}
         <Link target="_blank" href={termsUrl} className="underline text-white">
           Terms of Service

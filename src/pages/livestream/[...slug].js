@@ -6,7 +6,10 @@ import { useSelector } from "react-redux";
 import GiftTicket from "@/components/modules/EventDetails/modal/GiftTicket";
 import ShareEvent from "@/components/modules/EventDetails/modal/ShareEvent";
 import MyModal from "@/components/Ui/Modal";
-import { useGetEventDetailViaIdQuery, useGetEventViaIdQuery } from "@/store/Event/eventApi";
+import {
+  useGetEventDetailViaIdQuery,
+  useGetEventViaIdQuery,
+} from "@/store/Event/eventApi";
 import { useRouter } from "next/router";
 import { useGetUserProfileQuery } from "@/store/User/userApi";
 import { selectCurrentUserData, selectLiveStreamEvent } from "@/store/User";
@@ -28,19 +31,22 @@ export default function Index() {
       skip: !showId,
     }
   );
-  const {data:eventDetail,}=useGetEventViaIdQuery( showId,
-    {
-      skip: !showId,
-    })
+  const { data: eventDetail } = useGetEventViaIdQuery(showId, {
+    skip: !showId,
+  });
   //useLazyGetEventViaIdQuery
   const { data: userProfileData, isLoading: userProfileLoader } =
     useGetUserProfileQuery(undefined, {
       skip: !userInfo?._id,
     });
   const NestedLiveStreamData = useSelector(selectLiveStreamEvent) || data;
-  const liveStream = { ...data, ...NestedLiveStreamData?.event,...eventDetail };
-  const isYoutubeVideo =liveStream?.streaming_url?.includes("youtube");
-  console.log(isYoutubeVideo,'isYoutubeVideo')
+  const liveStream = {
+    ...data,
+    ...NestedLiveStreamData?.event,
+    ...eventDetail,
+  };
+  const isYoutubeVideo = liveStream?.streaming_url?.includes("youtube");
+  console.log(isYoutubeVideo, "isYoutubeVideo");
   const modalRef = useRef(null);
 
   const handleCloseModal = () => {
@@ -68,7 +74,6 @@ export default function Index() {
 
   const forceUpdate = React.useReducer(() => ({}), {})[1]; // Force update for re-render
 
-
   return (
     <WithAuth showHeader={false}>
       {modalRef.current && (
@@ -77,14 +82,14 @@ export default function Index() {
             ModalList?.find((item, index) => item?.name === modalRef.current)
               ?.component
           }
-          containerStyle={`bg-[#1B1C20] border-[1px] border-[#343F4B] rounded-[16px]  !w-[486px]`}
+          containerStyle={`bg-[#1B1C20] border-[1px] border-[#343F4B] rounded-[16px] !w-full sm:!w-[486px]`}
           isOpen={!!modalRef.current}
           closeModal={handleCloseModal}
         />
       )}
       <div className="flex-1 flex flex-col bg-[#060809] overflow-hidden h-[100dvh] lg:h-[30vh] relative ">
         <LiveStream
-          isLive={(liveStream?.isLiveStreamed &&liveStream?.eventStarted)}
+          isLive={liveStream?.isLiveStreamed && liveStream?.eventStarted}
           liveStreamDetail={liveStream}
           handleOpenModal={handleOpenModal}
           handleCloseModal={handleCloseModal}

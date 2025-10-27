@@ -66,7 +66,7 @@ export default function LiveStreamHeaderIndexComp({
           bodyComponent={
             ModalList?.find((item, index) => item?.name === isOpen)?.component
           }
-          containerStyle={`bg-[#1B1C20] border-[1px] border-[#343F4B] rounded-[16px]  !w-[486px]`}
+          containerStyle={`bg-[#1B1C20] border-[1px] border-[#343F4B] rounded-[16px] !w-full sm:!w-[486px]`}
           isOpen={isOpen ? true : false}
           closeModal={handleCloseModal}
         />

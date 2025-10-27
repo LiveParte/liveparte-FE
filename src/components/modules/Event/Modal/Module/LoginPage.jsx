@@ -39,7 +39,7 @@ export default function LoginPage({
 
   return (
     <form
-      className="px-[15px] lg:px-[30px] flex flex-col  lg:pb-[0px]"
+      className="px-[15px] lg:px-[30px] flex flex-col lg:pb-[0px]"
       autoComplete="off"
     >
       <div className="w-full ">
@@ -49,9 +49,9 @@ export default function LoginPage({
               e.preventDefault();
               googleLogin(); // Trigger Google Sign-In
             }}
-            className={`w-full text-[#060809] text-[13px] font500`}
+            className={`w-full text-[#060809] text-[11px] sm:text-[13px] font500`}
             btnText={
-              <div className="flex justify-center items-center gap-[12px]">
+              <div className="flex justify-center items-center gap-[8px] sm:gap-[12px]">
                 <GoogleIcon />
                 Log in with Google
               </div>
@@ -59,14 +59,14 @@ export default function LoginPage({
           />
         </div>
 
-        <div className="flex items-center text-[13px] text-white  py-[28px] ">
-          <div className="bg-[#343F4B]  h-[1px] flex-grow-1"></div>
-          <div className="px-[28px] tracking-[1.5px]"> Or</div>
+        <div className="flex items-center text-[11px] sm:text-[13px] text-white py-[20px] sm:py-[28px]">
+          <div className="bg-[#343F4B] h-[1px] flex-grow-1"></div>
+          <div className="px-[16px] sm:px-[28px] tracking-[1.5px]"> Or</div>
 
-          <div className="bg-[#343F4B]  h-[1px] flex-grow-1"></div>
+          <div className="bg-[#343F4B] h-[1px] flex-grow-1"></div>
         </div>
       </div>
-      <div className="flex flex-col gap-[20px] mt-4">
+      <div className="flex flex-col gap-[16px] sm:gap-[20px] mt-4">
         {LoginForm()?.map((item, index) => (
           <Controller
             key={index}
@@ -91,10 +91,10 @@ export default function LoginPage({
           />
         ))}
       </div>
-      <div className="mt-[24px]">
+      <div className="mt-[20px] sm:mt-[24px]">
         <ButtonComp
           btnText={isEvent ? "Login to Continue" : "Login"}
-          className={`w-full text-[13px] font500   mb-[30px]`}
+          className={`w-full text-[11px] sm:text-[13px] font500 mb-[24px] sm:mb-[30px]`}
           onClick={handleSubmit(handleLogin)}
           isLoading={isLoading}
           isDisabled={isLoading}
@@ -102,7 +102,7 @@ export default function LoginPage({
 
         <div className="flex justify-center">
           <button
-            className="text-center underline text-[13px] text-white cursor-pointer "
+            className="text-center underline text-[11px] sm:text-[13px] text-white cursor-pointer"
             onClick={(e) => {
               e.preventDefault();
               handleForgetPasswordToggle && handleForgetPasswordToggle();

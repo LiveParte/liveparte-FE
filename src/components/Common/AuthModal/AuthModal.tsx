@@ -119,7 +119,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
     <AnimatePresence>
       {isOpen && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto"
           style={{ minHeight: "100vh" }}
         >
           {/* Simple Clean Backdrop */}
@@ -141,7 +141,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
               duration: 0.6,
               bounce: 0.3,
             }}
-            className="relative w-full max-w-md bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-8 shadow-2xl overflow-hidden z-10"
+            className="relative w-full max-w-md max-h-[90vh] bg-white/5 backdrop-blur-xl border border-white/10 rounded-2xl p-4 sm:p-6 md:p-8 shadow-2xl overflow-y-auto overflow-x-hidden z-10 my-4"
           >
             {/* Clean glassmorphism overlay */}
             <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-white/5 to-white/8 rounded-2xl"></div>
@@ -157,22 +157,25 @@ const AuthModal: React.FC<AuthModalProps> = ({
 
             <div className="relative z-10">
               {/* Header */}
-              <div className="text-center mb-8">
+              <div className="text-center mb-6 sm:mb-8">
                 <motion.div
                   variants={itemVariants}
-                  className="w-20 h-16 flex items-center justify-center mx-auto mb-4"
+                  className="w-20 h-12 sm:h-16 flex items-center justify-center mx-auto mb-3 sm:mb-4"
                 >
-                  <div className="text-white.200 font-bold text-3xl font-1">
+                  <div className="text-white.200 font-bold text-2xl sm:text-3xl font-1">
                     Liveparte
                   </div>
                 </motion.div>
                 <motion.h1
                   variants={itemVariants}
-                  className="text-white.200 text-2xl font-bold mb-2"
+                  className="text-white.200 text-xl sm:text-2xl font-bold mb-2"
                 >
                   {mode === "login" ? "Welcome Back" : "Create Account"}
                 </motion.h1>
-                <motion.p variants={itemVariants} className="text-grey.200">
+                <motion.p
+                  variants={itemVariants}
+                  className="text-grey.200 text-sm sm:text-base"
+                >
                   {mode === "login"
                     ? "Sign in to continue your streaming journey"
                     : "Create your account and start your streaming journey"}
@@ -185,12 +188,12 @@ const AuthModal: React.FC<AuthModalProps> = ({
                 initial="hidden"
                 animate="visible"
                 onSubmit={handleSubmit}
-                className="space-y-6"
+                className="space-y-4 sm:space-y-6"
               >
                 {mode === "signup" && (
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-3 sm:gap-4">
                     <motion.div variants={itemVariants}>
-                      <label className="block text-white.200 text-sm font-medium mb-2">
+                      <label className="block text-white.200 text-xs sm:text-sm font-medium mb-2">
                         First Name
                       </label>
                       <Input
@@ -199,13 +202,13 @@ const AuthModal: React.FC<AuthModalProps> = ({
                         value={formData.firstName}
                         onChange={handleInputChange}
                         placeholder="John"
-                        className="px-4 py-3 bg-white/5 backdrop-blur-sm border border-white/20 text-white placeholder-white/60 focus:border-white/40 focus:ring-white/20 rounded-xl"
+                        className="px-3 py-2 sm:px-4 sm:py-3 bg-white/5 backdrop-blur-sm border border-white/20 text-white text-sm placeholder-white/60 focus:border-white/40 focus:ring-white/20 rounded-xl"
                       />
                       {errors.firstName && (
                         <motion.p
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
-                          className="text-red.100 text-sm mt-1"
+                          className="text-red.100 text-xs sm:text-sm mt-1"
                         >
                           {errors.firstName}
                         </motion.p>
@@ -213,7 +216,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
                     </motion.div>
 
                     <motion.div variants={itemVariants}>
-                      <label className="block text-white.200 text-sm font-medium mb-2">
+                      <label className="block text-white.200 text-xs sm:text-sm font-medium mb-2">
                         Last Name
                       </label>
                       <Input
@@ -222,13 +225,13 @@ const AuthModal: React.FC<AuthModalProps> = ({
                         value={formData.lastName}
                         onChange={handleInputChange}
                         placeholder="Doe"
-                        className="px-4 py-3 bg-white/5 backdrop-blur-sm border border-white/20 text-white placeholder-white/60 focus:border-white/40 focus:ring-white/20 rounded-xl"
+                        className="px-3 py-2 sm:px-4 sm:py-3 bg-white/5 backdrop-blur-sm border border-white/20 text-white text-sm placeholder-white/60 focus:border-white/40 focus:ring-white/20 rounded-xl"
                       />
                       {errors.lastName && (
                         <motion.p
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
-                          className="text-red.100 text-sm mt-1"
+                          className="text-red.100 text-xs sm:text-sm mt-1"
                         >
                           {errors.lastName}
                         </motion.p>
@@ -239,7 +242,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
 
                 {/* Email Field */}
                 <motion.div variants={itemVariants}>
-                  <label className="block text-white.200 text-sm font-medium mb-2">
+                  <label className="block text-white.200 text-xs sm:text-sm font-medium mb-2">
                     Email Address
                   </label>
                   <Input
@@ -250,13 +253,13 @@ const AuthModal: React.FC<AuthModalProps> = ({
                     placeholder={
                       mode === "login" ? "Enter your email" : "john@example.com"
                     }
-                    className="px-4 py-3 bg-white/5 backdrop-blur-sm border border-white/20 text-white placeholder-white/60 focus:border-white/40 focus:ring-white/20 rounded-xl"
+                    className="px-3 py-2 sm:px-4 sm:py-3 bg-white/5 backdrop-blur-sm border border-white/20 text-white text-sm placeholder-white/60 focus:border-white/40 focus:ring-white/20 rounded-xl"
                   />
                   {errors.email && (
                     <motion.p
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="text-red.100 text-sm mt-1"
+                      className="text-red.100 text-xs sm:text-sm mt-1"
                     >
                       {errors.email}
                     </motion.p>
@@ -265,7 +268,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
 
                 {/* Password Field */}
                 <motion.div variants={itemVariants}>
-                  <label className="block text-white.200 text-sm font-medium mb-2">
+                  <label className="block text-white.200 text-xs sm:text-sm font-medium mb-2">
                     Password
                   </label>
                   <div className="relative">
@@ -279,12 +282,12 @@ const AuthModal: React.FC<AuthModalProps> = ({
                           ? "Enter your password"
                           : "Create a strong password"
                       }
-                      className="px-4 py-3 pr-12 bg-white/5 backdrop-blur-sm border border-white/20 text-white placeholder-white/60 focus:border-white/40 focus:ring-white/20 rounded-xl"
+                      className="px-3 py-2 sm:px-4 sm:py-3 pr-10 sm:pr-12 bg-white/5 backdrop-blur-sm border border-white/20 text-white text-sm placeholder-white/60 focus:border-white/40 focus:ring-white/20 rounded-xl"
                     />
                     <button
                       type="button"
                       onClick={() => setShowPassword(!showPassword)}
-                      className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white/60 hover:text-white transition-colors z-10"
+                      className="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 text-white/60 hover:text-white transition-colors z-10"
                     >
                       {showPassword ? (
                         <EyeOff className="w-4 h-4" />
@@ -297,7 +300,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
                     <motion.p
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      className="text-red.100 text-sm mt-1"
+                      className="text-red.100 text-xs sm:text-sm mt-1"
                     >
                       {errors.password}
                     </motion.p>
@@ -307,7 +310,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
                 {/* Confirm Password Field (Signup only) */}
                 {mode === "signup" && (
                   <motion.div variants={itemVariants}>
-                    <label className="block text-white.200 text-sm font-medium mb-2">
+                    <label className="block text-white.200 text-xs sm:text-sm font-medium mb-2">
                       Confirm Password
                     </label>
                     <div className="relative">
@@ -317,14 +320,14 @@ const AuthModal: React.FC<AuthModalProps> = ({
                         value={formData.confirmPassword}
                         onChange={handleInputChange}
                         placeholder="Confirm your password"
-                        className="px-4 py-3 pr-12 bg-white/5 backdrop-blur-sm border border-white/20 text-white placeholder-white/60 focus:border-white/40 focus:ring-white/20 rounded-xl"
+                        className="px-3 py-2 sm:px-4 sm:py-3 pr-10 sm:pr-12 bg-white/5 backdrop-blur-sm border border-white/20 text-white text-sm placeholder-white/60 focus:border-white/40 focus:ring-white/20 rounded-xl"
                       />
                       <button
                         type="button"
                         onClick={() =>
                           setShowConfirmPassword(!showConfirmPassword)
                         }
-                        className="absolute right-4 top-1/2 transform -translate-y-1/2 text-white/60 hover:text-white transition-colors z-10"
+                        className="absolute right-3 sm:right-4 top-1/2 transform -translate-y-1/2 text-white/60 hover:text-white transition-colors z-10"
                       >
                         {showConfirmPassword ? (
                           <EyeOff className="w-4 h-4" />
@@ -337,7 +340,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
                       <motion.p
                         initial={{ opacity: 0, y: -10 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-red.100 text-sm mt-1"
+                        className="text-red.100 text-xs sm:text-sm mt-1"
                       >
                         {errors.confirmPassword}
                       </motion.p>
@@ -349,20 +352,18 @@ const AuthModal: React.FC<AuthModalProps> = ({
                 {mode === "login" && (
                   <motion.div
                     variants={itemVariants}
-                    className="flex items-center justify-between"
+                    className="flex items-center justify-between text-xs sm:text-sm"
                   >
                     <label className="flex items-center">
                       <input
                         type="checkbox"
                         className="w-4 h-4 text-yellow.100 bg-grey.100/50 border-grey.400/30 rounded focus:ring-yellow.100/20"
                       />
-                      <span className="ml-2 text-grey.200 text-sm">
-                        Remember me
-                      </span>
+                      <span className="ml-2 text-grey.200">Remember me</span>
                     </label>
                     <button
                       type="button"
-                      className="text-yellow.100 hover:text-yellow.200 text-sm transition-colors"
+                      className="text-yellow.100 hover:text-yellow.200 transition-colors"
                     >
                       Forgot password?
                     </button>
@@ -373,13 +374,13 @@ const AuthModal: React.FC<AuthModalProps> = ({
                 {mode === "signup" && (
                   <motion.div
                     variants={itemVariants}
-                    className="flex items-start"
+                    className="flex items-start text-xs sm:text-sm"
                   >
                     <input
                       type="checkbox"
                       className="w-4 h-4 text-yellow.100 bg-grey.100/50 border-grey.400/30 rounded focus:ring-yellow.100/20 mt-1"
                     />
-                    <span className="ml-2 text-grey.200 text-sm">
+                    <span className="ml-2 text-grey.200">
                       I agree to the{" "}
                       <a
                         href="#"
@@ -403,11 +404,11 @@ const AuthModal: React.FC<AuthModalProps> = ({
                   <Button
                     type="submit"
                     disabled={isLoading}
-                    className="w-full bg-white/20 backdrop-blur-sm border border-white/30 text-white font-semibold py-3 rounded-xl transition-all duration-300 hover:bg-white/30 hover:border-white/40 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-white/20 backdrop-blur-sm border border-white/30 text-white font-semibold py-2.5 sm:py-3 text-sm sm:text-base rounded-xl transition-all duration-300 hover:bg-white/30 hover:border-white/40 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isLoading ? (
                       <div className="flex items-center justify-center">
-                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
+                        <div className="w-4 h-4 sm:w-5 sm:h-5 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
                         {mode === "login"
                           ? "Signing in..."
                           : "Creating account..."}
@@ -425,7 +426,7 @@ const AuthModal: React.FC<AuthModalProps> = ({
                   <div className="absolute inset-0 flex items-center">
                     <div className="w-full border-t border-grey.400/20"></div>
                   </div>
-                  <div className="relative flex justify-center text-sm">
+                  <div className="relative flex justify-center text-xs sm:text-sm">
                     <span className="px-2 bg-transparent text-grey.200">
                       Or continue with
                     </span>
@@ -435,24 +436,27 @@ const AuthModal: React.FC<AuthModalProps> = ({
                 {/* Social Login */}
                 <motion.div
                   variants={itemVariants}
-                  className="grid grid-cols-2 gap-3"
+                  className="grid grid-cols-2 gap-2 sm:gap-3"
                 >
                   <Button
                     type="button"
-                    className="bg-white/10 hover:bg-white/20 text-white border border-white/20 py-3 rounded-xl transition-all duration-300"
+                    className="bg-white/10 hover:bg-white/20 text-white border border-white/20 py-2 sm:py-3 text-xs sm:text-sm rounded-xl transition-all duration-300"
                   >
                     Google
                   </Button>
                   <Button
                     type="button"
-                    className="bg-white/10 hover:bg-white/20 text-white border border-white/20 py-3 rounded-xl transition-all duration-300"
+                    className="bg-white/10 hover:bg-white/20 text-white border border-white/20 py-2 sm:py-3 text-xs sm:text-sm rounded-xl transition-all duration-300"
                   >
                     Apple
                   </Button>
                 </motion.div>
 
                 {/* Switch Mode */}
-                <motion.div variants={itemVariants} className="text-center">
+                <motion.div
+                  variants={itemVariants}
+                  className="text-center text-xs sm:text-sm"
+                >
                   <span className="text-grey.200">
                     {mode === "login"
                       ? "Don't have an account?"

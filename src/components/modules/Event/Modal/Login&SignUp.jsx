@@ -43,8 +43,8 @@ export default function LoginSignUp({
   const dispatch = useDispatch();
   const { id } = router?.query;
   const [toggle, setToggle] = useState("Login");
-  const isActive = `text-white border-[1px] border-[#48515d]  rounded-[999px] bg-[#2e3239] px-[30px] lg:px-[20px] cursor-pointer `;
-  const notActive = `text-[#495969] px-[30px] lg:px-[20px] cursor-pointer `;
+  const isActive = `text-white border-[1px] border-[#48515d]  rounded-[999px] bg-[#2e3239] px-[20px] sm:px-[30px] lg:px-[20px] cursor-pointer text-[11px] sm:text-[13px]`;
+  const notActive = `text-[#495969] px-[20px] sm:px-[30px] lg:px-[20px] cursor-pointer text-[11px] sm:text-[13px]`;
   const isEvent = router?.pathname === singleEventLink;
   const [
     RegisterUser,
@@ -275,16 +275,16 @@ export default function LoginSignUp({
   }
 
   return (
-    <div className="flex flex-col flex-grow-1 overflow-y-scroll customScrollHorizontal relative">
+    <div className="flex flex-col w-full relative">
       <div
-        className={`bg-[#1B1C20] relative pb-[48px] px-[16px] py-[30px] lg:py-[30px]  h-full  max-h-[75vh] md:max-h-[90vh] overflow-y-scroll customScrollHorizontal ${className}  md:h-auto `}
+        className={`bg-[#1B1C20] relative pb-[32px] sm:pb-[48px] px-[16px] py-[20px] sm:py-[30px] w-full ${className}`}
       >
-        <div className="flex justify-center items-center mb-[35px]">
+        <div className="flex justify-center items-center mb-[25px] sm:mb-[35px]">
           {/* <div className="pb-[10px] w-[27px]"></div> */}
-          <div className="flex border-[#343F4B] border-[1px] justify-center items-center rounded-[999px] bg-[#25272d] text-[14px] font500 h-[33px] ">
+          <div className="flex border-[#343F4B] border-[1px] justify-center items-center rounded-[999px] bg-[#25272d] text-[12px] sm:text-[14px] font500 h-[28px] sm:h-[33px]">
             <div
               onClick={() => setToggle("Login")}
-              className={` h-[30px] flex justify-center items-center   ${
+              className={`h-[26px] sm:h-[30px] flex justify-center items-center ${
                 toggle === "Login" ? isActive : notActive
               }`}
             >
@@ -293,7 +293,7 @@ export default function LoginSignUp({
             <div
               // onClick={testNot ification}
               onClick={() => setToggle("SignUp")}
-              className={` h-[30px] flex justify-center items-center ${
+              className={`h-[26px] sm:h-[30px] flex justify-center items-center ${
                 toggle !== "Login" ? isActive : notActive
               }`}
             >
@@ -301,7 +301,7 @@ export default function LoginSignUp({
             </div>
           </div>
           <div
-            className="flex justify-end pb-[10px]  cursor-pointer fixed right-5 top-5"
+            className="flex justify-end pb-[10px] cursor-pointer absolute right-3 top-3 sm:right-4 sm:top-4 z-10"
             onClick={closeModal}
           >
             <CloseModal />

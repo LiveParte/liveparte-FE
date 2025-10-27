@@ -69,7 +69,7 @@ export default function Shows({
           {isOpen && (
             <MyModal
               isOpen={isOpen}
-              containerStyle={`!w-[507px]`}
+              containerStyle={`!w-full sm:!w-[507px]`}
               closeModal={() => setIsOpen(false)}
               bodyComponent={
                 <CountDown
