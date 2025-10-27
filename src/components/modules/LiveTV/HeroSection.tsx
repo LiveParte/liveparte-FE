@@ -510,7 +510,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   // No program selected
   if (!selectedProgram) {
     return (
-      <div className={`relative h-[500px] md:h-[600px] w-full ${className}`}>
+      <div className={`relative h-full w-full ${className}`}>
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
@@ -581,7 +581,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   }
 
   return (
-    <div className={`relative h-[500px] md:h-[600px] w-full ${className}`}>
+    <div className={`relative h-full w-full ${className}`}>
       {/* Background Image - Only show when video is NOT playing or NOT loaded */}
       {(!isVideoPlaying || !isHlsLoaded) && (
         <div

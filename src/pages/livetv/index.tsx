@@ -15,11 +15,11 @@ const LiveTVPage: React.FC = () => {
         <ScrollAnimation {...ScrollAnimations.fadeUp} delay={0.1}>
           <LiveTV />
         </ScrollAnimation>
-
-        <ScrollAnimation {...ScrollAnimations.fadeUp} delay={0.2}>
-          <Footer />
-        </ScrollAnimation>
       </OptimizedTransition>
+
+      <ScrollAnimation {...ScrollAnimations.fadeUp} delay={0.2}>
+        <Footer />
+      </ScrollAnimation>
     </div>
   );
 };
