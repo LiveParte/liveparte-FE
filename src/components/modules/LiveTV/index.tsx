@@ -1,5 +1,8 @@
 import React, { useState, useCallback, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+// Lazy import motion value utilities to avoid TS type issues with older framer-motion versions
+// @ts-ignore
+import { useMotionValue, useSpring } from "framer-motion";
 import { ChevronDown, X } from "lucide-react";
 import HeroSection from "./HeroSection";
 import CategoriesSidebar from "./CategoriesSidebar";
@@ -40,6 +43,12 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const dragOffsetRef = useRef<number>(0);
   const dragStartRatioRef = useRef<number>(0.25);
+  const sheetHeightMv = useMotionValue(0);
+  const sheetHeight = useSpring(sheetHeightMv, {
+    stiffness: 380,
+    damping: 36,
+    mass: 0.25,
+  });
   const isExpanded = sheetRatio > 0.25;
 
   // Handle hover with delay for better UX - only when NO video is playing
@@ -116,6 +125,11 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
     window.addEventListener("resize", onResize);
     return () => window.removeEventListener("resize", onResize);
   }, []);
+
+  React.useEffect(() => {
+    const next = Math.round((viewportH || 0) * sheetRatio);
+    if (!Number.isNaN(next)) sheetHeightMv.set(next);
+  }, [viewportH, sheetRatio]);
 
   // Callback to handle program selection from ProgramGuide
   const handleProgramSelect = useCallback((programData: SelectedProgram) => {
@@ -242,10 +256,7 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
               className="absolute bottom-0 left-0 right-0 z-50 bg-[#0b0c0e]/90 backdrop-blur-md pointer-events-auto rounded-t-2xl shadow-2xl"
-              style={{
-                height: Math.round(viewportH * sheetRatio) || undefined,
-                transform: "translateY(0px)",
-              }}
+              style={{ height: sheetHeight, transform: "translateY(0px)" }}
               onMouseEnter={handleContentMouseEnter}
               drag="y"
               dragElastic={0}
@@ -263,23 +274,23 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
                 let nextRatio = dragStartRatioRef.current - deltaRatio;
                 // Clamp between 0.2 and 0.9
                 nextRatio = Math.max(0.2, Math.min(0.9, nextRatio));
-                setSheetRatio(nextRatio);
+                sheetHeightMv.set(Math.round(nextRatio * viewportH));
               }}
               onPanEnd={() => {
-                const ratio = sheetRatio;
+                const current = sheetHeightMv.get();
+                const ratio = (current || 0) / (viewportH || 1);
                 const delta = dragOffsetRef.current;
                 // Close only if dragged significantly down
                 if (delta > 180 || ratio <= 0.16) {
                   setIsHovered(false);
+                  sheetHeightMv.set(Math.round(viewportH * 0.25));
                   setSheetRatio(0.25);
                   return;
                 }
                 // Snap to closest: 25% or 70%
-                if (ratio >= 0.475) {
-                  setSheetRatio(0.7);
-                } else {
-                  setSheetRatio(0.25);
-                }
+                const target = ratio >= 0.475 ? 0.7 : 0.25;
+                sheetHeightMv.set(Math.round(viewportH * target));
+                setSheetRatio(target);
               }}
             >
               {/* Drag Handle + Close */}
