@@ -20,6 +20,7 @@ interface ProgramGuideProps {
     index: number;
     channelName: string;
     channelLogo: string;
+    streamingUrl?: string;
   }) => void;
 }
 
@@ -329,6 +330,13 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({
     return programs;
   };
 
+  const channelStreamUrls: Record<string, string> = {
+    cnn: "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",
+    bbc: "https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8",
+    fox: "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8",
+    msnbc: "https://mojen.se/vod/test/test_format_2.m3u8",
+  };
+
   const channels = [
     {
       id: "cnn",
@@ -379,6 +387,7 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({
             index,
             channelName: channel.name,
             channelLogo: channel.logo,
+            streamingUrl: channelStreamUrls[channelId] || channelStreamUrls.cnn,
           });
         }
       }

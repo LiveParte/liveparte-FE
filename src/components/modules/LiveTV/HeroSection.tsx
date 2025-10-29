@@ -40,7 +40,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
 }) => {
   const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
   const [showControls, setShowControls] = useState(true);
   const [currentTime, setCurrentTime] = useState(0);
   const [totalTime, setTotalTime] = useState(0);
@@ -52,6 +52,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
   const [isHlsLoaded, setIsHlsLoaded] = useState(false);
   const [playbackRate, setPlaybackRate] = useState(1);
   const [isFavorited, setIsFavorited] = useState(false);
+  const [initAttempts, setInitAttempts] = useState(0);
 
   // Refs
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -82,6 +83,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({
       setError(null);
       setHlsStats(null);
       setIsHlsLoaded(false);
+      setInitAttempts(0);
+      setIsMuted(true);
       setPlaybackRate(1);
       setIsFavorited(false);
 
@@ -120,12 +123,37 @@ const HeroSection: React.FC<HeroSectionProps> = ({
     }
   }, [currentTime, totalTime]);
 
-  // Initialize HLS
+  // Initialize HLS on streamUrl change
   useEffect(() => {
-    if (!isVideoPlaying) {
-      console.log("Not video playing, skipping HLS init");
-      return;
+    async function prepareAndStart() {
+      setIsHlsLoaded(false);
+      setError(null);
+      setIsVideoPlaying(false);
+      setIsPlaying(false);
+      setShowControls(true);
+      setCurrentTime(0);
+      setTotalTime(0);
+      setProgress(0);
+      setHlsStats(null);
+      setPlaybackRate(1);
+      setIsFavorited(false);
+      setIsMuted(true);
+
+      if (hlsRef.current) {
+        try {
+          hlsRef.current.destroy();
+        } catch (e) {}
+        hlsRef.current = null;
+      }
+      await new Promise((res) => setTimeout(res, 100));
+      setIsVideoPlaying(true);
     }
+    prepareAndStart();
+  }, [streamUrl, selectedProgram?.program.status]);
+
+  // Actually start/attach HLS when isVideoPlaying true (as before)
+  useEffect(() => {
+    if (!isVideoPlaying) return;
 
     const initHLS = async () => {
       await new Promise((resolve) => setTimeout(resolve, 200));
@@ -159,10 +187,22 @@ const HeroSection: React.FC<HeroSectionProps> = ({
 
           hlsRef.current = hls;
 
+          hls.on(Hls.Events.MEDIA_ATTACHED, () => {
+            console.log("Media attached - attempting autoplay");
+            if (videoRef.current) {
+              videoRef.current.muted = true;
+              videoRef.current.play().catch(() => {});
+            }
+          });
+
           hls.on(Hls.Events.MANIFEST_PARSED, () => {
             console.log("HLS manifest parsed successfully");
             setIsHlsLoaded(true);
             setError(null);
+            if (videoRef.current) {
+              videoRef.current.muted = true;
+              videoRef.current.play().catch(() => {});
+            }
           });
 
           hls.on(Hls.Events.ERROR, (event: any, data: any) => {
@@ -182,6 +222,10 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             });
           });
 
+          hls.on(Hls.Events.LEVEL_LOADED, () => {
+            setIsHlsLoaded(true);
+          });
+
           hls.on(Hls.Events.FRAG_LOADED, (event: any, data: any) => {
             setHlsStats({
               level: hls.currentLevel,
@@ -190,17 +234,28 @@ const HeroSection: React.FC<HeroSectionProps> = ({
               fragUrl: data.frag?.url,
               bitrate: hls.levels?.[hls.currentLevel]?.bitrate,
             });
+            setIsHlsLoaded(true);
           });
 
-          console.log("Loading HLS source:", streamUrl);
-          hls.loadSource(streamUrl);
+          console.log("Attaching media and loading HLS source:", streamUrl);
           hls.attachMedia(videoRef.current);
+          hls.loadSource(streamUrl);
         } else if (
           videoRef.current?.canPlayType("application/vnd.apple.mpegurl")
         ) {
           console.log("Using native HLS support");
-          videoRef.current.src = streamUrl;
-          setIsHlsLoaded(true);
+          const v = videoRef.current;
+          v.src = streamUrl;
+          // Mark loaded on canplay for native
+          const nativeCanPlay = () => {
+            setIsHlsLoaded(true);
+            v.removeEventListener("canplay", nativeCanPlay);
+          };
+          v.addEventListener("canplay", nativeCanPlay);
+          try {
+            v.load();
+            v.play().catch(() => {});
+          } catch (_) {}
         } else {
           setError("HLS is not supported in this browser");
         }
@@ -213,13 +268,35 @@ const HeroSection: React.FC<HeroSectionProps> = ({
     initHLS();
 
     return () => {
-      if (!isVideoPlaying && hlsRef.current) {
-        console.log("Cleaning up HLS instance");
-        hlsRef.current.destroy();
+      if (hlsRef.current) {
+        try {
+          console.log("Cleaning up HLS instance");
+          hlsRef.current.destroy();
+        } catch (_) {}
         hlsRef.current = null;
       }
     };
   }, [isVideoPlaying, streamUrl, selectedProgram?.program.status]);
+
+  // Watchdog retry if HLS doesn't load in time
+  useEffect(() => {
+    if (!isVideoPlaying || isHlsLoaded || error) return;
+    const timer = setTimeout(() => {
+      if (!isHlsLoaded && !error) {
+        if (initAttempts < 2) {
+          console.warn("HLS init slow, retrying", {
+            attempt: initAttempts + 1,
+          });
+          setInitAttempts((n) => n + 1);
+          setIsVideoPlaying(false);
+          setTimeout(() => setIsVideoPlaying(true), 150);
+        } else {
+          setError("Unable to load stream. Please try another program.");
+        }
+      }
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [isVideoPlaying, isHlsLoaded, error, initAttempts, streamUrl]);
 
   // Video event listeners - FIXED TO SYNC STATE PROPERLY
   useEffect(() => {
@@ -264,8 +341,20 @@ const HeroSection: React.FC<HeroSectionProps> = ({
     };
 
     const handleEnded = () => {
-      console.log("Video ended - setting isPlaying to false");
-      setIsPlaying(false);
+      console.log("Video ended - restarting loop");
+      if (videoRef.current) {
+        try {
+          videoRef.current.currentTime = 0;
+          // Attempt to play again for loop behavior
+          videoRef.current.play().catch(() => {
+            setIsPlaying(false);
+          });
+        } catch (_) {
+          setIsPlaying(false);
+        }
+      } else {
+        setIsPlaying(false);
+      }
     };
 
     video.addEventListener("loadedmetadata", handleLoadedMetadata);
@@ -582,135 +671,24 @@ const HeroSection: React.FC<HeroSectionProps> = ({
 
   return (
     <div className={`relative h-full w-full ${className}`}>
-      {/* Background Image - Only show when video is NOT playing or NOT loaded */}
-      {(!isVideoPlaying || !isHlsLoaded) && (
+      {/* Background Image - Only show while stream not loaded */}
+      {!isHlsLoaded && (
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: "url('/images/liveparte_banner.png')",
-            filter: isVideoPlaying ? "brightness(0.6)" : "brightness(0.4)",
+            filter: "brightness(0.4)",
           }}
         />
       )}
 
-      {/* Gradient Overlay - Only show when video is NOT playing or NOT loaded */}
-      {(!isVideoPlaying || !isHlsLoaded) && (
+      {/* Gradient Overlay - Only show while stream not loaded */}
+      {!isHlsLoaded && (
         <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-black/50 to-transparent" />
       )}
 
       <AnimatePresence mode="wait">
-        {!isVideoPlaying ? (
-          // Program Details View - REMOVED (now auto-starts)
-          <motion.div
-            key="program-details"
-            className="relative z-10 h-full flex items-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-          >
-            <div className="px-[60px] md:px-[80px] lg:px-[120px] max-w-[800px]">
-              <motion.div
-                className="flex items-center gap-[16px] mb-[24px]"
-                key={`channel-${selectedProgram.channelName}`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-              >
-                <div className="bg-red-600 text-white px-[16px] py-[8px] rounded-[6px] text-[16px] font-bold">
-                  {selectedProgram.channelLogo}
-                </div>
-                <div className="flex items-center gap-[8px]">
-                  <div className="w-[6px] h-[6px] bg-red-500 rounded-full"></div>
-                  <span className="text-white text-[16px] font-medium">
-                    {selectedProgram.program.status === "live"
-                      ? "LIVE NOW"
-                      : "UPCOMING"}
-                  </span>
-                </div>
-                {selectedProgram.program.breaking && (
-                  <motion.div
-                    className="bg-blue-600 text-white px-[12px] py-[4px] rounded-[4px] text-[12px] font-bold"
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
-                    transition={{ delay: 0.3, type: "spring", stiffness: 200 }}
-                  >
-                    BREAKING
-                  </motion.div>
-                )}
-              </motion.div>
-
-              <motion.h1
-                className="text-white text-[56px] md:text-[72px] font-bold mb-[24px] leading-[0.9] whitespace-nowrap"
-                key={`title-${selectedProgram.program.title}`}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
-              >
-                {selectedProgram.program.title}
-              </motion.h1>
-
-              <motion.p
-                className="text-gray-200 text-[20px] md:text-[22px] mb-[32px] leading-relaxed max-w-[600px]"
-                key={`description-${selectedProgram.program.description}`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.5,
-                  delay: 0.2,
-                  ease: [0.25, 0.46, 0.45, 0.94],
-                }}
-              >
-                {selectedProgram.program.description}
-              </motion.p>
-
-              <motion.div
-                className="flex flex-wrap gap-[20px] mb-[40px]"
-                key={`metadata-${selectedProgram.program.time}`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.5,
-                  delay: 0.3,
-                  ease: [0.25, 0.46, 0.45, 0.94],
-                }}
-              >
-                <span className="text-gray-300 text-[16px]">
-                  Started {selectedProgram.program.time.split(" - ")[0]}
-                </span>
-                <span className="text-gray-300 text-[16px]">•</span>
-                <span className="text-gray-300 text-[16px]">
-                  {selectedProgram.program.genre}
-                </span>
-                <span className="text-gray-300 text-[16px]">•</span>
-                <span className="text-gray-300 text-[16px]">TV-14</span>
-                {selectedProgram.program.timeLeft && (
-                  <>
-                    <span className="text-gray-300 text-[16px]">•</span>
-                    <span className="text-gray-300 text-[16px]">
-                      {selectedProgram.program.timeLeft}
-                    </span>
-                  </>
-                )}
-              </motion.div>
-
-              <motion.div
-                className="flex gap-[20px]"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.5,
-                  delay: 0.4,
-                  ease: [0.25, 0.46, 0.45, 0.94],
-                }}
-              >
-                <div className="text-white text-lg">
-                  Click on any program to start watching immediately
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
-        ) : (
+        {selectedProgram ? (
           // Video Player View
           <motion.div
             key="video-player"
@@ -734,12 +712,14 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             {/* Video Element */}
             <video
               ref={videoRef}
+              key={streamUrl}
               className="w-full h-full object-cover"
               controls={false}
               muted={isMuted}
               playsInline
-              preload="metadata"
+              preload="auto"
               autoPlay={true}
+              loop
             />
 
             {/* Floating Audio Control Button */}
@@ -758,7 +738,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             </motion.button>
 
             {/* Loading Overlay */}
-            {isVideoPlaying && !isHlsLoaded && !error && (
+            {!isHlsLoaded && !error && (
               <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
                 <div className="text-center">
                   <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white mx-auto mb-4"></div>
@@ -885,7 +865,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
               </motion.div>
             )}
           </motion.div>
-        )}
+        ) : null}
       </AnimatePresence>
     </div>
   );

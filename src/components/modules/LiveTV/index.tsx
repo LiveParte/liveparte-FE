@@ -25,6 +25,7 @@ interface SelectedProgram {
   index: number;
   channelName: string;
   channelLogo: string;
+  streamingUrl?: string;
 }
 
 const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
@@ -32,7 +33,14 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
     useState<SelectedProgram | null>(null);
   const [isFullscreenOpen, setIsFullscreenOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [sheetRatio, setSheetRatio] = useState<number>(0.25); // 0.25 or 0.7
+  const [viewportH, setViewportH] = useState<number>(
+    typeof window !== "undefined" ? window.innerHeight : 0
+  );
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const dragOffsetRef = useRef<number>(0);
+  const dragStartRatioRef = useRef<number>(0.25);
+  const isExpanded = sheetRatio > 0.25;
 
   // Handle hover with delay for better UX - only when NO video is playing
   const handleMouseEnter = useCallback(() => {
@@ -41,6 +49,7 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
       if (hoverTimeoutRef.current) {
         clearTimeout(hoverTimeoutRef.current);
       }
+      setSheetRatio(0.25);
       setIsHovered(true);
     }
   }, [selectedProgram]);
@@ -100,6 +109,14 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
     }, 300);
   }, []);
 
+  // Viewport height listener for responsive snap heights
+  React.useEffect(() => {
+    const onResize = () => setViewportH(window.innerHeight);
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
   // Callback to handle program selection from ProgramGuide
   const handleProgramSelect = useCallback((programData: SelectedProgram) => {
     setSelectedProgram(programData);
@@ -126,6 +143,7 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
   React.useEffect(() => {
     if (selectedProgram) {
       setIsHovered(false);
+      setSheetRatio(0.25);
     }
   }, [selectedProgram]);
 
@@ -136,6 +154,30 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
         clearTimeout(hoverTimeoutRef.current);
       }
     };
+  }, []);
+
+  // Auto-select a default program on mount so video starts playing
+  React.useEffect(() => {
+    if (!selectedProgram) {
+      setSelectedProgram({
+        program: {
+          title: "Live News Stream",
+          time: "Now - 24/7",
+          status: "live",
+          description: "Continuous live news coverage.",
+          genre: "News",
+          timeLeft: null,
+          breaking: false,
+          progress: 0,
+        },
+        channelId: "cnn",
+        index: 0,
+        channelName: "CNN",
+        channelLogo: "CNN",
+        streamingUrl:
+          "https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8",
+      });
+    }
   }, []);
 
   return (
@@ -185,39 +227,95 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
       {/* Bottom Section - Categories and Program Guide with smooth animation */}
       <AnimatePresence>
         {isHovered && (
-          <motion.div
-            initial={{ opacity: 0, y: 100 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 100 }}
-            transition={{
-              duration: 0.6,
-              ease: [0.25, 0.46, 0.45, 0.94],
-            }}
-            className="absolute bottom-0 left-0 right-0 px-[20px] md:px-[40px] lg:px-[120px] py-[40px] z-50 bg-black/60 backdrop-blur-md pointer-events-auto"
-            onMouseEnter={handleContentMouseEnter}
-            onMouseLeave={handleContentMouseLeave}
-          >
-            {/* Close Button */}
-            <button
-              onClick={() => setIsHovered(false)}
-              className="absolute top-4 right-4 md:top-6 md:right-6 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full p-2 transition-all duration-300 group z-10"
-              aria-label="Close program guide"
+          <>
+            {/* Backdrop - visual only (no click-to-close) */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="absolute inset-0 bg-black/50 backdrop-blur-sm z-40 pointer-events-none"
+            />
+            <motion.div
+              initial={false}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="absolute bottom-0 left-0 right-0 z-50 bg-[#0b0c0e]/90 backdrop-blur-md pointer-events-auto rounded-t-2xl shadow-2xl"
+              style={{
+                height: Math.round(viewportH * sheetRatio) || undefined,
+                transform: "translateY(0px)",
+              }}
+              onMouseEnter={handleContentMouseEnter}
+              drag="y"
+              dragElastic={0}
+              dragMomentum={false}
+              dragConstraints={{ top: 0, bottom: 0 }}
+              onPanStart={() => {
+                dragStartRatioRef.current = sheetRatio;
+                dragOffsetRef.current = 0;
+              }}
+              onPan={(e, info) => {
+                // @ts-ignore - framer-motion PanInfo
+                const currentOffset = info.offset?.y ?? 0;
+                dragOffsetRef.current = currentOffset;
+                const deltaRatio = currentOffset / viewportH;
+                let nextRatio = dragStartRatioRef.current - deltaRatio;
+                // Clamp between 0.2 and 0.9
+                nextRatio = Math.max(0.2, Math.min(0.9, nextRatio));
+                setSheetRatio(nextRatio);
+              }}
+              onPanEnd={() => {
+                const ratio = sheetRatio;
+                const delta = dragOffsetRef.current;
+                // Close only if dragged significantly down
+                if (delta > 180 || ratio <= 0.16) {
+                  setIsHovered(false);
+                  setSheetRatio(0.25);
+                  return;
+                }
+                // Snap to closest: 25% or 70%
+                if (ratio >= 0.475) {
+                  setSheetRatio(0.7);
+                } else {
+                  setSheetRatio(0.25);
+                }
+              }}
             >
-              <X className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
-            </button>
-
-            <div className="flex flex-col lg:flex-row gap-[32px]">
-              {/* Categories Sidebar */}
-              <div className="relative">
-                <CategoriesSidebar />
-                {/* Faint vertical separator line */}
-                <div className="hidden lg:block absolute top-0 right-0 w-[1px] h-full bg-white/10" />
+              {/* Drag Handle + Close */}
+              <div className="absolute left-0 right-0 top-0 pt-2 pb-1 flex items-center justify-center">
+                <div
+                  className="flex items-center gap-2 px-3 h-10 w-full max-w-[180px] cursor-grab active:cursor-grabbing"
+                  onClick={() => setSheetRatio((r) => (r > 0.25 ? 0.25 : 0.7))}
+                >
+                  <div className="w-12 h-1.5 rounded-full bg-white/30" />
+                </div>
+                <button
+                  onClick={() => setIsHovered(false)}
+                  className="absolute right-4 top-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm border border-white/20 rounded-full p-2 transition-all duration-300 group"
+                  aria-label="Close program guide"
+                >
+                  <X className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
+                </button>
               </div>
 
-              {/* Program Guide */}
-              <ProgramGuide onProgramSelect={handleProgramSelect} />
-            </div>
-          </motion.div>
+              <div
+                className={`h-full min-h-0 overflow-y-auto px-[20px] md:px-[40px] lg:px-[120px] ${
+                  isExpanded ? "pt-14" : "pt-8"
+                } pb-4 flex flex-col lg:flex-row gap-[24px]`}
+              >
+                {/* Categories Sidebar */}
+                <div className="relative">
+                  <CategoriesSidebar />
+                  {/* Faint vertical separator line */}
+                  <div className="hidden lg:block absolute top-0 right-0 w-[1px] h-full bg-white/10" />
+                </div>
+
+                {/* Program Guide */}
+                <ProgramGuide onProgramSelect={handleProgramSelect} />
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
 
