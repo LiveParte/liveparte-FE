@@ -9,7 +9,7 @@ import ScrollAnimation, {
 
 const LiveTVPage: React.FC = () => {
   return (
-    <div className="min-h-[100vh] bg-black-background">
+    <div className="min-h-screen bg-black-background pt-24">
       <Navbar />
       <OptimizedTransition>
         <ScrollAnimation {...ScrollAnimations.fadeUp} delay={0.1}>

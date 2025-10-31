@@ -255,7 +255,7 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="absolute bottom-0 left-0 right-0 z-50 bg-[#0b0c0e]/90 backdrop-blur-md pointer-events-auto rounded-t-2xl shadow-2xl"
+              className="absolute bottom-0 left-0 right-0 z-50 bg-[#0b0c0e]/90 backdrop-blur-md pointer-events-auto rounded-t-2xl shadow-2xl flex flex-col"
               style={{ height: sheetHeight, transform: "translateY(0px)" }}
               onMouseEnter={handleContentMouseEnter}
               drag="y"
@@ -311,19 +311,22 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
               </div>
 
               <div
-                className={`h-full min-h-0 overflow-y-auto px-[20px] md:px-[40px] lg:px-[120px] ${
+                className={`flex-1 min-h-0 overflow-y-auto px-[20px] md:px-[40px] lg:px-[120px] ${
                   isExpanded ? "pt-14" : "pt-8"
-                } pb-4 flex flex-col lg:flex-row gap-[24px]`}
+                } pb-8 flex flex-col lg:flex-row gap-[24px]`}
+                style={{ maxHeight: "100%" }}
               >
                 {/* Categories Sidebar */}
-                <div className="relative">
+                <div className="relative flex-shrink-0">
                   <CategoriesSidebar />
                   {/* Faint vertical separator line */}
                   <div className="hidden lg:block absolute top-0 right-0 w-[1px] h-full bg-white/10" />
                 </div>
 
                 {/* Program Guide */}
-                <ProgramGuide onProgramSelect={handleProgramSelect} />
+                <div className="flex-1 min-w-0">
+                  <ProgramGuide onProgramSelect={handleProgramSelect} />
+                </div>
               </div>
             </motion.div>
           </>
