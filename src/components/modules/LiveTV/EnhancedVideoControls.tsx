@@ -183,71 +183,81 @@ const EnhancedVideoControls: React.FC<EnhancedVideoControlsProps> = ({
             </div>
 
             {/* Volume Control */}
-            <div className="flex items-center gap-2 relative">
-              <button
-                onClick={onMuteToggle}
-                onMouseEnter={() => setShowVolumeSlider(true)}
-                onMouseLeave={() => setShowVolumeSlider(false)}
-                className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-200"
-                title={isMuted ? "Unmute" : "Mute"}
-              >
-                {isMuted || volume === 0 ? (
-                  <svg
-                    className="w-6 h-6"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.617.816L4.617 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.617l3.766-3.816a1 1 0 011.617.816zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                ) : (
-                  <svg
-                    className="w-6 h-6"
-                    fill="currentColor"
-                    viewBox="0 0 20 20"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.617.816L4.617 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.617l3.766-3.816a1 1 0 011.617.816zM12.293 7.293a1 1 0 011.414 0L15 8.586l1.293-1.293a1 1 0 111.414 1.414L16.414 10l1.293 1.293a1 1 0 01-1.414 1.414L15 11.414l-1.293 1.293a1 1 0 01-1.414-1.414L13.586 10l-1.293-1.293a1 1 0 010-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                )}
-              </button>
+            <div className="flex items-center gap-2">
+              <div className="relative">
+                <button
+                  onClick={onMuteToggle}
+                  onMouseEnter={() => setShowVolumeSlider(true)}
+                  onMouseLeave={() => setShowVolumeSlider(false)}
+                  className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-200"
+                  title={isMuted ? "Unmute" : "Mute"}
+                >
+                  {isMuted || volume === 0 ? (
+                    <svg
+                      className="w-6 h-6"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.617.816L4.617 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.617l3.766-3.816a1 1 0 011.617.816zM12.293 7.293a1 1 0 011.414 0L15 8.586l1.293-1.293a1 1 0 111.414 1.414L16.414 10l1.293 1.293a1 1 0 01-1.414 1.414L15 11.414l-1.293 1.293a1 1 0 01-1.414-1.414L13.586 10l-1.293-1.293a1 1 0 010-1.414z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      className="w-6 h-6"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.617.816L4.617 13H2a1 1 0 01-1-1V8a1 1 0 011-1h2.617l3.766-3.816a1 1 0 011.617.816zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  )}
+                </button>
 
-              {/* Volume Slider - Shows on hover */}
-              <motion.div
-                className="absolute left-14 bg-black/80 rounded-lg p-3"
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{
-                  opacity: showVolumeSlider ? 1 : 0,
-                  scale: showVolumeSlider ? 1 : 0.8,
-                }}
-                transition={{ duration: 0.2 }}
-                onMouseEnter={() => setShowVolumeSlider(true)}
-                onMouseLeave={() => setShowVolumeSlider(false)}
-              >
-                <input
-                  type="range"
-                  min="0"
-                  max="1"
-                  step="0.1"
-                  value={isMuted ? 0 : volume}
-                  onChange={onVolumeChange}
-                  className="w-32 h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer slider vertical-slider"
+                {/* Volume Slider - Shows on hover above the button */}
+                <motion.div
+                  className="absolute bottom-full mb-2 bg-black/80 rounded-lg p-3 pointer-events-auto z-50"
                   style={{
-                    background: `linear-gradient(to right, #fff 0%, #fff ${
-                      isMuted ? 0 : volume * 100
-                    }%, #4b5563 ${isMuted ? 0 : volume * 100}%, #4b5563 100%)`,
+                    left: "50%",
+                    pointerEvents: showVolumeSlider ? "auto" : "none",
                   }}
-                />
-                <div className="text-white text-xs text-center mt-1">
-                  {Math.round((isMuted ? 0 : volume) * 100)}%
-                </div>
-              </motion.div>
+                  initial={{ opacity: 0, scale: 0.8, y: 10, x: "-50%" }}
+                  animate={{
+                    opacity: showVolumeSlider ? 1 : 0,
+                    scale: showVolumeSlider ? 1 : 0.8,
+                    y: showVolumeSlider ? 0 : 10,
+                    x: "-50%",
+                  }}
+                  transition={{ duration: 0.2 }}
+                  onMouseEnter={() => setShowVolumeSlider(true)}
+                  onMouseLeave={() => setShowVolumeSlider(false)}
+                >
+                  <input
+                    type="range"
+                    min="0"
+                    max="1"
+                    step="0.1"
+                    value={isMuted ? 0 : volume}
+                    onChange={onVolumeChange}
+                    className="w-32 h-2 bg-gray-600 rounded-lg appearance-none cursor-pointer slider vertical-slider"
+                    style={{
+                      background: `linear-gradient(to right, #fff 0%, #fff ${
+                        isMuted ? 0 : volume * 100
+                      }%, #4b5563 ${
+                        isMuted ? 0 : volume * 100
+                      }%, #4b5563 100%)`,
+                    }}
+                  />
+                  <div className="text-white text-xs text-center mt-1">
+                    {Math.round((isMuted ? 0 : volume) * 100)}%
+                  </div>
+                </motion.div>
+              </div>
             </div>
 
             {/* Playback Speed */}
