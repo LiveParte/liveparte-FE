@@ -777,7 +777,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
 
             {/* Program Info Overlay */}
             <motion.div
-              className="absolute bottom-24 left-6 z-20 max-w-2xl"
+              className="absolute bottom-40 left-6 z-20 max-w-2xl"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: showControls ? 1 : 0, y: 0 }}
               transition={{ duration: 0.3 }}
