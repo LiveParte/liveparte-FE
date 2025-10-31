@@ -296,7 +296,7 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
               {/* Drag Handle + Close */}
               <div className="absolute left-0 right-0 top-0 pt-2 pb-1 flex items-center justify-center">
                 <div
-                  className="flex items-center gap-2 px-3 h-10 w-full max-w-[180px] cursor-grab active:cursor-grabbing"
+                  className="flex items-center justify-center gap-2 px-3 h-10 w-full cursor-grab active:cursor-grabbing"
                   onClick={() => setSheetRatio((r) => (r > 0.25 ? 0.25 : 0.7))}
                 >
                   <div className="w-12 h-1.5 rounded-full bg-white/30" />
@@ -312,12 +312,17 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
 
               <div
                 className={`flex-1 min-h-0 overflow-y-auto px-[20px] md:px-[40px] lg:px-[120px] ${
-                  isExpanded ? "pt-14" : "pt-8"
+                  isExpanded ? "pt-14 md:pt-14" : "pt-20 md:pt-8"
                 } pb-8 flex flex-col lg:flex-row gap-[24px]`}
                 style={{ maxHeight: "100%" }}
               >
-                {/* Categories Sidebar */}
-                <div className="relative flex-shrink-0">
+                {/* Mobile: Categories tabs at top */}
+                <div className="md:hidden -mx-[20px] px-[20px] pt-2 pb-4 border-b border-white/10">
+                  <CategoriesSidebar />
+                </div>
+
+                {/* Desktop: Categories Sidebar */}
+                <div className="hidden md:block relative flex-shrink-0">
                   <CategoriesSidebar />
                   {/* Faint vertical separator line */}
                   <div className="hidden lg:block absolute top-0 right-0 w-[1px] h-full bg-white/10" />
