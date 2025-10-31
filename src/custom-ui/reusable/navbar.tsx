@@ -1,4 +1,4 @@
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { Button } from "../../components/Ui/ui/button";
@@ -10,6 +10,7 @@ export default function Navbar() {
   const router = useRouter();
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const [authMode, setAuthMode] = useState<"login" | "signup">("login");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const navigationItems = [
     { name: "Home", href: "/" },
@@ -82,24 +83,83 @@ export default function Navbar() {
             </Button>
 
             {/* Mobile Menu Button */}
-            <button className="md:hidden p-2 text-white.200">
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="md:hidden p-2 text-white.200 hover:text-white.200/80 transition-colors duration-200"
+              aria-label="Toggle mobile menu"
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              )}
             </button>
           </div>
         </div>
       </div>
+
+      {/* Mobile Menu Dropdown */}
+      {isMobileMenuOpen && (
+        <div className="md:hidden border-t border-grey.400/20 bg-black-background/98 backdrop-blur-md">
+          <div className="px-[20px] py-6 space-y-4">
+            {/* Mobile Navigation Items */}
+            {navigationItems.map((item) => {
+              const isActive = router.pathname === item.href;
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={cn(
+                    "block text-base font-500 transition-colors duration-200 no-underline py-2",
+                    isActive
+                      ? "text-white.200"
+                      : "text-grey.200 hover:text-white.200"
+                  )}
+                >
+                  {item.name}
+                </Link>
+              );
+            })}
+
+            {/* Mobile Auth Buttons */}
+            <div className="pt-4 border-t border-grey.400/20 space-y-3">
+              <button
+                onClick={() => {
+                  setAuthMode("login");
+                  setIsAuthModalOpen(true);
+                  setIsMobileMenuOpen(false);
+                }}
+                className="w-full text-left text-sm font-500 text-grey.200 hover:text-white.200 transition-colors duration-200 py-2"
+              >
+                Sign In
+              </button>
+              <Button
+                onClick={() => {
+                  setAuthMode("signup");
+                  setIsAuthModalOpen(true);
+                  setIsMobileMenuOpen(false);
+                }}
+                className="w-full bg-white.200 text-black.100 hover:bg-white.200/90 shadow-lg hover:shadow-xl font-500"
+              >
+                Sign Up
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Auth Modal */}
       <AuthModal
