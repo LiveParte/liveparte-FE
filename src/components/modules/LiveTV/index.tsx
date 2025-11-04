@@ -36,20 +36,20 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
     useState<SelectedProgram | null>(null);
   const [isFullscreenOpen, setIsFullscreenOpen] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
-  const [sheetRatio, setSheetRatio] = useState<number>(0.25); // 0.25 or 0.7
+  const [sheetRatio, setSheetRatio] = useState<number>(0.6); // 0.6 or 0.7
   const [viewportH, setViewportH] = useState<number>(
     typeof window !== "undefined" ? window.innerHeight : 0
   );
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const dragOffsetRef = useRef<number>(0);
-  const dragStartRatioRef = useRef<number>(0.25);
+  const dragStartRatioRef = useRef<number>(0.6);
   const sheetHeightMv = useMotionValue(0);
   const sheetHeight = useSpring(sheetHeightMv, {
     stiffness: 380,
     damping: 36,
     mass: 0.25,
   });
-  const isExpanded = sheetRatio > 0.25;
+  const isExpanded = sheetRatio > 0.6;
 
   // Handle hover with delay for better UX - only when NO video is playing
   const handleMouseEnter = useCallback(() => {
@@ -58,7 +58,7 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
       if (hoverTimeoutRef.current) {
         clearTimeout(hoverTimeoutRef.current);
       }
-      setSheetRatio(0.25);
+      setSheetRatio(0.6);
       setIsHovered(true);
     }
   }, [selectedProgram]);
@@ -157,7 +157,7 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
   React.useEffect(() => {
     if (selectedProgram) {
       setIsHovered(false);
-      setSheetRatio(0.25);
+      setSheetRatio(0.6);
     }
   }, [selectedProgram]);
 
@@ -283,12 +283,12 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
                 // Close only if dragged significantly down
                 if (delta > 180 || ratio <= 0.16) {
                   setIsHovered(false);
-                  sheetHeightMv.set(Math.round(viewportH * 0.25));
-                  setSheetRatio(0.25);
+                  sheetHeightMv.set(Math.round(viewportH * 0.6));
+                  setSheetRatio(0.6);
                   return;
                 }
-                // Snap to closest: 25% or 70%
-                const target = ratio >= 0.475 ? 0.7 : 0.25;
+                // Snap to closest: 60% or 70%
+                const target = ratio >= 0.65 ? 0.7 : 0.6;
                 sheetHeightMv.set(Math.round(viewportH * target));
                 setSheetRatio(target);
               }}
@@ -297,7 +297,7 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
               <div className="absolute left-0 right-0 top-0 pt-2 pb-1 flex items-center justify-center">
                 <div
                   className="flex items-center justify-center gap-2 px-3 h-10 w-full cursor-grab active:cursor-grabbing"
-                  onClick={() => setSheetRatio((r) => (r > 0.25 ? 0.25 : 0.7))}
+                  onClick={() => setSheetRatio((r) => (r > 0.6 ? 0.6 : 0.7))}
                 >
                   <div className="w-12 h-1.5 rounded-full bg-white/30" />
                 </div>

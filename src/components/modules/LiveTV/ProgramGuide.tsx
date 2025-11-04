@@ -411,8 +411,6 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({
     return null;
   };
 
-  const selectedProgramData = getSelectedProgram();
-
   return (
     <div className={`flex-1 ${className}`} style={{ overflow: "hidden" }}>
       {/* Header with current time */}

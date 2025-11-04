@@ -33,12 +33,12 @@ const EnhancedVideoControls: React.FC<EnhancedVideoControlsProps> = ({
   isPlaying,
   isMuted,
   volume,
-  currentTime,
-  totalTime,
+  currentTime: _currentTime,
+  totalTime: _totalTime,
   progress,
   isDragging,
   showControls,
-  onPlayPause,
+  onPlayPause: _onPlayPause,
   onMuteToggle,
   onVolumeChange,
   onProgressClick,
@@ -53,25 +53,15 @@ const EnhancedVideoControls: React.FC<EnhancedVideoControlsProps> = ({
   onSubtitles,
   onAddToFavorites,
   isFavorited,
-  formatTime,
+  formatTime: _formatTime,
   progressRef,
 }) => {
   const [showVolumeSlider, setShowVolumeSlider] = useState(false);
-  const [showSpeedMenu, setShowSpeedMenu] = useState(false);
-  const [playbackRate, setPlaybackRate] = useState(1);
-
-  const speedOptions = [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2];
 
   // Debug logging for isPlaying state
   useEffect(() => {
     console.log("EnhancedVideoControls - isPlaying changed to:", isPlaying);
   }, [isPlaying]);
-
-  const handleSpeedChange = useCallback((speed: number) => {
-    setPlaybackRate(speed);
-    setShowSpeedMenu(false);
-    // This would be passed as a prop to control video playback rate
-  }, []);
 
   return (
     <motion.div
@@ -125,46 +115,7 @@ const EnhancedVideoControls: React.FC<EnhancedVideoControlsProps> = ({
               </svg>
             </button> */}
 
-            {/* Play/Pause Button - ENHANCED WITH DEBUGGING */}
-            <button
-              onClick={() => {
-                console.log(
-                  "Play/Pause button clicked - current isPlaying:",
-                  isPlaying
-                );
-                onPlayPause();
-              }}
-              className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-200 hover:scale-105"
-              title={isPlaying ? "Pause" : "Play"}
-            >
-              {isPlaying ? (
-                // Pause Icon - Two vertical bars
-                <svg
-                  className="w-8 h-8"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 00-1 1v2a1 1 0 002 0V9a1 1 0 00-1-1zm4 0a1 1 0 00-1 1v2a1 1 0 102 0V9a1 1 0 00-1-1z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              ) : (
-                // Play Icon - Triangle pointing right
-                <svg
-                  className="w-8 h-8 ml-1"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              )}
-            </button>
+            {/* Play/Pause hidden for Live TV */}
 
             {/* Seek Forward */}
             {/* <button
@@ -177,10 +128,7 @@ const EnhancedVideoControls: React.FC<EnhancedVideoControlsProps> = ({
               </svg>
             </button> */}
 
-            {/* Time Display */}
-            <div className="text-white text-lg font-mono min-w-[120px] ml-4">
-              {formatTime(currentTime)} / {formatTime(totalTime)}
-            </div>
+            {/* Time display hidden for Live TV */}
 
             {/* Volume Control */}
             <div className="flex items-center gap-2">
@@ -260,39 +208,7 @@ const EnhancedVideoControls: React.FC<EnhancedVideoControlsProps> = ({
               </div>
             </div>
 
-            {/* Playback Speed */}
-            <div className="relative">
-              <button
-                onClick={() => setShowSpeedMenu(!showSpeedMenu)}
-                className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center text-white hover:bg-white/30 transition-all duration-200"
-                title="Playback Speed"
-              >
-                <span className="text-sm font-medium">{playbackRate}x</span>
-              </button>
-
-              {showSpeedMenu && (
-                <motion.div
-                  className="absolute bottom-14 left-0 bg-black/80 rounded-lg p-2 min-w-[100px]"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  {speedOptions.map((speed) => (
-                    <button
-                      key={speed}
-                      onClick={() => handleSpeedChange(speed)}
-                      className={`w-full text-left px-3 py-2 text-sm rounded hover:bg-white/20 transition-colors ${
-                        playbackRate === speed
-                          ? "text-white bg-white/20"
-                          : "text-gray-300"
-                      }`}
-                    >
-                      {speed}x
-                    </button>
-                  ))}
-                </motion.div>
-              )}
-            </div>
+            {/* Playback speed hidden for Live TV */}
 
             {/* Subtitles */}
             <button
