@@ -311,7 +311,7 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
               </div>
 
               <div
-                className={`flex-1 min-h-0 overflow-y-auto px-[20px] md:px-[40px] lg:px-[120px] ${
+                className={`flex-1 min-h-0 overflow-y-auto pl-[20px] pr-[12px] md:pl-[40px] md:pr-[16px] lg:pl-[120px] lg:pr-[24px] ${
                   isExpanded ? "pt-14 md:pt-14" : "pt-20 md:pt-8"
                 } pb-8 flex flex-col lg:flex-row gap-[24px]`}
                 style={{ maxHeight: "100%" }}
@@ -329,7 +329,7 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
                 </div>
 
                 {/* Program Guide */}
-                <div className="flex-1 min-w-0">
+                <div className="flex-1 min-w-0 w-full">
                   <ProgramGuide onProgramSelect={handleProgramSelect} />
                 </div>
               </div>

@@ -52,8 +52,8 @@ const HorizontalScrollView = React.memo(
         >
           <motion.div
             ref={scrollRef}
-            className="flex gap-4 py-2 items-start"
-            style={{ width: "max-content" }}
+            className="flex gap-4 py-2 items-stretch"
+            style={{ minWidth: "100%" }}
             drag="x"
             dragConstraints={containerRef}
             dragElastic={0.1}
@@ -412,7 +412,7 @@ const ProgramGuide: React.FC<ProgramGuideProps> = ({
   };
 
   return (
-    <div className={`flex-1 ${className}`} style={{ overflow: "hidden" }}>
+    <div className={`flex-1 ${className} `} style={{ overflow: "hidden" }}>
       {/* Header with current time */}
       <div className="flex justify-between items-center mb-[20px]">
         <div>

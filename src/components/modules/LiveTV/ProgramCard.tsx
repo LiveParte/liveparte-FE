@@ -32,7 +32,7 @@ const LiveProgramCard: React.FC<{
 }> = ({ program, channelId, index, onSelect }) => {
   return (
     <motion.div
-      className="min-w-[17.75rem] h-[5.375em] flex flex-col self-center justify-between rounded-[12px] border-gray-900 bg-gray-900 text-gray-300 hover:bg-gray-700 cursor-pointer transition-all relative px-4 py-2"
+      className="min-w-[17.75rem] basis-[17.75rem] flex-1 h-[5.375em] flex flex-col self-center justify-between rounded-[12px] border-gray-900 bg-gray-900 text-gray-300 hover:bg-gray-700 cursor-pointer transition-all relative px-4 py-2"
       whileHover={{
         scale: 1.05,
         y: -2,
@@ -94,7 +94,7 @@ const NormalProgramCard: React.FC<{
 }> = ({ program, channelId, index, onSelect }) => {
   return (
     <motion.div
-      className="min-w-[17.75rem] h-[5.375em] flex flex-col self-center justify-between rounded-[12px] border-gray-900 bg-gray-900 text-gray-300 hover:bg-gray-700 cursor-pointer transition-all relative px-4 py-2"
+      className="min-w-[17.75rem] basis-[17.75rem] flex-1 h-[5.375em] flex flex-col self-center justify-between rounded-[12px] border-gray-900 bg-gray-900 text-gray-300 hover:bg-gray-700 cursor-pointer transition-all relative px-4 py-2"
       whileHover={{
         scale: 1.05,
         y: -2,
@@ -151,7 +151,7 @@ const SelectedProgramCard: React.FC<{
 }> = ({ program, index }) => {
   return (
     <motion.div
-      className="min-w-[24.125rem] h-[8.188rem] flex-shrink-0 flex flex-col justify-center rounded-[12px] border-3 bg-gray-900 border-white-900 text-white cursor-pointer transition-all relative py-2 px-2"
+      className="min-w-[24.125rem] basis-[24.125rem] flex-1 h-[8.188rem] flex-shrink-0 flex flex-col justify-center rounded-[12px] border-3 bg-gray-900 border-white-900 text-white cursor-pointer transition-all relative py-2 px-2"
       whileHover={{
         scale: 1.05,
         y: 0,
