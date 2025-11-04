@@ -3,6 +3,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, User, Mail, Lock, Eye, EyeOff } from "lucide-react";
 import { Input } from "../../Ui/ui/input";
 import { Button } from "../../Ui/ui/button";
+import Cookies from "js-cookie";
+import { register as apiRegister } from "@/api/auth";
+import { useStore } from "@/Context/Zustand";
 
 interface AuthModalProps {
   isOpen: boolean;
@@ -20,13 +23,15 @@ const AuthModal: React.FC<AuthModalProps> = ({
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    fullName: "",
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const setAuthenticated = (useStore as any)((s: any) => s.setAuthenticated);
+  const setUser = (useStore as any)((s: any) => s.setUser);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -40,10 +45,10 @@ const AuthModal: React.FC<AuthModalProps> = ({
     const newErrors: Record<string, string> = {};
 
     if (mode === "signup") {
-      if (!formData.firstName.trim())
-        newErrors.firstName = "First name is required";
-      if (!formData.lastName.trim())
-        newErrors.lastName = "Last name is required";
+      if (!formData.fullName.trim())
+        newErrors.fullName = "Full name is required";
+      if (!formData.username.trim())
+        newErrors.username = "Username is required";
     }
 
     if (!formData.email.trim()) {
@@ -54,8 +59,17 @@ const AuthModal: React.FC<AuthModalProps> = ({
 
     if (!formData.password) {
       newErrors.password = "Password is required";
-    } else if (mode === "signup" && formData.password.length < 8) {
-      newErrors.password = "Password must be at least 8 characters";
+    } else if (mode === "signup") {
+      const pass = formData.password;
+      const rules = [
+        { test: /.{8,}/, msg: "At least 8 characters" },
+        { test: /[A-Z]/, msg: "At least one uppercase letter" },
+        { test: /[a-z]/, msg: "At least one lowercase letter" },
+        { test: /\d/, msg: "At least one number" },
+        { test: /[^A-Za-z0-9]/, msg: "At least one special character" },
+      ];
+      const failed = rules.find((r) => !r.test.test(pass));
+      if (failed) newErrors.password = failed.msg;
     }
 
     if (mode === "signup") {
@@ -76,12 +90,33 @@ const AuthModal: React.FC<AuthModalProps> = ({
 
     setIsLoading(true);
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      console.log(`${mode} successful:`, formData);
-      onClose();
+      if (mode === "signup") {
+        const payload = {
+          email: formData.email.trim(),
+          username: formData.username.trim(),
+          fullName: formData.fullName.trim(),
+          password: formData.password,
+          isGoogle: false,
+        };
+        const res: any = await apiRegister(payload as any);
+        const accessToken = res?.accessToken;
+        const user = res?.user;
+        if (accessToken) {
+          Cookies.set("access_token", accessToken, { sameSite: "lax" });
+        }
+        if (user) {
+          setUser(user);
+          setAuthenticated(true);
+        }
+        onClose();
+      } else {
+        // TODO: implement login against /auth/login
+        await new Promise((resolve) => setTimeout(resolve, 800));
+        onClose();
+      }
     } catch (error) {
       console.error(`${mode} failed:`, error);
+      setErrors((prev) => ({ ...prev, form: "Registration failed" }));
     } finally {
       setIsLoading(false);
     }
@@ -91,8 +126,8 @@ const AuthModal: React.FC<AuthModalProps> = ({
     setMode(mode === "login" ? "signup" : "login");
     setErrors({});
     setFormData({
-      firstName: "",
-      lastName: "",
+      fullName: "",
+      username: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -191,53 +226,53 @@ const AuthModal: React.FC<AuthModalProps> = ({
                 className="space-y-4 sm:space-y-6"
               >
                 {mode === "signup" && (
-                  <div className="grid grid-cols-2 gap-3 sm:gap-4">
-                    <motion.div variants={itemVariants}>
-                      <label className="block text-white.200 text-xs sm:text-sm font-medium mb-2">
-                        First Name
-                      </label>
-                      <Input
-                        type="text"
-                        name="firstName"
-                        value={formData.firstName}
-                        onChange={handleInputChange}
-                        placeholder="John"
-                        className="px-3 py-2 sm:px-4 sm:py-3 bg-white/5 backdrop-blur-sm border border-white/20 text-white text-sm placeholder-white/60 focus:border-white/40 focus:ring-white/20 rounded-xl"
-                      />
-                      {errors.firstName && (
-                        <motion.p
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          className="text-red.100 text-xs sm:text-sm mt-1"
-                        >
-                          {errors.firstName}
-                        </motion.p>
-                      )}
-                    </motion.div>
+                  <motion.div variants={itemVariants}>
+                    <label className="block text-white.200 text-xs sm:text-sm font-medium mb-2">
+                      Full Name
+                    </label>
+                    <Input
+                      type="text"
+                      name="fullName"
+                      value={formData.fullName}
+                      onChange={handleInputChange}
+                      placeholder="John Doe"
+                      className="px-3 py-2 sm:px-4 sm:py-3 bg-white/5 backdrop-blur-sm border border-white/20 text-white text-sm placeholder-white/60 focus:border-white/40 focus:ring-white/20 rounded-xl"
+                    />
+                    {errors.fullName && (
+                      <motion.p
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="text-red.100 text-xs sm:text-sm mt-1"
+                      >
+                        {errors.fullName}
+                      </motion.p>
+                    )}
+                  </motion.div>
+                )}
 
-                    <motion.div variants={itemVariants}>
-                      <label className="block text-white.200 text-xs sm:text-sm font-medium mb-2">
-                        Last Name
-                      </label>
-                      <Input
-                        type="text"
-                        name="lastName"
-                        value={formData.lastName}
-                        onChange={handleInputChange}
-                        placeholder="Doe"
-                        className="px-3 py-2 sm:px-4 sm:py-3 bg-white/5 backdrop-blur-sm border border-white/20 text-white text-sm placeholder-white/60 focus:border-white/40 focus:ring-white/20 rounded-xl"
-                      />
-                      {errors.lastName && (
-                        <motion.p
-                          initial={{ opacity: 0, y: -10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          className="text-red.100 text-xs sm:text-sm mt-1"
-                        >
-                          {errors.lastName}
-                        </motion.p>
-                      )}
-                    </motion.div>
-                  </div>
+                {mode === "signup" && (
+                  <motion.div variants={itemVariants}>
+                    <label className="block text-white.200 text-xs sm:text-sm font-medium mb-2">
+                      Username
+                    </label>
+                    <Input
+                      type="text"
+                      name="username"
+                      value={formData.username}
+                      onChange={handleInputChange}
+                      placeholder="yourusername"
+                      className="px-3 py-2 sm:px-4 sm:py-3 bg-white/5 backdrop-blur-sm border border-white/20 text-white text-sm placeholder-white/60 focus:border-white/40 focus:ring-white/20 rounded-xl"
+                    />
+                    {errors.username && (
+                      <motion.p
+                        initial={{ opacity: 0, y: -10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="text-red.100 text-xs sm:text-sm mt-1"
+                      >
+                        {errors.username}
+                      </motion.p>
+                    )}
+                  </motion.div>
                 )}
 
                 {/* Email Field */}
@@ -419,6 +454,15 @@ const AuthModal: React.FC<AuthModalProps> = ({
                       "Create Account"
                     )}
                   </Button>
+                  {errors.form && (
+                    <motion.p
+                      initial={{ opacity: 0, y: -10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      className="text-red.100 text-xs sm:text-sm mt-2 text-center"
+                    >
+                      {errors.form}
+                    </motion.p>
+                  )}
                 </motion.div>
 
                 {/* Divider */}
