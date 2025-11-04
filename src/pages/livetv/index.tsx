@@ -1,6 +1,6 @@
 import React from "react";
 import LiveTV from "@/components/modules/LiveTV";
-import Footer from "../entertainers/Footer";
+import Footer from "@/custom-ui/reusable/footer";
 import Navbar from "@/custom-ui/reusable/navbar";
 import OptimizedTransition from "@/components/Common/PageTransition/OptimizedTransition";
 import ScrollAnimation, {
