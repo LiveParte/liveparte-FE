@@ -45,9 +45,9 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
   const dragStartRatioRef = useRef<number>(0.6);
   const sheetHeightMv = useMotionValue(0);
   const sheetHeight = useSpring(sheetHeightMv, {
-    stiffness: 380,
-    damping: 36,
-    mass: 0.25,
+    stiffness: 280,
+    damping: 30,
+    mass: 0.3,
   });
   const isExpanded = sheetRatio > 0.6;
 
@@ -97,7 +97,15 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
         if (hoverTimeoutRef.current) {
           clearTimeout(hoverTimeoutRef.current);
         }
-        setIsHovered(true);
+        // Add delay before animation starts
+        hoverTimeoutRef.current = setTimeout(() => {
+          setIsHovered(true);
+        }, 400); // 400ms delay before animation starts
+      } else if (!isNearIcon && isHovered) {
+        // Clear timeout if mouse moves away before delay completes
+        if (hoverTimeoutRef.current) {
+          clearTimeout(hoverTimeoutRef.current);
+        }
       }
       // Removed the else clause - once open, it stays open until mouse leaves the container
     },
@@ -160,6 +168,35 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
       setSheetRatio(0.6);
     }
   }, [selectedProgram]);
+
+  // Prevent unwanted scroll when sheet opens
+  React.useEffect(() => {
+    if (isHovered) {
+      // Save current scroll position
+      const scrollY = window.scrollY;
+      // Prevent body scroll to avoid jump
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = "hidden";
+      // Maintain scroll position
+      if (scrollY > 0) {
+        document.body.style.position = "fixed";
+        document.body.style.top = `-${scrollY}px`;
+        document.body.style.width = "100%";
+      }
+
+      return () => {
+        // Restore scroll behavior
+        document.body.style.overflow = originalOverflow;
+        const bodyTop = document.body.style.top;
+        document.body.style.position = "";
+        document.body.style.top = "";
+        document.body.style.width = "";
+        if (bodyTop) {
+          window.scrollTo(0, parseInt(bodyTop || "0") * -1);
+        }
+      };
+    }
+  }, [isHovered]);
 
   // Cleanup timeout on unmount
   React.useEffect(() => {
@@ -247,16 +284,25 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="absolute inset-0 bg-black/50 backdrop-blur-sm z-40 pointer-events-none"
+              transition={{
+                duration: 0.75,
+                ease: [0.16, 1, 0.3, 1], // Smoother ease-in-out curve
+              }}
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 pointer-events-none"
             />
             <motion.div
-              initial={false}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="absolute bottom-0 left-0 right-0 z-50 bg-[#0b0c0e]/90 backdrop-blur-md pointer-events-auto rounded-t-2xl shadow-2xl flex flex-col"
-              style={{ height: sheetHeight, transform: "translateY(0px)" }}
+              initial={{ y: "100%", opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: "100%", opacity: 0 }}
+              transition={{
+                duration: 0.75,
+                ease: [0.16, 1, 0.3, 1], // Smoother ease-in-out curve for gradual slide
+              }}
+              className="fixed bottom-0 left-0 right-0 z-50 bg-[#0b0c0e]/90 backdrop-blur-md pointer-events-auto rounded-t-2xl shadow-2xl flex flex-col"
+              style={{
+                height: sheetHeight,
+                willChange: "transform, opacity", // Optimize animation performance
+              }}
               onMouseEnter={handleContentMouseEnter}
               drag="y"
               dragElastic={0}
