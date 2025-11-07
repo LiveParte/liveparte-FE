@@ -252,8 +252,22 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
           className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-40 pointer-events-auto cursor-pointer"
           onClick={() => setIsHovered(!isHovered)}
         >
+          {/* Outer pulsing ring for better visibility */}
           <motion.div
-            animate={{ opacity: [0.3, 0.7, 0.3] }}
+            animate={{
+              scale: [1, 1.3, 1],
+              opacity: [0.4, 0.1, 0.4],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="absolute inset-0 rounded-full bg-white/30 blur-sm"
+            style={{ margin: "-8px" }}
+          />
+          <motion.div
+            animate={{ opacity: [0.5, 1, 0.5] }}
             transition={{
               duration: 2,
               repeat: Infinity,
@@ -261,15 +275,30 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
             }}
           >
             <motion.div
-              animate={{ y: [0, 8, 0] }}
+              animate={{
+                y: [0, 8, 0],
+                scale: [1, 1.05, 1],
+              }}
               transition={{
                 duration: 1.5,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
-              className="bg-black/60 backdrop-blur-sm rounded-full p-3 border border-white/20"
+              className="relative bg-gradient-to-br from-black/90 to-black/70 backdrop-blur-md rounded-full p-3 border-2 border-white/40 shadow-[0_0_20px_rgba(255,255,255,0.3),0_0_40px_rgba(255,255,255,0.1)]"
             >
-              <ChevronDown className="w-6 h-6 text-white" />
+              <motion.div
+                animate={{
+                  y: [0, 2, 0],
+                  opacity: [0.9, 1, 0.9],
+                }}
+                transition={{
+                  duration: 1.2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
+                <ChevronDown className="w-6 h-6 text-white drop-shadow-lg" />
+              </motion.div>
             </motion.div>
           </motion.div>
         </div>
