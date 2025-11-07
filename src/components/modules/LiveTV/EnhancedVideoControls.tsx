@@ -70,8 +70,8 @@ const EnhancedVideoControls: React.FC<EnhancedVideoControlsProps> = ({
       animate={{ opacity: showControls ? 1 : 0, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      {/* Progress Bar */}
-      <div className="w-full bg-black/30 px-6 py-3">
+      {/* Progress Bar - Commented out for now */}
+      {/* <div className="w-full bg-black/30 px-6 py-3">
         <div
           ref={progressRef}
           className="w-full bg-gray-600 h-2 rounded-full cursor-pointer group select-none"
@@ -97,7 +97,7 @@ const EnhancedVideoControls: React.FC<EnhancedVideoControlsProps> = ({
             />
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Main Controls Bar */}
       <div className="bg-gradient-to-t from-black/90 to-black/60 px-8 py-6">

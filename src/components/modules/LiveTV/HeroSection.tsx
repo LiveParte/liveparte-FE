@@ -699,15 +699,15 @@ const HeroSection: React.FC<HeroSectionProps> = ({
             transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
             onMouseMove={handleMouseMove}
           >
-            {/* Debug Info */}
-            <div className="absolute top-4 left-4 z-50 bg-black/50 text-white p-2 rounded text-xs">
+            {/* Debug Info - Commented out for now, uncomment if needed in future */}
+            {/* <div className="absolute top-4 left-4 z-50 bg-black/50 text-white p-2 rounded text-xs">
               <div>Video Playing: {isVideoPlaying ? "Yes" : "No"}</div>
               <div>HLS Loaded: {isHlsLoaded ? "Yes" : "No"}</div>
               <div>Is Playing: {isPlaying ? "Yes" : "No"}</div>
               <div>Video Paused: {videoRef.current?.paused ? "Yes" : "No"}</div>
               <div>Stream URL: {streamUrl.substring(0, 50)}...</div>
               <div>Error: {error || "None"}</div>
-            </div>
+            </div> */}
 
             {/* Video Element */}
             <video
@@ -722,8 +722,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({
               loop
             />
 
-            {/* Floating Audio Control Button */}
-            <motion.button
+            {/* Floating Audio Control Button - Commented out for now, uncomment if needed in future */}
+            {/* <motion.button
               initial={{ opacity: 0, scale: 0.8 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.3, ease: "easeInOut" }}
@@ -735,7 +735,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
               ) : (
                 <Volume2 className="w-5 h-5 text-white" />
               )}
-            </motion.button>
+            </motion.button> */}
 
             {/* Loading Overlay */}
             {!isHlsLoaded && !error && (
@@ -844,8 +844,8 @@ const HeroSection: React.FC<HeroSectionProps> = ({
               onClick={() => setShowControls(!showControls)}
             />
 
-            {/* HLS Stats Overlay */}
-            {hlsStats && (
+            {/* HLS Stats Overlay - Commented out for now, uncomment if needed in future */}
+            {/* {hlsStats && (
               <motion.div
                 className="absolute top-6 right-6 z-20 bg-black/50 backdrop-blur-sm rounded-lg p-4 text-white text-sm"
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -863,7 +863,7 @@ const HeroSection: React.FC<HeroSectionProps> = ({
                   )}
                 </div>
               </motion.div>
-            )}
+            )} */}
           </motion.div>
         ) : null}
       </AnimatePresence>
