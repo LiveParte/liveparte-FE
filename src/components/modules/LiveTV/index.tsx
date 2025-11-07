@@ -40,6 +40,8 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
   const [viewportH, setViewportH] = useState<number>(
     typeof window !== "undefined" ? window.innerHeight : 0
   );
+  const [iconHovered, setIconHovered] = useState(false);
+  const [showInitialHint, setShowInitialHint] = useState(true);
   const hoverTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const dragOffsetRef = useRef<number>(0);
   const dragStartRatioRef = useRef<number>(0.6);
@@ -97,6 +99,8 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
         if (hoverTimeoutRef.current) {
           clearTimeout(hoverTimeoutRef.current);
         }
+        // Hide initial hint when user approaches icon
+        setShowInitialHint(false);
         // Add delay before animation starts
         hoverTimeoutRef.current = setTimeout(() => {
           setIsHovered(true);
@@ -109,7 +113,7 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
       }
       // Removed the else clause - once open, it stays open until mouse leaves the container
     },
-    [isHovered, selectedProgram]
+    [isHovered, selectedProgram, setShowInitialHint]
   );
 
   // Keep animation open when mouse is over the animated content itself
@@ -231,6 +235,16 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
     }
   }, []);
 
+  // Hide initial hint after 5 seconds or when user interacts
+  React.useEffect(() => {
+    if (selectedProgram && showInitialHint) {
+      const timer = setTimeout(() => {
+        setShowInitialHint(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [selectedProgram, showInitialHint]);
+
   return (
     <div
       className={`${className} relative`}
@@ -249,9 +263,29 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
       {/* Scroll Indicator - Show when video is playing */}
       {selectedProgram && (
         <div
-          className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-40 pointer-events-auto cursor-pointer"
-          onClick={() => setIsHovered(!isHovered)}
+          className="absolute bottom-6 left-1/2 transform -translate-x-1/2 z-40 pointer-events-auto cursor-pointer flex flex-col items-center gap-2"
+          onClick={() => {
+            setIsHovered(!isHovered);
+            setShowInitialHint(false);
+          }}
+          onMouseEnter={() => setIconHovered(true)}
+          onMouseLeave={() => setIconHovered(false)}
         >
+          {/* Text label that appears on hover or initially */}
+          <AnimatePresence>
+            {(iconHovered || showInitialHint) && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.3 }}
+                className="text-white text-sm font-medium bg-black/80 backdrop-blur-sm px-4 py-1.5 rounded-full border border-white/20 shadow-lg whitespace-nowrap"
+              >
+                View Program Guide
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {/* Outer pulsing ring for better visibility */}
           <motion.div
             animate={{
@@ -264,23 +298,26 @@ const LiveTV: React.FC<LiveTVProps> = ({ className = "" }) => {
               ease: "easeInOut",
             }}
             className="absolute inset-0 rounded-full bg-white/30 blur-sm"
-            style={{ margin: "-8px" }}
+            style={{ margin: "-8px", top: "auto", bottom: 0 }}
           />
           <motion.div
-            animate={{ opacity: [0.5, 1, 0.5] }}
+            animate={{
+              opacity: [0.5, 1, 0.5],
+              scale: iconHovered ? 1.1 : 1,
+            }}
             transition={{
-              duration: 2,
-              repeat: Infinity,
+              duration: iconHovered ? 0.2 : 2,
+              repeat: iconHovered ? 0 : Infinity,
               ease: "easeInOut",
             }}
           >
             <motion.div
               animate={{
-                y: [0, 8, 0],
+                y: showInitialHint ? [0, 12, 0] : [0, 8, 0],
                 scale: [1, 1.05, 1],
               }}
               transition={{
-                duration: 1.5,
+                duration: showInitialHint ? 1.2 : 1.5,
                 repeat: Infinity,
                 ease: "easeInOut",
               }}
