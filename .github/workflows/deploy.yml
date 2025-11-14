@@ -1,0 +1,40 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+      - staging
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install SSH client
+        run: sudo apt-get update && sudo apt-get install -y openssh-client
+
+      - name: Create SSH key
+        run: |
+          echo "${{ secrets.VM_PK }}" | tr -d '\r' > liveparte-key.pem
+          chmod 600 liveparte-key.pem
+
+      - name: Deploy to GCP
+        env:
+          SERVER_IP_PROD: ${{ secrets.SERVER_IP_PROD }}
+          # STAGING_IP: ${{ secrets.STAGING_IP }}
+        run: |
+          if [[ "${GITHUB_REF##*/}" == "main" ]]; then
+            echo "🚀 Deploying to production..."
+            ssh -o StrictHostKeyChecking=no -i liveparte-key.pem ubuntu@$SERVER_IP_PROD \
+              "cd /home/ubuntu/liveparte-studio && chmod +x deploy-prod.sh && ./deploy-prod.sh"
+          elif [[ "${GITHUB_REF##*/}" == "staging" ]]; then
+            echo "🚀 Deploying to staging..."
+            ssh -o StrictHostKeyChecking=no -i liveparte-key.pem liveparte_io@35.192.113.165 \
+              "cd /home/liveparte_io/liveparte-studio && chmod +x deploy.sh && ./deploy.sh"
+          else
+            echo "❌ Not a deploy branch. Skipping."
+          fi
