@@ -23,14 +23,14 @@ jobs:
           chmod 600 liveparte-key.pem
 
       - name: Deploy to GCP
-        env:
-          SERVER_IP_PROD: ${{ secrets.SERVER_IP_PROD }}
-          # STAGING_IP: ${{ secrets.STAGING_IP }}
+        # env:
+        #   SERVER_IP_PROD: ${{ secrets.SERVER_IP_PROD }}
+        #   STAGING_IP: ${{ secrets.STAGING_IP }}
         run: |
           if [[ "${GITHUB_REF##*/}" == "main" ]]; then
             echo "🚀 Deploying to production..."
-            ssh -o StrictHostKeyChecking=no -i liveparte-key.pem ubuntu@$SERVER_IP_PROD \
-              "cd /home/ubuntu/liveparte-studio && chmod +x deploy-prod.sh && ./deploy-prod.sh"
+            ssh -o StrictHostKeyChecking=no -i liveparte-key.pem liveparte_io@136.115.149.7 \
+              "cd /home/liveparte_io/liveparte-studio && chmod +x deploy-prod.sh && ./deploy-prod.sh"
           elif [[ "${GITHUB_REF##*/}" == "staging" ]]; then
             echo "🚀 Deploying to staging..."
             ssh -o StrictHostKeyChecking=no -i liveparte-key.pem liveparte_io@35.192.113.165 \
