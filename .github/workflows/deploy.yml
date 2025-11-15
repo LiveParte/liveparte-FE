@@ -36,5 +36,5 @@ jobs:
             ssh -o StrictHostKeyChecking=no -i liveparte-key.pem liveparte_io@35.192.113.165 \
               "cd /home/liveparte_io/liveparte-FE && chmod +x deploy.sh && ./deploy.sh"
           else
-            echo "❌ Not a deploy branch. Skipping."
+            echo "❌❌ Not a deploy branch. Skipping."
           fi
